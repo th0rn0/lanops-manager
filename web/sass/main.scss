@@ -1,0 +1,20 @@
+// Follows inverted triangle CSS see https://github.com/itcss/itcss-netmag/blob/master/css/main.scss
+
+@import "ionicons";
+
+@import 'settings.global.scss';
+@import 'settings.colours.scss';
+
+@import 'bootstrap/bootstrap-reboot.scss';
+@import 'generic.reset.scss';
+@import 'generic.unreset.scss';
+//@import 'generic.grid.scss';
+@import 'bootstrap/bootstrap-grid.scss';
+@import 'generic.shared.scss';
+
+@import 'element.hero.scss';
+@import 'element.menu.scss';
+@import 'element.newsfeed.scss';
+
+
+@import 'tools.scss';

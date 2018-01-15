@@ -16,3 +16,5 @@ composer.lock
 \.env
 
 public/uploads/gallery/
+
+certs/

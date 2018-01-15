@@ -1,0 +1,19 @@
+/**
+ * Book Now
+ */
+.book-now
+{
+    padding: 15px 0;
+
+    background: $colour__orange;
+    h3
+    {
+        text-transform: uppercase;
+
+        color: white;
+        a:hover
+        {
+            cursor: pointer;
+        }
+    }
+}
