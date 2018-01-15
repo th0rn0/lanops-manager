@@ -17,4 +17,4 @@ composer.lock
 
 public/uploads/gallery/
 
-certs/
+/certs
