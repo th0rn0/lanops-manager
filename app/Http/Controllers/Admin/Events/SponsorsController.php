@@ -42,6 +42,6 @@ class SponsorsController extends Controller
 			);
 		}
 		$sponsor->save();
-		return Redirect::to('admin/events/' . $event->id);
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 }

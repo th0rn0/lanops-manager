@@ -12,10 +12,10 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a> 
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}/tournaments">Tournaments</a>
+        <a href="/admin/events/{{ $event->slug }}/tournaments">Tournaments</a>
       </li>
       <li class="active">
         {{ $tournament->name }}
@@ -105,7 +105,7 @@
             </thead>
             <tbody>
               @foreach($tournament->tournamentParticipants as $participant)
-                {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments/' . $tournament->id . '/participants/' . $participant->id  . '/team')) }}
+                {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id . '/participants/' . $participant->id  . '/team')) }}
                   <tr>
                     <td>
                       {{ $participant->eventParticipant->user->steamname }}
@@ -170,7 +170,7 @@
         <i class="fa fa-wrench fa-fw"></i> Settings
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments/' . $tournament->id )) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id )) }}
           <div class="form-group">
             {{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
             @if($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
@@ -244,19 +244,19 @@
         {{ Form::close() }}
         <div class="form-group">
           @if(count($tournament->tournamentParticipants) >= 2 && $tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
-            {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments/' . $tournament->id . '/start')) }}
+            {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id . '/start')) }}
               <button type="submit" name="action" value="start" class="btn btn-default">Start Tournament</button>
             {{ Form::close() }}
           @endif
           @if($tournament->status == 'LIVE')
-            {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments/' . $tournament->id . '/finalize')) }}
+            {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id . '/finalize')) }}
               <button type="submit" class="btn btn-default">Finalize Tournament</button>
             {{ Form::close() }}
           @endif
         </div>
         @if($tournament->status != 'COMPLETE')
           <hr>
-          {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments/' . $tournament->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+          {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id, 'onsubmit' => 'return ConfirmDelete()')) }}
             {{ Form::hidden('_method', 'DELETE') }}
             <button type="submit" class="btn btn-danger">Delete</button>
           {{ Form::close() }}

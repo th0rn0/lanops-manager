@@ -39,7 +39,7 @@ class AnnoucementsController extends Controller
 		$annoucement->save();
 
 		Session::flash('message', 'Successfully saved!');
-		return Redirect::to('admin/events/' . $event->id);
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -63,7 +63,7 @@ class AnnoucementsController extends Controller
 		$annoucement->save();
 
 		Session::flash('message', 'Successfully saved!');
-		return Redirect::to('admin/events/' . $event->id);
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -76,6 +76,6 @@ class AnnoucementsController extends Controller
 	{
 		$annoucement->delete();
 		session::flash('message', 'Successfully deleted!');
-		return Redirect::to('admin/events/' . $event->id);
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 }

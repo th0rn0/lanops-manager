@@ -84,17 +84,17 @@ class TournamentsController extends Controller
 	{
 		if ($tournament->status != 'OPEN') {
 			$request->session()->flash('alert-danger', 'Signups not permitted at this time.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 	 
 		if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
 			$request->session()->flash('alert-danger', 'You are not signed in to this event.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		if ($tournament->getParticipant($request->event_participant_id)) {
 			$request->session()->flash('alert-danger', 'You are already signed up to this tournament.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		$tournament_participant = new EventTournamentParticipant();
@@ -109,12 +109,12 @@ class TournamentsController extends Controller
 			if (!$tournament_participant->setChallongeParticipantId()) {
 				$tournament_participant->delete();
 				Session::flash('alert-danger', 'Cannot add participant. Please try again.');
-				return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug)->withErrors('Database Error. Please Contact a Admin.');
+				return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug)->withErrors('Database Error. Please Contact a Admin.');
 			}
 		}
 
 		$request->session()->flash('alert-success', 'Successfully Registered!');
-		return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+		return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
 
 	/**
@@ -128,17 +128,17 @@ class TournamentsController extends Controller
 	{
 		if ($tournament->status != 'OPEN') {
 			$request->session()->flash('alert-danger', 'Signups not permitted at this time.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 	 
 		if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
 			$request->session()->flash('alert-danger', 'You are not signed in to this event.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		if($tournament->getParticipant($request->event_participant_id)){
 			$request->session()->flash('alert-danger', 'You are already signed up to this tournament.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		$tournament_team = new EventTournamentTeam();
@@ -150,11 +150,11 @@ class TournamentsController extends Controller
 		if (!$tournament_team->setChallongeParticipantId()) {
 			$tournament_team->delete();
 			Session::flash('alert-danger', 'Cannot add participant. Please try again.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug)->withErrors('Database Error. Please Contact a Admin.');
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug)->withErrors('Database Error. Please Contact a Admin.');
 		} 
 
 		$request->session()->flash('alert-success', 'Team Successfully Created!');
-		return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+		return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
 
 	/**
@@ -168,17 +168,17 @@ class TournamentsController extends Controller
 	{
 		if ($tournament->status != 'OPEN') {
 			$request->session()->flash('alert-danger', 'Signups not permitted at this time.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 	 
 		if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
 			$request->session()->flash('alert-danger', 'You are not signed in to this event.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		if($tournament->getParticipant($request->event_participant_id)){
 			$request->session()->flash('alert-danger', 'You are already signed up to this tournament.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		$tournament_participant = new EventTournamentParticipant();
@@ -189,7 +189,7 @@ class TournamentsController extends Controller
 		$tournament_participant->save();
 
 		$request->session()->flash('alert-success', 'Successfully Registered!');
-		return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+		return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
 
 	/**
@@ -203,15 +203,15 @@ class TournamentsController extends Controller
 	{
 		if(!$tournament_participant = $tournament->getParticipant($request->event_participant_id)){
 			$request->session()->flash('alert-danger', 'You are not signed up.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug)->withErrors('Cannot find Participant.');
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug)->withErrors('Cannot find Participant.');
 		}
 
 		if (!$tournament_participant->delete()) {
 			$request->session()->flash('alert-danger', 'Cannot remove. Please try again.');
-			return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
 		$request->session()->flash('alert-success', 'You have been successfully removed from the Tournament.');
-		return Redirect::to('/events/' . $event->id . '/tournaments/' . $tournament->slug);
+		return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
 }

@@ -246,7 +246,7 @@
 									@if(!$user->eventParticipation->isEmpty())
 										@foreach($user->eventParticipation as $participant) 
 											@if($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
-												{{ Form::open(array('url'=>'/events/' . $event->id . '/seating/' . $seating_plan->id)) }}
+												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->id)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
 													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 
@@ -513,7 +513,7 @@
 				<h4 class="modal-title" id="pickSeatModalLabel"></h4>
 			</div>
 			@if(Auth::user())
-				{{ Form::open(array('url'=>'/events/' . $event->id . '/seating/', 'id'=>'pickSeatFormModal')) }}
+				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
 							<h4>Which ticket would you like to seat?</h4>
@@ -550,7 +550,7 @@
 		$("#seat_number_modal").val(seat);
 		$("#seat_modal").val(seat);
 		$("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
-		$("#pickSeatFormModal").prop('action', '/events/{{ $event->id }}/seating/' + seating_plan_id);
+		$("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_id);
 	}
 </script>
 

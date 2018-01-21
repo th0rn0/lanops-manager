@@ -12,7 +12,7 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a> 
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
       </li>
       <li class="active">
         Tournaments
@@ -44,19 +44,19 @@
             </thead>
             <tbody>
               @foreach ($event->tournaments as $tournament)
-                <tr class="table-row odd gradeX" data-href="/admin/events/{{ $event->id }}/tournaments/{{ $tournament->slug }}">
+                <tr class="table-row odd gradeX" data-href="/admin/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
                   <td>{{ $tournament->name }}</td>
                   <td>{{ $tournament->status }}</td>
                   <td>{{ $tournament->game }}</td>
                   <td>{{ ucfirst($tournament->format) .  ' - ' . $tournament->team_size }}</td>
                   <td class="center">{{ $tournament->tournamentParticipants->count() }}</td>
                   <td width="15%">
-                    <a href="/admin/events/{{ $event->id }}/tournaments/{{ $tournament->slug }}">
+                    <a href="/admin/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
                       <button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
                     </a>
                   </td>
                   <td width="15%">
-                    {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments/' . $tournament->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+                    {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id, 'onsubmit' => 'return ConfirmDelete()')) }}
                       {{ Form::hidden('_method', 'DELETE') }}
                       <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                     {{ Form::close() }}
@@ -77,7 +77,7 @@
         <i class="fa fa-plus fa-fw"></i> Add Tournament
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tournaments', 'files' => 'true')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments', 'files' => 'true')) }}
           <div class="form-group">
             {{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
             {{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}

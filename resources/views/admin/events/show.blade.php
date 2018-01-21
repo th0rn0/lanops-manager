@@ -28,7 +28,7 @@
         <i class="fa fa-wrench fa-fw"></i> Settings
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id, 'files' => 'true')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'files' => 'true')) }}
           <div class="row">
             <div class="col-md-6 col-sm-12">
               <div class="form-group">
@@ -116,7 +116,7 @@
           <button type="submit" class="btn btn-default">Submit</button>
         {{ Form::close() }}
         <hr>
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
           {{ Form::hidden('_method', 'DELETE') }}
           <button type="submit" class="btn btn-danger">Delete</button>
         {{ Form::close() }}
@@ -214,14 +214,14 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-ticket fa-fw"></i> Tickets
-        <a href="/admin/events/{{ $event->id }}/tickets" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Tickets</a>
+        <a href="/admin/events/{{ $event->slug }}/tickets" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Tickets</a>
         <a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addTicketModal">Add Ticket</a>
       </div>
       <div class="panel-body">
         @if($event->tickets->count() != 0)
           <div class="list-group">
             @foreach ($event->tickets as $ticket)
-              <a href="/admin/events/{{ $event->id }}/tickets/{{ $ticket->id }}" class="list-group-item">
+              <a href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}" class="list-group-item">
                 <i class="fa fa-pencil fa-fw"></i> {{ $ticket->name }} - £{{ $ticket->price }}
                 <span class="pull-right text-muted small">
                   @if($ticket->quantity != 0)
@@ -242,14 +242,14 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-user fa-fw"></i> Attendees <small>Last Ten Signups</small>
-        <a href="/admin/events/{{ $event->id }}/participants" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Attendees</a>
-        <a href="/admin/events/{{ $event->id }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
+        <a href="/admin/events/{{ $event->slug }}/participants" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Attendees</a>
+        <a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
       </div>
       <div class="panel-body">
         @if($event->eventParticipants->count() != 0)
           <div class="list-group">
             @foreach ($event->eventParticipants as $participant)
-              <a href="/admin/events/{{ $event->id }}/participants/{{ $participant->id }}" class="list-group-item">
+              <a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
                 <i class="fa fa-comment fa-fw"></i> {{ $participant->user->steamname}} - {{ $participant->user->username}}
                 <span class="pull-right text-muted small">
                   <em>{{ date('d-m-y H:i', strtotime($participant->created_at)) }}</em>
@@ -297,7 +297,7 @@
         <h4 class="modal-title" id="addTicketModalLabel">Add Ticket</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tickets')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets')) }}
           @include('layouts._partials._admin._event._tickets.form', ['empty' => true])
         {{ Form::close() }}
       </div>
@@ -318,7 +318,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="addSponsorModalLabel">Add Sponsor</h4>
       </div>
-      {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/sponsors', 'files' => 'true')) }}
+      {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/sponsors', 'files' => 'true')) }}
         <div class="modal-body">
           <div class="form-group">
             {{ Form::label('sponsor_name','Sponsor Name',array('id'=>'','class'=>'')) }}
@@ -347,7 +347,7 @@
         <h4 class="modal-title" id="annoucementModalLabel">Edit Annoucement</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/annoucements', 'files' => 'true')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/annoucements', 'files' => 'true')) }}
           <div class="form-group">
             {{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
             {{ Form::textarea('message', NULL,array('id'=>'message','class'=>'form-control', 'rows' => '2')) }}
@@ -367,14 +367,14 @@
         <h4 class="modal-title" id="editAnnoucementModalLabel">Edit Annoucement</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/annoucements', 'files' => 'true', 'id' => 'editAnnoucementForm')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/annoucements', 'files' => 'true', 'id' => 'editAnnoucementForm')) }}
           <div class="form-group">
             {{ Form::label('edit_annoucement','Message',array('id'=>'','class'=>'')) }}
             {{ Form::textarea('edit_annoucement', NULL,array('id'=>'edit_annoucement','class'=>'form-control', 'rows' => '2')) }}
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         {{ Form::close() }}
-        {{ Form::open(array('method'  => 'delete', 'url'=>'/admin/events/' . $event->id . '/annoucements', 'id'=>'deleteAnnoucementForm', 'files' => 'true')) }}
+        {{ Form::open(array('method'  => 'delete', 'url'=>'/admin/events/' . $event->slug . '/annoucements', 'id'=>'deleteAnnoucementForm', 'files' => 'true')) }}
           <div class="">
             <button type="submit" class="btn btn-danger">Delete</button>
           </div>
@@ -386,8 +386,8 @@
 <script>
   function editAnnoucement(annoucement_id, message)
   {
-    $("#editAnnoucementForm").prop('action', '/admin/events/{{ $event->id }}/annoucements/' + annoucement_id);
-    $("#deleteAnnoucementForm").prop('action', '/admin/events/{{ $event->id }}/annoucements/' + annoucement_id);
+    $("#editAnnoucementForm").prop('action', '/admin/events/{{ $event->slug }}/annoucements/' + annoucement_id);
+    $("#deleteAnnoucementForm").prop('action', '/admin/events/{{ $event->slug }}/annoucements/' + annoucement_id);
     $('#edit_annoucement').val(message);
   }
 </script>
@@ -400,7 +400,7 @@
         <h4 class="modal-title" id="addEventInformationModal">Add Event Information</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/information', 'files' => 'true')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/information', 'files' => 'true')) }}
           <div class="row">
             <div class="col-md-6 col-sm-12">
               <div class="form-group">

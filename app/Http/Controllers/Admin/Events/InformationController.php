@@ -54,7 +54,7 @@ class InformationController extends Controller
 	    $information->save();
 
         Session::flash('alert-success', 'Successfully saved!');
-        return Redirect::to('admin/events/' . $event->id);
+        return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -87,7 +87,7 @@ class InformationController extends Controller
 	    }
 	    $information->save();
         Session::flash('alert-success', 'Successfully saved!');
-        return Redirect::to('admin/events/' . $information->event->id);
+        return Redirect::to('admin/events/' . $information->event->slug);
 	}
 
 	/**
@@ -99,6 +99,6 @@ class InformationController extends Controller
 	{
 		$information->delete();
 		session::flash('alert-success', 'Successfully deleted!');
-        return Redirect::to('admin/events/' . $information->event->id);
+        return Redirect::to('admin/events/' . $information->event->slug);
 	}
 }

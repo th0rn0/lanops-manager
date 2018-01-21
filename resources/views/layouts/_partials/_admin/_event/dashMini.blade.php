@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <a href="/admin/events/{{ $event->id }}">
+      <a href="/admin/events/{{ $event->slug }}">
         <div class="panel-footer">
           <span class="pull-left">View Event Page</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <a href="/admin/events/{{ $event->id }}/seating">
+      <a href="/admin/events/{{ $event->slug }}/seating">
         <div class="panel-footer">
           <span class="pull-left">View Seating Plans</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -90,7 +90,7 @@
           </div>
         </div>
       </div>
-      <a href="/admin/events/{{ $event->id }}/tournaments">
+      <a href="/admin/events/{{ $event->slug }}/tournaments">
         <div class="panel-footer">
           <span class="pull-left">View Tournaments</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -112,7 +112,7 @@
           </div>
         </div>
       </div>
-      <a href="/admin/events/{{ $event->id }}/participants">
+      <a href="/admin/events/{{ $event->slug }}/participants">
         <div class="panel-footer">
           <span class="pull-left">View Attendees</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -134,7 +134,7 @@
           </div>
         </div>
       </div>
-      <a href="/admin/events/{{ $event->id }}/tickets">
+      <a href="/admin/events/{{ $event->slug }}/tickets">
         <div class="panel-footer">
           <span class="pull-left">View Tickets</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -156,7 +156,7 @@
           </div>
         </div>
       </div>
-      <a href="/admin/events/{{ $event->id }}/timetables">
+      <a href="/admin/events/{{ $event->slug }}/timetables">
         <div class="panel-footer">
           <span class="pull-left">View Timetables</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

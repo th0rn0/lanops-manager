@@ -133,14 +133,14 @@ class TournamentsController extends Controller
 		if(!$response = $challonge->createTournament($params)){
 			$tournament->delete();
 			Session::flash('message', 'Could not connect to Challonge. Please try again');
-			return Redirect::to('admin/events/' . $event->id . '/tournaments');
+			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 		}
 		
 		$tournament->challonge_tournament_id = $response->id;
 		$tournament->save();
 
 		Session::flash('message', 'Tournament Successfully saved!');
-		return Redirect::to('admin/events/' . $event->id . '/tournaments');
+		return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 	}
 	
 	/**
@@ -168,7 +168,7 @@ class TournamentsController extends Controller
 		if(isset($request->status) && $request->status != $tournament->status) {
 			if(!$tournament->setStatus($request->status)){
 				Session::flash('message', 'Tournament status cannot be updated!');
-				return Redirect::to('admin/events/' . $event->id . '/tournaments' . $tournament->slug);
+				return Redirect::to('admin/events/' . $event->slug . '/tournaments' . $tournament->slug);
 			}
 		}
 
@@ -193,10 +193,10 @@ class TournamentsController extends Controller
 	{
 		if (!$tournament->delete()) {
 			Session::flash('message', 'Error connecting to Challonge!');
-			return Redirect::to('admin/events/' . $event->id . '/tournaments');
+			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 		}
 		Session::flash('message', 'Successfully deleted!');
-		return Redirect::to('admin/events/' . $event->id . '/tournaments');
+		return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 	}
 
 	/**
@@ -209,24 +209,24 @@ class TournamentsController extends Controller
 	{
 		if($tournament->tournamentParticipants->count() > 2 && ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETED')){
 			Session::flash('alert-danger', 'Tournament is already live or doesnt have enough participants');
-			return Redirect::to('admin/events/' . $event->id . '/tournaments/');
+			return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
 		}
 		if(!$tournament->tournamentTeams->isEmpty()){
 			foreach($tournament->tournamentTeams as $team){
 				if($team->tournamentParticipants->isEmpty()){
 					 if (!$team->delete()) {
 						Session::flash('message', 'Error connecting to Challonge!');
-						return Redirect::to('admin/events/' . $event->id . '/tournaments');
+						return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 					}
 				}
 			}
 		}
 		if(!$tournament->setStatus('LIVE')){
 			Session::flash('alert-danger', 'Cannot start Tournament!');
-			return Redirect::to('admin/events/' . $event->id . '/tournaments/');
+			return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
 		}
 		Session::flash('message', 'Tournament Started!');
-		return Redirect::to('admin/events/' . $event->id . '/tournaments/');
+		return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
 	}
 
 	/**
@@ -239,10 +239,10 @@ class TournamentsController extends Controller
 	{
 		if(!$tournament->setStatus('COMPLETE')){
 			Session::flash('alert-danger', 'Cannot finalize Tournament!');
-			return Redirect::to('admin/events/' . $event->id . '/tournaments');
+			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 		}
 		Session::flash('message', 'Tournament Finalized!');
-		return Redirect::to('admin/events/' . $event->id . '/tournaments/' . $tournament->slug);
+		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
 
 	/**
@@ -267,7 +267,7 @@ class TournamentsController extends Controller
 		$participant->save();
 
 		Session::flash('message', 'Participant updated!');
-		return Redirect::to('admin/events/' . $event->id . '/tournaments/' . $tournament->slug);
+		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
 }
 

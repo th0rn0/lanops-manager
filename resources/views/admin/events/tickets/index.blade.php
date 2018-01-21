@@ -12,7 +12,7 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a>
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
       </li>
       <li class="active">
         Tickets
@@ -84,7 +84,7 @@
           </thead>
           <tbody>
             @foreach ($event->tickets as $ticket)
-              <tr class="table-row odd gradeX" data-href="/admin/events/{{ $event->id }}/tickets/{{ $ticket->id }}">
+              <tr class="table-row odd gradeX" data-href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}">
                 <td>
                   {{ $ticket->name }}
                 </td>
@@ -127,12 +127,12 @@
                   @endif
                 </td>
                 <td width="15%">
-                  <a href="/admin/events/{{ $event->id }}/tickets/{{ $ticket->id }}">
+                  <a href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}">
                     <button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
                   </a>
                 </td>
                 <td width="15%">
-                  {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tickets/' . $ticket->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+                  {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets/' . $ticket->id, 'onsubmit' => 'return ConfirmDelete()')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
                     <button type="submit" class="btn btn-danger btn-sm btn-block" data-confirm="Are you sure to delete this Ticket?">Delete</button>
                   {{ Form::close() }}
@@ -173,14 +173,14 @@
                   {{ $user->getStaffTickets($event->id)->count() }}
                 </td>
                 <td width="15%">
-                  {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/freebies/gift')) }}
+                  {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/freebies/gift')) }}
                     {{ csrf_field() }}
                     <input type="hidden" name="user_id" value="{{ $user->id }}" />
                     <button type="submit" name="action" class="btn btn-success btn-sm btn-block">Gift Ticket</button>
                   {{ Form::close() }}
                 </td>
                 <td width="15%">
-                  {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/freebies/admin')) }}
+                  {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/freebies/admin')) }}
                     {{ csrf_field() }}
                     <input type="hidden" name="user_id" value="{{ $user->id }}" />
                     <button type="submit" name="action" class="btn btn-success btn-sm btn-block">Gift Admin Ticket</button>
@@ -200,7 +200,7 @@
         <i class="fa fa-plus fa-fw"></i> Add Tickets
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tickets')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets')) }}
           @include('layouts._partials._admin._event._tickets.form', ['empty' => true])
         {{ Form::close() }}
       </div>

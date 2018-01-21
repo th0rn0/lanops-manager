@@ -12,10 +12,10 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a>
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}/tickets">Tickets</a>
+        <a href="/admin/events/{{ $event->slug }}/tickets">Tickets</a>
       </li>
       <li class="active">
         {{ $ticket->name }}
@@ -34,7 +34,7 @@
         <i class="fa fa-pencil fa-fw"></i> Edit
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/tickets/' . $ticket->id)) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets/' . $ticket->id)) }}
           @include('layouts._partials._admin._event._tickets.form')
         {{ Form::close() }}
       </div>
@@ -70,7 +70,7 @@
         <div class="list-group">
           @foreach ($event->eventParticipants as $participant)
             @if ($participant->ticket_id == $ticket->id)
-              <a href="/admin/events/{{ $event->id }}/participants/{{ $participant->id }}" class="list-group-item">
+              <a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
                 <i class="fa fa-comment fa-fw"></i> {{ $participant->user->username_nice}} - {{ $participant->user->steamname}}
                 <span class="pull-right text-muted small">
                   <em>

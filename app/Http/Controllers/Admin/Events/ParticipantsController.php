@@ -59,7 +59,7 @@ class ParticipantsController extends Controller
 	public function signIn(Event $event, EventParticipant $participant)
 	{
 		$participant->setSignIn();
-		return Redirect::to('admin/events/' . $event->id . '/participants/' . $participant->id);
+		return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
 	}
 }
 

@@ -30,19 +30,11 @@ class EventsController extends Controller
 	
 	/**
 	 * Show Event Page
-	 * @param  $slug
+	 * @param  Event $event
 	 * @return View
 	 */
-	public function show($slug)
+	public function show(Event $event)
 	{
-		if (!is_numeric($slug)) {
-			$event = Event::where('slug', $slug)->first();
-		} else {
-			$event = Event::where('id', $slug)->first();
-		}
-		if (!$event) {
-			return Redirect::to('/');
-		}
 		foreach ($event->timetables as $timetable) {
 			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}

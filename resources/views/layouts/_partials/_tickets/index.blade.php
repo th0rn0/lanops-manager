@@ -37,7 +37,7 @@
 				@endif
 				@if($participant->seat)
 					<hr>
-				 {{ Form::open(array('url'=>'/events/' . $participant->event->id . '/seating/' . $participant->seat->seatingPlan->id)) }}
+				 {{ Form::open(array('url'=>'/events/' . $participant->event->slug . '/seating/' . $participant->seat->seatingPlan->id)) }}
 						{{ Form::hidden('_method', 'DELETE') }}
 						{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
 						{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 

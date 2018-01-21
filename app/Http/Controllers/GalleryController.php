@@ -12,25 +12,9 @@ use App\GalleryAlbumImage;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class GalleryController extends Controller
 {
-	use Sluggable;
-	
-	/**
-	 * Return the sluggable configuration array for this model.
-	 * @return array
-	 */
-	public function sluggable()
-	{
-		return [
-			'slug' => [
-				'source' => 'nice_name'
-			]
-		];
-	}
-	
 	/**
 	 * Show Gallery Index Page
 	 * @return View
@@ -44,16 +28,11 @@ class GalleryController extends Controller
 
 	/**
 	 * Show Gallery Page
-	 * @param  $slug
+	 * @param  GalleryAlbum $album
 	 * @return View      
 	 */
-	public function show($slug)
+	public function show(GalleryAlbum $album)
 	{
-		if (!is_numeric($slug)) {
-			$album = GalleryAlbum::where('slug', $slug)->first();
-		} else {
-			$album = GalleryAlbum::where('id', $slug)->first();
-		}
 		return view('gallery.show')->withAlbum($album);  
 	}
 }

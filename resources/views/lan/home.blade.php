@@ -361,7 +361,7 @@
 									@if($ticket_flag)
 										@foreach($user->eventParticipation as $participant) 
 											@if($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
-												{{ Form::open(array('url'=>'/events/' . $event->id . '/seating/' . $seating_plan->id)) }}
+												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->id)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
 													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 

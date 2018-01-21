@@ -42,7 +42,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Event
 	Route::get('/events', 'Events\EventsController@index');
-	Route::get('/events/{slug}', 'Events\EventsController@show');
+	Route::get('/events/{event}', 'Events\EventsController@show');
 
 	Route::resource('/about', 'HomeController');
 	Route::resource('/notfound', 'HomeController');
@@ -56,7 +56,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	//Gallery Routes
 	Route::get('/gallery', 'GalleryController@index');
-	Route::get('/gallery/{slug}', 'GalleryController@show');
+	Route::get('/gallery/{album}', 'GalleryController@show');
 
 	//Annoucement & Intranet Page
 	Route::get('/events/{event}/big', 'HomeController@bigScreen');

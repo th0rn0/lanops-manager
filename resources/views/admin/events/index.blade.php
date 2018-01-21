@@ -45,10 +45,10 @@
                   <td>{{ $event->desc_short }}</td>
                   <td class="center">{{ $event->getSeatingCapacity() }}</td>
                   <td width="15%">
-                    <a href="/admin/events/{{ $event->id }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
+                    <a href="/admin/events/{{ $event->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
                   </td>
                   <td width="15%">
-                    {{ Form::open(array('url'=>'/admin/events/' . $event->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+                    {{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
                       {{ Form::hidden('_method', 'DELETE') }}
                       <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                     {{ Form::close() }}

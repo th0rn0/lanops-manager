@@ -41,7 +41,7 @@
         <ul class="nav nav-second-level">
           @foreach(Helpers::getEvents('DESC', 5) as $event)
             <li>
-              <a href="/admin/events/{{ $event->id }}">
+              <a href="/admin/events/{{ $event->slug }}">
                 {{ $event->display_name }}
                 @if ($event->status != 'PUBLISHED')
                   - {{ $event->status }}

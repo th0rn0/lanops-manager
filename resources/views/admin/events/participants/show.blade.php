@@ -10,10 +10,10 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a> 
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}/participants">Participants</a>
+        <a href="/admin/events/{{ $event->slug }}/participants">Participants</a>
       </li>
       <li class="active">
         {{ $participant->user->steamname }}
@@ -89,7 +89,7 @@
         refund
         ticket
         @if(!$participant->signed_in)
-          {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/participants/' . $participant->id . '/signin')) }}
+          {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
             <button type="submit" class="btn btn-default">Sign in</button>
           {{ Form::close() }}
         @else

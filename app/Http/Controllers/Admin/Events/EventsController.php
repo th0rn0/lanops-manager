@@ -86,10 +86,10 @@ class EventsController extends Controller
 
 		if(!$event->save()){
 			Session::flash('alert-danger', 'Could not Save!');
-			return Redirect::to('admin/events/' . $event->id);
+			return Redirect::to('admin/events/' . $event->slug);
 		}
 		Session::flash('alert-success', 'Event Successfully Added!');
-		return Redirect::to('admin/events/' . $event->id);
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 	
 	/**
@@ -142,10 +142,10 @@ class EventsController extends Controller
 
 		if(!$event->save()){
 			Session::flash('alert-danger', 'Could not Save!');
-			return Redirect::to('admin/events/' . $event->id);
+			return Redirect::to('admin/events/' . $event->slug);
 		}
 		Session::flash('alert-success', 'Event Successfully Updated!');
-		return Redirect::to('admin/events/' . $event->id);
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -185,10 +185,10 @@ class EventsController extends Controller
 
 		if (!$participant->save()) {
 			Session::flash('alert-danger', 'Could not add Gift!');
-			return Redirect::to('admin/events/' . $event->id . '/tickets');          
+			return Redirect::to('admin/events/' . $event->slug . '/tickets');          
 		}
 		Session::flash('alert-success', 'Successfully added Gift!');
-		return Redirect::to('admin/events/' . $event->id . '/tickets');
+		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}
 
 	/**
@@ -209,10 +209,10 @@ class EventsController extends Controller
 	 
 		if (!$participant->save()) {
 			Session::flash('alert-danger', 'Could not add Admin!');
-			return Redirect::to('admin/events/' . $event->id . '/tickets');          
+			return Redirect::to('admin/events/' . $event->slug . '/tickets');          
 		}
 		Session::flash('alert-success', 'Successfully added Admin!');
-		return Redirect::to('admin/events/' . $event->id . '/tickets');
+		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}
 }
 

@@ -12,10 +12,10 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a> 
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}/timetables">Timetables</a>
+        <a href="/admin/events/{{ $event->slug }}/timetables">Timetables</a>
       </li>
       <li class="active">
     		{{ $timetable->name }}
@@ -73,7 +73,7 @@
         <i class="fa fa-plus fa-fw"></i> Add New Slot
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/timetables/' . $timetable->id . '/data')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->id . '/data')) }}
           <div class="row">
             <div class="form-group col-lg-6">
               {{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
@@ -97,7 +97,7 @@
         <i class="fa fa-wrench fa-fw"></i> Settings
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/timetables/' . $timetable->id)) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->id)) }}
           <div class="row">
             <div class="form-group col-lg-6">
               {{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
@@ -135,7 +135,7 @@
           <button type="submit" class="btn btn-default">Submit</button>
         {{ Form::close() }}
         <hr>
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/timetables/' . $timetable->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->id, 'onsubmit' => 'return ConfirmDelete()')) }}
           {{ Form::hidden('_method', 'DELETE') }}
           <button type="submit" class="btn btn-danger">Delete</button>
         {{ Form::close() }}
@@ -155,7 +155,7 @@
         <h4 class="modal-title" id="editTimeSlotModal">Edit Time Slot</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->id . '/timetables/' . $timetable->id . '/data', 'id'=>'editTimeSlotForm')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->id . '/data', 'id'=>'editTimeSlotForm')) }}
 	        <div class="row">
 	          <div class="form-group col-lg-6">
 	            {{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
@@ -179,7 +179,7 @@
 <script>
   function editTimeSlot(id, timestamp, name, desc)
   {
-    $("#editTimeSlotForm").prop('action', '/admin/events/{{ $event->id }}/timetables/{{ $timetable->id }}/data/' + id);
+    $("#editTimeSlotForm").prop('action', '/admin/events/{{ $event->slug }}/timetables/{{ $timetable->id }}/data/' + id);
     $('#editTimetableStart').val(timestamp);
     $('#editTimetableGame').val(name);
     $('#editTimetableDesc').val(desc);

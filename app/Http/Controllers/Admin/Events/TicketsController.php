@@ -105,7 +105,7 @@ class TicketsController extends Controller
 		} 
 
 		Session::flash('alert-success', 'Ticket Created!');
-		return Redirect::to('/admin/events/' . $event->id . '/tickets/' . $ticket->id);
+		return Redirect::to('/admin/events/' . $event->slug . '/tickets/' . $ticket->id);
 	}
 
 	/**
@@ -187,6 +187,6 @@ class TicketsController extends Controller
 			return Redirect::back();
 		}
 		Session::flash('alert-success', 'Successfully deleted!');
-		return Redirect::to('admin/events/' . $event->id . '/tickets');
+		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}
 }

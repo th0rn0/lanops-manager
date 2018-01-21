@@ -12,7 +12,7 @@
         <a href="/admin/events/">Events</a>
       </li>
       <li>
-        <a href="/admin/events/{{ $event->id }}">{{ $event->display_name }}</a> 
+        <a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
       </li>
       <li class="active">
         Participants
@@ -29,7 +29,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-users fa-fw"></i> All Participants
-        <a href="/admin/events/{{ $event->id }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
+        <a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
       </div>
       <div class="panel-body">
         <div class="dataTable_wrapper">
@@ -83,7 +83,7 @@
                     @endif
                   </td>
                   <td width="10%">
-                    <a href="/admin/events/{{ $event->id }}/participants/{{ $participant->id }}">
+                    <a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}">
                       <button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
                     </a>
                   </td>
