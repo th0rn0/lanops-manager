@@ -76,8 +76,8 @@ class InformationController extends Controller
 		$information->title = $request->title;
 		$information->text = $request->text;
 		if($request->file('image') !== NULL){
-			Storage::delete($information->path);
-			$information->image = str_replace(
+			Storage::delete($information->image_path);
+			$information->image_path = str_replace(
 				'public/', 
 				'/storage/', 
 				Storage::put('public/images/events/' . $information->event->slug . '/info', 

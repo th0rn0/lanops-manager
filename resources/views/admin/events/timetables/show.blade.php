@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <h1 class="page-header">Timetables - {{ $timetable->display_name }}</h1>
+    <h1 class="page-header">Timetables - {{ $timetable->name }}</h1>
     <ol class="breadcrumb">
       <li>
         <a href="/admin/events/">Events</a>
@@ -18,7 +18,7 @@
         <a href="/admin/events/{{ $event->id }}/timetables">Timetables</a>
       </li>
       <li class="active">
-    		{{ $timetable->display_name }}
+    		{{ $timetable->name }}
   		</li>
     </ol>
   </div>
@@ -46,16 +46,16 @@
           <tbody>
             @foreach($timetable->data as $slot)
               <tr class="odd gradeX">
-                <td>{{ date("D", strtotime($slot->slot_timestamp)) }} - {{ date("H:i", strtotime($slot->slot_timestamp)) }}</td>
-                @if($slot->slot == NULL && $slot->desc == NULL)
+                <td>{{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}</td>
+                @if($slot->name == NULL && $slot->desc == NULL)
                   <td>EMPTY</td>
                   <td>EMPTY</td>
                 @else
-                  <td>{{ $slot->slot }}</td>
+                  <td>{{ $slot->name }}</td>
                   <td>{{ $slot->desc }}</td>
                 @endif
                 <td width="10%">
-                	<button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" onclick="editTimeSlot('{{ $slot->id }}', '{{ $slot->slot_timestamp }}', '{{ $slot->slot }}', '{{ $slot->desc }}')" data-target="#editTimeSlotModal">Edit</button>
+                	<button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" onclick="editTimeSlot('{{ $slot->id }}', '{{ $slot->start_time }}', '{{ $slot->name }}', '{{ $slot->desc }}')" data-target="#editTimeSlotModal">Edit</button>
               </td>
               </tr>
             @endforeach
@@ -81,7 +81,7 @@
             </div> 
              <div class="form-group col-lg-6">
               {{ Form::label('start','Start',array('id'=>'','class'=>'')) }}
-              {{ Form::select('start', $timetable->getSlotsArray(), null, array('id'=>'start','class'=>'form-control')) }}
+              {{ Form::select('start', $timetable->getAvailableTimes(), null, array('id'=>'start','class'=>'form-control')) }}
             </div>
             <div class="form-group col-lg-12">
               {{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
@@ -101,7 +101,7 @@
           <div class="row">
             <div class="form-group col-lg-6">
               {{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
-              {{ Form::text('name', $timetable->display_name ,array('id'=>'name','class'=>'form-control')) }}
+              {{ Form::text('name', $timetable->name ,array('id'=>'name','class'=>'form-control')) }}
             </div>
             <div class="form-group col-lg-6">
               {{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
@@ -163,7 +163,7 @@
 	          </div> 
 	           <div class="form-group col-lg-6">
 	            {{ Form::label('start','Start',array('id'=>'','class'=>'')) }}
-	            {{ Form::select('start', $timetable->getSlotsArray(), null, array('id'=>'editTimetableStart','class'=>'form-control')) }}
+	            {{ Form::select('start', $timetable->getAvailableTimes(), null, array('id'=>'editTimetableStart','class'=>'form-control')) }}
 	          </div>
 	          <div class="form-group col-lg-12">
 	            {{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}

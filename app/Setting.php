@@ -73,6 +73,30 @@ class Setting extends Model
         return $setting;
     }
 
+    public static function getOrgFavicon()
+    {
+        return self::where('setting', 'org_favicon')->first()->value;
+    }
+
+    public static function setOrgFavicon($favicon)
+    {
+        Storage::delete(self::getOrgFavicon());
+      
+        $path = str_replace(
+            'public/',
+            '/storage/',
+            Storage::put(
+              'public/images/main',
+              $favicon
+            )
+        );
+
+        $setting = self::where('setting', 'org_favicon')->first();
+        $setting->value = $path;
+        $setting->save();
+        return $setting;
+    }
+
     public static function getTermsAndConditions()
     {
         return self::where('setting', 'terms_and_conditions')->first()->value;

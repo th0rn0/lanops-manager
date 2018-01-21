@@ -8,7 +8,7 @@
       <div class="well well-sm">
         <div class="row">
           <div class="col-sm-2 col-xs-12" style="">
-            <img src="{{$tournament->igdb_game_cover_image}}" class="img-responsive img-rounded img-thumbnail">
+            <img src="{{$tournament->game_cover_image_path}}" class="img-responsive img-rounded img-thumbnail">
           </div>
           <div class="col-sm-10 col-xs-12" >
             <div class="block">

@@ -18,7 +18,7 @@ class CreateEventInformationTable extends Migration
             $table->integer('event_id')->unsigned()->index();
             $table->string('title');
             $table->string('text', 1000);
-            $table->string('image', 1000)->nullable();
+            $table->string('image_path', 1000)->nullable();
             $table->timestamps();
 
             ## Foreign Keys

@@ -59,7 +59,7 @@
     </div>
     @foreach($event->sponsors as $sponsor)
       <a href="{{$sponsor->website}}">
-        <img class="img-responsive img-rounded" src="{{$sponsor->logo}}"/>
+        <img class="img-responsive img-rounded" src="{{$sponsor->image_path}}"/>
       </a>
     @endforeach
   @endif
@@ -115,13 +115,13 @@
         </thead>
         <tbody>
           @foreach($timetable->data as $slot)
-            @if($slot->slot != NULL && $slot->desc != NULL)
+            @if($slot->name != NULL && $slot->desc != NULL)
               <tr>
                 <td>
-                  {{ date("D", strtotime($slot->slot_timestamp)) }} - {{ date("H:i", strtotime($slot->slot_timestamp)) }}
+                  {{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
                 </td>
                 <td>
-                  {{ $slot->slot }}
+                  {{ $slot->name }}
                 </td>
                 <td>
                   {{ $slot->desc }}
@@ -162,9 +162,9 @@
               </div>
               <div class="panel-body">
                 <div class="col-sm-4 col-xs-12">
-                  @if(isset($tournament->game_cover_image))
+                  @if(isset($tournament->game_cover_image_path))
                     <a href="/events/{{$event->slug}}/tournaments/{{$tournament->slug}}">
-                      <img class="img-responsive img-rounded" src="{{ $tournament->game_cover_image }}">
+                      <img class="img-responsive img-rounded" src="{{ $tournament->game_cover_image_path }}">
                     </a>
                     <hr>
                   @endif

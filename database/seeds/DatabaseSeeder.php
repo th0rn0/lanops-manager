@@ -55,6 +55,11 @@ class DatabaseSeeder extends Seeder
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
+            'setting'   => 'org_favicon',
+            'value'     => env('ORG_FAVICON', '/storage/images/main/favicon.png'),
+            'default'   => true,
+        ]);
+        factory(App\Setting::class)->create([
             'setting'   => 'terms_and_conditions',
             'value'     => 'these are Terms & Conditions',
             'default'   => true,

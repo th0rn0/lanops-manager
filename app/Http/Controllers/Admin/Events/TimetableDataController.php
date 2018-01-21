@@ -30,11 +30,11 @@ class TimetableDataController extends Controller
 	 */
 	public function store(Event $event, EventTimetable $timetable, Request $request)
   	{
-	    $data = new EventTimetableData;
-	    $data->event_timetable_id = $timetable->id;
-	    $data->slot_timestamp = $request->start;
-	    $data->slot = $request->game;
-	    $data->desc = $request->desc;
+	    $data 						= new EventTimetableData;
+	    $data->event_timetable_id 	= $timetable->id;
+	    $data->start_time 			= $request->start;
+	    $data->name 				= $request->game;
+	    $data->desc 				= $request->desc;
 	    
 	    if (!$data->save()) {
 			Session::flash('alert-danger', 'Cannot save!');
@@ -54,9 +54,9 @@ class TimetableDataController extends Controller
      */
     public function update(Event $event, EventTimetable $timetable, EventTimetableData $data, Request $request)
     {
-	    $data->slot_timestamp = $request->start;
-    	$data->slot = $request->game;
-	    $data->desc = $request->desc;
+	    $data->start_time 	= $request->start;
+    	$data->name 		= $request->game;
+	    $data->desc 		= $request->desc;
 
 		if (!$data->save()) {
 			Session::flash('alert-danger', 'Cannot save!');

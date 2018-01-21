@@ -24,6 +24,16 @@ class Settings
 		return \App\Setting::setOrgLogo($logo);
 	}
 
+	public static function getOrgFavicon()
+	{
+		return \App\Setting::getOrgFavicon();
+	}
+
+	public static function setOrgFavicon($favicon)
+	{
+		return \App\Setting::setOrgFavicon($logo);
+	}
+
 	public static function getTermsAndConditions()
 	{
 		return \App\Setting::getTermsAndConditions();

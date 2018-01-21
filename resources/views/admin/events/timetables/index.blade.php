@@ -45,7 +45,7 @@
               @foreach($event->timetables as $timetable)
                 <tr>
                   <td>
-                    {{ $timetable->display_name }}
+                    {{ $timetable->name }}
                   </td>
                   <td>
                     {{ $timetable->status }}

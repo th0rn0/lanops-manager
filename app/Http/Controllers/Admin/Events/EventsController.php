@@ -135,6 +135,7 @@ class EventsController extends Controller
 		$event->desc_short        = $request->desc_short;
 		$event->status            = @$request->status;
 		$event->allow_spectators  = false;
+		
 		if (isset($request->allow_spec)) {
 			$event->allow_spectators = true;
 		}

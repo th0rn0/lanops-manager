@@ -28,9 +28,8 @@ class TimetablesController extends Controller
 	 */
 	public function index(Event $event)
 	{
-		$event->load('timetables');
 		foreach($event->timetables as $timetable){
-			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('slot_timestamp', 'asc')->get();
+			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
 		return view('admin.events.timetables.index')->withEvent($event);
 	}
@@ -54,10 +53,10 @@ class TimetablesController extends Controller
 	 */
 	public function store(Event $event, Request $request)
 	{
-		$timetable                = new EventTimetable;
-		$timetable->display_name  = $request->name;
-		$timetable->slug          = strtolower(str_replace(' ', '-', $request->name));
-		$timetable->event_id      = $event->id;
+		$timetable              = new EventTimetable;
+		$timetable->name  		= $request->name;
+		$timetable->slug        = strtolower(str_replace(' ', '-', $request->name));
+		$timetable->event_id 	= $event->id;
 
 		if (!$timetable->save()) {
 			Session::flash('alert-danger', 'Could not Save!');
@@ -84,10 +83,10 @@ class TimetablesController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		$timetable->display_name  = $request->name;
-		$timetable->slug          = strtolower(str_replace(' ', '-', $request->name));
-		$timetable->status        = $request->status;
-		$timetable->primary       = ($request->primary ? true : false);
+		$timetable->name  		= $request->name;
+		$timetable->slug        = strtolower(str_replace(' ', '-', $request->name));
+		$timetable->status 		= $request->status;
+		$timetable->primary 	= ($request->primary ? true : false);
 
 		if (!$timetable->save()) {
 			Session::flash('alert-danger', 'Could not Save!');

@@ -12,21 +12,30 @@ use App\EventTimetable;
 use App\EventTimetableData;
 use DateTime;
 
-
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class TimetablesController extends Controller
 {
-	public function all(Event $event)
+
+	/**
+	 * Show all Timetables
+	 * @param  Event  $event
+	 * @return EventTimetables       
+	 */
+	public function index(Event $event)
 	{
-		$event->load('timetables.data');
 		return $event->timetables;
 	}
+
+	/**
+	 * Show a Specific Timetable
+	 * @param  Event          $event    
+	 * @param  EventTimetable $timetable
+	 * @return EventTimetable
+	 */
 	public function show(Event $event, EventTimetable $timetable)
 	{
-		$timetable->load('data');
 		return $timetable;
 	}
 }

@@ -33,10 +33,10 @@ class PaymentsController extends Controller
 	 */
 	public function review()
 	{
-	  if (!Session::get('basket')) {
+	  if (!$basket = Session::get('basket')) {
 		return Redirect::to('/');
 	  }
-	  return view('payments.review')->withBasketItems(Helpers::getBasketFormat(Session::get('basket'), true));
+	  return view('payments.review')->withBasketItems(Helpers::getBasketFormat($basket, true))->withBasketTotal(Helpers::getBasketTotal($basket));
 	}
 	
 	/**
@@ -46,7 +46,7 @@ class PaymentsController extends Controller
 	 */
 	public function post(Request $request)
 	{
-		if (!Session::get('basket')) {
+		if (!$basket = Session::get('basket')) {
 			Session::flash('alert-danger', 'No Basket was found. Please try again');
 			return Redirect::back();
 		}
@@ -54,24 +54,14 @@ class PaymentsController extends Controller
 			$this->sandbox = TRUE;
 	  	}
 
-		//Get Ticket Details - Move this to ticketsController? PaymentController should just be payments
-		$total = 0;
-		foreach (Session::get('basket') as $ticket_id => $quantity) {
-			$ticket = EventTicket::where('id', $ticket_id)->first();
-			for ($i=1; $i <= $quantity; $i++) { 
-				$tickets[] = ['id' => $ticket_id, 'price' => $ticket->price];
-				$total += $ticket->price;
-			}
-		}
-
 		//Paypal Post Params
 		$params = array(
 			'cancelUrl'     => 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=cancel',
 			'returnUrl'     => 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=return', 
 			'name'          => Settings::getOrgName() . ' - Tickets Purchase',
 			'description'   => 'Ticket Purchase for ' . Settings::getOrgName(), 
-			'amount'        => (float)$total,
-			'quantity'      => (string)count($tickets),
+			'amount'        => (float)Helpers::getBasketTotal($basket),
+			'quantity'      => (string)count($basket),
 			'currency'      => Settings::getCurrency(),
 			'user_id'       => Auth::id(),
 		);

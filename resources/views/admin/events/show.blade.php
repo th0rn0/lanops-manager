@@ -168,9 +168,9 @@
                     <div class="row">
                       <div class="form-group col-lg-6">
                         {{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
-                        @if(isset($section->image))
+                        @if(isset($section->image_path))
                           <center>
-                            <img class="img-responsive img-thumbnail" src="{{ $section->image }}" />
+                            <img class="img-responsive img-thumbnail" src="{{ $section->image_path }}" />
                           </center>
                         @endif
                       </div>  
@@ -274,7 +274,7 @@
             @foreach ($event->sponsors as $sponsor)
               <a href="/admin/tickets/{{ $ticket->id }}" class="list-group-item">
                 <i class="fa fa-pencil fa-fw"></i> {{ $sponsor->name }} - {{ ucwords($sponsor->website) }}
-                <img class="img-responsive img-thumbnail" src="{{ $sponsor->logo }}" />
+                <img class="img-responsive img-thumbnail" src="{{ $sponsor->image_path }}" />
               </a>
             @endforeach
           </div>

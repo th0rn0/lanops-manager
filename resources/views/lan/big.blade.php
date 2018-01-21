@@ -25,13 +25,13 @@
         </thead>
         <tbody>
           @foreach($timetable->data as $slot)
-            @if($slot->slot != NULL && $slot->desc != NULL)
+            @if($slot->name != NULL && $slot->desc != NULL)
               <tr>
                 <td>
-                  {{ date("D", strtotime($slot->slot_timestamp)) }} - {{ date("H:i", strtotime($slot->slot_timestamp)) }}
+                  {{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
                 </td>
                 <td>
-                  {{ $slot->slot }}
+                  {{ $slot->name }}
                 </td>
                 <td>
                   {{ $slot->desc }}

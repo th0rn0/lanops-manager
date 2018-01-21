@@ -8,6 +8,15 @@ Route::post('/steamlogin/register/{user}', 'AuthController@store');
 
 Route::group(['middleware' => ['web']], function () {
 
+	// API ROUTES
+	//Timetables
+	Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
+	Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
+
+
+
+
+
 	//Login
 	Route::get('/steamlogin', 'AuthController@login');
 	Route::group(['middleware' => ['auth']], function () {
@@ -41,9 +50,7 @@ Route::group(['middleware' => ['web']], function () {
 	//Participants - API?
 	Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
 
-	//Timetables - API?
-	Route::get('/events/{event}/timetable', 'Events\TimetablesController@all');
-	Route::get('/events/{event}/timetable/{timetable}', 'Events\TimetablesController@show');
+	
 
 	//Misc
 	Route::get('/about', 'HomeController@about');

@@ -46,7 +46,7 @@ class EventsController extends Controller
 		}
 
 		foreach ($event->timetables as $timetable) {
-			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('slot_timestamp', 'asc')->get();
+			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
 		//Get this users participant details if logged in
 		$user = Auth::user();

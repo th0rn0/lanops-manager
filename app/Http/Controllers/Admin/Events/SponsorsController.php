@@ -33,7 +33,7 @@ class SponsorsController extends Controller
 		$sponsor->event_id = $event_id;
 		$sponsor->name = $request->sponsor_name;
 		if($request->file('sponsor_image') !== NULL){
-			$sponsor->logo = str_replace(
+			$sponsor->image_path = str_replace(
 				'public/', 
 				'/storage/', 
 				Storage::put('public/images/events/' . $event->slug . '/sponsors', 

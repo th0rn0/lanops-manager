@@ -109,7 +109,7 @@ class TournamentsController extends Controller
 		$tournament->status                     = 'DRAFT';
 
 		if($request->file('image') !== NULL){
-			$tournament->game_cover_image = str_replace(
+			$tournament->game_cover_image_path = str_replace(
 				'public/', 
 				'/storage/', 
 				Storage::put(

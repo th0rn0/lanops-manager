@@ -15,6 +15,28 @@
 
 <div class="row">
   <div class="col-lg-6 col-xs-12">
+    <!-- Name & Logo -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-wrench fa-fw"></i> Name & Logo
+      </div>
+      <div class="panel-body">
+        {{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+          <div class="form-group">
+            {{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
+            {{ Form::text('org_name', $settings->where('setting', 'org_name')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+          </div>
+          <div class="form-group">
+            @if (trim($settings->where('setting', 'org_logo')->first()->value) != '')
+              <img class="img img-responsive" src="{{ $settings->where('setting', 'org_logo')->first()->value }}" />
+            @endif
+            {{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
+            {{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        {{ Form::close() }}
+      </div>
+    </div>
     <!-- Main -->
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -81,28 +103,6 @@
           <div class="form-group">
             {{ Form::label('terms_and_conditions','Main',array('id'=>'','class'=>'')) }}
             {{ Form::textarea('terms_and_conditions', $settings->where('setting', 'terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control')) }}
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        {{ Form::close() }}
-      </div>
-    </div>
-    <!-- Name & Logo -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-wrench fa-fw"></i> Name & Logo
-      </div>
-      <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-          <div class="form-group">
-            {{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-            {{ Form::text('org_name', $settings->where('setting', 'org_name')->first()->value ,array('id'=>'','class'=>'form-control')) }}
-          </div>
-          <div class="form-group">
-            @if (trim($settings->where('setting', 'org_logo')->first()->value) != '')
-              <img class="img img-responsive" src="{{ $settings->where('setting', 'org_logo')->first()->value }}" />
-            @endif
-            {{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
-            {{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         {{ Form::close() }}

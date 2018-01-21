@@ -122,4 +122,14 @@ class Helpers
 		}
 		return $return;
 	}
+
+	public static function getBasketTotal($basket)
+	{
+		$return = 0;
+		foreach ($basket as $ticket_id => $quantity) {
+			$ticket = \App\EventTicket::where('id', $ticket_id)->first();
+			$return += ($ticket->price * $quantity);
+		}
+		return $return;
+	}
 }

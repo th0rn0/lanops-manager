@@ -159,7 +159,7 @@
   @if(!$event->seatingPlans->isEmpty())
     <div class="page-header">
       <a name="seating"></a>
-      <h3>Seating Plans <small>- unseatedtickets / total seatable tickets remaining</small></h3>
+      <h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
     </div>
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
       @foreach($event->seatingPlans as $seating_plan)
@@ -167,7 +167,7 @@
           <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
               <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seating_plan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seating_plan->slug }}">
-                {{ $seating_plan->name }} <small>- Number of seated seats here</small>
+                {{ $seating_plan->name }} <small>- {{ ($seating_plan->columns * $seating_plan->rows) - $seating_plan->seats->count() }} / {{ $seating_plan->columns * $seating_plan->rows }} Available</small>
               </a>
             </h4>
           </div>
@@ -310,7 +310,7 @@
     </div>
     @foreach($event->sponsors as $sponsor)
       <a href="{{$sponsor->website}}">
-        <img class="img-responsive img-rounded" src="{{$sponsor->logo}}"/>
+        <img class="img-responsive img-rounded" src="{{$sponsor->image_path}}"/>
       </a>
     @endforeach
   @endif
@@ -324,11 +324,11 @@
     @foreach($event->information as $section)
       <div class="row">
         @if($x % 2 == 0)
-          @if(isset($section->image))
+          @if(isset($section->image_path))
             <div class="col-sm-4 visible-xs">
               <h3><small>{{$section->title}}</small></h3>
               <center>
-                <img class="img-responsive img-rounded" src="{{$section->image}}" />
+                <img class="img-responsive img-rounded" src="{{$section->image_path}}" />
               </center>
             </div>
             <div class="col-sm-8">
@@ -338,7 +338,7 @@
             <div class="col-sm-4 hidden-xs">
               @if(isset($section->image))
                 <center>
-                  <img class="img-responsive img-rounded" src="{{$section->image}}" />
+                  <img class="img-responsive img-rounded" src="{{$section->image_path}}" />
                 </center>
               @endif
             </div>
@@ -349,11 +349,11 @@
             </div>
           @endif
         @else
-          @if(isset($section->image))
+          @if(isset($section->image_path))
             <div class="col-sm-4">
               <h3 class="visible-xs"><small>{{$section->title}}</small></h3>
               <center>
-                <img class="img-responsive img-rounded" src="{{$section->image}}" />
+                <img class="img-responsive img-rounded" src="{{$section->image_path}}" />
               </center>
             </div>
             <div class="col-sm-8">
@@ -397,13 +397,13 @@
         </thead>
         <tbody>
           @foreach($timetable->data as $slot)
-            @if($slot->slot != NULL && $slot->desc != NULL)
+            @if($slot->name != NULL && $slot->desc != NULL)
               <tr>
                 <td>
-                  {{ date("D", strtotime($slot->slot_timestamp)) }} - {{ date("H:i", strtotime($slot->slot_timestamp)) }}
+                  {{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
                 </td>
                 <td>
-                  {{ $slot->slot }}
+                  {{ $slot->name }}
                 </td>
                 <td>
                   {{ $slot->desc }}

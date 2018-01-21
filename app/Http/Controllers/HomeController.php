@@ -74,7 +74,7 @@ class HomeController extends Controller
 		$event->load('eventParticipants.user');
 		$event->load('timetables');
 		foreach($event->timetables as $timetable){
-			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('slot_timestamp', 'asc')->get();
+			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
 
 		foreach($event->tournaments as $tournament){

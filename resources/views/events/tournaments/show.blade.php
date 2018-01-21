@@ -7,9 +7,9 @@
     <div class="row">
       <div class="jumbotron">
         <div class="row">
-          @if($tournament->game_cover_image != null)
+          @if($tournament->game_cover_image_path != null)
             <div class="col-sm-2 col-xs-12">
-              <img src="{{$tournament->game_cover_image}}" class="img-responsive img-rounded img-thumbnail">
+              <img src="{{$tournament->game_cover_image_path}}" class="img-responsive img-rounded img-thumbnail">
             </div>
             <div class="col-sm-10 col-xs-12" >
           @else
