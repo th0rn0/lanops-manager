@@ -109,7 +109,6 @@ class AuthController extends Controller
 	 */
 	public function update(Request $request, User $user)
 	{
-		//- Validation
 		$this->validate($request, [
 				'fistname' => 'string',
 				'surname' => 'string',
