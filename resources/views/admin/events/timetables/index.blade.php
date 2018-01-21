@@ -51,12 +51,12 @@
                     {{ $timetable->status }}
                   </td>
                   <td width="15%">
-                    <a href="/admin/events/{{ $event->slug }}/timetables/{{ $timetable->id }}">
+                    <a href="/admin/events/{{ $event->slug }}/timetables/{{ $timetable->slug }}">
                       <button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
                     </a>
                   </td>
                   <td width="15%">
-                    {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+                    {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
                       {{ Form::hidden('_method', 'DELETE') }}
                       <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                     {{ Form::close() }}

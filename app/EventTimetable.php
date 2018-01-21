@@ -37,15 +37,6 @@ class EventTimetable extends Model
         }
     }
     
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
-
     /*
      * Relationships
      */
@@ -58,9 +49,28 @@ class EventTimetable extends Model
        return $this->hasMany('App\EventTimetableData');
     }
 
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     /**
      * Get Available Time slots for timetable
-     * @param  boolean $obj [Return as Object]
+     * @param  boolean $obj
      * @return Array
      */
     public function getAvailableTimes($obj = false)

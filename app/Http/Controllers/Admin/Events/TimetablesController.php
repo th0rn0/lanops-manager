@@ -63,7 +63,7 @@ class TimetablesController extends Controller
 			return Redirect::back();
 		}
 		Session::flash('alert-success', 'Successfully Saved!');
-		return Redirect::to('admin/events/' . $event->slug . '/timetables/' . $timetable->id);
+		return Redirect::to('admin/events/' . $event->slug . '/timetables/' . $timetable->slug);
 	}
 
 	/**
