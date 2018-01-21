@@ -43,24 +43,12 @@ class TournamentsController extends Controller
 
 	/**
 	 * Show Tournaments Page
-	 * @param  $eventSlug
-	 * @param  $tournamentSlug
+	 * @param  Event 			$event
+	 * @param  EventTournament 	$tournament
 	 * @return View
 	 */
-	public function show($eventSlug, $tournamentSlug)
+	public function show(Event $event, EventTournament $tournament)
 	{
-		if (!is_numeric($eventSlug)) {
-		  $event = Event::where('slug', $eventSlug)->first();
-		} else {
-		  $event = Event::where('id', $eventSlug)->first();
-		}
-
-		if (!is_numeric($tournamentSlug)) {
-		  $tournament = EventTournament::where('slug', $tournamentSlug)->first();
-		} else {
-		  $tournament = EventTournament::where('id', $tournamentSlug)->first();
-		}
-
 		return view('admin.events.tournaments.show')->withEvent($event)->withTournament($tournament);
 	}
    

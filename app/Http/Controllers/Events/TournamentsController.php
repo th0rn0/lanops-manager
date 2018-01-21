@@ -41,26 +41,17 @@ class TournamentsController extends Controller
 
 	/**
 	 * Show Tournaments Page
-	 * @param  $event_slug 
-	 * @param  $tournament_slug
-	 * @param  Request $request
+	 * @param  Event 			$event 
+	 * @param  EventTournament 	$tournament
+	 * @param  Request 			$request
 	 * @return View
 	 */
-	public function show($event_slug, $tournament_slug, Request $request)
+	public function show(Event $event, EventTournament $tournament, Request $request)
 	{
 		$signed_in = true;
-		$user = Auth::user();
-		if (!is_numeric($event_slug)) {
-			$event = Event::where('slug', $event_slug)->first();
-		} else {
-			$event = Event::where('id', $event_slug)->first();
+		if (!$user = Auth::user()) {
+			Redirect::to('/');
 		}
-		if (!is_numeric($tournament_slug)) {
-			$tournament = EventTournament::where('slug', $tournament_slug)->first();
-		} else {
-			$tournament = EventTournament::where('id', $tournament_slug)->first();
-		}
-
 		$user->setActiveEventParticipant($event->id);
 		if (!isset($user->active_event_participant)) {
 			Session::flash('alert-danger', 'Please sign in with one of our Admins.');
@@ -141,9 +132,9 @@ class TournamentsController extends Controller
 			return Redirect::to('/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 		}
 
-		$tournament_team = new EventTournamentTeam();
-		$tournament_team->event_tournament_id = $tournament->id;
-		$tournament_team->name = $request->team_name;
+		$tournament_team 						= new EventTournamentTeam();
+		$tournament_team->event_tournament_id 	= $tournament->id;
+		$tournament_team->name 					= $request->team_name;
 
 		$tournament_team->save();
 

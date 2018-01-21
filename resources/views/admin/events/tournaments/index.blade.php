@@ -56,7 +56,7 @@
                     </a>
                   </td>
                   <td width="15%">
-                    {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+                    {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
                       {{ Form::hidden('_method', 'DELETE') }}
                       <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                     {{ Form::close() }}

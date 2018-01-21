@@ -93,7 +93,7 @@ class SeatingController extends Controller
 			return Redirect::back();
 		}
 		Session::flash('alert-success', 'Successfully saved!');
-		return Redirect::to('admin/events/' . $event->slug . '/seating/' . $seating_plan->id);
+		return Redirect::to('admin/events/' . $event->slug . '/seating/' . $seating_plan->slug);
 	}
 
 	/**

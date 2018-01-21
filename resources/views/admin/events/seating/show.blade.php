@@ -130,7 +130,7 @@
         <i class="fa fa-wrench fa-fw"></i> Settings
       </div>
       <div class="panel-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->id, 'files' => 'true')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->slug, 'files' => 'true')) }}
           <div class="row">
             <div class="col-lg-6 col-sm-12 form-group">
               {{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
@@ -201,7 +201,7 @@
         <h4 class="modal-title" id="editSeatingModalLabel">Edit Seating</h4>
       </div>
       <div class="modal-body">
-        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->id . '/seat')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->slug . '/seat')) }}
           <div class="form-group">
             {{ Form::label('seat_number_modal','Seat Number',array('id'=>'','class'=>'')) }}
             {{ Form::text('seat_number_modal', null, array('id'=>'seat_number_modal','class'=>'form-control')) }}
@@ -218,7 +218,7 @@
           </a>
           <button type="submit" class="btn btn-default">Save Changes</button>
         {{ Form::close() }}
-        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->id . '/seat', 'id'=>'clear_seat_form')) }}
+        {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->slug . '/seat', 'id'=>'clear_seat_form')) }}
           <hr>
           {{ Form::hidden('_method', 'DELETE') }}
           {{ Form::hidden('seat_number', null, array('id'=>'seat_number')) }}

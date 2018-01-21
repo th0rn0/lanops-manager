@@ -211,7 +211,7 @@
 																	<button 
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
-																			'{{ $seating_plan->id }}',
+																			'{{ $seating_plan->slug }}',
 																			'{{ ucwords($headers[$column]) . $row }}'
 																		)"
 																		data-toggle="modal"
@@ -246,7 +246,7 @@
 									@if(!$user->eventParticipation->isEmpty())
 										@foreach($user->eventParticipation as $participant) 
 											@if($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
-												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->id)) }}
+												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
 													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 
@@ -545,12 +545,12 @@
 </div>
 
 <script>
-	function pickSeat(seating_plan_id, seat)
+	function pickSeat(seating_plan_slug, seat)
 	{
 		$("#seat_number_modal").val(seat);
 		$("#seat_modal").val(seat);
 		$("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
-		$("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_id);
+		$("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
 	}
 </script>
 
