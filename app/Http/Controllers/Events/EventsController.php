@@ -18,22 +18,21 @@ use Illuminate\Support\Facades\Redirect;
 
 class EventsController extends Controller
 {
-	/* View All Event.
-	*
-	* @param  \App
-	* @return status
-	*/
-	public function all()
+	/**
+	 * Show Events Index Page
+	 * @return View
+	 */
+	public function index()
 	{
 		$events = Event::all();
 		return view('events.index')->withEvents($events);
 	}
-	/* View Specific Event.
-	*
-	* @param  \App\Event  $event
-	* @param  \App
-	* @return status
-	*/
+	
+	/**
+	 * Show Event Page
+	 * @param  $slug
+	 * @return View
+	 */
 	public function show($slug)
 	{
 		if (!is_numeric($slug)) {
@@ -44,28 +43,14 @@ class EventsController extends Controller
 		if (!$event) {
 			return Redirect::to('/');
 		}
-
 		foreach ($event->timetables as $timetable) {
 			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
-		//Get this users participant details if logged in
 		$user = Auth::user();
 		if ($user) {
 			$clauses = ['user_id' => $user->id, 'event_id' => $event->id]; 
 			$user->eventParticipation = EventParticipant::where($clauses)->get();
 		}
-		//Determine whether the user has a ticket for this event
-		$ticket_flag = false;
-		if ($user) {
-			if ($user->eventParticipation != null || isset($user->eventParticipation)) {
-				foreach ($user->eventParticipation as $participant) {
-					if ($participant->event_id == $event->id) {
-						$ticket_flag = true;
-					} 
-				}
-			}
-		}
-		return view('events.show')->withEvent($event)->withTicketFlag($ticket_flag);
-
+		return view('events.show')->withEvent($event);
 	}
 }
