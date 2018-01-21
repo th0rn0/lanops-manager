@@ -54,7 +54,7 @@ class AuthController extends Controller
 						Auth::login($user, true);
 						return redirect('/steamlogin/register/' . $user->id); // redirect to site
 					}
-				}else{
+				} else {
 					$user = User::create([
 							'steamname' => $info->personaname,
 							'avatar'    => $info->avatarfull,
@@ -75,7 +75,7 @@ class AuthController extends Controller
 	 */
 	public function register(User $user)
 	{
-		if(!is_null($user->email)){
+		if (!is_null($user->email)) {
 			return redirect('/'); // redirect to site 
 		} else {
 			return view('login.steam.register')->withUser($user);  
@@ -89,10 +89,10 @@ class AuthController extends Controller
 	 */
 	public function store(Request $request, User $user)
 	{
-		if(is_null($user->username) && !is_null($user->steamid)){
+		if (is_null($user->username) && !is_null($user->steamid)) {
 			$user->username = $request->username;
 			$user->username_nice = strtolower($request->username);
-			if(User::count() >= 1) {
+			if (User::count() >= 1) {
 				$user->admin = true;
 			}
 			$user->save();
@@ -117,7 +117,7 @@ class AuthController extends Controller
 		$user->surname = $request->surname;
 		$user->username = $request->username;
 		$user->username_nice = strtolower(str_replace(' ', '-', $request->username));
-		if($user->save()){
+		if ($user->save()) {
 			return Redirect('/account');
 		}
 		Auth::logout();

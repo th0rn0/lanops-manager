@@ -49,7 +49,7 @@ class GalleryController extends Controller
 	 */
 	public function show($slug)
 	{
-		if(!is_numeric($slug)){
+		if (!is_numeric($slug)) {
 			$album = GalleryAlbum::where('slug', $slug)->first();
 		} else {
 			$album = GalleryAlbum::where('id', $slug)->first();

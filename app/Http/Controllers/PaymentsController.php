@@ -50,7 +50,7 @@ class PaymentsController extends Controller
 			Session::flash('alert-danger', 'No Basket was found. Please try again');
 			return Redirect::back();
 		}
-	  	if(env('APP_DEBUG')){
+	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
 	  	}
 
@@ -74,7 +74,7 @@ class PaymentsController extends Controller
 	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
 	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
 
-	  	if($this->sandbox){
+	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
 	  	} else {
 			$gateway->setTestMode(false);
@@ -120,7 +120,7 @@ class PaymentsController extends Controller
 	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
 	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
 
-	  	if($this->sandbox){
+	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
 	  	} else {
 			$gateway->setTestMode(false);
@@ -130,7 +130,7 @@ class PaymentsController extends Controller
 	  	$gateway->completePurchase($params)->send();
 	  	$response = $gateway->fetchCheckout($params)->send(); // this is the raw response object
  	 	$paypal_response = $response->getData();
-	  	if(isset($paypal_response['ACK']) && $paypal_response['ACK'] === 'Success' && isset($paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'])) {
+	  	if (isset($paypal_response['ACK']) && $paypal_response['ACK'] === 'Success' && isset($paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'])) {
 			//Add Purchase to database
 			$purchase 					= new Purchase;
 			$purchase->user_id 			= $params['user_id'];

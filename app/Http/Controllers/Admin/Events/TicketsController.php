@@ -96,11 +96,8 @@ class TicketsController extends Controller
 		$ticket->price      = $request->price;
 		$ticket->sale_start = @$saleStart;
 		$ticket->sale_end   = @$saleEnd;
-		$ticket->seatable   = false;
+		$ticket->seatable   = ($request->seatable ? true : false);
 		$ticket->quantity   = @$request->quantity;
-		if(@$ticket->seatable){
-			$ticket->seatable = true;
-		}
 
 		if(!$ticket->save()){
 			Session::flash('alert-danger', 'Cannot Create Ticket.');
