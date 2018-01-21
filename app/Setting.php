@@ -60,9 +60,10 @@ class Setting extends Model
         $path = str_replace(
             'public/',
             '/storage/',
-            Storage::put(
+            Storage::putFileAs(
               'public/images/main',
-              $logo
+              $logo,
+              'logo_main.png'
             )
         );
         $setting = self::where('setting', 'org_logo')->first();
@@ -82,9 +83,10 @@ class Setting extends Model
         $path = str_replace(
             'public/',
             '/storage/',
-            Storage::put(
+            Storage::putFileAs(
               'public/images/main',
-              $favicon
+              $favicon,
+              'favicon.ico'
             )
         );
         $setting = self::where('setting', 'org_favicon')->first();
