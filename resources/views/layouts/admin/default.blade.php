@@ -57,7 +57,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 
 	<script>
-
 		function ConfirmDelete()
 		{
 			var x = confirm("Are you sure you want to delete?");
@@ -97,7 +96,6 @@
 						@endforeach
 					</div>
 				@yield('content')
-
 			</div>
 		</div>    
 	</div>

@@ -1,23 +1,24 @@
 @extends('layouts.default')
 
-@section('page_title', 'Updating your Profile')
+@section('page_title', Settings::getOrgName() . ' Events List')
 
 @section('content')
-      
+			
 <div class="container">
-
-  @foreach ($events as $event)
-
-  	<div class="jumbotron">
-    	<h2><a href="/events/{{$event->id}}">{{$event->display_name}}</a></h2>
-  		<div class="event-information__from-date">
-     		<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Start Date: {{ $event->start }}				
+	@foreach ($events as $event)
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong><a href="/events/{{ $event->slug }}">{{ $event->display_name }}</a></strong>
 			</div>
-			<div class="event-information__to-date">
-  			<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> End Date: {{ $event->end }}
+			<div class="panel-body">
+				<h5>{{ $event->desc_short }}</h5>
+				<p>{{$event->desc_long}}</p>
+				<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
+				<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
+				<p class="bg-info  padding">Seating Capacity: {{ $event->getSeatingCapacity() }}</p>
 			</div>
-    </div>
-  @endforeach
+		</div>
+	@endforeach
 </div>
 
 @endsection
