@@ -127,19 +127,19 @@
 				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('about_main','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_main', $settings->where('setting', 'about_main')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::textarea('about_main', $settings->where('setting', 'about_main')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('about_short','Short',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_short', $settings->where('setting', 'about_short')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::textarea('about_short', $settings->where('setting', 'about_short')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('about_our_aim','Our Aim',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_our_aim', $settings->where('setting', 'about_our_aim')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::textarea('about_our_aim', $settings->where('setting', 'about_our_aim')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_who', $settings->where('setting', 'about_who')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::textarea('about_who', $settings->where('setting', 'about_who')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
