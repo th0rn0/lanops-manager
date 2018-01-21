@@ -14,17 +14,17 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="topbar-navigation">
 			<ul class="nav navbar-nav navbar-right">
-				@include('layouts._partials.tournaments-navigation')
+				@include ('layouts._partials.tournaments-navigation')
 
-				@include('layouts._partials.events-navigation')
+				@include ('layouts._partials.events-navigation')
 
 				<li><a href="/gallery">Gallery</a></li>
 
 				<li><a href="/about">About</a></li>
 
-				@if ( Auth::check() )
+				@if (Auth::check())
 
-					@include('layouts._partials.user-navigation')
+					@include ('layouts._partials.user-navigation')
 
 				@else
 					<li><a href="/steamlogin">Login</a></li>
@@ -36,11 +36,21 @@
 <div class="container" style="margin-top:70px;">
 	<div class='row'>
 		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-		  @if(Session::has('alert-' . $msg))
-		  	<p class="alert alert-{{ $msg }}">
-		  		<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			@if (Session::has('alert-' . $msg))
+				<p class="alert alert-{{ $msg }}">
+					<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				</p>
-		  @endif
+			@endif
 		@endforeach
+		@if ($errors->any())
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
 	</div>
+
 </div>

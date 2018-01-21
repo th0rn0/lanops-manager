@@ -98,7 +98,6 @@ class AuthController extends Controller
 			$user->save();
 			return $user;
 		}
-
 	}
 
 	/**
@@ -110,9 +109,9 @@ class AuthController extends Controller
 	public function update(Request $request, User $user)
 	{
 		$this->validate($request, [
-				'fistname' => 'string',
-				'surname' => 'string',
-				'username' =>   'unique:users,username',
+				'fistname' 	=> 'string',
+				'surname' 	=> 'string',
+				'username' 	=> 'unique:users,username',
 		]);
 		$user->firstname = $request->firstname;
 		$user->surname = $request->surname;
