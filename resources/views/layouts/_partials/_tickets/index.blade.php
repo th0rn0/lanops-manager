@@ -1,9 +1,9 @@
 <div class="panel panel-success">
 	<div class="panel-heading">
 		@if($participant->ticket)
-			<strong>{{ $participant->ticket->name }} @if($participant->ticket && $participant->ticket->seatable) - Seat: @if($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else Not Seated @endif @endif</strong>
+			<strong>{{ $participant->ticket->name }} @if($participant->ticket && $participant->ticket->seatable) - Seat: @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else Not Seated @endif @endif</strong>
 		@else
-			@if ($participant->staff)
+			@if($participant->staff)
 				<strong>Staff Ticket @if($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
 			@else
 				<strong>Free Ticket @if($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
@@ -20,7 +20,7 @@
 		<div class="row" style="display: flex; align-items: center;">
 			<div class="col-md-8 col-sm-8 col-xs-12">
 				@if($participant->gift != 1 && $participant->gift_accepted != 1)
-					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{$participant->id}}')" data-toggle="modal" data-target="#giftTicketModal">
+					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{ $participant->id }}')" data-toggle="modal" data-target="#giftTicketModal">
 						Gift Ticket
 					</button>
 				@endif
@@ -51,7 +51,7 @@
 				@endif
 			</div>
 			<div class="col-md-offset-2 col-md-2 col-sm-offset-2 col-sm-4 col-xs-12">
-				<img class="img img-responsive" src="/{{$participant->qrcode}}"/>
+				<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
 			</div>
 		</div>
 	</div>
