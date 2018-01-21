@@ -13,7 +13,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
 	Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
 
-
+	//Participants - API?
+	Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
 
 
 
@@ -39,18 +40,12 @@ Route::group(['middleware' => ['web']], function () {
 	//Index
 	Route::get('/', 'HomeController@index');
 
-	//Event Routes
-	Route::get('/events', 'Events\EventsController@all');
+	//Event
+	Route::get('/events', 'Events\EventsController@index');
 	Route::get('/events/{slug}', 'Events\EventsController@show');
 
 	Route::resource('/about', 'HomeController');
 	Route::resource('/notfound', 'HomeController');
-
-
-	//Participants - API?
-	Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
-
-	
 
 	//Misc
 	Route::get('/about', 'HomeController@about');
