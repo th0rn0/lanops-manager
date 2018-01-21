@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use Faker\Factory as Faker;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         ## House Cleaning
         \DB::table('events')->delete();
         \DB::table('event_tickets')->delete();
@@ -61,7 +65,7 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'terms_and_conditions',
-            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
@@ -106,22 +110,22 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_main',
-            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_short',
-            'value'     => Faker\Generator::sentences($nb = 2, $asText = true),
+            'value'     => $faker->paragraph($nbSentences = 4, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_our_aim',
-            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_who',
-            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
     }
