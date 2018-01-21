@@ -12,7 +12,8 @@
   </div>
   <div class="row">
     <div class="col-xs-12 col-md-8">
- 		<h4>Your Tickets are now active</h4>
+ 		<h3>Your Tickets are now active</h3>
+    <h4>You may now go to the <a href="/events/{{ $purchase->participants{0}->event->slug }}/#seating">Events Page and Book a Seat!</a></h4>
  		<p><strong>Purchase ID:</strong> {{ $purchase->id }}</p>
  		<p><strong>Payment Method:</strong> {{ $purchase->type }}</p>
  		<p><strong>Paypal Token:</strong> {{ $purchase->token }}</p>
