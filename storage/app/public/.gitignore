@@ -1,4 +1,4 @@
-*
+images/*
 !.gitignore
 !images/main/favicon.ico
 !images/main/logo_main.png
