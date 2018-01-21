@@ -4,32 +4,49 @@ namespace App\Libraries;
 
 class Helpers
 {
-	public static function getVenues()
+	public static function getVenues($obj = false)
 	{
 		$venues = \App\EventVenue::all();
-		$return_array = array();
+		$return = array();
 		foreach($venues as $venue){
-				$return_array[$venue->id] = $venue->display_name;
+				$return[$venue->id] = $venue->display_name;
 		}
-		return $return_array;
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
 	}
 
-	public static function getEvents($order = 'DESC', $limit = 0, $array = false)
+	public static function getEvents($order = 'DESC', $limit = 0, $obj = false)
 	{
 		if ($limit != 0) {
 			$events = \App\Event::orderBy('start', $order)->paginate($limit);
 		} else {
 			$events = \App\Event::orderBy('start', 'DESC')->get();
 		}
-		if ($array) {
-			$events_array[0] = 'None';
-			foreach($events as $event){
-				$events_array[$event->id] = $event->display_name;
-			}
-			$events = $events_array;
+		foreach ($events as $event) {
+			$return[$event->id] = $event;
 		}
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
+	}
 
-		return $events;
+	public static function getEventNames($order = 'DESC', $limit = 0, $obj = false)
+	{
+		if ($limit != 0) {
+			$events = \App\Event::orderBy('start', $order)->paginate($limit);
+		} else {
+			$events = \App\Event::orderBy('start', 'DESC')->get();
+		}
+		foreach ($events as $event) {
+			$return[$event->id] = $event->display_name;
+		}
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
 	}
 
 	public static function getEventTotal()
@@ -100,7 +117,6 @@ class Helpers
 		return $final_rank . 'th';
 	}
 
-	//DEBUG - Do array as default and object as param on ALL
 	public static function getBasketFormat($basket, $obj = false)
 	{
 		$return = array();

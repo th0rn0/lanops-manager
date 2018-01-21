@@ -143,7 +143,7 @@
                 {{ 
                   Form::select(
                     'event_id',
-                    Helpers::getEvents('DESC', 0, true),
+                    array_unshift(Helpers::getEventNames('DESC', 0), 'None'),
                     strtolower($album->event_id),
                     array(
                       'id'=>'event_id',

@@ -35,7 +35,7 @@
             </thead>
             <tbody>
               @foreach ($venues as $venue)
-                <tr class="table-row" data-href="/admin/venues/{{ $venue->id }}" class="odd gradeX">
+                <tr class="table-row" data-href="/admin/venues/{{ $venue->slug }}" class="odd gradeX">
                   <td>{{ $venue->display_name }}</td>
                   <td>
                     <address>
@@ -48,10 +48,10 @@
                     </address>
                   </td>
                   <td width="15%">
-                    <a href="/admin/venues/{{ $venue->id }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
+                    <a href="/admin/venues/{{ $venue->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
                   </td>
                   <td width="15%">
-                    {{ Form::open(array('url'=>'/admin/venues/' . $venue->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+                    {{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
                       {{ Form::hidden('_method', 'DELETE') }}
                       <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                     {{ Form::close() }}

@@ -39,7 +39,7 @@
       <li>
         <a href="/admin/events"><i class="fa fa-book fa-fw"></i> Events</a>
         <ul class="nav nav-second-level">
-          @foreach(Helpers::getEvents('DESC', 5) as $event)
+          @foreach (Helpers::getEvents('DESC', 5, true) as $event)
             <li>
               <a href="/admin/events/{{ $event->slug }}">
                 {{ $event->display_name }}

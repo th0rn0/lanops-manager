@@ -86,7 +86,7 @@ class VenuesController extends Controller
 			}
 		}
 	    Session::flash('alert-success', 'Successfully create venue!');
-	    return Redirect::to('admin/venues/' . $venue->id);
+	    return Redirect::to('admin/venues/' . $venue->slug);
 	}
 
 	/**
