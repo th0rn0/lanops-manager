@@ -31,7 +31,7 @@ class Settings
 
 	public static function setOrgFavicon($favicon)
 	{
-		return \App\Setting::setOrgFavicon($logo);
+		return \App\Setting::setOrgFavicon($favicon);
 	}
 
 	public static function getTermsAndConditions()

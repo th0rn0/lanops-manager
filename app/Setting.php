@@ -57,7 +57,6 @@ class Setting extends Model
     public static function setOrgLogo($logo)
     {
         Storage::delete(self::getOrgLogo());
-      
         $path = str_replace(
             'public/',
             '/storage/',
@@ -66,7 +65,6 @@ class Setting extends Model
               $logo
             )
         );
-
         $setting = self::where('setting', 'org_logo')->first();
         $setting->value = $path;
         $setting->save();
@@ -81,7 +79,6 @@ class Setting extends Model
     public static function setOrgFavicon($favicon)
     {
         Storage::delete(self::getOrgFavicon());
-      
         $path = str_replace(
             'public/',
             '/storage/',
@@ -90,7 +87,6 @@ class Setting extends Model
               $favicon
             )
         );
-
         $setting = self::where('setting', 'org_favicon')->first();
         $setting->value = $path;
         $setting->save();

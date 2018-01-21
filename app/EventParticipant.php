@@ -76,7 +76,7 @@ class EventParticipant extends Model
 		QrCode::format('png');
 		QrCode::size(300);
 		$ticket_url = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
-		$qr_code_path = 'storage/public/images/events/' . $this->event->slug . '/qr/';
+		$qr_code_path = 'storage/images/events/' . $this->event->slug . '/qr/';
 		$qr_code_file =  $this->event->slug . '-' . str_random(32) . '.png';
 		//Check if directory exists - if not create it
 		if (!file_exists($qr_code_path)) {

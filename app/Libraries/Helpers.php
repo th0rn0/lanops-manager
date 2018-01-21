@@ -60,8 +60,7 @@ class Helpers
 	public static function getEventParticipantTotal()
 	{
 		$participants = \App\EventParticipant::count();
-		//DEBUG - Put the offset as config variable
-		return 686 + $participants;
+		return Settings::getParticipantCountOffset() + $participants;
 	}
 
 	public static function getUserActiveTournaments($event_id)
