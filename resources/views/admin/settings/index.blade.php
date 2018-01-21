@@ -110,7 +110,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('terms_and_conditions','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('terms_and_conditions', $settings->where('setting', 'terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::textarea('terms_and_conditions', $settings->where('setting', 'terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}

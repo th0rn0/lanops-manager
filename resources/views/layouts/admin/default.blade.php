@@ -75,7 +75,9 @@
 				return false;
 		}
         $(document).ready(function() {
-            $('.wysiwyg-editor').summernote();
+            $('.wysiwyg-editor').summernote({
+              height:300,
+            });
         });
 	</script>
 
