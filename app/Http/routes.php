@@ -200,15 +200,9 @@ Route::group(['middleware' => ['web']], function () {
 
 		//Settings
 		Route::get('/admin/settings', 'Admin\SettingsController@index');
-		// Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
-		// Route::post('/admin/settings/about', 'Admin\SettingsController@updateAbout');
-		// Route::post('/admin/settings/terms', 'Admin\SettingsController@updateAbout');
-		// Route::post('/admin/settings/currency', 'Admin\SettingsController@updateAbout');
-		// Route::post('/admin/settings/namelogo', 'Admin\SettingsController@updateAbout');
-
 		Route::post('/admin/settings/', 'Admin\SettingsController@update');
-		//Route::delete('/admin/settings/{setting}', 'Admin\SettingsController@destroy');
 
+		Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 	});
 
 });

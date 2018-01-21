@@ -121,7 +121,6 @@ class AuthController extends Controller
 		if($user->save()){
 			return Redirect('/account');
 		}
-		//IF cannost be updated
 		Auth::logout();
 		return Redirect('/')->withError('Something went wrong. Please Try again later');
 	}

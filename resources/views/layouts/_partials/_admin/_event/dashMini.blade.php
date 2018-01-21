@@ -70,7 +70,7 @@
       </div>
       <a href="/admin/events/{{ $event->id }}/seating">
         <div class="panel-footer">
-          <span class="pull-left">View Seating Plan</span>
+          <span class="pull-left">View Seating Plans</span>
           <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
           <div class="clearfix"></div>
         </div>

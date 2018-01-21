@@ -132,24 +132,24 @@ class PaymentsController extends Controller
  	 	$paypal_response = $response->getData();
 	  	if(isset($paypal_response['ACK']) && $paypal_response['ACK'] === 'Success' && isset($paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'])) {
 			//Add Purchase to database
-			$purchase = new Purchase;
-			$purchase->user_id = $params['user_id'];
-			$purchase->type = 'PayPal Express';
-			$purchase->transaction_id = $paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'];
-			$purchase->token = $paypal_response['TOKEN'];
-			$purchase->status = $paypal_response['ACK'];
-			$purchase->paypal_email = $paypal_response['EMAIL'];
+			$purchase 					= new Purchase;
+			$purchase->user_id 			= $params['user_id'];
+			$purchase->type 			= 'PayPal Express';
+			$purchase->transaction_id 	= $paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'];
+			$purchase->token 			= $paypal_response['TOKEN'];
+			$purchase->status 			= $paypal_response['ACK'];
+			$purchase->paypal_email 	= $paypal_response['EMAIL'];
 			$purchase->save();
 		
 			foreach (Session::get('basket') as $ticket_id => $quantity) {
 				$ticket = EventTicket::where('id', $ticket_id)->first();
 		  		for ($i=1; $i <= $quantity; $i++) { 
 					//Add Participant to databade
-					$participant = new EventParticipant;
-					$participant->user_id = $params['user_id'];
-					$participant->event_id = $ticket->event->id;
-					$participant->ticket_id = $ticket->id;
-					$participant->purchase_id = $purchase->id;
+					$participant 				= new EventParticipant;
+					$participant->user_id 		= $params['user_id'];
+					$participant->event_id 		= $ticket->event->id;
+					$participant->ticket_id 	= $ticket->id;
+					$participant->purchase_id 	= $purchase->id;
 					$participant->generateQRCode();
 					$participant->save();
 		  		}
