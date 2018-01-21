@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'terms_and_conditions',
-            'value'     => 'these are Terms & Conditions',
+            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
             'value'     => null,
             'default'   => true,
         ]);
-         factory(App\Setting::class)->create([
+        factory(App\Setting::class)->create([
             'setting'   => 'facebook',
             'value'     => null,
             'default'   => true,
@@ -104,25 +104,24 @@ class DatabaseSeeder extends Seeder
             'value'     => 'GBP',
             'default'   => true,
         ]);
-
         factory(App\Setting::class)->create([
             'setting'   => 'about_main',
-            'value'     => 'About us Main Here.',
+            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_short',
-            'value'     => 'About us Short Here.',
+            'value'     => Faker\Generator::sentences($nb = 2, $asText = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_our_aim',
-            'value'     => 'About us Our Aim here.',
+            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_who',
-            'value'     => 'About us Whos who here.',
+            'value'     => Faker\Generator::sentences($nb = 5, $asText = true),
             'default'   => true,
         ]);
     }
