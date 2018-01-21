@@ -12,24 +12,14 @@ class EventTimetable extends Model
 {
     use Sluggable;
 
-    /**
-     * The name of the table.
-     *
-     * @var string
-     */
     protected $table = 'event_timetables';
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = array(
         'created_at',
         'updated_at'
     );
 
-     protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -47,16 +37,11 @@ class EventTimetable extends Model
         }
     }
     
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     public function sluggable()
     {
         return [
             'slug' => [
-                'source' => 'display_name'
+                'source' => 'name'
             ]
         ];
     }
@@ -73,15 +58,24 @@ class EventTimetable extends Model
        return $this->hasMany('App\EventTimetableData');
     }
 
-    function getSlotsArray()
+    /**
+     * Get Available Time slots for timetable
+     * @param  boolean $obj [Return as Object]
+     * @return Array
+     */
+    public function getAvailableTimes($obj = false)
     {
+        $return = array();
         $end_date = new \DateTime($this->event->end);
         $this_date = new \DateTime($this->event->start);
         while($this_date <= $end_date){
-            $return_array[$this_date->format('Y-m-d H:i:s')] = date("D", strtotime($this_date->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($this_date->format('Y-m-d H:i:s')));
+            $return[$this_date->format('Y-m-d H:i:s')] = date("D", strtotime($this_date->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($this_date->format('Y-m-d H:i:s')));
             $this_date->modify('+30 minutes');
         }
-        return $return_array;
+        if ($obj) {
+            return json_decode(json_encode($return), FALSE);
+        }
+        return $return;
     }
 
 }

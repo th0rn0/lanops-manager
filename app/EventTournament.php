@@ -41,7 +41,7 @@ class EventTournament extends Model
         'description', 
         'allow_player_teams', 
         'status',
-        'game_cover_image'
+        'game_cover_image_path'
     ];
 
     /**
