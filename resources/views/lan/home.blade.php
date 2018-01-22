@@ -31,8 +31,8 @@
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#information">Essential Information</a></li>
 					</ul>
-				</div><!--/.nav-collapse -->
-			</div><!--/.container-fluid -->
+				</div>
+			</div>
 		</nav>
 	</div>
 	<!-- SIGN IN TO EVENT -->

@@ -1,4 +1,4 @@
-@extends ('layouts.admin.default')
+@extends ('layouts.admin-default')
 
 @section ('page_title', 'Events')
 

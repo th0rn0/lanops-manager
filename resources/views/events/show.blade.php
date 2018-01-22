@@ -91,7 +91,7 @@
 					<a name="purchaseTickets"></a>
 					<h3>Purchase Tickets</h3>
 				</div>
-				@foreach($event->tickets as $ticket)
+				@foreach ($event->tickets as $ticket)
 					<div class="well well-sm col-lg-12" disabled>
 						<h3>{{$ticket->name}} @if ($event->getSeatingCapacity() <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
 						<div class="row" style="display: flex; align-items: center;">
@@ -162,7 +162,7 @@
 			<h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			@foreach($event->seatingPlans as $seating_plan)
+			@foreach ($event->seatingPlans as $seating_plan)
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
@@ -244,7 +244,7 @@
 								<div class="col-xs-12 col-md-4">
 									<h5>Your Seats</h5>
 									@if (!$user->eventParticipation->isEmpty())
-										@foreach($user->eventParticipation as $participant) 
+										@foreach ($user->eventParticipation as $participant) 
 											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
 												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
@@ -296,7 +296,7 @@
 			</address>
 		</div>
 		<div class="col-lg-5">
-			@foreach($event->venue->images as $image)
+			@foreach ($event->venue->images as $image)
 				<img class="img-responsive img-rounded" src="{{$image->path}}"/>
 			@endforeach
 		</div>
@@ -308,7 +308,7 @@
 			<a name="sponsors"></a>
 			<h3>{{$event->display_name}} is sponsored by</h3>
 		</div>
-		@foreach($event->sponsors as $sponsor)
+		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
 				<img class="img-responsive img-rounded" src="{{$sponsor->image_path}}"/>
 			</a>
@@ -321,7 +321,7 @@
 			<h3>And there's more...</h3>
 		</div>
 		@php($x = 0)
-		@foreach($event->information as $section)
+		@foreach ($event->information as $section)
 			<div class="row">
 				@if ($x % 2 == 0)
 					@if (isset($section->image_path))
@@ -379,7 +379,7 @@
 			<a name="timetable"></a>
 			<h3>Timetable</h3>
 		</div>
-		@foreach($event->timetables as $timetable)
+		@foreach ($event->timetables as $timetable)
 			@if (strtoupper($timetable->status) == 'DRAFT')
 				<h4>DRAFT</h4>
 			@endif
@@ -396,7 +396,7 @@
 					</th>
 				</thead>
 				<tbody>
-					@foreach($timetable->data as $slot)
+					@foreach ($timetable->data as $slot)
 						@if ($slot->name != NULL && $slot->desc != NULL)
 							<tr>
 								<td>
@@ -423,7 +423,7 @@
 	</div>
 	@if (Auth::user())
 		@if (!$user->eventParticipation->isEmpty())
-			@foreach($user->eventParticipation as $participant)
+			@foreach ($user->eventParticipation as $participant)
 				@include('layouts._partials._tickets.index')
 			@endforeach
 		@else
@@ -440,7 +440,7 @@
 			<h3>Tournaments</h3>
 		</div>
 		<div class="row">
-			@foreach($event->tournaments as $tournament)
+			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
 					<div class="col-sm-6 col-xs-12">
 						<div class="panel panel-default">
@@ -480,7 +480,7 @@
 			</th>
 		</thead>
 		<tbody>
-			@foreach($event->eventParticipants as $participant)
+			@foreach ($event->eventParticipants as $participant)
 			<tr>
 				<td>
 					<img class="img-responsive img-rounded img-small" style="max-width: 30%;" src="{{$participant->user->avatar}}">

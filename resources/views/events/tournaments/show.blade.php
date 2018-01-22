@@ -83,7 +83,7 @@
 
 		@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
 			<div class="alert alert-success text-center">
-				@foreach($tournament->challonge_participants as $challonge_participant)
+				@foreach ($tournament->challonge_participants as $challonge_participant)
 					<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h2>
 				@endforeach
 			</div>
@@ -103,7 +103,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($tournament->tournamentParticipants as $tournament_participant)
+							@foreach ($tournament->tournamentParticipants as $tournament_participant)
 								<tr>
 									<td>
 										<p style="padding-top:7px;"><img class="img-rounded" style="max-width: 4%;" src="{{$tournament_participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournament_participant->eventParticipant->user->steamname }}</p>
@@ -139,7 +139,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($tournament->tournamentParticipants as $tournament_participant)
+								@foreach ($tournament->tournamentParticipants as $tournament_participant)
 									@if ($tournament_participant->pug)
 										<tr>
 											<td>
@@ -182,14 +182,14 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($tournament->tournamentTeams as $tournament_team)
+								@foreach ($tournament->tournamentTeams as $tournament_team)
 									<tr>
 										<td>
 											<h4>{{ $tournament_team->name }}</h4>
 										</td>
 										<td>
 											<table class="table">
-												@foreach($tournament_team->tournamentParticipants as $participant)
+												@foreach ($tournament_team->tournamentParticipants as $participant)
 													<tr>
 														<td>  
 															<img class="img-rounded" style="max-width: 8%;" src="{{$participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->  steamname }}
