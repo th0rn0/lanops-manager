@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Session;
+
 use App\User;
 use App\Event;
 use App\EventTicket;
@@ -17,6 +16,8 @@ use App\EventParticipantType;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class TimetableDataController extends Controller
@@ -37,10 +38,10 @@ class TimetableDataController extends Controller
 	    $data->desc 				= $request->desc;
 	    
 	    if (!$data->save()) {
-			Session::flash('alert-danger', 'Cannot save!');
+			Session::flash('alert-danger', 'Cannot save Timetable Slot!');
 		    return Redirect::back();
 	    }
-	    Session::flash('alert-success', 'Successfully Saved!');
+	    Session::flash('alert-success', 'Successfully saved Timetable Slot!');
 	    return Redirect::back();
     }
 
@@ -59,10 +60,10 @@ class TimetableDataController extends Controller
 	    $data->desc 		= $request->desc;
 
 		if (!$data->save()) {
-			Session::flash('alert-danger', 'Cannot save!');
+			Session::flash('alert-danger', 'Cannot update Timetable Slot!');
 		    return Redirect::back();
 	    }
-	    Session::flash('alert-success', 'Successfully Saved!');
+	    Session::flash('alert-success', 'Successfully updated Timetable Slot!');
 	    return Redirect::back();
     }
 }

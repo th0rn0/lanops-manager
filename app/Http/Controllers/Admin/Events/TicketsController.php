@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Session;
 
@@ -16,6 +14,8 @@ use App\EventParticipantType;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class TicketsController extends Controller
@@ -50,26 +50,26 @@ class TicketsController extends Controller
 	public function store(Request $request, Event $event)
 	{
 		$rules = [
-			'name'            => 'required',
-			'price'           => 'required|numeric',
-			'sale_start_date' => 'date',
-			'sale_start_time' => 'date_format:H:i',
-			'sale_end_date'   => 'date',
-			'sale_end_time'   => 'date_format:H:i', 
-			'type'            => 'required',
-			'seatable'        => 'boolean',
-			'quantity'        => 'numeric',
+			'name'				=> 'required',
+			'price'				=> 'required|numeric',
+			'sale_start_date'	=> 'date',
+			'sale_start_time'	=> 'date_format:H:i',
+			'sale_end_date'		=> 'date',
+			'sale_end_time'		=> 'date_format:H:i', 
+			'type'				=> 'required',
+			'seatable'			=> 'boolean',
+			'quantity'			=> 'numeric',
 		];
 		$messages = [
-			'name|required'               => 'A Ticket Name is required',
-			'price|numeric'               => 'Price must be a number',
-			'price|required'              => 'A Price is required',
-			'sale_start_date|date'        => 'Sale dates must be valid Dates',
-			'sale_start_time|date_format' => 'Sale times must be valid Times HH:MM',
-			'sale_end_date|date'          => 'Sale dates must be valid Dates',
-			'sale_end_time|date_format'   => 'Sale times must be valid Times HH:MM',
-			'seatable|boolen'             => 'Seatable must be True/False',
-			'quantity|numeric'            => 'Quantity must be a number',
+			'name|required'					=> 'A Ticket Name is required',
+			'price|numeric'					=> 'Price must be a number',
+			'price|required'				=> 'A Price is required',
+			'sale_start_date|date'			=> 'Sale dates must be valid Dates',
+			'sale_start_time|date_format'	=> 'Sale times must be valid Times HH:MM',
+			'sale_end_date|date'			=> 'Sale dates must be valid Dates',
+			'sale_end_time|date_format'		=> 'Sale times must be valid Times HH:MM',
+			'seatable|boolen'				=> 'Seatable must be True/False',
+			'quantity|numeric'				=> 'Quantity must be a number',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -89,22 +89,23 @@ class TicketsController extends Controller
 			);
 		}
 
-		$ticket             = new EventTicket;
-		$ticket->event_id   = $event->id;
-		$ticket->name       = $request->name;
-		$ticket->type       = $request->type;
-		$ticket->price      = $request->price;
-		$ticket->sale_start = @$saleStart;
-		$ticket->sale_end   = @$saleEnd;
-		$ticket->seatable   = ($request->seatable ? true : false);
-		$ticket->quantity   = @$request->quantity;
+		$ticket				= new EventTicket;
+		$ticket->event_id	= $event->id;
+		$ticket->name		= $request->name;
+		$ticket->type		= $request->type;
+		$ticket->price		= $request->price;
+		$ticket->seatable	= ($request->seatable ? true : false);
 
-		if(!$ticket->save()){
-			Session::flash('alert-danger', 'Cannot Create Ticket.');
+		$ticket->sale_start	= @$saleStart;
+		$ticket->sale_end	= @$saleEnd;
+		$ticket->quantity	= @$request->quantity;
+
+		if (!$ticket->save()) {
+			Session::flash('alert-danger', 'Cannot save Ticket');
 			Redirect::back();
 		} 
 
-		Session::flash('alert-success', 'Ticket Created!');
+		Session::flash('alert-success', 'Ticket saved Successfully');
 		return Redirect::to('/admin/events/' . $event->slug . '/tickets/' . $ticket->id);
 	}
 
@@ -118,55 +119,66 @@ class TicketsController extends Controller
 	public function update(Request $request, Event $event, EventTicket $ticket)
 	{
 		$rules = [
-			'price'           => 'numeric',
-			'sale_start_date' => 'date',
-			'sale_start_time' => 'date_format:H:i',
-			'sale_end_date'   => 'date',
-			'sale_end_time'   => 'date_format:H:i', 
-			'seatable'        => 'boolean',
-			'quantity'        => 'numeric',
+			'price'				=> 'numeric',
+			'sale_start_date'	=> 'date',
+			'sale_start_time'	=> 'date_format:H:i',
+			'sale_end_date'		=> 'date',
+			'sale_end_time'		=> 'date_format:H:i', 
+			'seatable'			=> 'boolean',
+			'quantity'			=> 'numeric',
 		];
 		$messages = [
-			'price|numeric'               => 'Price must be a number',
-			'sale_start_date|date'        => 'Sale dates must be valid Dates',
-			'sale_start_time|date_format' => 'Sale times must be valid Times HH:MM',
-			'sale_end_date|date'          => 'Sale dates must be valid Dates',
-			'sale_end_time|date_format'   => 'Sale times must be valid Times HH:MM',
-			'seatable|boolen'             => 'Seatable must be True/False',
-			'quantity|numeric'            => 'Quantity must be a number',
+			'price|numeric'					=> 'Price must be a number',
+			'sale_start_date|date'			=> 'Sale dates must be valid Dates',
+			'sale_start_time|date_format'	=> 'Sale times must be valid Times HH:MM',
+			'sale_end_date|date'			=> 'Sale dates must be valid Dates',
+			'sale_end_time|date_format'		=> 'Sale times must be valid Times HH:MM',
+			'seatable|boolen'				=> 'Seatable must be True/False',
+			'quantity|numeric'				=> 'Quantity must be a number',
 		];
 		$this->validate($request, $rules, $messages);
 
-		if ($request->sale_start_date != '' || $request->sale_start_time != '') {
-			$saleStart = date(
-				"Y-m-d H:i:s", strtotime(
-					$request->sale_start_date . $request->sale_start_time
-				)
-			);
+
+		if (!$ticket->participants->isEmpty() && $ticket->price != $request->price) {
+			Session::flash('alert-danger', 'Cannot update Ticket price when tickets have been bought!');
+			return Redirect::back();
 		}
 
-		if ($request->sale_end_date != '' || $request->sale_end_time != '') {
-			$saleEnd = date(
-				"Y-m-d H:i:s", strtotime(
-					$request->sale_end_date . $request->sale_end_time
-				)
-			);
+		if (isset($request->sale_start_date) || isset($request->sale_start_time)) {
+			if ($request->sale_start_date != '' || $request->sale_start_time != '') {
+				$saleStart = date(
+					"Y-m-d H:i:s", strtotime(
+						$request->sale_start_date . $request->sale_start_time
+					)
+				);
+			}
 		}
 
-		if ($ticket->participants->isEmpty() && $ticket->price == $request->price) {
-			$ticket->price      = @$request->price;
+		if (isset($request->sale_end_date) || isset($request->sale_end_time)) {
+			if ($request->sale_end_date != '' || $request->sale_end_time != '') {
+				$saleEnd = date(
+					"Y-m-d H:i:s", strtotime(
+						$request->sale_end_date . $request->sale_end_time
+					)
+				);
+			}
 		}
 
 		$ticket->sale_start = @$saleStart;
 		$ticket->sale_end   = @$saleEnd;
-		$ticket->quantity   = @$request->quantity;
-		$ticket->seatable   = @$request->seatable;
 
-		if(!$ticket->save()){
-			Session::flash('alert-danger', 'Cannot Update Ticket!');
+		if (isset($request->quantity)) {
+			$ticket->quantity   = $request->quantity;
+		}
+
+		$ticket->seatable	= ($request->seatable ? true : false);
+
+		if (!$ticket->save()) {
+			Session::flash('alert-danger', 'Cannot update Ticket!');
 			return Redirect::back();
-		} 
-		Session::flash('alert-success', 'Ticket Updated!');
+		}
+
+		Session::flash('alert-success', 'Ticket updated Successfully!');
 		return Redirect::back();
 	}
 
@@ -179,14 +191,16 @@ class TicketsController extends Controller
 	public function destroy(Event $event, EventTicket $ticket)
 	{
 		if ($ticket->participants && $ticket->participants()->count() > 0) {
-			Session::flash('alert-danger', 'Cannot Delete Ticket, Purchases have been made!');
+			Session::flash('alert-danger', 'Cannot delete Ticket, Purchases have been made!');
 			return Redirect::back();
 		}
+		
 		if (!$ticket->delete()) {
-			Session::flash('alert-danger', 'Cannot Delete Ticket!');
+			Session::flash('alert-danger', 'Cannot delete Ticket!');
 			return Redirect::back();
 		}
-		Session::flash('alert-success', 'Successfully deleted!');
+		
+		Session::flash('alert-success', 'Successfully deleted Ticket!');
 		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}
 }

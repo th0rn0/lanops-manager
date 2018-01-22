@@ -26,16 +26,11 @@ class TournamentsController extends Controller
 {
 	/**
 	 * Show Tournaments
-	 * @param  $slug
+	 * @param  Event $event
 	 * @return Tournaments      
 	 */
-	public function index($slug)
+	public function index(Event $event)
 	{
-		if (!is_numeric($slug)) {
-			$event = Event::where('slug', $slug)->first();
-		} else {
-			$event = Event::where('id', $slug)->first();
-		}
 		return $event->tournaments;
 	}
 
