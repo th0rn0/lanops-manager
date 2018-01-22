@@ -4,6 +4,11 @@ namespace App\Libraries;
 
 class Helpers
 {
+	/**
+	 * Get Venues
+	 * @param  boolean $obj Return as Object
+	 * @return Array|Object
+	 */
 	public static function getVenues($obj = false)
 	{
 		$venues = \App\EventVenue::all();
@@ -20,6 +25,13 @@ class Helpers
 		return $return;
 	}
 
+	/**
+	 * Get Events
+	 * @param  string  $order
+	 * @param  integer $limit
+	 * @param  boolean $obj   Return as Object
+	 * @return Array|Object
+	 */
 	public static function getEvents($order = 'DESC', $limit = 0, $obj = false)
 	{
 		if ($limit != 0) {
@@ -36,6 +48,13 @@ class Helpers
 		return $return;
 	}
 
+	/**
+	 * Get Event Names
+	 * @param  string  $order
+	 * @param  integer $limit
+	 * @param  boolean $obj   Return as Object
+	 * @return Array|Object
+	 */
 	public static function getEventNames($order = 'DESC', $limit = 0, $obj = false)
 	{
 		if ($limit != 0) {
@@ -55,13 +74,21 @@ class Helpers
 		return $return;
 	}
 
+	/**
+	 * Get Total Events Count
+	 * @return Integer
+	 */
 	public static function getEventTotal()
 	{
 		$events = \App\Event::count();
 		return Settings::getLanCountOffset() + $events;
 	}
 
-	public static function getNextEventname()
+	/**
+	 * Get Next Event Name
+	 * @return String
+	 */
+	public static function getNextEventName()
 	{
 		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
 			if ($event->status == 'DRAFT' || $event->status == 'PREVIEW') {
@@ -72,6 +99,10 @@ class Helpers
 		return 'No new Events';
 	}
 
+	/**
+	 * Get Next Event Slug
+	 * @return String
+	 */
 	public static function getNextEventSlug()
 	{
 		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
@@ -80,12 +111,21 @@ class Helpers
 		return '#';
 	}
 
+	/**
+	 * Get Total Event Participants Count
+	 * @return Integer
+	 */
 	public static function getEventParticipantTotal()
 	{
 		$participants = \App\EventParticipant::count();
 		return Settings::getParticipantCountOffset() + $participants;
 	}
 
+	/**
+	 * Get Active Tournaments count for User
+	 * @param  $event_id
+	 * @return Integer
+	 */
 	public static function getUserActiveTournaments($event_id)
 	{
 		$user = \Auth::user();
@@ -100,6 +140,11 @@ class Helpers
 		return $active_tournament_counter;
 	}
 
+	/**
+	 * Format Challonge Rankings
+	 * @param  $final_rank
+	 * @return String
+	 */
 	public static function getChallongeRankFormat($final_rank)
 	{
 		if($final_rank == '1'){
@@ -123,6 +168,12 @@ class Helpers
 		return $final_rank . 'th';
 	}
 
+	/**
+	 * Format Basket
+	 * @param  $basket
+	 * @param  boolean $obj    Return as Object
+	 * @return Array|Object
+	 */
 	public static function getBasketFormat($basket, $obj = false)
 	{
 		$return = array();
@@ -147,6 +198,11 @@ class Helpers
 		return $return;
 	}
 
+	/**
+	 * Get Basket Total
+	 * @param  $basket
+	 * @return Integer
+	 */
 	public static function getBasketTotal($basket)
 	{
 		$return = 0;
