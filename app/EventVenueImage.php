@@ -3,6 +3,7 @@
 namespace App;
 
 use DB;
+
 use Illuminate\Database\Eloquent\Model;
 
 class EventVenueImage extends Model

@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin-default')
 
-@section('page_title', 'Venues')
+@section ('page_title', 'Venues')
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -40,11 +40,11 @@
 									<td>
 										<address>
 										<strong>{{ $venue->address_1 }}</strong>,<br>
-											@if($venue->address_2){{ $venue->address_2 }},<br>@endif
-											@if($venue->address_street){{ $venue->address_street }},<br>@endif
-											@if($venue->address_city){{ $venue->address_city }},<br>@endif
-											@if($venue->address_postcode){{ $venue->address_postcode }},<br>@endif
-											@if($venue->address_country){{ $venue->address_country }}@endif
+											@if ($venue->address_2){{ $venue->address_2 }},<br>@endif
+											@if ($venue->address_street){{ $venue->address_street }},<br>@endif
+											@if ($venue->address_city){{ $venue->address_city }},<br>@endif
+											@if ($venue->address_postcode){{ $venue->address_postcode }},<br>@endif
+											@if ($venue->address_country){{ $venue->address_country }}@endif
 										</address>
 									</td>
 									<td width="15%">

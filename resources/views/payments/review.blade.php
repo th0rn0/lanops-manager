@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends ('layouts.default')
 
-@section('page_title', 'Review Order')
+@section ('page_title', 'Review Order')
 
-@section('content')
+@section ('content')
 
 <div class="container">
 	<div class="page-header">

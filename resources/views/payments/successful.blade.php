@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends ('layouts.default')
 
-@section('page_title', 'Payment Successful!')
+@section ('page_title', 'Payment Successful!')
 
-@section('content')
+@section ('content')
 
 <div class="container">
 	<div class="page-header">
@@ -20,7 +20,7 @@
 			<h3>Tickets</h3>
 			<hr>
 			<div class="row">
-				@foreach($purchase->participants as $participant)
+				@foreach ($purchase->participants as $participant)
 					<div class="col-lg-4 col-sm-6 col-xs-12 text-center">
 						<h5>{{ $participant->event->display_name }}</h5>
 						<h5>{{ $participant->ticket->name }}</h5>
@@ -38,8 +38,8 @@
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<tbody>
-								@php($total = 0)
-								@foreach($basket_items as $item)
+								@php ($total = 0)
+								@foreach ($basket_items as $item)
 									<tr>
 										<td>
 											<strong>{{ $item->name }}</strong>
@@ -51,7 +51,7 @@
 											£{{ $item->price }}
 										</td>
 									</tr>
-									@php($total += ($item->price * $item->quantity))
+									@php ($total += ($item->price * $item->quantity))
 								@endforeach
 								<tr>
 									<td></td>

@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin-default')
 
-@section('page_title', 'Timetables - ' . $event->display_name)
+@section ('page_title', 'Timetables - ' . $event->display_name)
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-@include('layouts._partials._admin._event.dashMini')
+@include ('layouts._partials._admin._event.dashMini')
 
 <div class="row">
 	<div class="col-lg-8">
@@ -44,7 +44,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($timetable->data as $slot)
+						@foreach ($timetable->data as $slot)
 							<tr class="odd gradeX">
 								<td>{{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}</td>
 								@if($slot->name == NULL && $slot->desc == NULL)
@@ -142,7 +142,7 @@
 					<div class="form-group">
 						<div class="checkbox">
 							<label>
-								@if($timetable->primary)
+								@if ($timetable->primary)
 									{{ Form::checkbox('primary', 1, true)}} Primary Timetable
 								@else
 									{{ Form::checkbox('primary', 1)}} Primary Timetable

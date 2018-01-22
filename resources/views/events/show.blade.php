@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends ('layouts.default')
 
-@section('page_title', $event->display_name . ' - Lans in South Yorkshire')
+@section ('page_title', $event->display_name . ' - Lans in South Yorkshire')
 
-@section('content')
+@section ('content')
 			
 <div class="container">
 
@@ -29,17 +29,17 @@
 				<div id="navbar" class="navbar-collapse collapse" style="text-align:center;">
 					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
 						<li style="font-size:15px; font-weight:bold;"><a href="#event">Event Information</a></li>
-						@if(!$event->sponsors->isEmpty())
+						@if (!$event->sponsors->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#sponsors">Sponsors</a></li>
 						@endif
-						@if(!$event->seatingPlans->isEmpty())
+						@if (!$event->seatingPlans->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">Attendees</a></li>
-						@if(!$event->tournaments->isEmpty())
+						@if (!$event->tournaments->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">Tournaments</a></li>
 						@endif
-						@if(!$event->timetables->isEmpty())
+						@if (!$event->timetables->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#timetable">Timetable</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#yourTickets">Your Tickets</a></li>
@@ -86,26 +86,26 @@
 		<!-- TICKETS -->
 		<div class="col-md-5">
 			<!-- PURCHASE TICKETS -->
-			@if(!$event->tickets->isEmpty())
+			@if (!$event->tickets->isEmpty())
 				<div class="page-header">
 					<a name="purchaseTickets"></a>
 					<h3>Purchase Tickets</h3>
 				</div>
-				@foreach($event->tickets as $ticket)
+				@foreach ($event->tickets as $ticket)
 					<div class="well well-sm col-lg-12" disabled>
-						<h3>{{$ticket->name}} @if($event->getSeatingCapacity() <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
+						<h3>{{$ticket->name}} @if ($event->getSeatingCapacity() <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
 						<div class="row" style="display: flex; align-items: center;">
 							<div class="col-sm-12 col-xs-12">
 								<h3>£{{$ticket->price}}
-									@if($ticket->quantity != 0)
+									@if ($ticket->quantity != 0)
 										<small>
 											{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available
 										</small>
 									@endif
 								</h3>
-								@if($user)
+								@if ($user)
 									{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
-										@if(
+										@if (
 											$event->getSeatingCapacity() <= $event->eventParticipants->count() 
 											|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
 											)
@@ -156,13 +156,13 @@
 	</div>
 
 	<!-- SEATING -->
-	@if(!$event->seatingPlans->isEmpty())
+	@if (!$event->seatingPlans->isEmpty())
 		<div class="page-header">
 			<a name="seating"></a>
 			<h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			@foreach($event->seatingPlans as $seating_plan)
+			@foreach ($event->seatingPlans as $seating_plan)
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
@@ -191,8 +191,8 @@
 											<tr>
 												@for ($column = 1; $column <= $seating_plan->columns; $column++)
 													<td style="padding-top:14px;">
-														@if($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
-															@if($seating_plan->locked)
+														@if ($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
+															@if ($seating_plan->locked)
 																<button class="btn btn-success btn-sm" disabled>
 																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
 																</button>
@@ -202,12 +202,12 @@
 																</button>
 															@endif
 														@else
-															@if($seating_plan->locked)
+															@if ($seating_plan->locked)
 																<button class="btn btn-primary btn-sm" disabled>
 																	{{ ucwords($headers[$column]) . $row }} - Empty
 																</button>
 															@else
-																@if(Auth::user() && $event->getUser())
+																@if (Auth::user() && $event->getEventParticipant())
 																	<button 
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
@@ -232,7 +232,7 @@
 										@endfor
 									</tbody>
 								</table>
-								@if($seating_plan->locked)
+								@if ($seating_plan->locked)
 									<p class="text-center"><strong>NOTE: Seating Plan is current locked!</strong></p>
 								@endif
 							</div>
@@ -243,9 +243,9 @@
 								</div>
 								<div class="col-xs-12 col-md-4">
 									<h5>Your Seats</h5>
-									@if(!$user->eventParticipation->isEmpty())
-										@foreach($user->eventParticipation as $participant) 
-											@if($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
+									@if (!$user->eventParticipation->isEmpty())
+										@foreach ($user->eventParticipation as $participant) 
+											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
 												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
@@ -287,28 +287,28 @@
 			<p>{{$event->venue->display_name}}</p>
 			<address>
 				<strong>{{ $event->venue->display_name }}</strong><br>
-				@if(trim($event->venue->address_1) != '' || $event->venue->address_1 != null) {{ $event->venue->address_1 }}<br> @endif
-				@if(trim($event->venue->address_2) != '' || $event->venue->address_2 != null) {{ $event->venue->address_2 }}<br> @endif
-				@if(trim($event->venue->address_street) != '' || $event->venue->address_street != null) {{ $event->venue->address_street }}<br> @endif
-				@if(trim($event->venue->address_city) != '' || $event->venue->address_city != null) {{ $event->venue->address_city }}<br> @endif
-				@if(trim($event->venue->address_postcode) != '' || $event->venue->address_postcode != null) {{ $event->venue->address_postcode }}<br> @endif
-				@if(trim($event->venue->address_country) != '' || $event->venue->address_country != null) {{ $event->venue->address_country }}<br> @endif
+				@if (trim($event->venue->address_1) != '' || $event->venue->address_1 != null) {{ $event->venue->address_1 }}<br> @endif
+				@if (trim($event->venue->address_2) != '' || $event->venue->address_2 != null) {{ $event->venue->address_2 }}<br> @endif
+				@if (trim($event->venue->address_street) != '' || $event->venue->address_street != null) {{ $event->venue->address_street }}<br> @endif
+				@if (trim($event->venue->address_city) != '' || $event->venue->address_city != null) {{ $event->venue->address_city }}<br> @endif
+				@if (trim($event->venue->address_postcode) != '' || $event->venue->address_postcode != null) {{ $event->venue->address_postcode }}<br> @endif
+				@if (trim($event->venue->address_country) != '' || $event->venue->address_country != null) {{ $event->venue->address_country }}<br> @endif
 			</address>
 		</div>
 		<div class="col-lg-5">
-			@foreach($event->venue->images as $image)
+			@foreach ($event->venue->images as $image)
 				<img class="img-responsive img-rounded" src="{{$image->path}}"/>
 			@endforeach
 		</div>
 	</div>
 	
 	<!-- EVENT SPONSORS -->
-	@if(!$event->sponsors->isEmpty())
+	@if (!$event->sponsors->isEmpty())
 		<div class="page-header">
 			<a name="sponsors"></a>
 			<h3>{{$event->display_name}} is sponsored by</h3>
 		</div>
-		@foreach($event->sponsors as $sponsor)
+		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
 				<img class="img-responsive img-rounded" src="{{$sponsor->image_path}}"/>
 			</a>
@@ -316,15 +316,15 @@
 	@endif
 	
 	<!-- EVENT INFORMATION SECTIONS -->
-	@if(!empty($event->information))
+	@if (!empty($event->information))
 		<div class="page-header">
 			<h3>And there's more...</h3>
 		</div>
 		@php($x = 0)
-		@foreach($event->information as $section)
+		@foreach ($event->information as $section)
 			<div class="row">
-				@if($x % 2 == 0)
-					@if(isset($section->image_path))
+				@if ($x % 2 == 0)
+					@if (isset($section->image_path))
 						<div class="col-sm-4 visible-xs">
 							<h3><small>{{$section->title}}</small></h3>
 							<center>
@@ -336,7 +336,7 @@
 							<p>{{$section->text}}</p>
 						</div>
 						<div class="col-sm-4 hidden-xs">
-							@if(isset($section->image))
+							@if (isset($section->image))
 								<center>
 									<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
 								</center>
@@ -349,7 +349,7 @@
 						</div>
 					@endif
 				@else
-					@if(isset($section->image_path))
+					@if (isset($section->image_path))
 						<div class="col-sm-4">
 							<h3 class="visible-xs"><small>{{$section->title}}</small></h3>
 							<center>
@@ -374,13 +374,13 @@
 	@endif
 	
 	<!-- TIMETABLE -->
-	@if(!$event->timetables->isEmpty())
+	@if (!$event->timetables->isEmpty())
 		<div class="page-header">
 			<a name="timetable"></a>
 			<h3>Timetable</h3>
 		</div>
-		@foreach($event->timetables as $timetable)
-			@if(strtoupper($timetable->status) == 'DRAFT')
+		@foreach ($event->timetables as $timetable)
+			@if (strtoupper($timetable->status) == 'DRAFT')
 				<h4>DRAFT</h4>
 			@endif
 			<table class="table table-striped">
@@ -396,8 +396,8 @@
 					</th>
 				</thead>
 				<tbody>
-					@foreach($timetable->data as $slot)
-						@if($slot->name != NULL && $slot->desc != NULL)
+					@foreach ($timetable->data as $slot)
+						@if ($slot->name != NULL && $slot->desc != NULL)
 							<tr>
 								<td>
 									{{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
@@ -421,9 +421,9 @@
 		<a name="yourTickets"></a>
 		<h3>My Tickets</h3>
 	</div>
-	@if(Auth::user())
-		@if(!$user->eventParticipation->isEmpty())
-			@foreach($user->eventParticipation as $participant)
+	@if (Auth::user())
+		@if (!$user->eventParticipation->isEmpty())
+			@foreach ($user->eventParticipation as $participant)
 				@include('layouts._partials._tickets.index')
 			@endforeach
 		@else
@@ -434,14 +434,14 @@
 	@endif
 	
 	<!-- TOURNAMENTS -->
-	@if(!$event->tournaments->isEmpty())
+	@if (!$event->tournaments->isEmpty())
 		<div class="page-header">
 			<a name="tournaments"></a>
 			<h3>Tournaments</h3>
 		</div>
 		<div class="row">
-			@foreach($event->tournaments as $tournament)
-				@if($tournament->status != 'DRAFT')
+			@foreach ($event->tournaments as $tournament)
+				@if ($tournament->status != 'DRAFT')
 					<div class="col-sm-6 col-xs-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -480,7 +480,7 @@
 			</th>
 		</thead>
 		<tbody>
-			@foreach($event->eventParticipants as $participant)
+			@foreach ($event->eventParticipants as $participant)
 			<tr>
 				<td>
 					<img class="img-responsive img-rounded img-small" style="max-width: 30%;" src="{{$participant->user->avatar}}">
@@ -492,7 +492,7 @@
 					{{$participant->user->firstname}}
 				</td>
 				<td style="vertical-align: middle;">
-					@if($participant->seat)
+					@if ($participant->seat)
 						{{ $participant->seat->seat }}
 					@else
 						Not Seated
@@ -512,7 +512,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="pickSeatModalLabel"></h4>
 			</div>
-			@if(Auth::user())
+			@if (Auth::user())
 				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
@@ -520,7 +520,7 @@
 							{{
 								Form::select(
 									'participant_id',
-									$user->getTickets($event->id, true),             
+									$user->getTickets($event->id),             
 									null, 
 									array(
 										'id'    => 'format',

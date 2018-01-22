@@ -1,6 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin-default')
 
-@section('content')
+@section ('page_title', $venue->name)
+
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -101,7 +103,7 @@
 				<i class="fa fa-image fa-fw"></i> Images
 			</div>
 			<div class="panel-body">
-				@foreach($venue->images as $image)
+				@foreach ($venue->images as $image)
 					<div class="row">
 						<div class="col-lg-12 col-sm-12">
 							<img class="img img-responsive" src="{{ $image->path }}" />

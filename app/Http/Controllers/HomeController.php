@@ -44,8 +44,7 @@ class HomeController extends Controller
 							->orderBy('id', 'desc')
 							->limit(1)
 							->get();
-		$news = DB::select('select news_feed.*, users.username from news_feed left join users on news_feed.user_id = users.id limit 3');
-		return view("home")->withEvents($events)->withNews($news);
+		return view("home")->withEvents($events);
 	}
 	
 	/**

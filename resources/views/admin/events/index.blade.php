@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin-default')
 
-@section('page_title', 'Events')
+@section ('page_title', 'Events')
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">

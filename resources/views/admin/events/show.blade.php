@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin-default')
 
-@section('page_title', $event->display_name)
+@section ('page_title', $event->display_name)
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -18,7 +18,7 @@
 	</div>
 </div>
 
-@include('layouts._partials._admin._event.dashMini')
+@include ('layouts._partials._admin._event.dashMini')
 
 <div class="row">
 	<div class="col-lg-8">
@@ -75,7 +75,7 @@
 							</div>
 							<div class="form-group checkbox">
 								<label>
-									@if($event->allow_spectators)
+									@if ($event->allow_spectators)
 										{{ Form::checkbox('allow_spec', 1, true) }} Allow Spectators
 									@else
 										{{ Form::checkbox('allow_spec', 1) }} Allow Spectators
@@ -138,8 +138,8 @@
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addEventInformationModal">Add Event Information</a>
 			</div>
 			<div class="panel-body">
-				@if($event->information->count() != 0)
-					@foreach($event->information as $section)
+				@if ($event->information->count() != 0)
+					@foreach ($event->information as $section)
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
@@ -206,9 +206,9 @@
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addAnnoucementModal">Add Annoucement</a>
 			</div>
 			<div class="panel-body">
-				@if($event->annoucements->count() != 0)
+				@if ($event->annoucements->count() != 0)
 					<div class="list-group">
-						@foreach($event->annoucements as $annoucement)
+						@foreach ($event->annoucements as $annoucement)
 							<a href="#" class="list-group-item" data-toggle="modal" onclick="editAnnoucement('{{$annoucement->id}}', '{{$annoucement->message}}')" data-target="#editAnnoucementModal">
 								<i class="fa fa-comment fa-fw"></i> {{ $annoucement->message }}
 							</a>
@@ -227,7 +227,7 @@
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addTicketModal">Add Ticket</a>
 			</div>
 			<div class="panel-body">
-				@if($event->tickets->count() != 0)
+				@if ($event->tickets->count() != 0)
 					<div class="list-group">
 						@foreach ($event->tickets as $ticket)
 							<a href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}" class="list-group-item">
@@ -255,7 +255,7 @@
 				<a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
 			</div>
 			<div class="panel-body">
-				@if($event->eventParticipants->count() != 0)
+				@if ($event->eventParticipants->count() != 0)
 					<div class="list-group">
 						@foreach ($event->eventParticipants as $participant)
 							<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
@@ -278,7 +278,7 @@
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addSponsorModal">Add Sponsor</a>
 			</div>
 			<div class="panel-body">
-				@if($event->sponsors->count() != 0)
+				@if ($event->sponsors->count() != 0)
 					<div class="list-group">
 						@foreach ($event->sponsors as $sponsor)
 							<a href="/admin/tickets/{{ $ticket->id }}" class="list-group-item">

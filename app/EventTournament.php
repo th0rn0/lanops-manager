@@ -4,11 +4,13 @@ namespace App;
 
 use DB;
 
-use Illuminate\Database\Eloquent\Model;
-use GuzzleHttp\Client;
-use Reflex\Challonge\Challonge;
 use App\EventParticipant;
 use App\EventTournamentParticipant;
+
+use Illuminate\Database\Eloquent\Model;
+
+use GuzzleHttp\Client;
+use Reflex\Challonge\Challonge;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 
@@ -59,7 +61,7 @@ class EventTournament extends Model
         self::deleting(function($model){
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $response = $challonge->getTournament($model->challonge_tournament_id);
-            if(!$response->delete()){
+            if (!$response->delete()) {
                return false;
             }
             return true;
@@ -106,73 +108,101 @@ class EventTournament extends Model
         return 'slug';
     }
     
+    /**
+     * Set Status
+     * @param Boolean
+     */
     public function setStatus($status)
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if($status == 'LIVE') {
+        if ($status == 'LIVE') {
             $tournament = $challonge->getTournament($this->challonge_tournament_id);
-            if(!$tournament->start()){
-                return FALSE;
+            if (!$tournament->start()) {
+                return false;
             }
         }
-        if($status == 'COMPLETE') {
+        if ($status == 'COMPLETE') {
             $tournament = $challonge->getTournament($this->challonge_tournament_id);
-            if(!$tournament->finalize()){
-                return FALSE;
+            if (!$tournament->finalize()) {
+                return false;
             }
         }
         $this->status = $status;
-        if(!$this->save()){
-            return FALSE;
+        if (!$this->save()) {
+            return false;
         }
-        return TRUE;
+        return true;
     }
 
+    /**
+     * Get Tournament Participant
+     * @param  $event_participant_id
+     * @return EventTournamentParticipant
+     */
     public function getParticipant($event_participant_id)
     {
         return $this->tournamentParticipants()->where('event_participant_id', $event_participant_id)->first();
     }
 
+    /**
+     * Get Matches from Challonge
+     * @return JSON|Boolean
+     */
     public function getChallongeMatches()
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if(!$matches = $challonge->getMatches($this->challonge_tournament_id)){
-            return FALSE;
+        if (!$matches = $challonge->getMatches($this->challonge_tournament_id)) {
+            return false;
         }
         return $matches;
     }
   
+    /**
+     * Get Participants from Challonge
+     * @return JSON|Boolean
+     */
     public function getChallongeParticipants()
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if(!$challonge_participants = $challonge->getParticipants($this->challonge_tournament_id)){
-            return FALSE;
+        if (!$challonge_participants = $challonge->getParticipants($this->challonge_tournament_id)) {
+            return false;
         }
-        if($this->status == 'COMPLETE'){
+        if ($this->status == 'COMPLETE') {
             usort($challonge_participants, function($a, $b) { return strcmp($a->final_rank, $b->final_rank); });
         }
         return $challonge_participants;
     }
 
+    /**
+     * Get Challonge URL
+     * @return String|Boolean
+     */
     public function getChallongeUrl()
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if(!$tournament = $challonge->getTournament($this->challonge_tournament_id)){
-            return FALSE;
+        if (!$tournament = $challonge->getTournament($this->challonge_tournament_id)) {
+            return false;
         }
-        $return_url = "https://" . env('CHALLONGE_URL') . "/" . $tournament->url;
-        return $return_url;
+        return "https://" . env('CHALLONGE_URL') . "/" . $tournament->url;
     }
 
-    public function getTeamsArray()
+    /**
+     * Get Teams
+     * @param  boolean $obj
+     * @return Array|Object
+     */
+    public function getTeams($obj = false)
     {
-        if(isset($this->tournamentTeams)){
-            $team_array = array();
-            foreach($this->tournamentTeams as $tournament_team){
-                $team_array[$tournament_team->id] = $tournament_team->name;
-            }
-            return $team_array;
+        if(!isset($this->tournamentTeams)){
+            return null;
         }
-        return null;
+        $return = array();
+        foreach($this->tournamentTeams as $tournament_team){
+            $return[$tournament_team->id] = $tournament_team->name;
+        }
+        if ($obj) {
+            return json_decode(json_encode($return), FALSE);
+        }
+        return $return;
     }
 }

@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin-default')
 
-@section('page_title', 'Tickets - ' . $event->display_name)
+@section ('page_title', 'Tickets - ' . $event->display_name)
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-@include('layouts._partials._admin._event.dashMini')
+@include ('layouts._partials._admin._event.dashMini')
 
 <div class="row">
 	<div class="col-lg-6">
@@ -37,7 +37,7 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets/' . $ticket->id)) }}
 					@if (isset($ticket) && !$ticket->participants->isEmpty()) @php $price_lock = true; @endphp @endif
 
-					@include('layouts._partials._admin._event._tickets.form')
+					@include ('layouts._partials._admin._event._tickets.form')
 				{{ Form::close() }}
 			</div>
 		</div>
