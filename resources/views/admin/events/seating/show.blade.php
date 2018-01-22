@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin.default')
 
-@section('page_title', 'Seating Plans - ' . $event->display_name)
+@section ('page_title', 'Seating Plans - ' . $event->display_name)
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-@include('layouts._partials._admin._event.dashMini')
+@include ('layouts._partials._admin._event.dashMini')
 
 <div class="row">
 	<div class="col-lg-8">
@@ -180,7 +180,7 @@
 					<div class="form-group"> 
 						<div class="checkbox"> 
 							<label> 
-								@if($seating_plan->locked) 
+								@if ($seating_plan->locked) 
 									{{ Form::checkbox('locked', 1, true)}} Lock Seating 
 								@else 
 									{{ Form::checkbox('locked', 1)}} Lock Seating 
@@ -189,7 +189,7 @@
 						</div> 
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
-					@if($seating_plan->image_path)
+					@if ($seating_plan->image_path)
 						<hr>
 						<h4>Image Preview</h4>
 						<img src="{{ $seating_plan->image_path }}" class="img img-responsive" />

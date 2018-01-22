@@ -10,7 +10,7 @@
 	<meta name="author" content="">
 
 	<title>
-		@hasSection('page_title')
+		@hasSection ('page_title')
 			@yield('page_title') | {{ Settings::getOrgName() }}
 		@else
 			{{ Settings::getOrgName() }} Admin
@@ -77,12 +77,12 @@
 </head>
 <body>
 	<div id="wrapper">
-		@include('layouts._partials._admin.navigation')
+		@include ('layouts._partials._admin.navigation')
 		<div id="page-wrapper">
 			<div class="container-fluid">
 					<div class='row'>
 						@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-							@if(Session::has('alert-' . $msg))
+							@if (Session::has('alert-' . $msg))
 								<p class="alert alert-{{ $msg }}">
 									<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 								</p>

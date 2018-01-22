@@ -1,30 +1,30 @@
 <div class="panel panel-success">
 	<div class="panel-heading">
-		@if($participant->ticket)
-			<strong>{{ $participant->ticket->name }} @if($participant->ticket && $participant->ticket->seatable) - Seat: @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else Not Seated @endif @endif</strong>
+		@if ($participant->ticket)
+			<strong>{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - Seat: @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else Not Seated @endif @endif</strong>
 		@else
-			@if($participant->staff)
-				<strong>Staff Ticket @if($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
+			@if ($participant->staff)
+				<strong>Staff Ticket @if ($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
 			@else
-				<strong>Free Ticket @if($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
+				<strong>Free Ticket @if ($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
 			@endif
 		@endif
-		@if($participant->gift == 1 && $participant->gift_accepted != 1)
+		@if ($participant->gift == 1 && $participant->gift_accepted != 1)
 			<span class="label label-info label-block pull-right" style="margin-left: 3px; margin-top:2px;">This Ticket has been gifted!</span>
 		@endif
-		@if($participant->ticket && !$participant->ticket->seatable)
+		@if ($participant->ticket && !$participant->ticket->seatable)
 			<span class="label label-info label-block pull-right" style="margin-top:2px;">This Ticket is not eligable for a seat</span>
 		@endif
 	</div>
 	<div class="panel-body">
 		<div class="row" style="display: flex; align-items: center;">
 			<div class="col-md-8 col-sm-8 col-xs-12">
-				@if($participant->gift != 1 && $participant->gift_accepted != 1)
+				@if ($participant->gift != 1 && $participant->gift_accepted != 1)
 					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{ $participant->id }}')" data-toggle="modal" data-target="#giftTicketModal">
 						Gift Ticket
 					</button>
 				@endif
-				@if($participant->gift == 1 && $participant->gift_accepted != 1)
+				@if ($participant->gift == 1 && $participant->gift_accepted != 1)
 					<label>Gift URL:</label>
 					<p>
 						<strong>
@@ -35,7 +35,7 @@
 						<button type="submit" class="btn btn-primary btn-md btn-block">Revoke Gift</button>
 					{{ Form::close() }}
 				@endif
-				@if($participant->seat)
+				@if ($participant->seat)
 					<hr>
 				 {{ Form::open(array('url'=>'/events/' . $participant->event->slug . '/seating/' . $participant->seat->seatingPlan->id)) }}
 						{{ Form::hidden('_method', 'DELETE') }}
@@ -57,4 +57,4 @@
 	</div>
 </div>
 
-@include('layouts._partials._gifts.modal')
+@include ('layouts._partials._gifts.modal')

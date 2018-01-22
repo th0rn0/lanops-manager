@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin.default')
 
-@section('page_title', $tournament->name . ' - Tournaments')
+@section ('page_title', $tournament->name . ' - Tournaments')
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-@include('layouts._partials._admin._event.dashMini')
+@include ('layouts._partials._admin._event.dashMini')
 
 <div class="row">
 	<div class="col-lg-8">
@@ -35,7 +35,7 @@
 				<a target="_blank" href="{{ $tournament->getChallongeUrl() }}" class="btn btn-info btn-xs pull-right">Go to Brackets</a>
 			</div>
 			<div class="panel-body">
-				@if($tournament->team_size != '1v1')
+				@if ($tournament->team_size != '1v1')
 					<h3>Teams</h3>
 					<div class="dataTable_wrapper">
 						<table width="100%" class="table table-striped table-hover" id="participant_table">
@@ -50,13 +50,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($tournament->tournamentTeams as $tournament_team)
+								@foreach ($tournament->tournamentTeams as $tournament_team)
 									<tr>
 										<td>
 											{{ $tournament_team->name }}
 										</td>
 										<td>
-											@foreach($tournament_team->tournamentParticipants as $participant)
+											@foreach ($tournament_team->tournamentParticipants as $participant)
 												{{ $participant->eventParticipant->user->steamname }}
 												-
 												@if($participant->eventParticipant->seat)
@@ -104,7 +104,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($tournament->tournamentParticipants as $participant)
+							@foreach ($tournament->tournamentParticipants as $participant)
 								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id  . '/team')) }}
 									<tr>
 										<td>
@@ -116,7 +116,7 @@
 												Not Seated
 											@endif 
 										</td>
-										@if($tournament->team_size != '1v1')
+										@if ($tournament->team_size != '1v1')
 											<td>
 												@if($participant->pug)
 													Yes
@@ -125,7 +125,7 @@
 												@endif
 											</td>                        
 											<td>
-												@if($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+												@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 													{{ $participant->getTeamName() }}
 												@else
 													<div class="form-group">
@@ -134,7 +134,7 @@
 												@endif
 											</td>
 											<td>
-												@if($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+												@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 													<button type="submit" class="btn btn-default" disabled>Update</button>  
 												@else
 													<button type="submit" class="btn btn-default">Update</button>  
@@ -182,7 +182,7 @@
 					@endif
 					<div class="form-group">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
-						@if($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+						@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 							{{ Form::text('name', $tournament->name ,array('id'=>'name','class'=>'form-control', 'disabled'=>'true')) }}
 						@else
 							{{ Form::text('name', $tournament->name ,array('id'=>'name','class'=>'form-control')) }}
@@ -191,7 +191,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
-							@if($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+							@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 								{{ 
 									Form::select(
 										'status',
@@ -239,31 +239,31 @@
 						{{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
 						{{ Form::text('game', $tournament->game ,array('id'=>'game','class'=>'form-control')) }}
 					</div>
-					@if($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
+					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $tournament->description,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
 					@endif
-					@if($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
+					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
 							<button type="submit" class="btn btn-default">Submit</button>
 						</div>
 					@endif
 				{{ Form::close() }}
 				<div class="form-group">
-					@if(count($tournament->tournamentParticipants) >= 2 && $tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
+					@if (count($tournament->tournamentParticipants) >= 2 && $tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/start')) }}
 							<button type="submit" name="action" value="start" class="btn btn-default">Start Tournament</button>
 						{{ Form::close() }}
 					@endif
-					@if($tournament->status == 'LIVE')
+					@if ($tournament->status == 'LIVE')
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/finalize')) }}
 							<button type="submit" class="btn btn-default">Finalize Tournament</button>
 						{{ Form::close() }}
 					@endif
 				</div>
-				@if($tournament->status != 'COMPLETE')
+				@if ($tournament->status != 'COMPLETE')
 					<hr>
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 						{{ Form::hidden('_method', 'DELETE') }}

@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends ('layouts.default')
 
-@section('page_title', 'Updating your Profile')
+@section ('page_title', 'Updating your Profile')
 
-@section('content')
+@section ('content')
 
 	<div class="container">
 
@@ -17,7 +17,7 @@
 						{{ Form::open(array('url'=>'/account/' . $user->id )) }}
 							<div class="row" style="display: flex; align-items: center;">
 								<div class="col-md-2 col-sm-12">
-									@if($user->avatar != NULL)
+									@if ($user->avatar != NULL)
 										<img src="{{$user->avatar}}" class="img-responsive img-thumbnail"/>
 									@endif
 								</div> 
@@ -49,9 +49,9 @@
 						<h3 class="panel-title">Tickets</h3>
 					</div>
 					<div class="panel-body">
-						@if ( count($user->eventParticipants) )
-							@foreach($user->eventParticipants as $participant)
-								@include('layouts._partials._tickets.index')
+						@if (count($user->eventParticipants))
+							@foreach ($user->eventParticipants as $participant)
+								@include ('layouts._partials._tickets.index')
 							@endforeach
 						@else
 							You currently have no tickets.
@@ -67,7 +67,7 @@
 						<h3 class="panel-title">Purchases</h3>
 					</div>
 					<div class="panel-body">
-						@if(count($user->purchases))
+						@if (count($user->purchases))
 							<table class="table table-striped">
 								<thead>
 									<tr>
@@ -86,7 +86,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($user->purchases as $purchase)
+									@foreach ($user->purchases as $purchase)
 										<tr>
 											<td>
 												{{ $purchase->id }}
@@ -98,7 +98,7 @@
 												{{  date('d-m-y H:i', strtotime($purchase->created_at)) }}
 											</td>
 											<td>
-												@foreach($purchase->participants as $participant)
+												@foreach ($purchase->participants as $participant)
 													{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
 													@if(!$loop->last)
 														<hr>
@@ -116,6 +116,6 @@
 				</div>
 			</div>
 		</div>
-		@include('layouts._partials._gifts.modal')
+		@include ('layouts._partials._gifts.modal')
 	</div>
 @endsection

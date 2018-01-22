@@ -1,13 +1,13 @@
-@extends('layouts.default')
+@extends ('layouts.default')
 
-@section('page_title', $event->display_name . ' - Lans in South Yorkshire')
+@section ('page_title', $event->display_name . ' - Lans in South Yorkshire')
 
-@section('content')
+@section ('content')
 			
 <div class="container">
 
 	<div class="page-header">
-		<h1>Welcome to {{$event->display_name}}!</h1> 
+		<h1>Welcome to {{ $event->display_name }}!</h1> 
 	</div>
 	<div class="text-center">
 		<nav class="navbar navbar-default" style="z-index: 1;">
@@ -26,7 +26,7 @@
 						<li style="font-size:15px; font-weight:bold;"><a href="#event">What's on</a></li>
 						<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
 						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">Attendees</a></li>
-						@if(!$event->tournaments->isEmpty())
+						@if (!$event->tournaments->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">Tournaments</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#information">Essential Information</a></li>
@@ -36,7 +36,7 @@
 		</nav>
 	</div>
 	<!-- SIGN IN TO EVENT -->
-	@if(!$signed_in)
+	@if (!$signed_in)
 		Please Sign in at the main desk
 	@endif
 	<!-- FOOD ORDER -->
@@ -52,14 +52,14 @@
 	</div>
 
 	<!-- EVENT SPONSORS -->
-	@if(!$event->sponsors->isEmpty())
+	@if (!$event->sponsors->isEmpty())
 		<div class="page-header">
 			<a name="sponsors"></a>
-			<h3>{{$event->display_name}} is sponsored by</h3>
+			<h3>{{ $event->display_name }} is sponsored by</h3>
 		</div>
-		@foreach($event->sponsors as $sponsor)
+		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
-				<img class="img-responsive img-rounded" src="{{$sponsor->image_path}}"/>
+				<img class="img-responsive img-rounded" src="{{ $sponsor->image_path }}"/>
 			</a>
 		@endforeach
 	@endif
@@ -72,15 +72,15 @@
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-xs-12">
 			<h4>Venue Address</h4>
-			<p>{{$event->venue->display_name}}</p>
+			<p>{{ $event->venue->display_name }}</p>
 			<address>
 				<strong>{{ $event->venue->display_name }}</strong><br>
-				@if(trim($event->venue->address_1) != '' || $event->venue->address_1 != null) {{ $event->venue->address_1 }}<br> @endif
-				@if(trim($event->venue->address_2) != '' || $event->venue->address_2 != null) {{ $event->venue->address_2 }}<br> @endif
-				@if(trim($event->venue->address_street) != '' || $event->venue->address_street != null) {{ $event->venue->address_street }}<br> @endif
-				@if(trim($event->venue->address_city) != '' || $event->venue->address_city != null) {{ $event->venue->address_city }}<br> @endif
-				@if(trim($event->venue->address_postcode) != '' || $event->venue->address_postcode != null) {{ $event->venue->address_postcode }}<br> @endif
-				@if(trim($event->venue->address_country) != '' || $event->venue->address_country != null) {{ $event->venue->address_country }}<br> @endif
+				@if (trim($event->venue->address_1) != '' || $event->venue->address_1 != null) {{ $event->venue->address_1 }}<br> @endif
+				@if (trim($event->venue->address_2) != '' || $event->venue->address_2 != null) {{ $event->venue->address_2 }}<br> @endif
+				@if (trim($event->venue->address_street) != '' || $event->venue->address_street != null) {{ $event->venue->address_street }}<br> @endif
+				@if (trim($event->venue->address_city) != '' || $event->venue->address_city != null) {{ $event->venue->address_city }}<br> @endif
+				@if (trim($event->venue->address_postcode) != '' || $event->venue->address_postcode != null) {{ $event->venue->address_postcode }}<br> @endif
+				@if (trim($event->venue->address_country) != '' || $event->venue->address_country != null) {{ $event->venue->address_country }}<br> @endif
 			</address>
 		</div>
 		<div class="col-lg-6 col-md-6 col-xs-12">
@@ -99,8 +99,8 @@
 		<a name="event"></a>
 		<h3>Timetable</h3>
 	</div>
-	@if(!$event->timetables->isEmpty())
-		@foreach($event->timetables as $timetable)
+	@if (!$event->timetables->isEmpty())
+		@foreach ($event->timetables as $timetable)
 			<table class="table table-striped">
 				<thead>
 					<th>
@@ -114,8 +114,8 @@
 					</th>
 				</thead>
 				<tbody>
-					@foreach($timetable->data as $slot)
-						@if($slot->name != NULL && $slot->desc != NULL)
+					@foreach ($timetable->data as $slot)
+						@if ($slot->name != NULL && $slot->desc != NULL)
 							<tr>
 								<td>
 									{{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
@@ -135,26 +135,26 @@
 	@endif
 
 	<!-- TOURNAMENTS -->
-	@if(!$event->tournaments->isEmpty())
+	@if (!$event->tournaments->isEmpty())
 		<div class="row">
 			<div class="page-header">
 				<a name="tournaments"></a>
 				<h3>Tournaments</h3>
 			</div>
-			@foreach($event->tournaments as $tournament)
-				@if($tournament->status != 'DRAFT')
+			@foreach ($event->tournaments as $tournament)
+				@if ($tournament->status != 'DRAFT')
 					<div class="col-sm-6 col-xs-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4>
-									<a href="/events/{{$event->slug}}/tournaments/{{$tournament->slug}}">
+									<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
 										{{ $tournament->name }}
 									</a>
 									<span class="pull-right">
-										@if(!$tournament->getParticipant($user->active_event_participant->id))
+										@if (!$tournament->getParticipant($user->active_event_participant->id))
 											<span class="label label-danger">Not Signed up</span>
 										@endif
-										@if($tournament->getParticipant($user->active_event_participant->id))
+										@if ($tournament->getParticipant($user->active_event_participant->id))
 											<span class="label label-success">Signed up</span>
 										@endif
 									</span>
@@ -162,14 +162,14 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-sm-4 col-xs-12">
-									@if(isset($tournament->game_cover_image_path))
-										<a href="/events/{{$event->slug}}/tournaments/{{$tournament->slug}}">
+									@if (isset($tournament->game_cover_image_path))
+										<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
 											<img class="img-responsive img-rounded" src="{{ $tournament->game_cover_image_path }}">
 										</a>
 										<hr>
 									@endif
-									<a href="/events/{{$event->slug}}/tournaments/{{$tournament->slug}}">
-										@if(!$tournament->getParticipant($user->active_event_participant->id) && $tournament->status == 'OPEN')
+									<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
+										@if (!$tournament->getParticipant($user->active_event_participant->id) && $tournament->status == 'OPEN')
 											<button class="btn btn-lg btn-primary">Sign up now</button>
 										@else
 											<button class="btn btn-lg btn-primary">View Brackets</button>
@@ -182,7 +182,7 @@
 											{{ $tournament->tournamentParticipants->count() }} Signups
 										</strong>
 									</h4>
-									@if($tournament->status != 'COMPLETE')
+									@if ($tournament->status != 'COMPLETE')
 										<dl>
 											<dt>
 												Team Sizes:
@@ -204,15 +204,15 @@
 											</dd>
 										</dl>
 									@endif
-									@if($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
-										@foreach($tournament->challonge_participants as $challonge_participant)
-											@if($challonge_participant->final_rank == 1)
+									@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
+										@foreach ($tournament->challonge_participants as $challonge_participant)
+											@if ($challonge_participant->final_rank == 1)
 												<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h2>
 											@endif
-											@if($challonge_participant->final_rank == 2)
+											@if ($challonge_participant->final_rank == 2)
 												<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h3>
 											@endif
-											@if($challonge_participant->final_rank != 2 && $challonge_participant->final_rank != 1)
+											@if ($challonge_participant->final_rank != 2 && $challonge_participant->final_rank != 1)
 												<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h4>
 											@endif
 										@endforeach
@@ -247,19 +247,19 @@
 			</th>
 		</thead>
 		<tbody>
-			@foreach($event->eventParticipants as $participant)
+			@foreach ($event->eventParticipants as $participant)
 			<tr>
 				<td>
-					<img class="img-responsive img-rounded" style="max-width: 70%;" src="{{$participant->user->avatar}}">
+					<img class="img-responsive img-rounded" style="max-width: 70%;" src="{{ $participant->user->avatar }}">
 				</td>
 				<td style="vertical-align: middle;">
-					{{$participant->user->steamname}}
+					{{ $participant->user->steamname }}
 				</td>
 				<td style="vertical-align: middle;">
-					{{$participant->user->firstname}}
+					{{ $participant->user->firstname }}
 				</td>
 				<td style="vertical-align: middle;">
-					@if($participant->seat)
+					@if ($participant->seat)
 						{{ $participant->seat->seat }}
 					@else
 						Not Seated
@@ -271,13 +271,13 @@
 	</table>
 	
 	<!-- SEATING -->
-	@if(!$event->seatingPlans->isEmpty())
+	@if (!$event->seatingPlans->isEmpty())
 		<div class="page-header">
 			<a name="seating"></a>
 			<h3>Seating Plans <small>- unseatedtickets / total seatable tickets remaining</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			@foreach($event->seatingPlans as $seating_plan)
+			@foreach ($event->seatingPlans as $seating_plan)
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
@@ -306,8 +306,8 @@
 											<tr>
 												@for ($column = 1; $column <= $seating_plan->columns; $column++)
 													<td style="padding-top:14px;">
-														@if($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
-															@if($seating_plan->locked)
+														@if ($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
+															@if ($seating_plan->locked)
 																<button class="btn btn-success btn-sm" disabled>
 																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
 																</button>
@@ -317,12 +317,12 @@
 																</button>
 															@endif
 														@else
-															@if($seating_plan->locked)
+															@if ($seating_plan->locked)
 																<button class="btn btn-primary btn-sm" disabled>
 																	{{ ucwords($headers[$column]) . $row }} - Empty
 																</button>
 															@else
-																@if(Auth::user() && $event->getUser())
+																@if (Auth::user() && $event->getUser())
 																	<button 
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
@@ -347,7 +347,7 @@
 										@endfor
 									</tbody>
 								</table>
-								@if($seating_plan->locked)
+								@if ($seating_plan->locked)
 									<p class="text-center"><strong>NOTE: Seating Plan is current locked!</strong></p>
 								@endif
 							</div>
@@ -358,9 +358,9 @@
 								</div>
 								<div class="col-xs-12 col-md-4">
 									<h5>Your Seats</h5>
-									@if($ticket_flag)
-										@foreach($user->eventParticipation as $participant) 
-											@if($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
+									@if ($ticket_flag)
+										@foreach ($user->eventParticipation as $participant) 
+											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
 												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 

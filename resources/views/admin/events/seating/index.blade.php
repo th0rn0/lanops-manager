@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin.default')
 
-@section('page_title', 'Seating Plans - ' . $event->display_name)
+@section ('page_title', 'Seating Plans - ' . $event->display_name)
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -21,7 +21,7 @@
 	</div>
 </div>
 
-@include('layouts._partials._admin._event.dashMini')
+@include ('layouts._partials._admin._event.dashMini')
 
 <div class="row">
 	<div class="col-lg-8">
@@ -42,7 +42,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($event->seatingPlans as $seating_plan)
+							@foreach ($event->seatingPlans as $seating_plan)
 								<tr>
 									<td>
 										{{ $seating_plan->name }}

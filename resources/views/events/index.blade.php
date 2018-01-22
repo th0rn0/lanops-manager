@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends ('layouts.default')
 
-@section('page_title', Settings::getOrgName() . ' Events List')
+@section ('page_title', Settings::getOrgName() . ' Events List')
 
-@section('content')
+@section ('content')
 			
 <div class="container">
 	@foreach ($events as $event)
@@ -12,7 +12,7 @@
 			</div>
 			<div class="panel-body">
 				<h5>{{ $event->desc_short }}</h5>
-				<p>{{$event->desc_long}}</p>
+				<p>{{ $event->desc_long }}</p>
 				<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
 				<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
 				<p class="bg-info  padding">Seating Capacity: {{ $event->getSeatingCapacity() }}</p>

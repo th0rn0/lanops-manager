@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin.default')
 
-@section('page_title', 'Gallery')
+@section ('page_title', 'Gallery')
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -40,7 +40,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($album->images as $image)
+							@foreach ($album->images as $image)
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class=" col-xs-3">
@@ -59,7 +59,7 @@
 										<td>
 											<div class="form-group checkbox">
 												<label>
-													@if($album->album_cover_id == $image->id)
+													@if ($album->album_cover_id == $image->id)
 														{{ Form::checkbox('album_cover', 1, true) }}
 													@else
 														{{ Form::checkbox('album_cover', 1) }}

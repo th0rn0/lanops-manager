@@ -1,8 +1,8 @@
-@extends('layouts.admin.default')
+@extends ('layouts.admin.default')
 
-@section('page_title', 'Gallery')
+@section ('page_title', 'Gallery')
 
-@section('content')
+@section ('content')
 
 <div class="row">
 	<div class="col-lg-12">
@@ -37,7 +37,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($albums as $album)
+							@foreach ($albums as $album)
 								<tr>
 									<td>{{ $album->name }}</td>
 									<td>{{ $album->description }}</td>

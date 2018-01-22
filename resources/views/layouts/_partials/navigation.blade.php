@@ -23,9 +23,7 @@
 				<li><a href="/about">About</a></li>
 
 				@if (Auth::check())
-
 					@include ('layouts._partials.user-navigation')
-
 				@else
 					<li><a href="/steamlogin">Login</a></li>
 				@endif
