@@ -56,12 +56,12 @@ class VenuesController extends Controller
 			'image.*' 			=> 'image',
 		];
 		$messages = [
-			'name|required' 			=> 'Venue Name is Required',
-			'address_1|required' 		=> 'Address is Required',
-			'address_street|required' 	=> 'Street name is Required',
-			'address_city|required' 	=> 'City name is Required',
-			'address_postcode|required' => 'Postcode is Required',
-			'image.*|image' 			=> 'Venue Image must be of Image type',
+			'name.required' 			=> 'Venue Name is Required',
+			'address_1.required' 		=> 'Address is Required',
+			'address_street.required' 	=> 'Street name is Required',
+			'address_city.required' 	=> 'City name is Required',
+			'address_postcode.required' => 'Postcode is Required',
+			'image.*.image' 			=> 'Venue Image must be of Image type',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -108,12 +108,12 @@ class VenuesController extends Controller
 			'image.*' 			=> 'image',
 		];
 		$messages = [
-			'name|required' 			=> 'Venue Name cannot be empty',
-			'address_1|required' 		=> 'Address cannot be empty',
-			'address_street|required' 	=> 'Street name cannot be empty',
-			'address_city|required' 	=> 'City name cannot be empty',
-			'address_postcode|required' => 'Postcode cannot be empty',
-			'image.*|image' 			=> 'Venue Image must be of Image type',
+			'name.required' 			=> 'Venue Name cannot be empty',
+			'address_1.required' 		=> 'Address cannot be empty',
+			'address_street.required' 	=> 'Street name cannot be empty',
+			'address_city.required' 	=> 'City name cannot be empty',
+			'address_postcode.required' => 'Postcode cannot be empty',
+			'image.*.image' 			=> 'Venue Image must be of Image type',
 		];
 		$this->validate($request, $rules, $messages);
 

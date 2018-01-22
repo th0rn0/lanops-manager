@@ -30,7 +30,7 @@ class AnnoucementsController extends Controller
 			'message'			=> 'required'
 		];
 		$messages = [
-			'message|required'	=> 'Some Text is required',
+			'message.required'	=> 'Some Text is required',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -60,7 +60,7 @@ class AnnoucementsController extends Controller
 			'message'			=> 'required'
 		];
 		$messages = [
-			'message|required'	=> 'Some Text is required',
+			'message.required'	=> 'Some Text is required',
 		];
 		$this->validate($request, $rules, $messages);
 

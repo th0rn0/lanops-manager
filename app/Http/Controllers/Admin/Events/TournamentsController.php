@@ -70,14 +70,14 @@ class TournamentsController extends Controller
 			'image'			=> 'image',
 		];
 		$messages = [
-			'name|required'			=> 'Tournament name is required',
-			'game|required'			=> 'Game is required',
-			'format|required'		=> 'Format is required',
-			'format|in'				=> 'Single Elimation, Double Elimination or Round Robin only',
-			'team_size|required'	=> 'Team size is required',
-			'team_size|in'			=> 'Team Size must be in format 1v1, 2v2, 3v3 etc',
-			'description'			=> 'Description is required',
-			'image'					=> 'Tournament image must be a Image'
+			'name.required'			=> 'Tournament name is required',
+			'game.required'			=> 'Game is required',
+			'format.required'		=> 'Format is required',
+			'format.in'				=> 'Single Elimation, Double Elimination or Round Robin only',
+			'team_size.required'	=> 'Team size is required',
+			'team_size.in'			=> 'Team Size must be in format 1v1, 2v2, 3v3 etc',
+			'description.required'	=> 'Description is required',
+			'image.image'			=> 'Tournament image must be a Image'
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -154,9 +154,9 @@ class TournamentsController extends Controller
 			'description'	=> 'filled',
 		];
 		$messages = [
-			'name|required'			=> 'Tournament name cannot be empty',
-			'status|in'				=> 'Status must be DRAFT, OPEN, CLOSED, LIVE or COMPLETE',
-			'description|required'	=> 'Description cannot be empty',
+			'name.filled'			=> 'Tournament name cannot be empty',
+			'status.in'				=> 'Status must be DRAFT, OPEN, CLOSED, LIVE or COMPLETE',
+			'description.filled'	=> 'Description cannot be empty',
 		];
 		$this->validate($request, $rules, $messages);
 

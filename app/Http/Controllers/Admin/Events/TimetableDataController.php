@@ -31,6 +31,16 @@ class TimetableDataController extends Controller
 	 */
 	public function store(Event $event, EventTimetable $timetable, Request $request)
   	{
+  		$rules = [
+			'name'			=> 'required',
+			'start_time'	=> 'required'
+		];
+		$messages = [
+			'name.required'			=> 'Name is required',
+			'start_time.required'	=> 'Start Time is required',
+		];
+		$this->validate($request, $rules, $messages);
+
 	    $data 						= new EventTimetableData;
 	    $data->event_timetable_id 	= $timetable->id;
 	    $data->start_time 			= $request->start;
@@ -55,6 +65,16 @@ class TimetableDataController extends Controller
      */
     public function update(Event $event, EventTimetable $timetable, EventTimetableData $data, Request $request)
     {
+    	$rules = [
+			'name'			=> 'filled',
+			'start_time'	=> 'filled'
+		];
+		$messages = [
+			'name.filled'		=> 'Name cannot be empty',
+			'start_time.filled'	=> 'Start Time cannot be empty',
+		];
+		$this->validate($request, $rules, $messages);
+
 	    $data->start_time 	= $request->start;
     	$data->name 		= $request->game;
 	    $data->desc 		= $request->desc;

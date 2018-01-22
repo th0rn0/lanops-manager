@@ -61,17 +61,17 @@ class EventsController extends Controller
 			'start_time'	=> 'required|date_format:H:i:s',
 		];
 		$messages = [
-			'event_name.required'	=> 'An Event name is required',
-			'start_date.required'	=> 'A Start date is required',
-			'start_time.required'	=> 'A Start date is required',
-			'end_date.required'		=> 'A End date is required',
-			'end_time.required'		=> 'A End date is required',
-			'end_date|date_format'	=> 'A End Date must be Y-m-d format',
-			'end_time|date_format'	=> 'A End Time must be H:i:s formate',
-			'end_date|date_format'	=> 'A Start Date must be Y-m-d format',
-			'end_time|date_format'	=> 'A Start Time must be H:i:s format',
-			'desc_short.required'	=> 'A Short description is required',
-			'desc_long.required'	=> 'A description is required',
+			'event_name.required'	=> 'Event name is required',
+			'start_date.required'	=> 'Start date is required',
+			'start_time.required'	=> 'Start date is required',
+			'end_date.required'		=> 'End date is required',
+			'end_time.required'		=> 'End date is required',
+			'end_date.date_format'	=> 'End Date must be Y-m-d format',
+			'end_time.date_format'	=> 'End Time must be H:i:s formate',
+			'end_date.date_format'	=> 'Start Date must be Y-m-d format',
+			'end_time.date_format'	=> 'Start Time must be H:i:s format',
+			'desc_short.required'	=> 'Short Description is required',
+			'desc_long.required'	=> 'Long Description is required',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -86,10 +86,10 @@ class EventsController extends Controller
 		$event->event_venue_id		= @$request->venue;
 
 		if (!$event->save()) {
-			Session::flash('alert-danger', 'Could not Save!');
+			Session::flash('alert-danger', 'Cannot Save Event!');
 			return Redirect::to('admin/events/' . $event->slug);
 		}
-		Session::flash('alert-success', 'Event Successfully Added!');
+		Session::flash('alert-success', 'Successfully saved Event!');
 		return Redirect::to('admin/events/' . $event->slug);
 	}
 	
@@ -111,17 +111,17 @@ class EventsController extends Controller
 			'allow_spectators'	=> 'boolean',
 		];
 		$messages = [
-			'event_name|filled'			=> 'Event Name cannot be empty',
-			'end_date|filled'			=> 'A End Date cannot be empty',
-			'end_date|date_format'		=> 'A End Date must be Y-m-d format',
-			'end_time|filled'			=> 'A End Time cannot be empty',
-			'end_time|date_format'		=> 'A End Time must be H:i:s formate',
-			'start_date|filled'			=> 'A Start Date cannout be empty',
-			'end_date|date_format'		=> 'A Start Date must be Y-m-d format',
-			'start_time|filled'			=> 'A Start Time cannout be empty',
-			'end_time|date_format'		=> 'A Start Time must be H:i:s format',
-			'status|in' 				=> 'Status must be draft, preview, published or private',
-			'allow_spectators|boolean'	=> 'Allow Spectators must be boolean',
+			'event_name.filled'			=> 'Event Name cannot be empty',
+			'end_date.filled'			=> 'A End Date cannot be empty',
+			'end_date.date_format'		=> 'A End Date must be Y-m-d format',
+			'end_time.filled'			=> 'A End Time cannot be empty',
+			'end_time.date_format'		=> 'A End Time must be H:i:s formate',
+			'start_date.filled'			=> 'A Start Date cannout be empty',
+			'end_date.date_format'		=> 'A Start Date must be Y-m-d format',
+			'start_time.filled'			=> 'A Start Time cannout be empty',
+			'end_time.date_format'		=> 'A Start Time must be H:i:s format',
+			'status.in' 				=> 'Status must be draft, preview, published or private',
+			'allow_spectators.boolean'	=> 'Allow Spectators must be boolean',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -167,11 +167,11 @@ class EventsController extends Controller
 		}
 		
 		if (!$event->save()) {
-			Session::flash('alert-danger', 'Could not Save!');
+			Session::flash('alert-danger', 'Cannot update Event!');
 			return Redirect::to('admin/events/' . $event->slug);
 		}
 
-		Session::flash('alert-success', 'Event Successfully Updated!');
+		Session::flash('alert-success', 'Successfully updated Event!');
 		return Redirect::to('admin/events/' . $event->slug);
 	}
 
@@ -188,11 +188,11 @@ class EventsController extends Controller
 		}
 
 		if (!$event->delete()) {
-			Session::flash('alert-danger', 'Cannot Delete!');
+			Session::flash('alert-danger', 'Cannot delete Event!');
 			return Redirect::back();
 		}
 
-		Session::flash('alert-success', 'Successfully deleted!');
+		Session::flash('alert-success', 'Successfully deleted Event!');
 		return Redirect::to('admin/events/');
 	}
 
@@ -240,7 +240,7 @@ class EventsController extends Controller
 			Session::flash('alert-danger', 'Could not add Admin!');
 			return Redirect::to('admin/events/' . $event->slug . '/tickets');          
 		}
-		
+
 		Session::flash('alert-success', 'Successfully added Admin!');
 		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}

@@ -55,6 +55,14 @@ class TimetablesController extends Controller
 	 */
 	public function store(Event $event, Request $request)
 	{
+		$rules = [
+			'name' => 'required',
+		];
+		$messages = [
+			'name.required' => 'Name is required',
+		];
+		$this->validate($request, $rules, $messages);
+
 		$timetable				= new EventTimetable;
 		$timetable->name		= $request->name;
 		$timetable->slug		= strtolower(str_replace(' ', '-', $request->name));
@@ -84,9 +92,9 @@ class TimetablesController extends Controller
 			'primary'	=> 'boolean',
 		];
 		$messages = [
-			'name|filled'		=> 'Name cannot be empty',
-			'status|in'			=> 'Status must be DRAFT, OPEN, LIVE, CLOSE or COMPLETE',
-			'primary|boolean'	=> 'Primary must be boolean',
+			'name.filled'		=> 'Name cannot be empty',
+			'status.in'			=> 'Status must be DRAFT, OPEN, LIVE, CLOSE or COMPLETE',
+			'primary.boolean'	=> 'Primary must be boolean',
 		];
 		$this->validate($request, $rules, $messages);
 

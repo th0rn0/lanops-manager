@@ -40,7 +40,7 @@ class GalleryController extends Controller
 	public function show(GalleryAlbum $album)
 	{
 		$user = Auth::user();
-		return view('admin.gallery.show')->withUser($user)->withAlbum($album);  
+		return view('admin.gallery.show')->withUser($user)->withAlbum($album);
 	}
 	
 	/**
@@ -55,8 +55,8 @@ class GalleryController extends Controller
 			'description'	=> 'required'
 		];
 		$messages = [
-			'name|required'			=> 'Name is required',
-			'description|required'	=> 'Description is required'
+			'name.required'			=> 'Name is required',
+			'description.required'	=> 'Description is required'
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -70,7 +70,7 @@ class GalleryController extends Controller
 		}
 
 		Session::flash('alert-success', 'Successfully saved Gallery!');
-		return Redirect::to('admin/gallery/' . $album->id);
+		return Redirect::to('admin/gallery/' . $album->slug);
 	}
 	
 	/**
@@ -89,10 +89,10 @@ class GalleryController extends Controller
 			'event_id'		=> 'exists:events,id',
 		];
 		$messages = [
-			'name|filled'			=> 'Name cannot be empty',
-			'description|filled'	=> 'Description cannot be empty',
-			'status|in'				=> 'Status must be draft or published',
-			'event_id|exists'		=> 'Event_id must be a real ID',
+			'name.filled'			=> 'Name cannot be empty',
+			'description.filled'	=> 'Description cannot be empty',
+			'status.in'				=> 'Status must be draft or published',
+			'event_id.exists'		=> 'Event_id must be a real ID',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -149,7 +149,7 @@ class GalleryController extends Controller
 			'image.*'	=> 'image',
 		];
 		$messages = [
-			'image.*|image'	=> 'Venue Image must be of Image type',
+			'image.*.image'	=> 'Venue Image must be of Image type',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -179,11 +179,11 @@ class GalleryController extends Controller
 		}
 		if ($uploadcount != $file_count) {
 			Session::flash('alert-danger', 'Upload unsuccessful!'); 
-			return Redirect::to('admin/gallery/' . $album->id);
+			return Redirect::to('admin/gallery/' . $album->slug);
 		}
 
 		Session::flash('alert-success', 'Upload successful!'); 
-		return Redirect::to('admin/gallery/' . $album->id);
+		return Redirect::to('admin/gallery/' . $album->slug);
 	}
 
 	/**

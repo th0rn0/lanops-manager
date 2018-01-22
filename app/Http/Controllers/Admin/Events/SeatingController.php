@@ -58,12 +58,12 @@ class SeatingController extends Controller
 			'image'		=> 'image',
 		];
 		$messages =[
-			'name|required'		=> 'A Name is required',
-			'columns|required'	=> 'Columns is required',
-			'columns|integer'	=> 'Columns must be a number',
-			'rows|required'		=> 'Rows is required',
-			'rows|integer'		=> 'Rows must be a number',
-			'image|image'		=> 'Seating image must be a image',
+			'name.required'		=> 'Name is required',
+			'columns.required'	=> 'Columns is required',
+			'columns.integer'	=> 'Columns must be a number',
+			'rows.required'		=> 'Rows is required',
+			'rows.integer'		=> 'Rows must be a number',
+			'image.image'		=> 'Seating image must be a image',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -117,12 +117,12 @@ class SeatingController extends Controller
 			'name'		=> 'filled',
 		];
 		$messages = [
-			'columns|integer'	=> 'Columns must be a number',
-			'rows|integer'		=> 'Rows must be a number',
-			'image|image'		=> 'Seating image must be a image',
-			'status|in'			=> 'Status must be draft or published',
-			'locked|boolean'	=> 'Locked must be a boolean',
-			'name|filled'		=> 'Name cannout be empty',
+			'columns.integer'	=> 'Columns must be a number',
+			'rows.integer'		=> 'Rows must be a number',
+			'image.image'		=> 'Seating image must be a image',
+			'status.in'			=> 'Status must be draft or published',
+			'locked.boolean'	=> 'Locked must be a boolean',
+			'name.filled'		=> 'Name cannout be empty',
 		];
 		$this->validate($request, $rules, $messages);
 

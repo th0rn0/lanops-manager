@@ -61,15 +61,15 @@ class TicketsController extends Controller
 			'quantity'			=> 'numeric',
 		];
 		$messages = [
-			'name|required'					=> 'A Ticket Name is required',
-			'price|numeric'					=> 'Price must be a number',
-			'price|required'				=> 'A Price is required',
-			'sale_start_date|date'			=> 'Sale dates must be valid Dates',
-			'sale_start_time|date_format'	=> 'Sale times must be valid Times HH:MM',
-			'sale_end_date|date'			=> 'Sale dates must be valid Dates',
-			'sale_end_time|date_format'		=> 'Sale times must be valid Times HH:MM',
-			'seatable|boolen'				=> 'Seatable must be True/False',
-			'quantity|numeric'				=> 'Quantity must be a number',
+			'name.required'					=> 'A Ticket Name is required',
+			'price.numeric'					=> 'Price must be a number',
+			'price.required'				=> 'A Price is required',
+			'sale_start_date.date'			=> 'Sale dates must be valid Dates',
+			'sale_start_time.date_format'	=> 'Sale times must be valid Times HH:MM',
+			'sale_end_date.date'			=> 'Sale dates must be valid Dates',
+			'sale_end_time.date_format'		=> 'Sale times must be valid Times HH:MM',
+			'seatable.boolen'				=> 'Seatable must be True/False',
+			'quantity.numeric'				=> 'Quantity must be a number',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -139,7 +139,7 @@ class TicketsController extends Controller
 		$this->validate($request, $rules, $messages);
 
 
-		if (!$ticket->participants->isEmpty() && $ticket->price != $request->price) {
+		if (isset($request->price) && (!$ticket->participants->isEmpty() && $ticket->price != $request->price)) {
 			Session::flash('alert-danger', 'Cannot update Ticket price when tickets have been bought!');
 			return Redirect::back();
 		}

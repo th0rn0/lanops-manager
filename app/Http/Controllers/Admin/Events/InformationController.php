@@ -32,9 +32,9 @@ class InformationController extends Controller
 			'image'	=> 'image',
 		];
 		$messages = [
-			'title|required'	=> 'A Title is required',
-			'text|required'		=> 'Some Information is required',
-			'image|image'		=> 'The file must be a Image',
+			'title.required'	=> 'A Title is required',
+			'text.required'		=> 'Some Information is required',
+			'image.image'		=> 'The file must be a Image',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -77,9 +77,9 @@ class InformationController extends Controller
 			'text'	=> 'filled',
 		];
 		$messages = [
-			'image|image'	=> 'The file must be a Image',
-			'title|filled'	=> 'Title cannot be blank',
-			'text|filled'	=> 'Title cannot be blank',
+			'image.image'	=> 'The file must be a Image',
+			'title.filled'	=> 'Title cannot be blank',
+			'text.filled'	=> 'Text cannot be blank',
 		];
 		$this->validate($request, $rules, $messages);
 

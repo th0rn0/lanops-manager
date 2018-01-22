@@ -1,5 +1,13 @@
+@if ($errors->any())
+  	<div class="alert alert-danger">
+        <ul>
+          	@foreach ($errors->all() as $error)
+            	<li>{{ $error }}</li>
+          	@endforeach
+        </ul>
+  	</div>
+@endif
 <div class="row">
-
 	<div class="form-group col-sm-6 col-xs-12">
 		{{ Form::label('name','Ticket Name',array('id'=>'','class'=>'')) }}
 		{{ 

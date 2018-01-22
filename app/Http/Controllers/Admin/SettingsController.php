@@ -50,15 +50,15 @@ class SettingsController extends Controller
 			'lan_count_offset'			=> 'numeric',
 		];
 		$messages = [
-			'terms_and_conditions|filled'		=> 'Terms And Conditions cannot be empty',
-			'org_name|filled'					=> 'Org Name cannot be empty',
-			'about_main|filled'					=> 'About Main cannot be empty',
-			'about_short|filled'				=> 'About Short cannot be empty',
-			'about_our_aim|filled'				=> 'About Our Aim cannot be empty',
-			'about_who|filled'					=> 'About Whos who cannot be empty',
-			'currency|in'						=> 'Currency must be GBP, USD or EUR',
-			'participant_count_offset|numeric'	=> 'Participant Count Offset must be a number',
-			'lan_count_offset|numeric'			=> 'Lan Count Offset must be a number',
+			'terms_and_conditions.filled'		=> 'Terms And Conditions cannot be empty',
+			'org_name.filled'					=> 'Org Name cannot be empty',
+			'about_main.filled'					=> 'About Main cannot be empty',
+			'about_short.filled'				=> 'About Short cannot be empty',
+			'about_our_aim.filled'				=> 'About Our Aim cannot be empty',
+			'about_who.filled'					=> 'About Whos who cannot be empty',
+			'currency.in'						=> 'Currency must be GBP, USD or EUR',
+			'participant_count_offset.numeric'	=> 'Participant Count Offset must be a number',
+			'lan_count_offset.numeric'			=> 'Lan Count Offset must be a number',
 		];
 		$this->validate($request, $rules, $messages);
 
