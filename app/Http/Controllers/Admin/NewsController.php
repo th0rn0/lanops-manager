@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use Session;
-use App\News;
-use App\User;
-use App\Event;
-use App\EventParticipant;
 use Form;
 use Input;
 use Redirect;
 use Validator;
 
+use App\News;
+use App\User;
+use App\Event;
+use App\EventParticipant;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -45,15 +45,15 @@ class NewsController extends Controller
 
 		// Define rules
 		$rules = array(
-			'title' => array( 'required', 'unique:news_feed' ),
-			'article' => array( 'required' ),
+			'title'		=> array( 'required', 'unique:news_feed' ),
+			'article'	=> array( 'required' ),
 		);
 
 		// Pass input to validator
 		$validator = Validator::make(Input::all(), $rules);
 
 		// Test if input fails
-		if ( $validator->fails() ) {
+		if ($validator->fails()) {
 			$request->session()->flash('alert-danger', 'Please ensure news Title is unique.');
 			return Redirect::to('admin/news');
 		}

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use App\User;
@@ -13,6 +11,8 @@ use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
