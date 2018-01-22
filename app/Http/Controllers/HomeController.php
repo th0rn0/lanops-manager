@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use DB;
 use Auth;
+
 use App\Event;
 use App\EventTimetable;
 use App\EventTimetableData;
 use App\EventParticipant;
 use App\EventParticipantType;
+
 use App\Http\Requests;
+
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {

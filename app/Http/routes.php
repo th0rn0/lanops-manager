@@ -13,8 +13,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
 	Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
 
-	//Participants - API?
+	//Participants
 	Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
+
+	//Tickets
+	Route::get('/api/events/{event}/tickets', 'Events\TicketsController@index');
+	Route::get('/api/events/{event}/tickets/{ticket}', 'Events\TicketsController@show');
 
 
 
@@ -29,10 +33,6 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/steamlogin/register/{user}', 'AuthController@register');
 		Route::patch('/steamlogin/register/{user}', 'AuthController@update');
 	});
-	
-	//Tickets
-	Route::get('/events/{event}/tickets', 'Events\TicketsController@all');
-	Route::get('/events/{event}/tickets/{ticket}', 'Events\TicketsController@show');
 
 	//Gift
 	Route::post('/events/{event}/tickets/{ticket}/purchase/{user}/gift', 'Events\TicketsController@purchaseGift');

@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
+use DateTime;
+
 use App\Event;
 use App\EventParticipant;
 use App\EventParticipantType;
 use App\EventTimetable;
 use App\EventTimetableData;
-use DateTime;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 
 class TimetablesController extends Controller
 {

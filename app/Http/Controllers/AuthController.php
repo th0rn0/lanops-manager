@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+
+use App\User;
+
 use Illuminate\Http\Request;
 
 use Invisnik\LaravelSteamAuth\SteamAuth;
-use App\User;
-use Auth;
 
 class AuthController extends Controller
 {
 	private $steam;
 
 	/**
-	 * @param SteamAuth $steam [description]
+	 * @param SteamAuth $steam
 	 */
 	public function __construct(SteamAuth $steam)
 	{
@@ -32,20 +34,20 @@ class AuthController extends Controller
 				$user = User::where('steamid', $info->steamID64)->first();
 				if (!is_null($user)) {
 					//If user is in our database but no username found redirect to register page
-					if(!is_null($user->username)) {
+					if (!is_null($user->username)) {
 						//username found... Log user in
 						Auth::login($user, true);
 						//Check if the user has changed their steam details
 						$steam_changes = FALSE;
-						if($info->personaname != $user->steamname){
+						if ($info->personaname != $user->steamname) {
 							$user->steamname = $info->personaname;
 							$steam_changes = TRUE;
 						}
-						if($info->avatarfull != $user->avatar){
+						if ($info->avatarfull != $user->avatar) {
 							$user->avatar = $info->avatarfull;
 							$steam_changes = TRUE;
 						}
-						if($steam_changes){
+						if ($steam_changes) {
 							$user->save();
 						}
 						return redirect('/'); // redirect to site
@@ -81,6 +83,7 @@ class AuthController extends Controller
 			return view('login.steam.register')->withUser($user);  
 		}
 	}
+	
 	/**
 	 * Create a new user instance after a valid registration.
 	 * @param  Request  $request

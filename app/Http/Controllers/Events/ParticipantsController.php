@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use Session;
@@ -13,11 +11,17 @@ use App\EventParticipant;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class ParticipantsController extends Controller
 {
+	/**
+	 * Show Participants
+	 * @param  Event  $event
+	 * @return EventParticipants
+	 */
 	public function show(Event $event)
 	{
 		$return = array();
@@ -44,27 +48,12 @@ class ParticipantsController extends Controller
 		return $return;
 	}
 
-	/* Show user the seats/tickets they bought for a specific event.
-	 *
-	 * @param  \App\Event  $event
-	 * @param  \App\User  $user
-	 * @return $thisUser
+	/**
+	 * Gift Ticket
+	 * @param  EventParticipant $participant
+	 * @param  Request          $request
+	 * @return Redirect 
 	 */
-	public function showUser(Event $event, User $user)
-	{
-		$clauses = ['user_id' => $user->id, 'event_id' => $event->id];
-		$thisUser = EventParticipant::where($clauses)->get();
-		return $thisUser;
-	}
-	/* Gift a ticket.
-	*
-	* @param  \Illuminate\Http\Request  $request->user_id - Who to gift
-	* @param  \Illuminate\Http\Request  $request->email - Email
-	* @param  \Illuminate\Http\Request  $request->email_body - Email body
-	* @param  \Illuminate\Http\Request  $request->email_signature - Email signature
-	* @param  \App\EventParticipant  $participant
-	* @return $participant
-	*/
 	public function gift(EventParticipant $participant, Request $request)
 	{
 		//Only accept non gifted
@@ -85,11 +74,13 @@ class ParticipantsController extends Controller
 			return Redirect::back();
 		}
 	}
-	/* Revoke a gift.
-	*
-	* @param  \App\EventParticipant  $participant
-	* @return $participant
-	*/
+	
+	/**
+	 * Revoke Gifted Ticket
+	 * @param  EventParticipant $participant
+	 * @param  boolean          $accepted
+	 * @return Redirect
+	 */
 	public function revokeGift(EventParticipant $participant, $accepted = FALSE)
 	{
 		if ($participant->gift == TRUE) {
@@ -113,11 +104,12 @@ class ParticipantsController extends Controller
 			return Redirect::back();
 		}
 	}
-	/* Accept a gift.
-	*
-	* @param  \Illuminate\Http\Request  $request->url - Users accept unique accept url
-	* @return $participant
-	*/
+	
+	/**
+	 * Accept Gifted Ticket
+	 * @param  Request $request
+	 * @return Redirect
+	 */
 	public function acceptGift(Request $request)
 	{
 		$user = Auth::user();
@@ -143,47 +135,4 @@ class ParticipantsController extends Controller
 		$request->session()->flash('alert-danger', 'Please Login.');
 		return Redirect::to('home');
 	}
-	
-	/* Remove User to Event Participants.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Event  $event
-	 * @param  \App\User  $user
-	 * @return status
-	 */
-	public function remove(Request $request, Event $event, user $user)
-	{
-		//check if user is already signed up
-		$clauses = ['user_id' => $user->id, 'event_id' => $event->id];
-		$participant = EventParticipant::where($clauses)->first();
-		if ($participant != NULL) {
-			//User Exists
-			$participant->delete();
-			return 'true';
-		} else {
-			return 'user cannot be found';
-		}
-	}
-	 /* Update User in Event Participants.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Event  $event
-	 * @param  \App\User  $user
-	 * @return status
-	 */
-	public function update(Request $request, Event $event, user $user)
-	{
-		//check if user is already signed up
-		$clauses = ['user_id' => $user->id, 'event_id' => $event->id];
-		$participant = EventParticipant::where($clauses)->first();
-		if ($participant != NULL) {
-			//User Exists
-			$participant->event_participant_type_id = $request->type_id;
-			$participant->save();
-			return 'true';
-		} else {
-			return 'user cannot be found';
-		}
-	}
-	
 }
