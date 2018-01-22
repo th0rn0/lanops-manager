@@ -28,10 +28,10 @@ class EventTicket extends Model
      */
     public function event()
     {
-      return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Event');
     }
     public function participants()
     {
-      return $this->hasMany('App\EventParticipant', 'ticket_id');
+        return $this->hasMany('App\EventParticipant', 'ticket_id');
     }
 }

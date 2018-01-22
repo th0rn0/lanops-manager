@@ -70,31 +70,6 @@
 	</div>
 </div>
 
-<div class="news  section-padding  section-margin" hidden>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="text-center">
-					<h2 class="section-heading  text-center">Latest News</h2>
-				</div>
-			</div>
-			<div class="row">
-				@foreach ($news as $news_article)
-					<div class="col-md-4  news-article__container">
-						<div class="news-article">
-							<h3>{{$news_article->title}}</h3>
-							<div class="pull-right">{{date('d M Y', strtotime($news_article->created_at))}}</div>
-							<div class="">posted by: {{$news_article->username}}</div>
-							<p>{{$news_article->article}}</p>
-							<div class="hidden"><a href="#">read more</a></div>
-						</div>
-					</div>
-				@endforeach
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="stats  section-padding  section-margin">
 	<div class="container">
 		<div class="row">

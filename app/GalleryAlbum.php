@@ -4,8 +4,10 @@ namespace App;
 
 use DB;
 use Auth;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class GalleryAlbum extends Model
@@ -38,7 +40,7 @@ class GalleryAlbum extends Model
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
         }
-        if(!$admin) {
+        if (!$admin) {
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
             });
@@ -84,11 +86,20 @@ class GalleryAlbum extends Model
         return 'slug';
     }
 
+    /**
+     * Set Album Cover
+     * @param $image_id
+     */
     public function setAlbumCover($image_id)
         {
         $this->album_cover_id = $image_id;
         $this->save();
     }
+
+    /**
+     * Get Album Cover Path
+     * @return String
+     */
     public function getAlbumCoverPath(){
         return $this->images()->where('id', $this->album_cover_id)->first()->path;
     }

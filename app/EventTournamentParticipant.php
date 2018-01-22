@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
 use GuzzleHttp\Client;
 use Reflex\Challonge\Challonge;
 
@@ -42,10 +43,10 @@ class EventTournamentParticipant extends Model
     {
         parent::boot();
         self::deleting(function($model){
-            if  (!$model->pug && $model->event_tournament_team_id == null) {
+            if (!$model->pug && $model->event_tournament_team_id == null) {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $participant = $challonge->getParticipant($model->eventTournament->challonge_tournament_id, $model->challonge_participant_id);
-                if(!$response = $participant->delete()){
+                if (!$response = $participant->delete()) {
                     return false;
                 }
                 return true;
@@ -69,20 +70,14 @@ class EventTournamentParticipant extends Model
         return $this->belongsTo('App\EventTournamentTeam', 'event_tournament_team_id');
     }
 
-    public function getTeamName()
-    {
-        $clauses = ['id' => $this->event_tournament_team_id];
-        if(!$team = EventTournamentTeam::where($clauses)->first()){
-            return null;
-        }
-        return $team->name;
-    }
-
+    /**
+     * Set Challonge Participant ID
+     */
     public function setChallongeParticipantId()
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
         $tournament = $challonge->getTournament($this->eventTournament->challonge_tournament_id);
-        if(!$response = $tournament->addParticipant(['participant[name]' => $this->eventParticipant->user->steamname])){
+        if (!$response = $tournament->addParticipant(['participant[name]' => $this->eventParticipant->user->steamname])) {
             return false;
         }
         $this->challonge_participant_id = $response->id;

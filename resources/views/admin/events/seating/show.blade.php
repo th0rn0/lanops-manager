@@ -217,7 +217,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('participant_select_modal','Participant',array('id'=>'','class'=>'')) }}
-						{{ Form::select('participant_select_modal', $event->getParticipantsSelectArray(), null, array('id'=>'participant_select_modal','class'=>'form-control')) }}
+						{{ Form::select('participant_select_modal', $event->getParticipants(), null, array('id'=>'participant_select_modal','class'=>'form-control')) }}
 					</div> 
 					{{ Form::hidden('participant_id_modal', null, array('id'=>'participant_id_modal','class'=>'form-control')) }}
 					{{ Form::hidden('event_id_modal', null, array('id'=>'event_id_modal','class'=>'form-control')) }}

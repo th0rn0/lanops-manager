@@ -3,7 +3,9 @@
 namespace App;
 
 use DB;
+
 use Illuminate\Database\Eloquent\Model;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class EventVenue extends Model

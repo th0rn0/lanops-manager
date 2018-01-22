@@ -207,7 +207,7 @@
 																	{{ ucwords($headers[$column]) . $row }} - Empty
 																</button>
 															@else
-																@if (Auth::user() && $event->getUser())
+																@if (Auth::user() && $event->getEventParticipant())
 																	<button 
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
@@ -520,7 +520,7 @@
 							{{
 								Form::select(
 									'participant_id',
-									$user->getTickets($event->id, true),             
+									$user->getTickets($event->id),             
 									null, 
 									array(
 										'id'    => 'format',

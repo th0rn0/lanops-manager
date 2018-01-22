@@ -126,10 +126,10 @@
 											</td>                        
 											<td>
 												@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-													{{ $participant->getTeamName() }}
+													{{ $participant->tournamentTeam->name }}
 												@else
 													<div class="form-group">
-														{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeamsArray(), $participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
+														{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
 													</div>
 												@endif
 											</td>
