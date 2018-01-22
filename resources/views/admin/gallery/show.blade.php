@@ -42,7 +42,7 @@
 						<tbody>
 							@foreach($album->images as $image)
 								<tr>
-									{{ Form::open(array('url'=>'/admin/gallery/' . $album->id . '/' . $image->id, 'files' => true )) }}
+									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class=" col-xs-3">
 											<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
 										</td>
@@ -74,7 +74,7 @@
 											<button type="submit" class="btn btn-primary btn-sm btn-block">Update</button>
 										</td>
 									{{ Form::close() }}
-									{{ Form::open(array('url'=>'/admin/gallery/' . $album->id . '/' . $image->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
+									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										<td width="15%">
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -96,7 +96,7 @@
 				<i class="fa fa-upload fa-fw"></i> Add Images
 			</div>
 			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/gallery/' . $album->id . '/upload', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/upload', 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}
@@ -111,7 +111,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="list-group">
-					{{ Form::open(array('url'=>'/admin/gallery/' . $album->id, 'files' => true )) }}
+					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug, 'files' => true )) }}
 						@if ($errors->any())
 						  	<div class="alert alert-danger">
 						        <ul>
@@ -152,7 +152,7 @@
 								{{ 
 									Form::select(
 										'event_id',
-										array_unshift(Helpers::getEventNames('DESC', 0), 'None'),
+										Helpers::getEventNames('DESC', 0),
 										strtolower($album->event_id),
 										array(
 											'id'=>'event_id',
@@ -165,7 +165,7 @@
 						<button type="submit" class="btn btn-default">Submit</button>
 					{{ Form::close() }}
 					<hr>
-					{{ Form::open(array('url'=>'/admin/gallery/' . $album->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 						{{ Form::hidden('_method', 'DELETE') }}
 						<button type="submit" class="btn btn-danger">Delete</button>
 					{{ Form::close() }}

@@ -11,6 +11,9 @@ class Helpers
 		foreach($venues as $venue){
 				$return[$venue->id] = $venue->display_name;
 		}
+		if (!$obj) {
+			$return[] = 'None';
+		}
 		if ($obj) {
 			return json_decode(json_encode($return), FALSE);
 		}
@@ -39,6 +42,9 @@ class Helpers
 			$events = \App\Event::orderBy('start', $order)->paginate($limit);
 		} else {
 			$events = \App\Event::orderBy('start', 'DESC')->get();
+		}
+		if (!$obj) {
+			$return[] = 'None';
 		}
 		foreach ($events as $event) {
 			$return[$event->id] = $event->display_name;
@@ -120,6 +126,9 @@ class Helpers
 	public static function getBasketFormat($basket, $obj = false)
 	{
 		$return = array();
+		if (!$obj) {
+			$return[] = 'None';
+		}
 		foreach ($basket as $ticket_id => $quantity) {
 			$ticket = \App\EventTicket::where('id', $ticket_id)->first();
 			array_push(

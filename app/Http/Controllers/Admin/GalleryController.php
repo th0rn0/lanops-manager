@@ -86,13 +86,11 @@ class GalleryController extends Controller
 			'name'			=> 'filled',
 			'description'	=> 'filled',
 			'status'		=> 'in:draft,published',
-			'event_id'		=> 'exists:events,id',
 		];
 		$messages = [
 			'name.filled'			=> 'Name cannot be empty',
 			'description.filled'	=> 'Description cannot be empty',
 			'status.in'				=> 'Status must be draft or published',
-			'event_id.exists'		=> 'Event_id must be a real ID',
 		];
 		$this->validate($request, $rules, $messages);
 

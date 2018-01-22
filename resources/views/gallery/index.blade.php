@@ -6,32 +6,32 @@
 
 <div class="container">
 
-  <div class="page-header">
-    <h1>Gallery</h1> 
-  </div>
-  <div class="row">
-    @foreach($albums as $album)
-      <div class="well well-sm col-sm-3 col-xs-6">
-        <h4>{{ $album->name }}</h4>
-        @if($album->event)
-          <h5>Event: {{ $album->event->display_name }}</h5>
-        @endif
-        <p>{{ $album->description }}</p>
-        <a href="/gallery/{{ $album->id }}">
-          @if(isset($album->album_cover_id) && trim($album->album_cover_id) != '')
-            <img src="{{ $album->getAlbumCoverPath() }}" class="img img-responsive img-thumbnail"/>
-          @else
-            <img src="http://placehold.it/600x300" class="img img-responsive img-thumbnail"/>
-          @endif
-        </a>
-      </div>
-    @endforeach
-  </div>
-  <!--
-    <div class="jumbotron">
-    	USER UPLOAD COMING SOON
-    </div>
-  -->
+	<div class="page-header">
+		<h1>Gallery</h1> 
+	</div>
+	<div class="row">
+		@foreach($albums as $album)
+			<div class="well well-sm col-sm-3 col-xs-6">
+				<h4>{{ $album->name }}</h4>
+				@if($album->event)
+					<h5>Event: {{ $album->event->display_name }}</h5>
+				@endif
+				<p>{{ $album->description }}</p>
+				<a href="/gallery/{{ $album->slug }}">
+					@if(isset($album->album_cover_id) && trim($album->album_cover_id) != '')
+						<img src="{{ $album->getAlbumCoverPath() }}" class="img img-responsive img-thumbnail"/>
+					@else
+						<img src="http://placehold.it/600x300" class="img img-responsive img-thumbnail"/>
+					@endif
+				</a>
+			</div>
+		@endforeach
+	</div>
+	<!--
+		<div class="jumbotron">
+			USER UPLOAD COMING SOON
+		</div>
+	-->
 </div>
 
 @endsection
