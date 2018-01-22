@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use Session;
+
 use App\User;
 use App\Event;
 use App\EventTicket;
@@ -17,14 +16,19 @@ use App\EventParticipantType;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class SeatingController extends Controller
 {
+	/**
+	 * Show Seating
+	 * @param  Event  $event 
+	 * @return SeatingPlans
+	 */
 	public function show(Event $event)
 	{
-		//Create seating array
 		$seating_array = array();
 		foreach($event->participants as $participant){
 			array_push($seating_array, array($participant->seat => $participant->user->username));
@@ -32,6 +36,13 @@ class SeatingController extends Controller
 		return json_encode($seating_array);
 	}
 
+	/**
+	 * Seat Participant
+	 * @param  Event            $event
+	 * @param  EventSeatingPlan $seating_plan
+	 * @param  Request          $request
+	 * @return Redirect
+	 */
 	public function store(Event $event, EventSeatingPlan $seating_plan, Request $request)
 	{
 		$rules = [
@@ -71,6 +82,13 @@ class SeatingController extends Controller
 		return Redirect::to('events/' . $event->slug);
 	}
 
+	/**
+	 * Remove Participant Seating
+	 * @param  Event            $event
+	 * @param  EventSeatingPlan $seating_plan
+	 * @param  Request          $request
+	 * @return Redirect
+	 */
 	public function destroy(Event $event, EventSeatingPlan $seating_plan, Request $request)
 	{
 		$clauses = [

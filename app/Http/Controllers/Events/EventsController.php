@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
+
 use App\Event;
 use App\EventTimetable;
 use App\EventTimetableData;
@@ -14,6 +13,8 @@ use App\EventParticipantType;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class EventsController extends Controller

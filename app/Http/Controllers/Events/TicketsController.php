@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use Session;
+
 use App\User;
 use App\Event;
 use App\EventParticipant;
 use App\EventTicket;
 
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -20,19 +20,36 @@ use App\Http\Controllers\PaymentController as Payment;
 
 class TicketsController extends Controller
 {
-	public function all(Event $event)
+	/**
+	 * Show all Event Tickets
+	 * @param  Event  $event
+	 * @return EventTickets
+	 */
+	public function index(Event $event)
 	{
 		$event->load('tickets');
 		return $event->tickets;
 	}
+
+	/**
+	 * Show Event Ticket
+	 * @param  Event       $event
+	 * @param  EventTicket $ticket
+	 * @return EventTicket
+	 */
 	public function show(Event $event, EventTicket $ticket)
 	{
 		return $ticket;
 	}
+
+	/**
+	 * Purchase Ticket
+	 * @param  Request     $request
+	 * @param  EventTicket $ticket 
+	 * @return Redirect
+	 */
 	public function purchase(Request $request, EventTicket $ticket)
 	{
-		//Purchase Route
-		//Check user exists
 		$user = User::where('id', $request->user_id)->first();
 
 		if ($user == NULL) {
@@ -66,28 +83,19 @@ class TicketsController extends Controller
 
 		Session::put('basket', [$ticket->id => $request->quantity]);
 		return Redirect::to('/payment/review'); 
-
-
-		//DEBUG
-		dd();
-		$payment = new Payment;
-		//DEBUG - Change payment to a model
-		$payment->post($user, $ticket, $request->quantity);
-
-		return $event . $ticket . $user;
-
 	}
+
+	/**
+	 * Retrieve ticket via QR code
+	 * @param  EventParticipant $participant
+	 * @return Redirect
+	 */
 	public function retrieve(EventParticipant $participant)
 	{
 		$user = Auth::user();
-		//Check if user is admin
-		if($user->admin == 1){
-			//User is admin - show lan registration
-			return redirect('/admin/events/' . $participant->event_id . '/participants/' . $participant->id); // redirect to site
-		} else {
-			//User is not admin - show information
-			return redirect('/events/' . $participant->event_id); // redirect to site
+		if ($user->admin == 1) {
+			return Redirect::to('/admin/events/' . $participant->event_id . '/participants/' . $participant->id); // redirect to site
 		}
-		return $user;
+		return Redirect::to('/events/' . $participant->event_id); // redirect to site
 	}
 }

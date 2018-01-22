@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
+
 use App\Event;
 use App\GalleryAlbum;
 use App\GalleryAlbumImage;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {

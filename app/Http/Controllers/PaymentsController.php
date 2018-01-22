@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-
 use QrCode;
 use Storage;
 use Settings;
 use Helpers;
 use Auth;
+
 use App\Purchase;
 use App\User;
 use App\Event;
 use App\EventTicket;
 use App\EventParticipant;
 
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+
 use Omnipay\Omnipay as Omnipay;
 
 class PaymentsController extends Controller
@@ -56,14 +56,14 @@ class PaymentsController extends Controller
 
 		//Paypal Post Params
 		$params = array(
-			'cancelUrl'     => 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=cancel',
-			'returnUrl'     => 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=return', 
-			'name'          => Settings::getOrgName() . ' - Tickets Purchase',
-			'description'   => 'Ticket Purchase for ' . Settings::getOrgName(), 
-			'amount'        => (float)Helpers::getBasketTotal($basket),
-			'quantity'      => (string)count($basket),
-			'currency'      => Settings::getCurrency(),
-			'user_id'       => Auth::id(),
+			'cancelUrl'		=> 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=cancel',
+			'returnUrl'		=> 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=return', 
+			'name'			=> Settings::getOrgName() . ' - Tickets Purchase',
+			'description'	=> 'Ticket Purchase for ' . Settings::getOrgName(), 
+			'amount'		=> (float)Helpers::getBasketTotal($basket),
+			'quantity'		=> (string)count($basket),
+			'currency'		=> Settings::getCurrency(),
+			'user_id'		=> Auth::id(),
 		);
 
 	  	Session::put('params', $params);
@@ -87,10 +87,9 @@ class PaymentsController extends Controller
 	  	} elseif ($response->isRedirect()) {
 			// redirect to offsite payment gateway
 			$response->redirect();
-	  	} else {
-			// payment failed: display message to customer
-			echo $response->getMessage();
 	  	}
+		// payment failed: display message to customer
+		echo $response->getMessage();
 	}
 
 	/**
@@ -111,7 +110,7 @@ class PaymentsController extends Controller
 	  	}
 	  	$params = Session::get('params');
 
-	  	if(env('APP_DEBUG')){
+	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
 	  	}
 
