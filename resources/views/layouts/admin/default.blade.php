@@ -19,17 +19,11 @@
 
 	<link rel="icon" type="image/png" sizes="32x32" href="{{ Settings::getOrgFavicon() }}">
 	
-	<!-- Bootstrap Core CSS -->
-	<link href="/css/admin/bootstrap.min.css" rel="stylesheet">
-
-	<!-- Custom CSS -->
-	<link href="/css/admin/sb-admin.css" rel="stylesheet">
-
-	<!-- Morris Charts CSS -->
-	<link href="/css/admin/plugins/morris.css" rel="stylesheet">
+	<!-- Admin CSS -->
+	<link href="/css/admin.css" rel="stylesheet">
 
 	<!-- Custom Fonts -->
-	<link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="/fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,12 +38,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="/javascripts/admin/bootstrap.min.js"></script>
+	<script src="/js/bootstrap-admin.min.js"></script>
 
 	<!-- Morris Charts JavaScript -->
-	<script src="/javascripts/admin/plugins/morris/raphael.min.js"></script>
-	<script src="/javascripts/admin/plugins/morris/morris.min.js"></script>
-	<script src="/javascripts/admin/plugins/morris/morris-data.js"></script>
+	<script src="/js/morris/raphael.min.js"></script>
+	<script src="/js/morris/morris.min.js"></script>
+	<script src="/js/morris/morris-data.js"></script>
 
 
 	<!-- include summernote css/js -->

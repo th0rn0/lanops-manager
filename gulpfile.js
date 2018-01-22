@@ -12,5 +12,6 @@ elixir.config.assetsDir = 'resources/assets/';
  */
 
 elixir(function(mix) {
-    mix.sass(['app.scss'], 'public/css');
+    mix.sass(['app.scss'], 'public/css/app.css');
+    mix.sass(['admin.scss'], 'public/css/admin.css');
 });
