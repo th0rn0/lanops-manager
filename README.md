@@ -3,6 +3,7 @@
 Lan Manager by Th0rn0 of LanOps. Front End Design by Invert.
 
 https://github.com/th0rn0
+
 https://github.com/richardmountain
 
 The Lan Manager is a fully featured White Labelled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained.
