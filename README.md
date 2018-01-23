@@ -1,8 +1,9 @@
 # LanOps Lan Manager - WIP - v0.1.4.1
 
-Lan Manager Created by Th0rn0 of LanOps.
+Lan Manager by Th0rn0 of LanOps. Front End Design by Invert.
 
 https://github.com/th0rn0
+https://github.com/richardmountain
 
 The Lan Manager is a fully featured White Labelled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained.
 
@@ -11,7 +12,7 @@ https://lanops.co.uk
 ##### Features
 
 - White Label
-- Event Management (as a Service)
+- Event Management
   - Signup/Info Pages
   - Tickets
   - Signups/Gifts/Staff/Refunds
