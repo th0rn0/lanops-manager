@@ -30,7 +30,7 @@ https://lanops.co.uk
 - Seating Plans
   - Multiple Plans per Event supported!
   - Manual seating of participants
-- Venues
+- Venue Management
 - User Management
 - Timetable Management
   - Multiple timetables per event supported!
@@ -43,7 +43,12 @@ https://lanops.co.uk
 - Event specific page for when at the event
   - Shows Timetables, Attendees, Tournaments, Annoucements and Seating
 - Gallery
-- Admin Interface for management
+- Admin Interface
+- API Endpoints
+  - Events
+  - Participants
+  - Seating
+  - Timetables
 - Payments
   - Terms & Conditions
   - Paypal Express
