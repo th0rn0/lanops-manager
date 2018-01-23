@@ -70,11 +70,12 @@ Manual install here
 
 ## First Run
 
+First time run here
 
 #### Contributors
 
-Th0rn0
-1nver7
+- Th0rn0
+- 1nvert
 
 ##### To Do
 
