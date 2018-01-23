@@ -19,11 +19,8 @@ class CreateGalleryAlbumsTable extends Migration {
 			$table->string('slug')->unique();
 			$table->string('description')->nullable();
 			$table->string('album_cover_id')->nullable();
-			$table->integer('event_id')->unsigned()->nullable()->index();
+			$table->integer('event_id');
 			$table->timestamps();
-
-			## Foreign Keys
-			$table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 		});
 	}
 
@@ -35,7 +32,6 @@ class CreateGalleryAlbumsTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('gallery_albums_event_id_foreign');
 		Schema::drop('gallery_albums');
 	}
 
