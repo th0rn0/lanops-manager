@@ -79,7 +79,8 @@
 										<td width="15%">
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										</td>
-									</tr>
+									{{ Form::close() }}
+								</tr>
 							@endforeach
 						</tbody>
 					</table>
@@ -101,7 +102,7 @@
 						{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}
 					</div>
-					<button type="submit" name="action" value="upload_image" class="btn btn-default">Upload</button>
+					<button type="submit" class="btn btn-default">Upload</button>
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -111,7 +112,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="list-group">
-					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug, 'files' => true )) }}
+					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug)) }}
 						@if ($errors->any())
 						  	<div class="alert alert-danger">
 						        <ul>
