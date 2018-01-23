@@ -78,3 +78,10 @@ Th0rn0
 
 ##### To Do
 
+- Refunds
+- Twitch Integration
+- Tournament API
+- Server Management
+- Add more payment Gateways
+- Unit Tests
+- Get a life
