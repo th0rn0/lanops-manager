@@ -34,6 +34,9 @@ app-install:
 	# and running. This is because both database and memcached containers are needed 
 	# for migrated the db
 
+app-install-dev:
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certs/nginx.key -out certs/nginx.crt
+
 # Helper to just clear all docker containers and images
 clear-docker-images:
 	docker rm $$(docker ps -a -q) -f
