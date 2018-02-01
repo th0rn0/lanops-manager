@@ -118,6 +118,15 @@
 							</address>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
+								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
+								<small>This will show on the event home page</small>
+							</div>
+						</div>
+					</div>
 					{{ Form::hidden('end_time', date('H:i:s', strtotime($event->end)), array('id'=>'end_time')) }}
 					{{ Form::hidden('end_date', date('Y-m-d', strtotime($event->end)), array('id'=>'end_date')) }}
 					{{ Form::hidden('start_time', date('H:i:s', strtotime($event->start)), array('id'=>'start_time')) }}

@@ -109,6 +109,7 @@ class EventsController extends Controller
 			'start_time'		=> 'filled|date_format:H:i:s',
 			'status'			=> 'in:draft,preview,published,private',
 			'allow_spectators'	=> 'boolean',
+			'essential_info'	=> 'filled',
 		];
 		$messages = [
 			'event_name.filled'			=> 'Event Name cannot be empty',
@@ -116,12 +117,13 @@ class EventsController extends Controller
 			'end_date.date_format'		=> 'A End Date must be Y-m-d format',
 			'end_time.filled'			=> 'A End Time cannot be empty',
 			'end_time.date_format'		=> 'A End Time must be H:i:s formate',
-			'start_date.filled'			=> 'A Start Date cannout be empty',
+			'start_date.filled'			=> 'A Start Date cannut be empty',
 			'end_date.date_format'		=> 'A Start Date must be Y-m-d format',
-			'start_time.filled'			=> 'A Start Time cannout be empty',
+			'start_time.filled'			=> 'A Start Time cannot be empty',
 			'end_time.date_format'		=> 'A Start Time must be H:i:s format',
 			'status.in' 				=> 'Status must be draft, preview, published or private',
 			'allow_spectators.boolean'	=> 'Allow Spectators must be boolean',
+			'essential_info.filled'		=> 'Essetntial Information cannot be empty',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -166,6 +168,10 @@ class EventsController extends Controller
 			$event->allow_spectators = $request->allow_spectators; 
 		}
 		
+		if (isset($request->essential_info)) {
+			$event->essential_info = $request->essential_info; 
+		}
+
 		if (!$event->save()) {
 			Session::flash('alert-danger', 'Cannot update Event!');
 			return Redirect::to('admin/events/' . $event->slug);

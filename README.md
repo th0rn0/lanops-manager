@@ -1,8 +1,10 @@
 # LanOps Lan Manager - WIP - v0.1.4.1
 
-Lan Manager by Th0rn0 of LanOps. Front End Design by Invert.
+Lan Manager by Th0rn0 of LanOps. 
 
 https://github.com/th0rn0
+
+Initial Front End Design by Invert.
 
 https://github.com/richardmountain
 
@@ -28,7 +30,6 @@ https://lanops.co.uk
   - Weekend, Day, Spectator Ticket Types
   - Eligible/Non Eligible for seats Ticket Type supported!
   - QR Codes supported!
-  - Refunds (TBC)
 - Seating Plans
   - Multiple Plans per Event supported!
   - Manual seating of participants
@@ -55,10 +56,7 @@ https://lanops.co.uk
   - Terms & Conditions
   - Paypal Express
   - Breakdowns in Admin
-  - More Payment Gateways (TBC)
 - Account Management
-- Server Management (TBC)
-- Twitch Integration (TBC)
 - Fully Encapsulated in Docker Containers
 - Built on Laravel
 - Easily Expandable
@@ -74,6 +72,10 @@ make db-seed
 ### Manual Install
 
 Manual install here
+
+### Dockerless Setup
+
+Y U DO DIS?
 
 ## First Run
 
@@ -93,3 +95,5 @@ First time run here
 - Add more payment Gateways
 - Unit Tests
 - Get a life
+- Add docker container for install
+- Add instructions for non docker installation

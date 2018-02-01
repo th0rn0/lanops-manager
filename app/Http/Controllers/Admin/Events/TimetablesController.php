@@ -88,12 +88,12 @@ class TimetablesController extends Controller
 	{
 		$rules = [
 			'name'		=> 'filled',
-			'status'	=> 'in:DRAFT,OPEN,LIVE,CLOSE,COMPLETE',
+			'status'	=> 'in:DRAFT,PUBLISHED',
 			'primary'	=> 'boolean',
 		];
 		$messages = [
 			'name.filled'		=> 'Name cannot be empty',
-			'status.in'			=> 'Status must be DRAFT, OPEN, LIVE, CLOSE or COMPLETE',
+			'status.in'			=> 'Status must be DRAFT or PUBLISHED',
 			'primary.boolean'	=> 'Primary must be boolean',
 		];
 		$this->validate($request, $rules, $messages);
