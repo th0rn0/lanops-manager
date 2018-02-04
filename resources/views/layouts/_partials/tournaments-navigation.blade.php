@@ -2,7 +2,7 @@
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Tournaments({{Helpers::getUserActiveTournaments($event->id)}}) <span class="caret"></span></a>
 		<ul class="dropdown-menu">
-			@if ( count($user->eventParticipants) > 0 )
+			@if ( count($user->eventParticipants) > 0 && Helpers::getUserActiveTournaments($event->id) != 0)
 				<li class="hidden"><a href="/events/{{$event->slug}}/tournaments">All Tournaments</a></li>
 				<li role="separator" class="divider hidden"></li>
 
