@@ -73,15 +73,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group checkbox">
-								<label>
-									@if ($event->allow_spectators)
-										{{ Form::checkbox('allow_spec', 1, true) }} Allow Spectators
-									@else
-										{{ Form::checkbox('allow_spec', 1) }} Allow Spectators
-									@endif
-								</label>
-							</div>
 						</div>
 						<div class="col-md-6 col-sm-12">
 							<div class="form-group">
@@ -116,6 +107,15 @@
 								@if ($event->venue->address_postcode) {{ $event->venue->address_postcode }}<br> @endif
 								@if ($event->venue->address_country) {{ $event->venue->address_country }}<br> @endif
 							</address>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
+								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
+								<small>This will show on the event home page</small>
+							</div>
 						</div>
 					</div>
 					{{ Form::hidden('end_time', date('H:i:s', strtotime($event->end)), array('id'=>'end_time')) }}

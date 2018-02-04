@@ -43,7 +43,7 @@ class TimetableDataController extends Controller
 
 	    $data 						= new EventTimetableData;
 	    $data->event_timetable_id 	= $timetable->id;
-	    $data->start_time 			= $request->start;
+	    $data->start_time 			= $request->start_time;
 	    $data->name 				= $request->game;
 	    $data->desc 				= $request->desc;
 	    
@@ -75,8 +75,8 @@ class TimetableDataController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-	    $data->start_time 	= $request->start;
-    	$data->name 		= $request->game;
+	    $data->start_time 	= $request->start_time;
+    	$data->name 		= $request->name;
 	    $data->desc 		= $request->desc;
 
 		if (!$data->save()) {

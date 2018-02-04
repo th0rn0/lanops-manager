@@ -238,7 +238,7 @@ class TournamentsController extends Controller
 	public function finalize(Event $event, EventTournament $tournament)
 	{
 		if (!$tournament->setStatus('COMPLETE')) {
-			Session::flash('alert-danger', 'Cannot finalize Tournament!');
+			Session::flash('alert-danger', 'Cannot finalize. Tournament is still live!');
 			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 		}
 

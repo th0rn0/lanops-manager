@@ -383,6 +383,7 @@
 			@if (strtoupper($timetable->status) == 'DRAFT')
 				<h4>DRAFT</h4>
 			@endif
+			<h4>{{ $timetable->name }}</h4>
 			<table class="table table-striped">
 				<thead>
 					<th>
