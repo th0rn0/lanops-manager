@@ -82,7 +82,6 @@ class EventsController extends Controller
 		$event->end					= date("Y-m-d H:i:s", strtotime($request->end_date . $request->end_time));
 		$event->desc_long			= $request->desc_long;
 		$event->desc_short			= $request->desc_short;
-		$event->allow_spectators	= $request->allow_spec;
 		$event->event_venue_id		= @$request->venue;
 
 		if (!$event->save()) {
@@ -108,7 +107,6 @@ class EventsController extends Controller
 			'start_date'		=> 'filled|date_format:Y-m-d',
 			'start_time'		=> 'filled|date_format:H:i:s',
 			'status'			=> 'in:draft,preview,published,private',
-			'allow_spectators'	=> 'boolean',
 			'essential_info'	=> 'filled',
 		];
 		$messages = [
@@ -122,7 +120,6 @@ class EventsController extends Controller
 			'start_time.filled'			=> 'A Start Time cannot be empty',
 			'end_time.date_format'		=> 'A Start Time must be H:i:s format',
 			'status.in' 				=> 'Status must be draft, preview, published or private',
-			'allow_spectators.boolean'	=> 'Allow Spectators must be boolean',
 			'essential_info.filled'		=> 'Essetntial Information cannot be empty',
 		];
 		$this->validate($request, $rules, $messages);
@@ -164,10 +161,6 @@ class EventsController extends Controller
 			$event->status			= $request->status;
 		}
 
-		if (isset($request->allow_spectators)) {
-			$event->allow_spectators = $request->allow_spectators; 
-		}
-		
 		if (isset($request->essential_info)) {
 			$event->essential_info = $request->essential_info; 
 		}

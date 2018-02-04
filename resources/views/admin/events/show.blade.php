@@ -73,15 +73,6 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group checkbox">
-								<label>
-									@if ($event->allow_spectators)
-										{{ Form::checkbox('allow_spec', 1, true) }} Allow Spectators
-									@else
-										{{ Form::checkbox('allow_spec', 1) }} Allow Spectators
-									@endif
-								</label>
-							</div>
 						</div>
 						<div class="col-md-6 col-sm-12">
 							<div class="form-group">
