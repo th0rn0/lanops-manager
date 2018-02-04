@@ -117,13 +117,17 @@ class EventTournament extends Model
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
         if ($status == 'LIVE') {
             $tournament = $challonge->getTournament($this->challonge_tournament_id);
-            if (!$tournament->start()) {
+            try {
+                $tournament->start();
+            } catch (\Exception $e) {
                 return false;
             }
         }
         if ($status == 'COMPLETE') {
             $tournament = $challonge->getTournament($this->challonge_tournament_id);
-            if (!$tournament->finalize()) {
+            try {
+                $tournament->finalize();
+            } catch (\Exception $e) {
                 return false;
             }
         }

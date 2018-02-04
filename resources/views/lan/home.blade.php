@@ -39,17 +39,6 @@
 	@if (!$signed_in)
 		Please Sign in at the main desk
 	@endif
-	<!-- FOOD ORDER -->
-	<div class="page-header">
-		<a name="food"></a>
-		<h3>Order some food...</h3>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<h4>Dominos</h4>
-			<p>LanOps Recieves a 50% discount on all items (desserts and drinks excluded)</p>
-		</div>
-	</div>
 
 	<!-- EVENT SPONSORS -->
 	@if (!$event->sponsors->isEmpty())
@@ -65,42 +54,40 @@
 	@endif
 
 	<!-- ESSENTIAL INFORMATION -->
-	<div class="page-header">
-		<a name="information"></a>
-		<h3>Essential Information</h3>
-	</div>
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-xs-12">
-			<h4>Venue Address</h4>
-			<p>{{ $event->venue->display_name }}</p>
-			<address>
-				<strong>{{ $event->venue->display_name }}</strong><br>
-				@if (trim($event->venue->address_1) != '' || $event->venue->address_1 != null) {{ $event->venue->address_1 }}<br> @endif
-				@if (trim($event->venue->address_2) != '' || $event->venue->address_2 != null) {{ $event->venue->address_2 }}<br> @endif
-				@if (trim($event->venue->address_street) != '' || $event->venue->address_street != null) {{ $event->venue->address_street }}<br> @endif
-				@if (trim($event->venue->address_city) != '' || $event->venue->address_city != null) {{ $event->venue->address_city }}<br> @endif
-				@if (trim($event->venue->address_postcode) != '' || $event->venue->address_postcode != null) {{ $event->venue->address_postcode }}<br> @endif
-				@if (trim($event->venue->address_country) != '' || $event->venue->address_country != null) {{ $event->venue->address_country }}<br> @endif
-			</address>
+			<div class="page-header">
+				<a name="information"></a>
+				<h3>Essential Information</h3>
+			</div>
+			{!! $event->essential_info !!}
 		</div>
 		<div class="col-lg-6 col-md-6 col-xs-12">
-			<p>Doors will be locked at 12pm If you need to get in please ring <strong>Storm Seeker</strong></p>
-			<p>Dominoes orders will happen throughout the day. 50% off <strong>pizzas and sides ONLY</strong></p>
-			<p>Smokers please stay <strong>AWAY</strong> from the doors</p>
-			<p><strong><a href="https://www.lanfuel.co.uk">Lan Fuel</a></strong> will be here in the morning to take breakfast orders <strong>last orders 11.30AM</strong></p>
-			<p>Server issues speak to <strong>Kayomani</strong></p>
-			<p>Website issues speak to <strong>Th0rn0</strong></p>
-			<p>Network issues speak to <strong>Rebel</strong></p>
+			<div class="page-header">
+				<a name="annoucements"></a>
+				<h3>Annoucements</h3>
+			</div>
+			@if ($event->annoucements->isEmpty())
+				<div class="alert alert-info"><strong>No Annoucements</strong></div>
+			@else
+				@foreach ($event->annoucements as $annoucement)
+					<div class="alert alert-info">{{ $annoucement->message }}</div>
+				@endforeach
+			@endif
 		</div>
 	</div>
 	
 	<!-- TIMETABLE -->
-	<div class="page-header">
-		<a name="event"></a>
-		<h3>Timetable</h3>
-	</div>
 	@if (!$event->timetables->isEmpty())
+		<div class="page-header">
+			<a name="timetable"></a>
+			<h3>Timetable</h3>
+		</div>
 		@foreach ($event->timetables as $timetable)
+			@if (strtoupper($timetable->status) == 'DRAFT')
+				<h4>DRAFT</h4>
+			@endif
+			<h4>{{ $timetable->name }}</h4>
 			<table class="table table-striped">
 				<thead>
 					<th>
@@ -136,11 +123,11 @@
 
 	<!-- TOURNAMENTS -->
 	@if (!$event->tournaments->isEmpty())
+		<div class="page-header">
+			<a name="tournaments"></a>
+			<h3>Tournaments</h3>
+		</div>
 		<div class="row">
-			<div class="page-header">
-				<a name="tournaments"></a>
-				<h3>Tournaments</h3>
-			</div>
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
 					<div class="col-sm-6 col-xs-12">
@@ -151,10 +138,16 @@
 										{{ $tournament->name }}
 									</a>
 									<span class="pull-right">
-										@if (!$tournament->getParticipant($user->active_event_participant->id))
+										@if ($tournament->status == 'COMPLETE')
+											<span class="label label-success">Ended</span>
+										@endif
+										@if ($tournament->status == 'LIVE')
+											<span class="label label-success">Live</span>
+										@endif
+										@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->active_event_participant->id))
 											<span class="label label-danger">Not Signed up</span>
 										@endif
-										@if ($tournament->getParticipant($user->active_event_participant->id))
+										@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->active_event_participant->id))
 											<span class="label label-success">Signed up</span>
 										@endif
 									</span>

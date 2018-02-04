@@ -38,7 +38,7 @@
 					<thead>
 						<tr>
 							<th>Time</th>
-							<th>Game</th>
+							<th>Name</th>
 							<th>Desc</th>
 							<th></th>
 						</tr>
@@ -85,12 +85,12 @@
 					@endif
 					<div class="row">
 						<div class="form-group col-lg-6">
-							{{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
-							{{ Form::text('game', NULL ,array('id'=>'game','class'=>'form-control')) }}
+							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 						</div> 
 						 <div class="form-group col-lg-6">
-							{{ Form::label('start','Start',array('id'=>'','class'=>'')) }}
-							{{ Form::select('start', $timetable->getAvailableTimes(), null, array('id'=>'start','class'=>'form-control')) }}
+							{{ Form::label('start_time','Start',array('id'=>'','class'=>'')) }}
+							{{ Form::select('start_time', $timetable->getAvailableTimes(), null, array('id'=>'start_time','class'=>'form-control')) }}
 						</div>
 						<div class="form-group col-lg-12">
 							{{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
@@ -127,8 +127,8 @@
 								Form::select(
 									'status',
 									array(
-										'draft'=>'Draft',
-										'published'=>'Published',
+										'DRAFT'=>'Draft',
+										'PUBLISHED'=>'Published',
 									),
 									$event->status,
 									array(
@@ -176,8 +176,8 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data', 'id'=>'editTimeSlotForm')) }}
 					<div class="row">
 						<div class="form-group col-lg-6">
-							{{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
-							{{ Form::text('game', NULL ,array('id'=>'editTimetableGame','class'=>'form-control')) }}
+							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name', NULL ,array('id'=>'editTimetableGame','class'=>'form-control')) }}
 						</div> 
 						 <div class="form-group col-lg-6">
 							{{ Form::label('start','Start',array('id'=>'','class'=>'')) }}
