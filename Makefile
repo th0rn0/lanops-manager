@@ -1,57 +1,73 @@
-live: purge-containers prep-fixtures
-	docker-compose -p lanops up -d --build 
+live: purge-containers
+	docker-compose up -d --build 
 
-interative: purge-containers prep-fixtures
-	docker-compose -p lanops up --build
+interative: purge-containers
+	docker-compose up --build
 
 stop:
-	docker-compose -p lanops stop
+	docker-compose stop
 
-prep-fixtures:
+app-install: folder-structure composer-install npm-install
 
-purge-containers:
-	docker-compose -p lanops stop
-	docker-compose -p lanops rm -vf
+app-install-dev: folder-structure composer-install-dev npm-install
 
-app-install:
-	# We need to give write permission on the app directory for the webserver.
-	# For dev, let's just give write permission to all since changing the owner of this directory will also affect the
-	# local machine. We should probably avoid this as could affect our own access to this directory.
-	# apt-get install -y php git docker docker-compose
-	# apt-get install -y php-mbstring php-xml php-zip php-bz2 php-dom php-curl php-bcmath php-gd
-	rm -rf bootstrap/cache/*
-	chmod 777 -R bootstrap/cache/
-	chmod 777 -R storage/
-	chmod -R o+w storage/
-	composer dump-auto
-	composer install --no-scripts
-	## Composer Install
-	# docker run --rm --interactive --tty \
- 	#    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
- 	#    --user $(id -u):$(id -g) \
- 	#    composer install --ignore-platform-reqs --no-scripts
-	# Installation of the app needs to come after the docker services are already up 
-	# and running. This is because both database and memcached containers are needed 
-	# for migrated the db
+# DANGER ZONE
+clean-all: stop purge-containers
+	echo 'This is dangerous!'
+	echo 'This will totally remove all data and information stored in your app!'
+	echo 'do you want to continue? (Y/N)'
+	
+	sudo rm -rf storage/app/public/images/gallery/*
+	sudo rm -rf storage/app/public/images/events/*
+	sudo rm -rf vendor/*
+	sudo rm -rf node_modules/
+	sudo rm -rf public/css/*
+	sudo rm -rf storage/framework/cache/*
+	sudo rm -rf storage/framework/views/*
+	sudo rm -rf storage/framework/sessions/*
+	sudo rm -rf bootstrap/cache/*
 
-app-install-dev:
-	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certs/nginx.key -out certs/nginx.crt
+	docker rm lan_manager_server
+	docker rm lan_manager_app
+	docker rm lan_manager_database
+	docker rmi manager_server
+	docker rmi manager_app
+	docker rmi manager_database
+	docker volume rm lan_manager_db
 
-# Helper to just clear all docker containers and images
-clear-docker-images:
-	docker rm $$(docker ps -a -q) -f
-	docker rmi $$(docker images -q) -f
+#########
+#HELPERS#
+#########
 
 composer-install:
 	## Composer Install
 	docker run --rm --interactive --tty \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
     --user $(id -u):$(id -g) \
-    composer install
+    composer install --ignore-platform-reqs --no-scripts
 
 composer-install-dev:
 	## Composer Install
 	docker run --rm --interactive --tty \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
     --user $(id -u):$(id -g) \
-    composer install --dev
+    composer install --ignore-platform-reqs --no-scripts --dev
+
+npm-install:
+	docker run \
+      --rm \
+      -it \
+      -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/src:rw \
+      mkenney/npm:node-6.9-debian npm install && gulp
+
+folder-structure:
+	chmod 777 bootstrap/cache/
+	chmod 777 storage/
+	chmod -R o+w storage/
+
+ssh-keygen:
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certs/nginx.key -out certs/nginx.crt
+
+purge-containers:
+	docker-compose -p lan_manager stop
+	docker-compose -p lan_manager rm -vf
