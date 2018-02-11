@@ -173,8 +173,8 @@ make stop
 
 ## Contributors
 
-- Th0rn0
-- 1nvert
+- Th0rn0 - https://github.com/th0rn0
+- 1nvert - https://github.com/richardmountain
 
 ##### To Do
 
