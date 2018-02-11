@@ -1,47 +1,37 @@
-version: '2'
+version: "3.4"
 services:
   app:
     build:
       context: ./docker/app
       dockerfile: app.dockerfile
     working_dir: /var/www
-    container_name: lanops_web_app
     volumes:
       - .:/var/www
     env_file: .env
+    container_name: lan_manager_app
   server:
     build:
       context: ./docker/server
       dockerfile: server.dockerfile
     working_dir: /var/www
-    container_name: lanops_web_server
     volumes:
       - ./certs:/etc/nginx/certs
-    volumes_from:
-      - app
+      - .:/var/www
     env_file: .env
     ports:
       - 80:80
       - 443:443
+    container_name: lan_manager_server
   database:
     build:
       context: ./docker/db
       dockerfile: db.dockerfile
     volumes:
-      - lanops_db:/var/lib/mysql
-    container_name: lanops_web_database
+      - db:/var/lib/mysql
     env_file: .env
     ports:
         - "3306:3306"
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-      - database
-    container_name: lanops_web_phpmyadmin
-    environment:
-      PMA_HOST: database
-      PMA_PORT: 3306
-    ports:
-      - '8081:80'
+    container_name: lan_manager_database
 volumes:
-  lanops_db:
+  db:
+    name: lan_manager_db
