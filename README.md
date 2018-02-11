@@ -122,7 +122,7 @@ npm install
 
 6. Compile JS & CSS:
 ```
-gulp
+gulp --production
 ```
 
 7. Run the database migration:
