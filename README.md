@@ -1,4 +1,5 @@
 
+
 # LanOps Lan Manager - WIP - v0.1.4.1
 Lan Manager by Th0rn0 of LanOps. 
 
@@ -8,7 +9,10 @@ Initial Front End Design by Invert.
 
 https://github.com/richardmountain
 
-The Lan Manager is a fully featured White Labelled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained.
+##### About
+The Lan Manager is a fully featured White labeled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained. The purpose of this application was to remove the need for websites like WIX, SquareSpace, EventBrite or bloated Wordpress plugins that charge a small fortune for use of their code base and/or services all the while keeping all of the IPs and rights to your event hosting and ticket sales. Coupled with this there was no decent fully fledged alternative to the likes of ALP (2004 baby!) that did everything we (LanOps) needed. There was a lot of software out there but there wasn't one unified application that tied all these services such as tournaments, ticket management & sales, event signup, server management all in a easily extendable OPEN SOURCE package.
+
+Thus the LanOps Lan Manager was born!
 
 https://lanops.co.uk
 ##### Home Page:
@@ -49,7 +53,7 @@ https://lanops.co.uk
 - Timetable Management
   - Multiple timetables per event supported!
 - Tournament Management
-  - Supported via Challonge API (To be changed)
+  - Supported via Challonge API
   - 1v1, Teams and PUGs supported!
   - Single/Double Elimination and Round Robin supported!
 - Event Sign in
@@ -79,9 +83,14 @@ https://lanops.co.uk
 - Docker v17
 - Docker-compose v1.18
 - Paypal Account for payments
-- Challonge Team API key  (Challongeteamapiherelocation)
-- Steam Developers API Key (steamapiherelocation)
-- Google Analytics Tracking ID (googleanalyticsapiherelocation)
+- Challonge API key
+  - A verified challonge account is required - https://challonge.com/settings/developer
+- Challonge Organization subdomain 
+  - An Organization must be created in Challonge for this. Please use the exact subdomain used in challonge. For example if the organization domain is https://lanops.challonge.com/ your sub domain will be 'lanops' - https://challonge.com/organizations/new
+- Steam Developers API Key
+  - Any Steam API key will do. It's best to create a new account though - https://steamcommunity.com/dev/apikey
+- Google Analytics Tracking ID
+  - Optional but highly recommended
 
 ### Pre Requisites - Dockerless
 - PHP
@@ -107,6 +116,7 @@ PAYPAL_PASSWORD=<< Paypal password >>
 PAYPAL_SIGNATURE=<< Paypal signature >>
 STEAM_API_KEY=<< Steam API key >>
 CHALLONGE_API_KEY=<< Challonge API key >>
+CHALLONGE_SUBDOMAIN=<< Challonge Subdomain >>
 
 DB_CONNECTION=mysql
 DB_PORT=3306
@@ -224,8 +234,6 @@ make stop
 
 - Refunds
 - Twitch Integration
-- Tournament API
-- Server Management
 - Add more payment Gateways
 - Unit Tests
 - Get a life
