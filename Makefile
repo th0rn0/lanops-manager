@@ -10,7 +10,7 @@ stop:
 	docker-compose stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed stop
+app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed stop generate-key
 
 # Install Dependencies 
 app-install: folder-structure composer-install npm-install
@@ -41,6 +41,10 @@ database-seed:
 # Rollback last Database Migration
 database-rollback:
 	docker exec lan_manager_app php artisan db:rollback
+
+# Generate Application key
+generate-key:
+	docker exec lan_manager_app php artisan key:generate
 
 # Create Default Folder structure
 folder-structure:
@@ -95,6 +99,7 @@ purge-containers:
 	docker-compose -p lan_manager stop
 	docker-compose -p lan_manager rm -vf
 
+# Purge Caches
 purge-cache:
 	sudo rm -rf storage/framework/cache/*
 	sudo rm -rf storage/framework/views/*
@@ -102,6 +107,7 @@ purge-cache:
 	sudo rm -rf bootstrap/cache/*
 	sudo rm -rf storage/debugbar/*
 
+# Wait for containers to initialize
 wait:
 	sleep 20
 
