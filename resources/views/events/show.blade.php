@@ -243,7 +243,7 @@
 								</div>
 								<div class="col-xs-12 col-md-4">
 									<h5>Your Seats</h5>
-									@if (!$user->eventParticipation->isEmpty())
+									@if ($user && !$user->eventParticipation->isEmpty())
 										@foreach ($user->eventParticipation as $participant) 
 											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
 												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
