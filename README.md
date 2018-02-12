@@ -134,7 +134,7 @@ make app-install
 
 ### Dockerless Setup
 
-Disclaimer: This part is untested and I dont intend on testing it. If you are struggling move out of 1999 and utlize Docker.
+Disclaimer: This part is untested and I dont intend on testing it. If you are struggling to get it to work, leave the year 1999 and utlize Docker.
 
 1. Y U DO DIS?
 
