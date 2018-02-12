@@ -44,18 +44,18 @@ database-rollback:
 
 # Create Default Folder structure
 folder-structure:
-	if [ ! -d "storage/app/public/images/gallery/" ]; then
+	# if [ ! -d "storage/app/public/images/gallery/" ]; then
 		mkdir -p storage/app/public/images/gallery/
-	fi
-	if [ ! -d "storage/app/public/images/events/" ]; then
+	# fi
+	# if [ ! -d "storage/app/public/images/events/" ]; then
 		mkdir -p storage/app/public/images/events/
-	fi
-	if [ ! -d "storage/app/public/images/venues/" ]; then
+	# fi
+	# if [ ! -d "storage/app/public/images/venues/" ]; then
 		mkdir -p storage/app/public/images/venues/
-	fi
-	if [ ! -d "storage/app/public/images/main/" ]; then
+	# fi
+	# if [ ! -d "storage/app/public/images/main/" ]; then
 		mkdir -p storage/app/public/images/main/
-	fi
+	# fi
 	chmod +x bootstrap/cache/
 	chmod +x storage/
 
@@ -125,7 +125,4 @@ purge-all: stop purge-containers
 	docker rm lan_manager_server
 	docker rm lan_manager_app
 	docker rm lan_manager_database
-	docker rmi manager_server
-	docker rmi manager_app
-	docker rmi manager_database
 	docker volume rm lan_manager_db
