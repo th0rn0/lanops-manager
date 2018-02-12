@@ -56,8 +56,8 @@ folder-structure:
 	# if [ ! -d "storage/app/public/images/main/" ]; then
 		mkdir -p storage/app/public/images/main/
 	# fi
-	chmod +x bootstrap/cache/
-	chmod +x storage/
+	chmod 775 bootstrap/cache/
+	chmod 777 -R storage/
 
 # Create SSL Keypair for Development
 ssh-keygen:
@@ -95,6 +95,13 @@ purge-containers:
 	docker-compose -p lan_manager stop
 	docker-compose -p lan_manager rm -vf
 
+purge-cache:
+	sudo rm -rf storage/framework/cache/*
+	sudo rm -rf storage/framework/views/*
+	sudo rm -rf storage/framework/sessions/*
+	sudo rm -rf bootstrap/cache/*
+	sudo rm -rf storage/debugbar/*
+
 wait:
 	sleep 20
 
@@ -103,7 +110,7 @@ wait:
 # DANGER ZONE #
 ###############
 # Clean ALL! DANGEROUS!
-purge-all: stop purge-containers
+purge-all: stop purge-containers purge-cache
 	echo 'This is dangerous!'
 	echo 'This will totally remove all data and information stored in your app!'
 	echo 'do you want to continue? (Y/N)'
@@ -116,10 +123,6 @@ purge-all: stop purge-containers
 	sudo rm -rf storage/app/public/images/venues
 	sudo rm -rf storage/app/public/images/main
 	sudo rm -rf storage/logs/*
-	sudo rm -rf storage/framework/cache/*
-	sudo rm -rf storage/framework/views/*
-	sudo rm -rf storage/framework/sessions/*
-	sudo rm -rf bootstrap/cache/*
 	sudo rm public/storage
 
 	docker rm lan_manager_server
