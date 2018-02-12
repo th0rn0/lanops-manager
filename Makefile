@@ -44,12 +44,20 @@ database-rollback:
 
 # Create Default Folder structure
 folder-structure:
-	mkdir storage/app/public/images/gallery/
-	mkdir storage/app/public/images/events/
-	mkdir storage/app/public/images/venues/
-	mkdir storage/app/public/images/main/
-	chmod 777 bootstrap/cache/
-	chmod 777 storage/
+	if [ ! -d "storage/app/public/images/gallery/" ]; then
+		mkdir -p storage/app/public/images/gallery/
+	fi
+	if [ ! -d "storage/app/public/images/events/" ]; then
+		mkdir -p storage/app/public/images/events/
+	fi
+	if [ ! -d "storage/app/public/images/venues/" ]; then
+		mkdir -p storage/app/public/images/venues/
+	fi
+	if [ ! -d "storage/app/public/images/main/" ]; then
+		mkdir -p storage/app/public/images/main/
+	fi
+	chmod +x bootstrap/cache/
+	chmod +x storage/
 
 # Create SSL Keypair for Development
 ssh-keygen:
