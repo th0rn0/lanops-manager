@@ -111,7 +111,6 @@ purge-all: stop purge-containers
 	sudo rm -rf storage/framework/cache/*
 	sudo rm -rf storage/framework/views/*
 	sudo rm -rf storage/framework/sessions/*
-	sudo rm -rf storage/debugbar/*
 	sudo rm -rf bootstrap/cache/*
 	sudo rm public/storage
 
