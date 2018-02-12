@@ -134,9 +134,11 @@ make app-install
 
 ### Dockerless Setup
 
+Disclaimer: This part is untested and I dont intend on testing it. If you are struggling move out of 1999 and utlize Docker.
+
 1. Y U DO DIS?
 
-2. Set the server root as public/
+2. Set the server root as public/. Apache and NGINX are supported. WAMP or its alternatives are untested (and shouldn't be used)
 
 3. Install Prerequisites:
 
@@ -193,8 +195,8 @@ mkdir storage/app/public/images/gallery/
 mkdir storage/app/public/images/events/
 mkdir storage/app/public/images/venues/
 mkdir storage/app/public/images/main/
-chmod 777 bootstrap/cache/
-chmod 777 storage/
+chmod +x bootstrap/cache/
+chmod +x storage/
 ```
 
 ## Run
@@ -227,5 +229,3 @@ make stop
 - Add more payment Gateways
 - Unit Tests
 - Get a life
-- Add docker container for install
-- Add instructions for non docker installation
