@@ -107,7 +107,7 @@ Anything wrapped in <<>> needs your input!
 APP_DEBUG=<< true OR false >>
 APP_ENV=<< local OR prod >>
 APP_URL=<< app URL. Use localhost if unsure >>
-APP_KEY=<< Laravel App key. Use ```make generate-key``` helper if not already set >>
+APP_KEY=<< Laravel App key. Use "make generate-key" helper if not already set >>
 ANALYTICS_PROVIDER=GoogleAnalytics
 ANALYTICS_TRACKING_ID=<< Google Analytics tracking ID >>
 
