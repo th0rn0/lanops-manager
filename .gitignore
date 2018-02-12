@@ -18,3 +18,11 @@ composer.lock
 public/uploads/gallery/
 
 /certs
+
+public/css/admin\.css
+
+public/css/app\.css
+
+public/css/admin\.css\.map
+
+public/css/app\.css\.map
