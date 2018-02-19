@@ -10,7 +10,7 @@ stop:
 	docker-compose stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed stop generate-key
+app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed generate-key stop
 
 # Install Dependencies 
 app-install: folder-structure composer-install npm-install
