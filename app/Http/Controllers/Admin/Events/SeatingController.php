@@ -75,7 +75,7 @@ class SeatingController extends Controller
 		for ($i=0; $i < $request->columns; $i++) { 
 			$seating_headers[] = $alphabet[$i];
 		}
-		$seating_plan->headers  = implode(', ', $seating_headers);
+		$seating_plan->headers  = implode(',', $seating_headers);
 		$seating_plan->columns  = $request->columns;
 		$seating_plan->rows     = $request->rows;
 

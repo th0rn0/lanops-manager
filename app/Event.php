@@ -211,7 +211,7 @@ class Event extends Model
 	{
 		$return = array();
 		foreach ($this->eventParticipants as $participant) {
-			if (($participant->staff || $participant->free) || $participant->ticket->seatable) {
+			if (($participant->staff || $participant->free) || @$participant->ticket->seatable) {
 				$seat = 'NOT SEATED';
 				if (!empty($participant->seat)) {
 					$seat = $participant->seat->seat;
@@ -230,5 +230,18 @@ class Event extends Model
 			return json_decode(json_encode($return), FALSE);
 		}
 		return $return;
+	}
+
+	/**
+	 * Get Timetable Data Count
+	 * @return Integer
+	 */
+	public function getTimetableDataCount()
+	{
+		$total = 0;
+		foreach ($this->timetables as $timetable) {
+			$total += $timetable->data()->count();
+		}
+		return $total;
 	}
 }

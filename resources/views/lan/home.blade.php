@@ -341,7 +341,7 @@
 									</tbody>
 								</table>
 								@if ($seating_plan->locked)
-									<p class="text-center"><strong>NOTE: Seating Plan is current locked!</strong></p>
+									<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
 								@endif
 							</div>
 							<hr>
