@@ -86,14 +86,14 @@ npm-install:
 	docker run -it --rm --name js-maintainence \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/usr/src/app \
 	-w /usr/src/app \
-	node:8 npm install && gulp --production
+	node:8 /bin/bash -ci "npm install && npm install --global gulp && gulp --production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run -it --rm --name js-maintainence-dev \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/usr/src/app \
 	-w /usr/src/app \
-	node:8 npm install && gulp
+	node:8 /bin/bash -ci "npm install && npm install --global gulp && gulp"
 # Purge Containers
 purge-containers:
 	docker-compose -p lan_manager stop
