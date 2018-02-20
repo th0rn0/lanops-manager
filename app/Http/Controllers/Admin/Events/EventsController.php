@@ -40,7 +40,6 @@ class EventsController extends Controller
 	{
 		$user = Auth::user();
 		$events = Event::withoutGlobalScopes();
-		$event->eventParticipants = $event->eventParticipants()->orderBy('created_at', 'desc')->simplePaginate(10);
 		return view('admin.events.show')->withUser($user)->withEvent($event)->withEvents($events);
 	}
 

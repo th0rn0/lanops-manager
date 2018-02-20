@@ -151,7 +151,7 @@
 						<i class="fa fa-calendar fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">{{ $event->timetables()->count() }}</div>
+						<div class="huge">{{ $event->getTimetableDataCount() }}</div>
 						<div>Scheduled Slots</div>
 					</div>
 				</div>

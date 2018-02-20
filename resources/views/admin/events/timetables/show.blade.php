@@ -180,8 +180,8 @@
 							{{ Form::text('name', NULL ,array('id'=>'editTimetableGame','class'=>'form-control')) }}
 						</div> 
 						 <div class="form-group col-lg-6">
-							{{ Form::label('start','Start',array('id'=>'','class'=>'')) }}
-							{{ Form::select('start', $timetable->getAvailableTimes(), null, array('id'=>'editTimetableStart','class'=>'form-control')) }}
+							{{ Form::label('start_time','Start',array('id'=>'','class'=>'')) }}
+							{{ Form::select('start_time', $timetable->getAvailableTimes(), null, array('id'=>'editTimetableStart','class'=>'form-control')) }}
 						</div>
 						<div class="form-group col-lg-12">
 							{{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
