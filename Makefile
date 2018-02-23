@@ -61,7 +61,7 @@ folder-structure:
 		mkdir -p storage/app/public/images/main/
 	# fi
 	chmod 775 bootstrap/cache/
-	chmod 777 -R storage/
+	chmod 777 storage/
 
 # Create SSL Keypair for Development
 ssh-keygen:
@@ -135,3 +135,5 @@ purge-all: stop purge-containers purge-cache
 	docker rm lan_manager_app
 	docker rm lan_manager_database
 	docker volume rm lan_manager_db
+
+.ONESHELL:
