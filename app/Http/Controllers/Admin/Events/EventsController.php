@@ -54,23 +54,23 @@ class EventsController extends Controller
 			'event_name'	=> 'required|unique:events,display_name',
 			'desc_short'	=> 'required',
 			'desc_long'		=> 'required',
-			'end_date'		=> 'required|date_format:Y-m-d',
-			'end_time'		=> 'required|date_format:H:i:s',
-			'start_date'	=> 'required|date_format:Y-m-d',
-			'start_time'	=> 'required|date_format:H:i:s',
+			'end_date'		=> 'required|date_format:m/d/Y',
+			'end_time'		=> 'required|date_format:H:i',
+			'start_date'	=> 'required|date_format:m/d/Y',
+			'start_time'	=> 'required|date_format:H:i',
 		];
 		$messages = [
-			'event_name.required'	=> 'Event name is required',
-			'start_date.required'	=> 'Start date is required',
-			'start_time.required'	=> 'Start date is required',
-			'end_date.required'		=> 'End date is required',
-			'end_time.required'		=> 'End date is required',
-			'end_date.date_format'	=> 'End Date must be Y-m-d format',
-			'end_time.date_format'	=> 'End Time must be H:i:s formate',
-			'end_date.date_format'	=> 'Start Date must be Y-m-d format',
-			'end_time.date_format'	=> 'Start Time must be H:i:s format',
-			'desc_short.required'	=> 'Short Description is required',
-			'desc_long.required'	=> 'Long Description is required',
+			'event_name.required'		=> 'Event name is required',
+			'start_date.required'		=> 'Start date is required',
+			'start_time.required'		=> 'Start date is required',
+			'end_date.required'			=> 'End date is required',
+			'end_time.required'			=> 'End date is required',
+			'end_date.date_format'		=> 'End Date must be m/d/Y format',
+			'end_time.date_format'		=> 'End Time must be H:i format',
+			'start_date.date_format'	=> 'Start Date must be m/d/Y format',
+			'start_time.date_format'	=> 'Start Time must be H:i format',
+			'desc_short.required'		=> 'Short Description is required',
+			'desc_long.required'		=> 'Long Description is required',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -101,25 +101,23 @@ class EventsController extends Controller
 	{
 		$rules = [
 			'event_name'		=> 'filled',
-			'end_date'			=> 'filled|date_format:Y-m-d',
-			'end_time'			=> 'filled|date_format:H:i:s',
-			'start_date'		=> 'filled|date_format:Y-m-d',
-			'start_time'		=> 'filled|date_format:H:i:s',
+			'end_date'			=> 'filled|date_format:m/d/Y',
+			'end_time'			=> 'filled|date_format:H:i',
+			'start_date'		=> 'filled|date_format:m/d/Y',
+			'start_time'		=> 'filled|date_format:H:i',
 			'status'			=> 'in:draft,preview,published,private',
-			'essential_info'	=> 'filled',
 		];
 		$messages = [
 			'event_name.filled'			=> 'Event Name cannot be empty',
 			'end_date.filled'			=> 'A End Date cannot be empty',
-			'end_date.date_format'		=> 'A End Date must be Y-m-d format',
+			'end_date.date_format'		=> 'A End Date must be m/d/Y format',
 			'end_time.filled'			=> 'A End Time cannot be empty',
-			'end_time.date_format'		=> 'A End Time must be H:i:s formate',
+			'end_time.date_format'		=> 'A End Time must be H:i formate',
 			'start_date.filled'			=> 'A Start Date cannut be empty',
-			'end_date.date_format'		=> 'A Start Date must be Y-m-d format',
+			'end_date.date_format'		=> 'A Start Date must be m/d/Y format',
 			'start_time.filled'			=> 'A Start Time cannot be empty',
-			'end_time.date_format'		=> 'A Start Time must be H:i:s format',
+			'end_time.date_format'		=> 'A Start Time must be H:i format',
 			'status.in' 				=> 'Status must be draft, preview, published or private',
-			'essential_info.filled'		=> 'Essetntial Information cannot be empty',
 		];
 		$this->validate($request, $rules, $messages);
 
