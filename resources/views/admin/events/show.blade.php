@@ -118,10 +118,6 @@
 							</div>
 						</div>
 					</div>
-					{{ Form::hidden('end_time', date('H:i:s', strtotime($event->end)), array('id'=>'end_time')) }}
-					{{ Form::hidden('end_date', date('Y-m-d', strtotime($event->end)), array('id'=>'end_date')) }}
-					{{ Form::hidden('start_time', date('H:i:s', strtotime($event->start)), array('id'=>'start_time')) }}
-					{{ Form::hidden('start_date', date('Y-m-d', strtotime($event->start)), array('id'=>'start_date')) }}
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
 				<hr>
