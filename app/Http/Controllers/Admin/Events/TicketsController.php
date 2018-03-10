@@ -52,9 +52,9 @@ class TicketsController extends Controller
 		$rules = [
 			'name'				=> 'required',
 			'price'				=> 'required|numeric',
-			'sale_start_date'	=> 'date',
+			'sale_start_date'	=> 'date_format:m/d/Y',
 			'sale_start_time'	=> 'date_format:H:i',
-			'sale_end_date'		=> 'date',
+			'sale_end_date'		=> 'date_format:m/d/Y',
 			'sale_end_time'		=> 'date_format:H:i', 
 			'type'				=> 'required',
 			'seatable'			=> 'boolean',
@@ -64,10 +64,10 @@ class TicketsController extends Controller
 			'name.required'					=> 'A Ticket Name is required',
 			'price.numeric'					=> 'Price must be a number',
 			'price.required'				=> 'A Price is required',
-			'sale_start_date.date'			=> 'Sale dates must be valid Dates',
-			'sale_start_time.date_format'	=> 'Sale times must be valid Times HH:MM',
-			'sale_end_date.date'			=> 'Sale dates must be valid Dates',
-			'sale_end_time.date_format'		=> 'Sale times must be valid Times HH:MM',
+			'sale_start_date.date'			=> 'Sale Start Date must be m/d/Y format',
+			'sale_start_time.date_format'	=> 'Sale Start Time must be H:i format',
+			'sale_end_date.date'			=> 'Sale End Date must be m/d/Y format',
+			'sale_end_time.date_format'		=> 'Sale End Time must be H:i format',
 			'seatable.boolen'				=> 'Seatable must be True/False',
 			'quantity.numeric'				=> 'Quantity must be a number',
 		];
@@ -120,6 +120,7 @@ class TicketsController extends Controller
 	{
 		$rules = [
 			'price'				=> 'numeric',
+			'name'				=> 'filled',
 			'sale_start_date'	=> 'date',
 			'sale_start_time'	=> 'date_format:H:i',
 			'sale_end_date'		=> 'date',
@@ -129,19 +130,23 @@ class TicketsController extends Controller
 		];
 		$messages = [
 			'price|numeric'					=> 'Price must be a number',
-			'sale_start_date|date'			=> 'Sale dates must be valid Dates',
-			'sale_start_time|date_format'	=> 'Sale times must be valid Times HH:MM',
-			'sale_end_date|date'			=> 'Sale dates must be valid Dates',
-			'sale_end_time|date_format'		=> 'Sale times must be valid Times HH:MM',
+			'name|filled'					=> 'Name cannot be empty',
+			'sale_start_date.date'			=> 'Sale Start Date must be m/d/Y format',
+			'sale_start_time.date_format'	=> 'Sale Start Time must be H:i format',
+			'sale_end_date.date'			=> 'Sale End Date must be m/d/Y format',
+			'sale_end_time.date_format'		=> 'Sale End Time must be H:i format',
 			'seatable|boolen'				=> 'Seatable must be True/False',
 			'quantity|numeric'				=> 'Quantity must be a number',
 		];
 		$this->validate($request, $rules, $messages);
 
-
 		if (isset($request->price) && (!$ticket->participants->isEmpty() && $ticket->price != $request->price)) {
 			Session::flash('alert-danger', 'Cannot update Ticket price when tickets have been bought!');
 			return Redirect::back();
+		}
+
+		if (isset($request->name)) {
+			$ticket->name = $request->name;
 		}
 
 		if (isset($request->sale_start_date) || isset($request->sale_start_time)) {
