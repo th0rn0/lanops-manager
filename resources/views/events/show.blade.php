@@ -336,7 +336,7 @@
 							<p>{{$section->text}}</p>
 						</div>
 						<div class="col-sm-4 hidden-xs">
-							@if (isset($section->image))
+							@if (isset($section->image_path))
 								<center>
 									<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
 								</center>
