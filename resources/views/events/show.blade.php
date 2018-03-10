@@ -284,7 +284,6 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-7">
-			<p>{{$event->venue->display_name}}</p>
 			<address>
 				<strong>{{ $event->venue->display_name }}</strong><br>
 				@if (trim($event->venue->address_1) != '' || $event->venue->address_1 != null) {{ $event->venue->address_1 }}<br> @endif
