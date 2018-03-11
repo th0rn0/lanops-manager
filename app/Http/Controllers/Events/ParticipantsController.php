@@ -30,14 +30,8 @@ class ParticipantsController extends Controller
 		foreach ($event->eventParticipants as $participant) {
 			$x["id"] = $participant->id;
 			$x["user_id"] = $participant->user_id;
-			$x["event_id"] = $participant->event_id;
 			$x["ticket_id"] = $participant->ticket_id;
-			$x["purchase_id"] = $participant->purchase_id;
-			$x["qrcode"] = $participant->qrcode;
-			$x["signed_in"] = $participant->signed_in;
 			$x["gift"] = $participant->gift;
-			$x["gift_accepted"] = $participant->gift_accepted;
-			$x["gift_accepted_url"] = $participant->gift_accepted_url;
 			$x["gift_sendee"] = $participant->gift_sendee;
 			$x['user']['steamname'] = $participant->user->steamname;
 			if ($participant->seat) {
