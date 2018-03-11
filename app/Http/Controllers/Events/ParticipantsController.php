@@ -18,12 +18,13 @@ use Illuminate\Http\Request;
 class ParticipantsController extends Controller
 {
 	/**
-	 * Show Participants
+	 * API Show Participants
 	 * @param  Event  $event
 	 * @return EventParticipants
 	 */
-	public function show(Event $event)
+	public function show($event)
 	{
+		$event = Event::where('id', $event)->first();
 		$return = array();
 		$x = array();
 		foreach ($event->eventParticipants as $participant) {

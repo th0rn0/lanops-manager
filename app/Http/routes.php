@@ -19,19 +19,19 @@ Route::group(['middleware' => ['web']], function () {
 	});
 });
 
+/**
+ * API
+ */
+Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
+Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
+
+Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
+
+Route::get('/api/events/{event}/tickets', 'Events\TicketsController@index');
+Route::get('/api/events/{event}/tickets/{ticket}', 'Events\TicketsController@show');
 
 Route::group(['middleware' => ['web']], function () {
 
-	/**
-	 * API
-	 */
-	Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
-	Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
-
-	Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
-
-	Route::get('/api/events/{event}/tickets', 'Events\TicketsController@index');
-	Route::get('/api/events/{event}/tickets/{ticket}', 'Events\TicketsController@show');
 
 	/**
 	 * Index Page

@@ -21,24 +21,26 @@ use App\Http\Controllers\PaymentController as Payment;
 class TicketsController extends Controller
 {
 	/**
-	 * Show all Event Tickets
+	 * API Show all Event Tickets
 	 * @param  Event  $event
 	 * @return EventTickets
 	 */
-	public function index(Event $event)
+	public function index($event)
 	{
-		$event->load('tickets');
+		$event = Event::where('id', $event)->first();
 		return $event->tickets;
 	}
 
 	/**
-	 * Show Event Ticket
+	 * API Show Event Ticket
 	 * @param  Event       $event
 	 * @param  EventTicket $ticket
 	 * @return EventTicket
 	 */
-	public function show(Event $event, EventTicket $ticket)
+	public function show($event, $ticket)
 	{
+		$event = Event::where('id', $event)->first();
+		$ticket = EventTicket::where('id', $ticket)->first();
 		return $ticket;
 	}
 

@@ -20,23 +20,26 @@ class TimetablesController extends Controller
 {
 
 	/**
-	 * Show all Timetables
+	 * API Show all Timetables
 	 * @param  Event  $event
 	 * @return EventTimetables       
 	 */
-	public function index(Event $event)
+	public function index($event)
 	{
+		$event = Event::where('id', $event)->first();
 		return $event->timetables;
 	}
 
 	/**
-	 * Show a Specific Timetable
+	 * API Show Timetable
 	 * @param  Event          $event    
 	 * @param  EventTimetable $timetable
 	 * @return EventTimetable
 	 */
-	public function show(Event $event, EventTimetable $timetable)
+	public function show($event, $timetable)
 	{
+		$event = Event::where('id', $event)->first();
+		$timetable = EventTimetable::where('id', $timetable)->first();
 		return $timetable;
 	}
 }

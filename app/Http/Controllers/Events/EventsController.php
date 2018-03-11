@@ -36,11 +36,6 @@ class EventsController extends Controller
 	 */
 	public function show(Event $event)
 	{
-		foreach ($event->timetables as $timetable) {
-			// DEBUG
-			//$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
-			// dd($timetable->data);
-		}
 		$user = Auth::user();
 		if ($user) {
 			$clauses = ['user_id' => $user->id, 'event_id' => $event->id]; 
