@@ -112,6 +112,30 @@ class Helpers
 	}
 
 	/**
+	 * Get Next Event Start Date
+	 * @return String
+	 */
+	public static function getNextEventStartDate()
+	{
+		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+			return date("d-m-Y H:i", strtotime($event->start));
+		}
+		return 'No new Events';
+	}
+
+	/**
+	 * Get Next Event End Date
+	 * @return String
+	 */
+	public static function getNextEventEndDate()
+	{
+		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+			return date("d-m-Y H:i", strtotime($event->end));
+		}
+		return 'No new Events';
+	}
+
+	/**
 	 * Get Total Event Participants Count
 	 * @return Integer
 	 */

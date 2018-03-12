@@ -15,15 +15,15 @@
 							Next LAN
 						</div>
 						<div class="hero-information__title">
-							<h1>{{ $event->display_name }}</h1>
+							<h1>{{ Helpers::getNextEventName() }}</h1>
 						</div>
 
 						<div class="hero-information__from-date">
-							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Start Date: {{ date("d-m-Y H:i", strtotime($event->start)) }}				
+							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Start Date: {{ Helpers::getNextEventStartDate() }}				
 						</div>
 
 						<div class="hero-information__to-date">
-							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> End Date: {{ date("d-m-Y H:i", strtotime($event->end)) }}
+							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> End Date: {{ Helpers::getNextEventEndDate() }}
 						</div>
 						<a href="/events/{{$event->slug}}#purchaseTickets">
 							<button type="button" class="btn btn-primary btn-lg">
