@@ -9,7 +9,7 @@
         "laravel/framework": "5.3.*",
         "laravelcollective/html": "5.3.*",
         "webonyx/graphql-php": "dev-master",
-        "invisnik/laravel-steam-auth": "2.*",
+        "invisnik/laravel-steam-auth": "3.3",
         "laravel/socialite": "~2.0",
         "ignited/laravel-omnipay": "2.*",
         "omnipay/paypal": "2.6.*",
