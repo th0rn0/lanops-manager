@@ -7,6 +7,7 @@ docker/db/\.env
 /node_modules
 /public/storage
 /public/downloads/qr/tickets/*
+package-lock.json
 Homestead.yaml
 Homestead.json
 *.sublime-project
