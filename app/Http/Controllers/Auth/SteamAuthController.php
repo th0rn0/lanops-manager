@@ -35,37 +35,29 @@ class SteamAuthController extends Controller
 			if (!is_null($info)) {
 				$user = User::where('steamid', $info->steamID64)->first();
 				if (!is_null($user)) {
-					//If user is in our database but no username found redirect to register page
-					if (!is_null($user->username)) {
-						//username found... Log user in
-						Auth::login($user, true);
-						//Check if the user has changed their steam details
-						$steam_changes = FALSE;
-						if ($info->personaname != $user->steamname) {
-							$user->steamname = $info->personaname;
-							$steam_changes = TRUE;
-						}
-						if ($info->avatarfull != $user->avatar) {
-							$user->avatar = $info->avatarfull;
-							$steam_changes = TRUE;
-						}
-						if ($steam_changes) {
-							$user->save();
-						}
-						return redirect('/'); // redirect to site
-					} else {
-						//username is null
-						Auth::login($user, true);
-						return redirect('/steamlogin/register/' . $user->id); // redirect to site
+					//username found... Log user in
+					Auth::login($user, true);
+					//Check if the user has changed their steam details
+					$steam_changes = FALSE;
+					if ($info->personaname != $user->steamname) {
+						$user->steamname = $info->personaname;
+						$steam_changes = TRUE;
 					}
+					if ($info->avatarfull != $user->avatar) {
+						$user->avatar = $info->avatarfull;
+						$steam_changes = TRUE;
+					}
+					if ($steam_changes) {
+						$user->save();
+					}
+					return redirect('/'); // redirect to site
 				} else {
-					$user = User::create([
+					$user = [
 							'steamname' => $info->personaname,
 							'avatar'    => $info->avatarfull,
 							'steamid'   => $info->steamID64,
-					]);
-					Auth::login($user, true);
-					return redirect('/steamlogin/register/' . $user->id); // redirect to site 
+					];
+					return view('login.steam.register', $user); // show register page
 				}
 			}
 		} else {
@@ -73,6 +65,7 @@ class SteamAuthController extends Controller
 		}
 	}
 
+	// DEBUG - REDUNDENT?
 	/**
 	 * Steam Register to grab the users email address
 	 * @param  User   $user
@@ -94,15 +87,31 @@ class SteamAuthController extends Controller
 	 */
 	public function store(Request $request, User $user)
 	{
-		if (is_null($user->username) && !is_null($user->steamid)) {
-			$user->username = $request->username;
-			$user->username_nice = strtolower($request->username);
-			if (User::count() >= 1) {
-				$user->admin = true;
-			}
-			$user->save();
-			return $user;
+		$this->validate($request, [
+				'fistname' 	=> 'string',
+				'surname' 	=> 'string',
+				'surname' 	=> 'string',
+				'steamid' 	=> 'string',
+				'avatar' 	=> 'string',
+				'steamname' => 'string',
+				'username' 	=> 'unique:users,username',
+		]);
+		$user->firstname 		= $request->firstname;
+		$user->surname 			= $request->surname;
+		$user->username 		= $request->username;
+		$user->steamname 		= $request->steamname;
+		$user->avatar 			= $request->avatar;
+		$user->steamid 			= $request->steamid;
+		$user->username_nice 	= strtolower(str_replace(' ', '-', $request->username));
+		if (User::count() >= 1) {
+			$user->admin = true;
 		}
+		if ($user->save()) {
+			Auth::login($user, true);
+			return Redirect('/account');
+		}
+		Auth::logout();
+		return Redirect('/')->withError('Something went wrong. Please Try again later');
 	}
 
 	/**

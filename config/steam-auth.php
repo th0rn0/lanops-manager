@@ -5,7 +5,7 @@ return [
     /*
      * Redirect url after login
      */
-    'redirect_url' => '/steamlogin',
+    'redirect_url' => '/login',
     /*
      *  Api Key (http://steamcommunity.com/dev/apikey)
      */

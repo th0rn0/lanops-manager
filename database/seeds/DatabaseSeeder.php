@@ -64,7 +64,12 @@ class DatabaseSeeder extends Seeder
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
-            'setting'   => 'terms_and_conditions',
+            'setting'   => 'purchase_terms_and_conditions',
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
+            'default'   => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'   => 'registration_terms_and_conditions',
             'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);

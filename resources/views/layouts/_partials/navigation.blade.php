@@ -25,7 +25,7 @@
 				@if (Auth::check())
 					@include ('layouts._partials.user-navigation')
 				@else
-					<li><a href="/steamlogin">Login</a></li>
+					<li><a href="/login">Login</a></li>
 				@endif
 			</ul>
 		</div><!-- /.navbar-collapse -->

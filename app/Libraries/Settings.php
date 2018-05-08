@@ -62,18 +62,36 @@ class Settings
 	 * Get Terms and Conditions
 	 * @return String
 	 */
-	public static function getTermsAndConditions()
+	public static function getPurchaseTermsAndConditions()
 	{
-		return \App\Setting::getTermsAndConditions();
+		return \App\Setting::getPurchaseTermsAndConditions();
 	}
 
 	/**
 	 * Set Terms and Conditions
 	 * @param String $text
 	 */
-	public static function setTermsAndConditions($text)
+	public static function setPurchaseTermsAndConditions($text)
 	{
-		return \App\Setting::setTermsAndConditions($text);
+		return \App\Setting::setPurchaseTermsAndConditions($text);
+	}
+
+	/**
+	 * Get Registration Terms and Conditions
+	 * @return String
+	 */
+	public static function getRegistrationTermsAndConditions()
+	{
+		return \App\Setting::getRegistrationTermsAndConditions();
+	}
+
+	/**
+	 * Set Registration Terms and Conditions
+	 * @param String $text
+	 */
+	public static function setRegistrationTermsAndConditions($text)
+	{
+		return \App\Setting::setRegistrationTermsAndConditions($text);
 	}
 
 	/**

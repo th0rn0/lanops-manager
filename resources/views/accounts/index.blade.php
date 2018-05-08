@@ -7,11 +7,11 @@
 	<div class="container">
 
 		<div class="row">
-			<!-- STEAM DETAILS -->
+			<!-- ACCOUNT DETAILS -->
 			<div class="col-xs-12  col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Steam Details</h3>
+						<h3 class="panel-title">Account Details</h3>
 					</div>
 					<div class="panel-body">
 						{{ Form::open(array('url'=>'/account/' . $user->id )) }}
@@ -31,13 +31,19 @@
 										{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
 									</div>
 								</div>
-								
-								<div class="form-group pull-right">
-									<button type="submit" name="action" value="update" class="btn btn-primary hidden">Update</button>
-									<button type="button" name="" value="" class="btn btn-danger hidden">Unlink Steam</button>
-								</div>
 							</div>
 						{{ Form::close() }}
+						<div class="col-md-12 col-sm-12">
+							<div class="form-group">
+								<button type="button" name="" value="" class="btn btn-danger">Remove Steam Account</button>
+								<button type="button" name="" value="" class="btn btn-danger">Add Secondary Steam Account</button>
+								<button type="button" name="" value="" class="btn btn-danger">Add Twitch Account</button>
+								<button type="button" name="" value="" class="btn btn-danger">Remove Twitch Account</button>
+								{{ Form::open(array('url'=>'/account/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
+									<button type="button" name="" value="" class="btn btn-danger" >Delete Account</button>
+								{{ Form::close() }}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

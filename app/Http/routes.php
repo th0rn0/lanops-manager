@@ -3,19 +3,19 @@
 /**
  * Login & Register
  */
-Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@redirectToProvider', 'as' => 'social.login']);
-Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
-Route::post('/steamlogin/register/{user}', 'Auth\SteamAuthController@store');
+// Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@redirectToProvider', 'as' => 'social.login']);
+// Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
+// Route::post('/steamlogin/register/{user}', 'Auth\SteamAuthController@store');
 Route::group(['middleware' => ['web']], function () {
 	
-	Route::get('/steamlogin', 'Auth\SteamAuthController@login');
+	Route::get('/login', 'Auth\SteamAuthController@login');
+	Route::post('/steamlogin/register', 'Auth\SteamAuthController@store');
 	
 	Route::group(['middleware' => ['auth']], function () {
 		Route::get('/account', 'AccountController@index');
 		Route::get('logout', 'Auth\SteamAuthController@doLogout');
 
-		Route::get('/steamlogin/register/{user}', 'Auth\SteamAuthController@register');
-		Route::patch('/steamlogin/register/{user}', 'Auth\SteamAuthController@update');
+		// Route::get('/steamlogin/register', 'Auth\SteamAuthController@register');
 	});
 });
 

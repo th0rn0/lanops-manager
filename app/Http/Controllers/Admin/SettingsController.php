@@ -117,7 +117,12 @@ class SettingsController extends Controller
 			return Redirect::back();
 		}
 
-		if (isset($request->terms_and_conditions) && !Settings::setTermsAndConditions($request->terms_and_conditions)) {
+		if (isset($request->purchase_terms_and_conditions) && !Settings::setPurchaseTermsAndConditions($request->purchase_terms_and_conditions)) {
+			Session::flash('alert-danger', 'Could not update!');
+			return Redirect::back();
+		}
+
+		if (isset($request->registration_terms_and_conditions) && !Settings::setRegistrationTermsAndConditions($request->registration_terms_and_conditions)) {
 			Session::flash('alert-danger', 'Could not update!');
 			return Redirect::back();
 		}
