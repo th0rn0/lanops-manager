@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use Auth;
 
+use Session;
+
 use App\User;
 
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 use Invisnik\LaravelSteamAuth\SteamAuth;
 
@@ -146,6 +149,26 @@ class SteamAuthController extends Controller
 	{
 		Auth::logout(); // log the user out of our application
 		return redirect('/'); // redirect the user to the login screen
+	}
+	
+	/**
+	 * Delete Account
+	 * @return Redirect
+	 */
+	public function destroy()
+	{
+		$user = Auth::user();
+		if ($user && $user->delete()) {
+			Session::flash('alert-success', 'Account Deleted!');
+			return Redirect::to('/');
+		}
+		Session::flash('alert-danger', 'Could not delete Account!');
+		return Redirect::to('/account');
+		# Seats
+		# Tickets
+		# Event Participants
+		# Gifts
+		# 
 	}
 
 }

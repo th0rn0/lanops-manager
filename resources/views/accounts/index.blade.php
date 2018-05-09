@@ -39,9 +39,7 @@
 								<button type="button" name="" value="" class="btn btn-danger">Add Secondary Steam Account</button>
 								<button type="button" name="" value="" class="btn btn-danger">Add Twitch Account</button>
 								<button type="button" name="" value="" class="btn btn-danger">Remove Twitch Account</button>
-								{{ Form::open(array('url'=>'/account/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
-									<button type="button" name="" value="" class="btn btn-danger" >Delete Account</button>
-								{{ Form::close() }}
+								<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete Account</button>
 							</div>
 						</div>
 					</div>
@@ -124,4 +122,29 @@
 		</div>
 		@include ('layouts._partials._gifts.modal')
 	</div>
+
+	<!-- Confirm Delete Modal -->
+	<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="confirmDeleteModalLabel">Are you sure you want to Delete your Account?</h4>
+				</div>
+				{{ Form::open(array('url'=>'/steamlogin/delete/', 'id'=>'confirmDeleteFormModal')) }}
+					<div class="modal-body">
+						<div class="form-group">
+							<p>Once it's gone... It's gone, puff...</p>
+							<p>All user records will be deleted.</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">Yes</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+					</div>
+				{{ Form::close() }}
+			</div>
+		</div>
+	</div>
+	
 @endsection
