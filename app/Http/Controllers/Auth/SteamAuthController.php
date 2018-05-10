@@ -73,14 +73,14 @@ class SteamAuthController extends Controller
 	 * Steam Register to grab the users email address
 	 * @param  User   $user
 	 */
-	public function register(User $user)
-	{
-		if (!is_null($user->email)) {
-			return redirect('/'); // redirect to site 
-		} else {
-			return view('login.steam.register')->withUser($user);  
-		}
-	}
+	// public function register(User $user)
+	// {
+	// 	if (!is_null($user->email)) {
+	// 		return redirect('/'); // redirect to site 
+	// 	} else {
+	// 		return view('login.steam.register')->withUser($user);  
+	// 	}
+	// }
 	
 	/**
 	 * Create a new user instance after a valid registration.
@@ -106,9 +106,6 @@ class SteamAuthController extends Controller
 		$user->avatar 			= $request->avatar;
 		$user->steamid 			= $request->steamid;
 		$user->username_nice 	= strtolower(str_replace(' ', '-', $request->username));
-		if (User::count() >= 1) {
-			$user->admin = true;
-		}
 		if ($user->save()) {
 			Auth::login($user, true);
 			return Redirect('/account');
@@ -164,11 +161,6 @@ class SteamAuthController extends Controller
 		}
 		Session::flash('alert-danger', 'Could not delete Account!');
 		return Redirect::to('/account');
-		# Seats
-		# Tickets
-		# Event Participants
-		# Gifts
-		# 
 	}
 
 }

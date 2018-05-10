@@ -134,13 +134,18 @@
 				{{ Form::open(array('url'=>'/steamlogin/delete/', 'id'=>'confirmDeleteFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
-							<p>Once it's gone... It's gone, puff...</p>
-							<p>All user records will be deleted.</p>
+							<p>Once it's gone... It's gone, puff... Aaaannnd it's gone!</p>
+							<p><strong>All</strong> user records will be deleted.</p>
+							<p><strong>All</strong> tickets for upcoming events will be forfeit.</p>
+							<p><strong>All</strong> tickets gifted to you for upcoming will be forfeit.</p> 
+							<p>Tickets gifted to you will <strong>not</strong> be transferred back to the gifter</p>
+							<p>Refunds will <strong>not</strong> be given for any forfeit tickets.</p>
+							<p><strong>By clicking Accept you are agreeing to these terms.</strong></p>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">Yes</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<button type="submit" class="btn btn-success">Accept</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 					</div>
 				{{ Form::close() }}
 			</div>
