@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
 
 use DB;
 use Auth;
+
 use App\User;
 use App\Event;
 use App\EventParticipant;
@@ -13,6 +13,7 @@ use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class ParticipantsController extends Controller
@@ -59,7 +60,7 @@ class ParticipantsController extends Controller
 	public function signIn(Event $event, EventParticipant $participant)
 	{
 		$participant->setSignIn();
-		return Redirect::to('admin/events/' . $event->id . '/participants/' . $participant->id);
+		return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
 	}
 }
 

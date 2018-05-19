@@ -4,151 +4,289 @@ namespace App\Libraries;
 
 class Settings
 {
+	/**
+	 * Get Organization Name
+	 * @return String
+	 */
 	public static function getOrgName()
 	{
 		return \App\Setting::getOrgName();
 	}
 
+	/**
+	 * Set Org Name
+	 * @param String $name
+	 */
 	public static function setOrgName($name)
 	{
 		return \App\Setting::setOrgName($name);
 	}
 
+	/**
+	 * Get Organization Logo Path
+	 * @return String
+	 */
 	public static function getOrgLogo()
 	{
 		return \App\Setting::getOrgLogo();
 	}
 
+	/**
+	 * Set Organization Logo Path
+	 * @param Image $logo
+	 */
 	public static function setOrgLogo($logo)
 	{
 		return \App\Setting::setOrgLogo($logo);
 	}
 
+	/**
+	 * Get Organization Favicon Path
+	 * @return String
+	 */
+	public static function getOrgFavicon()
+	{
+		return \App\Setting::getOrgFavicon();
+	}
+	
+	/**
+	 * Set Organization Favicon
+	 * @param Image $favicon
+	 */
+	public static function setOrgFavicon($favicon)
+	{
+		return \App\Setting::setOrgFavicon($favicon);
+	}
+
+	/**
+	 * Get Terms and Conditions
+	 * @return String
+	 */
 	public static function getTermsAndConditions()
 	{
 		return \App\Setting::getTermsAndConditions();
 	}
 
+	/**
+	 * Set Terms and Conditions
+	 * @param String $text
+	 */
 	public static function setTermsAndConditions($text)
 	{
 		return \App\Setting::setTermsAndConditions($text);
 	}
 
+	/**
+	 * Get Discord Link
+	 * @return String
+	 */
 	public static function getDiscordLink()
 	{
 		return \App\Setting::getDiscordLink();
 	}
 
+	/**
+	 * Set Discord Link
+	 * @param String $text
+	 */
 	public static function setDiscordLink($text)
 	{
 		return \App\Setting::setDiscordLink($text);
 	}
 
+	/**
+	 * Get Facebook Link
+	 * @return String
+	 */
 	public static function getFacebookLink()
 	{
 		return \App\Setting::getFacebookLink();
 	}
 
+	/**
+	 * Set Facebook Link
+	 * @param String $text
+	 */
 	public static function setFacebookLink($text)
 	{
 		return \App\Setting::setFacebookLink($text);
 	}
 
+	/**
+	 * Get Steam Link
+	 * @return String
+	 */
 	public static function getSteamLink()
 	{
 		return \App\Setting::getSteamLink();
 	}
 
+	/**
+	 * Set Steam Link
+	 * @param String $text
+	 */
 	public static function setSteamLink($text)
 	{
 		return \App\Setting::setSteamLink($text);
 	}
 
+	/**
+	 * Get Reddit Link
+	 * @return String
+	 */
 	public static function getRedditLink()
 	{
 		return \App\Setting::getRedditLink();
 	}
 
+	/**
+	 * Set Reddit Link
+	 * @param String $text
+	 */
 	public static function setRedditLink($text)
 	{
 		return \App\Setting::setRedditLink($text);
 	}
 
+	/**
+	 * Get Teamspeak Link
+	 * @return String
+	 */
 	public static function getTeamspeakLink()
 	{
 		return \App\Setting::getTeamspeakLink();
 	}
 
+	/**
+	 * Set Teamspeak Link
+	 * @param String $text
+	 */
 	public static function setTeamspeakLink($text)
 	{
 		return \App\Setting::setTeamspeakLink($text);
 	}
 
+	/**
+	 * Get Participant Count Offset
+	 * @return String
+	 */
 	public static function getParticipantCountOffset()
 	{
 		return \App\Setting::getParticipantCountOffset();
 	}
 
+	/**
+	 * Set Participant Count Offset
+	 * @param Integer $number
+	 */
 	public static function setParticipantCountOffset($number)
 	{
 		return \App\Setting::setParticipantCountOffset($number);
 	}
 
+	/**
+	 * Get Lan Count Offset
+	 * @return String
+	 */
 	public static function getLanCountOffset()
 	{
 		return \App\Setting::getLanCountOffset();
 	}
 
+	/**
+	 * Set Lan Count Offset
+	 * @param Integer $number
+	 */
 	public static function setLanCountOffset($number)
 	{
 		return \App\Setting::setLanCountOffset($number);
 	}
 
+	/**
+	 * Get Currency
+	 * @return String
+	 */
 	public static function getCurrency()
 	{
 		return \App\Setting::getCurrency();
 	}
 
+	/**
+	 * Set Currency
+	 * @param String $currency
+	 */
 	public static function setCurrency($currency)
 	{
 		return \App\Setting::setCurrency($currency);
 	}
 
+	/**
+	 * Get About Main Text
+	 * @return String
+	 */
 	public static function getAboutMain()
 	{
 		return \App\Setting::getAboutMain();
 	}
 
+	/**
+	 * Set About Main Text
+	 * @param String $text
+	 */
 	public static function setAboutMain($text)
 	{
 		return \App\Setting::setAboutMain($text);
 	}
 
+	/**
+	 * Get About Short Text
+	 * @return String
+	 */
 	public static function getAboutShort()
 	{
 		return \App\Setting::getAboutShort();
 	}
 
+	/**
+	 * Set About Short Text
+	 * @param String $text
+	 */
 	public static function setAboutShort($text)
 	{
 		return \App\Setting::setAboutShort($text);
 	}
 
+	/**
+	 * Get About Our Aim Text
+	 * @return String
+	 */
 	public static function getAboutOurAim()
 	{
 		return \App\Setting::getAboutOurAim();
 	}
 
+	/**
+	 * Set About Our Aim Text
+	 * @param String $text
+	 */
 	public static function setAboutOurAim($text)
 	{
 		return \App\Setting::setAboutOurAim($text);
 	}
 
+	/**
+	 * Get About Who's Who Text
+	 * @return String
+	 */
 	public static function getAboutWho()
 	{
 		return \App\Setting::getAboutWho();
 	}
 
+	/**
+	 * Set About Who's Who Text
+	 * @param String $text
+	 */
 	public static function setAboutWho($text)
 	{
 		return \App\Setting::setAboutWho($text);

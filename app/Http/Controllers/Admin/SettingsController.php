@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use Session;
 use Redirect;
 use Settings;
 use Input;
+
 use App\User;
 use App\Setting;
 use App\Event;
@@ -18,6 +17,8 @@ use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
@@ -38,26 +39,26 @@ class SettingsController extends Controller
 	public function update(Request $request)
 	{
 		$rules = [
-			'terms_and_conditions'      => 'filled',
-			'org_name'                  => 'filled',
-			'about_main'                => 'filled',
-			'about_short'               => 'filled',
-			'about_our_aim'             => 'filled',
-			'about_who'                 => 'filled',
-			'currency'                  => 'in:GBP,USD,EUR',
-			'participant_count_offset'  => 'numeric',
-			'lan_count_offset'          => 'numeric',
+			'terms_and_conditions'		=> 'filled',
+			'org_name'					=> 'filled',
+			'about_main'				=> 'filled',
+			'about_short'				=> 'filled',
+			'about_our_aim'				=> 'filled',
+			'about_who'					=> 'filled',
+			'currency'					=> 'in:GBP,USD,EUR',
+			'participant_count_offset'	=> 'numeric',
+			'lan_count_offset'			=> 'numeric',
 		];
 		$messages = [
-			'terms_and_conditions|filled'       => 'Terms And Conditions cannot be empty',
-			'org_name|filled'                   => 'Org Name cannot be empty',
-			'about_main|filled'                 => 'About Main cannot be empty',
-			'about_short|filled'                => 'About Short cannot be empty',
-			'about_our_aim|filled'              => 'About Our Aim cannot be empty',
-			'about_who|filled'                  => 'About Whos who cannot be empty',
-			'currency|in'                       => 'Currency must be GBP, USD or EUR',
-			'participant_count_offset|numeric'  => 'Participant Count Offset must be a number',
-			'lan_count_offset|numeric'          => 'Lan Count Offset must be a number',
+			'terms_and_conditions.filled'		=> 'Terms And Conditions cannot be empty',
+			'org_name.filled'					=> 'Org Name cannot be empty',
+			'about_main.filled'					=> 'About Main cannot be empty',
+			'about_short.filled'				=> 'About Short cannot be empty',
+			'about_our_aim.filled'				=> 'About Our Aim cannot be empty',
+			'about_who.filled'					=> 'About Whos who cannot be empty',
+			'currency.in'						=> 'Currency must be GBP, USD or EUR',
+			'participant_count_offset.numeric'	=> 'Participant Count Offset must be a number',
+			'lan_count_offset.numeric'			=> 'Lan Count Offset must be a number',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -132,6 +133,11 @@ class SettingsController extends Controller
 		}
 
 		if (Input::file('org_logo') && !Settings::setOrgLogo(Input::file('org_logo'))) {
+			Session::flash('alert-danger', 'Could not update!');
+			return Redirect::back();
+		}
+
+		if (Input::file('org_favicon') && !Settings::setOrgFavicon(Input::file('org_favicon'))) {
 			Session::flash('alert-danger', 'Could not update!');
 			return Redirect::back();
 		}

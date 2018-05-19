@@ -32,7 +32,6 @@ $factory->define(App\Event::class, function (Faker\Generator $faker) {
         'end'               => '2018-06-11 18:00:00',
         'desc_long'         => $faker->sentences($nb = 5, $asText = true),
         'desc_short'        => $faker->sentences($nb = 1, $asText = true),
-        'allow_spectators'  => true,
         'status'            => 'published',
     ];
 });
@@ -54,7 +53,7 @@ $factory->define(App\EventTicket::class, function (Faker\Generator $faker) {
 
 $factory->define(App\EventTimetable::class, function (Faker\Generator $faker) {
     return [
-        'display_name'  => $faker->words($nb = 3, $asText = true),
+        'name'  => $faker->words($nb = 3, $asText = true),
         'status'        => 'published',
     ];
 });

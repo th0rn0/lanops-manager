@@ -4,10 +4,11 @@ namespace App;
 
 use DB;
 use Auth;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Cviebrock\EloquentSluggable\Sluggable;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class EventSeatingPlan extends Model
 {
@@ -38,7 +39,7 @@ class EventSeatingPlan extends Model
 		if (Auth::user() && Auth::user()->getAdmin()) {
 			$admin = true;
 		}
-		if(!$admin) {
+		if (!$admin) {
 			static::addGlobalScope('statusDraft', function (Builder $builder) {
 				$builder->where('status', '!=', 'DRAFT');
 			});
@@ -73,4 +74,14 @@ class EventSeatingPlan extends Model
 			]
 		];
 	}
+
+	/**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

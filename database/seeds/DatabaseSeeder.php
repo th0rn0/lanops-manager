@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use Faker\Factory as Faker;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Faker::create();
+
         ## House Cleaning
         \DB::table('events')->delete();
         \DB::table('event_tickets')->delete();
@@ -55,8 +59,13 @@ class DatabaseSeeder extends Seeder
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
+            'setting'   => 'org_favicon',
+            'value'     => env('ORG_FAVICON', '/storage/images/main/favicon.ico'),
+            'default'   => true,
+        ]);
+        factory(App\Setting::class)->create([
             'setting'   => 'terms_and_conditions',
-            'value'     => 'these are Terms & Conditions',
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
@@ -79,7 +88,7 @@ class DatabaseSeeder extends Seeder
             'value'     => null,
             'default'   => true,
         ]);
-         factory(App\Setting::class)->create([
+        factory(App\Setting::class)->create([
             'setting'   => 'facebook',
             'value'     => null,
             'default'   => true,
@@ -99,25 +108,24 @@ class DatabaseSeeder extends Seeder
             'value'     => 'GBP',
             'default'   => true,
         ]);
-
         factory(App\Setting::class)->create([
             'setting'   => 'about_main',
-            'value'     => 'About us Main Here.',
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_short',
-            'value'     => 'About us Short Here.',
+            'value'     => $faker->paragraph($nbSentences = 4, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_our_aim',
-            'value'     => 'About us Our Aim here.',
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
             'setting'   => 'about_who',
-            'value'     => 'About us Whos who here.',
+            'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
     }

@@ -53,38 +53,45 @@ class EventParticipant extends Model
 		return $this->hasOne('App\EventSeating');
 	}
 
+	/**
+	 * Set Event Participant as Signed in
+	 * @param Boolean $bool
+	 */
 	public function setSignIn($bool = true)
 	{
 		$this->signed_in = true;
-		if(!$bool){
+		if (!$bool) {
 			$this->signed_in = false;
 		}
 		$this->save();
 	}
-	public function getGiftSendeeName()
-	{
-		$clauses = ['id' => $this->gift_sendee];
-		$user = User::where($clauses)->first();
-		return $user->username;
-	}
+
+	/**
+	 * Get User that Assigned Ticket
+	 * @return User
+	 */
 	public function getAssignedByUser()
 	{
 		return User::where(['id' => $this->staff_free_assigned_by])->first();
 	}
+
+	/**
+	 * Regenerate QR Codes
+	 * @return Boolean
+	 */
 	public function generateQRCode()
 	{
-		QrCode::format('png');
-		QrCode::size(300);
 		$ticket_url = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
-		$qr_code_path = 'storage/public/images/events/' . $this->event->slug . '/qr/';
+		$qr_code_path = 'storage/images/events/' . $this->event->slug . '/qr/';
 		$qr_code_file =  $this->event->slug . '-' . str_random(32) . '.png';
-		//Check if directory exists - if not create it
 		if (!file_exists($qr_code_path)) {
 			mkdir($qr_code_path, 0775, true);
 		}
-		//Generate QR Code
+		QrCode::format('png');
+		QrCode::size(300);
 		QrCode::generate($ticket_url, $qr_code_path . $qr_code_file);
 		$this->qrcode = $qr_code_path . $qr_code_file;
+		return true;
 	}
 }
 

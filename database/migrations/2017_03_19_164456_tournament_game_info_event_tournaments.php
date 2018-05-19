@@ -13,8 +13,7 @@ class TournamentGameInfoEventTournaments extends Migration
     public function up()
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->string('game_cover_image', 1000)->nullable()->after('status');
-            $table->string('game_images', 1000)->nullable()->after('game_cover_image');
+            $table->string('game_cover_image_path', 1000)->nullable()->after('status');
         });
     }
 

@@ -17,7 +17,7 @@ class CreateEventSponsorsTable extends Migration {
 			$table->increments('id');
 			$table->integer('event_id')->unsigned()->index();
 			$table->string('name');
-			$table->string('logo');
+			$table->string('image_path');
 			$table->string('website')->nullable();
 			$table->timestamps();
 

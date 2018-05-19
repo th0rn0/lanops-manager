@@ -15,7 +15,7 @@ class CreateEventTimetablesTable extends Migration {
 		Schema::create('event_timetables', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('display_name');
+			$table->string('name');
 			$table->string('slug');
 			$table->integer('event_id')->unsigned()->index();
 			$table->timestamps();

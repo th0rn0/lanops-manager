@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-
 use DB;
 use Auth;
 use Session;
 use Storage;
+
 use App\Event;
 use App\EventAnnoucement;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AnnoucementsController extends Controller
 {
@@ -26,20 +27,24 @@ class AnnoucementsController extends Controller
 	public function store(Request $request, Event $event)
 	{
 		$rules = [
-			'message' => 'required'
+			'message'			=> 'required'
 		];
 		$messages = [
-			'message|required' => 'Some Text is required',
+			'message.required'	=> 'Some Text is required',
 		];
 		$this->validate($request, $rules, $messages);
 
-		$annoucement = new EventAnnoucement();
-		$annoucement->message = $request->message;
-		$annoucement->event_id = $event->id;
-		$annoucement->save();
+		$annoucement			= new EventAnnoucement();
+		$annoucement->message	= $request->message;
+		$annoucement->event_id	= $event->id;
+		
+		if (!$annoucement->save()) {
+			Session::flash('alert-danger', 'Cannot save Annoucement!');
+			return Redirect::to('admin/events/' . $event->slug);
+		}
 
-		Session::flash('message', 'Successfully saved!');
-		return Redirect::to('admin/events/' . $event->id);
+		Session::flash('alert-success', 'Successfully saved Annoucement!');
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -52,18 +57,22 @@ class AnnoucementsController extends Controller
 	public function update(Request $request, Event $event, EventAnnoucement $annoucement)
 	{
 		$rules = [
-			'message' => 'required'
+			'message'			=> 'required'
 		];
 		$messages = [
-			'message|required' => 'Some Text is required',
+			'message.required'	=> 'Some Text is required',
 		];
 		$this->validate($request, $rules, $messages);
 
-		$annoucement->message = $request->message;
-		$annoucement->save();
+		$annoucement->message	= $request->message;
+		
+		if (!$annoucement->save()) {
+			Session::flash('alert-danger', 'Cannot update Annoucement!');
+			return Redirect::to('admin/events/' . $event->slug);
+		}
 
-		Session::flash('message', 'Successfully saved!');
-		return Redirect::to('admin/events/' . $event->id);
+		Session::flash('message', 'Successfully updated Annoucement!');
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -74,8 +83,12 @@ class AnnoucementsController extends Controller
 	 */
 	public function destroy(Event $event, EventAnnoucement $annoucement)
 	{
-		$annoucement->delete();
-		session::flash('message', 'Successfully deleted!');
-		return Redirect::to('admin/events/' . $event->id);
+		if (!$annoucement->delete()) {
+			Session::flash('alert-danger', 'Cannot delete Annoucement!');
+			return Redirect::to('admin/events/' . $event->slug);
+		}
+
+		session::flash('message', 'Successfully deleted Annoucement!');
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 }

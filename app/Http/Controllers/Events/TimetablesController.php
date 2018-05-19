@@ -2,31 +2,44 @@
 
 namespace App\Http\Controllers\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
+use DateTime;
+
 use App\Event;
 use App\EventParticipant;
 use App\EventParticipantType;
 use App\EventTimetable;
 use App\EventTimetableData;
-use DateTime;
-
-
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Http\Request;
+
 class TimetablesController extends Controller
 {
-	public function all(Event $event)
+
+	/**
+	 * API Show all Timetables
+	 * @param  Event  $event
+	 * @return EventTimetables       
+	 */
+	public function index($event)
 	{
-		$event->load('timetables.data');
+		$event = Event::where('id', $event)->first();
 		return $event->timetables;
 	}
-	public function show(Event $event, EventTimetable $timetable)
+
+	/**
+	 * API Show Timetable
+	 * @param  Event          $event    
+	 * @param  EventTimetable $timetable
+	 * @return EventTimetable
+	 */
+	public function show($event, $timetable)
 	{
-		$timetable->load('data');
+		$event = Event::where('id', $event)->first();
+		$timetable = EventTimetable::where('id', $timetable)->first();
 		return $timetable;
 	}
 }

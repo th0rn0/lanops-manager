@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-
 use QrCode;
 use Storage;
 use Settings;
 use Helpers;
 use Auth;
+
 use App\Purchase;
 use App\User;
 use App\Event;
 use App\EventTicket;
 use App\EventParticipant;
 
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+
 use Omnipay\Omnipay as Omnipay;
 
 class PaymentsController extends Controller
@@ -33,10 +33,10 @@ class PaymentsController extends Controller
 	 */
 	public function review()
 	{
-	  if (!Session::get('basket')) {
+	  if (!$basket = Session::get('basket')) {
 		return Redirect::to('/');
 	  }
-	  return view('payments.review')->withBasketItems(Helpers::getBasketFormat(Session::get('basket'), true));
+	  return view('payments.review')->withBasketItems(Helpers::getBasketFormat($basket, true))->withBasketTotal(Helpers::getBasketTotal($basket));
 	}
 	
 	/**
@@ -46,34 +46,24 @@ class PaymentsController extends Controller
 	 */
 	public function post(Request $request)
 	{
-		if (!Session::get('basket')) {
+		if (!$basket = Session::get('basket')) {
 			Session::flash('alert-danger', 'No Basket was found. Please try again');
 			return Redirect::back();
 		}
-	  	if(env('APP_DEBUG')){
+	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
 	  	}
 
-		//Get Ticket Details - Move this to ticketsController? PaymentController should just be payments
-		$total = 0;
-		foreach (Session::get('basket') as $ticket_id => $quantity) {
-			$ticket = EventTicket::where('id', $ticket_id)->first();
-			for ($i=1; $i <= $quantity; $i++) { 
-				$tickets[] = ['id' => $ticket_id, 'price' => $ticket->price];
-				$total += $ticket->price;
-			}
-		}
-
 		//Paypal Post Params
 		$params = array(
-			'cancelUrl'     => 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=cancel',
-			'returnUrl'     => 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=return', 
-			'name'          => Settings::getOrgName() . ' - Tickets Purchase',
-			'description'   => 'Ticket Purchase for ' . Settings::getOrgName(), 
-			'amount'        => (float)$total,
-			'quantity'      => (string)count($tickets),
-			'currency'      => Settings::getCurrency(),
-			'user_id'       => Auth::id(),
+			'cancelUrl'		=> 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=cancel',
+			'returnUrl'		=> 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=return', 
+			'name'			=> Settings::getOrgName() . ' - Tickets Purchase',
+			'description'	=> 'Ticket Purchase for ' . Settings::getOrgName(), 
+			'amount'		=> (float)Helpers::getBasketTotal($basket),
+			'quantity'		=> (string)count($basket),
+			'currency'		=> Settings::getCurrency(),
+			'user_id'		=> Auth::id(),
 		);
 
 	  	Session::put('params', $params);
@@ -84,7 +74,7 @@ class PaymentsController extends Controller
 	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
 	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
 
-	  	if($this->sandbox){
+	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
 	  	} else {
 			$gateway->setTestMode(false);
@@ -97,10 +87,9 @@ class PaymentsController extends Controller
 	  	} elseif ($response->isRedirect()) {
 			// redirect to offsite payment gateway
 			$response->redirect();
-	  	} else {
-			// payment failed: display message to customer
-			echo $response->getMessage();
 	  	}
+		// payment failed: display message to customer
+		echo $response->getMessage();
 	}
 
 	/**
@@ -121,7 +110,7 @@ class PaymentsController extends Controller
 	  	}
 	  	$params = Session::get('params');
 
-	  	if(env('APP_DEBUG')){
+	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
 	  	}
 
@@ -130,7 +119,7 @@ class PaymentsController extends Controller
 	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
 	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
 
-	  	if($this->sandbox){
+	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
 	  	} else {
 			$gateway->setTestMode(false);
@@ -140,26 +129,26 @@ class PaymentsController extends Controller
 	  	$gateway->completePurchase($params)->send();
 	  	$response = $gateway->fetchCheckout($params)->send(); // this is the raw response object
  	 	$paypal_response = $response->getData();
-	  	if(isset($paypal_response['ACK']) && $paypal_response['ACK'] === 'Success' && isset($paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'])) {
+	  	if (isset($paypal_response['ACK']) && $paypal_response['ACK'] === 'Success' && isset($paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'])) {
 			//Add Purchase to database
-			$purchase = new Purchase;
-			$purchase->user_id = $params['user_id'];
-			$purchase->type = 'PayPal Express';
-			$purchase->transaction_id = $paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'];
-			$purchase->token = $paypal_response['TOKEN'];
-			$purchase->status = $paypal_response['ACK'];
-			$purchase->paypal_email = $paypal_response['EMAIL'];
+			$purchase 					= new Purchase;
+			$purchase->user_id 			= $params['user_id'];
+			$purchase->type 			= 'PayPal Express';
+			$purchase->transaction_id 	= $paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'];
+			$purchase->token 			= $paypal_response['TOKEN'];
+			$purchase->status 			= $paypal_response['ACK'];
+			$purchase->paypal_email 	= $paypal_response['EMAIL'];
 			$purchase->save();
 		
 			foreach (Session::get('basket') as $ticket_id => $quantity) {
 				$ticket = EventTicket::where('id', $ticket_id)->first();
 		  		for ($i=1; $i <= $quantity; $i++) { 
 					//Add Participant to databade
-					$participant = new EventParticipant;
-					$participant->user_id = $params['user_id'];
-					$participant->event_id = $ticket->event->id;
-					$participant->ticket_id = $ticket->id;
-					$participant->purchase_id = $purchase->id;
+					$participant 				= new EventParticipant;
+					$participant->user_id 		= $params['user_id'];
+					$participant->event_id 		= $ticket->event->id;
+					$participant->ticket_id 	= $ticket->id;
+					$participant->purchase_id 	= $purchase->id;
 					$participant->generateQRCode();
 					$participant->save();
 		  		}

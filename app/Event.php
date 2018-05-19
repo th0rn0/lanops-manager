@@ -4,8 +4,10 @@ namespace App;
 
 use DB;
 use Auth;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class Event extends Model 
@@ -123,14 +125,35 @@ class Event extends Model
 			]
 		];
 	}
+	
+	/**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
+    /**
+     * Get Seat
+     * @param  $seating_plan_id
+     * @param  $seat
+     * @return EventSeating
+     */
 	public function getSeat($seating_plan_id, $seat)
 	{
 		$seating_plan = $this->seatingPlans()->find($seating_plan_id);
 		return $seating_plan->seats()->where('seat', ucwords($seat))->first();
 	}
 	
-	public function getUser($user_id = null)
+	/**
+	 * Get Event Participant
+	 * @param  [type] $user_id [description]
+	 * @return [type]          [description]
+	 */
+	public function getEventParticipant($user_id = null)
 	{
 		if ($user_id == null) {
 			$user_id = Auth::id();
@@ -138,8 +161,11 @@ class Event extends Model
 		return $this->eventParticipants()->where('user_id', $user_id)->first();
 	}
 
-	//DEBUG - CHANGE ME TO getTicketSalesCount
-	public function getTotalTicketSales()
+	/**
+	 * Get Total Ticket Sales
+	 * @return Integer
+	 */
+	public function getTicketSalesCount()
 	{
 		$total = 0;
 		foreach ($this->eventParticipants as $participant) {
@@ -150,6 +176,10 @@ class Event extends Model
 		return $total;
 	}
 
+	/**
+	 * Get Total Seated
+	 * @return Integer
+	 */
 	public function getSeatedCount()
 	{
 		$total = 0;
@@ -159,6 +189,10 @@ class Event extends Model
 		return $total;
 	}
 
+	/**
+	 * Get Seating Capacity
+	 * @return Integer
+	 */
 	public function getSeatingCapacity()
 	{
 		$total = 0;
@@ -168,11 +202,16 @@ class Event extends Model
 		return $total;
 	}
 
-	public function getParticipantsSelectArray()
+	/**
+	 * Get Event Participants
+	 * @param  boolean $obj
+	 * @return Array|Boolean
+	 */
+	public function getParticipants($obj = false)
 	{
 		$return = array();
 		foreach ($this->eventParticipants as $participant) {
-			if (($participant->staff || $participant->free) || $participant->ticket->seatable) {
+			if (($participant->staff || $participant->free) || @$participant->ticket->seatable) {
 				$seat = 'NOT SEATED';
 				if (!empty($participant->seat)) {
 					$seat = $participant->seat->seat;
@@ -187,6 +226,22 @@ class Event extends Model
 				$return[$participant->id] = $text;
 			}
 		}
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
 		return $return;
+	}
+
+	/**
+	 * Get Timetable Data Count
+	 * @return Integer
+	 */
+	public function getTimetableDataCount()
+	{
+		$total = 0;
+		foreach ($this->timetables as $timetable) {
+			$total += $timetable->data()->count();
+		}
+		return $total;
 	}
 }

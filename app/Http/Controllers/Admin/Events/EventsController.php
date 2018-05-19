@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Auth;
 use Session;
+
 use App\User;
 use App\Event;
 use App\EventParticipant;
@@ -15,6 +14,8 @@ use App\EventAnnoucement;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class EventsController extends Controller
@@ -39,7 +40,6 @@ class EventsController extends Controller
 	{
 		$user = Auth::user();
 		$events = Event::withoutGlobalScopes();
-		$event->eventParticipants = $event->eventParticipants()->orderBy('created_at', 'desc')->simplePaginate(10);
 		return view('admin.events.show')->withUser($user)->withEvent($event)->withEvents($events);
 	}
 
@@ -51,45 +51,44 @@ class EventsController extends Controller
 	public function store(Request $request)
 	{
 		$rules = [
-			'event_name'  => 'required|unique:events,display_name',
-			'start_date'  => 'required',
-			'start_time'  => 'required',
-			'end_date'    => 'required',
-			'end_time'    => 'required',
-			'desc_short'  => 'required',
-			'desc_long'   => 'required',
+			'event_name'	=> 'required|unique:events,display_name',
+			'desc_short'	=> 'required',
+			'desc_long'		=> 'required',
+			'end_date'		=> 'required|date_format:m/d/Y',
+			'end_time'		=> 'required|date_format:H:i',
+			'start_date'	=> 'required|date_format:m/d/Y',
+			'start_time'	=> 'required|date_format:H:i',
 		];
 		$messages = [
-			'event_name.required'   => 'An Event name is required',
-			'start_date.required'   => 'A Start date is required',
-			'start_time.required'   => 'A Start date is required',
-			'end_date.required'     => 'A End date is required',
-			'end_time.required'     => 'A End date is required',
-			'desc_short.required'   => 'A Short description is required',
-			'desc_long.required'    => 'A description is required',
+			'event_name.required'		=> 'Event name is required',
+			'start_date.required'		=> 'Start date is required',
+			'start_time.required'		=> 'Start date is required',
+			'end_date.required'			=> 'End date is required',
+			'end_time.required'			=> 'End date is required',
+			'end_date.date_format'		=> 'End Date must be m/d/Y format',
+			'end_time.date_format'		=> 'End Time must be H:i format',
+			'start_date.date_format'	=> 'Start Date must be m/d/Y format',
+			'start_time.date_format'	=> 'Start Time must be H:i format',
+			'desc_short.required'		=> 'Short Description is required',
+			'desc_long.required'		=> 'Long Description is required',
 		];
 		$this->validate($request, $rules, $messages);
 
-		$event = new Event();
-		//Format start and end time/date
-		$start = $request->start_date . $request->start_time;
-		$end = $request->end_date . $request->end_time;
+		$event 						= new Event();
+		$event->display_name		= $request->event_name;
+		$event->nice_name			= strtolower(str_replace(' ', '-', $request->event_name));
+		$event->start				= date("Y-m-d H:i:s", strtotime($request->start_date . $request->start_time));
+		$event->end					= date("Y-m-d H:i:s", strtotime($request->end_date . $request->end_time));
+		$event->desc_long			= $request->desc_long;
+		$event->desc_short			= $request->desc_short;
+		$event->event_venue_id		= @$request->venue;
 
-		$event->display_name      = $request->event_name;
-		$event->nice_name         = strtolower(str_replace(' ', '-', $request->event_name));
-		$event->start             = date("Y-m-d H:i:s", strtotime($start));
-		$event->end               = date("Y-m-d H:i:s", strtotime($end));
-		$event->desc_long         = $request->desc_long;
-		$event->desc_short        = $request->desc_short;
-		$event->allow_spectators  = $request->allow_spec;
-		$event->event_venue_id    = @$request->venue;
-
-		if(!$event->save()){
-			Session::flash('alert-danger', 'Could not Save!');
-			return Redirect::to('admin/events/' . $event->id);
+		if (!$event->save()) {
+			Session::flash('alert-danger', 'Cannot Save Event!');
+			return Redirect::to('admin/events/' . $event->slug);
 		}
-		Session::flash('alert-success', 'Event Successfully Added!');
-		return Redirect::to('admin/events/' . $event->id);
+		Session::flash('alert-success', 'Successfully saved Event!');
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 	
 	/**
@@ -101,50 +100,75 @@ class EventsController extends Controller
 	public function update(Event $event, Request $request)
 	{
 		$rules = [
-			'event_name'  => 'required',
-			'desc_short'  => 'required',
-			'desc_long'   => 'required',
-			'end_date'    => 'required',
-			'end_time'    => 'required',
-			'start_date'  => 'required',
-			'start_time'  => 'required',
-			'status'      => 'in:draft,preview,published,private',
+			'event_name'		=> 'filled',
+			'end_date'			=> 'filled|date_format:m/d/Y',
+			'end_time'			=> 'filled|date_format:H:i',
+			'start_date'		=> 'filled|date_format:m/d/Y',
+			'start_time'		=> 'filled|date_format:H:i',
+			'status'			=> 'in:draft,preview,published,private',
 		];
 		$messages = [
-			'event_name|required'   => 'Event Name is required',
-			'desc_short|required'   => 'A Short Description is required',
-			'desc_long|required'    => 'A Long Description is required',
-			'cap|required'          => 'A Capacity is required',
-			'end_date|required'     => 'A End Date is required',
-			'end_time|required'     => 'A End Time is required',
-			'start_date|required'   => 'A Start Date is required',
-			'start_time|required'   => 'A Start Time is required',
-			'status|in'             => 'Status must be draft, preview, published or private',
+			'event_name.filled'			=> 'Event Name cannot be empty',
+			'end_date.filled'			=> 'A End Date cannot be empty',
+			'end_date.date_format'		=> 'A End Date must be m/d/Y format',
+			'end_time.filled'			=> 'A End Time cannot be empty',
+			'end_time.date_format'		=> 'A End Time must be H:i formate',
+			'start_date.filled'			=> 'A Start Date cannut be empty',
+			'end_date.date_format'		=> 'A Start Date must be m/d/Y format',
+			'start_time.filled'			=> 'A Start Time cannot be empty',
+			'end_time.date_format'		=> 'A Start Time must be H:i format',
+			'status.in' 				=> 'Status must be draft, preview, published or private',
 		];
 		$this->validate($request, $rules, $messages);
 
-		//Format start and end time/date
-		$start = $request->start_date . $request->start_time;
-		$end = $request->end_date . $request->end_time;
-
-		$event->display_name      = $request->event_name;
-		$event->nice_name         = strtolower(str_replace(' ', '-', $request->event_name));
-		$event->start             = date("Y-m-d H:i:s", strtotime($start));
-		$event->end               = date("Y-m-d H:i:s", strtotime($end));
-		$event->desc_long         = $request->desc_long;
-		$event->desc_short        = $request->desc_short;
-		$event->status            = @$request->status;
-		$event->allow_spectators  = false;
-		if (isset($request->allow_spec)) {
-			$event->allow_spectators = true;
+		if (isset($request->event_name)) {
+			$event->display_name	= $request->event_name;
+			$event->nice_name		= strtolower(str_replace(' ', '-', $request->event_name));
 		}
 
-		if(!$event->save()){
-			Session::flash('alert-danger', 'Could not Save!');
-			return Redirect::to('admin/events/' . $event->id);
+		if (isset($request->start_date)) {
+			$start = $request->start_date . date("H:i:s", strtotime($event->start));
+			$event->start			= date("Y-m-d H:i:s", strtotime($start));
 		}
-		Session::flash('alert-success', 'Event Successfully Updated!');
-		return Redirect::to('admin/events/' . $event->id);
+
+		if (isset($request->start_time)) {
+			$start = date("Y-m-d", strtotime($event->start)) . $request->start_time;
+			$event->start			= date("Y-m-d H:i:s", strtotime($start));
+		}
+
+		if (isset($request->end_date)) {
+			$end = $request->end_date . date("H:i:s", strtotime($event->end));
+			$event->end				= date("Y-m-d H:i:s", strtotime($end));
+		}
+
+		if (isset($request->end_time)) {
+			$end = date("Y-m-d", strtotime($event->end)) . $request->end_time;
+			$event->end				= date("Y-m-d H:i:s", strtotime($end));
+		}
+
+		if (isset($request->desc_long)) {
+			$event->desc_long		= $request->desc_long;
+		}
+
+		if (isset($request->desc_short)) {
+			$event->desc_short		= $request->desc_short;
+		}
+
+		if (isset($request->status)) {
+			$event->status			= $request->status;
+		}
+
+		if (isset($request->essential_info)) {
+			$event->essential_info = $request->essential_info; 
+		}
+
+		if (!$event->save()) {
+			Session::flash('alert-danger', 'Cannot update Event!');
+			return Redirect::to('admin/events/' . $event->slug);
+		}
+
+		Session::flash('alert-success', 'Successfully updated Event!');
+		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
@@ -158,11 +182,13 @@ class EventsController extends Controller
 			Session::flash('alert-danger', 'Cannot delete event with participants!');
 			return Redirect::back();
 		}
+
 		if (!$event->delete()) {
-			Session::flash('alert-danger', 'Cannot Delete!');
+			Session::flash('alert-danger', 'Cannot delete Event!');
 			return Redirect::back();
 		}
-		Session::flash('alert-success', 'Successfully deleted!');
+
+		Session::flash('alert-success', 'Successfully deleted Event!');
 		return Redirect::to('admin/events/');
 	}
 
@@ -174,20 +200,20 @@ class EventsController extends Controller
 	 */
 	public function freeGift(Request $request, Event $event)
 	{
-		$participant = new EventParticipant;
-
-		$participant->user_id                = $request->user_id;
-		$participant->event_id               = $event->id;
-		$participant->free                   = 1;
-		$participant->staff_free_assigned_by = Auth::id();
+		$participant							= new EventParticipant;
+		$participant->user_id					= $request->user_id;
+		$participant->event_id					= $event->id;
+		$participant->free						= 1;
+		$participant->staff_free_assigned_by	= Auth::id();
 		$participant->generateQRCode();
 
 		if (!$participant->save()) {
 			Session::flash('alert-danger', 'Could not add Gift!');
-			return Redirect::to('admin/events/' . $event->id . '/tickets');          
+			return Redirect::to('admin/events/' . $event->slug . '/tickets');          
 		}
+
 		Session::flash('alert-success', 'Successfully added Gift!');
-		return Redirect::to('admin/events/' . $event->id . '/tickets');
+		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}
 
 	/**
@@ -208,10 +234,11 @@ class EventsController extends Controller
 	 
 		if (!$participant->save()) {
 			Session::flash('alert-danger', 'Could not add Admin!');
-			return Redirect::to('admin/events/' . $event->id . '/tickets');          
+			return Redirect::to('admin/events/' . $event->slug . '/tickets');          
 		}
+
 		Session::flash('alert-success', 'Successfully added Admin!');
-		return Redirect::to('admin/events/' . $event->id . '/tickets');
+		return Redirect::to('admin/events/' . $event->slug . '/tickets');
 	}
 }
 

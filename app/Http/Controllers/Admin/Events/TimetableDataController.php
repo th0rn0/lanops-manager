@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Session;
+
 use App\User;
 use App\Event;
 use App\EventTicket;
@@ -17,6 +16,8 @@ use App\EventParticipantType;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class TimetableDataController extends Controller
@@ -30,17 +31,27 @@ class TimetableDataController extends Controller
 	 */
 	public function store(Event $event, EventTimetable $timetable, Request $request)
   	{
-	    $data = new EventTimetableData;
-	    $data->event_timetable_id = $timetable->id;
-	    $data->slot_timestamp = $request->start;
-	    $data->slot = $request->game;
-	    $data->desc = $request->desc;
+  		$rules = [
+			'name'			=> 'required',
+			'start_time'	=> 'required'
+		];
+		$messages = [
+			'name.required'			=> 'Name is required',
+			'start_time.required'	=> 'Start Time is required',
+		];
+		$this->validate($request, $rules, $messages);
+
+	    $data 						= new EventTimetableData;
+	    $data->event_timetable_id 	= $timetable->id;
+	    $data->start_time 			= $request->start_time;
+	    $data->name 				= $request->game;
+	    $data->desc 				= $request->desc;
 	    
 	    if (!$data->save()) {
-			Session::flash('alert-danger', 'Cannot save!');
+			Session::flash('alert-danger', 'Cannot save Timetable Slot!');
 		    return Redirect::back();
 	    }
-	    Session::flash('alert-success', 'Successfully Saved!');
+	    Session::flash('alert-success', 'Successfully saved Timetable Slot!');
 	    return Redirect::back();
     }
 
@@ -54,15 +65,25 @@ class TimetableDataController extends Controller
      */
     public function update(Event $event, EventTimetable $timetable, EventTimetableData $data, Request $request)
     {
-	    $data->slot_timestamp = $request->start;
-    	$data->slot = $request->game;
-	    $data->desc = $request->desc;
+    	$rules = [
+			'name'			=> 'filled',
+			'start_time'	=> 'filled'
+		];
+		$messages = [
+			'name.filled'		=> 'Name cannot be empty',
+			'start_time.filled'	=> 'Start Time cannot be empty',
+		];
+		$this->validate($request, $rules, $messages);
+
+	    $data->start_time 	= $request->start_time;
+    	$data->name 		= $request->name;
+	    $data->desc 		= $request->desc;
 
 		if (!$data->save()) {
-			Session::flash('alert-danger', 'Cannot save!');
+			Session::flash('alert-danger', 'Cannot update Timetable Slot!');
 		    return Redirect::back();
 	    }
-	    Session::flash('alert-success', 'Successfully Saved!');
+	    Session::flash('alert-success', 'Successfully updated Timetable Slot!');
 	    return Redirect::back();
     }
 }

@@ -3,7 +3,9 @@
 namespace App;
 
 use DB;
+
 use Illuminate\Database\Eloquent\Model;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class EventVenue extends Model
@@ -66,5 +68,14 @@ class EventVenue extends Model
             ]
         ];
     }
-    
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

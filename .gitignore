@@ -7,14 +7,22 @@ docker/db/\.env
 /node_modules
 /public/storage
 /public/downloads/qr/tickets/*
+package-lock.json
 Homestead.yaml
 Homestead.json
 *.sublime-project
 *.sublime-workspace
-composer.lock
 
 \.env
 
 public/uploads/gallery/
 
-certs/
+/certs
+
+public/css/admin\.css
+
+public/css/app\.css
+
+public/css/admin\.css\.map
+
+public/css/app\.css\.map

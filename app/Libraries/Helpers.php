@@ -4,41 +4,91 @@ namespace App\Libraries;
 
 class Helpers
 {
-	public static function getVenues()
+	/**
+	 * Get Venues
+	 * @param  boolean $obj Return as Object
+	 * @return Array|Object
+	 */
+	public static function getVenues($obj = false)
 	{
 		$venues = \App\EventVenue::all();
-		$return_array = array();
+		$return = array();
 		foreach($venues as $venue){
-				$return_array[$venue->id] = $venue->display_name;
+				$return[$venue->id] = $venue->display_name;
 		}
-		return $return_array;
+		if (!$obj) {
+			$return[] = 'None';
+		}
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
 	}
 
-	public static function getEvents($order = 'DESC', $limit = 0, $array = false)
+	/**
+	 * Get Events
+	 * @param  string  $order
+	 * @param  integer $limit
+	 * @param  boolean $obj   Return as Object
+	 * @return Array|Object
+	 */
+	public static function getEvents($order = 'DESC', $limit = 0, $obj = false)
 	{
 		if ($limit != 0) {
 			$events = \App\Event::orderBy('start', $order)->paginate($limit);
 		} else {
 			$events = \App\Event::orderBy('start', 'DESC')->get();
 		}
-		if ($array) {
-			$events_array[0] = 'None';
-			foreach($events as $event){
-				$events_array[$event->id] = $event->display_name;
-			}
-			$events = $events_array;
+		foreach ($events as $event) {
+			$return[$event->id] = $event;
 		}
-
-		return $events;
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
 	}
 
+	/**
+	 * Get Event Names
+	 * @param  string  $order
+	 * @param  integer $limit
+	 * @param  boolean $obj   Return as Object
+	 * @return Array|Object
+	 */
+	public static function getEventNames($order = 'DESC', $limit = 0, $obj = false)
+	{
+		if ($limit != 0) {
+			$events = \App\Event::orderBy('start', $order)->paginate($limit);
+		} else {
+			$events = \App\Event::orderBy('start', 'DESC')->get();
+		}
+		if (!$obj) {
+			$return[] = 'None';
+		}
+		foreach ($events as $event) {
+			$return[$event->id] = $event->display_name;
+		}
+		if ($obj) {
+			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
+	}
+
+	/**
+	 * Get Total Events Count
+	 * @return Integer
+	 */
 	public static function getEventTotal()
 	{
 		$events = \App\Event::count();
 		return Settings::getLanCountOffset() + $events;
 	}
 
-	public static function getNextEventname()
+	/**
+	 * Get Next Event Name
+	 * @return String
+	 */
+	public static function getNextEventName()
 	{
 		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
 			if ($event->status == 'DRAFT' || $event->status == 'PREVIEW') {
@@ -49,6 +99,10 @@ class Helpers
 		return 'No new Events';
 	}
 
+	/**
+	 * Get Next Event Slug
+	 * @return String
+	 */
 	public static function getNextEventSlug()
 	{
 		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
@@ -57,13 +111,45 @@ class Helpers
 		return '#';
 	}
 
+	/**
+	 * Get Next Event Start Date
+	 * @return String
+	 */
+	public static function getNextEventStartDate()
+	{
+		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+			return date("d-m-Y H:i", strtotime($event->start));
+		}
+		return 'No new Events';
+	}
+
+	/**
+	 * Get Next Event End Date
+	 * @return String
+	 */
+	public static function getNextEventEndDate()
+	{
+		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+			return date("d-m-Y H:i", strtotime($event->end));
+		}
+		return 'No new Events';
+	}
+
+	/**
+	 * Get Total Event Participants Count
+	 * @return Integer
+	 */
 	public static function getEventParticipantTotal()
 	{
 		$participants = \App\EventParticipant::count();
-		//DEBUG - Put the offset as config variable
-		return 686 + $participants;
+		return Settings::getParticipantCountOffset() + $participants;
 	}
 
+	/**
+	 * Get Active Tournaments count for User
+	 * @param  $event_id
+	 * @return Integer
+	 */
 	public static function getUserActiveTournaments($event_id)
 	{
 		$user = \Auth::user();
@@ -78,6 +164,11 @@ class Helpers
 		return $active_tournament_counter;
 	}
 
+	/**
+	 * Format Challonge Rankings
+	 * @param  $final_rank
+	 * @return String
+	 */
 	public static function getChallongeRankFormat($final_rank)
 	{
 		if($final_rank == '1'){
@@ -101,10 +192,18 @@ class Helpers
 		return $final_rank . 'th';
 	}
 
-	//DEBUG - Do array as default and object as param on ALL
+	/**
+	 * Format Basket
+	 * @param  $basket
+	 * @param  boolean $obj    Return as Object
+	 * @return Array|Object
+	 */
 	public static function getBasketFormat($basket, $obj = false)
 	{
 		$return = array();
+		if (!$obj) {
+			$return[] = 'None';
+		}
 		foreach ($basket as $ticket_id => $quantity) {
 			$ticket = \App\EventTicket::where('id', $ticket_id)->first();
 			array_push(
@@ -119,6 +218,21 @@ class Helpers
 		}
 		if ($obj) {
 			return json_decode(json_encode($return), FALSE);
+		}
+		return $return;
+	}
+
+	/**
+	 * Get Basket Total
+	 * @param  $basket
+	 * @return Integer
+	 */
+	public static function getBasketTotal($basket)
+	{
+		$return = 0;
+		foreach ($basket as $ticket_id => $quantity) {
+			$ticket = \App\EventTicket::where('id', $ticket_id)->first();
+			$return += ($ticket->price * $quantity);
 		}
 		return $return;
 	}

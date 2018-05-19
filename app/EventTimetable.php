@@ -4,32 +4,24 @@ namespace App;
 
 use DateTime;
 use Auth;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class EventTimetable extends Model
 {
     use Sluggable;
 
-    /**
-     * The name of the table.
-     *
-     * @var string
-     */
     protected $table = 'event_timetables';
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     protected $hidden = array(
         'created_at',
         'updated_at'
     );
 
-     protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -37,7 +29,7 @@ class EventTimetable extends Model
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
         }
-        if(!$admin) {
+        if (!$admin) {
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
             });
@@ -47,20 +39,6 @@ class EventTimetable extends Model
         }
     }
     
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'display_name'
-            ]
-        ];
-    }
-
     /*
      * Relationships
      */
@@ -73,15 +51,43 @@ class EventTimetable extends Model
        return $this->hasMany('App\EventTimetableData');
     }
 
-    function getSlotsArray()
+    public function sluggable()
     {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     * Get Available Time slots for timetable
+     * @param  boolean $obj
+     * @return Array
+     */
+    public function getAvailableTimes($obj = false)
+    {
+        $return = array();
         $end_date = new \DateTime($this->event->end);
         $this_date = new \DateTime($this->event->start);
-        while($this_date <= $end_date){
-            $return_array[$this_date->format('Y-m-d H:i:s')] = date("D", strtotime($this_date->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($this_date->format('Y-m-d H:i:s')));
+        while ($this_date <= $end_date) {
+            $return[$this_date->format('Y-m-d H:i:s')] = date("D", strtotime($this_date->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($this_date->format('Y-m-d H:i:s')));
             $this_date->modify('+30 minutes');
         }
-        return $return_array;
+        if ($obj) {
+            return json_decode(json_encode($return), FALSE);
+        }
+        return $return;
     }
 
 }

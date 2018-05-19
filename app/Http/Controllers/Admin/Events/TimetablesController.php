@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use Illuminate\Http\Request;
-
 use DB;
 use Session;
+
 use App\User;
 use App\Event;
 use App\EventTicket;
@@ -17,6 +16,8 @@ use App\EventParticipantType;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class TimetablesController extends Controller
@@ -28,10 +29,10 @@ class TimetablesController extends Controller
 	 */
 	public function index(Event $event)
 	{
-		$event->load('timetables');
-		foreach($event->timetables as $timetable){
-			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('slot_timestamp', 'asc')->get();
+		foreach ($event->timetables as $timetable) {
+			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
+
 		return view('admin.events.timetables.index')->withEvent($event);
 	}
 
@@ -54,17 +55,26 @@ class TimetablesController extends Controller
 	 */
 	public function store(Event $event, Request $request)
 	{
-		$timetable                = new EventTimetable;
-		$timetable->display_name  = $request->name;
-		$timetable->slug          = strtolower(str_replace(' ', '-', $request->name));
-		$timetable->event_id      = $event->id;
+		$rules = [
+			'name' => 'required',
+		];
+		$messages = [
+			'name.required' => 'Name is required',
+		];
+		$this->validate($request, $rules, $messages);
+
+		$timetable				= new EventTimetable;
+		$timetable->name		= $request->name;
+		$timetable->slug		= strtolower(str_replace(' ', '-', $request->name));
+		$timetable->event_id	= $event->id;
 
 		if (!$timetable->save()) {
-			Session::flash('alert-danger', 'Could not Save!');
+			Session::flash('alert-danger', 'Cannot save Timetable!');
 			return Redirect::back();
 		}
-		Session::flash('alert-success', 'Successfully Saved!');
-		return Redirect::to('admin/events/' . $event->id . '/timetables/' . $timetable->id);
+
+		Session::flash('alert-success', 'Successfully saved Timetable!');
+		return Redirect::to('admin/events/' . $event->slug . '/timetables/' . $timetable->slug);
 	}
 
 	/**
@@ -77,23 +87,34 @@ class TimetablesController extends Controller
 	public function update(Event $event, EventTimetable $timetable, Request $request)
 	{
 		$rules = [
-		 
+			'name'		=> 'filled',
+			'status'	=> 'in:DRAFT,PUBLISHED',
+			'primary'	=> 'boolean',
 		];
 		$messages = [
-		
+			'name.filled'		=> 'Name cannot be empty',
+			'status.in'			=> 'Status must be DRAFT or PUBLISHED',
+			'primary.boolean'	=> 'Primary must be boolean',
 		];
 		$this->validate($request, $rules, $messages);
 
-		$timetable->display_name  = $request->name;
-		$timetable->slug          = strtolower(str_replace(' ', '-', $request->name));
-		$timetable->status        = $request->status;
-		$timetable->primary       = ($request->primary ? true : false);
+		if (isset($request->name)) {
+			$timetable->name	= $request->name;
+			$timetable->slug	= strtolower(str_replace(' ', '-', $request->name));
+		}
+
+		if (isset($request->status)) {
+			$timetable->status	= $request->status;
+		}
+
+		$timetable->primary		= ($request->primary ? true : false);
 
 		if (!$timetable->save()) {
-			Session::flash('alert-danger', 'Could not Save!');
+			Session::flash('alert-danger', 'Cannot update Timetable!');
 			return Redirect::back();
 		}
-		Session::flash('alert-success', 'Successfully Saved!');
+
+		Session::flash('alert-success', 'Successfully updated Timetable!');
 		return Redirect::back();
 	}
 
@@ -107,10 +128,11 @@ class TimetablesController extends Controller
 	public function destroy(Event $event, EventTimetable $timetable, Request $request)
 	{
 		if (!$timetable->delete()) {
-			Session::flash('alert-danger', 'Could not Delete!');
+			Session::flash('alert-danger', 'Cannot delete Timetable!');
 			return Redirect::back();
 		}
-		Session::flash('alert-success', 'Successfully Deleted!');
+		
+		Session::flash('alert-success', 'Successfully deleted Timetable!');
 		return Redirect::back();
 	}
 }

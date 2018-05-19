@@ -16,8 +16,8 @@ class CreateEventTimetableDataTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('event_timetable_id')->unsigned()->index();
-			$table->dateTime('slot_timestamp');
-			$table->string('slot')->nullable();
+			$table->string('name')->nullable();
+			$table->dateTime('start_time');
 			$table->string('desc')->nullable();
 			$table->timestamps();
 
