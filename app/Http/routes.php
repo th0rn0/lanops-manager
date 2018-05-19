@@ -3,9 +3,6 @@
 /**
  * Login & Register
  */
-// Route::get('social/login/redirect/{provider}', ['uses' => 'Auth\AuthController@redirectToProvider', 'as' => 'social.login']);
-// Route::get('social/login/{provider}', 'Auth\AuthController@handleProviderCallback');
-// Route::post('/steamlogin/register/{user}', 'Auth\SteamAuthController@store');
 Route::group(['middleware' => ['web']], function () {
 	
 	Route::get('/login', 'Auth\SteamAuthController@login');
