@@ -9,14 +9,13 @@
 Route::group(['middleware' => ['web']], function () {
 	
 	Route::get('/login', 'Auth\SteamAuthController@login');
-	Route::post('/steamlogin/register', 'Auth\SteamAuthController@store');
+	Route::get('/register', 'Auth\SteamAuthController@register');
+	Route::post('/account/register', 'Auth\SteamAuthController@store');
 	
 	Route::group(['middleware' => ['auth']], function () {
 		Route::get('/account', 'AccountController@index');
-		Route::post('/steamlogin/delete', 'Auth\SteamAuthController@destroy');
+		Route::post('/account/delete', 'Auth\SteamAuthController@destroy');
 		Route::get('/logout', 'Auth\SteamAuthController@doLogout');
-
-		// Route::get('/steamlogin/register', 'Auth\SteamAuthController@register');
 	});
 });
 

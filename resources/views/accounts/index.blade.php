@@ -33,15 +33,6 @@
 								</div>
 							</div>
 						{{ Form::close() }}
-						<div class="col-md-12 col-sm-12">
-							<div class="form-group">
-								<button type="button" name="" value="" class="btn btn-danger">Remove Steam Account</button>
-								<button type="button" name="" value="" class="btn btn-danger">Add Secondary Steam Account</button>
-								<button type="button" name="" value="" class="btn btn-danger">Add Twitch Account</button>
-								<button type="button" name="" value="" class="btn btn-danger">Remove Twitch Account</button>
-								<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete Account</button>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -119,6 +110,22 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- DANGER ZONE -->
+			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Danger Zone</h3>
+					</div>
+					<div class="panel-body">
+						<button type="button" name="" value="" class="btn btn-danger hidden">Remove Steam Account</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">Add Secondary Steam Account</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">Add Twitch Account</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">Remove Twitch Account</button>
+						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete Account</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		@include ('layouts._partials._gifts.modal')
 	</div>
@@ -131,7 +138,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="confirmDeleteModalLabel">Are you sure you want to Delete your Account?</h4>
 				</div>
-				{{ Form::open(array('url'=>'/steamlogin/delete/', 'id'=>'confirmDeleteFormModal')) }}
+				{{ Form::open(array('url'=>'/account/delete/', 'id'=>'confirmDeleteFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
 							<p>Once it's gone... It's gone, puff... Aaaannnd it's gone!</p>

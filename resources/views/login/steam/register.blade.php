@@ -11,7 +11,7 @@
 					<strong>Update Details</strong>
 				</div>
 				<div class="panel-body">
-					{{ Form::open(array('url'=>'/steamlogin/register/' )) }}
+					{{ Form::open(array('url'=>'/account/register/' )) }}
 						<div class="form-group">
 							{{ Form::label('firstname','Firstname',array('id'=>'','class'=>'')) }}
   							{{ Form::text('firstname', NULL, array('id'=>'firstname','class'=>'form-control', 'required')) }}

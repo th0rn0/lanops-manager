@@ -60,7 +60,9 @@ class SteamAuthController extends Controller
 							'avatar'    => $info->avatarfull,
 							'steamid'   => $info->steamID64,
 					];
-					return view('login.steam.register', $user); // show register page
+					Session::put('user', $user);
+	  				Session::save();
+					return Redirect('/register');
 				}
 			}
 		} else {
@@ -68,19 +70,28 @@ class SteamAuthController extends Controller
 		}
 	}
 
-	// DEBUG - REDUNDENT?
 	/**
 	 * Steam Register to grab the users email address
 	 * @param  User   $user
 	 */
-	// public function register(User $user)
-	// {
-	// 	if (!is_null($user->email)) {
-	// 		return redirect('/'); // redirect to site 
-	// 	} else {
-	// 		return view('login.steam.register')->withUser($user);  
-	// 	}
-	// }
+	public function register()
+	{
+		if (!Session::has('user')) {
+			return Redirect::to('/');
+	  	}
+
+	  	$user = Session::get('user');
+		
+		if (
+			is_null($user['steamid']) || 
+			is_null($user['avatar']) || 
+			is_null($user['steamname'])
+		) {
+			return redirect('/'); // redirect to site 
+		} else {
+			return view('login.steam.register', $user);  
+		}
+	}
 	
 	/**
 	 * Create a new user instance after a valid registration.
@@ -107,6 +118,7 @@ class SteamAuthController extends Controller
 		$user->steamid 			= $request->steamid;
 		$user->username_nice 	= strtolower(str_replace(' ', '-', $request->username));
 		if ($user->save()) {
+			Session::forget('user');
 			Auth::login($user, true);
 			return Redirect('/account');
 		}
