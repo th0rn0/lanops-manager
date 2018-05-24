@@ -61,7 +61,7 @@
 									<td>
 										@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif
 									</td>
-									@if ($participant->gift == 'Y')
+									@if ($participant->gift)
 										<td>Yes</td>
 									@else
 										<td>No</td>

@@ -12,7 +12,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
-			{!! Settings::getTermsAndConditions() !!}
+			{!! Settings::getPurchaseTermsAndConditions() !!}
 			<h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				<button class="btn btn-default">Confirm</button>

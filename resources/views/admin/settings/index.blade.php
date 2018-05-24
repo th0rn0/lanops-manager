@@ -111,8 +111,16 @@
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
-						{{ Form::label('terms_and_conditions','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('terms_and_conditions', $settings->where('setting', 'terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('registration_terms_and_conditions', $settings->where('setting', 'registration_terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				{{ Form::close() }}
+				<hr>
+				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					<div class="form-group">
+						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('purchase_terms_and_conditions', $settings->where('setting', 'purchase_terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}

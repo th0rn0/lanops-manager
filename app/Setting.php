@@ -130,18 +130,41 @@ class Setting extends Model
      * Get Terms And Conditions
      * @return String
      */
-    public static function getTermsAndConditions()
+    public static function getPurchaseTermsAndConditions()
     {
-        return self::where('setting', 'terms_and_conditions')->first()->value;
+        return self::where('setting', 'purchase_terms_and_conditions')->first()->value;
     }
 
     /**
      * Set Terms And Conditions
      * @param String $text
      */
-    public static function setTermsAndConditions($text)
+    public static function setPurchaseTermsAndConditions($text)
     {
-        $setting = self::where('setting', 'terms_and_conditions')->first();
+        $setting = self::where('setting', 'purchase_terms_and_conditions')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Registration Terms And Conditions
+     * @return String
+     */
+    public static function getRegistrationTermsAndConditions()
+    {
+        return self::where('setting', 'registration_terms_and_conditions')->first()->value;
+    }
+
+    /**
+     * Set Registration Terms And Conditions
+     * @param String $text
+     */
+    public static function setRegistrationTermsAndConditions($text)
+    {
+        $setting = self::where('setting', 'registration_terms_and_conditions')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;

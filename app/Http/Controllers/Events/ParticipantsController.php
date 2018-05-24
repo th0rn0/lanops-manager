@@ -64,10 +64,9 @@ class ParticipantsController extends Controller
 			}
 			$request->session()->flash('alert-danger', 'Somthing went wrong. Please try again later.');
 			return Redirect::back();
-		} else {
-			$request->session()->flash('alert-danger', 'This Ticket has already Gifted.');
-			return Redirect::back();
 		}
+		$request->session()->flash('alert-danger', 'This Ticket has already Gifted.');
+		return Redirect::back();
 	}
 	
 	/**
@@ -90,14 +89,10 @@ class ParticipantsController extends Controller
 					Session::flash('alert-success', 'Ticket gift revoked Successfully!');
 					return Redirect::back();
 				}
-			} else {
-				Session::flash('alert-danger', 'Gift has already been accepted.');
-				return Redirect::back();
 			}
-		} else {
-			Session::flash('alert-danger', 'This Ticket is already Gifted.');
-			return Redirect::back();
-		}
+		} 
+		Session::flash('alert-danger', 'This Ticket is already Gifted.');
+		return Redirect::back();
 	}
 	
 	/**
@@ -115,8 +110,8 @@ class ParticipantsController extends Controller
 				$participant->gift_accepted = TRUE;
 				//Change details to gifted user
 				$participant->user_id = $user->id;
-				//Remove gift status - TRUE = dont include accepted and gift
-				$this->revokeGift($participant, TRUE);
+				//Remove gift status
+				$participant->gift_accepted_url = NULL;
 				if ($participant->save()) {
 					$request->session()->flash('alert-success', 'Gift Successfully accepted! Please visit the event page to pick a seat');
 					return Redirect::to('account');

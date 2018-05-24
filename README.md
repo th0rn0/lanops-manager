@@ -1,6 +1,6 @@
 
 
-# LanOps Lan Manager - WIP - v0.1.4.1
+# LanOps Lan Manager
 Lan Manager by Th0rn0 of LanOps. 
 
 https://github.com/th0rn0
