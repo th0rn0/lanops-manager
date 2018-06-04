@@ -24,7 +24,16 @@ class ParticipantsController extends Controller
 	 */
 	public function show($event)
 	{
-		$event = Event::where('id', $event)->first();
+		if (is_numeric($event)) {
+			$event = Event::where('id', $event)->first();
+		} else {
+			$event = Event::where('slug', $event)->first();
+		}
+
+		if (!$event) {
+			return Redirect::to('404');
+		}
+
 		$return = array();
 		$x = array();
 		foreach ($event->eventParticipants as $participant) {
