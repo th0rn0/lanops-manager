@@ -65,7 +65,6 @@ class TimetablesController extends Controller
 
 		$timetable				= new EventTimetable;
 		$timetable->name		= $request->name;
-		$timetable->slug		= strtolower(str_replace(' ', '-', $request->name));
 		$timetable->event_id	= $event->id;
 
 		if (!$timetable->save()) {
