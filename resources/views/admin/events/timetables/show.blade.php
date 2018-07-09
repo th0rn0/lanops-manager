@@ -56,7 +56,7 @@
 								@endif
 								<td width="10%">
 									<button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" onclick="editTimeSlot('{{ $slot->id }}', '{{ $slot->start_time }}', '{{ $slot->name }}', '{{ $slot->desc }}')" data-target="#editTimeSlotModal">Edit</button>
-							</td>
+								</td>
 							</tr>
 						@endforeach
 					</tbody>
@@ -127,10 +127,10 @@
 								Form::select(
 									'status',
 									array(
-										'DRAFT'=>'Draft',
 										'PUBLISHED'=>'Published',
+										'DRAFT'=>'Draft'
 									),
-									$event->status,
+									strtoupper($timetable->status),
 									array(
 										'id'=>'status',
 										'class'=>'form-control'
