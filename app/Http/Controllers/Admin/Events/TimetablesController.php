@@ -99,7 +99,6 @@ class TimetablesController extends Controller
 
 		if (isset($request->name)) {
 			$timetable->name	= $request->name;
-			$timetable->slug	= strtolower(str_replace(' ', '-', $request->name));
 		}
 
 		if (isset($request->status)) {
