@@ -13,7 +13,7 @@
         "laravel/socialite": "~2.0",
         "ignited/laravel-omnipay": "2.*",
         "omnipay/paypal": "2.6.*",
-        "doctrine/dbal": "~2.4",
+        "doctrine/dbal": "2.4",
         "simplesoftwareio/simple-qrcode": "~1",
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "barryvdh/laravel-debugbar": "^2.2",
