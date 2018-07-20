@@ -45,11 +45,54 @@
 								</dd>
 							</dl>
 						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	 
+	 	@if ($tournament->status == 'LIVE' && isset($tournament->matches) && $tournament->team_size != '1v1')
+			Match Standings:
+			<div class="table-responsive">
+					<table class="table">
+						 <thead>
+							<tr>
+								<th>
+									Teams
+								</th>
+								<th>
+									Match History
+								</th>
+								<th>
+									Points
+								</th>
+								<th>
+									History
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($tournament->tournamentTeams as $tournament_team)
+								<tr>
+									<td>  
+										{{ $tournament_team->name }}
+									</td>
+									<td>
+										Standings here
+									</td>
+									<td>
+										Points here
+									</td>
+									<td>
+										History here
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+		@endif
+
 		@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 				<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
@@ -78,7 +121,7 @@
 		@endif
 
 		@if ($tournament->status == 'LIVE' && isset($tournament->matches))
-			<iframe src="https://{{ env('CHALLONGE_URL') }}/{{ $tournament->challonge_tournament_url }}/module?multiplier=1.0&amp;match_width_multiplier=1.0&amp;show_final_results=0&amp;show_standings=0&amp;theme=1&amp;subdomain=" width="100%" height="480" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+			<iframe src="{{ env('CHALLONGE_URL') }}/{{ $tournament->challonge_tournament_url }}/module?multiplier=1.0&amp;match_width_multiplier=1.0&amp;show_final_results=0&amp;show_standings=0&amp;theme=1&amp;subdomain=" width="100%" height="480" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
 		@endif
 
 		@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
