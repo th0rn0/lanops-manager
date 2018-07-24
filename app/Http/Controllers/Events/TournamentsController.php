@@ -23,6 +23,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
+use Reflex\Challonge\Challonge;
+
 class TournamentsController extends Controller
 {
 	/**
@@ -44,6 +46,16 @@ class TournamentsController extends Controller
 	 */
 	public function show(Event $event, EventTournament $tournament, Request $request)
 	{
+		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
+		$test = $challonge->getTournament($tournament->challonge_tournament_id);
+		if ($tournament->team_size != '1v1') {
+			echo 'asdasd';
+		}
+		foreach ($tournament->tournamentTeams as $team) {
+			dd($tournament->getChallongeParticipants());
+		}
+		dd($test);
+
 		$signed_in = true;
 		if (!$user = Auth::user()) {
 			Redirect::to('/');
