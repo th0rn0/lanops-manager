@@ -61,7 +61,7 @@
 									Teams
 								</th>
 								<th>
-									Match History
+									Win/Lose/Tie
 								</th>
 								<th>
 									Points
@@ -72,19 +72,35 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($tournament->tournamentTeams as $tournament_team)
+							@foreach ($tournament_progress['final'] as $standings)
 								<tr>
 									<td>  
-										{{ $tournament_team->name }}
+										{{ $standings['name'] }}
 									</td>
 									<td>
-										Standings here
+										{{ $standings['win'] }} / {{ $standings['lose'] }} / {{ $standings['tie'] }}
 									</td>
 									<td>
-										Points here
+										{{ $standings['pts'] }}
 									</td>
 									<td>
-										History here
+										@foreach ($standings['history'] as $game)
+											@if ($game == 'W') 
+												<div class="col-xs-1">
+													<span class="label label-success">W</span>
+												</div>
+											@endif
+											@if ($game == 'L') 
+												<div class="col-xs-1">
+													<span class="label label-danger">L</span>
+												</div>
+											@endif
+											@if ($game == 'T') 
+												<div class="col-xs-1">
+													<span class="label label-default">T</span>
+												</div>
+											@endif
+										@endforeach
 									</td>
 								</tr>
 							@endforeach
