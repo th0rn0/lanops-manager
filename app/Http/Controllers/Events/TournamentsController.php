@@ -48,7 +48,9 @@ class TournamentsController extends Controller
 	{
 		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
 		// TODO - Add cache
-		$tournament_progress = $challonge->getStandings($tournament->challonge_tournament_id);
+		$tournament_matches = $challonge->getParticipants($tournament->challonge_tournament_id);
+		dd($tournament_matches);
+		$tournament_standings = $challonge->getStandings($tournament->challonge_tournament_id);
 
 		if ($tournament->team_size != '1v1') {
 			echo 'asdasd';
@@ -72,7 +74,8 @@ class TournamentsController extends Controller
 			->withEvent($event)
 			->withUser($user)
 			->withSignedIn($signed_in)
-			->withTournamentProgress($tournament_progress)
+			->withTournamentStandings($tournament_standings)
+			->withTournamentMatches($tournament->matches)
 		;
 	}
 

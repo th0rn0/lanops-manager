@@ -72,7 +72,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($tournament_progress['final'] as $standings)
+							@foreach ($tournament_standings['final'] as $standings)
 								<tr>
 									<td>  
 										{{ $standings['name'] }}
@@ -107,6 +107,10 @@
 						</tbody>
 					</table>
 				</div>
+				Match Brackets:
+				@foreach ($tournament_matches as $match)
+					
+				@endforeach
 		@endif
 
 		@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
