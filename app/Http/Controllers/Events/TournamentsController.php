@@ -47,15 +47,10 @@ class TournamentsController extends Controller
 	public function show(Event $event, EventTournament $tournament, Request $request)
 	{
 		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
-		// TODO - Add cache
-		$tournament_matches = $challonge->getParticipants($tournament->challonge_tournament_id);
-		dd($tournament_matches);
+		// TODO - Add to model
 		$tournament_standings = $challonge->getStandings($tournament->challonge_tournament_id);
 
-		if ($tournament->team_size != '1v1') {
-			echo 'asdasd';
-		}
-		// dd($tournament_progress);
+		// dd($tournament->getMatches());
 		$signed_in = true;
 		if (!$user = Auth::user()) {
 			Redirect::to('/');
@@ -66,7 +61,6 @@ class TournamentsController extends Controller
 			return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
 		}
 		if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') {
-			$tournament->matches = $tournament->getChallongeMatches();
 			$tournament->challonge_participants = $tournament->getChallongeParticipants();
 		}
 		return view('events.tournaments.show')
@@ -75,7 +69,7 @@ class TournamentsController extends Controller
 			->withUser($user)
 			->withSignedIn($signed_in)
 			->withTournamentStandings($tournament_standings)
-			->withTournamentMatches($tournament->matches)
+			->withTournamentMatches($tournament->getMatches())
 		;
 	}
 
