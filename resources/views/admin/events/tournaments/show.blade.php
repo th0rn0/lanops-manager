@@ -140,21 +140,21 @@
 													<button type="submit" class="btn btn-default">Update</button>  
 												@endif
 											</td> 
-										{{ Form::close() }}
-									@endif
-									<td hidden>
-										0
-									</td>
-									<td hidden>
-										0
-									</td>
-									<td hidden>
-										0
-									</td>
-									<td hidden>
-										edit me
-									</td>
-								</tr>
+										@endif
+										<td hidden>
+											0
+										</td>
+										<td hidden>
+											0
+										</td>
+										<td hidden>
+											0
+										</td>
+										<td hidden>
+											edit me
+										</td>
+									</tr>
+								{{ Form::close() }}
 							@endforeach
 						</tbody>
 					</table>

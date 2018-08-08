@@ -169,6 +169,17 @@ class TournamentsController extends Controller
 
 		$tournament->name			= $request->name;
 		$tournament->description	= $request->description;
+
+		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
+		$challonge_tournament = $challonge->getTournament($tournament->challonge_tournament_id);
+		$params = [
+		  'tournament[name]'					=> $request->name
+		];
+
+		if (!$response = $challonge_tournament->update($params)) {
+			Session::flash('message', 'Could not connect to Challonge. Please try again');
+			return Redirect::back();
+		}
 		
 		if (!$tournament->save()) {
 			session::flash('alert-danger', 'Cannot update Tournament!');
@@ -204,9 +215,14 @@ class TournamentsController extends Controller
 	 */
 	public function start(Event $event, EventTournament $tournament)
 	{
-		if ($tournament->tournamentParticipants->count() > 2 && ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETED')) {
-			Session::flash('alert-danger', 'Tournament is already live or doesnt have enough participants');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+		if ($tournament->tournamentParticipants->count() < 2) {
+			Session::flash('alert-danger', 'Tournament doesnt have enough participants');
+			return Redirect::back();
+		}
+
+		if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETED') {
+			Session::flash('alert-danger', 'Tournament is already live or completed');
+			return Redirect::back();
 		}
 
 		if (!$tournament->tournamentTeams->isEmpty()) {

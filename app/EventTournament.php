@@ -149,17 +149,29 @@ class EventTournament extends Model
     }
 
     /**
+     * Get Tournament Participant
+     * @param  $challonge_participant_id
+     * @return EventTournamentParticipant
+     */
+    public function getParticipantByChallongeId($challonge_participant_id)
+    {
+        return $this->tournamentParticipants()->where('challonge_participant_id', $challonge_participant_id)->first();
+    }
+
+
+    // DEBUG - NEEDED?
+    /**
      * Get Matches from Challonge
      * @return JSON|Boolean
      */
-    public function getChallongeMatches()
-    {
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if (!$matches = $challonge->getMatches($this->challonge_tournament_id)) {
-            return false;
-        }
-        return $matches;
-    }
+    // public function getChallongeMatches()
+    // {
+    //     $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+    //     if (!$matches = $challonge->getMatches($this->challonge_tournament_id)) {
+    //         return false;
+    //     }
+    //     return $matches;
+    // }
   
     /**
      * Get Participants from Challonge
@@ -197,13 +209,30 @@ class EventTournament extends Model
      */
     public function getTeams($obj = false)
     {
-        if(!isset($this->tournamentTeams)){
+        if (!isset($this->tournamentTeams)) {
             return null;
         }
         $return = array();
-        foreach($this->tournamentTeams as $tournament_team){
+        foreach ($this->tournamentTeams as $tournament_team) {
             $return[$tournament_team->id] = $tournament_team->name;
         }
+        if ($obj) {
+            return json_decode(json_encode($return), FALSE);
+        }
+        return $return;
+    }
+
+    public function getMatches($obj = false)
+    {
+        // TODO - Add Cache
+        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+        $tournament_matches = $challonge->getMatches($this->challonge_tournament_id);
+
+        $return = array();
+        foreach ($tournament_matches as $match) {
+            $return[$match->round][$match->suggested_play_order] = $match;
+        }
+
         if ($obj) {
             return json_decode(json_encode($return), FALSE);
         }
