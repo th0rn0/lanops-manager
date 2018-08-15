@@ -6,6 +6,7 @@
 	<div class="container">
 
 		<!-- HEADER -->
+
 		<div class="row">
 			<div class="page-header">
 				<h1>
@@ -50,7 +51,6 @@
 					</dl>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-9">
-
 					@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
 						<div class="row">
 							<div class="alert alert-success text-center">
@@ -64,7 +64,6 @@
 					@if ($tournament->status == 'LIVE')
 						Status Bar here
 					@endif
-
 					@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
 						{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 							<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
@@ -91,12 +90,11 @@
 							<button type="submit" class="btn btn-default">Remove Signup</button>
 						{{ Form::close() }}
 					@endif
-
 				</div>
 			</div>
 		</div>
 
-		<!-- MATCHES & STANDINGS -->
+		<!-- BRACKETS & STANDINGS -->
 
 		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && isset($tournament_matches))
 			<div class="row">
@@ -106,94 +104,90 @@
 				@php
 					$match_counter = 1;
 				@endphp
-				@foreach ($tournament_matches as $round_number => $round)
-					<div class="row">
-						<div class="col-xs-12 col-sm-6 col-md-3">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3 class="panel-title">
-										@if ($round_number == count($tournament_matches) - 1)
-											Finals
-										@elseif ($round_number == count($tournament_matches) - 2)
-											Semi-Finals
-										@elseif (substr($round_number, 0, 1) == '-')
-											Losers Round {{ substr($round_number, 1, 1) }}
-										@else
-											Round {{ $round_number }}
-										@endif
-									</h3>
-								</div>
-								<div class="panel-body">
-									@foreach ($round as $match)
-										Match: {{ $match_counter }}
-										<table class="table table-bordered table-condensed">
-											<tbody>
-												@php
-													$scores[0] = 0;
-													$scores[1] = 0;
-													if ($match->scores_csv != "") {
-														$scores = explode("-", $match->scores_csv, 2);
-													}
-													$context[0] = 'active';
-													$context[1] = 'active';
-													if ($scores[0] > $scores[1]) {
-														$context[0] = 'success';
-														$context[1] = 'danger';
-													}
-													if ($scores[0] < $scores[1]) {
-														$context[0] = 'danger';
-														$context[1] = 'success';
-													}
-													if ($scores[0] == $scores[1]) {
-														$context[0] = 'warning';
-														$context[1] = 'warning';
-													}
-												@endphp
-												<tr>
-													<td class="text-center " width="12%">
-														1
-													</td>
-													<td class="{{ $context[0] }}">
-														@if ($match->player1_id)
-															{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
-															<span class="badge pull-right">{{ $scores[0] }}</span>
-														@endif
-														@if ($match->player1_is_prereq_match_loser)
-															<small><i>Loser of {{ ($match_counter - 1) }}</i></small>
-														@endif
-													</td>
-												</tr>
-												<tr>
-													<td class="text-center" width="12%">
-														2
-													</td>
-													<td class="{{ $context[1] }}">
-														@if ($match->player2_id)
-															{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
-															<span class="badge pull-right">{{ $scores[1] }}</span>
-														@endif
-														@if ($round_number != count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser)
-															<small><i>Loser of {{ ($match_counter - 2) }}</i></small>
-														@endif
-														@if ($round_number == count($tournament_matches) - 1 && !$match->player2_is_prereq_match_loser)
-															<small><i>Winner of Losers Bracket</i></small>
-														@endif
-														@if ($round_number == count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser)
-															<small><i>Loser of {{ ($match_counter - 2) }} (if necessary)</i></small>
-														@endif
-													</td>
-												</tr>
-											</tbody>
-										</table>
-										@php
-											$match_counter++
-										@endphp
-									@endforeach
-								</div>
-							</div>
-				 		</div>
-					</div>
-				@endforeach
+				<div class="row">
+					@foreach ($tournament_matches as $round_number => $round)
+							<div class="col-xs-12 col-sm-6 col-md-3">
+								<h3 class="page-header">
+									@if ($round_number == count($tournament_matches) - 1)
+										Finals
+									@elseif ($round_number == count($tournament_matches) - 2)
+										Semi-Finals
+									@elseif (substr($round_number, 0, 1) == '-')
+										Losers Round {{ substr($round_number, 1, 1) }}
+									@else
+										Round {{ $round_number }}
+									@endif
+								</h3>
+								@foreach ($round as $match)
+									<table class="table table-bordered table-condensed">
+										<tbody>
+											@php
+												$scores[0] = 0;
+												$scores[1] = 0;
+												if ($match->scores_csv != "") {
+													$scores = explode("-", $match->scores_csv, 2);
+												}
+												$context[0] = 'active';
+												$context[1] = 'active';
+												if ($scores[0] > $scores[1]) {
+													$context[0] = 'success';
+													$context[1] = 'danger';
+												}
+												if ($scores[0] < $scores[1]) {
+													$context[0] = 'danger';
+													$context[1] = 'success';
+												}
+												if ($scores[0] == $scores[1]) {
+													$context[0] = 'warning';
+													$context[1] = 'warning';
+												}
+											@endphp
+											<tr>
+												<td rowspan="2" class="text-center" width="10%">
+													{{ $match_counter }}
+												</td>
+												<td class="text-center " width="10%">
+													1
+												</td>
+												<td class="{{ $context[0] }}">
+													@if ($match->player1_id)
+														{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+														<span class="badge pull-right">{{ $scores[0] }}</span>
+													@endif
+													@if ($match->player1_is_prereq_match_loser)
+														<small><i>Loser of {{ ($match_counter - 1) }}</i></small>
+													@endif
+												</td>
+											</tr>
+											<tr>
+												<td class="text-center " width="10%">
+													2
+												</td>
+												<td class="{{ $context[1] }}">
+													@if ($match->player2_id)
+														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+														<span class="badge pull-right">{{ $scores[1] }}</span>
+													@endif
+													@if ($round_number != count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser)
+														<small><i>Loser of {{ ($match_counter - 2) }}</i></small>
+													@endif
+													@if ($round_number == count($tournament_matches) - 1 && !$match->player2_is_prereq_match_loser)
+														<small><i>Winner of Losers Bracket</i></small>
+													@endif
+													@if ($round_number == count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser)
+														<small><i>Loser of {{ ($match_counter - 1) }} (if necessary)</i></small>
+													@endif
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									@php
+										$match_counter++
+									@endphp
+								@endforeach
+				 			</div>
+					@endforeach
+	 			</div>
 				<div class="page-header">
 					<h3>Standings</h3>
 				</div>
@@ -313,6 +307,7 @@
 		@endif
 
 		<!-- PARTICIPANTS -->
+		
 		<div class="row">
 			<div class="page-header">
 				<h3>Participants</h3>
