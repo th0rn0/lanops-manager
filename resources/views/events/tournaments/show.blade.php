@@ -126,7 +126,7 @@
 								</div>
 								<div class="panel-body">
 									@foreach ($round as $match)
-										{{ $match_counter }}
+										Match: {{ $match_counter }}
 										<table class="table table-bordered table-condensed">
 											<tbody>
 												@php
