@@ -3,6 +3,7 @@
 namespace App;
 
 use DB;
+use Cache;
 
 use App\EventParticipant;
 use App\EventTournamentParticipant;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
 use Reflex\Challonge\Challonge;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Carbon\Carbon;
 
 
 class EventTournament extends Model
@@ -224,15 +226,16 @@ class EventTournament extends Model
 
     public function getMatches($obj = false)
     {
-        // TODO - Add Cache
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        $tournament_matches = $challonge->getMatches($this->challonge_tournament_id);
-
+        $tournament_matches = Cache::get($this->challonge_tournament_id + '-matches', function () {
+            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $matches = $challonge->getMatches($this->challonge_tournament_id);
+            Cache::put($this->challonge_tournament_id + '-matches', $matches, Carbon::now()->addMinutes(2));
+            return $matches;
+        });
         $return = array();
         foreach ($tournament_matches as $match) {
             $return[$match->round][$match->suggested_play_order] = $match;
         }
-
         if ($obj) {
             return json_decode(json_encode($return), FALSE);
         }
