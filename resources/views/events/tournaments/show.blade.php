@@ -105,7 +105,6 @@
 				</div>
 				@php
 					$match_counter = 1;
-					$finals = false;
 				@endphp
 				@foreach ($tournament_matches as $round_number => $round)
 					<div class="row">
