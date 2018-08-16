@@ -23,12 +23,12 @@
 						</small>
 					</span>
 				</h1>
-				<h4>
-					{{ $tournament->description }}
-				</h4>
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-4 col-md-3">
+					<h4>
+						{{ $tournament->description }}
+					</h4>
 					<dl>
 						<dt>
 							Game
@@ -157,8 +157,8 @@
 					<h3>Brackets</h3>
 				</div>
 				<div class="progress">
-					<div class="progress-bar" role="progressbar" aria-valuenow="{{ $tournament_standings['progress'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tournament_standings['progress'] }}%;">
-						{{ $tournament_standings['progress'] }}%
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{ $tournament->getStandings(null, true)->progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tournament->getStandings(null, true)->progress }}%;">
+						{{ $tournament->getStandings(null, true)->progress }}%
 					</div>
 				</div>
 				@php
@@ -271,19 +271,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($tournament_standings['final'] as $standings)
+								@foreach ($tournament->getStandings('asc', true)->final as $standings)
 									<tr>
 										<td>  
-											{{ $standings['name'] }}
+											{{ $standings->name }}
 										</td>
 										<td>
-											{{ $standings['win'] }} / {{ $standings['lose'] }} / {{ $standings['tie'] }}
+											{{ $standings->win }} / {{ $standings->lose }} / {{ $standings->tie }}
 										</td>
 										<td>
-											{{ $standings['pts'] }}
+											{{ $standings->pts }}
 										</td>
 										<td>
-											@foreach ($standings['history'] as $game)
+											@foreach ($standings->history as $game)
 												@if ($game == 'W') 
 													<div class="col-xs-1">
 														<span class="label label-success">W</span>
@@ -327,19 +327,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($tournament_standings['final'] as $standings)
+								@foreach ($tournament->getStandings('asc', true)->final as $standings)
 									<tr>
 										<td>  
-											{{ $standings['name'] }}
+											{{ $standings->name }}
 										</td>
 										<td>
-											{{ $standings['win'] }} / {{ $standings['lose'] }} / {{ $standings['tie'] }}
+											{{ $standings->win }} / {{ $standings->lose }} / {{ $standings->tie }}
 										</td>
 										<td>
-											{{ $standings['pts'] }}
+											{{ $standings->pts }}
 										</td>
 										<td>
-											@foreach ($standings['history'] as $game)
+											@foreach ($standings->history as $game)
 												@if ($game == 'W') 
 													<div class="col-xs-1">
 														<span class="label label-success">W</span>

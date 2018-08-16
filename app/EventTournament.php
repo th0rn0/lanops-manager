@@ -252,7 +252,7 @@ class EventTournament extends Model
         return $return;
     }
 
-    public function getStandings($obj = false)
+    public function getStandings($order = null, $obj = false)
     {
 
         $tournament_standings = Cache::get($this->standings_cache_key, function() {
@@ -262,6 +262,16 @@ class EventTournament extends Model
             Cache::put($this->standings_cache_key, $standings, Carbon::now()->addMinutes(2));
             return $standings;
         });
+        if ($order == 'asc') {
+            $standings = (array) $tournament_standings['final'];
+            ksort($standings);
+            $tournament_standings['final'] = $standings;
+        }
+        if ($order == 'desc') {
+            $standings = (array) $tournament_standings['final'];
+            krsort($standings);
+            $tournament_standings['final'] = $standings;
+        }
         if ($obj) {
             return json_decode(json_encode($tournament_standings), FALSE);
         }

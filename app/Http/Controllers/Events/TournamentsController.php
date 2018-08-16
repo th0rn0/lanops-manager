@@ -63,7 +63,6 @@ class TournamentsController extends Controller
 			->withEvent($event)
 			->withUser($user)
 			->withSignedIn($signed_in)
-			->withTournamentStandings($tournament->getStandings())
 		;
 	}
 
