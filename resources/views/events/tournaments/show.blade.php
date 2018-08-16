@@ -161,7 +161,7 @@
 														{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
 														<span class="badge pull-right">{{ $scores[0] }}</span>
 													@endif
-													@if ($match->player1_is_prereq_match_loser)
+													@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
 														<small><i>Loser of {{ ($match_counter - 1) }}</i></small>
 													@endif
 												</td>
