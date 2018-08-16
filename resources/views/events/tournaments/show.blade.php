@@ -61,9 +61,16 @@
 						</div>
 					@endif
 
+					<!-- PROGRESS -->
 					@if ($tournament->status == 'LIVE')
-						Status Bar here
+						<div class="progress">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{ $tournament_standings['progress'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tournament_standings['progress'] }}%;">
+								{{ $tournament_standings['progress'] }}%
+							</div>
+						</div>
+						More info on next match here				
 					@endif
+
 					@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
 						{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 							<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
@@ -168,13 +175,13 @@
 														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
 														<span class="badge pull-right">{{ $scores[1] }}</span>
 													@endif
-													@if ($round_number != count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser)
+													@if ($round_number != count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
 														<small><i>Loser of {{ ($match_counter - 2) }}</i></small>
 													@endif
-													@if ($round_number == count($tournament_matches) - 1 && !$match->player2_is_prereq_match_loser)
+													@if ($round_number == count($tournament_matches) - 1 && !$match->player2_is_prereq_match_loser && !$match->player2_id)
 														<small><i>Winner of Losers Bracket</i></small>
 													@endif
-													@if ($round_number == count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser)
+													@if ($round_number == count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
 														<small><i>Loser of {{ ($match_counter - 1) }} (if necessary)</i></small>
 													@endif
 												</td>

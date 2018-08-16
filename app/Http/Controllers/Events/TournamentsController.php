@@ -48,9 +48,8 @@ class TournamentsController extends Controller
 	{
 		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
 		// TODO - Add to model
-		$tournament_standings = $challonge->getStandings($tournament->challonge_tournament_id);
+		// $tournament_standings = ;
 
-		// dd($tournament->getMatches());
 		$signed_in = true;
 		if (!$user = Auth::user()) {
 			Redirect::to('/');
@@ -68,7 +67,7 @@ class TournamentsController extends Controller
 			->withEvent($event)
 			->withUser($user)
 			->withSignedIn($signed_in)
-			->withTournamentStandings($tournament_standings)
+			->withTournamentStandings($tournament->getStandings())
 			->withTournamentMatches($tournament->getMatches())
 		;
 	}

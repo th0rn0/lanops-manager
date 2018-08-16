@@ -58,6 +58,15 @@ class EventTournament extends Model
         'updated_at'
     );
 
+    protected $standings_cache;
+
+    protected $matches_cache;
+
+    public function __construct() {
+        $this->standings_cache = $this->challonge_tournament_id . "_standings";
+        $this->matches_cache = $this->challonge_tournament_id . "_matches";
+    }
+    
     public static function boot() {
         parent::boot();
         self::deleting(function($model){
@@ -226,10 +235,11 @@ class EventTournament extends Model
 
     public function getMatches($obj = false)
     {
-        $tournament_matches = Cache::get($this->challonge_tournament_id + '-matches', function () {
+        $tournament_matches = Cache::get($this->matches_cache, function () {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
-            Cache::put($this->challonge_tournament_id + '-matches', $matches, Carbon::now()->addMinutes(2));
+            // TODO - Change to forever and only update when the scores are updated
+            Cache::put($this->matches_cache, $matches, Carbon::now()->addMinutes(2));
             return $matches;
         });
         $return = array();
@@ -241,4 +251,21 @@ class EventTournament extends Model
         }
         return $return;
     }
+
+    public function getStandings($obj = false)
+    {
+
+        $tournament_standings = Cache::get($this->standings_cache, function() {
+            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $standings = $challonge->getStandings($this->challonge_tournament_id);
+            // TODO - Change to forever and only update when the scores are updated
+            Cache::put($this->standings_cache, $standings, Carbon::now()->addMinutes(2));
+            return $standings;
+        });
+        if ($obj) {
+            return json_decode(json_encode($tournament_standings), FALSE);
+        }
+        return $tournament_standings;
+    }
+
 }
