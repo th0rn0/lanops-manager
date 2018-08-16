@@ -63,12 +63,60 @@
 
 					<!-- PROGRESS -->
 					@if ($tournament->status == 'LIVE')
-						<div class="progress">
-							<div class="progress-bar" role="progressbar" aria-valuenow="{{ $tournament_standings['progress'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tournament_standings['progress'] }}%;">
-								{{ $tournament_standings['progress'] }}%
-							</div>
+						<h4 class="page-header">
+							Next Match
+						</h4>
+						<div class="row">
+							@foreach ($tournament->getNextMatches(2) as $match)
+								<div class="col-xs-12 col-sm-4">
+									<table class="table table-bordered table-condensed">
+										<tbody>
+											@php
+												$scores[0] = 0;
+												$scores[1] = 0;
+												if ($match->scores_csv != "") {
+													$scores = explode("-", $match->scores_csv, 2);
+												}
+												$context[0] = 'active';
+												$context[1] = 'active';
+												if ($scores[0] > $scores[1]) {
+													$context[0] = 'success';
+													$context[1] = 'danger';
+												}
+												if ($scores[0] < $scores[1]) {
+													$context[0] = 'danger';
+													$context[1] = 'success';
+												}
+												if ($scores[0] == $scores[1]) {
+													$context[0] = 'warning';
+													$context[1] = 'warning';
+												}
+											@endphp
+											<tr>
+												<td class="text-center " width="10%">
+													1
+												</td>
+												<td class="{{ $context[0] }}">
+													@if ($match->player1_id)
+														{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+													@endif
+												</td>
+											</tr>
+											<tr>
+												<td class="text-center " width="10%">
+													2
+												</td>
+												<td class="{{ $context[1] }}">
+													@if ($match->player2_id)
+														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+													@endif
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							@endforeach
 						</div>
-						More info on next match here				
 					@endif
 
 					@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
@@ -103,28 +151,33 @@
 
 		<!-- BRACKETS & STANDINGS -->
 
-		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && isset($tournament_matches))
+		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
 			<div class="row">
 				<div class="page-header">
 					<h3>Brackets</h3>
+				</div>
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{ $tournament_standings['progress'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $tournament_standings['progress'] }}%;">
+						{{ $tournament_standings['progress'] }}%
+					</div>
 				</div>
 				@php
 					$match_counter = 1;
 				@endphp
 				<div class="row">
-					@foreach ($tournament_matches as $round_number => $round)
+					@foreach ($tournament->getMatches() as $round_number => $round)
 							<div class="col-xs-12 col-sm-6 col-md-3">
-								<h3 class="page-header">
-									@if ($round_number == count($tournament_matches) - 1)
+								<h4 class="page-header">
+									@if ($round_number == count($tournament->getMatches()) - 1)
 										Finals
-									@elseif ($round_number == count($tournament_matches) - 2)
+									@elseif ($round_number == count($tournament->getMatches()) - 2)
 										Semi-Finals
 									@elseif (substr($round_number, 0, 1) == '-')
 										Losers Round {{ substr($round_number, 1, 1) }}
 									@else
 										Round {{ $round_number }}
 									@endif
-								</h3>
+								</h4>
 								@foreach ($round as $match)
 									<table class="table table-bordered table-condensed">
 										<tbody>
@@ -175,13 +228,13 @@
 														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
 														<span class="badge pull-right">{{ $scores[1] }}</span>
 													@endif
-													@if ($round_number != count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
+													@if ($round_number != count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
 														<small><i>Loser of {{ ($match_counter - 2) }}</i></small>
 													@endif
-													@if ($round_number == count($tournament_matches) - 1 && !$match->player2_is_prereq_match_loser && !$match->player2_id)
+													@if ($round_number == count($tournament->getMatches()) - 1 && !$match->player2_is_prereq_match_loser && !$match->player2_id)
 														<small><i>Winner of Losers Bracket</i></small>
 													@endif
-													@if ($round_number == count($tournament_matches) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
+													@if ($round_number == count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
 														<small><i>Loser of {{ ($match_counter - 1) }} (if necessary)</i></small>
 													@endif
 												</td>
