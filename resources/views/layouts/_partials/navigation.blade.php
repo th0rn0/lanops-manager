@@ -14,7 +14,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="topbar-navigation">
 			<ul class="nav navbar-nav navbar-right">
-				@include ('layouts._partials.tournaments-navigation')
+				@include ('layouts._partials._tournaments.navigation')
 
 				@include ('layouts._partials.events-navigation')
 

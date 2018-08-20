@@ -26,6 +26,16 @@
 
 @include ('layouts._partials._admin._event.dashMini')
 
+<!-- BRACKETS & STANDINGS -->
+@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
+	<div class="row">
+		<div class="col-lg-12">
+			@include ('layouts._partials._tournaments.standings', ['admin' => true])
+			@include ('layouts._partials._tournaments.brackets', ['admin' => true])
+		</div>
+	</div>
+@endif
+
 <div class="row">
 	<div class="col-lg-8">
 
@@ -35,6 +45,7 @@
 				<a target="_blank" href="{{ $tournament->getChallongeUrl() }}" class="btn btn-info btn-xs pull-right">Go to Brackets</a>
 			</div>
 			<div class="panel-body">
+				@include ('layouts._partials._tournaments.participants')
 				@if ($tournament->team_size != '1v1')
 					<h3>Teams</h3>
 					<div class="dataTable_wrapper">

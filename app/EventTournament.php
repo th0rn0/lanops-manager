@@ -263,14 +263,12 @@ class EventTournament extends Model
             return $standings;
         });
         if ($order == 'asc') {
-            $standings = (array) $tournament_standings['final'];
-            ksort($standings);
-            $tournament_standings['final'] = $standings;
+            $standings = $tournament_standings['final'];
+            $tournament_standings['final'] = $standings->sortBy('pts');
         }
         if ($order == 'desc') {
-            $standings = (array) $tournament_standings['final'];
-            krsort($standings);
-            $tournament_standings['final'] = $standings;
+            $standings = $tournament_standings['final'];
+            $tournament_standings['final'] = $standings->sortByDesc('pts');
         }
         if ($obj) {
             return json_decode(json_encode($tournament_standings), FALSE);
