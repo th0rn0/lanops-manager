@@ -119,18 +119,18 @@
 					<h4 class="modal-title" id="submitScoresModalLabel">Submit Scores</h4>
 				</div>
 				<div class="modal-body">
-					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug, 'class'=>'form-horizontal')) }}
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/match', 'class'=>'form-horizontal')) }}
 						<div class="form-group">
 							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-xs-6 col-sm-9 text-left')) }}
 							<div class="col-xs-6 col-sm-3 text-left">
-								{{ Form::number('player1_score', null, array('id'=>'player1_score','class'=>'form-control')) }}
+								{{ Form::number('player1_score', 0, array('id'=>'player1_score','class'=>'form-control')) }}
 							</div>
 						</div>
 						<hr>
 						<div class="form-group">
 							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-xs-6 col-sm-9 text-left')) }}
 							<div class="col-xs-6 col-sm-3 text-left">
-								{{ Form::number('player2_score', null, array('id'=>'player2_score','class'=>'form-control')) }}
+								{{ Form::number('player2_score', 0, array('id'=>'player2_score','class'=>'form-control')) }}
 							</div>
 						</div>
 						<hr>
@@ -158,7 +158,7 @@
 			$("#tournament_match_id").val(match_id);
 			$('[id$=player1_score_lbl]').text(player1_name);
 			$('[id$=player1_verify_span]').text(player1_name);
-			$('[id$=player2_score_lbl]').text(player1_name);
+			$('[id$=player2_score_lbl]').text(player2_name);
 			$('[id$=player2_verify_span]').text(player2_name);
 		}
 	</script>

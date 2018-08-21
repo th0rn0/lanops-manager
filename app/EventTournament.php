@@ -301,4 +301,39 @@ class EventTournament extends Model
         return $next_matches;
     }
 
+    public function updateMatch($match_id, $player1_score, $player2_score, $player_winner_verify = null)
+    {
+        // TODO - add support for multiple sets
+        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+        $match = $challonge->getMatch($this->challonge_tournament_id, $match_id);
+
+        if ($player1_score > $player2_score) {
+            $player_winner_id = $match->player1_id;
+        }
+        if ($player2_score > $player1_score) {
+            $player_winner_id = $match->player2_id;
+        }
+        if ($player_winner_verify == 'player1') {
+            $player_winner_id = $match->player1_id;
+        }
+        if ($player_winner_verify == 'player2') {
+            $player_winner_id = $match->player2_id;
+        }
+        // dd($player_winner_id);
+        // dd(($this->getParticipantByChallongeId($player_winner_id)));
+
+
+        // $player_winner = ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname
+        $params = [
+            'match' => [
+                'scores_csv' => $player1_score . '-' . $player2_score,
+                'winner_id' => $player_winner_id
+            ]
+        ];
+        if (!$response = $match->update($params)) {
+            return false;
+        }
+        return $response;
+    }
+
 }

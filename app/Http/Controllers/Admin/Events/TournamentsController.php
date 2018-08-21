@@ -290,5 +290,30 @@ class TournamentsController extends Controller
 		Session::flash('alert-success', 'Successfully updated Participant!');
 		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
 	}
+
+	public function updateMatch(Event $event, EventTournament $tournament, Request $request)
+	{
+		$rules = [
+			'player1_score' 		=> 'required',
+			'player2_score' 		=> 'required',
+			'tournament_match_id' 	=> 'required',
+			'player_winner_verify'	=> 'in:player1,player2'
+		];
+		$messages = [
+			'player1_score.required' 		=> 'Player 1 score is required.',
+			'player2_score.required' 		=> 'Player 2 score is required.',
+			'tournament_match_id.required' 	=> 'Tournament match ID is required',
+			'player_winner_verify.in' 		=> 'Player winner Verify must be player1 or player2'
+		];
+		$this->validate($request, $rules, $messages);
+
+		if (!$tournament->updateMatch($request->tournament_match_id, $request->player1_score, $request->player2_score, $request->player_winner_verify)) {
+			Session::flash('alert-danger', 'Cannot update match scores!');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Successfully updated match scores!');
+		return Redirect::back();
+	}
 }
 
