@@ -42,7 +42,6 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-users fa-fw"></i> Participants
-				<a target="_blank" href="{{ $tournament->getChallongeUrl() }}" class="btn btn-info btn-xs pull-right">Go to Brackets</a>
 			</div>
 			<div class="panel-body">
 				@include ('layouts._partials._tournaments.participants')

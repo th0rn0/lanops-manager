@@ -238,8 +238,7 @@ class EventTournament extends Model
         $tournament_matches = Cache::get($this->matches_cache_key, function () {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
-            // TODO - Change to forever and only update when the scores are updated
-            Cache::put($this->matches_cache_key, $matches, Carbon::now()->addMinutes(2));
+            Cache::forever($this->matches_cache_key, $matches);
             return $matches;
         });
         $return = array();
@@ -254,12 +253,10 @@ class EventTournament extends Model
 
     public function getStandings($order = null, $obj = false)
     {
-
         $tournament_standings = Cache::get($this->standings_cache_key, function() {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $standings = $challonge->getStandings($this->challonge_tournament_id);
-            // TODO - Change to forever and only update when the scores are updated
-            Cache::put($this->standings_cache_key, $standings, Carbon::now()->addMinutes(2));
+            Cache::forever($this->standings_cache_key, $standings);
             return $standings;
         });
         if ($order == 'asc') {
@@ -281,8 +278,7 @@ class EventTournament extends Model
         $tournament_matches = Cache::get($this->matches_cache_key, function () {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
-            // TODO - Change to forever and only update when the scores are updated
-            Cache::put($this->matches_cache_key, $matches, Carbon::now()->addMinutes(2));
+            Cache::forever($this->matches_cache_key, $matches);
             return $matches;
         });
         $next_matches = array();
@@ -294,7 +290,6 @@ class EventTournament extends Model
                 break;
             }
         }
-        
         if ($obj) {
             return json_decode(json_encode($next_matches), FALSE);
         }
@@ -319,11 +314,6 @@ class EventTournament extends Model
         if ($player_winner_verify == 'player2') {
             $player_winner_id = $match->player2_id;
         }
-        // dd($player_winner_id);
-        // dd(($this->getParticipantByChallongeId($player_winner_id)));
-
-
-        // $player_winner = ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname
         $params = [
             'match' => [
                 'scores_csv' => $player1_score . '-' . $player2_score,
@@ -333,7 +323,11 @@ class EventTournament extends Model
         if (!$response = $match->update($params)) {
             return false;
         }
+        # Update Cache
+        Cache::forget($this->matches_cache_key);
+        Cache::forget($this->standings_cache_key);
+        $this->getMatches();
+        $this->getStandings();
         return $response;
     }
-
 }
