@@ -7,6 +7,9 @@
 						Player
 					</th>
 					<th>
+						Seat
+					</th>
+					<th>
 						Win/Lose/Tie
 					</th>
 					<th>
@@ -23,7 +26,14 @@
 						<td>  
 							<img class="img-rounded" style="max-width: 6%;" src="{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->avatar }}">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->steamname }}
+							<small>- {{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->username }}</small>
 						</td>
+						<td>
+							@if (($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->seat)
+								{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->seat->seat }}
+							@else
+								Not Seated
+							@endif
 						<td>
 							<p>
 								{{ $standings->win }} / {{ $standings->lose }} / {{ $standings->tie }}

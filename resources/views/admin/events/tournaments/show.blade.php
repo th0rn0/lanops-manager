@@ -26,12 +26,18 @@
 
 @include ('layouts._partials._admin._event.dashMini')
 
-<!-- BRACKETS & STANDINGS -->
+<!-- BRACKETS -->
 @if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
 	<div class="row">
 		<div class="col-lg-12">
-			@include ('layouts._partials._tournaments.standings', ['admin' => true])
-			@include ('layouts._partials._tournaments.brackets', ['admin' => true])
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-users fa-fw"></i> Brackets
+				</div>
+				<div class="panel-body">
+					@include ('layouts._partials._tournaments.brackets', ['admin' => true])
+				</div>
+			</div>
 		</div>
 	</div>
 @endif
@@ -44,7 +50,11 @@
 				<i class="fa fa-users fa-fw"></i> Participants
 			</div>
 			<div class="panel-body">
-				@include ('layouts._partials._tournaments.participants')
+				@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+					@include ('layouts._partials._tournaments.standings', ['admin' => true])
+				@else
+					@include ('layouts._partials._tournaments.participants')
+				@endif
 				@if ($tournament->team_size != '1v1')
 					<h3>Teams</h3>
 					<div class="dataTable_wrapper">
@@ -96,7 +106,7 @@
 					</div>
 					<hr>
 				@endif
-				<h3>Participants</h3>
+				<h3>Participants REMOVE ME EVENTUALLY</h3>
 				<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="participant_table">
 						<thead>

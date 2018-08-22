@@ -84,13 +84,10 @@ class TournamentsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		// TODO - add to model
-		$tournament_url = str_random(16);
-
 		$tournament								= new EventTournament();
 
 		$tournament->event_id					= $event->id;
-		$tournament->challonge_tournament_url	= $tournament_url;
+		$tournament->challonge_tournament_url	= str_random(16);
 		$tournament->name						= $request->name;
 		$tournament->game						= $request->game;
 		$tournament->format						= $request->format;
@@ -112,39 +109,6 @@ class TournamentsController extends Controller
 		// 	);
 		// }
 		
-		if (!$tournament->save()) {
-			Session::flash('message', 'Could not save Tournament!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
-		}
-
-		// $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-  //       $params = [
-  //         'tournament[name]'                    => $tournament->name,
-  //         'tournament[tournament_type]'         => strtolower($tournament->format),
-  //         'tournament[url]'                     => $tournament->challonge_tournament_url,
-  //         'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
-  //         'tournament[hold_third_place_match]'  => ($tournament->allow_bronze ? true : false),
-  //         'tournament[show_rounds]'             => true,
-  //       ];
-
-		// $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-		// $params = [
-		//   'tournament[name]'					=> $request->name,
-		//   'tournament[tournament_type]'			=> strtolower($request->format),
-		//   'tournament[url]'						=> $tournament_url,
-		//   'tournament[subdomain]'				=> env('CHALLONGE_SUBDOMAIN'),
-		//   'tournament[hold_third_place_match]'	=> ($request->allow_bronze ? true : false),
-		//   'tournament[show_rounds]'				=> true,
-		// ];
-
-		// if (!$response = $challonge->createTournament($params)) {
-		// 	$tournament->delete();
-		// 	Session::flash('message', 'Could not connect to Challonge. Please try again');
-		// 	return Redirect::to('admin/events/' . $event->slug . '/tournaments');
-		// }
-		
-		// $tournament->challonge_tournament_id = $response->id;
-
 		if (!$tournament->save()) {
 			Session::flash('message', 'Cannot create Tournament!');
 			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
@@ -185,16 +149,16 @@ class TournamentsController extends Controller
 		$tournament->name			= $request->name;
 		$tournament->description	= $request->description;
 
-		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
-		$challonge_tournament = $challonge->getTournament($tournament->challonge_tournament_id);
-		$params = [
-		  'tournament[name]'					=> $request->name
-		];
+		// $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+		// $challonge_tournament = $challonge->getTournament($tournament->challonge_tournament_id);
+		// $params = [
+		//   'tournament[name]'					=> $request->name
+		// ];
 
-		if (!$response = $challonge_tournament->update($params)) {
-			Session::flash('message', 'Could not connect to Challonge. Please try again');
-			return Redirect::back();
-		}
+		// if (!$response = $challonge_tournament->update($params)) {
+		// 	Session::flash('message', 'Could not connect to Challonge. Please try again');
+		// 	return Redirect::back();
+		// }
 		
 		if (!$tournament->save()) {
 			session::flash('alert-danger', 'Cannot update Tournament!');

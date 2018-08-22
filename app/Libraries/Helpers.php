@@ -236,4 +236,15 @@ class Helpers
 		}
 		return $return;
 	}
+
+	/**
+	 * array_key_exists with regex
+	 * @param  $pattern
+	 * @param  $array
+	 * @return Integer
+	 */
+	public static function pregArrayKeyExists($pattern, $array) {
+	    $keys = array_keys($array);    
+	    return (int) preg_grep($pattern,$keys);
+	}
 }

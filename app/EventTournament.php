@@ -56,16 +56,6 @@ class EventTournament extends Model
         'updated_at'
     );
 
-    protected $standings_cache_key;
-
-    protected $matches_cache_key;
-
-    public function __construct(array $attributes = array()) {
-        parent::__construct($attributes);
-        $this->standings_cache_key  = $this->challonge_tournament_id . "_standings";
-        $this->matches_cache_key    = $this->challonge_tournament_id . "_matches";
-    }
-    
     public static function boot() {
         parent::boot();
         self::created(function ($model){
@@ -92,6 +82,17 @@ class EventTournament extends Model
             $response = $challonge->getTournament($model->challonge_tournament_id);
             if (!$response->delete()) {
                return false;
+            }
+            return true;
+        });
+        self::saved(function($model){
+            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $challonge_tournament = $challonge->getTournament($model->challonge_tournament_id);
+            $params = [
+              'tournament[name]' => $model->name
+            ];
+            if (!$response = $challonge_tournament->update($params)) {
+                return false;
             }
             return true;
         });
@@ -253,10 +254,10 @@ class EventTournament extends Model
 
     public function getMatches($obj = false)
     {
-        $tournament_matches = Cache::get($this->matches_cache_key, function () {
+        $tournament_matches = Cache::get($this->challonge_tournament_id . "_matches", function () {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
-            Cache::forever($this->matches_cache_key, $matches);
+            Cache::forever($this->challonge_tournament_id . "_matches", $matches);
             return $matches;
         });
         $return = array();
@@ -271,10 +272,10 @@ class EventTournament extends Model
 
     public function getStandings($order = null, $obj = false)
     {
-        $tournament_standings = Cache::get($this->standings_cache_key, function() {
+        $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $standings = $challonge->getStandings($this->challonge_tournament_id);
-            Cache::forever($this->standings_cache_key, $standings);
+            Cache::forever($this->challonge_tournament_id . "_standings", $standings);
             return $standings;
         });
         if ($order == 'asc') {
@@ -293,10 +294,10 @@ class EventTournament extends Model
 
     public function getNextMatches($limit = 0, $obj = false)
     {
-        $tournament_matches = Cache::get($this->matches_cache_key, function () {
+        $tournament_matches = Cache::get($this->challonge_tournament_id . "_matches", function () {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
-            Cache::forever($this->matches_cache_key, $matches);
+            Cache::forever($this->challonge_tournament_id . "_matches", $matches);
             return $matches;
         });
         $next_matches = array();
@@ -342,8 +343,8 @@ class EventTournament extends Model
             return false;
         }
         # Update Cache
-        Cache::forget($this->matches_cache_key);
-        Cache::forget($this->standings_cache_key);
+        Cache::forget($this->challonge_tournament_id . "_matches");
+        Cache::forget($this->challonge_tournament_id . "_standings");
         $this->getMatches();
         $this->getStandings();
         return $response;
