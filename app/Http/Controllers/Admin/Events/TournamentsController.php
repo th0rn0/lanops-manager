@@ -27,7 +27,10 @@ use Illuminate\Http\Request;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
-use Reflex\Challonge\Challonge;
+use Lanops\Challonge\Challonge;
+
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+
 
 class TournamentsController extends Controller
 {
@@ -81,6 +84,7 @@ class TournamentsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
+		// TODO - add to model
 		$tournament_url = str_random(16);
 
 		$tournament								= new EventTournament();
@@ -96,47 +100,58 @@ class TournamentsController extends Controller
 		$tournament->allow_player_teams			= ($request->allow_player_teams ? true : false);
 		$tournament->status						= 'DRAFT';
 
-		if ($request->file('image') !== NULL) {
-			$tournament->game_cover_image_path = str_replace(
-				'public/', 
-				'/storage/', 
-				Storage::put(
-					'public/images/events/' . $event->slug . '/tournaments/' . $tournament->slug,
-					$request->file('image')
-				)
-			);
-		}
-
+		// TODO finish image uploader
+		// if ($request->file('image') !== NULL) {
+		// 	$tournament->game_cover_image_path = str_replace(
+		// 		'public/', 
+		// 		'/storage/', 
+		// 		Storage::put(
+		// 			'public/images/events/' . $event->slug . '/tournaments/' . $tournament->slug,
+		// 			$request->file('image')
+		// 		)
+		// 	);
+		// }
+		
 		if (!$tournament->save()) {
 			Session::flash('message', 'Could not save Tournament!');
 			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 		}
-		
-		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
-		$params = [
-		  'tournament[name]'					=> $request->name,
-		  'tournament[tournament_type]'			=> strtolower($request->format),
-		  'tournament[url]'						=> $tournament_url,
-		  'tournament[subdomain]'				=> env('CHALLONGE_SUBDOMAIN'),
-		  'tournament[hold_third_place_match]'	=> ($request->allow_bronze ? true : false),
-		  'tournament[show_rounds]'				=> true,
-		];
 
-		if (!$response = $challonge->createTournament($params)) {
-			$tournament->delete();
-			Session::flash('message', 'Could not connect to Challonge. Please try again');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
-		}
+		// $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+  //       $params = [
+  //         'tournament[name]'                    => $tournament->name,
+  //         'tournament[tournament_type]'         => strtolower($tournament->format),
+  //         'tournament[url]'                     => $tournament->challonge_tournament_url,
+  //         'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
+  //         'tournament[hold_third_place_match]'  => ($tournament->allow_bronze ? true : false),
+  //         'tournament[show_rounds]'             => true,
+  //       ];
+
+		// $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+		// $params = [
+		//   'tournament[name]'					=> $request->name,
+		//   'tournament[tournament_type]'			=> strtolower($request->format),
+		//   'tournament[url]'						=> $tournament_url,
+		//   'tournament[subdomain]'				=> env('CHALLONGE_SUBDOMAIN'),
+		//   'tournament[hold_third_place_match]'	=> ($request->allow_bronze ? true : false),
+		//   'tournament[show_rounds]'				=> true,
+		// ];
+
+		// if (!$response = $challonge->createTournament($params)) {
+		// 	$tournament->delete();
+		// 	Session::flash('message', 'Could not connect to Challonge. Please try again');
+		// 	return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+		// }
 		
-		$tournament->challonge_tournament_id = $response->id;
+		// $tournament->challonge_tournament_id = $response->id;
 
 		if (!$tournament->save()) {
-			Session::flash('message', 'Cannot save Tournament!');
+			Session::flash('message', 'Cannot create Tournament!');
 			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
 		}
 
-		Session::flash('message', 'Successfully saved Tournament!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+		Session::flash('message', 'Successfully created Tournament!');
+		return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
 	}
 	
 	/**

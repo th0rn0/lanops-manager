@@ -23,7 +23,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
-use Reflex\Challonge\Challonge;
+use Lanops\Challonge\Challonge;
 
 class TournamentsController extends Controller
 {
@@ -99,6 +99,7 @@ class TournamentsController extends Controller
 		$tournament_participant->save();
 
 		if (!isset($request->event_tournament_team_id) || trim($request->event_tournament_team_id) == '') {
+			// TODO - recreate setChallongeParticipantId so it is for the creation of the participant on challonge and uses the username.
 			if (!$tournament_participant->setChallongeParticipantId()) {
 				$tournament_participant->delete();
 				Session::flash('alert-danger', 'Cannot add participant. Please try again.');

@@ -11,10 +11,8 @@ use App\EventTournamentParticipant;
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
-use Reflex\Challonge\Challonge;
+use Lanops\Challonge\Challonge;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Carbon\Carbon;
-
 
 class EventTournament extends Model
 {
@@ -62,13 +60,33 @@ class EventTournament extends Model
 
     protected $matches_cache_key;
 
-    public function __construct() {
+    public function __construct(array $attributes = array()) {
+        parent::__construct($attributes);
         $this->standings_cache_key  = $this->challonge_tournament_id . "_standings";
         $this->matches_cache_key    = $this->challonge_tournament_id . "_matches";
     }
     
     public static function boot() {
         parent::boot();
+        self::created(function ($model){
+            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $params = [
+              'tournament[name]'                    => $model->name,
+              'tournament[tournament_type]'         => strtolower($model->format),
+              'tournament[url]'                     => $model->challonge_tournament_url,
+              'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
+              'tournament[hold_third_place_match]'  => ($model->allow_bronze ? true : false),
+              'tournament[show_rounds]'             => true,
+            ];
+
+            if (!$response = $challonge->createTournament($params)) {
+                $model->delete();
+                return false;
+            }
+            $model->challonge_tournament_id = $response->id;
+            $model->save();
+            return true;
+        });
         self::deleting(function($model){
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $response = $challonge->getTournament($model->challonge_tournament_id);

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
-use Reflex\Challonge\Challonge;
+use Lanops\Challonge\Challonge;
 
 class EventTournamentParticipant extends Model
 {
@@ -77,7 +77,7 @@ class EventTournamentParticipant extends Model
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
         $tournament = $challonge->getTournament($this->eventTournament->challonge_tournament_id);
-        if (!$response = $tournament->addParticipant(['participant[name]' => $this->eventParticipant->user->steamname])) {
+        if (!$response = $tournament->addParticipant(['participant[name]' => $this->eventParticipant->user->username])) {
             return false;
         }
         $this->challonge_participant_id = $response->id;

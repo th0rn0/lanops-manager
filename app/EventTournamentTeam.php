@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
-use Reflex\Challonge\Challonge;
+use Lanops\Challonge\Challonge;
 
 class EventTournamentTeam extends Model
 {

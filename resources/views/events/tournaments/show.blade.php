@@ -154,26 +154,28 @@
 		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
 			<div class="row">
 				<div class="page-header">
-					<h3>Standings</h3>
-				</div>
-				@include ('layouts._partials._tournaments.standings')
-			</div>
-			<div class="row">
-				<div class="page-header">
 					<h3>Brackets</h3>
 				</div>
 				@include ('layouts._partials._tournaments.brackets')
+			</div>
+			<div class="row">
+				<div class="page-header">
+					<h3>Standings</h3>
+				</div>
+				@include ('layouts._partials._tournaments.standings')
 			</div>
 		@endif
 
 		<!-- PARTICIPANTS -->
 		
-		<div class="row">
-			<div class="page-header">
-				<h3>Participants</h3>
+		@if (($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE'))
+			<div class="row">
+				<div class="page-header">
+					<h3>Participants</h3>
+				</div>
+				@include ('layouts._partials._tournaments.participants')
 			</div>
-			@include ('layouts._partials._tournaments.participants')
-		</div>
+		@endif
 	</div>
 
 @endsection

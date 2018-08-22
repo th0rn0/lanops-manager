@@ -21,13 +21,18 @@
 				@foreach ($tournament->getStandings('desc', true)->final as $standings)
 					<tr>
 						<td>  
-							{{ $standings->name }}
+							<img class="img-rounded" style="max-width: 6%;" src="{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->avatar }}">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->steamname }}
 						</td>
 						<td>
-							{{ $standings->win }} / {{ $standings->lose }} / {{ $standings->tie }}
+							<p>
+								{{ $standings->win }} / {{ $standings->lose }} / {{ $standings->tie }}
+							</p>
 						</td>
 						<td>
-							{{ $standings->pts }}
+							<p>
+								{{ $standings->pts }}
+							</p>
 						</td>
 						<td>
 							@foreach ($standings->history as $game)
