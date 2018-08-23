@@ -55,130 +55,77 @@
 				@else
 					@include ('layouts._partials._tournaments.participants')
 				@endif
-				@if ($tournament->team_size != '1v1')
-					<h3>Teams</h3>
-					<div class="dataTable_wrapper">
-						<table width="100%" class="table table-striped table-hover" id="participant_table">
-							<thead>
+				<h3>All Participants REMOVE ME EVENTUALLY</h3>
+				<table class="table" id="participant_table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							@if($tournament->team_size != '1v1')
+								<th>PUG</th>
+								<th>Team</th>
+								<th></th>
+							@endif
+							<th hidden>Wins</th>
+							<th hidden>Loses</th>
+							<th hidden>Draws</th>
+							<th hidden>Edit</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($tournament->tournamentParticipants as $participant)
+							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id  . '/team')) }}
 								<tr>
-									<th>Name</th>
-									<th>Roster</th>
-									<th hidden>Wins</th>
-									<th hidden>Loses</th>
-									<th hidden>Draws</th>
-									<th hidden>Edit</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach ($tournament->tournamentTeams as $tournament_team)
-									<tr>
+									<td>
+										{{ $participant->eventParticipant->user->steamname }}
+										-
+										@if($participant->eventParticipant->seat)
+											{{ $participant->eventParticipant->seat->seat }}
+										@else
+											Not Seated
+										@endif 
+									</td>
+									@if ($tournament->team_size != '1v1')
 										<td>
-											{{ $tournament_team->name }}
-										</td>
-										<td>
-											@foreach ($tournament_team->tournamentParticipants as $participant)
-												{{ $participant->eventParticipant->user->steamname }}
-												-
-												@if($participant->eventParticipant->seat)
-													{{ $participant->eventParticipant->seat->seat }}
-												@else
-													Not Seated
-												@endif 
-												<br>
-											@endforeach
-										</td>
-										<td hidden>
-											0
-										</td>
-										<td hidden>
-											0
-										</td>
-										<td hidden>
-											0
-										</td>
-										<td hidden>
-											edit me
-										</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
-					<hr>
-				@endif
-				<h3>Participants REMOVE ME EVENTUALLY</h3>
-				<div class="dataTable_wrapper">
-					<table width="100%" class="table table-striped table-hover" id="participant_table">
-						<thead>
-							<tr>
-								<th>Name</th>
-								@if($tournament->team_size != '1v1')
-									<th>PUG</th>
-									<th>Team</th>
-									<th></th>
-								@endif
-								<th hidden>Wins</th>
-								<th hidden>Loses</th>
-								<th hidden>Draws</th>
-								<th hidden>Edit</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($tournament->tournamentParticipants as $participant)
-								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id  . '/team')) }}
-									<tr>
-										<td>
-											{{ $participant->eventParticipant->user->steamname }}
-											-
-											@if($participant->eventParticipant->seat)
-												{{ $participant->eventParticipant->seat->seat }}
+											@if($participant->pug)
+												Yes
 											@else
-												Not Seated
-											@endif 
+												No
+											@endif
+										</td>                        
+										<td>
+											@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+												{{ $participant->tournamentTeam->name }}
+											@else
+												<div class="form-group">
+													{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
+												</div>
+											@endif
 										</td>
-										@if ($tournament->team_size != '1v1')
-											<td>
-												@if($participant->pug)
-													Yes
-												@else
-													No
-												@endif
-											</td>                        
-											<td>
-												@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-													{{ $participant->tournamentTeam->name }}
-												@else
-													<div class="form-group">
-														{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
-													</div>
-												@endif
-											</td>
-											<td>
-												@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-													<button type="submit" class="btn btn-default" disabled>Update</button>  
-												@else
-													<button type="submit" class="btn btn-default">Update</button>  
-												@endif
-											</td> 
-										@endif
-										<td hidden>
-											0
-										</td>
-										<td hidden>
-											0
-										</td>
-										<td hidden>
-											0
-										</td>
-										<td hidden>
-											edit me
-										</td>
-									</tr>
-								{{ Form::close() }}
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+										<td>
+											@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+												<button type="submit" class="btn btn-default" disabled>Update</button>  
+											@else
+												<button type="submit" class="btn btn-default">Update</button>  
+											@endif
+										</td> 
+									@endif
+									<td hidden>
+										0
+									</td>
+									<td hidden>
+										0
+									</td>
+									<td hidden>
+										0
+									</td>
+									<td hidden>
+										edit me
+									</td>
+								</tr>
+							{{ Form::close() }}
+						@endforeach
+					</tbody>
+				</table>
 			</div>
 		</div>
 
