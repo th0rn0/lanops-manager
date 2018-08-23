@@ -149,17 +149,6 @@ class TournamentsController extends Controller
 		$tournament->name			= $request->name;
 		$tournament->description	= $request->description;
 
-		// $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-		// $challonge_tournament = $challonge->getTournament($tournament->challonge_tournament_id);
-		// $params = [
-		//   'tournament[name]'					=> $request->name
-		// ];
-
-		// if (!$response = $challonge_tournament->update($params)) {
-		// 	Session::flash('message', 'Could not connect to Challonge. Please try again');
-		// 	return Redirect::back();
-		// }
-		
 		if (!$tournament->save()) {
 			session::flash('alert-danger', 'Cannot update Tournament!');
 			return Redirect::back();

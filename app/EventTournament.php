@@ -189,20 +189,6 @@ class EventTournament extends Model
     }
 
 
-    // DEBUG - NEEDED?
-    /**
-     * Get Matches from Challonge
-     * @return JSON|Boolean
-     */
-    // public function getChallongeMatches()
-    // {
-    //     $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-    //     if (!$matches = $challonge->getMatches($this->challonge_tournament_id)) {
-    //         return false;
-    //     }
-    //     return $matches;
-    // }
-  
     /**
      * Get Participants from Challonge
      * @return JSON|Boolean
