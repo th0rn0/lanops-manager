@@ -79,12 +79,6 @@ class HomeController extends Controller
 			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
 
-		foreach ($event->tournaments as $tournament) {
-			if ($tournament->status == 'COMPLETE') {
-				$tournament->challonge_participants = $tournament->getChallongeParticipants();
-			}
-		}
-
 		$user = Auth::user();
 		if ($user) {
 			$clauses = ['user_id' => $user->id, 'event_id' => $event->id]; 

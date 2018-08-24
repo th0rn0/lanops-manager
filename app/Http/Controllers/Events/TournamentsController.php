@@ -55,9 +55,6 @@ class TournamentsController extends Controller
 			Session::flash('alert-danger', 'Please sign in with one of our Admins.');
 			return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
 		}
-		if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') {
-			$tournament->challonge_participants = $tournament->getChallongeParticipants();
-		}
 		return view('events.tournaments.show')
 			->withTournament($tournament)
 			->withEvent($event)

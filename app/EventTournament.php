@@ -199,23 +199,6 @@ class EventTournament extends Model
     }
 
 
-    // TODO - Is this needed?
-    /**
-     * Get Participants from Challonge
-     * @return JSON|Boolean
-     */
-    public function getChallongeParticipants()
-    {
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if (!$challonge_participants = $challonge->getParticipants($this->challonge_tournament_id)) {
-            return false;
-        }
-        if ($this->status == 'COMPLETE') {
-            usort($challonge_participants, function($a, $b) { return strcmp($a->final_rank, $b->final_rank); });
-        }
-        return $challonge_participants;
-    }
-
     /**
      * Get Challonge URL
      * @return String|Boolean
