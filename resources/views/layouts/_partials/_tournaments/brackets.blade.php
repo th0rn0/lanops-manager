@@ -64,7 +64,11 @@
 							</td>
 							<td class="{{ $context[0] }}">
 								@if ($match->player1_id)
-									{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+									@if ($tournament->team_size != '1v1')
+										{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}
+									@else
+										{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+									@endif
 									<span class="badge pull-right">{{ $scores[0] }}</span>
 								@endif
 								@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
@@ -74,18 +78,33 @@
 							@if ( @$admin && $user->admin )
 								<td rowspan="2" class="text-center" width="10%">
 									@if ($match->state == 'open' && ($match->player2_id != null && $match->player1_id != null))
-									 	<button 
-									 		class="btn btn-sm btn-primary" 
-									 		onclick="submitScores(
-									 			'{{ $match->id }}',
-									 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}',
-									 			'{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}'
-								 			)" 
-								 			data-toggle="modal"
-								 			data-target="#submitScoresModal"
-							 			>
-							 				Submit Scores
-							 			</button>
+										@if ($tournament->team_size != '1v1')
+											<button 
+										 		class="btn btn-sm btn-primary" 
+										 		onclick="submitScores(
+										 			'{{ $match->id }}',
+										 			'{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}',
+										 			'{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}'
+									 			)" 
+									 			data-toggle="modal"
+									 			data-target="#submitScoresModal"
+								 			>
+								 				Submit Scores
+								 			</button>
+										@else
+										 	<button 
+										 		class="btn btn-sm btn-primary" 
+										 		onclick="submitScores(
+										 			'{{ $match->id }}',
+										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}',
+										 			'{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}'
+									 			)" 
+									 			data-toggle="modal"
+									 			data-target="#submitScoresModal"
+								 			>
+								 				Submit Scores
+								 			</button>
+							 			@endif
 								 	@endif
 								</td>
 							@endif
@@ -96,7 +115,11 @@
 							</td>
 							<td class="{{ $context[1] }}">
 								@if ($match->player2_id)
-									{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+									@if ($tournament->team_size != '1v1')
+										{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}
+									@else
+										{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+									@endif
 									<span class="badge pull-right">{{ $scores[1] }}</span>
 								@endif
 								@if ($round_number != count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)

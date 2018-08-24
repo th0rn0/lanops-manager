@@ -6,7 +6,6 @@
 	<div class="container">
 
 		<!-- HEADER -->
-
 		<div class="row">
 			<div class="page-header">
 				<h1>
@@ -63,7 +62,7 @@
 
 					<!-- PROGRESS -->
 					@if ($tournament->status == 'LIVE')
-						<h4 class="page-header">
+						<h4 class="section-header">
 							Next Match
 						</h4>
 						<div class="row">
@@ -98,7 +97,11 @@
 												</td>
 												<td class="{{ $context[0] }}">
 													@if ($match->player1_id)
-														{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+														@if ($tournament->team_size != '1v1')
+															{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}
+														@else
+															{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+														@endif
 													@endif
 												</td>
 											</tr>
@@ -108,7 +111,11 @@
 												</td>
 												<td class="{{ $context[1] }}">
 													@if ($match->player2_id)
-														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+														@if ($tournament->team_size != '1v1')
+															{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}
+														@else
+															{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+														@endif
 													@endif
 												</td>
 											</tr>
@@ -120,83 +127,86 @@
 					@endif
 
 					<!-- REGISTRATION -->
-					<h4 class="page-header">
-						Registration
-					</h4>
-
-					<!-- Team Registration -->
-					@if ($tournament->team_size != '1v1' && $tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id))
-						<div class="row border-between">
-							<div class="col-xs-12 col-sm-6">
-								<label>Join a Team</label>
-								<div class="row">
-									@foreach ($tournament->tournamentTeams as $tournament_team)
-										<div class="col-xs-6 col-sm-6">
-											{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
-												<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-												<input type="hidden" name="event_tournament_team_id" value="{{ $tournament_team->id }}">
-												<button type="submit" name="action" value="sign_up" class="btn btn-primary btn-block">{{ $tournament_team->name }}</button>
-											{{ Form::close() }}
-										</div>
-									@endforeach
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-6">
-								<label>Create a Team</label>
-								{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
+					@if ($tournament->status == 'OPEN')
+						<h4 class="section-header">
+							Registration
+						</h4>
+						<!-- Team Registration -->
+						@if ($tournament->team_size != '1v1' && !$tournament->getParticipant($user->active_event_participant->id))
+							<div class="row border-between">
+								<div class="col-xs-12 col-sm-6">
+									<label>Join a Team</label>
 									<div class="row">
-										<div class="form-group col-sm-6 col-xs-12">
-											{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required', 'placeholder' => 'Team Name')) }}
-										</div>
-										<div class="form-group col-sm-6 col-xs-12">
-											<button type="submit" class="btn btn-primary btn-block">Create Team</button>
-										</div>
+										@foreach ($tournament->tournamentTeams as $tournament_team)
+											<div class="col-xs-6 col-sm-6">
+												{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
+													<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
+													<input type="hidden" name="event_tournament_team_id" value="{{ $tournament_team->id }}">
+													<button type="submit" name="action" value="sign_up" class="btn btn-default btn-block">{{ $tournament_team->name }}</button>
+												{{ Form::close() }}
+												<br>
+											</div>
+										@endforeach
 									</div>
-									<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-								{{ Form::close() }}
-								<hr>
-								{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/pug', 'files' => true )) }}
-									<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-									<button type="submit" class="btn btn-primary btn-block">Sign up as PUG</button>
-								{{ Form::close() }}
-							</div>
-						</div>
-					@endif
-
-
-
-					@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
-						{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
-							<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-							<button type="submit" class="btn btn-default">Signup</button>
-						{{ Form::close() }}
-					@endif
-
-					@if ($tournament->status == 'OPEN' && $tournament->getParticipant($user->active_event_participant->id))
-						{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/remove', 'files' => true )) }}
-							<div class="row">
-								<div class="col-xs-12 col-md-6">
-									@if ($tournament->team_size != '1v1')
-										@if (($tournament->getParticipant($user->active_event_participant->id))->pug)
-											<h4>You are signed up as a PUG. Team will be assigned shortly.</h4>
-										@else
-											<h4>You are signed up with {{ ($tournament->getParticipant($user->active_event_participant->id))->tournamentTeam->name }}</h4>
-										@endif
-									@else
-										<h4>You are signed up</h4>
-									@endif
-									<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-									<button type="submit" class="btn btn-primary btn-block">Remove Signup</button>
+								</div>
+								<div class="col-xs-12 col-sm-6">
+									<label>Create a Team</label>
+									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
+										<div class="row">
+											<div class="form-group col-sm-6 col-xs-12">
+												{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required', 'placeholder' => 'Team Name')) }}
+											</div>
+											<div class="form-group col-sm-6 col-xs-12">
+												<button type="submit" class="btn btn-default btn-block">Create Team</button>
+											</div>
+										</div>
+										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
+									{{ Form::close() }}
+									<hr>
+									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/pug', 'files' => true )) }}
+										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
+										<button type="submit" class="btn btn-default btn-block">Sign up as PUG</button>
+									{{ Form::close() }}
 								</div>
 							</div>
-						{{ Form::close() }}
+						@endif
+						<!-- Singles Registration -->
+						@if (!$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
+							<div class="row">
+								<div class="col-xs-6 col-sm-6">
+									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
+										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
+										<button type="submit" class="btn btn-default btn-block">Signup</button>
+									{{ Form::close() }}
+								</div>
+							</div>
+						@endif
+						<!-- Signed up -->
+						@if ($tournament->getParticipant($user->active_event_participant->id))
+							{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/remove', 'files' => true )) }}
+								<div class="row">
+									<div class="col-xs-12 col-md-6">
+										@if ($tournament->team_size != '1v1')
+											@if (($tournament->getParticipant($user->active_event_participant->id))->pug && !($tournament->getParticipant($user->active_event_participant->id))->tournamentTeam)
+												<h4>You are signed up as a PUG. Team will be assigned shortly.</h4>
+											@else
+												<h4>You are signed up with {{ ($tournament->getParticipant($user->active_event_participant->id))->tournamentTeam->name }}</h4>
+											@endif
+										@else
+											<h4>You are signed up</h4>
+										@endif
+										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
+										<button type="submit" class="btn btn-default btn-block">Remove Signup</button>
+									</div>
+								</div>
+							{{ Form::close() }}
+						@endif
 					@endif
 				</div>
 			</div>
 		</div>
 
 		<!-- BRACKETS & STANDINGS -->
-
 		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
 			<div class="row">
 				<div class="page-header">
@@ -213,7 +223,6 @@
 		@endif
 
 		<!-- PARTICIPANTS -->
-		
 		@if (($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE'))
 			<div class="row">
 				<div class="page-header">

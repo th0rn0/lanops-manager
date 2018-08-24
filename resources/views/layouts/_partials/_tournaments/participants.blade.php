@@ -1,5 +1,4 @@
 <!-- All Participants -->
-<h3>All Participants</h3>
 <div class="table-responsive">
 	<table class="table">
 		 <thead>
@@ -22,7 +21,15 @@
 		</thead>
 		<tbody>
 			@foreach ($tournament->tournamentParticipants as $tournament_participant)
-				<tr>
+				@php
+					$context = 'default';
+				@endphp
+				@if (($tournament_participant->pug && !$tournament_participant->tournamentTeam) && (@$admin && $user->admin))
+					@php
+						$context = 'warning';
+					@endphp
+				@endif
+				<tr class='{{ $context }}'>
 					<td>
 						<p style="padding-top:7px;">
 							<img class="img-rounded" style="max-width: 4%;" src="{{$tournament_participant->eventParticipant->user->avatar}}">
@@ -49,18 +56,20 @@
 						</td>                        
 						<td>
 							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournament_participant->id  . '/team')) }}
-								@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-									{{ $tournament_participant->tournamentTeam->name }}
-								@else
-									<div class="form-group">
+								<div class="form-group col-xs-12 col-sm-8">
+									@if ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETE' && (@$admin && $user->admin))
 										{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $tournament_participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
-									</div>
-								@endif
-								@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-									<button type="submit" class="btn btn-default" disabled>Update</button>  
-								@else
-									<button type="submit" class="btn btn-default">Update</button>  
-								@endif
+									@else
+										{{ $tournament_participant->tournamentTeam->name }}
+									@endif
+								</div>
+								<div class="form-group col-xs-12 col-sm-4">
+									@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+										<button type="submit" class="btn btn-default btn-block" disabled>Update</button>  
+									@else
+										<button type="submit" class="btn btn-default btn-block">Update</button>  
+									@endif
+								</div>
 							{{ Form::close() }}
 						</td>
 					@endif

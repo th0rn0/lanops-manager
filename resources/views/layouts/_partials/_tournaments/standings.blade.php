@@ -69,13 +69,16 @@
 		</table>
 	</div>
 @endif
-@if ($tournament->status == 'LIVE' && isset($tournament->matches) && $tournament->team_size != '1v1')
+@if ($tournament->team_size != '1v1')
 	<div class="table-responsive">
 		<table class="table">
 			 <thead>
 				<tr>
 					<th>
-						Teams
+						Team
+					</th>
+					<th>
+						Roster
 					</th>
 					<th>
 						Win/Lose/Tie
@@ -91,8 +94,16 @@
 			<tbody>
 				@foreach ($tournament->getStandings('desc', true)->final as $standings)
 					<tr>
-						<td>  
+						<td>
 							{{ $standings->name }}
+						</td>
+						<td>
+							@if (($tournament->getTeamByChallongeId($standings->id)->tournamentParticipants))
+								@foreach (($tournament->getTeamByChallongeId($standings->id)->tournamentParticipants) as $participant)
+									<img class="img-rounded" style="max-width: 6%;" src="{{ $participant->eventParticipant->user->avatar }}">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->steamname }} <small>- {{ $participant->eventParticipant->user->username }}</small><br>
+								@endforeach
+							@endif
 						</td>
 						<td>
 							{{ $standings->win }} / {{ $standings->lose }} / {{ $standings->tie }}
@@ -101,23 +112,25 @@
 							{{ $standings->pts }}
 						</td>
 						<td>
-							@foreach ($standings->history as $game)
-								@if ($game == 'W') 
-									<div class="col-xs-1">
-										<span class="label label-success">W</span>
-									</div>
-								@endif
-								@if ($game == 'L') 
-									<div class="col-xs-1">
-										<span class="label label-danger">L</span>
-									</div>
-								@endif
-								@if ($game == 'T') 
-									<div class="col-xs-1">
-										<span class="label label-default">T</span>
-									</div>
-								@endif
-							@endforeach
+							<div class="row">
+								@foreach ($standings->history as $game)
+									@if ($game == 'W') 
+										<div class="col-xs-1">
+											<span class="label label-success">W</span>
+										</div>
+									@endif
+									@if ($game == 'L') 
+										<div class="col-xs-1">
+											<span class="label label-danger">L</span>
+										</div>
+									@endif
+									@if ($game == 'T') 
+										<div class="col-xs-1">
+											<span class="label label-default">T</span>
+										</div>
+									@endif
+								@endforeach
+							</div>
 						</td>
 					</tr>
 				@endforeach

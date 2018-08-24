@@ -179,7 +179,7 @@ class EventTournament extends Model
     }
 
     /**
-     * Get Tournament Participant
+     * Get Tournament Participant By Challonge ID
      * @param  $challonge_participant_id
      * @return EventTournamentParticipant
      */
@@ -188,7 +188,18 @@ class EventTournament extends Model
         return $this->tournamentParticipants()->where('challonge_participant_id', $challonge_participant_id)->first();
     }
 
+     /**
+     * Get Tournament Team By Challonge ID
+     * @param  $challonge_participant_id
+     * @return EventTournamentParticipant
+     */
+    public function getTeamByChallongeId($challonge_participant_id)
+    {
+        return $this->tournamentTeams()->where('challonge_participant_id', $challonge_participant_id)->first();
+    }
 
+
+    // TODO - Is this needed?
     /**
      * Get Participants from Challonge
      * @return JSON|Boolean
