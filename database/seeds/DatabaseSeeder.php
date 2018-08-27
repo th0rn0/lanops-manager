@@ -19,9 +19,11 @@ class DatabaseSeeder extends Seeder
         \DB::table('events')->delete();
         \DB::table('event_tickets')->delete();
         \DB::table('event_timetables')->delete();
+        \DB::table('event_tournaments')->delete();
         \DB::table('event_venues')->delete();
         \DB::table('event_information')->delete();
         \DB::table('settings')->delete();
+        \DB::table('games')->delete();
 
         ## Venue
         $venue = factory(App\EventVenue::class)->create();
@@ -132,6 +134,11 @@ class DatabaseSeeder extends Seeder
             'setting'   => 'about_who',
             'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
+        ]);
+        factory(App\Game::class)->create([
+            'name'          => 'Quake',
+            'description'   => 'Best game ever',
+            'version'       => 'latest',
         ]);
     }
 }
