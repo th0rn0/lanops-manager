@@ -199,19 +199,6 @@ class EventTournament extends Model
 
 
     /**
-     * Get Challonge URL
-     * @return String|Boolean
-     */
-    public function getChallongeUrl()
-    {
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        if (!$tournament = $challonge->getTournament($this->challonge_tournament_id)) {
-            return false;
-        }
-        return "https://" . env('CHALLONGE_URL') . "/" . $tournament->url;
-    }
-
-    /**
      * Get Teams
      * @param  boolean $obj
      * @return Array|Object

@@ -72,7 +72,7 @@ Route::group(['middleware' => ['web']], function () {
 	 */
 	Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
 	Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-	Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@register');
+	Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
 	Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
 	Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
 	Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');

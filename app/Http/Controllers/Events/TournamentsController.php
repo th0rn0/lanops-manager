@@ -63,7 +63,7 @@ class TournamentsController extends Controller
 	 * @param  Request         $request
 	 * @return [type]                     
 	 */
-	public function register(Event $event, EventTournament $tournament, Request $request)
+	public function registerSingle(Event $event, EventTournament $tournament, Request $request)
 	{
 		if ($tournament->status != 'OPEN') {
 			Session::flash('alert-danger', 'Signups not permitted at this time.');

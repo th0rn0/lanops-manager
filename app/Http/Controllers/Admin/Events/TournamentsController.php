@@ -246,7 +246,7 @@ class TournamentsController extends Controller
 		}
 
 		Session::flash('alert-success', 'Successfully updated Participant!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
+		return Redirect::back();
 	}
 
 	public function updateMatch(Event $event, EventTournament $tournament, Request $request)
