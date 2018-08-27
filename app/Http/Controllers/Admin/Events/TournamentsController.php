@@ -11,6 +11,7 @@ use Storage;
 
 use App\User;
 use App\Event;
+use App\Game;
 use App\EventParticipant;
 use App\EventTournament;
 use App\EventTournamentParticipant;
@@ -53,10 +54,8 @@ class TournamentsController extends Controller
    	 */
 	public function store(Event $event, Request $request)
 	{
-
 		$rules = [
 			'name'			=> 'required',
-			'game'			=> 'required',
 			'format'		=> 'required|in:single elimination,double elimination,round robin',
 			'team_size'		=> 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
 			'description'	=> 'required',
@@ -64,7 +63,6 @@ class TournamentsController extends Controller
 		];
 		$messages = [
 			'name.required'			=> 'Tournament name is required',
-			'game.required'			=> 'Game is required',
 			'format.required'		=> 'Format is required',
 			'format.in'				=> 'Single Elimation, Double Elimination or Round Robin only',
 			'team_size.required'	=> 'Team size is required',
@@ -74,12 +72,17 @@ class TournamentsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
+		$game_id = null;
+		if (isset($request->game_id)) {
+			if (Game::where('id', $request->game_id)->first()) {
+				$game_id = $request->game_id;
+			}
+		}
 		$tournament								= new EventTournament();
-
 		$tournament->event_id					= $event->id;
 		$tournament->challonge_tournament_url	= str_random(16);
 		$tournament->name						= $request->name;
-		$tournament->game						= $request->game;
+		$tournament->game_id					= $game_id;
 		$tournament->format						= $request->format;
 		$tournament->team_size					= $request->team_size;
 		$tournament->description				= $request->description;
@@ -87,18 +90,6 @@ class TournamentsController extends Controller
 		$tournament->allow_player_teams			= ($request->allow_player_teams ? true : false);
 		$tournament->status						= 'DRAFT';
 
-		// TODO finish image uploader
-		// if ($request->file('image') !== NULL) {
-		// 	$tournament->game_cover_image_path = str_replace(
-		// 		'public/', 
-		// 		'/storage/', 
-		// 		Storage::put(
-		// 			'public/images/events/' . $event->slug . '/tournaments/' . $tournament->slug,
-		// 			$request->file('image')
-		// 		)
-		// 	);
-		// }
-		
 		if (!$tournament->save()) {
 			Session::flash('message', 'Cannot create Tournament!');
 			return Redirect::back();
@@ -107,7 +98,7 @@ class TournamentsController extends Controller
 		Session::flash('message', 'Successfully created Tournament!');
 		return Redirect::back();
 	}
-	
+	// TODO - remove game_cover_image_path from event_tournaments
 	/**
 	 * Update Tournament
 	 * @param  Event           $event
@@ -138,6 +129,16 @@ class TournamentsController extends Controller
 
 		$tournament->name			= $request->name;
 		$tournament->description	= $request->description;
+		$disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
+		if (!in_array($tournament->status, $disallowed_array)) {
+			$game_id = null;
+			if (isset($request->game_id)) {
+				if (Game::where('id', $request->game_id)->first()) {
+					$game_id = $request->game_id;
+				}
+			}
+			$tournament->game_id					= $game_id;
+		}
 
 		if (!$tournament->save()) {
 			session::flash('alert-danger', 'Cannot update Tournament!');

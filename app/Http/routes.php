@@ -154,6 +154,9 @@ Route::group(['middleware' => ['web']], function () {
 		 */
 		Route::get('/admin/games',  'Admin\GamesController@index');
 		Route::post('/admin/games',  'Admin\GamesController@store');
+		Route::get('/admin/games/{game}',  'Admin\GamesController@show');
+		Route::post('/admin/games/{game}',  'Admin\GamesController@update');
+		Route::delete('/admin/games/{game}',  'Admin\GamesController@destroy');
 
 		/**
 		 * Participants

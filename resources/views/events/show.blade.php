@@ -448,7 +448,7 @@
 								<h4>{{ $tournament->name }}</h4>
 							</div>
 							<div class="panel-body">
-								<p>Game: {{ $tournament->game }}</p>
+								<p>Game: {{ $tournament->game->name }}</p>
 								<p>Type: {{ $tournament->type }}</p>
 								<p>Format: {{ $tournament->format }}</p>
 								<p>{{ $tournament->description }}</p>

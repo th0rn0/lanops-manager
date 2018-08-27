@@ -23,27 +23,66 @@
 				<i class="fa fa-th-list fa-fw"></i> Games
 			</div>
 			<div class="panel-body">
-				<div class="dataTable_wrapper">
-					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
+				<div class="table-responsive">
+					<table class="table table-hover">
 						<thead>
 							<tr>
+								<th></th>
 								<th>Name</th>
 								<th>Description</th>
 								<th>Version</th>
-								<th>Active</th>
-								<th>Images</th>
+								<th>Public</th>
+								<th>Tournaments</th>
+								<th>Header</th>
+								<th></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($games as $game)
-								<tr>
-									<td>{{ $game->name }}</td>
-									<td>{{ $game->description }}</td>
-									<td>{{ $game->version }}</td>
-									<td>{{ $game->active }}</td>
-									<td>{{ $game->image_thumbnail_path }}{{ $game->image_main_path }}</td>
-									<td></td>
+								@php
+									$context = 'default';
+									if (!$game->public) {
+										$context = 'danger';
+									}
+								@endphp
+								<tr class="{{ $context }}">
+									<td class=col->
+										<img src="{{ $game->image_thumbnail_path }}" class="img img-responsive img-rounded" width="40%">
+									</td>
+									<td>
+										{{ $game->name }}
+									</td>
+									<td>
+										{{ $game->description }}
+									</td>
+									<td>
+										{{ $game->version }}
+									</td>
+									<td>
+										@if ($game->public)
+											Yes
+										@else
+											No
+										@endif
+									</td>
+									<td>
+										TBC
+									</td>
+									<td>
+										<img src="{{ $game->image_header_path }}" class="img img-responsive" width="40%">
+									</td>
+									<td width="15%">
+										<a href="/admin/games/{{ $game->slug }}">
+											<button class="btn btn-primary btn-block">Edit</button>
+										</a>
+									</td>
+									<td width="15%">
+										{{ Form::open(array('url'=>'/admin/games/' . $game->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+											{{ Form::hidden('_method', 'DELETE') }}
+											<button type="submit" class="btn btn-danger btn-block">Delete</button>
+										{{ Form::close() }}
+									</td>
 								</tr>
 							@endforeach
 						</tbody>
@@ -83,11 +122,11 @@
 							{{ Form::text('version',NULL,array('id'=>'version','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
-							{{ Form::label('image_thumbnail','Thumbnail Image',array('id'=>'','class'=>'')) }}
+							{{ Form::label('image_thumbnail','Thumbnail Image - 300x400',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
-							{{ Form::label('image_header','Header Image',array('id'=>'','class'=>'')) }}
+							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
 						<button type="submit" class="btn btn-default">Submit</button>
@@ -97,12 +136,5 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	$( function() {
-		$( "#start_date" ).datepicker();
-		$( "#end_date" ).datepicker();
-	});
-</script>
 
 @endsection

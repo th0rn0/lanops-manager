@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 class Helpers
 {
+	// TODO - refactor - eg getGameSelectArray
 	/**
 	 * Get Venues
 	 * @param  boolean $obj Return as Object
@@ -246,5 +247,15 @@ class Helpers
 	public static function pregArrayKeyExists($pattern, $array) {
 	    $keys = array_keys($array);    
 	    return (int) preg_grep($pattern,$keys);
+	}
+
+	/**
+	 * Get Games Select Array
+	 * @param  $public_only
+	 * @return Array
+	 */
+	public static function getGameSelectArray($public_only = true)
+	{
+		return \App\Game::getGameSelectArray($public_only);
 	}
 }

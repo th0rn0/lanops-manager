@@ -132,8 +132,18 @@
 						</div> 
 					</div>
 					<div class="form-group">
-						{{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
-						{{ Form::text('game', $tournament->game ,array('id'=>'game','class'=>'form-control')) }}
+						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+						{{ 
+							Form::select(
+								'game_id', 
+								Helpers::getGameSelectArray(), 
+								$tournament->game_id, 
+								array(
+									'id'    => 'game_id',
+									'class' => 'form-control'
+								)
+							) 
+						}}
 					</div>
 					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
@@ -143,19 +153,19 @@
 					@endif
 					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
-							<button type="submit" class="btn btn-default">Submit</button>
+							<button type="submit" class="btn btn-default btn-block">Submit</button>
 						</div>
 					@endif
 				{{ Form::close() }}
 				<div class="form-group">
 					@if (count($tournament->tournamentParticipants) >= 2 && $tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/start')) }}
-							<button type="submit" name="action" value="start" class="btn btn-default">Start Tournament</button>
+							<button type="submit" name="action" value="start" class="btn btn-default btn-block">Start Tournament</button>
 						{{ Form::close() }}
 					@endif
 					@if ($tournament->status == 'LIVE')
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/finalize')) }}
-							<button type="submit" class="btn btn-default">Finalize Tournament</button>
+							<button type="submit" class="btn btn-default btn-block">Finalize Tournament</button>
 						{{ Form::close() }}
 					@endif
 				</div>
@@ -163,7 +173,7 @@
 					<hr>
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 						{{ Form::hidden('_method', 'DELETE') }}
-						<button type="submit" class="btn btn-danger">Delete</button>
+						<button type="submit" class="btn btn-danger btn-block">Delete</button>
 					{{ Form::close() }}
 				@endif
 			</div>

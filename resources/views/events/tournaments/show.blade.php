@@ -4,7 +4,11 @@
 
 @section ('content')
 	<div class="container">
-
+		@if (isset($tournament->game) && $tournament->game->image_header_path != null)
+			<div class="row">
+				<img class="img-responsive img-rounded center-block" src="{{ $tournament->game->image_header_path }}">
+			</div>
+		@endif
 		<!-- HEADER -->
 		<div class="row">
 			<div class="page-header">
@@ -33,7 +37,7 @@
 							Game
 						</dt>
 						<dd>
-							{{ $tournament->game }}
+							{{ $tournament->game->name }}
 						</dd>
 						<dt>
 							Team Sizes

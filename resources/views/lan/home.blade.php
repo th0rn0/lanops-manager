@@ -155,17 +155,17 @@
 							</div>
 							<div class="panel-body">
 								<div class="col-sm-4 col-xs-12">
-									@if (isset($tournament->game_cover_image_path))
+									@if (isset($tournament->game) && $tournament->game->image_thumbnail_path != null)
 										<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
-											<img class="img-responsive img-rounded" src="{{ $tournament->game_cover_image_path }}">
+											<img class="img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}">
 										</a>
 										<hr>
 									@endif
 									<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
 										@if (!$tournament->getParticipant($user->active_event_participant->id) && $tournament->status == 'OPEN')
-											<button class="btn btn-lg btn-primary">Sign up now</button>
+											<button class="btn btn-lg btn-primary btn-block">View</button>
 										@else
-											<button class="btn btn-lg btn-primary">View Brackets</button>
+											<button class="btn btn-lg btn-primary btn-block">View Brackets</button>
 										@endif
 									</a>
 								</div>
@@ -187,7 +187,11 @@
 												Game:
 											</dt>
 											<dd>
-												{{ $tournament->game }}
+												@if ($tournament->game)
+													{{ $tournament->game->name }}
+												@else
+													None
+												@endif
 											</dd>
 											<dt>
 												Format:

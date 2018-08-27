@@ -47,7 +47,13 @@
 								<tr class="table-row odd gradeX" data-href="/admin/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
 									<td>{{ $tournament->name }}</td>
 									<td>{{ $tournament->status }}</td>
-									<td>{{ $tournament->game }}</td>
+									<td>
+										@if ($tournament->game)
+											{{ $tournament->game->name }}
+										@else
+											None
+										@endif
+									</td>
 									<td>{{ ucfirst($tournament->format) .  ' - ' . $tournament->team_size }}</td>
 									<td class="center">{{ $tournament->tournamentParticipants->count() }}</td>
 									<td width="15%">
@@ -92,8 +98,18 @@
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 					</div> 
 					<div class="form-group">
-						{{ Form::label('game','Game',array('id'=>'','class'=>'')) }}
-						{{ Form::text('game', NULL ,array('id'=>'game','class'=>'form-control')) }}
+						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+						{{ 
+							Form::select(
+								'game_id', 
+								Helpers::getGameSelectArray(), 
+								null, 
+								array(
+									'id'    => 'game_id',
+									'class' => 'form-control'
+								)
+							) 
+						}}
 					</div> 
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">

@@ -112,7 +112,7 @@ class EventTournament extends Model
     {
         return $this->hasMany('App\EventTournamentTeam');
     }
-     public function games()
+    public function game()
     {
         return $this->belongsTo('App\Game');
     }
@@ -200,7 +200,6 @@ class EventTournament extends Model
     {
         return $this->tournamentTeams()->where('challonge_participant_id', $challonge_participant_id)->first();
     }
-
 
     /**
      * Get Teams

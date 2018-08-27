@@ -19,7 +19,7 @@ class CreateGamesTable extends Migration
             $table->string('slug');
             $table->string('description', 1000)->nullable();
             $table->string('version')->nullable();
-            $table->boolean('active')->default(1);
+            $table->boolean('public')->default(1);
             $table->string('image_header_path')->nullable();
             $table->string('image_thumbnail_path')->nullable();
             $table->timestamps();

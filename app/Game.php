@@ -54,7 +54,7 @@ class Game extends Model
     /*
      * Relationships
      */
-    public function eventTournament()
+    public function eventTournaments()
     {
         return $this->hasMany('App\EventTournament');
     }
@@ -68,7 +68,7 @@ class Game extends Model
     {
         return [
             'slug' => [
-                'source' => 'nice_name'
+                'source' => 'name'
             ]
         ];
     }
@@ -81,5 +81,15 @@ class Game extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public static function getGameSelectArray($public_only = true)
+    {
+        $return[0] = 'None';
+        // TODO - return alphabetically
+        foreach (Game::where('public', $public_only)->get() as $game) {
+            $return[$game->id] = $game->name;
+        }
+        return $return;
     }
 }

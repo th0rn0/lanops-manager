@@ -56,6 +56,9 @@
 				<a href="/admin/gallery"><i class="fa fa-camera fa-fw"></i> Gallery</a>
 			</li>
 			<li>
+				<a href="/admin/games"><i class="fa fa-gamepad fa-fw"></i> Games</a>
+			</li>
+			<li>
 				<a><i class="fa fa-credit-card fa-fw"></i> Purchases - TBC</a>
 			</li>
 			<li>
