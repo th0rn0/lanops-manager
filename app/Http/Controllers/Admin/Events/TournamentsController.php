@@ -101,11 +101,11 @@ class TournamentsController extends Controller
 		
 		if (!$tournament->save()) {
 			Session::flash('message', 'Cannot create Tournament!');
-			return Redirect::back()
+			return Redirect::back();
 		}
 
 		Session::flash('message', 'Successfully created Tournament!');
-		return Redirect::back()
+		return Redirect::back();
 	}
 	
 	/**
