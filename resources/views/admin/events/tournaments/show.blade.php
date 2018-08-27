@@ -53,7 +53,7 @@
 				@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 					@include ('layouts._partials._tournaments.standings', ['admin' => true])
 				@else
-					@include ('layouts._partials._tournaments.participants', ['admin' => true])
+					@include ('layouts._partials._tournaments.participants', ['admin' => true, 'all' => true])
 				@endif
 			</div>
 		</div>

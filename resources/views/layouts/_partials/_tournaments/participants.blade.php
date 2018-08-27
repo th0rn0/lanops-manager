@@ -1,83 +1,85 @@
 <!-- All Participants -->
-<div class="table-responsive">
-	<table class="table">
-		 <thead>
-			<tr>
-				<th>
-					Name
-				</th>
-				<th>
-					Seat
-				</th>
-				@if($tournament->team_size != '1v1')
+@if (@$all)
+	<div class="table-responsive">
+		<table class="table">
+			 <thead>
+				<tr>
 					<th>
-						PUG
+						Name
 					</th>
 					<th>
-						Team
+						Seat
 					</th>
-				@endif
-			</tr>
-		</thead>
-		<tbody>
-			@foreach ($tournament->tournamentParticipants as $tournament_participant)
-				@php
-					$context = 'default';
-				@endphp
-				@if (($tournament_participant->pug && !$tournament_participant->tournamentTeam) && (@$admin && $user->admin))
-					@php
-						$context = 'warning';
-					@endphp
-				@endif
-				<tr class='{{ $context }}'>
-					<td>
-						<p style="padding-top:7px;">
-							<img class="img-rounded" style="max-width: 4%;" src="{{$tournament_participant->eventParticipant->user->avatar}}">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournament_participant->eventParticipant->user->steamname }}
-							<small> - {{ $tournament_participant->eventParticipant->user->username }}</small>
-						</p>
-					</td>
-					<td>
-						<p style="padding-top:15px;">
-							@if ($tournament_participant->eventParticipant->seat)
-								{{ $tournament_participant->eventParticipant->seat->seat }}
-							@else
-								Not Seated
-							@endif 
-						</p>
-					</td>
-					@if ($tournament->team_size != '1v1')
-						<td>
-							@if($tournament_participant->pug)
-								Yes
-							@else
-								No
-							@endif
-						</td>                        
-						<td>
-							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournament_participant->id  . '/team')) }}
-								<div class="form-group col-xs-12 col-sm-8">
-									@if ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETE' && (@$admin && $user->admin))
-										{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $tournament_participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
-									@else
-										{{ $tournament_participant->tournamentTeam->name }}
-									@endif
-								</div>
-								<div class="form-group col-xs-12 col-sm-4">
-									@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-										<button type="submit" class="btn btn-default btn-block" disabled>Update</button>  
-									@else
-										<button type="submit" class="btn btn-default btn-block">Update</button>  
-									@endif
-								</div>
-							{{ Form::close() }}
-						</td>
+					@if($tournament->team_size != '1v1')
+						<th>
+							PUG
+						</th>
+						<th>
+							Team
+						</th>
 					@endif
 				</tr>
-			@endforeach
-		</tbody>
-	</table>
-</div>
+			</thead>
+			<tbody>
+				@foreach ($tournament->tournamentParticipants as $tournament_participant)
+					@php
+						$context = 'default';
+					@endphp
+					@if (($tournament_participant->pug && !$tournament_participant->tournamentTeam) && (@$admin && $user->admin))
+						@php
+							$context = 'warning';
+						@endphp
+					@endif
+					<tr class='{{ $context }}'>
+						<td>
+							<p style="padding-top:7px;">
+								<img class="img-rounded" style="max-width: 4%;" src="{{$tournament_participant->eventParticipant->user->avatar}}">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournament_participant->eventParticipant->user->steamname }}
+								<small> - {{ $tournament_participant->eventParticipant->user->username }}</small>
+							</p>
+						</td>
+						<td>
+							<p style="padding-top:15px;">
+								@if ($tournament_participant->eventParticipant->seat)
+									{{ $tournament_participant->eventParticipant->seat->seat }}
+								@else
+									Not Seated
+								@endif 
+							</p>
+						</td>
+						@if ($tournament->team_size != '1v1')
+							<td>
+								@if($tournament_participant->pug)
+									Yes
+								@else
+									No
+								@endif
+							</td>                        
+							<td>
+								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournament_participant->id  . '/team')) }}
+									<div class="form-group col-xs-12 col-sm-8">
+										@if ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETE' && (@$admin && $user->admin))
+											{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $tournament_participant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
+										@else
+											{{ $tournament_participant->tournamentTeam->name }}
+										@endif
+									</div>
+									<div class="form-group col-xs-12 col-sm-4">
+										@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+											<button type="submit" class="btn btn-default btn-block" disabled>Update</button>  
+										@else
+											<button type="submit" class="btn btn-default btn-block">Update</button>  
+										@endif
+									</div>
+								{{ Form::close() }}
+							</td>
+						@endif
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+	</div>
+@endif
 <!-- Teams -->
 @if ($tournament->team_size != '1v1')
 	<h3>Teams</h3>

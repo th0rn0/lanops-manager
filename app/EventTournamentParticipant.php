@@ -42,6 +42,22 @@ class EventTournamentParticipant extends Model
     public static function boot()
     {
         parent::boot();
+        self::created(function($model){
+            if (
+                (!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
+                (!$model->pug && $model->event_tournament_team_id == null)
+            ) {
+                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
+                if (!$response = $tournament->addParticipant(['participant[name]' => $model->eventParticipant->user->username])) {
+                    $model->delete();
+                    return false;
+                }
+                $model->challonge_participant_id = $response->id;
+                $model->save();
+                return true;
+            }
+        });
         self::deleting(function($model){
             if (!$model->pug && $model->event_tournament_team_id == null) {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
@@ -68,20 +84,5 @@ class EventTournamentParticipant extends Model
     public function tournamentTeam()
     {
         return $this->belongsTo('App\EventTournamentTeam', 'event_tournament_team_id');
-    }
-
-    /**
-     * Set Challonge Participant ID
-     */
-    public function setChallongeParticipantId()
-    {
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        $tournament = $challonge->getTournament($this->eventTournament->challonge_tournament_id);
-        if (!$response = $tournament->addParticipant(['participant[name]' => $this->eventParticipant->user->username])) {
-            return false;
-        }
-        $this->challonge_participant_id = $response->id;
-        $this->save();
-        return true;
     }
 }

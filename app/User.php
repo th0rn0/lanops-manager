@@ -53,6 +53,7 @@ class User extends Authenticatable
 		return $this->admin;
 	}
 
+	// TODO - Refactor this somehow. It's a bit hacky.
 	/**
 	 * Set Active Event Participant for current User
 	 * @param $event_id

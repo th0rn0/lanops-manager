@@ -40,6 +40,17 @@ class EventTournamentTeam extends Model
     public static function boot()
     {
         parent::boot();
+        self::created(function($model){
+            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
+            if (!$response = $tournament->addParticipant(['participant[name]' => $model->name])) {
+                $model->delete();
+                return false;
+            }
+            $model->challonge_participant_id = $response->id;
+            $model->save();
+            return true;
+        });
         self::deleting(function($model){
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
             $participant = $challonge->getParticipant($model->eventTournament->challonge_tournament_id, $model->challonge_participant_id);
@@ -60,20 +71,5 @@ class EventTournamentTeam extends Model
     public function tournamentParticipants()
     {
         return $this->hasMany('App\EventTournamentParticipant');
-    }
-
-    /**
-     * Set Challonge Participant ID
-     */
-    public function setChallongeParticipantId()
-    {
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-        $tournament = $challonge->getTournament($this->eventTournament->challonge_tournament_id);
-        if (!$response = $tournament->addParticipant(['participant[name]' => $this->name])) {
-            return false;
-        }
-        $this->challonge_participant_id = $response->id;
-        $this->save();
-        return true;
     }
 }

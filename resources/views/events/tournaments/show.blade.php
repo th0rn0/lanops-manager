@@ -228,7 +228,13 @@
 				<div class="page-header">
 					<h3>Participants</h3>
 				</div>
-				@include ('layouts._partials._tournaments.participants')
+				@php
+					$participants_view = true;
+					if ($tournament->team_size != '1v1') {
+						$participants_view = false;
+					}
+				@endphp
+				@include ('layouts._partials._tournaments.participants', ['all' => $participants_view])
 			</div>
 		@endif
 	</div>

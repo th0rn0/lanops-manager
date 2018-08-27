@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin\Events;
 
 
-use Input;
 use DB;
 use Auth;
-use IGDB;
 use Session;
+use DateTime;
 use Storage;
 
 use App\User;
@@ -16,21 +15,12 @@ use App\EventParticipant;
 use App\EventTournament;
 use App\EventTournamentParticipant;
 use App\EventTournamentTeam;
-use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use Lanops\Challonge\Challonge;
-
-use \Cviebrock\EloquentSluggable\Services\SlugService;
-
 
 class TournamentsController extends Controller
 {
@@ -111,11 +101,11 @@ class TournamentsController extends Controller
 		
 		if (!$tournament->save()) {
 			Session::flash('message', 'Cannot create Tournament!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+			return Redirect::back()
 		}
 
 		Session::flash('message', 'Successfully created Tournament!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+		return Redirect::back()
 	}
 	
 	/**
@@ -206,11 +196,11 @@ class TournamentsController extends Controller
 
 		if (!$tournament->setStatus('LIVE')) {
 			Session::flash('alert-danger', 'Cannot start Tournament!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+			return Redirect::back();
 		}
 
 		Session::flash('alert-success', 'Tournament Started!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+		return Redirect::back();
 	}
 
 	/**
@@ -223,11 +213,11 @@ class TournamentsController extends Controller
 	{
 		if (!$tournament->setStatus('COMPLETE')) {
 			Session::flash('alert-danger', 'Cannot finalize. Tournament is still live!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+			return Redirect::back();
 		}
 
 		Session::flash('alert-success', 'Tournament Finalized!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
+		return Redirect::back();
 	}
 
 	/**

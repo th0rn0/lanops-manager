@@ -68,21 +68,12 @@ class EventTournament extends Model
               'tournament[hold_third_place_match]'  => ($model->allow_bronze ? true : false),
               'tournament[show_rounds]'             => true,
             ];
-
             if (!$response = $challonge->createTournament($params)) {
                 $model->delete();
                 return false;
             }
             $model->challonge_tournament_id = $response->id;
             $model->save();
-            return true;
-        });
-        self::deleting(function($model){
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-            $response = $challonge->getTournament($model->challonge_tournament_id);
-            if (!$response->delete()) {
-               return false;
-            }
             return true;
         });
         self::saved(function($model){
@@ -93,6 +84,14 @@ class EventTournament extends Model
             ];
             if (!$response = $challonge_tournament->update($params)) {
                 return false;
+            }
+            return true;
+        });
+        self::deleting(function($model){
+            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $response = $challonge->getTournament($model->challonge_tournament_id);
+            if (!$response->delete()) {
+               return false;
             }
             return true;
         });
@@ -232,6 +231,11 @@ class EventTournament extends Model
         return $return;
     }
 
+    /**
+     * Get Matches
+     * @param  boolean $obj
+     * @return Array|Object
+     */
     public function getMatches($obj = false)
     {
         $tournament_matches = Cache::get($this->challonge_tournament_id . "_matches", function () {
@@ -250,6 +254,12 @@ class EventTournament extends Model
         return $return;
     }
 
+    /**
+     * Get Standings
+     * @param  string $order
+     * @param  boolean $obj
+     * @return Array|Object
+     */
     public function getStandings($order = null, $obj = false)
     {
         $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() {
@@ -272,6 +282,12 @@ class EventTournament extends Model
         return $tournament_standings;
     }
 
+    /**
+     * Get Next Matches
+     * @param  integer $limit
+     * @param  boolean $obj
+     * @return Array|Object
+     */
     public function getNextMatches($limit = 0, $obj = false)
     {
         $tournament_matches = Cache::get($this->challonge_tournament_id . "_matches", function () {
@@ -295,6 +311,14 @@ class EventTournament extends Model
         return $next_matches;
     }
 
+    /**
+     * Update Match
+     * @param  string $match_id
+     * @param  string $player1_score
+     * @param  string $player2_score
+     * @param  string $player_winner_verify
+     * @return Array|Object
+     */
     public function updateMatch($match_id, $player1_score, $player2_score, $player_winner_verify = null)
     {
         // TODO - add support for multiple sets
