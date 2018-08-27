@@ -6,7 +6,7 @@
 	<div class="container">
 		@if (isset($tournament->game) && $tournament->game->image_header_path != null)
 			<div class="row">
-				<img class="img-responsive img-rounded center-block" src="{{ $tournament->game->image_header_path }}">
+				<img class="img-responsive img-rounded center-block" width="100%" src="{{ $tournament->game->image_header_path }}">
 			</div>
 		@endif
 		<!-- HEADER -->

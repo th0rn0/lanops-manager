@@ -42,8 +42,7 @@ class EventTournament extends Model
         'team_size', 
         'description', 
         'allow_player_teams', 
-        'status',
-        'game_cover_image_path'
+        'status'
     ];
 
     /**
