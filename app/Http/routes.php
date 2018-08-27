@@ -150,6 +150,12 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team', 'Admin\Events\TournamentsController@updateParticipantTeam');
 
 		/**
+		 * Games
+		 */
+		Route::get('/admin/games',  'Admin\GamesController@index');
+		Route::post('/admin/games',  'Admin\GamesController@store');
+
+		/**
 		 * Participants
 		 */
 		Route::get('/admin/events/{event}/participants', 'Admin\Events\ParticipantsController@index');

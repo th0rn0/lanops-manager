@@ -112,6 +112,10 @@ class EventTournament extends Model
     {
         return $this->hasMany('App\EventTournamentTeam');
     }
+     public function games()
+    {
+        return $this->belongsTo('App\Game');
+    }
 
     /**
      * Return the sluggable configuration array for this model.
