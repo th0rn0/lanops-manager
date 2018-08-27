@@ -216,6 +216,8 @@ class TournamentsController extends Controller
 			return Redirect::back();
 		}
 
+		// TODO - Colate scores and record them for future seeding
+		
 		Session::flash('alert-success', 'Tournament Finalized!');
 		return Redirect::back();
 	}
