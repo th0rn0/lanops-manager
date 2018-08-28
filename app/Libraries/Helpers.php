@@ -4,7 +4,7 @@ namespace App\Libraries;
 
 class Helpers
 {
-	// TODO - refactor - eg getGameSelectArray
+	// TODO - refactor - eg getGameSelectArray - specifially the selectArray part
 	/**
 	 * Get Venues
 	 * @param  boolean $obj Return as Object

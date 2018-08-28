@@ -98,7 +98,6 @@ class TournamentsController extends Controller
 		Session::flash('message', 'Successfully created Tournament!');
 		return Redirect::back();
 	}
-	// TODO - remove game_cover_image_path from event_tournaments
 	/**
 	 * Update Tournament
 	 * @param  Event           $event

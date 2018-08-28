@@ -132,7 +132,7 @@
 				@if ($tournament->status != 'DRAFT')
 					<div class="col-sm-6 col-md-3">
 						<div class="thumbnail">
-							@if ($tournament->game->image_thumbnail_path }})
+							@if ($tournament->game->image_thumbnail_path)
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
 									<img class="img img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
 								</a>

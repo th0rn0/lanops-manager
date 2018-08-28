@@ -7,6 +7,8 @@ use Auth;
 use Session;
 use Storage;
 use Input;
+use Image;
+use File;
 
 use App\Game;
 
@@ -67,17 +69,17 @@ class GamesController extends Controller
 			return Redirect::back();
 		}
 
-		// TODO - image magik to resize
+		$destination_path = '/storage/images/games/' . $game->slug . '/';
+		
+		// TODO - refactor into model
+		if ((Input::file('image_thumbnail') || Input::file('image_header')) && !File::exists(public_path() . $destination_path)) {
+		    File::makeDirectory(public_path() . $destination_path);
+		}
+
 		if (Input::file('image_thumbnail')) {
-			$image_name	= $game->slug . '_thumbnail' . Input::file('image_thumbnail')->getClientOriginalExtension();
-			$destination_path = 'public/images/games/' . $game->slug;
-			$game->image_thumbnail_path = str_replace(
-				'public/', 
-				'/storage/', 
-				Storage::put($destination_path, 
-					Input::file('image_thumbnail')
-				)
-			);
+			$image_name	= 'thumbnail.' . Input::file('image_thumbnail')->getClientOriginalExtension();
+			Image::make(Input::file('image_thumbnail'))->resize(300, 200)->save(public_path() . $destination_path . $image_name);
+			$game->image_thumbnail_path = $destination_path . $image_name;
 			if (!$game->save()) {
 				Session::flash('alert-danger', 'Could not save Game thumbnail!'); 
 				return Redirect::back();
@@ -85,15 +87,9 @@ class GamesController extends Controller
 		}
 
 		if (Input::file('image_header')) {
-			$image_name	= $game->slug . '_header' . Input::file('image_header')->getClientOriginalExtension();
-			$destination_path = 'public/images/games/' . $game->slug;
-			$game->image_header_path = str_replace(
-				'public/', 
-				'/storage/', 
-				Storage::put($destination_path, 
-					Input::file('image_header')
-				)
-			);
+			$image_name	= 'header.' . Input::file('image_header')->getClientOriginalExtension();
+			Image::make(Input::file('image_header'))->resize(1600, 400)->save(public_path() . $destination_path . $image_name);
+			$game->image_header_path = $destination_path . $image_name;
 			if (!$game->save()) {
 				Session::flash('alert-danger', 'Could not save Game Header!'); 
 				return Redirect::back();
@@ -135,18 +131,11 @@ class GamesController extends Controller
 			return Redirect::back();
 		}
 
-		// TODO - image magik to resize
 		if (Input::file('image_thumbnail')) {
 			Storage::delete($game->image_thumbnail_path);
-			$image_name	= $game->slug . '_thumbnail' . Input::file('image_thumbnail')->getClientOriginalExtension();
-			$destination_path = 'public/images/games/' . $game->slug;
-			$game->image_thumbnail_path = str_replace(
-				'public/', 
-				'/storage/', 
-				Storage::put($destination_path, 
-					Input::file('image_thumbnail')
-				)
-			);
+			$image_name	= 'thumbnail.' . Input::file('image_thumbnail')->getClientOriginalExtension();
+			Image::make(Input::file('image_thumbnail'))->resize(300, 200)->save(public_path() . $destination_path . $image_name);
+			$game->image_thumbnail_path = $destination_path . $image_name;
 			if (!$game->save()) {
 				Session::flash('alert-danger', 'Could not save Game thumbnail!'); 
 				return Redirect::back();
@@ -155,15 +144,9 @@ class GamesController extends Controller
 
 		if (Input::file('image_header')) {
 			Storage::delete($game->image_header_path);
-			$image_name	= $game->slug . '_header' . Input::file('image_header')->getClientOriginalExtension();
-			$destination_path = 'public/images/games/' . $game->slug;
-			$game->image_header_path = str_replace(
-				'public/', 
-				'/storage/', 
-				Storage::put($destination_path, 
-					Input::file('image_header')
-				)
-			);
+			$image_name	= 'header.' . Input::file('image_header')->getClientOriginalExtension();
+			Image::make(Input::file('image_header'))->resize(1600, 400)->save(public_path() . $destination_path . $image_name);
+			$game->image_header_path = $destination_path . $image_name;
 			if (!$game->save()) {
 				Session::flash('alert-danger', 'Could not save Game Header!'); 
 				return Redirect::back();
