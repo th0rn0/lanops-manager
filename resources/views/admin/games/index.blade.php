@@ -122,7 +122,7 @@
 							{{ Form::text('version',NULL,array('id'=>'version','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
-							{{ Form::label('image_thumbnail','Thumbnail Image - 300x400',array('id'=>'','class'=>'')) }}
+							{{ Form::label('image_thumbnail','Thumbnail Image - 500x500',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">

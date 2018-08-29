@@ -1,5 +1,7 @@
 FROM php:7.0.23-fpm
 
+COPY php.ini /usr/local/etc/php/
+
 RUN apt-get update && apt-get install -y libmcrypt-dev \
     mysql-client libmagickwand-dev --no-install-recommends \
     && pecl install imagick \

@@ -36,9 +36,11 @@
 						<dt>
 							Game
 						</dt>
-						<dd>
-							{{ $tournament->game->name }}
-						</dd>
+						@if ($tournament->game)
+							<dd>
+								{{ $tournament->game->name }}
+							</dd>
+						@endif
 						<dt>
 							Team Sizes
 						</dt>

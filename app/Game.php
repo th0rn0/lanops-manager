@@ -49,6 +49,15 @@ class Game extends Model
     public static function boot()
     {
         parent::boot();
+        self::deleting(function($model){
+            // TODO - remove dir as well
+            if ($model->image_thumbnail_path) {
+                Storage::delete($model->image_thumbnail_path);
+            }
+            if ($model->image_header_path) {
+                Storage::delete($model->image_header_path);
+            }
+        });
     }
 
     /*

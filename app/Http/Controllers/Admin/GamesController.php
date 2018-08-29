@@ -73,12 +73,12 @@ class GamesController extends Controller
 		
 		// TODO - refactor into model
 		if ((Input::file('image_thumbnail') || Input::file('image_header')) && !File::exists(public_path() . $destination_path)) {
-		    File::makeDirectory(public_path() . $destination_path);
+		    File::makeDirectory(public_path() . $destination_path, 0777, true);
 		}
 
 		if (Input::file('image_thumbnail')) {
 			$image_name	= 'thumbnail.' . Input::file('image_thumbnail')->getClientOriginalExtension();
-			Image::make(Input::file('image_thumbnail'))->resize(300, 200)->save(public_path() . $destination_path . $image_name);
+			Image::make(Input::file('image_thumbnail'))->resize(500, 500)->save(public_path() . $destination_path . $image_name);
 			$game->image_thumbnail_path = $destination_path . $image_name;
 			if (!$game->save()) {
 				Session::flash('alert-danger', 'Could not save Game thumbnail!'); 
@@ -134,7 +134,7 @@ class GamesController extends Controller
 		if (Input::file('image_thumbnail')) {
 			Storage::delete($game->image_thumbnail_path);
 			$image_name	= 'thumbnail.' . Input::file('image_thumbnail')->getClientOriginalExtension();
-			Image::make(Input::file('image_thumbnail'))->resize(300, 200)->save(public_path() . $destination_path . $image_name);
+			Image::make(Input::file('image_thumbnail'))->resize(500, 500)->save(public_path() . $destination_path . $image_name);
 			$game->image_thumbnail_path = $destination_path . $image_name;
 			if (!$game->save()) {
 				Session::flash('alert-danger', 'Could not save Game thumbnail!'); 
