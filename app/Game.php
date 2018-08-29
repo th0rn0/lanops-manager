@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Storage;
+
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
@@ -49,13 +51,10 @@ class Game extends Model
     public static function boot()
     {
         parent::boot();
-        self::deleting(function($model){
-            // TODO - remove dir as well
-            if ($model->image_thumbnail_path) {
-                Storage::delete($model->image_thumbnail_path);
-            }
-            if ($model->image_header_path) {
-                Storage::delete($model->image_header_path);
+        self::deleted(function($model){
+            if ($model->image_thumbnail_path || $model->image_header_path) {
+                // TODO - redo storage and image calls like this
+                Storage::deleteDirectory('public/images/games/' . $model->slug . '/');
             }
         });
     }

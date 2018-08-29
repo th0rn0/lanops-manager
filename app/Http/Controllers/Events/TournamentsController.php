@@ -49,7 +49,7 @@ class TournamentsController extends Controller
 			Session::flash('alert-danger', 'Please sign in with one of our Admins.');
 			return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
 		}
-		// TODO - Refactor - add the final scores to the tournament participant and add a job to pull it?
+		// TODO - Refactor - add the final scores to the tournament participant so getChallongeParticipants can be removed and add a job to pull it?
         if ($tournament->status == 'COMPLETE') {
             $tournament->challonge_participants = $tournament->getChallongeParticipants();
         }
