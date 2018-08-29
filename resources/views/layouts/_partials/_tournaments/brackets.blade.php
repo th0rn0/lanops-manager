@@ -15,17 +15,21 @@
 			<h4 class="page-header">
 				@if (
 					(
-						$round == end($matches)
-					) ||
-					(
-						$round_number == count($matches) &&
-						!Helpers::pregArrayKeyExists('/-$/',$matches)
+						(
+							$round == end($matches)
+						) ||
+						(
+							$round_number == count($matches) &&
+							!Helpers::pregArrayKeyExists('/-$/',$matches)
+						)
+					) && (
+						$tournament->format != 'round robin'
 					)
 				)
 					Finals
-				@elseif ($round_number == count($matches) - 2)
+				@elseif ($round_number == count($matches) - 2 && $tournament->format != 'round robin')
 					Semi-Finals
-				@elseif (substr($round_number, 0, 1) == '-')
+				@elseif (substr($round_number, 0, 1) == '-' && $tournament->format != 'round robin')
 					Losers Round {{ substr($round_number, 1, 1) }}
 				@else
 					Round {{ $round_number }}

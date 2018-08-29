@@ -162,16 +162,14 @@
 										<dd>
 											{{ $tournament->team_size }}
 										</dd>
-										 <dt>
-											Game:
-										</dt>
-										<dd>
-											@if ($tournament->game)
+										@if ($tournament->game)
+											 <dt>
+												Game:
+											</dt>
+											<dd>
 												{{ $tournament->game->name }}
-											@else
-												None
-											@endif
-										</dd>
+											</dd>
+										@endif
 										<dt>
 											Format:
 										</dt>
@@ -180,6 +178,12 @@
 										</dd>
 									</dl>
 								@endif
+								<!-- // TODO - refactor -->
+								@php
+								 	if ($tournament->status == 'COMPLETE') {
+							            $tournament->challonge_participants = $tournament->getChallongeParticipants();
+							        }
+						        @endphp
 								@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
 									@foreach ($tournament->challonge_participants as $challonge_participant)
 										@if ($challonge_participant->final_rank == 1)

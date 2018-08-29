@@ -79,6 +79,7 @@ class HomeController extends Controller
 			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
 
+		// TODO - Refactor
 		$user = Auth::user();
 		if ($user) {
 			$clauses = ['user_id' => $user->id, 'event_id' => $event->id]; 

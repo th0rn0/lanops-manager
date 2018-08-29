@@ -33,10 +33,10 @@
 						{{ $tournament->description }}
 					</h4>
 					<dl>
-						<dt>
-							Game
-						</dt>
 						@if ($tournament->game)
+							<dt>
+								Game
+							</dt>
 							<dd>
 								{{ $tournament->game->name }}
 							</dd>

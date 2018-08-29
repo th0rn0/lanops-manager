@@ -87,6 +87,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
+							<!-- // TODO - Refactor -->
 							@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 								{{ 
 									Form::select(
@@ -133,17 +134,32 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
-						{{ 
-							Form::select(
-								'game_id', 
-								Helpers::getGameSelectArray(), 
-								$tournament->game_id, 
-								array(
-									'id'    => 'game_id',
-									'class' => 'form-control'
-								)
-							) 
-						}}
+						@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+							{{ 
+								Form::select(
+									'game_id', 
+									Helpers::getGameSelectArray(), 
+									$tournament->game_id, 
+									array(
+										'id'    	=> 'game_id',
+										'class' 	=> 'form-control',
+										'disabled'	=> 'true'
+									)
+								) 
+							}}
+						@else
+							{{ 
+								Form::select(
+									'game_id', 
+									Helpers::getGameSelectArray(), 
+									$tournament->game_id, 
+									array(
+										'id'    => 'game_id',
+										'class' => 'form-control'
+									)
+								) 
+							}}
+						@endif
 					</div>
 					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
