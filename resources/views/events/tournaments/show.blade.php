@@ -60,7 +60,7 @@
 						<div class="row">
 							<div class="alert alert-success text-center">
 								@foreach ($tournament->challonge_participants as $challonge_participant)
-									<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h2>
+									<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h2>
 								@endforeach
 							</div>
 						</div>

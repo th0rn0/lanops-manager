@@ -187,13 +187,13 @@
 								@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
 									@foreach ($tournament->challonge_participants as $challonge_participant)
 										@if ($challonge_participant->final_rank == 1)
-											<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h2>
+											<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h2>
 										@endif
 										@if ($challonge_participant->final_rank == 2)
-											<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h3>
+											<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h3>
 										@endif
 										@if ($challonge_participant->final_rank != 2 && $challonge_participant->final_rank != 1)
-											<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h4>
+											<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h4>
 										@endif
 									@endforeach
 									<h4>Signups Closed</h4>
