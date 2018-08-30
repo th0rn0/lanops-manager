@@ -442,6 +442,64 @@
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
+						<div class="thumbnail">
+							@if ($tournament->game && $tournament->game->image_thumbnail_path)
+								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
+									<img class="img img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+								</a>
+							@endif
+							<div class="caption">
+								<h3>{{ $tournament->name }}</h3>
+								<hr>
+								@if ($tournament->status != 'COMPLETE')
+									<dl>
+										<dt>
+											Team Sizes:
+										</dt>
+										<dd>
+											{{ $tournament->team_size }}
+										</dd>
+										@if ($tournament->game)
+											 <dt>
+												Game:
+											</dt>
+											<dd>
+												{{ $tournament->game->name }}
+											</dd>
+										@endif
+										<dt>
+											Format:
+										</dt>
+										<dd>
+											{{ $tournament->format }}
+										</dd>
+									</dl>
+								@endif
+								<!-- // TODO - refactor -->
+								@php
+								 	if ($tournament->status == 'COMPLETE') {
+							            $tournament->challonge_participants = $tournament->getChallongeParticipants();
+							        }
+						        @endphp
+								@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
+									@foreach ($tournament->challonge_participants as $challonge_participant)
+										@if ($challonge_participant->final_rank == 1)
+											<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h2>
+										@endif
+										@if ($challonge_participant->final_rank == 2)
+											<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h3>
+										@endif
+										@if ($challonge_participant->final_rank != 2 && $challonge_participant->final_rank != 1)
+											<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h4>
+										@endif
+									@endforeach
+								@endif
+							</div>
+						</div>
+
+
+
+
 					<div class="col-sm-6 col-xs-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
