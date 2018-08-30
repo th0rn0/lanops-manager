@@ -442,6 +442,7 @@
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
+					<div class="col-xs-12 col-sm-6 col-md-3">
 						<div class="thumbnail">
 							@if ($tournament->game && $tournament->game->image_thumbnail_path)
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
@@ -494,24 +495,6 @@
 										@endif
 									@endforeach
 								@endif
-							</div>
-						</div>
-
-
-
-
-					<div class="col-sm-6 col-xs-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4>{{ $tournament->name }}</h4>
-							</div>
-							<div class="panel-body">
-								@if ($tournament->game)
-									<p>Game: {{ $tournament->game->name }}</p>
-								@endif
-								<p>Type: {{ $tournament->type }}</p>
-								<p>Format: {{ $tournament->format }}</p>
-								<p>{{ $tournament->description }}</p>
 							</div>
 						</div>
 					</div>

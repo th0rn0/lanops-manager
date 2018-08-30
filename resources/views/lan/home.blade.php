@@ -130,7 +130,7 @@
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
-					<div class="col-sm-6 col-md-3">
+					<div class="col-xs-12 col-sm-6 col-md-3">
 						<div class="thumbnail">
 							@if ($tournament->game && $tournament->game->image_thumbnail_path)
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
