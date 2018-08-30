@@ -173,13 +173,13 @@ class Helpers
 	public static function getChallongeRankFormat($final_rank)
 	{
 		if($final_rank == '1'){
-			return 'Winner';
+			return '1st';
 		}
 		if($final_rank == '2'){
-			return '1st Runner up';
+			return '2nd';
 		}
 		if($final_rank == '3'){
-			return '2nd Runner up';
+			return '3rd';
 		}
 		if(substr($final_rank, -1) == '1'){
 			return $final_rank . 'st';
