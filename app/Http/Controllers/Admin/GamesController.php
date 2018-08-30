@@ -131,6 +131,13 @@ class GamesController extends Controller
 			return Redirect::back();
 		}
 
+		$destination_path = '/storage/images/games/' . $game->slug . '/';
+		
+		// TODO - refactor into model
+		if ((Input::file('image_thumbnail') || Input::file('image_header')) && !File::exists(public_path() . $destination_path)) {
+		    File::makeDirectory(public_path() . $destination_path, 0777, true);
+		}
+
 		if (Input::file('image_thumbnail')) {
 			Storage::delete($game->image_thumbnail_path);
 			$image_name	= 'thumbnail.' . Input::file('image_thumbnail')->getClientOriginalExtension();
