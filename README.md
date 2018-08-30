@@ -92,13 +92,6 @@ https://lanops.co.uk
 - Google Analytics Tracking ID
   - Optional but highly recommended
 
-### Pre Requisites - Dockerless
-- PHP
-- MYSQL
-- Composer
-- NPM
-- Imagick
-
 ### Pre Setup
 Make a .env file - Use the example - KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything!
 
@@ -140,73 +133,6 @@ make app-install-clean
 #### Update
 ```
 make app-install
-```
-
-### Dockerless Setup
-
-Disclaimer: This part is untested and I dont intend on testing it. If you are struggling to get it to work, leave the year 1999 and utlize Docker.
-
-1. Y U DO DIS?
-
-2. Set the server root as public/. Apache and NGINX are supported. WAMP or its alternatives are untested (and shouldn't be used)
-
-3. Install Prerequisites:
-
-```
-sudo apt-get update \
-&& apt-get install \
-&& mysql-client libmagickwand-dev --no-install-recommends \
-&& pecl install imagick \
-&& openssl \
-&& imagick \
-&& composer \
-&& npm
-&& php-mcrypt && php-pdo_mysql && php-bcmath && php-gd && php-bc2 && php-zip
-```
-
-4. Install PHP Dependencies:
-```
-composer install
-```
-
-5. Install JS Dependencies:
-```
-npm install
-```
-
-6. Compile JS & CSS:
-```
-gulp --production
-```
-
-7. Run the database migration:
-```
-php artisan migrate
-```
-
-8. Seed the database:
-```
-php artisan db:seed
-```
-
-9. Create symlink to storage:
-```
-php artisan storage:link
-```
-
-10. Copy default images:
-```
-cp -r resources/assets/images/* storage/app/public/images/main/
-```
-
-11. Set folder structure:
-```
-mkdir storage/app/public/images/gallery/
-mkdir storage/app/public/images/events/
-mkdir storage/app/public/images/venues/
-mkdir storage/app/public/images/main/
-chmod +x bootstrap/cache/
-chmod +x storage/
 ```
 
 ## Run
