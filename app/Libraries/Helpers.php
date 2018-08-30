@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 class Helpers
 {
+	// TODO - refactor - eg getGameSelectArray - specifially the selectArray part
 	/**
 	 * Get Venues
 	 * @param  boolean $obj Return as Object
@@ -172,13 +173,13 @@ class Helpers
 	public static function getChallongeRankFormat($final_rank)
 	{
 		if($final_rank == '1'){
-			return 'Winner';
+			return '1st';
 		}
 		if($final_rank == '2'){
-			return '1st Runner up';
+			return '2nd';
 		}
 		if($final_rank == '3'){
-			return '2nd Runner up';
+			return '3rd';
 		}
 		if(substr($final_rank, -1) == '1'){
 			return $final_rank . 'st';
@@ -235,5 +236,26 @@ class Helpers
 			$return += ($ticket->price * $quantity);
 		}
 		return $return;
+	}
+
+	/**
+	 * array_key_exists with regex
+	 * @param  $pattern
+	 * @param  $array
+	 * @return Integer
+	 */
+	public static function pregArrayKeyExists($pattern, $array) {
+	    $keys = array_keys($array);    
+	    return (int) preg_grep($pattern,$keys);
+	}
+
+	/**
+	 * Get Games Select Array
+	 * @param  $public_only
+	 * @return Array
+	 */
+	public static function getGameSelectArray($public_only = true)
+	{
+		return \App\Game::getGameSelectArray($public_only);
 	}
 }

@@ -8,7 +8,7 @@
 			<div class="well well-sm">
 				<div class="row">
 					<div class="col-sm-2 col-xs-12" style="">
-						<img src="{{$tournament->game_cover_image_path}}" class="img-responsive img-rounded img-thumbnail">
+						<img src="{{$tournament->game->image_thumbnail_path}}" class="img-responsive img-rounded img-thumbnail">
 					</div>
 					<div class="col-sm-10 col-xs-12" >
 						<div class="block">
@@ -71,6 +71,7 @@
 				<button type="submit" name="action" value="sign_up" class="btn btn-default">Signup</button>
 			{{ Form::close() }}
 		@endif
+
 		@if ($tournament->status == 'OPEN' && !$tournament->get_participant($user->active_event_participant->id) && $tournament->team_size != '1v1')
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/pug', 'files' => true )) }}
 				<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
@@ -85,6 +86,7 @@
 				<button type="submit" name="action" value="sign_up" class="btn btn-default">Create Team</button>
 			{{ Form::close() }}
 		@endif
+
 		@if ($tournament->status == 'OPEN' && $tournament->get_participant($user->active_event_participant->id))
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/remove', 'files' => true )) }}
 				<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
@@ -93,7 +95,7 @@
 		@endif
 
 		@if ($tournament->status == 'LIVE' && isset($tournament->matches))
-			<iframe src="http://challonge.com/{{ $tournament->challonge_tournament_url }}/module?multiplier=1.0&amp;match_width_multiplier=1.0&amp;show_final_results=0&amp;show_standings=0&amp;theme=1&amp;subdomain=" width="100%" height="480" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+			<iframe src="https://challonge.com/{{ $tournament->challonge_tournament_url }}/module?multiplier=1.0&amp;match_width_multiplier=1.0&amp;show_final_results=0&amp;show_standings=0&amp;theme=1&amp;subdomain=" width="100%" height="480" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
 		@endif
 
 		@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))

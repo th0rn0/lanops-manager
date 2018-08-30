@@ -442,16 +442,59 @@
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
-					<div class="col-sm-6 col-xs-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4>{{ $tournament->name }}</h4>
-							</div>
-							<div class="panel-body">
-								<p>Game: {{ $tournament->game }}</p>
-								<p>Type: {{ $tournament->type }}</p>
-								<p>Format: {{ $tournament->format }}</p>
-								<p>{{ $tournament->description }}</p>
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<div class="thumbnail">
+							@if ($tournament->game && $tournament->game->image_thumbnail_path)
+								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
+									<img class="img img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+								</a>
+							@endif
+							<div class="caption">
+								<h3>{{ $tournament->name }}</h3>
+								<hr>
+								@if ($tournament->status != 'COMPLETE')
+									<dl>
+										<dt>
+											Team Sizes:
+										</dt>
+										<dd>
+											{{ $tournament->team_size }}
+										</dd>
+										@if ($tournament->game)
+											 <dt>
+												Game:
+											</dt>
+											<dd>
+												{{ $tournament->game->name }}
+											</dd>
+										@endif
+										<dt>
+											Format:
+										</dt>
+										<dd>
+											{{ $tournament->format }}
+										</dd>
+									</dl>
+								@endif
+								<!-- // TODO - refactor -->
+								@php
+								 	if ($tournament->status == 'COMPLETE') {
+							            $tournament->challonge_participants = $tournament->getChallongeParticipants();
+							        }
+						        @endphp
+								@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
+									@foreach ($tournament->challonge_participants as $challonge_participant)
+										@if ($challonge_participant->final_rank == 1)
+											<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h2>
+										@endif
+										@if ($challonge_participant->final_rank == 2)
+											<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h3>
+										@endif
+										@if ($challonge_participant->final_rank != 2 && $challonge_participant->final_rank != 1)
+											<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h4>
+										@endif
+									@endforeach
+								@endif
 							</div>
 						</div>
 					</div>

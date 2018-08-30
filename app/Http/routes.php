@@ -72,7 +72,7 @@ Route::group(['middleware' => ['web']], function () {
 	 */
 	Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
 	Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-	Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@register');
+	Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
 	Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
 	Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
 	Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
@@ -146,7 +146,17 @@ Route::group(['middleware' => ['web']], function () {
 		Route::delete('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@destroy');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/start', 'Admin\Events\TournamentsController@start');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/finalize', 'Admin\Events\TournamentsController@finalize');
+		Route::post('/admin/events/{event}/tournaments/{tournament}/match', 'Admin\Events\TournamentsController@updateMatch');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team', 'Admin\Events\TournamentsController@updateParticipantTeam');
+
+		/**
+		 * Games
+		 */
+		Route::get('/admin/games',  'Admin\GamesController@index');
+		Route::post('/admin/games',  'Admin\GamesController@store');
+		Route::get('/admin/games/{game}',  'Admin\GamesController@show');
+		Route::post('/admin/games/{game}',  'Admin\GamesController@update');
+		Route::delete('/admin/games/{game}',  'Admin\GamesController@destroy');
 
 		/**
 		 * Participants

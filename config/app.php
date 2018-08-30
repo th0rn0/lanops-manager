@@ -51,7 +51,7 @@ return [
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
         Ipunkt\LaravelAnalytics\AnalyticsServiceProvider::class,
-
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -108,6 +108,7 @@ return [
         'Analytics' => Ipunkt\LaravelAnalytics\AnalyticsFacade::class,
         'Settings'  => App\Libraries\Settings::class,
         'Helpers'   => App\Libraries\Helpers::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
     ],
 
 ];

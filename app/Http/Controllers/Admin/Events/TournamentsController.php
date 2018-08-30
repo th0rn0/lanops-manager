@@ -3,31 +3,25 @@
 namespace App\Http\Controllers\Admin\Events;
 
 
-use Input;
 use DB;
 use Auth;
-use IGDB;
 use Session;
+use DateTime;
 use Storage;
 
 use App\User;
 use App\Event;
+use App\Game;
 use App\EventParticipant;
 use App\EventTournament;
 use App\EventTournamentParticipant;
 use App\EventTournamentTeam;
-use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-use Reflex\Challonge\Challonge;
 
 class TournamentsController extends Controller
 {
@@ -60,10 +54,8 @@ class TournamentsController extends Controller
    	 */
 	public function store(Event $event, Request $request)
 	{
-
 		$rules = [
 			'name'			=> 'required',
-			'game'			=> 'required',
 			'format'		=> 'required|in:single elimination,double elimination,round robin',
 			'team_size'		=> 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
 			'description'	=> 'required',
@@ -71,7 +63,6 @@ class TournamentsController extends Controller
 		];
 		$messages = [
 			'name.required'			=> 'Tournament name is required',
-			'game.required'			=> 'Game is required',
 			'format.required'		=> 'Format is required',
 			'format.in'				=> 'Single Elimation, Double Elimination or Round Robin only',
 			'team_size.required'	=> 'Team size is required',
@@ -81,14 +72,17 @@ class TournamentsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		$tournament_url = str_random(16);
-
+		$game_id = null;
+		if (isset($request->game_id)) {
+			if (Game::where('id', $request->game_id)->first()) {
+				$game_id = $request->game_id;
+			}
+		}
 		$tournament								= new EventTournament();
-
 		$tournament->event_id					= $event->id;
-		$tournament->challonge_tournament_url	= $tournament_url;
+		$tournament->challonge_tournament_url	= str_random(16);
 		$tournament->name						= $request->name;
-		$tournament->game						= $request->game;
+		$tournament->game_id					= $game_id;
 		$tournament->format						= $request->format;
 		$tournament->team_size					= $request->team_size;
 		$tournament->description				= $request->description;
@@ -96,49 +90,14 @@ class TournamentsController extends Controller
 		$tournament->allow_player_teams			= ($request->allow_player_teams ? true : false);
 		$tournament->status						= 'DRAFT';
 
-		if ($request->file('image') !== NULL) {
-			$tournament->game_cover_image_path = str_replace(
-				'public/', 
-				'/storage/', 
-				Storage::put(
-					'public/images/events/' . $event->slug . '/tournaments/' . $tournament->slug,
-					$request->file('image')
-				)
-			);
-		}
-
 		if (!$tournament->save()) {
-			Session::flash('message', 'Could not save Tournament!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
-		}
-		
-		$challonge = new Challonge(env('CHALLONGE_API_KEY'));
-		$params = [
-		  'tournament[name]'					=> $request->name,
-		  'tournament[tournament_type]'			=> strtolower($request->format),
-		  'tournament[url]'						=> $tournament_url,
-		  'tournament[subdomain]'				=> env('CHALLONGE_SUBDOMAIN'),
-		  'tournament[hold_third_place_match]'	=> ($request->allow_bronze ? true : false),
-		  'tournament[show_rounds]'				=> true,
-		];
-
-		if (!$response = $challonge->createTournament($params)) {
-			$tournament->delete();
-			Session::flash('message', 'Could not connect to Challonge. Please try again');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
-		}
-		
-		$tournament->challonge_tournament_id = $response->id;
-
-		if (!$tournament->save()) {
-			Session::flash('message', 'Cannot save Tournament!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+			Session::flash('message', 'Cannot create Tournament!');
+			return Redirect::back();
 		}
 
-		Session::flash('message', 'Successfully saved Tournament!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+		Session::flash('message', 'Successfully created Tournament!');
+		return Redirect::back();
 	}
-	
 	/**
 	 * Update Tournament
 	 * @param  Event           $event
@@ -169,7 +128,17 @@ class TournamentsController extends Controller
 
 		$tournament->name			= $request->name;
 		$tournament->description	= $request->description;
-		
+		$disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
+		if (!in_array($tournament->status, $disallowed_array)) {
+			$game_id = null;
+			if (isset($request->game_id)) {
+				if (Game::where('id', $request->game_id)->first()) {
+					$game_id = $request->game_id;
+				}
+			}
+			$tournament->game_id					= $game_id;
+		}
+
 		if (!$tournament->save()) {
 			session::flash('alert-danger', 'Cannot update Tournament!');
 			return Redirect::back();
@@ -204,9 +173,14 @@ class TournamentsController extends Controller
 	 */
 	public function start(Event $event, EventTournament $tournament)
 	{
-		if ($tournament->tournamentParticipants->count() > 2 && ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETED')) {
-			Session::flash('alert-danger', 'Tournament is already live or doesnt have enough participants');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+		if ($tournament->tournamentParticipants->count() < 2) {
+			Session::flash('alert-danger', 'Tournament doesnt have enough participants');
+			return Redirect::back();
+		}
+
+		if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETED') {
+			Session::flash('alert-danger', 'Tournament is already live or completed');
+			return Redirect::back();
 		}
 
 		if (!$tournament->tournamentTeams->isEmpty()) {
@@ -222,11 +196,11 @@ class TournamentsController extends Controller
 
 		if (!$tournament->setStatus('LIVE')) {
 			Session::flash('alert-danger', 'Cannot start Tournament!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+			return Redirect::back();
 		}
 
 		Session::flash('alert-success', 'Tournament Started!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/');
+		return Redirect::back();
 	}
 
 	/**
@@ -239,11 +213,13 @@ class TournamentsController extends Controller
 	{
 		if (!$tournament->setStatus('COMPLETE')) {
 			Session::flash('alert-danger', 'Cannot finalize. Tournament is still live!');
-			return Redirect::to('admin/events/' . $event->slug . '/tournaments');
+			return Redirect::back();
 		}
 
+		// TODO - Colate scores and record them for future seeding
+		
 		Session::flash('alert-success', 'Tournament Finalized!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
+		return Redirect::back();
 	}
 
 	/**
@@ -272,7 +248,32 @@ class TournamentsController extends Controller
 		}
 
 		Session::flash('alert-success', 'Successfully updated Participant!');
-		return Redirect::to('admin/events/' . $event->slug . '/tournaments/' . $tournament->slug);
+		return Redirect::back();
+	}
+
+	public function updateMatch(Event $event, EventTournament $tournament, Request $request)
+	{
+		$rules = [
+			'player1_score' 		=> 'required',
+			'player2_score' 		=> 'required',
+			'tournament_match_id' 	=> 'required',
+			'player_winner_verify'	=> 'in:player1,player2'
+		];
+		$messages = [
+			'player1_score.required' 		=> 'Player 1 score is required.',
+			'player2_score.required' 		=> 'Player 2 score is required.',
+			'tournament_match_id.required' 	=> 'Tournament match ID is required',
+			'player_winner_verify.in' 		=> 'Player winner Verify must be player1 or player2'
+		];
+		$this->validate($request, $rules, $messages);
+
+		if (!$tournament->updateMatch($request->tournament_match_id, $request->player1_score, $request->player2_score, $request->player_winner_verify)) {
+			Session::flash('alert-danger', 'Cannot update match scores!');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Successfully updated match scores!');
+		return Redirect::back();
 	}
 }
 
