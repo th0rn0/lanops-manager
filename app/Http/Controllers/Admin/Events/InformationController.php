@@ -44,7 +44,7 @@ class InformationController extends Controller
 		$information->event_id	= $event->id;
 
 	 	if ($request->file('image') !== NULL) {
-			$information->image	= str_replace(
+			$information->image_path = str_replace(
 				'public/', 
 				'/storage/', 
 				Storage::put(
