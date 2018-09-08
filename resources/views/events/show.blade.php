@@ -483,13 +483,19 @@
 								@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
 									@foreach ($tournament->challonge_participants as $challonge_participant)
 										@if ($challonge_participant->final_rank == 1)
-											<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h2>
+											@if ($tournament->team_size == '1v1')
+												<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h2>
+											@endif
 										@endif
 										@if ($challonge_participant->final_rank == 2)
-											<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h3>
+											@if ($tournament->team_size == '1v1')
+												<h3>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h3>
+											@endif
 										@endif
 										@if ($challonge_participant->final_rank != 2 && $challonge_participant->final_rank != 1)
-											<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h4>
+											@if ($tournament->team_size == '1v1')
+												<h4>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $tournament->getParticipantByChallongeId($challonge_participant->id)->eventParticipant->user->steamname }}</h4>
+											@endif
 										@endif
 									@endforeach
 								@endif
