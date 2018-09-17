@@ -36,6 +36,13 @@ class EventsController extends Controller
 	public function show(Event $event)
 	{
 		$user = Auth::user();
+		if ($user && !empty($user->eventParticipants)) {
+			foreach ($user->eventParticipants as $participant) {
+				if ((date('Y-m-d H:i:s') >= $participant->event->start) && (date('Y-m-d H:i:s') <= $participant->event->end) && $participant->signed_in) {
+					return redirect('/'); 
+				}
+			}
+		}
 		if ($user) {
 			$clauses = ['user_id' => $user->id, 'event_id' => $event->id]; 
 			$user->eventParticipation = EventParticipant::where($clauses)->get();
