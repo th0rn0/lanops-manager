@@ -94,6 +94,7 @@ class TournamentsController extends Controller
 			}
 		}
 
+		// TODO - Refactor
 		$tournament_participant 							= new EventTournamentParticipant();
 		$tournament_participant->event_participant_id 		= $request->event_participant_id;
 		$tournament_participant->event_tournament_id 		= $tournament->id;
@@ -138,6 +139,17 @@ class TournamentsController extends Controller
 
 		if (!$tournament_team->save()) {
 			Session::flash('alert-danger', 'Cannot add Team. Please try again.');
+			return Redirect::back();
+		}
+
+		// TODO - Refactor
+		$tournament_participant 							= new EventTournamentParticipant();
+		$tournament_participant->event_participant_id 		= $request->event_participant_id;
+		$tournament_participant->event_tournament_id 		= $tournament->id;
+		$tournament_participant->event_tournament_team_id 	= $tournament_team->id;
+
+		if (!$tournament_participant->save()) {
+			Session::flash('alert-danger', 'Cannot add participant. Please try again.');
 			return Redirect::back();
 		}
 
