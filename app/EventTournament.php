@@ -58,39 +58,45 @@ class EventTournament extends Model
     public static function boot() {
         parent::boot();
         self::created(function ($model){
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-            $params = [
-              'tournament[name]'                    => $model->name,
-              'tournament[tournament_type]'         => strtolower($model->format),
-              'tournament[url]'                     => $model->challonge_tournament_url,
-              'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
-              'tournament[hold_third_place_match]'  => ($model->allow_bronze ? true : false),
-              'tournament[show_rounds]'             => true,
-            ];
-            if (!$response = $challonge->createTournament($params)) {
-                $model->delete();
-                return false;
+            if ($model->format != 'list') {
+                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $params = [
+                  'tournament[name]'                    => $model->name,
+                  'tournament[tournament_type]'         => strtolower($model->format),
+                  'tournament[url]'                     => $model->challonge_tournament_url,
+                  'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
+                  'tournament[hold_third_place_match]'  => ($model->allow_bronze ? true : false),
+                  'tournament[show_rounds]'             => true,
+                ];
+                if (!$response = $challonge->createTournament($params)) {
+                    $model->delete();
+                    return false;
+                }
+                $model->challonge_tournament_id = $response->id;
+                $model->save();
             }
-            $model->challonge_tournament_id = $response->id;
-            $model->save();
             return true;
         });
         self::saved(function($model){
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-            $challonge_tournament = $challonge->getTournament($model->challonge_tournament_id);
-            $params = [
-              'tournament[name]' => $model->name
-            ];
-            if (!$response = $challonge_tournament->update($params)) {
-                return false;
+            if ($model->format != 'list') {
+                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $challonge_tournament = $challonge->getTournament($model->challonge_tournament_id);
+                $params = [
+                  'tournament[name]' => $model->name
+                ];
+                if (!$response = $challonge_tournament->update($params)) {
+                    return false;
+                }
             }
             return true;
         });
         self::deleting(function($model){
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-            $response = $challonge->getTournament($model->challonge_tournament_id);
-            if (!$response->delete()) {
-               return false;
+            if ($model->format != 'list') {
+                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $response = $challonge->getTournament($model->challonge_tournament_id);
+                if (!$response->delete()) {
+                   return false;
+                }
             }
             return true;
         });

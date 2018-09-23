@@ -118,9 +118,10 @@
 								Form::select(
 									'format', 
 									array(
-										'single elimination'  => 'Single Elimination', 
-										'double elimination'  => 'Double Elimination', 
-										'round robin'         => 'Round Robin'
+										'single elimination'	=> 'Single Elimination', 
+										'double elimination'  	=> 'Double Elimination', 
+										'round robin'         	=> 'Round Robin',
+										'list'					=> 'List'
 									), 
 									null, 
 									array(
