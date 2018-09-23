@@ -220,7 +220,7 @@ class EventTournament extends Model
      */
     public function getChallongeParticipants()
     {
-        // TODO - Refactor
+        // TODO - Refactor - add to cache
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
         if (!$challonge_participants = $challonge->getParticipants($this->challonge_tournament_id)) {
             return false;

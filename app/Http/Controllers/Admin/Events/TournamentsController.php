@@ -217,6 +217,9 @@ class TournamentsController extends Controller
 		}
 
 		// TODO - Colate scores and record them for future seeding
+		// WIP
+		// $tournament->getChallongeParticipants();
+		
 		
 		Session::flash('alert-success', 'Tournament Finalized!');
 		return Redirect::back();
