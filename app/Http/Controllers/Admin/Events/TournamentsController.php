@@ -72,9 +72,6 @@ class TournamentsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		// DEBUG
-		dd($request);
-		
 		$game_id = null;
 		if (isset($request->game_id)) {
 			if (Game::where('id', $request->game_id)->first()) {

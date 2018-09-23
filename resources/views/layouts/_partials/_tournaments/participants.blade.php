@@ -10,7 +10,7 @@
 					<th>
 						Seat
 					</th>
-					@if($tournament->team_size != '1v1')
+					@if($tournament->team_size != '1v1' && ($admin && $user->admin))
 						<th>
 							PUG
 						</th>
@@ -47,7 +47,7 @@
 								@endif 
 							</p>
 						</td>
-						@if ($tournament->team_size != '1v1')
+						@if ($tournament->team_size != '1v1' && ($admin && $user->admin))
 							<td>
 								@if($tournament_participant->pug)
 									Yes

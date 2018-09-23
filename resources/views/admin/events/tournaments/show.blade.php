@@ -27,7 +27,7 @@
 @include ('layouts._partials._admin._event.dashMini')
 
 <!-- BRACKETS -->
-@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
+@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && $tournament->format != 'list')
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -50,7 +50,7 @@
 				<i class="fa fa-users fa-fw"></i> Participants
 			</div>
 			<div class="panel-body">
-				@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+				@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && $tournament->format != 'list')
 					@include ('layouts._partials._tournaments.standings', ['admin' => true])
 				@else
 					@include ('layouts._partials._tournaments.participants', ['admin' => true, 'all' => true])

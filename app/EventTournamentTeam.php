@@ -41,7 +41,7 @@ class EventTournamentTeam extends Model
     {
         parent::boot();
         self::created(function($model){
-            if ($model->format != 'list') {
+            if ($model->eventTournament->format != 'list') {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
                 if (!$response = $tournament->addParticipant(['participant[name]' => $model->name])) {
@@ -54,7 +54,7 @@ class EventTournamentTeam extends Model
             return true;
         });
         self::deleting(function($model){
-            if ($model->format != 'list') {
+            if ($model->eventTournament->format != 'list') {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $participant = $challonge->getParticipant($model->eventTournament->challonge_tournament_id, $model->challonge_participant_id);
                 if (!$response = $participant->delete()) {

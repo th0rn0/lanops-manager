@@ -154,19 +154,27 @@ class EventTournament extends Model
     {
         $challonge = new Challonge(env('CHALLONGE_API_KEY'));
         if ($status == 'LIVE') {
-            $tournament = $challonge->getTournament($this->challonge_tournament_id);
-            try {
-                $tournament->start();
-            } catch (\Exception $e) {
-                return false;
+            foreach ($this->tournamentTeams as $team) {
+                if ($team->tournamentParticipants->isEmpty()) {
+                    $team->delete();
+                }
+            }
+            if ($this->format != 'list') {
+                try {
+                    $tournament->start();
+                } catch (\Exception $e) {
+                    return false;
+                }
             }
         }
         if ($status == 'COMPLETE') {
-            $tournament = $challonge->getTournament($this->challonge_tournament_id);
-            try {
-                $tournament->finalize();
-            } catch (\Exception $e) {
-                return false;
+            if ($this->format != 'list') {
+                $tournament = $challonge->getTournament($this->challonge_tournament_id);
+                try {
+                    $tournament->finalize();
+                } catch (\Exception $e) {
+                    return false;
+                }
             }
         }
         $this->status = $status;

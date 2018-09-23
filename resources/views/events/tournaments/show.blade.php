@@ -56,7 +56,7 @@
 					</dl>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-9">
-					@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
+					@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants) && $tournament->format != 'list')
 						<div class="row">
 							<div class="alert alert-success text-center">
 								@foreach ($tournament->challonge_participants as $challonge_participant)
@@ -69,7 +69,7 @@
 					@endif
 
 					<!-- PROGRESS -->
-					@if ($tournament->status == 'LIVE')
+					@if ($tournament->status == 'LIVE' && $tournament->format != 'list')
 						<h4 class="section-header">
 							Next Match
 						</h4>
@@ -215,7 +215,7 @@
 		</div>
 
 		<!-- BRACKETS & STANDINGS -->
-		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE'))
+		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && $tournament->format != 'list')
 			<div class="row">
 				<div class="page-header">
 					<h3>Brackets</h3>
@@ -231,7 +231,7 @@
 		@endif
 
 		<!-- PARTICIPANTS -->
-		@if (($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE'))
+		@if (($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE') || $tournament->format == 'list')
 			<div class="row">
 				<div class="page-header">
 					<h3>Participants</h3>

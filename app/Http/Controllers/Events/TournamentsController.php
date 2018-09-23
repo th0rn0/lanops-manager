@@ -50,7 +50,7 @@ class TournamentsController extends Controller
 			return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
 		}
 		// TODO - Refactor - add the final scores to the tournament participant so getChallongeParticipants can be removed and add a job to pull it?
-        if ($tournament->status == 'COMPLETE') {
+        if ($tournament->status == 'COMPLETE' && $tournament->format != 'list') {
             $tournament->challonge_participants = $tournament->getChallongeParticipants();
         }
 		return view('events.tournaments.show')
