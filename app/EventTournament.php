@@ -61,12 +61,12 @@ class EventTournament extends Model
             if ($model->format != 'list') {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $params = [
-                  'tournament[name]'                    => $model->name,
-                  'tournament[tournament_type]'         => strtolower($model->format),
-                  'tournament[url]'                     => $model->challonge_tournament_url,
-                  'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
-                  'tournament[hold_third_place_match]'  => ($model->allow_bronze ? true : false),
-                  'tournament[show_rounds]'             => true,
+                    'tournament[name]'                    => $model->name,
+                    'tournament[tournament_type]'         => strtolower($model->format),
+                    'tournament[url]'                     => $model->challonge_tournament_url,
+                    'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
+                    'tournament[hold_third_place_match]'  => ($model->allow_bronze ? true : false),
+                    'tournament[show_rounds]'             => true,
                 ];
                 if (!$response = $challonge->createTournament($params)) {
                     $model->delete();
@@ -79,14 +79,18 @@ class EventTournament extends Model
         });
         self::saved(function($model){
             if ($model->format != 'list') {
+                // TODO - fire only when name is updated
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $challonge_tournament = $challonge->getTournament($model->challonge_tournament_id);
                 $params = [
-                  'tournament[name]' => $model->name
+                    'tournament[name]' => $model->name
                 ];
                 if (!$response = $challonge_tournament->update($params)) {
                     return false;
                 }
+            }
+            if ($model->status == 'COMPLETED' && $model->format != 'list' && !$model->api_complete) {
+                dd($model->getParticipants());
             }
             return true;
         });
