@@ -90,7 +90,34 @@ class EventTournament extends Model
                 }
             }
             if ($model->status == 'COMPLETED' && $model->format != 'list' && !$model->api_complete) {
-                dd($model->getParticipants());
+                foreach ($model->getStandings('desc', true)->final as $standings) {
+                    if ($model->team_size == '1v1') {
+                        $tournament_participant = $model->getParticipantByChallongeId($standings->id);
+                        $tournament_participant->final_rank = Helpers::getChallongeRankFormat($standings->final_rank)
+                        $tournament_participant->final_ratio = json_encode([$standings->win, $standings->lose, $standings->tie]);
+                        $tournament_participant->final_score = $standings->pts;
+                        $final_history = array();
+                        foreach ($standings->history as $game) {
+                            array_push($final_history, $game);
+                        }
+                        $tournament_participant->final_history = $final_history;
+                        $tournament_participant->save();
+                    }
+                    if ($model->team_size != '1v1') {
+                        $tournament_team = $model->getTeamByChallongeId($standings->id);
+                        $tournament_team->final_rank = Helpers::getChallongeRankFormat($standings->final_rank);
+                        $tournament_team->final_ratio = json_encode([$standings->win, $standings->lose, $standings->tie]);
+                        $tournament_team->final_score = $standings->pts;
+                        $final_history = array();
+                        foreach ($standings->history as $game) {
+                            array_push($final_history, $game);
+                        }
+                        $tournament_team->final_history = $final_history;
+                        $tournament_team->save();
+                    }
+                    $model->api_complete = true;
+                    $model->save();
+                }
             }
             return true;
         });
