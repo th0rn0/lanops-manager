@@ -328,7 +328,7 @@ class EventTournament extends Model
     {
         // TODO - if complete get from DB
         if ($tournament->status == 'COMPLETE' && $tournament->api_complete) {
-            $tournament_standings->['progress'] = 100;
+            $tournament_standings['progress'] = 100;
         }
         $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() {
             $challonge = new Challonge(env('CHALLONGE_API_KEY'));
