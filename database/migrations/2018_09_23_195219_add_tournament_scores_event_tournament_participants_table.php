@@ -15,7 +15,7 @@ class AddTournamentScoresEventTournamentParticipantsTable extends Migration
     {
         Schema::table('event_tournament_participants', function (Blueprint $table) {
             $table->integer('final_rank')->after('event_tournament_id')->nullable();
-            $table->string('final_history')->after('final_rank')->nullable();
+            $table->string('final_history', 1000)->after('final_rank')->nullable();
             $table->string('final_ratio')->after('final_history')->nullable();
             $table->integer('final_score')->after('final_ratio')->nullable();
         });

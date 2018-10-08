@@ -215,12 +215,6 @@ class TournamentsController extends Controller
 			Session::flash('alert-danger', 'Cannot finalize. Tournament is still live!');
 			return Redirect::back();
 		}
-
-		// TODO - Colate scores and record them for future seeding
-		// WIP
-		// $tournament->getChallongeParticipants();
-		
-		
 		Session::flash('alert-success', 'Tournament Finalized!');
 		return Redirect::back();
 	}
