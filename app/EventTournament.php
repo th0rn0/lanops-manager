@@ -326,13 +326,36 @@ class EventTournament extends Model
      */
     public function getStandings($order = null, $obj = false)
     {
-        // TODO - if complete get from DB
-        if ($tournament->status == 'COMPLETE' && $tournament->api_complete) {
-            $tournament_standings['progress'] = 100;
-        }
         $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() {
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
-            $standings = $challonge->getStandings($this->challonge_tournament_id);
+            if ($this->status == 'COMPLETE' && $this->api_complete && $this->format != 'list') {
+                $standings['progress'] = 100;
+                $standings_array = array();
+                if ($this->team_size != '1v1') {
+                    $participants = $this->tournamentTeams;
+                }
+                if ($this->team_size == '1v1') {
+                    $participants = $this->tournamentParticipants;
+                }
+                foreach ($participants as $participant) {
+                    $ratio = unserialize($participant->final_ratio);
+                    $history = unserialize($participant->final_history);
+                    $params = [
+                        'win' => $ratio['W'],
+                        'lose' => $ratio['L'],
+                        'tie' => $ratio['T'],
+                        'pts' => $participant->final_score,
+                        'history' => $history,
+                        'name' => ($this->team_size != '1v1' ? $participant->name : $participant->eventParticipant->user->username),
+                        'id' => $participant->challonge_participant_id
+                    ];
+                    array_push($standings_array, $params);
+                }
+                $standings['final'] = collect($standings_array);
+            }
+            if ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list') {
+                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $standings = $challonge->getStandings($this->challonge_tournament_id);
+            }
             Cache::forever($this->challonge_tournament_id . "_standings", $standings);
             return $standings;
         });
@@ -347,7 +370,6 @@ class EventTournament extends Model
         if ($obj) {
             return json_decode(json_encode($tournament_standings), FALSE);
         }
-
         return $tournament_standings;
     }
 
