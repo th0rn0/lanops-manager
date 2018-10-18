@@ -40,11 +40,7 @@ class HomeController extends Controller
 	 */
 	public function net()
 	{
-		$events = Event::where('start', '>=', date("Y-m-d 00:00:00"))
-							->orderBy('id', 'desc')
-							->limit(1)
-							->get();
-		return view("home")->withEvents($events);
+		return view("home")->with('nextEvent', Event::where('end', '>=', \Carbon\Carbon::now())->first());
 	}
 	
 	/**
