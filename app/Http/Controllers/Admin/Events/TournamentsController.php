@@ -56,7 +56,7 @@ class TournamentsController extends Controller
 	{
 		$rules = [
 			'name'			=> 'required',
-			'format'		=> 'required|in:single elimination,double elimination,round robin',
+			'format'		=> 'required|in:single elimination,double elimination,round robin,list',
 			'team_size'		=> 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
 			'description'	=> 'required',
 			'image'			=> 'image',
@@ -64,7 +64,7 @@ class TournamentsController extends Controller
 		$messages = [
 			'name.required'			=> 'Tournament name is required',
 			'format.required'		=> 'Format is required',
-			'format.in'				=> 'Single Elimation, Double Elimination or Round Robin only',
+			'format.in'				=> 'Single Elimation, Double Elimination, List or Round Robin only',
 			'team_size.required'	=> 'Team size is required',
 			'team_size.in'			=> 'Team Size must be in format 1v1, 2v2, 3v3 etc',
 			'description.required'	=> 'Description is required',
@@ -215,9 +215,6 @@ class TournamentsController extends Controller
 			Session::flash('alert-danger', 'Cannot finalize. Tournament is still live!');
 			return Redirect::back();
 		}
-
-		// TODO - Colate scores and record them for future seeding
-		
 		Session::flash('alert-success', 'Tournament Finalized!');
 		return Redirect::back();
 	}
