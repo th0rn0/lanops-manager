@@ -244,4 +244,15 @@ class Event extends Model
 		}
 		return $total;
 	}
+
+	/**
+	 * Get Cheapest Ticket
+	 * @return Object
+	 */
+	public function getCheapestTicket()
+	{
+		// TODO - Finish
+		return '30';
+	}
+
 }

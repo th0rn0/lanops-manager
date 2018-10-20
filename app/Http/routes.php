@@ -227,6 +227,15 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/settings', 'Admin\SettingsController@index');
 		Route::post('/admin/settings/', 'Admin\SettingsController@update');
 		Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
+
+		/**
+		 * News
+		 */
+		Route::get('/admin/news', 'Admin\NewsController@index');
+		Route::post('/admin/news', 'Admin\NewsController@store');
+		Route::get('/admin/news/{news}', 'Admin\NewsController@show');
+		Route::post('/admin/news/{news}', 'Admin\NewsController@update');
+		Route::delete('/admin/news/{news}', 'Admin\NewsController@destroy');
 	});
 
 });

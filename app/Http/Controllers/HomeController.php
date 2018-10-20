@@ -6,6 +6,8 @@ use DB;
 use Auth;
 
 use App\Event;
+use App\User;
+use App\NewsArticle;
 use App\EventTimetable;
 use App\EventTimetableData;
 use App\EventParticipant;
@@ -40,7 +42,11 @@ class HomeController extends Controller
 	 */
 	public function net()
 	{
-		return view("home")->with('nextEvent', Event::where('end', '>=', \Carbon\Carbon::now())->first());
+		return view("home")
+			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->first())
+			->withTopAttendees(User::all())
+			->withNews(NewsArticle::all())
+		;
 	}
 	
 	/**

@@ -12,6 +12,17 @@
 	</ul>
 </li>
 <li class="dropdown">
+	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Future Events <span class="caret"></span></a>
+	<ul class="dropdown-menu">
+		<!-- // TODO -->
+		<li>
+			<a href="/events/">
+				Some Event
+			</a>
+		</li>
+	</ul>
+</li>
+<li class="dropdown">
 	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Events <span class="caret"></span></a>
 	<ul class="dropdown-menu">
 		@if ( count($events) > 0 )
