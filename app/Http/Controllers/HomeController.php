@@ -45,7 +45,7 @@ class HomeController extends Controller
 		return view("home")
 			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->first())
 			->withTopAttendees(User::all())
-			->withNews(NewsArticle::all())
+			->withNewsArticles(NewsArticle::all())
 		;
 	}
 	

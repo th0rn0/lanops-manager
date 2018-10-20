@@ -233,9 +233,9 @@ Route::group(['middleware' => ['web']], function () {
 		 */
 		Route::get('/admin/news', 'Admin\NewsController@index');
 		Route::post('/admin/news', 'Admin\NewsController@store');
-		Route::get('/admin/news/{news}', 'Admin\NewsController@show');
-		Route::post('/admin/news/{news}', 'Admin\NewsController@update');
-		Route::delete('/admin/news/{news}', 'Admin\NewsController@destroy');
+		Route::get('/admin/news/{news_article}', 'Admin\NewsController@show');
+		Route::post('/admin/news/{news_article}', 'Admin\NewsController@update');
+		Route::delete('/admin/news/{news_article}', 'Admin\NewsController@destroy');
 	});
 
 });

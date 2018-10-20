@@ -106,12 +106,12 @@
 				<h3>Latest News</h3>
 			</div>
 
-			@foreach ($news as $news_item)
+			@foreach ($news_articles as $news_article)
 				<div class="news-post">
-					<h2 class="news-post-title">{{ $news_item->title }}</h2>
+					<h2 class="news-post-title">{{ $news_article->title }}</h2>
 					<!-- // TODO - add user account public pages -->
-					<p class="news-post-meta">{{ date('F d, Y', strtotime($news_item->created_at)) }} by <a href="#">{{ $news_item->user->steamname }}</a></p>
-					{!! $news_item->article !!}
+					<p class="news-post-meta">{{ date('F d, Y', strtotime($news_article->created_at)) }} by <a href="#">{{ $news_article->user->steamname }}</a></p>
+					{!! $news_article->article !!}
 				</div>
 			@endforeach
 

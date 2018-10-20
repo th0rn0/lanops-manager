@@ -47,22 +47,32 @@
 						<thead>
 							<tr>
 								<th>Title</th>
-								<th>Posted By</th>
-								<th>Edit</th>
+								<th>By</th>
+								<th>Date</th>
+								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($news as $news_item)
+							@foreach ($news_articles as $news_article)
 								<tr>
 									<td>
-										{{ $news_item->title }}
+										{{ $news_article->title }}
 									</td>
 									<td>
-										{{ $news_item->user->steamname }}
-										{{ date('dd-MM-yy', strtotime($news_item->created_at)) }}
+										{{ $news_article->user->steamname }}
 									</td>
 									<td>
-										edit me
+										{{ date('d-MM-yy', strtotime($news_article->created_at)) }}
+									</td>
+									<td width="15%">
+										<a href="/admin/news/{{ $news_article->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
+									</td>
+									<td width="15%">
+										{{ Form::open(array('url'=>'/admin/news/' . $news_article->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+											{{ Form::hidden('_method', 'DELETE') }}
+											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+										{{ Form::close() }}
 									</td>
 								</tr>
 							@endforeach
