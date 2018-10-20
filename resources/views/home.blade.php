@@ -135,43 +135,7 @@
 	</div>
 </div>
 
-<div class="stats  section-padding  section-margin">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4  text-center">
-				<div class="stats-number">
-					{{ Helpers::getEventTotal() }}
-				</div>
-				<hr />
-				<div class="stats-title">
-					LANs we've hosted
-				</div>
-			</div>
-
-			<div class="col-md-4  text-center">
-				<div class="stats-number">
-					{{ Helpers::getEventParticipantTotal() }}
-				</div>
-				<hr />
-				<div class="stats-title">
-					GAMERs we've entertained
-				</div>
-			</div>
-
-			<div class="col-md-4  text-center">
-				<div class="stats-number">
-					A LOT
-				</div>
-				<hr />
-				<div class="stats-title">
-					PIZZAs we've ordered
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="about  section-padding  section-margin">
+<div class="about  section-padding  section-margin hidden">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8  col-md-offset-2 text-center">

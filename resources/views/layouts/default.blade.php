@@ -24,7 +24,7 @@
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-		<!-- MOVE ME -->
+		<!-- // TODO MOVE ME -->
 		<style>
 			.footer {
 				height: 200px;
@@ -32,6 +32,41 @@
 			}
 		</style>
 		<br>
+		<div class="stats  section-padding">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4  text-center">
+						<div class="stats-number">
+							{{ Helpers::getEventTotal() }}
+						</div>
+						<hr />
+						<div class="stats-title">
+							LANs we've hosted
+						</div>
+					</div>
+
+					<div class="col-md-4  text-center">
+						<div class="stats-number">
+							{{ Helpers::getEventParticipantTotal() }}
+						</div>
+						<hr />
+						<div class="stats-title">
+							GAMERs we've entertained
+						</div>
+					</div>
+
+					<div class="col-md-4  text-center">
+						<div class="stats-number">
+							A LOT
+						</div>
+						<hr />
+						<div class="stats-title">
+							PIZZAs we've ordered
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<footer class="footer" style="height:30%">
 			<div class="container">
 				<div class="hidden-xs hidden-sm">
