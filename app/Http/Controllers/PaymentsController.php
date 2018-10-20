@@ -56,8 +56,8 @@ class PaymentsController extends Controller
 
 		//Paypal Post Params
 		$params = array(
-			'cancelUrl'		=> 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=cancel',
-			'returnUrl'		=> 'https://' . $_SERVER['SERVER_NAME'] . '/payment/callback?type=return', 
+			'cancelUrl'		=> 'https://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
+			'returnUrl'		=> 'https://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return', 
 			'name'			=> Settings::getOrgName() . ' - Tickets Purchase',
 			'description'	=> 'Ticket Purchase for ' . Settings::getOrgName(), 
 			'amount'		=> (float)Helpers::getBasketTotal($basket),
