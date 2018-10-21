@@ -322,9 +322,10 @@ class EventTournament extends Model
      * Get Standings
      * @param  string $order
      * @param  boolean $obj
+     * @param  boolean $retroactively
      * @return Array|Object
      */
-    public function getStandings($order = null, $obj = false)
+    public function getStandings($order = null, $obj = false, $retroactively = false)
     {
         $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() {
             if ($this->status == 'COMPLETE' && $this->api_complete && $this->format != 'list') {
@@ -352,10 +353,11 @@ class EventTournament extends Model
                 }
                 $standings['final'] = collect($standings_array);
             }
-            if ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list') {
+            if ($retroactively || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $standings = $challonge->getStandings($this->challonge_tournament_id);
             }
+
             Cache::forever($this->challonge_tournament_id . "_standings", $standings);
             return $standings;
         });
@@ -445,11 +447,15 @@ class EventTournament extends Model
         return $response;
     }
 
-    public static function getAllScoresTest()
+    /**
+     * Update all scores Retoractively - This is for Legacy
+     * @return Array|Object
+     */
+    public static function getAllScoresRetroActively()
     {
         foreach (EventTournament::all() as $model) {
             if ($model->status == 'COMPLETE' && $model->format != 'list' && !$model->api_complete) {
-                foreach ($model->getStandings('desc', true)->final as $standings) {
+                foreach ($model->getStandings('desc', true, true)->final as $standings) {
                     $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                     if (!$challonge_participants = $challonge->getParticipants($model->challonge_tournament_id)) {
                         return false;
@@ -499,7 +505,9 @@ class EventTournament extends Model
                     $model->api_complete = true;
                     $model->save();
                 }
+                $count++
             }
         }
+        return "Updated scores for " . $count . "tournaments";
     }
 }
