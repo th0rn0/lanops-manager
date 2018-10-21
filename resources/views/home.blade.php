@@ -2,38 +2,43 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel slide" data-ride="carousel">
+<div id="hero-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
-			<img class="hero-image" src="/storage/images/main/slider/1.png">
+			<img class="hero-image" src="/storage/images/main/slider/5.png">
+		</div>
+		<div class="item">
+			<img class="hero-image" src="/storage/images/main/slider/3.png">
 		</div>
 		<div class="item">
 			<img class="hero-image" src="/storage/images/main/slider/2.png">
 		</div>
 		<div class="item">
-			<img class="hero-image" src="/storage/images/main/slider/3.png">
+			<img class="hero-image" src="/storage/images/main/slider/1.png">
 		</div>
 		<div class="item">
 			<img class="hero-image" src="/storage/images/main/slider/4.png">
 		</div>
 	</div>
 	<div class="hero-overlay hidden-xs">
-		@if ($next_event)
-			<h3>Next Event</h3>
-			<h1>{{ $next_event->display_name }}</h1>
-			<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
-			<a href="/events/{{ $next_event->slug }}#information"><button class="btn btn-primary">More Info</button></a>
-			<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-primary">Book Now</button></a>
-		@endif
+			@if ($next_event)
+				<h3>Next Event</h3>
+				<h1>{{ $next_event->display_name }}</h1>
+				<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
+				<a href="/events/{{ $next_event->slug }}#information"><button class="btn btn-primary">More Info</button></a>
+				<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-primary">Book Now</button></a>
+			@endif
+		</div>
 	</div>
+	
 </div>
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="page-header">
-				<h3>{{ Settings::getOrgName() }}</h3>
+				<h3>About {{ Settings::getOrgName() }}</h3>
 			</div>
 			<p>{!! Settings::getAboutShort() !!}</p>
 		</div>
