@@ -65,11 +65,11 @@ class HomeController extends Controller
 		foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
 			$recent = false;
 			foreach ($winner_team->tournamentParticipants as $winner) {
-				if (!$winner->eventParticipant->user->admin && array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
+				if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
 					$top_winners[$winner->eventParticipant->user->id]->win_count++;
 					$recent = true;
 				}
-				if (!$winner->eventParticipant->user->admin && !$recent) {
+				if (!$recent) {
 					$winner->eventParticipant->user->win_count = 1;
 					$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 				}
@@ -77,11 +77,11 @@ class HomeController extends Controller
 		}
 		foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
 			$recent = false;
-			if (!$winner->eventParticipant->user->admin && array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
+			if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
 				$top_winners[$winner->eventParticipant->user->id]->win_count++;
 				$recent = true;
 			}
-			if (!$winner->eventParticipant->user->admin && !$recent) {
+			if (!$recent) {
 				$winner->eventParticipant->user->win_count = 1;
 				$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 			}
@@ -89,7 +89,6 @@ class HomeController extends Controller
 		usort($top_winners, function($a, $b) {
 		    return $b['win_count'] <=> $a['win_count'];
 		});
-
 		return view("home")
 			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->first())
 			->withTopAttendees(array_slice($top_attendees, 0, 5))
