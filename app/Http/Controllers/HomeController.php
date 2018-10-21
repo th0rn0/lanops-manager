@@ -58,7 +58,7 @@ class HomeController extends Controller
 			}
 		}
 		usort($top_attendees, function($a, $b) {
-		    return $a['event_count'] <=> $b['event_count'];
+		    return $b['event_count'] <=> $a['event_count'];
 		});
 
 		$top_winners = array();
@@ -87,7 +87,7 @@ class HomeController extends Controller
 			}
 		}
 		usort($top_winners, function($a, $b) {
-		    return $a['win_count'] <=> $b['win_count'];
+		    return $b['win_count'] <=> $a['win_count'];
 		});
 
 		return view("home")
