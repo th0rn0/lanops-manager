@@ -453,6 +453,7 @@ class EventTournament extends Model
      */
     public static function getAllScoresRetroActively()
     {
+        $count = 0;
         foreach (EventTournament::all() as $model) {
             if ($model->status == 'COMPLETE' && $model->format != 'list' && !$model->api_complete) {
                 foreach ($model->getStandings('desc', true, true)->final as $standings) {
@@ -505,9 +506,9 @@ class EventTournament extends Model
                     $model->api_complete = true;
                     $model->save();
                 }
-                $count++
+                $count++;
             }
         }
-        return "Updated scores for " . $count . "tournaments";
+        dd('DUN');
     }
 }

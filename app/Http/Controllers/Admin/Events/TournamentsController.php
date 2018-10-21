@@ -275,7 +275,7 @@ class TournamentsController extends Controller
 
 	public function fixScores()
 	{
-		EventTournament::getAllScoresTest();
+		EventTournament::getAllScoresRetroActively();
 	}
 }
 
