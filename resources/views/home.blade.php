@@ -2,7 +2,7 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
+<div id="hero-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
