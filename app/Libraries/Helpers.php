@@ -85,6 +85,7 @@ class Helpers
 		return Settings::getLanCountOffset() + $events;
 	}
 
+	// TODO - move to model
 	/**
 	 * Get Next Event Name
 	 * @return String
@@ -110,6 +111,19 @@ class Helpers
 			return $event->slug;
 		}
 		return '#';
+	}
+
+
+	/**
+	 * Get Next Event Description
+	 * @return String
+	 */
+	public static function getNextEventDesc()
+	{
+		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+			return $event->desc_long;
+		}
+		return 'No new Events';
 	}
 
 	/**

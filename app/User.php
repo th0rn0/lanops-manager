@@ -31,6 +31,11 @@ class User extends Authenticatable
 		'password',
 		'remember_token',
 	];
+
+	public static function boot()
+	{
+		parent::boot();
+	}
 	
 	/*
 	 * Relationships
@@ -53,7 +58,7 @@ class User extends Authenticatable
 		return $this->admin;
 	}
 
-	// TODO - Refactor this somehow. It's a bit hacky.
+	// TODO - Refactor this somehow. It's a bit hacky. - Possible mutators and accessors?
 	/**
 	 * Set Active Event Participant for current User
 	 * @param $event_id

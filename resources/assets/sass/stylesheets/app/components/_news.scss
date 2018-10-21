@@ -2,17 +2,14 @@
  * News
  */
 
-.news-article__container
-{
-    padding: 15px;
+.news-post {
+  	margin-bottom: 60px;
 }
-.news-article
-{
-    padding: 15px;
-
-    background: #eeeeee;
-
-    .star {
-    	color: #dddddd;
-    }
+.news-post-title {
+  	margin-bottom: 5px;
+  	font-size: 25px;
+}
+.news-post-meta {
+  	margin-bottom: 20px;
+  	color: #999;
 }
