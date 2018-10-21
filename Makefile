@@ -84,6 +84,13 @@ composer-install-dev:
     --user $(id -u):$(id -g) \
     composer install --ignore-platform-reqs --no-scripts --dev
 
+# Update Dev PHP Dependencies via Composer
+composer-update:
+	docker run --rm --interactive --tty \
+    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+    --user $(id -u):$(id -g) \
+    composer require $(module) --ignore-platform-reqs --no-scripts
+
 # Install JS Dependencies via NPM
 npm-install:
 	docker run -it --rm --name js-maintainence \
