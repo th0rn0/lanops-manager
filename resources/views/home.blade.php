@@ -21,7 +21,7 @@
 	<div class="hero-overlay hidden-xs">
 		@if ($next_event)
 			<h3>Next Event</h3>
-			<h2>{{ $next_event->display_name }}</h2>
+			<h1>{{ $next_event->display_name }}</h1>
 			<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
 			<a href="/events/{{ $next_event->slug }}#information"><button class="btn btn-primary">More Info</button></a>
 			<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-primary">Book Now</button></a>
