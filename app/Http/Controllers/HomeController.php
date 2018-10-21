@@ -57,6 +57,9 @@ class HomeController extends Controller
 				}
 			}
 		}
+		usort($top_attendees, function($a, $b) {
+		    return $a['event_count'] <=> $b['event_count'];
+		});
 
 		$top_winners = array();
 		foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
@@ -83,6 +86,9 @@ class HomeController extends Controller
 				$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 			}
 		}
+		usort($top_winners, function($a, $b) {
+		    return $a['win_count'] <=> $b['win_count'];
+		});
 
 		return view("home")
 			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->first())

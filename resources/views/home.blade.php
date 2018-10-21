@@ -101,40 +101,42 @@
 			<div class="page-header">
 				<h3>The {{ Settings::getOrgName() }} Fam</h3>
 			</div>
-			<div class="page-header">
-				<h5>Top 3 Attendees</h5>
-			</div>
-			
-
-			@foreach ($top_attendees as $attendee)
-				<div class="row">
-					<div class="col-xs-12 col-sm-3">
-						<img class="img-rounded img-responsive" src="{{ $attendee->avatar }}">
-					</div>
-					<div class="col-xs-12 col-sm-9">
-						<p>
-							{{ $attendee->steamname }}<br>
-							<small> {{ $attendee->event_count }} Events Attended</small>
-						</p>
-					</div>
+			@if (count($top_attendees) > 0)
+				<div class="page-header">
+					<h5>Top 5 Attendees</h5>
 				</div>
-			@endforeach
-			<div class="page-header">
-				<h5>Top 3 Winners</h5>
-			</div>
-			@foreach ($top_winners as $winner)
-				<div class="row">
-					<div class="col-xs-12 col-sm-3">
-						<img class="img-rounded img-responsive" src="{{ $winner->avatar }}">
+				@foreach ($top_attendees as $attendee)
+					<div class="row">
+						<div class="col-xs-12 col-sm-3">
+							<img class="img-rounded img-responsive" src="{{ $attendee->avatar }}">
+						</div>
+						<div class="col-xs-12 col-sm-9">
+							<p>
+								{{ $attendee->steamname }}<br>
+								<small> {{ $attendee->event_count }} Events Attended</small>
+							</p>
+						</div>
 					</div>
-					<div class="col-xs-12 col-sm-9">
-						<p>
-							{{ $winner->steamname }}<br>
-							<small> {{ $winner->win_count }} Wins</small>
-						</p>
-					</div>
+				@endforeach
+			@endif
+			@if (count($top_winners) > 0)
+				<div class="page-header">
+					<h5>Top 5 Winners</h5>
 				</div>
-			@endforeach
+				@foreach ($top_winners as $winner)
+					<div class="row">
+						<div class="col-xs-12 col-sm-3">
+							<img class="img-rounded img-responsive" src="{{ $winner->avatar }}">
+						</div>
+						<div class="col-xs-12 col-sm-9">
+							<p>
+								{{ $winner->steamname }}<br>
+								<small> {{ $winner->win_count }} Wins</small>
+							</p>
+						</div>
+					</div>
+				@endforeach
+			@endif
 		</div>
 	</div>
 </div>
