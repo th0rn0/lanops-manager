@@ -26,7 +26,6 @@ class EventsController extends Controller
 	 */
 	public function index()
 	{
-		dd($_SERVER);
 		$user = Auth::user();
 		$events = Event::withoutGlobalScopes()->get();
 		return view('admin.events.index')->withUser($user)->withEvents($events);

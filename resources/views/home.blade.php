@@ -2,39 +2,20 @@
 
 @section ('content')
 
-<div class="hero" hidden>
-	
-	<div class="hero-information" style="height:30%">
-
-		<div class="container">
-		
-			
-		</div>
-	</div>
-
-</div>
 <div id="hero-carousel" class="carousel slide" data-ride="carousel">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
-			<img src="/storage/images/main/slider/1.png" alt="...">
-			<div class="carousel-caption">
-		  	</div>
+			<img src="/storage/images/main/slider/1.png">
 		</div>
 		<div class="item">
-			<img src="/storage/images/main/slider/2.png" alt="...">
-			<div class="carousel-caption">
-			</div>
+			<img src="/storage/images/main/slider/2.png">
 		</div>
 		<div class="item">
-			<img src="/storage/images/main/slider/3.png" alt="...">
-			<div class="carousel-caption">
-			</div>
+			<img src="/storage/images/main/slider/3.png">
 		</div>
 		<div class="item">
-			<img src="/storage/images/main/slider/4.png" alt="...">
-			<div class="carousel-caption">
-			</div>
+			<img src="/storage/images/main/slider/4.png">
 		</div>
 	</div>
 	<div class="hero-overlay hidden-xs">
@@ -42,8 +23,8 @@
 			<h3>Next Event</h3>
 			<h2>{{ $next_event->display_name }}</h2>
 			<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
-			<a href="/events/{{ $next_event->slug }}#information"><button class="btn btn-default">More Info</button></a>
-			<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-default">Book Now</button></a>
+			<a href="/events/{{ $next_event->slug }}#information"><button class="btn btn-primary">More Info</button></a>
+			<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-primary">Book Now</button></a>
 		@endif
 	</div>
 </div>
@@ -119,18 +100,41 @@
 		<div class="col-xs-12 col-sm-3">
 			<div class="page-header">
 				<h3>The {{ Settings::getOrgName() }} Fam</h3>
-				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
-					<tbody>
-						@foreach ($top_attendees as $attendee)
-							<tr>
-								<td>
-									{{ $attendee->steamname }}
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
 			</div>
+			<div class="page-header">
+				<h5>Top 3 Attendees</h5>
+			</div>
+			
+
+			@foreach ($top_attendees as $attendee)
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<img class="img-rounded img-responsive" src="{{ $attendee->avatar }}">
+					</div>
+					<div class="col-xs-12 col-sm-9">
+						<p>
+							{{ $attendee->steamname }}<br>
+							<small> {{ $attendee->event_count }} Events Attended</small>
+						</p>
+					</div>
+				</div>
+			@endforeach
+			<div class="page-header">
+				<h5>Top 3 Winners</h5>
+			</div>
+			@foreach ($top_winners as $winner)
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<img class="img-rounded img-responsive" src="{{ $winner->avatar }}">
+					</div>
+					<div class="col-xs-12 col-sm-9">
+						<p>
+							{{ $winner->steamname }}<br>
+							<small> {{ $winner->win_count }} Wins</small>
+						</p>
+					</div>
+				</div>
+			@endforeach
 		</div>
 	</div>
 </div>

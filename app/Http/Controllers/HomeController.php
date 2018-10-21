@@ -11,7 +11,8 @@ use App\NewsArticle;
 use App\EventTimetable;
 use App\EventTimetableData;
 use App\EventParticipant;
-use App\EventParticipantType;
+use App\EventTournamentTeam;
+use App\EventTournamentParticipant;
 
 use App\Http\Requests;
 
@@ -42,9 +43,49 @@ class HomeController extends Controller
 	 */
 	public function net()
 	{
+		$top_attendees = array();
+		foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
+			$recent = false;
+			if (array_key_exists($attendee->user->id, $top_attendees)) {
+				$top_attendees[$attendee->user->id]->event_count++;
+				$recent = true;
+			}
+			if (!$recent) {
+				$attendee->user->event_count = 1;
+				$top_attendees[$attendee->user->id] = $attendee->user;
+			}
+		}
+
+		$top_winners = array();
+		foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
+			$recent = false;
+			foreach ($winner_team->tournamentParticipants as $winner) {
+				if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
+					$top_winners[$winner->eventParticipant->user->id]->win_count++;
+					$recent = true;
+				}
+				if (!$recent) {
+					$winner->eventParticipant->user->win_count = 1;
+					$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
+				}
+			}
+		}
+		foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
+			$recent = false;
+			if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
+				$top_winners[$winner->eventParticipant->user->id]->win_count++;
+				$recent = true;
+			}
+			if (!$recent) {
+				$winner->eventParticipant->user->win_count = 1;
+				$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
+			}
+		}
+
 		return view("home")
 			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->first())
-			->withTopAttendees(User::all())
+			->withTopAttendees(array_slice($top_attendees, 0, 5))
+			->withTopWinners(array_slice($top_winners, 0, 5))
 			->withNewsArticles(NewsArticle::all())
 		;
 	}
