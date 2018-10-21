@@ -45,14 +45,16 @@ class HomeController extends Controller
 	{
 		$top_attendees = array();
 		foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
-			$recent = false;
-			if (array_key_exists($attendee->user->id, $top_attendees)) {
-				$top_attendees[$attendee->user->id]->event_count++;
-				$recent = true;
-			}
-			if (!$recent) {
-				$attendee->user->event_count = 1;
-				$top_attendees[$attendee->user->id] = $attendee->user;
+			if ($attendee->event->end < \Carbon\Carbon::today()) {
+				$recent = false;
+				if (!$attendee->user->admin && array_key_exists($attendee->user->id, $top_attendees)) {
+					$top_attendees[$attendee->user->id]->event_count++;
+					$recent = true;
+				}
+				if (!$attendee->user->admin && !$recent) {
+					$attendee->user->event_count = 1;
+					$top_attendees[$attendee->user->id] = $attendee->user;
+				}
 			}
 		}
 
@@ -60,11 +62,11 @@ class HomeController extends Controller
 		foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
 			$recent = false;
 			foreach ($winner_team->tournamentParticipants as $winner) {
-				if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
+				if (!$winner->eventParticipant->user->admin && array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
 					$top_winners[$winner->eventParticipant->user->id]->win_count++;
 					$recent = true;
 				}
-				if (!$recent) {
+				if (!$winner->eventParticipant->user->admin && !$recent) {
 					$winner->eventParticipant->user->win_count = 1;
 					$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 				}
@@ -72,11 +74,11 @@ class HomeController extends Controller
 		}
 		foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
 			$recent = false;
-			if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
+			if (!$winner->eventParticipant->user->admin && array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
 				$top_winners[$winner->eventParticipant->user->id]->win_count++;
 				$recent = true;
 			}
-			if (!$recent) {
+			if (!$winner->eventParticipant->user->admin && !$recent) {
 				$winner->eventParticipant->user->win_count = 1;
 				$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 			}

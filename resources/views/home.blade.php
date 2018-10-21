@@ -6,16 +6,16 @@
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
-			<img src="/storage/images/main/slider/1.png">
+			<img class="hero-image" src="/storage/images/main/slider/1.png">
 		</div>
 		<div class="item">
-			<img src="/storage/images/main/slider/2.png">
+			<img class="hero-image" src="/storage/images/main/slider/2.png">
 		</div>
 		<div class="item">
-			<img src="/storage/images/main/slider/3.png">
+			<img class="hero-image" src="/storage/images/main/slider/3.png">
 		</div>
 		<div class="item">
-			<img src="/storage/images/main/slider/4.png">
+			<img class="hero-image" src="/storage/images/main/slider/4.png">
 		</div>
 	</div>
 	<div class="hero-overlay hidden-xs">
