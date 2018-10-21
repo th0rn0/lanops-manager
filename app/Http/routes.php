@@ -149,6 +149,9 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/events/{event}/tournaments/{tournament}/match', 'Admin\Events\TournamentsController@updateMatch');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team', 'Admin\Events\TournamentsController@updateParticipantTeam');
 
+		Route::get('/admin/events/tournaments/fix', 'Admin\Events\TournamentsController@fixScores');
+
+
 		/**
 		 * Games
 		 */

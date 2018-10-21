@@ -272,5 +272,10 @@ class TournamentsController extends Controller
 		Session::flash('alert-success', 'Successfully updated match scores!');
 		return Redirect::back();
 	}
+
+	public function fixScores()
+	{
+		EventTournament::getAllScoresTest();
+	}
 }
 
