@@ -1,13 +1,13 @@
-live: purge-containers
-	docker-compose up -d --build 
+live:
+	docker-compose -f resources/docker/docker-compose.yml up -d --build 
 
 # Debug
-interative: purge-containers
-	docker-compose up --build
+interative:
+	docker-compose -f resources/docker/docker-compose.yml up --build
 
 # Stop all Containers
 stop:
-	docker-compose stop
+	docker-compose -f resources/docker/docker-compose.yml stop
 
 # Install from clean
 app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed generate-key stop
@@ -101,7 +101,6 @@ npm-install-dev:
 purge-containers:
 	docker-compose -p lan_manager stop
 	docker-compose -p lan_manager rm -vf
-	docker rm lan_manager_server
 	docker rm lan_manager_app
 	docker rm lan_manager_database
 	docker volume rm lan_manager_db

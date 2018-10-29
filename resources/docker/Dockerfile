@@ -6,6 +6,7 @@ MAINTAINER Thornton Phillis (Thornton@xedi.com)
 ENV NGINX_VERSION 1.12.2
 ENV PHP_VERSION 7.1.16-r1
 ENV SUPERVISOR_LOG_ROOT /var/log/supervisor
+ENV NGINX_DOCUMENT_ROOT /web/html
 
 # Install Dependencies
 
@@ -182,6 +183,7 @@ RUN apk add --update --no-cache \
         php7-pear>=${PHP_VERSION} \
         php7-fpm>=${PHP_VERSION} \
         php7-mbstring>=${PHP_VERSION} \
+        php7-imagick>=${PHP_VERSION} \
     	php7-dev>=${PHP_VERSION}
 
 RUN rm -f /var/cache/apk/* \
@@ -191,7 +193,22 @@ RUN echo 'date.timezone = "Europe/London"' >> /etc/php7/php.ini
 
 RUN sed -i 's/;clear_env/clear_env/' /etc/php7/php-fpm.d/www.conf
 RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php7/php.ini
+RUN sed -i 's/upload_max_filesize = 128M/upload_max_filesize = 512M/' /etc/php7/php.ini
+RUN sed -i 's/post_max_size = 128M/post_max_size = 512M/' /etc/php7/php.ini
 
+# Files
+
+COPY resources/docker/root /
+WORKDIR $NGINX_DOCUMENT_ROOT
+COPY src/ $NGINX_DOCUMENT_ROOT
+
+RUN sed -i 's/REPLACEMENT_SERVER_NAME/localhost/g' /etc/nginx/conf.d/default.conf
 
 # Clean Up
+
+RUN apk del .build-deps
+
+# Default Command
+
+ENTRYPOINT ["/run/start.sh"]
 
