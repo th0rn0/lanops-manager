@@ -48,18 +48,10 @@ generate-key:
 
 # Create Default Folder structure
 folder-structure:
-	# if [ ! -d "storage/app/public/images/gallery/" ]; then
-		mkdir -p src/storage/app/public/images/gallery/
-	# fi
-	# if [ ! -d "storage/app/public/images/events/" ]; then
-		mkdir -p src/storage/app/public/images/events/
-	# fi
-	# if [ ! -d "storage/app/public/images/venues/" ]; then
-		mkdir -p src/storage/app/public/images/venues/
-	# fi
-	# if [ ! -d "storage/app/public/images/main/" ]; then
-		mkdir -p src/storage/app/public/images/main/
-	# fi
+	mkdir -p src/storage/app/public/images/gallery/
+	mkdir -p src/storage/app/public/images/events/
+	mkdir -p src/storage/app/public/images/venues/
+	mkdir -p src/storage/app/public/images/main/
 	chmod 775 src/bootstrap/cache/
 	chmod -R 777 src/storage/framework
 	chmod -R 777 src/storage/logs
@@ -68,7 +60,7 @@ folder-structure:
 
 # Create SSL Keypair for Development
 ssh-keygen:
-	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/nginx.key -out resources/certs/nginx.crt
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/nginx.key -out resources/certs/nginx.crt
 
 # Install PHP Dependencies via Composer
 composer-install:

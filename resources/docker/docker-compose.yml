@@ -10,7 +10,7 @@ services:
       - ../../resources/certs:/etc/nginx/certs
     env_file: ../../src/.env
     environment:
-      - LOG_FILES=true
+      - LOG_FILES=false
       - DB_MIGRATE=true
     container_name: lan_manager_app
     ports:

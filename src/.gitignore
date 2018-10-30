@@ -1,28 +1,15 @@
 
-docker/app/\.env
-
-docker/db/\.env
-
-/vendor
-/node_modules
-/public/storage
-/public/downloads/qr/tickets/*
-package-lock.json
+vendor
+node_modules
+public/storage
+public/downloads/qr/tickets/*
 Homestead.yaml
 Homestead.json
-*.sublime-project
-*.sublime-workspace
 
 \.env
 
-public/uploads/gallery/
-
-/certs
-
 public/css/admin\.css
-
 public/css/app\.css
-
 public/css/admin\.css\.map
-
 public/css/app\.css\.map
+public/uploads/gallery/
