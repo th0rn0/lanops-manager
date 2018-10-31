@@ -106,3 +106,11 @@ $factory->define(App\Game::class, function (Faker\Generator $faker) {
     return [
     ];
 });
+
+## News Article
+$factory->define(App\NewsArticle::class, function (Faker\Generator $faker) {
+    return [
+        'title'     => $faker->words($nb = 3, $asText = true),
+        'text'      => $faker->paragraphs($nb = 3, $asText = true),
+    ];
+});

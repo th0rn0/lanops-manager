@@ -31,7 +31,7 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
-<div class="container" style="margin-top:70px;">
+<div class="container" style="margin-top:50px;">
 	<div class='row'>
 		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
 			@if (Session::has('alert-' . $msg))

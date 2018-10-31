@@ -149,6 +149,10 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/events/{event}/tournaments/{tournament}/match', 'Admin\Events\TournamentsController@updateMatch');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team', 'Admin\Events\TournamentsController@updateParticipantTeam');
 
+		// TODO - REMOVE THIS AND ALL LIKE IT
+		Route::get('/admin/events/tournaments/fix', 'Admin\Events\TournamentsController@fixScores');
+
+
 		/**
 		 * Games
 		 */
@@ -227,6 +231,15 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/settings', 'Admin\SettingsController@index');
 		Route::post('/admin/settings/', 'Admin\SettingsController@update');
 		Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
+
+		/**
+		 * News
+		 */
+		Route::get('/admin/news', 'Admin\NewsController@index');
+		Route::post('/admin/news', 'Admin\NewsController@store');
+		Route::get('/admin/news/{news_article}', 'Admin\NewsController@show');
+		Route::post('/admin/news/{news_article}', 'Admin\NewsController@update');
+		Route::delete('/admin/news/{news_article}', 'Admin\NewsController@destroy');
 	});
 
 });

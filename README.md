@@ -20,12 +20,15 @@ https://lanops.co.uk
 ##### Event Page:
 ![Event Page](https://i.imgur.com/BAvJU2l.png)
 ##### Successful Payment Page
-![Successful payment](https://i.imgur.com/Qb2fyPw.png)
+![Successful Payment](https://i.imgur.com/Qb2fyPw.png)
 ##### Event Management
 ![Event Admin Page](https://i.imgur.com/w9aD10o.png)
-
 ##### Ticket Management
-![Tickets breakdown](https://i.imgur.com/nM7lcnG.png)
+![Tickets Breakdown](https://i.imgur.com/nM7lcnG.png)
+##### Tournament Management
+![Tournament Management](https://i.imgur.com/55zynWs.png)
+##### Tournament Brakcets
+![Tournament Brackets](https://i.imgur.com/lcSCq0s.png)
 
 ##### Features
 

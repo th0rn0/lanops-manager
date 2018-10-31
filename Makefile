@@ -10,7 +10,7 @@ stop:
 	docker-compose -f resources/docker/docker-compose.yml stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed generate-key stop
+app-install-clean: app-install layout-images live symlink wait database-migrate database-seed generate-key stop
 
 # Install Dependencies 
 app-install: folder-structure composer-install npm-install
@@ -76,19 +76,34 @@ composer-install-dev:
     --user $(id -u):$(id -g) \
     composer install --ignore-platform-reqs --no-scripts --dev
 
+# Update Dev PHP Dependencies via Composer
+composer-update:
+	docker run --rm --interactive --tty \
+    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+    --user $(id -u):$(id -g) \
+    composer require $(module) --ignore-platform-reqs --no-scripts
+
 # Install JS Dependencies via NPM
 npm-install:
 	docker run -it --rm --name js-maintainence \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && npm install --global gulp && gulp --production"
+	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp --production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run -it --rm --name js-maintainence-dev \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && npm install --global gulp && gulp"
+	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp"
+
+# Gulp Runner
+gulp:
+	docker run -it --rm --name js-maintainence-dev \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/usr/src/app \
+	-w /usr/src/app \
+	node:8 /bin/bash -ci "node_modules/.bin/gulp"
+
 # Purge Containers
 purge-containers:
 	docker-compose -p lan_manager stop
