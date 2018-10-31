@@ -10,7 +10,7 @@ services:
       - ../../resources/certs:/etc/nginx/certs
     env_file: ../../src/.env
     environment:
-      - LOG_FILES=false
+      - LOG_FILES=true
       - DB_MIGRATE=true
       - DB_PORT=3306
       - DB_HOST=database

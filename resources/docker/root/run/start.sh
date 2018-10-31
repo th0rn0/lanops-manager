@@ -18,8 +18,8 @@ then
 	then
 		rm /var/log/nginx/access.log
 		rm /var/log/nginx/error.log
- 		ln -sf /web/html/storage/logs/access.log /var/log/nginx/access.log
-		ln -sf /web/html/storage/logs/error.log /var/log/nginx/error.log
+ 		ln -sf $NGINX_DOCUMENT_ROOT/storage/logs/access.log /var/log/nginx/access.log
+		ln -sf $NGINX_DOCUMENT_ROOT/storage/logs/error.log /var/log/nginx/error.log
 	fi
 fi
 
