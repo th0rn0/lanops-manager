@@ -10,8 +10,6 @@ src/Homestead.json
 
 \.env
 
-resources/certs/*
-
 src/public/css/admin\.css
 src/public/css/app\.css
 src/public/css/admin\.css\.map
