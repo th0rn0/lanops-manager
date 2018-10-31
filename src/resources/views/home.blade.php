@@ -2,7 +2,7 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="5000">
+<div id="hero-carousel" class="carousel fade" data-ride="carousel" data-interval="8000">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
@@ -23,11 +23,12 @@
 	</div>
 	<div class="hero-overlay hidden-xs">
 			@if ($next_event)
-				<h3>Next Event</h3>
-				<h1>{{ $next_event->display_name }}</h1>
-				<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
-				<a href="/events/{{ $next_event->slug }}#information"><button class="btn btn-primary">More Info</button></a>
-				<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-primary">Book Now</button></a>
+				<div>
+					<h3>Next Event</h3>
+					<h1>{{ $next_event->display_name }}</h1>
+					<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
+					<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
+				</div>
 			@endif
 		</div>
 	</div>

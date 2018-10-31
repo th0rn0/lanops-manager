@@ -3,18 +3,18 @@
  */
 .book-now
 {
-    margin-top: 10px;
-    padding: 0 0 10px 0;
+	margin-top: 10px;
+	padding: 0 0 10px 0;
 
-    background: $colour__orange;
-    h3
-    {
-        text-transform: uppercase;
+	background: $colour__orange;
+	h3
+	{
+		text-transform: uppercase;
 
-        color: white;
-        a:hover
-        {
-            cursor: pointer;
-        }
-    }
+		color: white;
+		a:hover
+		{
+			cursor: pointer;
+		}
+	}
 }

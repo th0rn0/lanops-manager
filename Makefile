@@ -100,7 +100,7 @@ npm-install-dev:
 # Gulp Runner
 gulp:
 	docker run -it --rm --name js-maintainence-dev \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/usr/src/app \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "node_modules/.bin/gulp"
 

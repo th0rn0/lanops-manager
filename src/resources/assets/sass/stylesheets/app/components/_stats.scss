@@ -3,28 +3,28 @@
  */
 .stats
 {
-    background: $colour__orange;
-    hr
-    {
-        width: 50px;
-        margin-top: 0;
-    }
+	background: $colour__orange;
+	hr
+	{
+		width: 50px;
+		margin-top: 0;
+	}
 }
 
 .stats-number
 {
-    font-size: 42px;
-    font-weight: $font-bold;
+	font-size: 42px;
+	font-weight: $font-bold;
 
-    color: white;
+	color: white;
 }
 
 .stats-title
 {
-    font-size: 14px;
-    font-weight: $font-thin;
+	font-size: 14px;
+	font-weight: $font-thin;
 
-    text-transform: uppercase;
+	text-transform: uppercase;
 
-    color: white;
+	color: white;
 }

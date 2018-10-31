@@ -7,3 +7,9 @@
 		'stylesheets/app/components/stats',
 		'stylesheets/app/components/news',
 		'stylesheets/app/components/user-navigation';
+
+
+
+.btn-orange {
+  @include button-variant(#333333, $colour__orange, #333333);
+}

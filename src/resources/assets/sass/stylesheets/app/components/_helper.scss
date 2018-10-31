@@ -3,50 +3,50 @@
  */
 .full-height
 {
-    height: 100%;
+	height: 100%;
 }
 
 .section-heading
 {
-    font-size: 16px;
-    font-weight: bold;
+	font-size: 16px;
+	font-weight: bold;
 
-    display: inline-block;
+	display: inline-block;
 
-    margin-bottom: 35px;
-    padding-bottom: 15px;
+	margin-bottom: 35px;
+	padding-bottom: 15px;
 
-    text-transform: uppercase;
+	text-transform: uppercase;
 
-    border-bottom: 5px solid $colour__orange;
+	border-bottom: 5px solid $colour__orange;
 }
 
 .section-padding
 {
-    padding-top: 50px;
-    padding-bottom: 50px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 .section-margin
 {
-    margin-bottom: 50px;
+	margin-bottom: 50px;
 }
 
 
 .padding {
-    padding: 15px;
+	padding: 15px;
 }
 
 .border-between > [class*='col-']:before {
-   background: #e3e3e3;
-   bottom: 0;
-   content: " ";
-   left: 0;
-   position: absolute;
-   width: 1px;
-   top: 0;
+	background: #e3e3e3;
+	bottom: 0;
+	content: " ";
+	left: 0;
+	position: absolute;
+	width: 1px;
+	top: 0;
 }
 
 .border-between > [class*='col-']:first-child:before {
-   display: none;
+	display: none;
 }
