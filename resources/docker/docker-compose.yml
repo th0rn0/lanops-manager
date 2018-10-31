@@ -12,6 +12,11 @@ services:
     environment:
       - LOG_FILES=false
       - DB_MIGRATE=true
+      - DB_PORT=3306
+      - DB_HOST=database
+      - DB_DATABASE=lan_manager
+      - DB_USERNAME=lan_manager
+      - DB_PASSWORD=password
     container_name: lan_manager_app
     ports:
       - 80:80
@@ -21,8 +26,8 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      - MYSQL_DATABASE=lanops
-      - MYSQL_USER=lanops
+      - MYSQL_DATABASE=lan_manager
+      - MYSQL_USER=lan_manager
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=secret
     ports:
