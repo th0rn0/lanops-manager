@@ -47,7 +47,7 @@
 			<div class="col-xs-12">
 				<div class="page-header">
 					<h3>
-						Next Event: {{ $next_event->display_name }} 
+						{{ $next_event->display_name }} 
 						<small>{{ max($next_event->getSeatingCapacity() - $next_event->eventParticipants->count(), 0) }} / {{ $next_event->getSeatingCapacity() }} Seats Remaining</small>
 					</h3>
 				</div>
