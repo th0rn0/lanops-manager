@@ -178,7 +178,7 @@
 										</dd>
 									</dl>
 								@endif
-								<!-- // TODO - refactor & add order on rank-->
+								<!-- // TODO - refactor-->
 								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
 									@php
 										if ($tournament->team_size != '1v1') {
@@ -187,6 +187,7 @@
 										if ($tournament->team_size == '1v1') {
 											$tournament_participants = $tournament->tournamentParticipants;
 										}
+										$tournament_participants = $tournament_participants->sortBy('final_rank');
 									@endphp
 									@foreach ($tournament_participants as $tournament_participant)
 										@if ($tournament_participant->final_rank == 1)

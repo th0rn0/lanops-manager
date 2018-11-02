@@ -322,12 +322,12 @@ class EventTournament extends Model
      * Get Standings
      * @param  string $order
      * @param  boolean $obj
-     * @param  boolean $retroactively
+     * @param  boolean $retroactive - For Legacy
      * @return Array|Object
      */
-    public function getStandings($order = null, $obj = false, $retroactively = false)
+    public function getStandings($order = null, $obj = false, $retroactive = false)
     {
-        $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() {
+        $tournament_standings = Cache::get($this->challonge_tournament_id . "_standings", function() use ($retroactive) {
             if ($this->status == 'COMPLETE' && $this->api_complete && $this->format != 'list') {
                 $standings['progress'] = 100;
                 $standings_array = array();
@@ -353,7 +353,8 @@ class EventTournament extends Model
                 }
                 $standings['final'] = collect($standings_array);
             }
-            if ($retroactively || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
+            ## Pull LIVE standings from Challonge when tournament is in progress
+            if ($retroactive || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
                 $challonge = new Challonge(env('CHALLONGE_API_KEY'));
                 $standings = $challonge->getStandings($this->challonge_tournament_id);
             }
