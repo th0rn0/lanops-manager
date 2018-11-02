@@ -7,6 +7,7 @@ ENV NGINX_VERSION 1.12.2
 ENV PHP_VERSION 7.1.16-r1
 ENV SUPERVISOR_LOG_ROOT /var/log/supervisor
 ENV NGINX_DOCUMENT_ROOT /web/html
+ENV APP_URL localhost
 
 # Install Dependencies
 
@@ -202,7 +203,7 @@ COPY resources/docker/root /
 WORKDIR $NGINX_DOCUMENT_ROOT
 COPY src/ $NGINX_DOCUMENT_ROOT
 
-RUN sed -i 's/REPLACEMENT_SERVER_NAME/localhost/g' /etc/nginx/conf.d/default.conf
+RUN sed -i 's/REPLACEMENT_SERVER_NAME/$APP_URL/g' /etc/nginx/conf.d/default.conf
 
 # Clean Up
 
