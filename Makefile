@@ -106,8 +106,8 @@ gulp:
 
 # Purge Containers
 purge-containers:
-	docker-compose -p lan_manager stop
-	docker-compose -p lan_manager rm -vf
+	docker-compose -f resources/docker/docker-compose.yml -p lan_manager stop
+	docker-compose -f resources/docker/docker-compose.yml -p lan_manager rm -vf
 	docker rm lan_manager_app
 	docker rm lan_manager_database
 	docker volume rm lan_manager_db

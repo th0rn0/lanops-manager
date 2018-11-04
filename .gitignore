@@ -1,3 +1,8 @@
+*.sublime-project
+*.sublime-workspace
+resources/certs/*
+
+\.env
 
 src/vendor
 src/node_modules
@@ -5,11 +10,6 @@ src/public/storage
 src/public/downloads/qr/tickets/*
 src/Homestead.yaml
 src/Homestead.json
-*.sublime-project
-*.sublime-workspace
-
-\.env
-
 src/public/css/admin\.css
 src/public/css/app\.css
 src/public/css/admin\.css\.map
