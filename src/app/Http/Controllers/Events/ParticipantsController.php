@@ -61,11 +61,9 @@ class ParticipantsController extends Controller
 	 */
 	public function gift(EventParticipant $participant, Request $request)
 	{
-		//Only accept non gifted
 		if ($participant->gift != TRUE && $participant->gift_sendee == NULL) {
 			$participant->gift = TRUE;
 			$participant->gift_accepted = FALSE;
-			//Generate gift accept URL
 			$participant->gift_accepted_url = base_convert(microtime(false), 10, 36);
 			$participant->gift_sendee = $participant->user_id;
 			if ($participant->save()) {
@@ -116,11 +114,8 @@ class ParticipantsController extends Controller
 		if ($user) {
 			$participant = EventParticipant::where(['gift_accepted_url' => $request->url])->first();
 			if ($participant != NULL) {
-				//Set as gifted/complete
 				$participant->gift_accepted = TRUE;
-				//Change details to gifted user
 				$participant->user_id = $user->id;
-				//Remove gift status
 				$participant->gift_accepted_url = NULL;
 				if ($participant->save()) {
 					$request->session()->flash('alert-success', 'Gift Successfully accepted! Please visit the event page to pick a seat');

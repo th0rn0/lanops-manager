@@ -19,6 +19,7 @@ Route::group(['middleware' => ['web']], function () {
 /**
  * API
  */
+// TODO - Move these endpoints to their own controllers EG src/app/Http/Controllers/Api
 Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
 Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
 
