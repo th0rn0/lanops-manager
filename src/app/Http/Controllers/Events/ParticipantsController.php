@@ -43,6 +43,7 @@ class ParticipantsController extends Controller
 			$x["gift"] = $participant->gift;
 			$x["gift_sendee"] = $participant->gift_sendee;
 			$x['user']['steamname'] = $participant->user->steamname;
+			$x['seat'] = "Not Seated";
 			if ($participant->seat) {
 				$x['seat'] = $participant->seat->seat;
 			}
