@@ -8,15 +8,7 @@ services:
     volumes:
       - ../../src/:/web/html/
       - ../../resources/certs:/etc/nginx/certs
-    env_file: ../../src/.env
-    environment:
-      - LOG_FILES=true
-      - DB_MIGRATE=true
-      - DB_PORT=3306
-      - DB_HOST=database
-      - DB_DATABASE=lan_manager
-      - DB_USERNAME=lan_manager
-      - DB_PASSWORD=password
+    env_file: ../../.env
     container_name: lan_manager_app
     ports:
       - 80:80
@@ -25,11 +17,7 @@ services:
     image: mysql:5.6
     volumes:
       - db:/var/lib/mysql
-    environment:
-      - MYSQL_DATABASE=lan_manager
-      - MYSQL_USER=lan_manager
-      - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD=secret
+    env_file: ../../.env
     ports:
       - "3306:3306"
     container_name: lan_manager_database
