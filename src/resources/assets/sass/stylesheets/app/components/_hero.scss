@@ -1,0 +1,51 @@
+/**
+ * Hero Banner
+ */
+
+.hero-overlay { 
+	position: absolute;
+	top: 15%;
+	width: 96.66666666666666%;
+	color: #FFF;
+	text-align:center;
+	h1, h3, h5 { 
+		color: $colour__orange;
+	}
+	h1 {
+	    margin-bottom: 15px;
+	    padding-bottom: 15px;
+	    border-bottom: 5px solid $colour__orange;
+	    display: inline-block;
+	}
+	h3 {
+		margin-bottom: 0px;
+	}
+	h5 {
+		margin-bottom: 20px;
+	}
+}
+
+.hero-image {
+	min-width: 100%;
+}
+
+.carousel.fade {
+     opacity: 1;
+}
+.carousel.fade .item {
+    transition: opacity ease-out 1s;
+    left: 0;
+    opacity: 0; /* hide all slides */
+    top: 0;
+    position: absolute;
+    width: 100%;
+    display: block;
+}
+.carousel.fade .item:first-child {
+    top: auto;
+    opacity: 1; /* show first slide */
+    position: relative;
+}
+.carousel.fade .item.active {
+    opacity: 1;
+}

@@ -1,0 +1,26 @@
+version: "3.4"
+services:
+  app:
+    build:
+      context: ../../
+      dockerfile: ./resources/docker/Dockerfile
+    working_dir: /web/html/
+    volumes:
+      - ../../src/:/web/html/
+      - ../../resources/certs:/etc/nginx/certs
+    env_file: ../../.env
+    container_name: lan_manager_app
+    ports:
+      - 80:80
+      - 443:443
+  database:
+    image: mysql:5.6
+    volumes:
+      - db:/var/lib/mysql
+    env_file: ../../.env
+    ports:
+      - "3306:3306"
+    container_name: lan_manager_database
+volumes:
+  db:
+    name: lan_manager_db

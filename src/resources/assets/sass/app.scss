@@ -1,0 +1,15 @@
+@import 'stylesheets/app/vendor/bootstrap';
+
+@import 'stylesheets/app/modules/variables',
+		'stylesheets/app/components/helper',
+		'stylesheets/app/components/hero',
+		'stylesheets/app/components/book-now',
+		'stylesheets/app/components/stats',
+		'stylesheets/app/components/news',
+		'stylesheets/app/components/user-navigation';
+
+
+
+.btn-orange {
+  @include button-variant(#333333, $colour__orange, #333333);
+}

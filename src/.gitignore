@@ -1,0 +1,15 @@
+
+vendor
+node_modules
+public/storage
+public/downloads/qr/tickets/*
+Homestead.yaml
+Homestead.json
+
+\.env
+
+public/css/admin\.css
+public/css/app\.css
+public/css/admin\.css\.map
+public/css/app\.css\.map
+public/uploads/gallery/

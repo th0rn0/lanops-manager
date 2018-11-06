@@ -1,16 +1,16 @@
-live: purge-containers
-	docker-compose up -d --build 
+live:
+	docker-compose -f resources/docker/docker-compose.yml up -d --build 
 
 # Debug
-interative: purge-containers
-	docker-compose up --build
+interative:
+	docker-compose -f resources/docker/docker-compose.yml up --build
 
 # Stop all Containers
 stop:
-	docker-compose stop
+	docker-compose -f resources/docker/docker-compose.yml stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink layout-images wait database-migrate database-seed generate-key stop
+app-install-clean: app-install layout-images live symlink wait database-migrate database-seed generate-key stop
 
 # Install Dependencies 
 app-install: folder-structure composer-install npm-install
@@ -24,7 +24,7 @@ app-install-dev: folder-structure composer-install-dev npm-install-dev ssh-keyge
 
 # Move default images to Storage
 layout-images:
-	cp -r resources/assets/images/* storage/app/public/images/main/
+	cp -r src/resources/assets/images/* src/storage/app/public/images/main/
 
 # Create Symlink for Storage
 symlink:
@@ -48,67 +48,77 @@ generate-key:
 
 # Create Default Folder structure
 folder-structure:
-	# if [ ! -d "storage/app/public/images/gallery/" ]; then
-		mkdir -p storage/app/public/images/gallery/
-	# fi
-	# if [ ! -d "storage/app/public/images/events/" ]; then
-		mkdir -p storage/app/public/images/events/
-	# fi
-	# if [ ! -d "storage/app/public/images/venues/" ]; then
-		mkdir -p storage/app/public/images/venues/
-	# fi
-	# if [ ! -d "storage/app/public/images/main/" ]; then
-		mkdir -p storage/app/public/images/main/
-	# fi
-	chmod 775 bootstrap/cache/
-	chmod -R 777 storage/framework
-	chmod -R 777 storage/logs
-	chmod -R 777 storage/debugbar
-	chmod -R 777 storage/app/public/images
+	mkdir -p src/storage/app/public/images/gallery/
+	mkdir -p src/storage/app/public/images/events/
+	mkdir -p src/storage/app/public/images/venues/
+	mkdir -p src/storage/app/public/images/main/
+	chmod 775 src/bootstrap/cache/
+	chmod -R 777 src/storage/framework
+	chmod -R 777 src/storage/logs
+	chmod -R 777 src/storage/debugbar
+	chmod -R 777 src/storage/app/public/images
 
 # Create SSL Keypair for Development
 ssh-keygen:
-	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout certs/nginx.key -out certs/nginx.crt
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/nginx.key -out resources/certs/nginx.crt
 
 # Install PHP Dependencies via Composer
 composer-install:
 	docker run --rm --interactive --tty \
-    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
     composer install --ignore-platform-reqs --no-scripts
 
 # Install Dev PHP Dependencies via Composer
 composer-install-dev:
 	docker run --rm --interactive --tty \
-    -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+    -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
     composer install --ignore-platform-reqs --no-scripts --dev
+
+# Update Dev PHP Dependencies via Composer
+composer-update:
+	docker run --rm --interactive --tty \
+    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+    --user $(id -u):$(id -g) \
+    composer require $(module) --ignore-platform-reqs --no-scripts
 
 # Install JS Dependencies via NPM
 npm-install:
 	docker run -it --rm --name js-maintainence \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/usr/src/app \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && npm install --global gulp && gulp --production"
+	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp --production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run -it --rm --name js-maintainence-dev \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/usr/src/app \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && npm install --global gulp && gulp"
+	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp"
+
+# Gulp Runner
+gulp:
+	docker run -it --rm --name js-maintainence-dev \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:8 /bin/bash -ci "node_modules/.bin/gulp"
+
 # Purge Containers
 purge-containers:
-	docker-compose -p lan_manager stop
-	docker-compose -p lan_manager rm -vf
+	docker-compose -f resources/docker/docker-compose.yml -p lan_manager stop
+	docker-compose -f resources/docker/docker-compose.yml -p lan_manager rm -vf
+	docker rm lan_manager_app
+	docker rm lan_manager_database
+	docker volume rm lan_manager_db
 
 # Purge Caches
 purge-cache:
-	sudo rm -rf storage/framework/cache/*
-	sudo rm -rf storage/framework/views/*
-	sudo rm -rf storage/framework/sessions/*
-	sudo rm -rf bootstrap/cache/*
-	sudo rm -rf storage/debugbar/*
+	sudo rm -rf src/storage/framework/cache/*
+	sudo rm -rf src/storage/framework/views/*
+	sudo rm -rf src/storage/framework/sessions/*
+	sudo rm -rf src/bootstrap/cache/*
+	sudo rm -rf src/storage/debugbar/*
 
 # Wait for containers to initialize
 wait:
@@ -124,19 +134,14 @@ purge-all: stop purge-containers purge-cache
 	echo 'This will totally remove all data and information stored in your app!'
 	echo 'do you want to continue? (Y/N)'
 	
-	sudo rm -rf vendor/
-	sudo rm -rf node_modules/
-	sudo rm -rf public/css/*
-	sudo rm -rf storage/app/public/images/gallery
-	sudo rm -rf storage/app/public/images/events
-	sudo rm -rf storage/app/public/images/venues
-	sudo rm -rf storage/app/public/images/main
-	sudo rm -rf storage/logs/*
-	sudo rm public/storage
-
-	docker rm lan_manager_server
-	docker rm lan_manager_app
-	docker rm lan_manager_database
-	docker volume rm lan_manager_db
+	sudo rm -rf src/vendor/
+	sudo rm -rf src/node_modules/
+	sudo rm -rf src/public/css/*
+	sudo rm -rf src/storage/app/public/images/gallery
+	sudo rm -rf src/storage/app/public/images/events
+	sudo rm -rf src/storage/app/public/images/venues
+	sudo rm -rf src/storage/app/public/images/main
+	sudo rm -rf src/storage/logs/*
+	sudo rm src/public/storage
 
 .ONESHELL:
