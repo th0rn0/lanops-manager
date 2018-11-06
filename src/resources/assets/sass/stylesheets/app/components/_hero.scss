@@ -4,7 +4,7 @@
 
 .hero-overlay { 
 	position: absolute;
-	top: 10%;
+	top: 15%;
 	width: 96.66666666666666%;
 	color: #FFF;
 	text-align:center;
@@ -27,11 +27,6 @@
 
 .hero-image {
 	min-width: 100%;
-    filter: sepia(50%);
-    -webkit-filter: sepia(50%);
-    -moz-filter: sepia(50%);
-	-o-filter: sepia(50%);
-	-ms-filter: sepia(50%);
 }
 
 .carousel.fade {
