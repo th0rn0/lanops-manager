@@ -28,6 +28,7 @@ RUN apk add --no-cache \
 	gnupg \
 	libxslt-dev \
 	gd-dev \
+	imagemagick \
 	geoip-dev
 
 RUN apk add --no-cache supervisor \
