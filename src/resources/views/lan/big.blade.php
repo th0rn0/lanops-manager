@@ -3,7 +3,9 @@
 @section ('page_title', $event->display_name . ' - Lans in South Yorkshire')
 
 @section ('content')
-			
+	
+<meta http-equiv="refresh" content="15">
+
 <div class="container">
 	@foreach ($event->annoucements as $annoucement)
 		<h3><center>{{ $annoucement->message }}</center></h3>
