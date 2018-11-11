@@ -38,7 +38,12 @@ class EventsController extends Controller
 		$user = Auth::user();
 		if ($user && !empty($user->eventParticipants)) {
 			foreach ($user->eventParticipants as $participant) {
-				if ((date('Y-m-d H:i:s') >= $participant->event->start) && (date('Y-m-d H:i:s') <= $participant->event->end) && $participant->signed_in) {
+				if (
+					$event->id == $participant->event->id
+					&& (date('Y-m-d H:i:s') >= $participant->event->start)
+					&& (date('Y-m-d H:i:s') <= $participant->event->end)
+					&& $participant->signed_in
+				) {
 					return redirect('/'); 
 				}
 			}
