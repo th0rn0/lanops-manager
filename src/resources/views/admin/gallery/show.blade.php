@@ -98,6 +98,7 @@
 			</div>
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/upload', 'files' => 'true')) }}
+					{{ csrf_field() }}
 					<div class="form-group">
 						{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}

@@ -195,8 +195,8 @@ RUN echo 'date.timezone = "Europe/London"' >> /etc/php7/php.ini
 
 RUN sed -i 's/;clear_env/clear_env/' /etc/php7/php-fpm.d/www.conf
 RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php7/php.ini
-RUN sed -i 's/upload_max_filesize = 128M/upload_max_filesize = 512M/' /etc/php7/php.ini
-RUN sed -i 's/post_max_size = 128M/post_max_size = 512M/' /etc/php7/php.ini
+RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' /etc/php7/php.ini
+RUN sed -i 's/post_max_size = 8M/post_max_size = 512M/' /etc/php7/php.ini
 
 # Files
 
