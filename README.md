@@ -149,6 +149,12 @@ make
 make interactive
 ```
 
+##### Migrate & Seed Database
+```
+make database-migrate
+make database-seed
+```
+
 ##### Stop
 ```
 make stop
@@ -165,4 +171,4 @@ make stop
 - Twitch Integration
 - Add more payment Gateways
 - Unit Tests
-- Get a life
+- Push to Docker Hub

@@ -1,5 +1,5 @@
 FROM alpine:3.7
-MAINTAINER Thornton Phillis (Thornton@xedi.com)
+MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
 
 # ENV
 

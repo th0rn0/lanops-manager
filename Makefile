@@ -10,7 +10,7 @@ stop:
 	docker-compose -f resources/docker/docker-compose.yml stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink wait database-migrate database-seed generate-key stop
+app-install-clean: app-install layout-images live symlink wait database-migrate database-seed env-file generate-key stop
 
 # Install Dependencies 
 app-install: folder-structure composer-install npm-install
@@ -21,6 +21,10 @@ app-install-dev: folder-structure composer-install-dev npm-install-dev ssh-keyge
 ###########
 # HELPERS #
 ###########
+
+# Make .env
+env-file:
+	touch src/.env
 
 # Move default images to Storage
 layout-images:
