@@ -207,6 +207,9 @@ COPY src/ $NGINX_DOCUMENT_ROOT
 
 RUN sed -i "s/REPLACEMENT_SERVER_NAME/$APP_URL/g" /etc/nginx/nginx.conf
 
+RUN chgrp -R nginx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
+RUN chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
+
 # Clean Up
 
 RUN apk del .build-deps

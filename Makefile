@@ -10,13 +10,13 @@ stop:
 	docker-compose -f resources/docker/docker-compose.yml stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink wait database-migrate database-seed env-file generate-key stop
+app-install-clean: folder-structure app-install layout-images env-file live symlink wait database-migrate database-seed generate-key stop ssh-keygen
 
 # Install Dependencies 
-app-install: folder-structure composer-install npm-install
+app-install: composer-install npm-install
 
 # Install Dev Dependencies
-app-install-dev: composer-install-dev npm-install-dev ssh-keygen
+app-install-dev: composer-install-dev npm-install-dev
 
 ###########
 # HELPERS #

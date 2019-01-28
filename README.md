@@ -129,13 +129,20 @@ MYSQL_ROOT_PASSWORD=<< database root password here >>
 ### Ezi Install
 
 #### First time install
+
+To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory, a ```.env``` file in the root mirroring the ```.env.example``` but with a unique ```APP_KEY``` as well as a blank ```src/.env``` for Laravel. These can and should be changed to your preferences.
 ```
 make app-install-clean
 ```
 
-#### Update
+#### Install Dependencies
 ```
 make app-install
+```
+
+#### Install Development Dependencies
+```
+make app-install-dev
 ```
 
 ## Run
