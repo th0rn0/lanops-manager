@@ -16,7 +16,7 @@ app-install-clean: app-install layout-images live symlink wait database-migrate 
 app-install: folder-structure composer-install npm-install
 
 # Install Dev Dependencies
-app-install-dev: folder-structure composer-install-dev npm-install-dev ssh-keygen
+app-install-dev: composer-install-dev npm-install-dev ssh-keygen
 
 ###########
 # HELPERS #
@@ -25,6 +25,7 @@ app-install-dev: folder-structure composer-install-dev npm-install-dev ssh-keyge
 # Make .env
 env-file:
 	touch src/.env
+	cp .env.example .env
 
 # Move default images to Storage
 layout-images:
@@ -48,7 +49,8 @@ database-rollback:
 
 # Generate Application key
 generate-key:
-	docker exec lan_manager_app php artisan key:generate
+	$(eval APPKEY=$(shell sh -c "docker exec lan_manager_app php artisan key:generate | sed -e 's/.*Application key \[\(.*\)\] set successfully.*/\1/'"))
+	sed -i 's/APP_KEY=.*/APP_KEY=${APPKEY}/' .env
 
 # Create Default Folder structure
 folder-structure:
