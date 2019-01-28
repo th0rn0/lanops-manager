@@ -1,5 +1,3 @@
-
-
 # LanOps Lan Manager
 Lan Manager by Th0rn0 of LanOps. 
 
@@ -15,6 +13,9 @@ The Lan Manager is a fully featured White labeled Event Management system. The o
 Thus the LanOps Lan Manager was born!
 
 https://lanops.co.uk
+
+###### A Docker image is coming.
+
 ##### Home Page:
 ![Manager front page](https://i.imgur.com/IqKAK1h.png)
 ##### Event Page:
@@ -95,10 +96,35 @@ https://lanops.co.uk
 - Google Analytics Tracking ID
   - Optional but highly recommended
 
-### Pre Setup
-Make a .env file - Use the example - KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything!
+### Dev Install
 
-Anything wrapped in <<>> needs your input!
+TBC
+
+
+### Install
+
+#### First time install
+
+To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory, a ```.env``` file in the root mirroring the ```.env.example``` but with a unique ```APP_KEY``` as well as a blank ```src/.env``` for Laravel. These can and should be changed to your preferences.
+```
+make app-install-clean
+```
+
+#### Install Dependencies
+```
+make app-install
+```
+
+#### Install Development Dependencies
+```
+make app-install-dev
+```
+
+### Configuration
+
+Once ```make app-install-clean``` is made a .env file will appear in the root for the repo. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything! 
+
+Anything wrapped in <<>> Can and should be changed
 ```
 APP_DEBUG=<< true OR false >>
 APP_ENV=<< local OR prod >>
@@ -126,26 +152,7 @@ MYSQL_PASSWORD=<< database password here >>
 MYSQL_ROOT_PASSWORD=<< database root password here >>
 ```
 
-### Ezi Install
-
-#### First time install
-
-To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory, a ```.env``` file in the root mirroring the ```.env.example``` but with a unique ```APP_KEY``` as well as a blank ```src/.env``` for Laravel. These can and should be changed to your preferences.
-```
-make app-install-clean
-```
-
-#### Install Dependencies
-```
-make app-install
-```
-
-#### Install Development Dependencies
-```
-make app-install-dev
-```
-
-## Run
+### Run
 
 ```
 make
