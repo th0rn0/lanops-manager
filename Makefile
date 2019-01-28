@@ -56,11 +56,7 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/events/
 	mkdir -p src/storage/app/public/images/venues/
 	mkdir -p src/storage/app/public/images/main/
-	chmod 775 src/bootstrap/cache/
-	chmod -R 777 src/storage/framework
-	chmod -R 777 src/storage/logs
-	chmod -R 777 src/storage/debugbar
-	chmod -R 777 src/storage/app/public/images
+	chmod -R 775 src/storage/app/public/images
 
 # Create SSL Keypair for Development
 ssh-keygen:
