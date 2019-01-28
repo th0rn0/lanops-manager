@@ -10,17 +10,22 @@ stop:
 	docker-compose -f resources/docker/docker-compose.yml stop
 
 # Install from clean
-app-install-clean: app-install layout-images live symlink wait database-migrate database-seed generate-key stop
+app-install-clean: folder-structure app-install layout-images env-file live symlink wait database-migrate database-seed generate-key stop ssh-keygen
 
 # Install Dependencies 
-app-install: folder-structure composer-install npm-install
+app-install: composer-install npm-install
 
 # Install Dev Dependencies
-app-install-dev: folder-structure composer-install-dev npm-install-dev ssh-keygen
+app-install-dev: composer-install-dev npm-install-dev
 
 ###########
 # HELPERS #
 ###########
+
+# Make .env
+env-file:
+	touch src/.env
+	cp .env.example .env
 
 # Move default images to Storage
 layout-images:
@@ -44,7 +49,8 @@ database-rollback:
 
 # Generate Application key
 generate-key:
-	docker exec lan_manager_app php artisan key:generate
+	$(eval APPKEY=$(shell sh -c "docker exec lan_manager_app php artisan key:generate | sed -e 's/.*Application key \[\(.*\)\] set successfully.*/\1/'"))
+	sed -i 's/APP_KEY=.*/APP_KEY=${APPKEY}/' .env
 
 # Create Default Folder structure
 folder-structure:
@@ -52,11 +58,7 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/events/
 	mkdir -p src/storage/app/public/images/venues/
 	mkdir -p src/storage/app/public/images/main/
-	chmod 775 src/bootstrap/cache/
-	chmod -R 777 src/storage/framework
-	chmod -R 777 src/storage/logs
-	chmod -R 777 src/storage/debugbar
-	chmod -R 777 src/storage/app/public/images
+	chmod -R 775 src/storage/app/public/images
 
 # Create SSL Keypair for Development
 ssh-keygen:

@@ -1,5 +1,5 @@
 FROM alpine:3.7
-MAINTAINER Thornton Phillis (Thornton@xedi.com)
+MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
 
 # ENV
 
@@ -206,6 +206,9 @@ WORKDIR $NGINX_DOCUMENT_ROOT
 COPY src/ $NGINX_DOCUMENT_ROOT
 
 RUN sed -i "s/REPLACEMENT_SERVER_NAME/$APP_URL/g" /etc/nginx/nginx.conf
+
+RUN chgrp -R nginx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
+RUN chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
 # Clean Up
 
