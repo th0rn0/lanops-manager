@@ -2,7 +2,7 @@ live:
 	docker-compose -f resources/docker/docker-compose.yml up -d --build 
 
 # Debug
-interative:
+interactive:
 	docker-compose -f resources/docker/docker-compose.yml up --build
 
 # Stop all Containers
