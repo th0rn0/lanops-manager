@@ -1,13 +1,13 @@
 live:
-	docker-compose -f resources/docker/docker-compose.yml up -d --build 
+	docker-compose -f docker-compose.yml up -d --build 
 
 # Debug
 interactive:
-	docker-compose -f resources/docker/docker-compose.yml up --build
+	docker-compose -f docker-compose.yml up --build
 
 # Stop all Containers
 stop:
-	docker-compose -f resources/docker/docker-compose.yml stop
+	docker-compose -f docker-compose.yml stop
 
 # Install from clean
 app-install-clean: folder-structure app-install layout-images env-file live symlink wait database-migrate database-seed generate-key stop ssh-keygen
@@ -111,8 +111,8 @@ gulp:
 
 # Purge Containers
 purge-containers:
-	docker-compose -f resources/docker/docker-compose.yml -p lan_manager stop
-	docker-compose -f resources/docker/docker-compose.yml -p lan_manager rm -vf
+	docker-compose -f docker-compose.yml -p lan_manager stop
+	docker-compose -f docker-compose.yml -p lan_manager rm -vf
 	docker rm lan_manager_app
 	docker rm lan_manager_database
 	docker volume rm lan_manager_db

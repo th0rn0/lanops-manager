@@ -89,8 +89,6 @@ https://lanops.co.uk
 - Paypal Account for payments
 - Challonge API key
   - A verified challonge account is required - https://challonge.com/settings/developer
-- Challonge Organization subdomain 
-  - An Organization must be created in Challonge for this. Please use the exact subdomain used in challonge. For example if the organization domain is https://lanops.challonge.com/ your sub domain will be 'lanops' - https://challonge.com/organizations/new
 - Steam Developers API Key
   - Any Steam API key will do. It's best to create a new account though - https://steamcommunity.com/dev/apikey
 - Google Analytics Tracking ID
@@ -138,7 +136,6 @@ PAYPAL_PASSWORD=<< Paypal password >>
 PAYPAL_SIGNATURE=<< Paypal signature >>
 STEAM_API_KEY=<< Steam API key >>
 CHALLONGE_API_KEY=<< Challonge API key >>
-CHALLONGE_SUBDOMAIN=<< Challonge Subdomain >>
 
 DB_CONNECTION=mysql
 DB_PORT=3306
@@ -186,3 +183,8 @@ make stop
 - Add more payment Gateways
 - Unit Tests
 - Push to Docker Hub
+
+## Sites that use the Lan Manager
+
+- LanOps - https://lanops.co.uk
+- EngLan - https://englan.co.uk
