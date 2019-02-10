@@ -24,8 +24,7 @@ app-install-dev: composer-install-dev npm-install-dev
 
 # Make .env
 env-file:
-	touch src/.env
-	cp .env.example .env
+	cp .env.example src/.env
 
 # Move default images to Storage
 layout-images:
