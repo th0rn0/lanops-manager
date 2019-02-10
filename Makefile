@@ -59,8 +59,8 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/main/
 	
 	chmod -R 777 src/storage/app/public/images
-	chmod -R 777 storage/logs/
-	chmod -R 777 storage/framework/
+	chmod -R 777 src/storage/logs/
+	chmod -R 777 src/storage/framework/
 
 # Create SSL Keypair for Development
 ssh-keygen:
