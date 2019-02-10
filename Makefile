@@ -10,7 +10,7 @@ stop:
 	docker-compose -f docker-compose.yml stop
 
 # Install from clean
-app-install-clean: folder-structure app-install layout-images env-file live symlink wait database-migrate database-seed generate-key stop ssh-keygen
+app-install-clean: folder-structure app-install layout-images live symlink wait database-migrate database-seed generate-key stop ssh-keygen
 
 # Install Dependencies 
 app-install: composer-install npm-install
@@ -48,8 +48,7 @@ database-rollback:
 
 # Generate Application key
 generate-key:
-	$(eval APPKEY=$(shell sh -c "docker exec lan_manager_app php artisan key:generate | sed -e 's/.*Application key \[\(.*\)\] set successfully.*/\1/'"))
-	sed -i 's/APP_KEY=.*/APP_KEY=${APPKEY}/' .env
+	docker exec lan_manager_app php artisan key:generate
 
 # Create Default Folder structure
 folder-structure:
@@ -126,7 +125,7 @@ purge-cache:
 
 # Wait for containers to initialize
 wait:
-	sleep 20
+	sleep 30
 
 
 ###############

@@ -8,6 +8,7 @@ Initial Front End Design by Invert.
 https://github.com/richardmountain
 
 ##### About
+
 The Lan Manager is a fully featured White labeled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained. The purpose of this application was to remove the need for websites like WIX, SquareSpace, EventBrite or bloated Wordpress plugins that charge a small fortune for use of their code base and/or services all the while keeping all of the IPs and rights to your event hosting and ticket sales. Coupled with this there was no decent fully fledged alternative to the likes of ALP (2004 baby!) that did everything we (LanOps) needed. There was a lot of software out there but there wasn't one unified application that tied all these services such as tournaments, ticket management & sales, event signup, server management all in a easily extendable OPEN SOURCE package.
 
 Thus the LanOps Lan Manager was born!
@@ -17,6 +18,7 @@ https://lanops.co.uk
 #### A Docker image is coming.
 
 ##### Home Page:
+
 ![Manager front page](https://i.imgur.com/IqKAK1h.png)
 ##### Event Page:
 ![Event Page](https://i.imgur.com/BAvJU2l.png)
@@ -84,6 +86,7 @@ https://lanops.co.uk
 ## Installation Prerequisites
 
 ### Prerequisites
+
 - Docker v17
 - Docker-compose v1.18
 - Paypal Account for payments
@@ -94,79 +97,51 @@ https://lanops.co.uk
 - Google Analytics Tracking ID
   - Optional but highly recommended
 
-### Dev Install
+### Setup & Configuration
 
-TBC
+Run ```make env-file``` to create a ```.env``` file in the ```src```  directory. Then modify it as according to your preferences. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything! 
 
+### Installation
 
-### Install
+#### First Time install
 
-#### First time install
-
-To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory, a ```.env``` file in the root mirroring the ```.env.example``` but with a unique ```APP_KEY``` as well as a blank ```src/.env``` for Laravel. These can and should be changed to your preferences.
+To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory.
 ```
 make app-install-clean
 ```
 
 #### Install Dependencies
+
 ```
 make app-install
 ```
 
 #### Install Development Dependencies
+
 ```
 make app-install-dev
 ```
 
-### Configuration
-
-Once ```make app-install-clean``` is made a .env file will appear in the root for the repo. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything! 
-
-Anything wrapped in <<>> Can and should be changed
-```
-APP_DEBUG=<< true OR false >>
-APP_ENV=<< local OR prod >>
-APP_URL=<< app URL. Use localhost if unsure >>
-APP_KEY=<< Laravel App key. Use "make generate-key" helper if not already set >>
-ANALYTICS_PROVIDER=GoogleAnalytics
-ANALYTICS_TRACKING_ID=<< Google Analytics tracking ID >>
-
-PAYPAL_USERNAME=<< Paypal account to use for payments. If in development ENV use SANDBOX credentials! >>
-PAYPAL_PASSWORD=<< Paypal password >>
-PAYPAL_SIGNATURE=<< Paypal signature >>
-STEAM_API_KEY=<< Steam API key >>
-CHALLONGE_API_KEY=<< Challonge API key >>
-
-DB_CONNECTION=mysql
-DB_PORT=3306
-DB_HOST=database
-DB_DATABASE=<< database name here >>
-DB_USERNAME=<< database username here >>
-DB_PASSWORD=<< database password here >>
-MYSQL_DATABASE=<< database name here >>
-MYSQL_USER=<< database username here >>
-MYSQL_PASSWORD=<< database password here >>
-MYSQL_ROOT_PASSWORD=<< database root password here >>
-```
-
-### Run
+### Usage
 
 ```
 make
 ```
 
-##### Interactive
+#### Interactive
 ```
 make interactive
 ```
 
-##### Migrate & Seed Database
+#### Migrate & Seed Database
+
 ```
 make database-migrate
 make database-seed
 ```
 
-##### Stop
+#### Stop
+
 ```
 make stop
 ```

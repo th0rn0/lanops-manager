@@ -24,12 +24,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
 	$event_name = 'EventNameHere ' . $faker->randomDigitNotNull;
+    $start_date = date_format($faker->dateTimeBetween('+1 months', '+2 months'),"Y-m-d");
+    $end_date   = date('Y-m-d', strtotime($start_date. ' + 2 days'));
     return [
         'display_name'      => $event_name,
         'nice_name'         => strtolower(str_replace(' ', '-', $event_name)),
         'slug'              => strtolower(str_replace(' ', '-', $event_name)),
-        'start'             => '2018-06-09 16:00:00',
-        'end'               => '2018-06-11 18:00:00',
+        'start'             => $start_date . ' 16:00:00',
+        'end'               => $end_date . ' 18:00:00',
         'desc_long'         => $faker->sentences($nb = 5, $asText = true),
         'desc_short'        => $faker->sentences($nb = 1, $asText = true),
         'status'            => 'published',
