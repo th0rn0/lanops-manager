@@ -1,16 +1,16 @@
 live:
-	docker-compose -f resources/docker/docker-compose.yml up -d --build 
+	docker-compose -f docker-compose.yml up -d --build 
 
 # Debug
 interactive:
-	docker-compose -f resources/docker/docker-compose.yml up --build
+	docker-compose -f docker-compose.yml up --build
 
 # Stop all Containers
 stop:
-	docker-compose -f resources/docker/docker-compose.yml stop
+	docker-compose -f docker-compose.yml stop
 
 # Install from clean
-app-install-clean: folder-structure app-install layout-images env-file live symlink wait database-migrate database-seed generate-key stop ssh-keygen
+app-install-clean: folder-structure app-install layout-images live symlink wait database-migrate database-seed generate-key stop ssh-keygen
 
 # Install Dependencies 
 app-install: composer-install npm-install
@@ -24,8 +24,7 @@ app-install-dev: composer-install-dev npm-install-dev
 
 # Make .env
 env-file:
-	touch src/.env
-	cp .env.example .env
+	cp .env.example src/.env
 
 # Move default images to Storage
 layout-images:
@@ -49,8 +48,7 @@ database-rollback:
 
 # Generate Application key
 generate-key:
-	$(eval APPKEY=$(shell sh -c "docker exec lan_manager_app php artisan key:generate | sed -e 's/.*Application key \[\(.*\)\] set successfully.*/\1/'"))
-	sed -i 's/APP_KEY=.*/APP_KEY=${APPKEY}/' .env
+	docker exec lan_manager_app php artisan key:generate
 
 # Create Default Folder structure
 folder-structure:
@@ -60,8 +58,8 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/main/
 	
 	chmod -R 777 src/storage/app/public/images
-	chmod -R 777 storage/logs/
-	chmod -R 777 storage/framework/
+	chmod -R 777 src/storage/logs/
+	chmod -R 777 src/storage/framework/
 
 # Create SSL Keypair for Development
 ssh-keygen:
@@ -111,8 +109,8 @@ gulp:
 
 # Purge Containers
 purge-containers:
-	docker-compose -f resources/docker/docker-compose.yml -p lan_manager stop
-	docker-compose -f resources/docker/docker-compose.yml -p lan_manager rm -vf
+	docker-compose -f docker-compose.yml -p lan_manager stop
+	docker-compose -f docker-compose.yml -p lan_manager rm -vf
 	docker rm lan_manager_app
 	docker rm lan_manager_database
 	docker volume rm lan_manager_db
@@ -127,7 +125,7 @@ purge-cache:
 
 # Wait for containers to initialize
 wait:
-	sleep 20
+	sleep 30
 
 
 ###############

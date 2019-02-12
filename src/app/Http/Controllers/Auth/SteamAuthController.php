@@ -117,6 +117,9 @@ class SteamAuthController extends Controller
 		$user->avatar 			= $request->avatar;
 		$user->steamid 			= $request->steamid;
 		$user->username_nice 	= strtolower(str_replace(' ', '-', $request->username));
+		if (User::count() == 0 && User::where('admin', 1)->count() == 0) {
+			$user->admin = 1;
+		}
 		if ($user->save()) {
 			Session::forget('user');
 			Auth::login($user, true);

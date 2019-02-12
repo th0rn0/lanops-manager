@@ -92,6 +92,9 @@
 						<p class="text-muted">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
 					</div>
 				</div>
+				<div class="col-lg-12 text-center">
+					<p class="text-muted">Powered By <a href="https://lanops.co.uk">LanOps</a> <a href="https://github.com/lanops/manager">Lan Manager</a></p>
+				</div>
 			</div>
 		</footer>
 	</body>
