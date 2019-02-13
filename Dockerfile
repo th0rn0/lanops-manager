@@ -3,6 +3,8 @@ MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
 
 # ENV
 
+ENV UUID 1000
+ENV GUID 1000
 ENV NGINX_VERSION 1.12.2
 ENV PHP_VERSION 7.1.16-r1
 ENV SUPERVISOR_LOG_ROOT /var/log/supervisor
@@ -193,11 +195,14 @@ RUN rm -f /var/cache/apk/* \
 
 RUN echo 'date.timezone = "Europe/London"' >> /etc/php7/php.ini
 
-RUN sed -i 's/;clear_env/clear_env/' /etc/php7/php-fpm.d/www.conf
 RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php7/php.ini
 RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' /etc/php7/php.ini
 RUN sed -i 's/max_file_uploads = 20/max_file_uploads = 500/' /etc/php7/php.ini
 RUN sed -i 's/post_max_size = 8M/post_max_size = 512M/' /etc/php7/php.ini
+
+RUN sed -i 's/;clear_env/clear_env/' /etc/php7/php-fpm.d/www.conf
+RUN sed -i 's/user = nobody/user = ${UUID}/' /etc/php7/php-fpm.d/www.conf
+RUN sed -i 's/group = nobody/group = ${GUID}/' /etc/php7/php-fpm.d/www.conf
 
 # Files
 
@@ -205,8 +210,8 @@ COPY resources/docker/root /
 WORKDIR $NGINX_DOCUMENT_ROOT
 COPY src/ $NGINX_DOCUMENT_ROOT
 
-RUN chgrp -R nginx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
-RUN chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
+RUN chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
+RUN chmod -R 755 $NGINX_DOCUMENT_ROOT/storage
 
 # Clean Up
 
