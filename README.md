@@ -97,43 +97,112 @@ https://lanops.co.uk
 - Google Analytics Tracking ID
   - Optional but highly recommended
 
-### Setup & Configuration
+## Usage
+
+There are 3 ways to run the Lan Manager
+
+### Docker
+
+```docker run -it -d lanopsdev/manager:latest```
+
+### Docker-compose
+
+```
+version: "3.4"
+services:
+  app:
+    image: lanopsdev/manager:latest
+    volumes:
+      - $PWD/certs:/etc/nginx/certs
+    environment:
+      - asd=asd
+    container_name: lan_manager_app
+    ports:
+      - 80:80
+      - 443:443
+  database:
+    image: mysql:5.6
+    volumes:
+      - db:/var/lib/mysql
+    env_file: $PWD/src/.env
+    ports:
+      - 3306:3306
+    container_name: lan_manager_database
+volumes:
+  db:
+    name: lan_manager_db
+```
+
+or with a load balancer /w letsEncrypt
+
+```
+version: "3.4"
+services:
+  app:
+    image: lanopsdev/manager:latest
+    volumes:
+      - $PWD/certs:/etc/nginx/certs
+    environment:
+      - asd=asd
+    container_name: lan_manager_app
+    ports:
+      - 80:80
+      - 443:443
+  database:
+    image: mysql:5.6
+    volumes:
+      - db:/var/lib/mysql
+    env_file: $PWD/src/.env
+    ports:
+      - 3306:3306
+    container_name: lan_manager_database
+volumes:
+  db:
+    name: lan_manager_db
+```
+
+### Makefile
+
+This method is intended for development but can be used in production
+
+#### Setup & Configuration
 
 Run ```make env-file``` to create a ```.env``` file in the ```src```  directory. Then modify it as according to your preferences. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything! 
 
-### Installation
+#### Installation
 
-#### First Time install
+##### First Time install
 
 To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory.
 ```
 make app-install-clean
 ```
 
-#### Install Dependencies
+##### Install Dependencies
 
 ```
 make app-install
 ```
 
-#### Install Development Dependencies
+##### Install Development Dependencies
 
 ```
 make app-install-dev
 ```
 
-### Usage
+#### Run
 
 ```
 make
 ```
 
-#### Interactive
+##### Interactive
+
 ```
 make interactive
 ```
 
-#### Migrate & Seed Database
+##### Migrate & Seed Database
 
 ```
 make database-migrate
@@ -146,7 +215,7 @@ make database-seed
 make stop
 ```
 
-#### HTTPS
+## HTTPS
 
 To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs```
 
