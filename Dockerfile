@@ -1,7 +1,7 @@
 FROM alpine:3.7
 MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
 
-# ENV
+# ENV - Config
 
 ENV UUID 1000
 ENV GUID 1000
@@ -9,7 +9,17 @@ ENV NGINX_VERSION 1.12.2
 ENV PHP_VERSION 7.1.16-r1
 ENV SUPERVISOR_LOG_ROOT /var/log/supervisor
 ENV NGINX_DOCUMENT_ROOT /web/html
+
+# ENV - App Defaults
+
 ENV APP_URL localhost
+ENV APP_DEBUG false
+ENV APP_ENV production
+ENV ENABLE_HTTPS false
+ENV LOG_FILES false
+ENV ANALYTICS_PROVIDER GoogleAnalytics
+ENV DB_CONNECTION mysql
+ENV DB_MIGRATE false
 
 # Install Dependencies
 
