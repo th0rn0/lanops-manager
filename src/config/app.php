@@ -10,7 +10,7 @@ return [
     'fallback_locale'   => 'en',
     'key'               => env('APP_KEY'),
     'cipher'            => 'AES-256-CBC',
-    'log'               => env('APP_LOG', 'single'),
+    'log'               => env('APP_LOG', 'errorlog'),
 
     /*
     |--------------------------------------------------------------------------

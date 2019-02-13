@@ -30,7 +30,7 @@ class HomeController extends Controller
 		if ($user && !empty($user->eventParticipants)) {
 			foreach ($user->eventParticipants as $participant) {
 				if ((date('Y-m-d H:i:s') >= $participant->event->start) && (date('Y-m-d H:i:s') <= $participant->event->end) && $participant->signed_in) {
-					return $this->lan(); 
+					return $this->lan();
 				}
 			}
 		}
