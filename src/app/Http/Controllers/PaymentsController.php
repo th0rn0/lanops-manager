@@ -54,10 +54,18 @@ class PaymentsController extends Controller
 			$this->sandbox = TRUE;
 	  	}
 
+	  	$request_scheme = 'http';
+		if ( 
+				(! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
+				(! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
+				(! empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') 
+			) {
+			$request_scheme = 'https';
+		}
 		//Paypal Post Params
 		$params = array(
-			'cancelUrl'		=> 'https://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
-			'returnUrl'		=> 'https://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return', 
+			'cancelUrl'		=> $request_scheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
+			'returnUrl'		=> $request_scheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return', 
 			'name'			=> Settings::getOrgName() . ' - Tickets Purchase',
 			'description'	=> 'Ticket Purchase for ' . Settings::getOrgName(), 
 			'amount'		=> (float)Helpers::getBasketTotal($basket),

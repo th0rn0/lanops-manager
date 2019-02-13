@@ -146,6 +146,10 @@ make database-seed
 make stop
 ```
 
+#### HTTPS
+
+To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs```
+
 ## Contributors
 
 - Th0rn0 - https://github.com/th0rn0

@@ -13,6 +13,6 @@ return [
     /*
      * Is using https?
      */
-    'https' => true
+    'https' => env('ENABLE_HTTPS')
 
 ];
