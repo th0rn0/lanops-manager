@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: docker
+  image: docker:18.06.2-ce-dind
   commands:
   - ls
   - apk add --update make
