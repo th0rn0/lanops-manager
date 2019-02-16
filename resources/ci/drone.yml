@@ -5,6 +5,8 @@ steps:
 - name: test
   image: alpine
   commands:
+  - ls
+  - apk add --update make
   - make
   when:
     event:
