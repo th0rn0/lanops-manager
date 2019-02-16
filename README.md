@@ -1,13 +1,4 @@
 # LanOps Lan Manager
-Lan Manager by Th0rn0 of LanOps. 
-
-https://github.com/th0rn0
-
-Initial Front End Design by Invert.
-
-https://github.com/richardmountain
-
-##### About
 
 The Lan Manager is a fully featured White labeled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained. The purpose of this application was to remove the need for websites like WIX, SquareSpace, EventBrite or bloated Wordpress plugins that charge a small fortune for use of their code base and/or services all the while keeping all of the IPs and rights to your event hosting and ticket sales. Coupled with this there was no decent fully fledged alternative to the likes of ALP (2004 baby!) that did everything we (LanOps) needed. There was a lot of software out there but there wasn't one unified application that tied all these services such as tournaments, ticket management & sales, event signup, server management all in a easily extendable OPEN SOURCE package.
 
