@@ -71,42 +71,42 @@ ssh-keygen:
 
 # Install PHP Dependencies via Composer
 composer-install:
-	docker run --rm --name compose-maintainence --interactive \
+	docker run --rm --name compose-maintainence --interactive --tty \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
     composer install --ignore-platform-reqs --no-scripts
 
 # Install Dev PHP Dependencies via Composer
 composer-install-dev:
-	docker run --rm --name compose-maintainence-dev --interactive \
+	docker run --rm --name compose-maintainence-dev --interactive --tty \
     -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
     composer install --ignore-platform-reqs --no-scripts --dev
 
 # Update Dev PHP Dependencies via Composer
 composer-update:
-	docker run --rm --name compose-maintainence-update --interactive \
+	docker run --rm --name compose-maintainence-update --interactive --tty \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
     composer require $(module) --ignore-platform-reqs --no-scripts
 
 # Install JS Dependencies via NPM
 npm-install:
-	docker run --rm --name js-maintainence --interactive \
+	docker run --rm --name js-maintainence --interactive --tty \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp --production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
-	docker run --rm --name js-maintainence-dev --interactive \
+	docker run --rm --name js-maintainence-dev --interactive --tty \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp"
 
 # Gulp Runner
 gulp:
-	docker run --rm --name js-maintainence-dev --interactive \
+	docker run --rm --name js-maintainence-dev --interactive --tty \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "node_modules/.bin/gulp"
