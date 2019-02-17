@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: lanopsdev/ci-test:latest
+  image: lanopsdev/base-ci:latest
   # privileged: true
   volumes:
   - name: docker-socket
