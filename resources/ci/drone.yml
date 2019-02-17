@@ -5,6 +5,7 @@ steps:
 - name: build-composer
   image: composer
   commands:
+  - cd src/
   - composer install --ignore-platform-reqs --no-scripts
 - name: test
   image: lanopsdev/base-ci:latest
