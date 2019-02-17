@@ -3,8 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: lanopsdev/ci-base:latest
-  privileged: true
+  image: docker:18.06.2-ce-dind
   commands:
   - apk add make
   - make app-build-docker
