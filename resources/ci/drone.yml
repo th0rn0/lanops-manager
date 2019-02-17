@@ -9,12 +9,11 @@ steps:
   - name: docker-socket
     path: /var/run/docker.sock
   commands:
-  - docker run hello-world
-  # - apk add make
-  # - make app-build-docker
-  # - docker run -d lanopsdev/manager:ci-test
-  # - make database-migrate database-seed generate-key
-  # - make stop
+  - apk add make
+  - make app-build-docker
+  - docker run -d lanopsdev/manager:ci-test
+  - make database-migrate database-seed generate-key
+  - make stop
   when:
     event:
     - push
