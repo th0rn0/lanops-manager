@@ -9,7 +9,7 @@ steps:
   - name: docker-socket
     path: /var/run/docker.sock
   commands:
-    - ls
+  - ls
   - apk add make
   - make app-build-docker
   - docker run -d lanopsdev/manager:ci-test
