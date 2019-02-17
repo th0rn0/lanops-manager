@@ -7,16 +7,21 @@ steps:
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
-- name: test
-  image: lanopsdev/base-ci:latest
+- name: build-npm
+  image: node:8
+  commands:
+  - cd src/
+  - npm install && node_modules/.bin/gulp --production
+- name: build-image
+  image: docker:18.06.2-ce-dind
   # privileged: true
   volumes:
   - name: docker-socket
     path: /var/run/docker.sock
   commands:
-  - ls
-  # - apk add make
-  - make app-build-docker
+  - apk add make
+  - make folder-structure layout-images env-file
+  - docker build -t lanopsdev/manager:ci-test .
   - docker run -d lanopsdev/manager:ci-test
   - make database-migrate database-seed generate-key
   - make stop

@@ -18,10 +18,6 @@ app-build-dep: composer-install npm-install
 # Build Dev App & Dependencies
 app-build-dep-dev: composer-install-dev npm-install-dev
 
-# Build app for CICD
-app-build-docker: folder-structure layout-images app-build-dep env-file
-	docker build -t lanopsdev/manager:ci-test .
-
 ###########
 # HELPERS #
 ###########
