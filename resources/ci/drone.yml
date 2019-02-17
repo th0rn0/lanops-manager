@@ -2,6 +2,10 @@ kind: pipeline
 name: default
 
 steps:
+- name: build-composer
+  image: composer
+  commands:
+  - composer install --ignore-platform-reqs --no-scripts
 - name: test
   image: lanopsdev/base-ci:latest
   # privileged: true
