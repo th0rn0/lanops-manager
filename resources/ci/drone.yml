@@ -29,22 +29,17 @@ steps:
 - name: build-image  
   image: plugins/docker
   settings:
-    repo: lanopsdev/manage
+    repo: lanopsdev/manager
     tags: ci-test
     dry_run: true
-# - name: build-image
-#   image: docker:18.06.2-ce-dind
-#   # privileged: true
-#   volumes:
-#   - name: docker-socket
-#     path: /var/run/docker.sock
-#   commands:
-#   - apk add make
-#   - make folder-structure layout-images env-file
-#   - docker build -t lanopsdev/manager:ci-test .
-#   - docker run -d lanopsdev/manager:ci-test
-#   - make database-migrate database-seed generate-key
-#   - make stop
+  when:
+    event:
+    - push
+- name: test-image
+  image: lanopsdev/manager:ci-test
+  # privileged: true
+  commands:
+  - ls -a
   when:
     event:
     - push
