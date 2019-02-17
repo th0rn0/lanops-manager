@@ -4,15 +4,14 @@ name: default
 steps:
 - name: test
   image: docker:18.06.2-ce-dind
-  environment:
-    DOCKER_HOST: "tcp://docker:2375"
   privileged: true
   commands:
-  - apk add make
-  - make app-build-docker
-  - docker run -d lanopsdev/manager:ci-test
-  - make database-migrate database-seed generate-key
-  - make stop
+  - docker run hello-world
+  # - apk add make
+  # - make app-build-docker
+  # - docker run -d lanopsdev/manager:ci-test
+  # - make database-migrate database-seed generate-key
+  # - make stop
   when:
     event:
     - push
