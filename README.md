@@ -154,34 +154,40 @@ volumes:
 
 ### Makefile
 
-This method is intended for development but can be used in production
+This method is intended for development but can be used in production. It uses docker-compose to build the image and database from the source code instead of pulling them from docker hub.
 
-#### Setup & Configuration
+#### 1. Setup & Configuration
 
 Run ```make env-file``` to create a ```.env``` file in the ```src```  directory. Then modify it as according to your preferences. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything! 
 
-#### Installation
+#### 2. Installation
 
-##### First Time install
+##### First Time Build
 
-To run a clean install run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory.
+To run a clean build run the command below. This will also generate self signed Certificates in the ```resources/certs``` directory.
 ```
-make app-install-clean
-```
-
-##### Install Dependencies
-
-```
-make app-install
+make app-build-clean
 ```
 
-##### Install Development Dependencies
+##### Build Dependencies (Optional)
+
+Install dependencies. This is run when ```app-build-clean``` is run.
 
 ```
-make app-install-dev
+make app-build-dep
 ```
 
-#### Run
+##### Build Development App & Dependencies (Optional)
+
+Install dependencies for Development
+
+```
+make app-build-dep-dev
+```
+
+#### 3. Run
+
+Run the stack detached. This is re attachable. 
 
 ```
 make
@@ -189,11 +195,15 @@ make
 
 ##### Interactive
 
+Run the stack in the foreground. Once exited the stack will stop.
+
 ```
 make interactive
 ```
 
 ##### Migrate & Seed Database
+
+Run Database migrations and populate.
 
 ```
 make database-migrate
@@ -201,6 +211,8 @@ make database-seed
 ```
 
 #### Stop
+
+Stop the stack.
 
 ```
 make stop

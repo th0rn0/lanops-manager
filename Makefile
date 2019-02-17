@@ -1,4 +1,4 @@
-live:
+dev:
 	docker-compose -f docker-compose.yml up -d --build 
 
 # Debug
@@ -9,14 +9,18 @@ interactive:
 stop:
 	docker-compose -f docker-compose.yml stop
 
-# Install from clean
-app-install-clean: folder-structure app-install layout-images live symlink wait database-migrate database-seed generate-key stop ssh-keygen
+# Build from clean
+app-build-clean: folder-structure layout-images dev symlink app-build-dep wait database-migrate database-seed generate-key stop ssh-keygen
 
-# Install Dependencies 
-app-install: composer-install npm-install
+# Build Dependencies 
+app-build-dep: composer-install npm-install
 
-# Install Dev Dependencies
-app-install-dev: composer-install-dev npm-install-dev
+# Build Dev App & Dependencies
+app-build-dep-dev: composer-install-dev npm-install-dev
+
+# Build app for CICD
+app-build-docker: folder-structure layout-images app-build-dep env-file
+	docker build -t lanopsdev/manager:ci-test .
 
 ###########
 # HELPERS #
