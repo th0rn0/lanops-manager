@@ -20,6 +20,7 @@ steps:
     path: /var/run/docker.sock
   commands:
   - apk add make
+  - ls src/vendor
   - make folder-structure layout-images env-file
   - docker build -t lanopsdev/manager:ci-test .
   - docker run -d lanopsdev/manager:ci-test
