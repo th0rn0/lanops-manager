@@ -5,8 +5,8 @@ steps:
 - name: test
   image: docker:18.06.2-ce-dind
   environment:
-    DOCKER_HOST: tcp://docker:2375
   privileged: true
+  command: [ --storage-driver=overlay2]
   commands:
   - apk add make
   - make app-build-docker
