@@ -3,8 +3,10 @@ name: default
 
 steps:
 - name: test
-  image: docker:dind
+  image: docker:18.06.2-ce-dind
   privileged: true
+  environment:
+  - DOCKER_HOST=tcp://docker:2375
   commands:
   - apk add make
   - make app-build-docker
