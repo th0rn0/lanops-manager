@@ -3,10 +3,9 @@ name: default
 
 steps:
 - name: test
-  image: docker:18.06.2-ce-dind
+  image: lanopsdev/ci-base:latest
   environment:
   privileged: true
-  command: [ --storage-driver=overlay2]
   commands:
   - apk add make
   - make app-build-docker
