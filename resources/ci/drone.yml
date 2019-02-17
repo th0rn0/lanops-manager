@@ -4,7 +4,7 @@ name: default
 steps:
 - name: test
   image: docker:18.06.2-ce-dind
-  privileged: true
+  # privileged: true
   volumes:
   - name: docker-socket
     path: /var/run/docker.sock
