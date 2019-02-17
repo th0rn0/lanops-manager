@@ -3,7 +3,7 @@ name: default
 
 steps:
 - name: test
-  image: docker:18.06.2-ce-dind
+  image: lanopsdev/ci-test:latest
   # privileged: true
   volumes:
   - name: docker-socket
