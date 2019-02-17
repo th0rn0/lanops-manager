@@ -3,11 +3,11 @@ name: default
 
 steps:
 - name: test
-  image: docker:18.06.2-ce-dind
+  image: lanopsdev/ci-base:latest
   commands:
   - apk add make
   - make app-build-docker
-  - docker run -it -d lanopsdev/manager:ci-test
+  - docker run -d lanopsdev/manager:ci-test
   - make database-migrate database-seed generate-key
   - make stop
   when:

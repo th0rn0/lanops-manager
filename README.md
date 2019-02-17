@@ -94,9 +94,18 @@ There are 3 ways to run the Lan Manager
 
 ### Docker
 
-```docker run -it -d lanopsdev/manager:latest```
+This method is intended to be run as just a image with your own database
+
+```
+docker run -it -d lanopsdev/manager:latest \
+  --env=DB_PASSWORD=asdasdasd
+  --ports 80:80
+  --ports 443:443
+```
 
 ### Docker-compose
+
+This method is intended to be run with docker-compose. It will create a full stack including database.
 
 ```
 version: "3.4"
