@@ -39,7 +39,10 @@ steps:
   image: lanopsdev/manager:ci-test
   # privileged: true
   commands:
-  - ls -a
+  - php artisan key:generate
+  - php artisan storage:link
+  - php artisan migrate
+  - php artisan db:seed
   when:
     event:
     - push
