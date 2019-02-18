@@ -10,7 +10,7 @@ stop:
 	docker-compose -f docker-compose.yml stop
 
 # Build from clean
-app-build-clean: folder-structure layout-images dev symlink app-build-dep wait database-migrate database-seed generate-key stop ssh-keygen
+app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-key stop ssh-keygen
 
 # Build Dependencies 
 app-build-dep: composer-install npm-install
@@ -52,6 +52,7 @@ generate-key:
 
 # Create Default Folder structure
 folder-structure:
+	ln -s src/storage/app/public src/public/storage
 	mkdir -p src/storage/app/public/images/gallery/
 	mkdir -p src/storage/app/public/images/events/
 	mkdir -p src/storage/app/public/images/venues/
