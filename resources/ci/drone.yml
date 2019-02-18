@@ -37,7 +37,6 @@ steps:
     - push
 - name: test-image
   image: lanopsdev/manager:ci-test
-  # privileged: true
   commands:
   - php artisan key:generate
   - php artisan migrate
