@@ -52,8 +52,3 @@ services:
     MYSQL_USER: lan_manager
     MYSQL_PASSWORD: password
     MYSQL_RANDOM_ROOT_PASSWORD: true
-
-volumes:
-- name: docker-socket
-  host:
-    path: /var/run/docker.sock
