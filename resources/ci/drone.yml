@@ -38,6 +38,7 @@ steps:
 - name: test-image
   image: lanopsdev/manager:ci-test
   commands:
+  - ls
   - php artisan key:generate
   - php artisan migrate
   - php artisan db:seed
