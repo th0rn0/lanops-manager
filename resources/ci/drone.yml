@@ -30,7 +30,7 @@ steps:
   image: epcallan/php7-testing-phpunit:7.1-phpunit5
   environment:
     APP_KEY:
-      from_secret: APP_KEY_TEST
+      from_secret: TEST_APP_KEY
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
