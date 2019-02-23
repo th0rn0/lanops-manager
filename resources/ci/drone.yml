@@ -31,6 +31,7 @@ steps:
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
+  - php artisan key:generate
   - phpunit
   when:
     event:
