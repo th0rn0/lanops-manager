@@ -27,7 +27,7 @@ steps:
     event:
     - push
 - name: test-unit  
-  image: epcallan/php7-testing-phpunit:7.1-phpunit7
+  image: epcallan/php7-testing-phpunit:7.1-phpunit5
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
