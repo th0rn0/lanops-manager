@@ -30,13 +30,13 @@ steps:
   image: plugins/docker
   settings:
     repo: lanopsdev/manager
-    tags: ci-test
+    tags: latest
     dry_run: true
   when:
     event:
     - push
 - name: test-image
-  image: lanopsdev/manager:ci-test
+  image: lanopsdev/manager:latest
   commands:
   - ls
   - cd /web/html/
@@ -46,6 +46,14 @@ steps:
   - php artisan key:generate
   - php artisan migrate --force
   - php artisan db:seed --force
+  when:
+    event:
+    - push
+- name: push-image
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: latest
   when:
     event:
     - push
