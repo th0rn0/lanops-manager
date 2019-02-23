@@ -28,10 +28,12 @@ steps:
     - push
 - name: test-unit  
   image: epcallan/php7-testing-phpunit:7.1-phpunit5
+  environment:
+    APP_KEY:
+      from_secret: APP_KEY_TEST
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
-  - php artisan key:generate
   - phpunit
   when:
     event:
