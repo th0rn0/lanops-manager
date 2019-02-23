@@ -29,7 +29,9 @@ steps:
 - name: test-unit  
   image: epcallan/php7-testing-phpunit:7.1-phpunit5
   commands:
-  - src/vendor/bin/phpunit
+  - cd src/
+  - composer install --ignore-platform-reqs --no-scripts
+  - phpunit
   when:
     event:
     - push
