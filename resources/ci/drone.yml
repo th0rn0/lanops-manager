@@ -41,10 +41,11 @@ steps:
   - ls
   - cd /web/html/
   - ls
+  - cat .env
   - php -v
   - php artisan key:generate
-  - php artisan migrate
-  - php artisan db:seed
+  - php artisan migrate --force
+  - php artisan db:seed --force
   when:
     event:
     - push
