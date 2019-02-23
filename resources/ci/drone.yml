@@ -34,6 +34,8 @@ steps:
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
+  - php artisan migrate --force
+  - php artisan db:seed --force
   - phpunit
   when:
     event:
@@ -56,8 +58,7 @@ steps:
   - cat .env
   - php -v
   - php artisan key:generate
-  - php artisan migrate --force
-  - php artisan db:seed --force
+
   when:
     event:
     - push
