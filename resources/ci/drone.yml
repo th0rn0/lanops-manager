@@ -45,7 +45,11 @@ steps:
   settings:
     repo: lanopsdev/manager
     tags: latest
-    dry_run: true
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+    tags: latest
   when:
     event:
     - push
