@@ -27,7 +27,7 @@ steps:
     event:
     - push
 - name: test-unit  
-  image: phpunit/phpunit
+  image: epcallan/php7-testing-phpunit:7.1-phpunit5
   commands:
   - src/vendor/bin/phpunit
   when:
