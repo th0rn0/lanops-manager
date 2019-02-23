@@ -36,7 +36,7 @@ steps:
   - composer install --ignore-platform-reqs --no-scripts
   - php artisan migrate --force
   - php artisan db:seed --force
-  - phpunit --process-isolation
+  - phpunit
   when:
     event:
     - push
