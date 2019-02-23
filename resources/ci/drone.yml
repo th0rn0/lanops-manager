@@ -26,6 +26,13 @@ steps:
   when:
     event:
     - push
+- name: test-unit  
+  image: phpunit/phpunit
+  commands:
+  - src/vendor/bin/phpunit
+  when:
+    event:
+    - push
 - name: build-image  
   image: plugins/docker
   settings:
@@ -49,14 +56,14 @@ steps:
   when:
     event:
     - push
-- name: push-image
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: latest
-  when:
-    event:
-    - push
+# - name: push-image
+#   image: plugins/docker
+#   settings:
+#     repo: lanopsdev/manager
+#     tags: latest
+#   when:
+#     event:
+#     - push
 services:
 - name: database
   image: mysql:5.6
