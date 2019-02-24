@@ -3,6 +3,22 @@ kind: pipeline
 name: default
 
 steps:
+
+- name: notify-discord-start
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "Commit {{ build.commit }} - ${DRONE_COMMIT_MESSAGE} - on branch {{ build.branch }} started.",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - push
+
 - name: build-structure
   image: alpine:3.8
   commands:
@@ -34,14 +50,16 @@ steps:
   image: plugins/docker
   settings:
     repo: lanopsdev/manager
-    tags: latest
+    tags: 
+    - ${DRONE_TAG}
+    - latest
     dry_run: true
   when:
     event:
     - push
     
 - name: test-phpunit
-  image: lanopsdev/manager:latest
+  image: lanopsdev/manager:${DRONE_TAG}
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
@@ -59,7 +77,9 @@ steps:
   image: plugins/docker
   settings:
     repo: lanopsdev/manager
-    tags: latest
+    tags: 
+    - ${DRONE_TAG}
+    - latest
     username:
       from_secret: DOCKERHUB_USERNAME
     password:
@@ -74,7 +94,7 @@ steps:
 
 # Notifcations
 
-- name: notify-discord-success
+- name: notify-discord-test-success
   image: plugins/webhook
   settings:
     urls:
@@ -82,7 +102,7 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "Build {{ build.number }} succeeded. GGWP!",
+        "content": "Commit {{ build.commit }} - ${DRONE_COMMIT_MESSAGE} - on branch {{ build.branch }} Passed. GGWP!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -91,7 +111,7 @@ steps:
     status:
     - success
 
-- name: notify-discord-fail
+- name: notify-discord-test-fail
   image: plugins/webhook
   settings:
     urls:
@@ -99,7 +119,7 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "Build {{ build.number }} failed. Fix me please!",
+        "content": "Commit {{ build.commit }} - ${DRONE_COMMIT_MESSAGE} -  on branch {{ build.branch }} Failed. Fix me please!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -108,7 +128,7 @@ steps:
     status:
     - failure
 
-- name: notify-discord-pushed
+- name: notify-discord-image-pushed
   image: plugins/webhook
   settings:
     urls:
