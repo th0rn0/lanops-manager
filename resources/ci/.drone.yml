@@ -51,6 +51,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
     
 - name: build-composer
   image: composer
@@ -60,6 +61,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
     
 - name: build-npm
   image: node:8
@@ -69,6 +71,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
 
 # Build Docker Image
 
@@ -83,6 +86,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
 
 - name: build-image-tagged
   image: plugins/docker
@@ -113,6 +117,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
 
 # Push Docker Image
 
@@ -167,6 +172,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
     status:
     - success
 
@@ -184,6 +190,7 @@ steps:
   when:
     event:
     - push
+    - pull_request
     status:
     - failure
 
@@ -240,6 +247,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: fd954b2c33cba345fe630bc22be914a5f0f661017f25d1899770f5bd839b13c7
+hmac: e88bb5a3a56f83c545931f31cfec5467a642c3808ea76aa2a209b363710487d8
 
 ...
