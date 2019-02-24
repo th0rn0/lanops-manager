@@ -26,20 +26,18 @@ steps:
   when:
     event:
     - push
-- name: test-phpunit  
-  image: epcallan/php7-testing-phpunit:7.1-phpunit5
-  environment:
-    APP_KEY:
-      from_secret: TEST_APP_KEY
-  commands:
-  - cd src/
-  - composer install --ignore-platform-reqs --no-scripts
-  - php artisan migrate --force
-  - php artisan db:seed --force
-  - vendor/bin/phpunit
-  when:
-    event:
-    - push
+# - name: test-phpunit  
+#   image: epcallan/php7-testing-phpunit:7.1-phpunit5
+
+#   commands:
+#   - cd src/
+#   - composer install --ignore-platform-reqs --no-scripts
+#   - php artisan migrate --force
+#   - php artisan db:seed --force
+#   - vendor/bin/phpunit
+#   when:
+#     event:
+#     - push
 - name: build-image  
   image: plugins/docker
   settings:
@@ -49,15 +47,16 @@ steps:
   when:
     event:
     - push
-- name: test-image
+- name: test-phpunit
   image: lanopsdev/manager:latest
+  environment:
+    APP_KEY:
+      from_secret: TEST_APP_KEY
   commands:
-  - ls
   - cd /web/html/
   - ls
-  - cat .env
-  - php -v
-  - php artisan key:generate
+  - php artisan migrate --force
+  - php artisan db:seed --force
   - vendor/bin/phpunit
   when:
     event:
