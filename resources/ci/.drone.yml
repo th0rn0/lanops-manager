@@ -4,6 +4,8 @@ name: default
 
 steps:
 
+# Notifacations - Start
+
 - name: notify-discord-start-staging
   image: plugins/webhook
   settings:
@@ -38,6 +40,8 @@ steps:
     - tag
     branch:
     - master
+
+# Build Dependencies & Structure
 
 - name: build-structure
   image: alpine:3.8
@@ -92,7 +96,9 @@ steps:
     - tag
     branch:
     - master
-    
+
+# Tests
+
 - name: test-phpunit
   image: lanopsdev/manager:latest
   environment:
@@ -121,8 +127,6 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   when:
-    event:
-    - tag
     branch:
     - staging
     status:
@@ -147,7 +151,7 @@ steps:
     status:
     - success
 
-# Notifcations
+# Notifcations - End
 
 - name: notify-discord-test-success
   image: plugins/webhook
@@ -223,6 +227,8 @@ trigger:
   branch:
   - master
   - staging
+  event:
+  - pull_request
 
 services:
 - name: database
@@ -234,6 +240,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: 72a4a6dd30156bfdf618b83d2f5a7234e8c5cf4aa16af507fbb0ca8d321d9046
+hmac: fd954b2c33cba345fe630bc22be914a5f0f661017f25d1899770f5bd839b13c7
 
 ...
