@@ -63,6 +63,13 @@ steps:
     - tag
     branch:
     - master
+
+trigger:
+  branch:
+  - master
+  - staging
+  - feat/*
+
 services:
 - name: database
   image: mysql:5.6
