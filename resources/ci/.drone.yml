@@ -4,7 +4,7 @@ name: default
 
 steps:
 
-- name: notify-discord-start-master-staging
+- name: notify-discord-start-staging
   image: plugins/webhook
   settings:
     urls:
@@ -18,7 +18,26 @@ steps:
   when:
     event:
     - push
+    branch:
+    - staging
 
+- name: notify-discord-start-master-tagged
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - **TAGGED** Docker Build Started.",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - push
+    - tag
+    branch:
+    - master
 
 - name: build-structure
   image: alpine:3.8
@@ -46,19 +65,33 @@ steps:
   when:
     event:
     - push
-    
-- name: build-image  
+
+# Build Docker Image
+
+- name: build-image
   image: plugins/docker
   settings:
     repo: lanopsdev/manager
     tags: 
-    - ${DRONE_TAG}
     - latest
     - staging
     dry_run: true
   when:
     event:
     - push
+
+- name: build-image-tagged
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: 
+    - ${DRONE_TAG}
+    dry_run: true
+  when:
+    event:
+    - tag
+    branch:
+    - master
     
 - name: test-phpunit
   image: lanopsdev/manager:latest
@@ -150,7 +183,24 @@ steps:
     status:
     - failure
 
-- name: notify-discord-image-pushed-master-staging
+- name: notify-discord-image-pushed-staging
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    branch:
+    - staging
+    status:
+    - success
+
+- name: notify-discord-image-pushed-master-tagged
   image: plugins/webhook
   settings:
     urls:
@@ -165,7 +215,6 @@ steps:
     event:
     - tag
     branch:
-    - staging
     - master
     status:
     - success
