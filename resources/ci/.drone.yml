@@ -51,7 +51,6 @@ steps:
   settings:
     repo: lanopsdev/manager
     tags: 
-    - ${DRONE_TAG}
     - latest
     dry_run: true
   when:
