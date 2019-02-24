@@ -69,20 +69,23 @@ steps:
     - tag
     branch:
     - master
-    
+
 - name: notify-discord
-  image: appleboy/drone-discord
+  image: plugins/webhook
   settings:
-    webhook_id:
-      from_secret: DISCORD_WEBHOOK_ID
-    webhook_token:
-      from_secret: DISCORD_WEBHOOK_TOKEN
-    message: |
-      {{ #success build.status }}
-        build {{ build.number }} succeeded. Good job.
-      {{ else }}
-        build {{ build.number }} failed. Fix me please.
-      {{ /success }}
+    urls: https://discordapp.com/api/webhooks/549313406268735543/zQeUIVn02tSUZirwbpRzzu6llXHvfbag81eWm4d1d0t2lFLZcG-uR36S1JoIR13fsbMm
+  # image: appleboy/drone-discord
+  # settings:
+  #   webhook_id:
+  #     from_secret: DISCORD_WEBHOOK_ID
+  #   webhook_token:
+  #     from_secret: DISCORD_WEBHOOK_TOKEN
+  #   message: |
+  #     {{ #success build.status }}
+  #       build {{ build.number }} succeeded. Good job.
+  #     {{ else }}
+  #       build {{ build.number }} failed. Fix me please.
+  #     {{ /success }}
   when:
     event:
     - push
