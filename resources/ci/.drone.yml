@@ -81,9 +81,7 @@ steps:
       }
   when:
     event:
-    - tag
-    branch:
-    - master
+    - push
 
 trigger:
   branch:
@@ -101,6 +99,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: 2b3e885dd8be77d33989e68ea8de78cbec6198c56222cb1861ecfca39154472a
+hmac: 4b711df602d27598e5c808b04c1e7051f54bf6436a62d93b528dad0366a4c68a
 
 ...
