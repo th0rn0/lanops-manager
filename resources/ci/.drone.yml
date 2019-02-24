@@ -3,15 +3,6 @@ kind: pipeline
 name: default
 
 steps:
-- name: notify-discord-start
-  image: plugins/webhook
-  settings:
-    urls: 
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "content": "Starting build"
-      }
 - name: build-structure
   image: alpine:3.8
   commands:
@@ -86,23 +77,13 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "content": "{{ build.status }}"
+        "content": "{{ #success build.status }} build {{ build.number }} succeeded. Good job. {{ else }} build {{ build.number }} failed. Fix me please. {{ /success }}"
       }
-  # image: appleboy/drone-discord
-  # settings:
-  #   webhook_id:
-  #     from_secret: DISCORD_WEBHOOK_ID
-  #   webhook_token:
-  #     from_secret: DISCORD_WEBHOOK_TOKEN
-  #   message: |
-  #     {{ #success build.status }}
-  #       build {{ build.number }} succeeded. Good job.
-  #     {{ else }}
-  #       build {{ build.number }} failed. Fix me please.
-  #     {{ /success }}
   when:
     event:
-    - push
+    - tag
+    branch:
+    - master
 
 trigger:
   branch:
@@ -120,6 +101,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: baf8a340a0e891777f4c86327464317adb90ba253c9a5b15adcf80e74474e17d
+hmac: 2b3e885dd8be77d33989e68ea8de78cbec6198c56222cb1861ecfca39154472a
 
 ...
