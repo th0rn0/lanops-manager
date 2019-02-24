@@ -11,6 +11,7 @@ steps:
   when:
     event:
     - push
+    
 - name: build-composer
   image: composer
   commands:
@@ -19,6 +20,7 @@ steps:
   when:
     event:
     - push
+    
 - name: build-npm
   image: node:8
   commands:
@@ -27,6 +29,7 @@ steps:
   when:
     event:
     - push
+    
 - name: build-image  
   image: plugins/docker
   settings:
@@ -36,6 +39,7 @@ steps:
   when:
     event:
     - push
+    
 - name: test-phpunit
   image: lanopsdev/manager:latest
   environment:
@@ -50,6 +54,7 @@ steps:
   when:
     event:
     - push
+    
 - name: push-image
   image: plugins/docker
   settings:
@@ -64,6 +69,19 @@ steps:
     - tag
     branch:
     - master
+    
+- name: notify-discord
+  image: appleboy/drone-discord
+  secrets: [ DISCORD_WEBHOOK_ID, DISCORD_WEBHOOK_TOKEN ]
+  message: |
+    {{ #success build.status }}
+      build {{ build.number }} succeeded. Good job.
+    {{ else }}
+      build {{ build.number }} failed. Fix me please.
+    {{ /success }}
+  when:
+    event:
+    - push
 
 trigger:
   branch:
@@ -81,6 +99,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: d2b0e62b031248993bde2e5c651ad415d2c6cdbe65616a0adf7835532ee133f0
+hmac: 0e0329c2ba75431d072484d25921620879b56063052ecbd39bb96c93e00c2e21
 
 ...
