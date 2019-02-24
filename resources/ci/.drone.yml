@@ -69,25 +69,68 @@ steps:
     - tag
     branch:
     - master
+    status:
+    - success
 
-- name: notify-discord
+# Notifcations
+
+- name: notify-discord-success
   image: plugins/webhook
   settings:
-    urls: 
+    urls:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "content": "{{ #success build.status }} build {{ build.number }} succeeded. Good job. {{ else }} build {{ build.number }} failed. Fix me please. {{ /success }}"
+        "username": "Lan Manager Drone",
+        "content": "Build {{ build.number }} succeeded. GGWP!",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
     event:
     - push
+    status:
+    - success
+
+- name: notify-discord-fail
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "Build {{ build.number }} failed. Fix me please!",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - push
+    status:
+    - failure
+
+- name: notify-discord-pushed
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "Build {{ build.number }} has been built and pushed to Docker Hub.",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - tag
+    branch:
+    - master
+    status:
+    - success
 
 trigger:
   branch:
   - master
   - staging
-  - feat/*
 
 services:
 - name: database
@@ -99,6 +142,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: 4b711df602d27598e5c808b04c1e7051f54bf6436a62d93b528dad0366a4c68a
+hmac: 72a4a6dd30156bfdf618b83d2f5a7234e8c5cf4aa16af507fbb0ca8d321d9046
 
 ...
