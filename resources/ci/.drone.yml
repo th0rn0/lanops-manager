@@ -73,7 +73,8 @@ steps:
 - name: notify-discord
   image: plugins/webhook
   settings:
-    urls: https://discordapp.com/api/webhooks/549313406268735543/zQeUIVn02tSUZirwbpRzzu6llXHvfbag81eWm4d1d0t2lFLZcG-uR36S1JoIR13fsbMm
+    urls: 
+      from_secret: DISCORD_WEBHOOK_URL
   # image: appleboy/drone-discord
   # settings:
   #   webhook_id:
