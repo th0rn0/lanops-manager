@@ -245,6 +245,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: e88bb5a3a56f83c545931f31cfec5467a642c3808ea76aa2a209b363710487d8
+hmac: c4fa0ffa0e77f9e4466bcf9574bee6d127f35efd28fff3f84721cd1753397518
 
 ...
