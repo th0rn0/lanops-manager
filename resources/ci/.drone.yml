@@ -4,7 +4,7 @@ name: default
 
 steps:
 
-- name: notify-discord-start
+- name: notify-discord-start-master-staging
   image: plugins/webhook
   settings:
     urls:
@@ -12,7 +12,7 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "Commit {{ build.commit }} - ${DRONE_COMMIT_MESSAGE} - on branch {{ build.branch }} started.",
+        "content": "{{uppercase build.branch }} - \"${DRONE_COMMIT_MESSAGE}\" - Docker Build Started.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -53,6 +53,7 @@ steps:
     tags: 
     - ${DRONE_TAG}
     - latest
+    - staging
     dry_run: true
   when:
     event:
@@ -72,8 +73,28 @@ steps:
   when:
     event:
     - push
-    
-- name: push-image
+
+# Push Docker Image
+
+- name: push-image-staging
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: 
+    - staging
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  when:
+    event:
+    - tag
+    branch:
+    - staging
+    status:
+    - success
+
+- name: push-image-master
   image: plugins/docker
   settings:
     repo: lanopsdev/manager
@@ -128,7 +149,7 @@ steps:
     status:
     - failure
 
-- name: notify-discord-image-pushed
+- name: notify-discord-image-pushed-master-staging
   image: plugins/webhook
   settings:
     urls:
@@ -136,13 +157,14 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "Build {{ build.number }} has been built and pushed to Docker Hub.",
+        "content": "{{uppercase build.branch }} - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
     event:
     - tag
     branch:
+    - staging
     - master
     status:
     - success
