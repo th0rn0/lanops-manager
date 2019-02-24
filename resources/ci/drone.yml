@@ -45,11 +45,7 @@ steps:
   settings:
     repo: lanopsdev/manager
     tags: latest
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-    tags: latest
+    dry_run: true
   when:
     event:
     - push
@@ -62,17 +58,22 @@ steps:
   - cat .env
   - php -v
   - php artisan key:generate
+  - vendor/bin/phpunit
   when:
     event:
     - push
-# - name: push-image
-#   image: plugins/docker
-#   settings:
-#     repo: lanopsdev/manager
-#     tags: latest
-#   when:
-#     event:
-#     - push
+- name: push-image
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: latest
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  when:
+    event:
+    - push
 services:
 - name: database
   image: mysql:5.6
