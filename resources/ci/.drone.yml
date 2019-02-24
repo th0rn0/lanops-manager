@@ -12,12 +12,13 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "{{uppercase build.branch }} - \"${DRONE_COMMIT_MESSAGE}\" - Docker Build Started.",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Docker Build Started.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
     event:
     - push
+
 
 - name: build-structure
   image: alpine:3.8
@@ -123,7 +124,7 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "Commit {{ build.commit }} - ${DRONE_COMMIT_MESSAGE} - on branch {{ build.branch }} Passed. GGWP!",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Passed. GGWP!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -132,7 +133,7 @@ steps:
     status:
     - success
 
-- name: notify-discord-test-fail
+- name: notify-discord-test-failure
   image: plugins/webhook
   settings:
     urls:
@@ -140,7 +141,7 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "Commit {{ build.commit }} - ${DRONE_COMMIT_MESSAGE} -  on branch {{ build.branch }} Failed. Fix me please!",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -157,7 +158,7 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "{{uppercase build.branch }} - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
