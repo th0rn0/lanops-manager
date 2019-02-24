@@ -234,8 +234,6 @@ trigger:
   branch:
   - master
   - staging
-  event:
-  - pull_request
 
 services:
 - name: database
