@@ -51,6 +51,7 @@ steps:
   settings:
     repo: lanopsdev/manager
     tags: 
+    - ${DRONE_TAG}
     - latest
     dry_run: true
   when:
@@ -58,7 +59,7 @@ steps:
     - push
     
 - name: test-phpunit
-  image: lanopsdev/manager:${DRONE_TAG}
+  image: lanopsdev/manager:latest
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
