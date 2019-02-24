@@ -26,18 +26,6 @@ steps:
   when:
     event:
     - push
-# - name: test-phpunit  
-#   image: epcallan/php7-testing-phpunit:7.1-phpunit5
-
-#   commands:
-#   - cd src/
-#   - composer install --ignore-platform-reqs --no-scripts
-#   - php artisan migrate --force
-#   - php artisan db:seed --force
-#   - vendor/bin/phpunit
-#   when:
-#     event:
-#     - push
 - name: build-image  
   image: plugins/docker
   settings:
@@ -72,7 +60,9 @@ steps:
       from_secret: DOCKERHUB_PASSWORD
   when:
     event:
-    - push
+    - tag
+    branch:
+    - master
 services:
 - name: database
   image: mysql:5.6
