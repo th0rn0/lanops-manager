@@ -3,6 +3,15 @@ kind: pipeline
 name: default
 
 steps:
+- name: notify-discord-start
+  image: plugins/webhook
+  settings:
+    urls: 
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "content": "Starting build"
+      }
 - name: build-structure
   image: alpine:3.8
   commands:
@@ -75,6 +84,10 @@ steps:
   settings:
     urls: 
       from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "content": "{{ build.status }}"
+      }
   # image: appleboy/drone-discord
   # settings:
   #   webhook_id:
