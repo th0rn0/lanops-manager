@@ -33,10 +33,16 @@ class PaymentsController extends Controller
 	 */
 	public function review()
 	{
-	  if (!$basket = Session::get('basket')) {
-		return Redirect::to('/');
-	  }
-	  return view('payments.review')->withBasketItems(Helpers::getBasketFormat($basket, true))->withBasketTotal(Helpers::getBasketTotal($basket));
+	  	if (!$basket = Session::get('basket')) {
+			return Redirect::to('/');
+	  	}
+	  	$next_event_flag = true;
+		foreach (Session::get('basket') as $ticket_id => $quantity) {
+			if (EventTicket::where('id', $ticket_id)->first()->event->id != Event::where('end', '>=', \Carbon\Carbon::now())->orderBy(\DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()->id) {
+				$next_event_flag = false;
+			}
+		}
+	  	return view('payments.review')->withBasketItems(Helpers::getBasketFormat($basket, true))->withBasketTotal(Helpers::getBasketTotal($basket))->withNextEventFlag($next_event_flag);
 	}
 	
 	/**

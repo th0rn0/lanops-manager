@@ -13,7 +13,15 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
 			{!! Settings::getPurchaseTermsAndConditions() !!}
-			<h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+			<hr>
+			@if (!$next_event_flag)
+				<div class="alert alert-warning">
+					<h5>Please be aware you are not purchasing tickets for our next event but instead a future event after that.</h5>
+				</div>
+			@endif
+			<div class="alert alert-warning">
+				<h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				<button class="btn btn-default">Confirm</button>
 			{{ Form::close() }}
