@@ -132,6 +132,9 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   when:
+    event:
+      exclude:
+      - pull_request
     branch:
     - staging
     status:
@@ -245,6 +248,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: c4fa0ffa0e77f9e4466bcf9574bee6d127f35efd28fff3f84721cd1753397518
+hmac: dd6fc58afc46642322402a7f279c6bcd1f0c15d24b161fa24fb5694fdc00d95d
 
 ...

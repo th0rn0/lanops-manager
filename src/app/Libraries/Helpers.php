@@ -2,6 +2,9 @@
 
 namespace App\Libraries;
 
+use DB;
+use \Carbon\Carbon as Carbon;
+
 class Helpers
 {
 	// TODO - refactor - eg getGameSelectArray - specifially the selectArray part
@@ -92,7 +95,7 @@ class Helpers
 	 */
 	public static function getNextEventName()
 	{
-		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+		if ($event = \App\Event::where('end', '>=', Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
 			if ($event->status == 'DRAFT' || $event->status == 'PREVIEW') {
 				return $event->display_name . ' - ' . $event->status;
 			}
@@ -107,7 +110,7 @@ class Helpers
 	 */
 	public static function getNextEventSlug()
 	{
-		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+		if ($event = \App\Event::where('end', '>=', Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
 			return $event->slug;
 		}
 		return '#';
@@ -120,7 +123,7 @@ class Helpers
 	 */
 	public static function getNextEventDesc()
 	{
-		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+		if ($event = \App\Event::where('end', '>=', Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
 			return $event->desc_long;
 		}
 		return 'No new Events';
@@ -132,7 +135,7 @@ class Helpers
 	 */
 	public static function getNextEventStartDate()
 	{
-		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+		if ($event = \App\Event::where('end', '>=', Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
 			return date("d-m-Y H:i", strtotime($event->start));
 		}
 		return 'No new Events';
@@ -144,7 +147,7 @@ class Helpers
 	 */
 	public static function getNextEventEndDate()
 	{
-		if ($event = \App\Event::where('end', '>=', \Carbon\Carbon::now())->first()) {
+		if ($event = \App\Event::where('end', '>=', Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
 			return date("d-m-Y H:i", strtotime($event->end));
 		}
 		return 'No new Events';

@@ -31,24 +31,3 @@
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
-<div class="container" style="margin-top:50px;">
-	<div class='row'>
-		@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-			@if (Session::has('alert-' . $msg))
-				<p class="alert alert-{{ $msg }}">
-					<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				</p>
-			@endif
-		@endforeach
-		@if (isset($errors) && $errors->any())
-			<div class="alert alert-danger">
-				<ul>
-					@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-			</div>
-		@endif
-	</div>
-
-</div>

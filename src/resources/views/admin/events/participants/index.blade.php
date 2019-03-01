@@ -41,8 +41,7 @@
 								<th>Seat</th>
 								<th>Ticket</th>
 								<th>Paypal Email</th>
-								<th>Gift</th>
-								<th>Free/Staff</th>
+								<th>Free/Staff/Gift</th>
 								<th>Signed in</th>
 								<th></th>
 							</tr>
@@ -61,11 +60,6 @@
 									<td>
 										@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif
 									</td>
-									@if ($participant->gift)
-										<td>Yes</td>
-									@else
-										<td>No</td>
-									@endif
 									<td>
 										@if ($participant->free)
 											<strong>Free</strong>
@@ -73,6 +67,9 @@
 										@elseif ($participant->staff)
 											<strong>Staff</strong>
 											<small>Assigned by: {{ $participant->getAssignedByUser()->steamname }}</small>
+										@elseif ($participant->gift)
+											<strong>Gift</strong>
+											<small>Assigned by: {{ $participant->getGiftedByUser()->steamname }}</small>
 										@endif
 									</td>
 									<td>

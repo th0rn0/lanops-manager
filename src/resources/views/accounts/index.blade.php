@@ -6,6 +6,11 @@
 
 	<div class="container">
 
+		<div class="page-header">
+			<h1>
+				My Account
+			</h1>
+		</div>
 		<div class="row">
 			<!-- ACCOUNT DETAILS -->
 			<div class="col-xs-12  col-lg-12">

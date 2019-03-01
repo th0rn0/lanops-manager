@@ -125,9 +125,9 @@ class ParticipantsController extends Controller
 				return Redirect::to('account');
 			}
 			$request->session()->flash('alert-danger', 'Redemption code not found.');
-			return Redirect::to('home');
+			return Redirect::to('account');
 		}
 		$request->session()->flash('alert-danger', 'Please Login.');
-		return Redirect::to('home');
+		return Redirect::to('login');
 	}
 }
