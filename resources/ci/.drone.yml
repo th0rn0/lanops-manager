@@ -132,13 +132,13 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   when:
+    event:
+      exclude:
+      - pull_request
     branch:
     - staging
     status:
     - success
-    event:
-      exclude:
-        pull_request
 
 - name: push-image-master
   image: plugins/docker
@@ -248,6 +248,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: 3e088693bdfdbe12e0b62d68a3f69a012ae1a8f7cf75eb313cff1f7b8b6d3607
+hmac: dd6fc58afc46642322402a7f279c6bcd1f0c15d24b161fa24fb5694fdc00d95d
 
 ...
