@@ -37,11 +37,43 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
 			<div class="page-header">
 				<h3>About {{ Settings::getOrgName() }}</h3>
 			</div>
 			<p>{!! Settings::getAboutShort() !!}</p>
+		</div>
+		<div class="hidden-xs hidden-sm hidden-md col-lg-4">
+			<div class="page-header">
+				<h3>Event Calendar</h3>
+			</div>
+			@if ( count($events) > 0 )
+				<table class="table table-borderless">
+					<tbody>
+						@foreach ( $events->reverse() as $event )
+							@if ($event->start > \Carbon\Carbon::today() )
+								<tr>
+									<td>
+										<a href="/events/{{ $event->slug }}">
+											{{ $event->display_name }}
+											@if ($event->status != 'PUBLISHED')
+												- {{ $event->status }}
+											@endif
+										</a>
+									</td>
+									<td>
+										<span class="pull-right">
+											{{ date('dS', strtotime($event->start)) }} - {{ date('dS', strtotime($event->end)) }} {{ date('F', strtotime($event->end)) }} {{ date('Y', strtotime($event->end)) }}
+										</span>
+									</td>
+								</tr>
+							@endif
+						@endforeach
+					</tbody>
+				</table>
+			@else
+				<div><a href="#">No Future events</a></div>
+			@endif
 		</div>
 		@if ($next_event)
 			<div class="col-xs-12">

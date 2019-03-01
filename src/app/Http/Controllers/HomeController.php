@@ -94,6 +94,7 @@ class HomeController extends Controller
 			->withTopAttendees(array_slice($top_attendees, 0, 5))
 			->withTopWinners(array_slice($top_winners, 0, 5))
 			->withNewsArticles(NewsArticle::all())
+			->withEvents(Event::all());
 		;
 	}
 	
