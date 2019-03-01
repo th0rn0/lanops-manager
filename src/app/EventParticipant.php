@@ -76,6 +76,15 @@ class EventParticipant extends Model
 	}
 
 	/**
+	 * Get User that Assigned Ticket
+	 * @return User
+	 */
+	public function getGiftedByUser()
+	{
+		return User::where(['id' => $this->gift_sendee])->first();
+	}
+
+	/**
 	 * Regenerate QR Codes
 	 * @return Boolean
 	 */

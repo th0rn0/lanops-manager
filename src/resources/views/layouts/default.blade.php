@@ -20,6 +20,28 @@
 	</head>
 	<body class="full-height">
 		@include ('layouts._partials.navigation')
+		<div class="container" style="margin-top:30px;">
+			<div class='row'>
+				@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+					@if (Session::has('alert-' . $msg))
+						<div class="col-xs-12" style="margin-top:30px; margin-bottom:-40px;">
+							<p class="alert alert-{{ $msg }}">
+								<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							</p>
+						</div>
+					@endif
+				@endforeach
+				@if (isset($errors) && $errors->any())
+					<div class="alert alert-danger" style="margin-top:30px; margin-bottom:-40px;">
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
+			</div>
+		</div>
 		@yield ('content')
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 		<!-- Latest compiled and minified JavaScript -->
