@@ -90,7 +90,7 @@ class HomeController extends Controller
 		    return $b['win_count'] <=> $a['win_count'];
 		});
 		return view("home")
-			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->first())
+			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first())
 			->withTopAttendees(array_slice($top_attendees, 0, 5))
 			->withTopWinners(array_slice($top_winners, 0, 5))
 			->withNewsArticles(NewsArticle::all())
