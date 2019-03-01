@@ -136,6 +136,9 @@ steps:
     - staging
     status:
     - success
+    events:
+      exclude:
+        pull_request
 
 - name: push-image-master
   image: plugins/docker
@@ -245,6 +248,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: c4fa0ffa0e77f9e4466bcf9574bee6d127f35efd28fff3f84721cd1753397518
+hmac: 3e088693bdfdbe12e0b62d68a3f69a012ae1a8f7cf75eb313cff1f7b8b6d3607
 
 ...
