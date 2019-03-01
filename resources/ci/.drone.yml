@@ -136,7 +136,7 @@ steps:
     - staging
     status:
     - success
-    events:
+    event:
       exclude:
         pull_request
 
