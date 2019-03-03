@@ -117,14 +117,18 @@ class SteamAuthController extends Controller
 		$user->avatar 			= $request->avatar;
 		$user->steamid 			= $request->steamid;
 		$user->username_nice 	= strtolower(str_replace(' ', '-', $request->username));
+
+		// Set first user on system as admin
 		if (User::count() == 0 && User::where('admin', 1)->count() == 0) {
 			$user->admin = 1;
 		}
+
 		if ($user->save()) {
 			Session::forget('user');
 			Auth::login($user, true);
 			return Redirect('/account');
 		}
+		
 		Auth::logout();
 		return Redirect('/')->withError('Something went wrong. Please Try again later');
 	}

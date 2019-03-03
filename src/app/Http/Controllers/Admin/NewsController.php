@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Session;
+use Settings;
 
 use App\User;
 use App\Event;
@@ -17,6 +18,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+
+use Facebook\Facebook;
 
 class newsController extends Controller
 {
@@ -62,6 +65,36 @@ class newsController extends Controller
 		if (!$news_article->save()) {
 			Session::flash('alert-danger', 'Cannot Save News Article!');
 			return Redirect::to('/admin/events/');
+		}
+		// DEBUG
+		// dd());
+		$request->share_to_facebook = true;
+
+
+
+		if ($request->share_to_facebook) {
+			$facebook = new Facebook;
+		 	$linkData = [
+			 	'link' => url("/news/{$news_article->slug}"),
+			 	'message' => $request->article
+			];
+
+			// Change link URL if on localhost. If on localhost facebook will error out.
+			if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
+				$linkData['link'] = "http://example.com/news/{$news_article->slug}";
+			}
+			foreach (Settings::getSocialFacebookPageAccessTokens() as $token) {
+				try {
+				 	$response = $facebook->post('/me/feed', $linkData, $token);
+				} catch(Facebook\Exceptions\FacebookResponseException $e) {
+				 	echo 'Graph returned an error: '.$e->getMessage();
+				 	exit;
+				} catch(Facebook\Exceptions\FacebookSDKException $e) {
+				 	echo 'Facebook SDK returned an error: '.$e->getMessage();
+				 	exit;
+				}
+				$graphNode = $response->getGraphNode();
+			}
 		}
 		Session::flash('alert-success', 'Successfully saved News Article!');
 		return Redirect::to('/admin/news/');

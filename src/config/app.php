@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     'env'               => env('APP_ENV', 'production'),
@@ -59,6 +58,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FacebookServiceProvider::class,
     ],
 
     /*

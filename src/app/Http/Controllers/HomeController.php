@@ -18,6 +18,9 @@ use App\Http\Requests;
 
 use Illuminate\Http\Request;
 
+use Facebook\Facebook;
+
+
 class HomeController extends Controller
 {
 	/**

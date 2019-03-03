@@ -309,4 +309,22 @@ class Settings
 	{
 		return \App\Setting::setAboutWho($text);
 	}
+
+	/**
+	 * Get Facebook Page Access Tokens
+	 * @param Array $facebook_access_tokens
+	 */
+	public static function getSocialFacebookPageAccessTokens()
+	{
+		return \App\Setting::getSocialFacebookPageAccessTokens();
+	}
+
+	/**
+	 * Set Facebook Page Access Tokens
+	 * @param Array $facebook_access_tokens
+	 */
+	public static function setSocialFacebookPageAccessTokens($facebook_access_tokens)
+	{
+		return \App\Setting::setSocialFacebookPageAccessTokens($facebook_access_tokens);
+	}
 }

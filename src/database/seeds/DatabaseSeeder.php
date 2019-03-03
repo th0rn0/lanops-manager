@@ -135,6 +135,12 @@ class DatabaseSeeder extends Seeder
             'value'     => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
             'default'   => true,
         ]);
+        factory(App\Setting::class)->create([
+            'setting'   => 'social_facebook_page_access_token',
+            'value'     => $null,
+            'default'   => true,
+        ]);
+
         factory(App\Game::class)->create([
             'name'          => 'Quake',
             'description'   => 'Best game ever',
