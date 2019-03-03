@@ -50,7 +50,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3>
-					<strong>{{ max($event->getSeatingCapacity() - $event->eventParticipants->count(), 0) }}</strong> Seats Available of <strong>{{ $event->getSeatingCapacity() }}</strong> total seats
+					<strong>{{ max($event->getSeatingCapacity() - $event->eventParticipants->count(), 0) }}/{{ $event->getSeatingCapacity() }}</strong> Tickets Available
 				</h3>
 			</div>
 			@if ($event->getSeatingCapacity() > 0)
@@ -94,6 +94,11 @@
 				@foreach ($event->tickets as $ticket)
 					<div class="well well-sm col-lg-12" disabled>
 						<h3>{{$ticket->name}} @if ($event->getSeatingCapacity() <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
+						@if ($ticket->quantity != 0)
+							<small>
+								Limited Availablity
+							</small>
+						@endif
 						<div class="row" style="display: flex; align-items: center;">
 							<div class="col-sm-12 col-xs-12">
 								<h3>£{{$ticket->price}}
