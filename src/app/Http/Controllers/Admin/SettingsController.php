@@ -8,6 +8,7 @@ use Session;
 use Redirect;
 use Settings;
 use Input;
+use FacebookPageWrapper as Facebook;
 
 use App\User;
 use App\Setting;
@@ -17,7 +18,8 @@ use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Facebook\Facebook;
+// use Facebook\Facebook;
+
 
 use Illuminate\Http\Request;
 
@@ -27,15 +29,12 @@ class SettingsController extends Controller
 	 * Show Settings Index Page
 	 * @return Redirect
 	 */
-	public function index(Facebook $facebook)
+	public function index()
 	{
-		// Build Permissions and callbacks for Social Media
-		$facebook_permissions = ['manage_pages','publish_pages'];
-		// TODO - Wrap in if to see if its already been linked
-		// dd($facebook->getRedirectLoginHelper()->getLoginUrl(url('/') . '/admin/settings/link/facebook', $facebook_permissions));
+		
 		$facebook_callback = null;
-		if (Settings::getSocialFacebookPageAccessTokens() == null) {
-			$facebook_callback = $facebook->getRedirectLoginHelper()->getLoginUrl(url('/admin/settings/link/facebook'), $facebook_permissions);
+		if (Facebook::isEnabled() && !Facebook::isLinked()) {
+			$facebook_callback = Facebook::getLoginUrl();
 		}
 		return view('admin.settings.index')
 			->withSettings(Setting::all())
@@ -175,7 +174,7 @@ class SettingsController extends Controller
 	{
 		// DEBUG
 		// dd($social);
-		if (config('facebook.config.app_id') == null || config('facebook.config.app_secret') == null) {
+		if ($social == 'facebook' && (config('facebook.config.app_id') == null || config('facebook.config.app_secret') == null)) {
 			Session::flash('alert-danger', 'Facebook App is not configured');
 			return Redirect::to('/admin/settings');
 		}
@@ -191,7 +190,6 @@ class SettingsController extends Controller
 
 		if ($social == 'facebook') {
 			$facebook_helper = $facebook->getRedirectLoginHelper();
-
 			try {
 			  	$access_token = $facebook_helper->getAccessToken();
 			} catch(Facebook\Exceptions\FacebookResponseException $e) {
@@ -256,6 +254,16 @@ class SettingsController extends Controller
 		}
 
 		Session::flash('alert-success', "Successfully Linked {$social}!");
+		return Redirect::to('/admin/settings');
+	}
+
+	public function unlinkSocial($social)
+	{
+		if (!Settings::setSocialFacebookPageAccessTokens(null)) {
+			Session::flash('alert-danger', "Could not Unlink {$social}!");
+			return Redirect::to('/admin/settings');
+		}
+		Session::flash('alert-success', "Successfully Uninked {$social}!");
 		return Redirect::to('/admin/settings');
 	}
 	/**

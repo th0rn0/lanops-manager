@@ -235,6 +235,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/settings', 'Admin\SettingsController@index');
 		Route::post('/admin/settings', 'Admin\SettingsController@update');
 		Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
+		Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
 		Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
 		/**
