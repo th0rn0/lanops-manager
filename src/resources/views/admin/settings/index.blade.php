@@ -138,17 +138,20 @@
 				<p>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</p>
 				<h4>Facebook</h4>
 				@if ($facebook_callback != null)
-					<a href="{{ $facebook_callback }}"><button type="button" class="btn btn-default">Facebook</button></a> - Unlinked
+					<a href="{{ $facebook_callback }}"><button type="button" class="btn btn-default">Link Account</button></a>
 				@else
-					<button type="submit" class="btn btn-default">Unlink</button> - unlink button plz
+					{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger">Unlink Account</button>
+					{{ Form::close() }}
 				@endif
 				<h4>Twitter</h4>
 				{{ Form::open(array('url'=>'/admin/settings/link/twitter')) }}
-					<button type="submit" class="btn btn-default">Twitter</button> - Unlinked
+					<button type="submit" class="btn btn-default">Link Account</button>
 				{{ Form::close() }}
 				<h4>Instagram</h4>
 				{{ Form::open(array('url'=>'/admin/settings/link/instagram')) }}
-					<button type="submit" class="btn btn-default">Instagram</button> - Unlinked
+					<button type="submit" class="btn btn-default">Link Account</button>
 				{{ Form::close() }}
 			</div>
 		</div>

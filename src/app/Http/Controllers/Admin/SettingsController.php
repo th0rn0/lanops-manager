@@ -34,7 +34,9 @@ class SettingsController extends Controller
 		// TODO - Wrap in if to see if its already been linked
 		// dd($facebook->getRedirectLoginHelper()->getLoginUrl(url('/') . '/admin/settings/link/facebook', $facebook_permissions));
 		$facebook_callback = null;
-		$facebook_callback = $facebook->getRedirectLoginHelper()->getLoginUrl(url('/admin/settings/link/facebook'), $facebook_permissions);
+		if (Settings::getSocialFacebookPageAccessTokens() == null) {
+			$facebook_callback = $facebook->getRedirectLoginHelper()->getLoginUrl(url('/admin/settings/link/facebook'), $facebook_permissions);
+		}
 		return view('admin.settings.index')
 			->withSettings(Setting::all())
 			->withFacebookCallback($facebook_callback)
