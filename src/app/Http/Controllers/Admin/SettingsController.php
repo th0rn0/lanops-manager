@@ -233,7 +233,6 @@ class SettingsController extends Controller
 				}
 			}
 
-
 			// DEBUG - test this isn't needed
 			// $_SESSION['fb_access_token'] = (string) $access_token;
 
