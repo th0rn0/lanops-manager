@@ -37,6 +37,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'HomeController@index');
 
 	/**
+	 * News Page
+	 */
+	Route::get('/news', 'NewsController@index');
+	Route::get('/news/{news_article}', 'NewsController@show');
+
+	/**
 	 * Events
 	 */
 	Route::get('/events', 'Events\EventsController@index');

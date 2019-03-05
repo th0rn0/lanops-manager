@@ -99,8 +99,9 @@
 				</div>
 				<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 					<div class="col-lg-6 col-md-6">
-						<h2 class="text-muted">Help</h2>
+						<h2 class="text-muted">Links</h2>
 						<p class="text-muted hidden"><a href="/contact">Contact Us</a></p>
+						<p class="text-muted"><a href="/news">News</a></p>
 						<p class="text-muted"><a href="/about">About Us</a></p>
 						<p class="text-muted hidden">Lan Guide</p>
 					</div>

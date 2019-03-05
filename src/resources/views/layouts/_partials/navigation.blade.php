@@ -20,8 +20,6 @@
 
 				<li><a href="/gallery">Gallery</a></li>
 
-				<li><a href="/about">About</a></li>
-
 				@if (Auth::check())
 					@include ('layouts._partials.user-navigation')
 				@else

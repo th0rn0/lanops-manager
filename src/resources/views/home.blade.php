@@ -124,16 +124,9 @@
 			<div class="page-header">
 				<h3>Latest News</h3>
 			</div>
-
 			@foreach ($news_articles as $news_article)
-				<div class="news-post">
-					<h2 class="news-post-title">{{ $news_article->title }}</h2>
-					<!-- // TODO - add user account public pages -->
-					<p class="news-post-meta">{{ date('F d, Y', strtotime($news_article->created_at)) }} by <a href="#">{{ $news_article->user->steamname }}</a></p>
-					{!! $news_article->article !!}
-				</div>
+				@include ('layouts._partials._news.short')
 			@endforeach
-
 		</div>
 		<div class="col-xs-12 col-sm-3">
 			<div class="page-header">
