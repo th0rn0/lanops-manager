@@ -73,7 +73,8 @@
 									$setting->setting != 'org_name' && 
 									$setting->setting != 'org_logo' &&
 									$setting->setting != 'org_favicon' &&
-									$setting->setting != 'currency'
+									$setting->setting != 'currency' &&
+									$setting->setting != 'social_facebook_page_access_token'
 								)
 									<tr>
 										{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
@@ -128,6 +129,32 @@
 		</div>
 	</div>
 	<div class="col-lg-6 col-xs-12">
+		<!-- Social Media -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Social Media
+			</div>
+			<div class="panel-body">
+				<p>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</p>
+				<h4>Facebook</h4>
+				@if ($facebook_callback != null)
+					<a href="{{ $facebook_callback }}"><button type="button" class="btn btn-default">Link Account</button></a>
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger">Unlink Account</button>
+					{{ Form::close() }}
+				@endif
+				<h4>Twitter</h4>
+				{{ Form::open(array('url'=>'/admin/settings/link/twitter')) }}
+					<button type="submit" class="btn btn-default">Link Account</button>
+				{{ Form::close() }}
+				<h4>Instagram</h4>
+				{{ Form::open(array('url'=>'/admin/settings/link/instagram')) }}
+					<button type="submit" class="btn btn-default">Link Account</button>
+				{{ Form::close() }}
+			</div>
+		</div>
 		<!-- About -->
 		<div class="panel panel-default">
 			<div class="panel-heading">

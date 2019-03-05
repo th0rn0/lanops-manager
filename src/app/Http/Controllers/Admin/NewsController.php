@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Session;
+use Settings;
 
 use App\User;
 use App\Event;
@@ -18,6 +19,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
+use FacebookPageWrapper as Facebook;
+
 class newsController extends Controller
 {
 	/**
@@ -26,7 +29,10 @@ class newsController extends Controller
 	 */
 	public function index()
 	{
-		return view('admin.news.index')->withNewsArticles(NewsArticle::all());
+		return view('admin.news.index')
+			->withNewsArticles(NewsArticle::all())
+			->withFacebookLinked(Facebook::isLinked())
+		;
 	}
 
 	/**
@@ -63,6 +69,23 @@ class newsController extends Controller
 			Session::flash('alert-danger', 'Cannot Save News Article!');
 			return Redirect::to('/admin/events/');
 		}
+
+		if (
+			(
+				isset($request->post_to_facebook) && 
+				$request->post_to_facebook 
+			) && 
+			(
+				Facebook::isEnabled() && 
+				Facebook::isLinked()
+			)
+		) {
+			if (!Facebook::postNewsArticleToPage($news_article->title, $news_article->article, $news_article->slug)) {
+				Session::flash('alert-danger', 'Facebook SDK returned an error');
+		 		return Redirect::back();
+			}
+		}
+
 		Session::flash('alert-success', 'Successfully saved News Article!');
 		return Redirect::to('/admin/news/');
 	}

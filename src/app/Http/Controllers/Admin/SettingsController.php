@@ -8,6 +8,7 @@ use Session;
 use Redirect;
 use Settings;
 use Input;
+use FacebookPageWrapper as Facebook;
 
 use App\User;
 use App\Setting;
@@ -28,7 +29,15 @@ class SettingsController extends Controller
 	 */
 	public function index()
 	{
-		return view('admin.settings.index')->withSettings(Setting::all());
+		
+		$facebook_callback = null;
+		if (Facebook::isEnabled() && !Facebook::isLinked()) {
+			$facebook_callback = Facebook::getLoginUrl();
+		}
+		return view('admin.settings.index')
+			->withSettings(Setting::all())
+			->withFacebookCallback($facebook_callback)
+		;
 	}
 	
 	/**
@@ -160,20 +169,63 @@ class SettingsController extends Controller
 	}
 
 	/**
-	 * Delete Setting
-	 * @param  Setting $setting
+	 * Link Social Platform for posting Images & News
+	 * @param  String $social
 	 * @return Redirect
 	 */
-	public function destroy(Setting $setting)
+	public function linkSocial($social)
 	{
-		if (!$setting->default && !$setting->delete()) {
-			Session::flash('alert-danger', 'Could not delete!');
-			return Redirect::back();
+		if ($social == 'facebook' && (!Facebook::isEnabled())) {
+			Session::flash('alert-danger', 'Facebook App is not configured.');
+			return Redirect::to('/admin/settings');
 		}
-		Session::flash('alert-success', 'Successfully deleted!');
-		return Redirect::back(); 
+		if ($social == 'facebook' && (Facebook::isLinked())) {
+			Session::flash('alert-danger', 'Facebook is already Linked.');
+			return Redirect::to('/admin/settings');
+		}
+		$accepted_social = array(
+			'facebook',
+			// 'twitter',
+			// 'instagram',
+		);
+		if (!in_array($social, $accepted_social)) {
+			Session::flash('alert-danger', "{$social} is not supported by the Lan Manager.");
+			return Redirect::to('/admin/settings');
+		}
+
+		if ($social == 'facebook' && (Facebook::isEnabled() && !Facebook::isLinked())) {
+			if (!$user_access_token = Facebook::getUserAccessToken()) {
+				Session::flash('alert-danger', 'Facebook: 401 Unauthorized Request.');
+				return Redirect::to('/admin/settings');
+			}
+			if (!$page_access_tokens = Facebook::getPageAccessTokens($user_access_token)) {
+				Session::flash('alert-danger', "Facebook: Error getting long-lived access token");
+				return Redirect::to('/admin/settings');
+			}
+			if (!Settings::setSocialFacebookPageAccessTokens($page_access_tokens)) {
+				Session::flash('alert-danger', "Could not Link {$social}!");
+				return Redirect::to('/admin/settings');
+			}
+		}
+		Session::flash('alert-success', "Successfully Linked {$social}!");
+		return Redirect::to('/admin/settings');
 	}
 
+	/**
+	 * Unlink Social Platform
+	 * @param  String $social
+	 * @return Redirect
+	 */
+	public function unlinkSocial($social)
+	{
+		if (!Settings::setSocialFacebookPageAccessTokens(null)) {
+			Session::flash('alert-danger', "Could not Unlink {$social}!");
+			return Redirect::to('/admin/settings');
+		}
+		Session::flash('alert-success', "Successfully Uninked {$social}. You will still need to remove the app access on Facebook!");
+		return Redirect::to('/admin/settings');
+	}
+	
 	/**
 	 * Regenerate QR codes for Event Participants
 	 * @return Redirect

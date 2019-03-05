@@ -151,6 +151,9 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team', 'Admin\Events\TournamentsController@updateParticipantTeam');
 
 		// TODO - REMOVE THIS AND ALL LIKE IT
+		/**
+		 * Legacy
+		 */
 		Route::get('/admin/events/tournaments/fix', 'Admin\Events\TournamentsController@fixScores');
 
 
@@ -230,7 +233,9 @@ Route::group(['middleware' => ['web']], function () {
 		 * Settings
 		 */
 		Route::get('/admin/settings', 'Admin\SettingsController@index');
-		Route::post('/admin/settings/', 'Admin\SettingsController@update');
+		Route::post('/admin/settings', 'Admin\SettingsController@update');
+		Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
+		Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
 		Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
 		/**

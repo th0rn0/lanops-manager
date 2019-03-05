@@ -85,6 +85,13 @@ composer-update:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
+    composer update --ignore-platform-reqs --no-scripts
+
+# Update Dev PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
+composer-add-dep:
+	docker run --rm --name compose-maintainence-update --interactive \
+    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
+    --user $(id -u):$(id -g) \
     composer require $(module) --ignore-platform-reqs --no-scripts
 
 # Install JS Dependencies via NPM

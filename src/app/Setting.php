@@ -447,4 +447,28 @@ class Setting extends Model
         }
         return true;
     }
+
+    /**
+     * Get Facebook Page Access Tokens
+     * @return String
+     */
+    public static function getSocialFacebookPageAccessTokens()
+    {
+        return unserialize(self::where('setting', 'social_facebook_page_access_token')->first()->value);
+    }
+
+    /**
+     * Set Facebook Page Access Tokens
+     * @param Array $facebook_access_tokens
+     */
+    public static function setSocialFacebookPageAccessTokens($facebook_access_tokens)
+    {
+        $setting = self::where('setting', 'social_facebook_page_access_token')->first();
+        $setting->value = serialize($facebook_access_tokens);
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
 }
