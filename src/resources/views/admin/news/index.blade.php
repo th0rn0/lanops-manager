@@ -68,7 +68,7 @@
 										{{ $news_article->user->steamname }}
 									</td>
 									<td>
-										{{ date('d-MM-yy', strtotime($news_article->created_at)) }}
+										{{ $news_article->created_at }}
 									</td>
 									<td width="15%">
 										<a href="/admin/news/{{ $news_article->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
