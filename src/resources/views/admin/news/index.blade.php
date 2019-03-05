@@ -31,6 +31,11 @@
 						{{ Form::label('article','Article',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('article', NULL,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
+					@if ($facebook_linked)
+						<div class="form-group">
+							{{ Form::checkbox('post_to_facebook', true, array('id'=>'post_to_facebook','class'=>'form-control')) }} Post to facebook?
+						</div>
+					@endif
 					<button type="submit" class="btn btn-default btn-block">Submit</button> 
 				{{ Form::close() }}
 			</div>

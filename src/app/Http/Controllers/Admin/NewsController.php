@@ -19,7 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
-use Facebook\Facebook;
+use FacebookPageWrapper as Facebook;
 
 class newsController extends Controller
 {
@@ -29,7 +29,10 @@ class newsController extends Controller
 	 */
 	public function index()
 	{
-		return view('admin.news.index')->withNewsArticles(NewsArticle::all());
+		return view('admin.news.index')
+			->withNewsArticles(NewsArticle::all())
+			->withFacebookLinked(Facebook::isLinked())
+		;
 	}
 
 	/**
@@ -67,31 +70,22 @@ class newsController extends Controller
 			return Redirect::to('/admin/events/');
 		}
 
-		// DEBUG
-		$request->share_to_facebook = true;
-
-		if ($request->share_to_facebook && $facebook_tokens = Settings::getSocialFacebookPageAccessTokens()) {
-			$facebook = new Facebook;
-		 	$linkData = [
-			 	'link' => url("/news/{$news_article->slug}"),
-			 	'message' => strip_tags(substr($request->article, strpos($request->article, "<p"), strpos($request->article, "</p>")+4))
-			];
-			if (!in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
-				$linkData['link'] = "http://example.com/news/{$news_article->slug}";
-			}
-			foreach ($facebook_tokens as $token) {
-				try {
-				 	$response = $facebook->post('/me/feed', $linkData, $token);
-				} catch(Facebook\Exceptions\FacebookResponseException $e) {
- 					Session::flash('alert-danger', 'Graph returned an error: '.$e->getMessage());
-					return Redirect::back();
-				} catch(Facebook\Exceptions\FacebookSDKException $e) {
- 					Session::flash('alert-danger', 'Facebook SDK returned an error: '.$e->getMessage());
-					return Redirect::back();
-				}
-				$graphNode = $response->getGraphNode();
+		if (
+			(
+				isset($request->post_to_facebook) && 
+				$request->post_to_facebook 
+			) && 
+			(
+				Facebook::isEnabled() && 
+				Facebook::isLinked()
+			)
+		) {
+			if (!Facebook::postNewsToPage($news_article->title, $news_article->article, $news_article->slug)) {
+				Session::flash('alert-danger', 'Facebook SDK returned an error');
+		 		return Redirect::back();
 			}
 		}
+
 		Session::flash('alert-success', 'Successfully saved News Article!');
 		return Redirect::to('/admin/news/');
 	}

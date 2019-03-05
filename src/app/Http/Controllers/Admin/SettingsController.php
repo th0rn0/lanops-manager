@@ -18,8 +18,6 @@ use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-// use Facebook\Facebook;
-
 
 use Illuminate\Http\Request;
 
@@ -170,12 +168,19 @@ class SettingsController extends Controller
 		return Redirect::back();
 	}
 
-	public function linkSocial($social, Facebook $facebook)
+	/**
+	 * Link Social Platform for posting Images & News
+	 * @param  String $social
+	 * @return Redirect
+	 */
+	public function linkSocial($social)
 	{
-		// DEBUG
-		// dd($social);
-		if ($social == 'facebook' && (config('facebook.config.app_id') == null || config('facebook.config.app_secret') == null)) {
-			Session::flash('alert-danger', 'Facebook App is not configured');
+		if ($social == 'facebook' && (!Facebook::isEnabled())) {
+			Session::flash('alert-danger', 'Facebook App is not configured.');
+			return Redirect::to('/admin/settings');
+		}
+		if ($social == 'facebook' && (Facebook::isLinked())) {
+			Session::flash('alert-danger', 'Facebook is already Linked.');
 			return Redirect::to('/admin/settings');
 		}
 		$accepted_social = array(
@@ -184,88 +189,43 @@ class SettingsController extends Controller
 			// 'instagram',
 		);
 		if (!in_array($social, $accepted_social)) {
-			Session::flash('alert-danger', "{$social} is not supported by the Lan Manager");
+			Session::flash('alert-danger', "{$social} is not supported by the Lan Manager.");
 			return Redirect::to('/admin/settings');
 		}
 
-		if ($social == 'facebook') {
-			$facebook_helper = $facebook->getRedirectLoginHelper();
-			try {
-			  	$access_token = $facebook_helper->getAccessToken();
-			} catch(Facebook\Exceptions\FacebookResponseException $e) {
-				// When Graph returns an error
-				Session::flash('alert-danger', 'Graph returned an error: ' . $e->getMessage());
-				return Redirect::to('/admin/settings');
-			} catch(Facebook\Exceptions\FacebookSDKException $e) {
-			  	// When validation fails or other local issues
-				Session::flash('alert-danger', 'Facebook SDK returned an error: ' . $e->getMessage());
+		if ($social == 'facebook' && (Facebook::isEnabled() && !Facebook::isLinked())) {
+			if (!$user_access_token = Facebook::getUserAccessToken()) {
+				Session::flash('alert-danger', 'Facebook: 401 Unauthorized Request.');
 				return Redirect::to('/admin/settings');
 			}
-			if (! isset($access_token)) {
-				if ($facebook_helper->getError()) {
-					header('HTTP/1.0 401 Unauthorized');
-					$message = "Error: " . $facebook_helper->getError() . "\n";
-					$message .= "Error Code: " . $facebook_helper->getErrorCode() . "\n";
-					$message .= "Error Reason: " . $facebook_helper->getErrorReason() . "\n";
-					$message .= "Error Description: " . $facebook_helper->getErrorDescription() . "\n";
-					Session::flash('alert-danger', 'HTTP/1.0 401 Unauthorized.' . "\n" . $message);
-					return Redirect::to('/admin/settings');
-				}
-				Session::flash('alert-danger', 'HTTP/1.0 400 Bad Request.');
+			if (!$page_access_tokens = Facebook::getPageAccessTokens($user_access_token)) {
+				Session::flash('alert-danger', "Facebook: Error getting long-lived access token");
 				return Redirect::to('/admin/settings');
 			}
-
-			// The OAuth 2.0 client handler helps us manage access tokens
-			$oauth_client = $facebook->getOAuth2Client();
-
-			// Get the access token metadata from /debug_token
-			$token_metadata = $oauth_client->debugToken($access_token);
-			$token_metadata->validateAppId(config('facebook.config.app_id'));
-			$token_metadata->validateExpiration();
-
-			if (!$access_token->isLongLived()) {
-				// Exchanges a short-lived access token for a long-lived one
-				try {
-					$access_token = $oauth_client->getLongLivedAccessToken($access_token);
-				} catch (Facebook\Exceptions\FacebookSDKException $e) {
-					Session::flash('alert-danger', "Error getting long-lived access token: " . $e->getMessage());
-					return Redirect::to('/admin/settings');
-				}
-			}
-
-			// DEBUG - test this isn't needed
-			// $_SESSION['fb_access_token'] = (string) $access_token;
-
-			try{
-				$response = ($facebook->get('/me/accounts?fields=access_token', $access_token))->getDecodedBody();
-			} catch (Facebook\Exceptions\FacebookSDKException $e) { 
-				Session::flash('alert-danger', "Error getting long-lived access token: " . $e->getMessage());
-				return Redirect::to('/admin/settings');
-			}
-			$facebook_access_tokens = array();
-			foreach ($response['data'] as $pages) {
-				array_push($facebook_access_tokens, $pages['access_token']);
-			}
-
-			if (!Settings::setSocialFacebookPageAccessTokens($facebook_access_tokens)) {
+			if (!Settings::setSocialFacebookPageAccessTokens($page_access_tokens)) {
 				Session::flash('alert-danger', "Could not Link {$social}!");
 				return Redirect::to('/admin/settings');
 			}
 		}
-
 		Session::flash('alert-success', "Successfully Linked {$social}!");
 		return Redirect::to('/admin/settings');
 	}
 
+	/**
+	 * Unlink Social Platform
+	 * @param  String $social
+	 * @return Redirect
+	 */
 	public function unlinkSocial($social)
 	{
 		if (!Settings::setSocialFacebookPageAccessTokens(null)) {
 			Session::flash('alert-danger', "Could not Unlink {$social}!");
 			return Redirect::to('/admin/settings');
 		}
-		Session::flash('alert-success', "Successfully Uninked {$social}!");
+		Session::flash('alert-success', "Successfully Uninked {$social}. You will still need to remove the app access on Facebook!");
 		return Redirect::to('/admin/settings');
 	}
+	
 	/**
 	 * Regenerate QR codes for Event Participants
 	 * @return Redirect
