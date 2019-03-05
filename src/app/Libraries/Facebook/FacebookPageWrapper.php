@@ -48,6 +48,9 @@ class FacebookPageWrapper
     	$this->api = new Facebook(config('facebook.config'));
     }
 
+	/**
+	 * Check if Facebook App is Enabled
+	 */
     public static function isEnabled()
     {
     	if (empty(config('facebook.config.app_id')) || empty(config('facebook.config.app_secret'))) {
@@ -56,6 +59,9 @@ class FacebookPageWrapper
     	return true;
     }
 
+	/**
+	 * Check if Facebook App is Linked to Pages & Access Tokens exist
+	 */
     public static function isLinked()
     {
     	if (empty(Settings::getSocialFacebookPageAccessTokens()))
@@ -65,12 +71,21 @@ class FacebookPageWrapper
     	return true;
     }
 
+	/**
+	 * Get Login URL for Facebook OAuth
+	 * @return String
+	 */
     public static function getLoginUrl()
     {
     	$api = new Facebook(config('facebook.config'));
     	return $api->getRedirectLoginHelper()->getLoginUrl(url('/admin/settings/link/facebook'), self::$permissions);
     }
 
+	/**
+	 * Get User Access Token for Facebook OAuth
+	 * @param  String $long_lived
+	 * @return String
+	 */
     public static function getUserAccessToken($long_lived = true)
     {
     	$api = new Facebook(config('facebook.config'));
@@ -120,6 +135,11 @@ class FacebookPageWrapper
 	    return $user_access_token;
     }
 
+	/**
+	 * Get Page Access Token for Facebook OAuth
+	 * @param  String $user_access_token
+	 * @return String
+	 */
     public static function getPageAccessTokens($user_access_token)
     {
     	$api = new Facebook(config('facebook.config'));
@@ -136,7 +156,14 @@ class FacebookPageWrapper
 		return $page_access_tokens;
     }
 
-    public static function postNewsToPage($title, $article, $slug)
+	/**
+	 * Post News Article to Facebook Page
+	 * @param  String $title
+	 * @param  String $article
+	 * @param  String $slug
+	 * @return String
+	 */
+    public static function postNewsArticleToPage($title, $article, $slug)
     {
 		$api = new Facebook;
 	 	$linkData = [

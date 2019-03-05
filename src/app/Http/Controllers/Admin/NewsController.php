@@ -80,7 +80,7 @@ class newsController extends Controller
 				Facebook::isLinked()
 			)
 		) {
-			if (!Facebook::postNewsToPage($news_article->title, $news_article->article, $news_article->slug)) {
+			if (!Facebook::postNewsArticleToPage($news_article->title, $news_article->article, $news_article->slug)) {
 				Session::flash('alert-danger', 'Facebook SDK returned an error');
 		 		return Redirect::back();
 			}
