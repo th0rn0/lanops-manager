@@ -178,7 +178,7 @@ class Setting extends Model
      */
     public static function getDiscordLink()
     {
-        return self::where('setting', 'discord')->first()->value;
+        return self::where('setting', 'discord_link')->first()->value;
     }
 
     /**
@@ -187,7 +187,7 @@ class Setting extends Model
      */
     public static function setDiscordLink($text)
     {
-        $setting = self::where('setting', 'discord')->first();
+        $setting = self::where('setting', 'discord_link')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;
@@ -201,7 +201,7 @@ class Setting extends Model
      */
     public static function getFacebookLink()
     {
-        return self::where('setting', 'facebook')->first()->value;
+        return self::where('setting', 'facebook_link')->first()->value;
     }
     
     /**
@@ -210,7 +210,7 @@ class Setting extends Model
      */
     public static function setFacebookLink($text)
     {
-        $setting = self::where('setting', 'facebook')->first();
+        $setting = self::where('setting', 'facebook_link')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;
@@ -224,7 +224,7 @@ class Setting extends Model
      */
     public static function getSteamLink()
     {
-        return self::where('setting', 'steam')->first()->value;
+        return self::where('setting', 'steam_link')->first()->value;
     }
 
     /**
@@ -233,7 +233,7 @@ class Setting extends Model
      */
     public static function setSteamLink($text)
     {
-        $setting = self::where('setting', 'steam')->first();
+        $setting = self::where('setting', 'steam_link')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;
@@ -247,7 +247,7 @@ class Setting extends Model
      */
     public static function getRedditLink()
     {
-        return self::where('setting', 'reddit')->first()->value;
+        return self::where('setting', 'reddit_link')->first()->value;
     }
 
     /**
@@ -256,7 +256,7 @@ class Setting extends Model
      */
     public static function setRedditLink($text)
     {
-        $setting = self::where('setting', 'reddit')->first();
+        $setting = self::where('setting', 'reddit_link')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;
@@ -270,7 +270,7 @@ class Setting extends Model
      */
     public static function getTeamspeakLink()
     {
-        return self::where('setting', 'teamspeak')->first()->value;
+        return self::where('setting', 'teamspeak_link')->first()->value;
     }
 
     /**
@@ -279,7 +279,7 @@ class Setting extends Model
      */
     public static function setTeamspeakLink($text)
     {
-        $setting = self::where('setting', 'teamspeak')->first();
+        $setting = self::where('setting', 'teamspeak_link')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;

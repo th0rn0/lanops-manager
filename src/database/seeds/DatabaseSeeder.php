@@ -76,27 +76,27 @@ class DatabaseSeeder extends Seeder
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
-            'setting'   => 'steam',
+            'setting'   => 'steam_link',
             'value'     => null,
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
-            'setting'   => 'teamspeak',
+            'setting'   => 'teamspeak_link',
             'value'     => null,
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
-            'setting'   => 'discord',
+            'setting'   => 'discord_link',
             'value'     => null,
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
-            'setting'   => 'reddit',
+            'setting'   => 'reddit_link',
             'value'     => null,
             'default'   => true,
         ]);
         factory(App\Setting::class)->create([
-            'setting'   => 'facebook',
+            'setting'   => 'facebook_link',
             'value'     => null,
             'default'   => true,
         ]);
