@@ -96,7 +96,7 @@ class HomeController extends Controller
 			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first())
 			->withTopAttendees(array_slice($top_attendees, 0, 5))
 			->withTopWinners(array_slice($top_winners, 0, 5))
-			->withNewsArticles(NewsArticle::limit(3)->orderBy('created_at', 'desc')->get())
+			->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
 			->withEvents(Event::all());
 		;
 	}

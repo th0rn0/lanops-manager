@@ -1,9 +1,5 @@
 <div class="news-post">
-	<h2 class="news-post-title"><a href="/news/{{ $news_article->slug }}">{{ $news_article->title }}</a></h2>
-	<br>
-	{!! strip_tags(substr($news_article->article, strpos($news_article->article, "<p"), strpos($news_article->article, "</p>")+4)) !!}
-	<br><br>
-	<p><a href="/news/{{ $news_article->slug }}">Read More...</a></p>
+	{!! $news_article->article !!}
 	<hr>
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
