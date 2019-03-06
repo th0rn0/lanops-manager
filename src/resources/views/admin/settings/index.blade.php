@@ -79,7 +79,8 @@
 									<tr>
 										{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 											<td>
-												{{ $setting->setting }}
+												{{ ucwords(str_replace("_"," ",$setting->setting)) }}<br>
+												<small>{{ $setting->description }}</small>
 											</td>
 											<td>
 												{{ Form::text($setting->setting, $setting->value ,array('id'=>'setting','class'=>'form-control')) }}
