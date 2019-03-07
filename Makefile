@@ -50,6 +50,10 @@ database-rollback:
 generate-key:
 	docker exec lan_manager_app php artisan key:generate
 
+# Generate Settings - This will erase your current settings!
+generate-settings:
+	docker exec lan_manager_app php artisan db:seed --class=SettingsTableSeeder
+
 # Create Default Folder structure
 folder-structure:
 	ln -s src/storage/app/public src/public/storage
@@ -134,7 +138,6 @@ purge-cache:
 # Wait for containers to initialize
 wait:
 	sleep 30
-
 
 ###############
 # DANGER ZONE #

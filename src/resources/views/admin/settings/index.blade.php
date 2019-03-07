@@ -80,7 +80,9 @@
 										{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 											<td>
 												{{ ucwords(str_replace("_"," ",$setting->setting)) }}<br>
-												<small>{{ $setting->description }}</small>
+												@if ($setting->description != null)
+													<small>{{ $setting->description }}</small>
+												@endif
 											</td>
 											<td>
 												{{ Form::text($setting->setting, $setting->value ,array('id'=>'setting','class'=>'form-control')) }}
