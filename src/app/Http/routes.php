@@ -41,6 +41,7 @@ Route::group(['middleware' => ['web']], function () {
 	 */
 	Route::get('/news', 'NewsController@index');
 	Route::get('/news/{news_article}', 'NewsController@show');
+	Route::post('/news/{news_article}/comment', 'NewsController@postComment');
 
 	/**
 	 * Events
@@ -252,6 +253,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/news/{news_article}', 'Admin\NewsController@show');
 		Route::post('/admin/news/{news_article}', 'Admin\NewsController@update');
 		Route::delete('/admin/news/{news_article}', 'Admin\NewsController@destroy');
+		Route::delete('/admin/news/{news_article}/comments/{news_comment}', 'Admin\NewsController@destroyComment');
+
 	});
 
 });

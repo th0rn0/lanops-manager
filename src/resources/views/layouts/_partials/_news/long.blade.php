@@ -1,4 +1,4 @@
-<div class="news-post">
+<div class="news-post" style="margin-bottom:0px;">
 	{!! $news_article->article !!}
 	<hr>
 	<div class="row">

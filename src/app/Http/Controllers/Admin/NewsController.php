@@ -10,6 +10,7 @@ use Settings;
 use App\User;
 use App\Event;
 use App\NewsArticle;
+use App\NewsComment;
 use App\GalleryAlbum;
 use App\GalleryAlbumImage;
 
@@ -86,7 +87,7 @@ class newsController extends Controller
 			}
 		}
 
-		Session::flash('alert-success', 'Successfully saved News Article!');
+		Session::flash('alert-success', 'Successfully Saved News Article!');
 		return Redirect::to('/admin/news/');
 	}
 
@@ -112,11 +113,11 @@ class newsController extends Controller
 		$news_article->article 	= $request->article;
 
 		if (!$news_article->save()) {
-			Session::flash('alert-danger', 'Cannot update News Article!');
+			Session::flash('alert-danger', 'Cannot Update News Article!');
 			return Redirect::to('admin/news/' . $news_article->slug);
 		}
 
-		Session::flash('alert-success', 'Successfully updated News Article!');
+		Session::flash('alert-success', 'Successfully Updated News Article!');
 		return Redirect::to('admin/news/' . $news_article->slug);
 	}
 
@@ -128,11 +129,23 @@ class newsController extends Controller
 	public function destroy(NewsArticle $news_article)
 	{
 		if (!$news_article->delete()) {
-			Session::flash('alert-danger', 'Cannot delete News Article!');
+			Session::flash('alert-danger', 'Cannot Delete News Article!');
 			return Redirect::back();
 		}
 
-		Session::flash('alert-success', 'Successfully deleted News Article!');
+		Session::flash('alert-success', 'Successfully Deleted News Article!');
 		return Redirect::to('admin/news/');
+	}
+
+
+	public function destroyComment(NewsArticle $news_article, NewsComment $news_comment)
+	{
+		if (!$news_comment->delete()) {
+			Session::flash('alert-danger', 'Cannot Delete News Article Comment!');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Successfully Deleted News Article Comment!');
+		return Redirect::back();
 	}
 }

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\NewsComment;
+
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -34,6 +36,11 @@ class NewsArticle extends Model
       return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function comments()
+    {
+      return $this->hasMany('App\NewsComment', 'news_feed_id');
+    }
+
 
     /**
      * Return the sluggable configuration array for this model.
@@ -57,5 +64,17 @@ class NewsArticle extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function postComment($text, $user_id)
+    {
+        $comment = new NewsComment();
+        $comment->comment = $text;
+        $comment->news_feed_id = $this->id;
+        $comment->user_id = $user_id;
+        if (!$comment->save()) {
+            return false;
+        }
+        return true;
     }
 }
