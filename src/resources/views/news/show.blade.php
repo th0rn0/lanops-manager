@@ -50,7 +50,7 @@
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $news_article->slug . '/comment')) }}
 					<div class="form-group">
-						{{ Form::textarea('comment', 'Post a Comment',array('id'=>'comment','class'=>'form-control', 'rows'=>'4')) }}
+						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
