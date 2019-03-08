@@ -69,7 +69,12 @@ class newsController extends Controller
 		$news_article->article = $request->article;
 		$news_article->user_id = Auth::id();
 		
-		if (!$news_article->storeTags(explode(',', $request->tags)) && !$news_article->save()) {
+		if (!$news_article->save()) {
+			Session::flash('alert-danger', 'Cannot Save News Article!');
+			return Redirect::to('/admin/events/');
+		}
+		if (!$news_article->storeTags(explode(',', $request->tags))) {
+			$news_article->delete();
 			Session::flash('alert-danger', 'Cannot Save News Article!');
 			return Redirect::to('/admin/events/');
 		}
