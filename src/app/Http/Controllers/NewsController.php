@@ -6,6 +6,7 @@ use DB;
 use Auth;
 
 use App\NewsArticle;
+use App\NewsTag;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -34,7 +35,26 @@ class NewsController extends Controller
 		return view('news.show')->withNewsArticle($news_article);  
 	}
 
-	public function postComment(NewsArticle $news_article, Request $request)
+	/**
+	 * Show News Articles for Given Tag
+	 * @param  NewsTag $news_tag
+	 * @return View      
+	 */
+	public function showTag(NewsTag $news_tag)
+	{
+		foreach (NewsTag::where('tag', $news_tag->tag)->get()->reverse() as $news_tag) {
+			$news_articles[] = $news_tag->newsArticle;
+		}
+		return view('news.tag')->withTag($news_tag->tag)->withNewsArticles($news_articles);  
+	}
+
+	/**
+	 * Store News Article Comment
+	 * @param  NewsArticle $news_article
+	 * @param  Request $request
+	 * @return View      
+	 */
+	public function storeComment(NewsArticle $news_article, Request $request)
 	{
 		if (!Auth::user()) {
 			$request->session()->flash('alert-danger', 'Please Login.');
@@ -49,7 +69,7 @@ class NewsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		if (!$news_article->postComment($request->comment, Auth::id())) {
+		if (!$news_article->storeComment($request->comment, Auth::id())) {
 			$request->session()->flash('alert-danger', 'Cannot post comment. Please try again.');
 			return Redirect::back();
 		}

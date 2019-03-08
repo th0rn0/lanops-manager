@@ -37,11 +37,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/', 'HomeController@index');
 
 	/**
-	 * News Page
+	 * News Pages
 	 */
 	Route::get('/news', 'NewsController@index');
 	Route::get('/news/{news_article}', 'NewsController@show');
-	Route::post('/news/{news_article}/comment', 'NewsController@postComment');
+	Route::post('/news/{news_article}/comment', 'NewsController@storeComment');
+	Route::get('/news/tags/{news_tag}', 'NewsController@showTag');
 
 	/**
 	 * Events
@@ -51,7 +52,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/events/{event}/big', 'HomeController@bigScreen');
 
 	/**
-	 * Misc pages
+	 * Misc Pages
 	 */
 	Route::get('/about', 'HomeController@about');
 	Route::get('/contact', 'HomeController@contact');

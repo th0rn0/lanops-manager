@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' Events List')
+@section ('page_title', Settings::getOrgName() . ' ' . $news_article->title)
 
 @section ('content')
 			
@@ -23,8 +23,8 @@
 			@foreach ($news_article->comments->reverse() as $comment)
 				<div class="row">
 					<div class="col-xs-2">
-						<img class="img-responsive img-rounded img-small" style="width:85%" src="{{ $comment->user->avatar }}"/>
-						<p style="margin-top:10px;">{{ $comment->user->steamname }}</p>
+						<img class="img-responsive img-rounded img-small news-post-comment-image" src="{{ $comment->user->avatar }}"/>
+						<p class="news-post-comment-image-text">{{ $comment->user->steamname }}</p>
 					</div>
 					<div class="col-xs-10">
 						<p>{{ $comment->comment }}</p>

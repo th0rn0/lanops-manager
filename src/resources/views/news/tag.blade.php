@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' News')
+@section ('page_title', Settings::getOrgName() . ' News Tag: ' . $tag)
 
 @section ('content')
 			
@@ -8,7 +8,7 @@
 
 	<div class="page-header">
 		<h1>
-			News
+			Tagged News: {{ $tag }}
 		</h1> 
 	</div>
 	@foreach ($news_articles as $news_article)

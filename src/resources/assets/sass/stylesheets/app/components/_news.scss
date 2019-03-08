@@ -3,7 +3,7 @@
  */
 
 .news-post {
-  	margin-bottom: 60px;
+  	margin-bottom: 0px;
 }
 .news-post-title {
   	margin-bottom: 5px;
@@ -12,4 +12,14 @@
 .news-post-meta {
   	margin-bottom: 20px;
   	color: #999;
+}
+.news-post-share-button {
+	width: 4%;
+	display: inline;
+}
+.news-post-comment-image {
+	width:85%;
+}
+.news-post-comment-image-text {
+	margin-top:10px;
 }

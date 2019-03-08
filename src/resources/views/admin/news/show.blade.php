@@ -34,6 +34,10 @@
 						{{ Form::label('article','Article',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('article', $news_article->article, array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
+					<div class="form-group">
+						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
+						{{ Form::text('tags', $news_article->getTags(), array('id'=>'', 'class'=>'form-control')) }}
+					</div>
 					<button type="submit" class="btn btn-default btn-block">Submit</button> 
 				{{ Form::close() }}
 				<hr>

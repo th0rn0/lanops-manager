@@ -31,6 +31,10 @@
 						{{ Form::label('article','Article',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('article', NULL,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
+					<div class="form-group">
+						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
+						{{ Form::text('tags', '', array('id'=>'', 'class'=>'form-control')) }}
+					</div>
 					@if ($facebook_linked)
 						<div class="form-group">
 							{{ Form::checkbox('post_to_facebook', true, array('id'=>'post_to_facebook','class'=>'form-control')) }} Post to facebook?
@@ -59,7 +63,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($news_articles as $news_article)
+							@foreach ($news_articles->reverse() as $news_article)
 								<tr>
 									<td>
 										{{ $news_article->title }}

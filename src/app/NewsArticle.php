@@ -3,6 +3,7 @@
 namespace App;
 
 use App\NewsComment;
+use App\NewsTag;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -41,6 +42,11 @@ class NewsArticle extends Model
       return $this->hasMany('App\NewsComment', 'news_feed_id');
     }
 
+    public function tags()
+    {
+      return $this->hasMany('App\NewsTag', 'news_feed_id');
+    }
+
 
     /**
      * Return the sluggable configuration array for this model.
@@ -66,15 +72,54 @@ class NewsArticle extends Model
         return 'slug';
     }
 
-    public function postComment($text, $user_id)
+    /**
+     * Store Comment
+     * @param  String $text
+     * @param  String $user_id
+     * @return Boolean
+     */
+    public function storeComment($text, $user_id)
     {
-        $comment = new NewsComment();
-        $comment->comment = $text;
-        $comment->news_feed_id = $this->id;
-        $comment->user_id = $user_id;
-        if (!$comment->save()) {
+        $news_comment = new NewsComment();
+        $news_comment->comment = $text;
+        $news_comment->news_feed_id = $this->id;
+        $news_comment->user_id = $user_id;
+        if (!$news_comment->save()) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Store Tags
+     * @param  Array $tags
+     * @return Boolean
+     */
+    public function storeTags($tags)
+    {
+        $this->tags()->delete();
+        $added_tags = array();
+        foreach ($tags as $tag) {
+            if (!in_array(trim($tag), $added_tags)) {
+                $news_tag = new NewsTag();
+                $news_tag->tag = trim($tag);
+                $news_tag->news_feed_id = $this->id;
+                if (!$news_tag->save()) {
+                    return false;
+                }
+                array_push($added_tags, trim($tag));
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Get Tags
+     * @param  String $separator
+     * @return Array
+     */
+    public function getTags($separator = ', ')
+    {
+        return implode($separator, $this->tags->pluck('tag')->toArray());
     }
 }
