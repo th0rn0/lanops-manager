@@ -126,6 +126,7 @@ class TicketsController extends Controller
 			'sale_end_date'		=> 'date',
 			'sale_end_time'		=> 'date_format:H:i', 
 			'seatable'			=> 'boolean',
+			'type'				=> 'filled',
 			'quantity'			=> 'numeric',
 		];
 		$messages = [
@@ -147,6 +148,10 @@ class TicketsController extends Controller
 
 		if (isset($request->name)) {
 			$ticket->name = $request->name;
+		}
+
+		if (isset($request->type)) {
+			$ticket->type = $request->type;
 		}
 
 		if (isset($request->sale_start_date) || isset($request->sale_start_time)) {
