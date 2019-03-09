@@ -11,6 +11,7 @@ use App\User;
 use App\Event;
 use App\NewsArticle;
 use App\NewsComment;
+use App\NewsCommentReport;
 use App\GalleryAlbum;
 use App\GalleryAlbumImage;
 
@@ -33,8 +34,8 @@ class newsController extends Controller
 		return view('admin.news.index')
 			->withNewsArticles(NewsArticle::all())
 			->withFacebookLinked(Facebook::isLinked())
-			->withCommentsToApprove(NewsComment::where([['approved', '=', false], ['reviewed', '=', false]])->get())
-			->withCommentsReported(NewsComment::where('reported', true)->get())
+			->withCommentsToApprove(NewsComment::where([['approved', '=', false], ['reviewed', '=', false]])->get()->reverse())
+			->withCommentsReported(NewsCommentReport::where('reviewed', false)->get()->reverse())
 		;
 	}
 
@@ -158,12 +159,66 @@ class newsController extends Controller
 	 */
 	public function destroyComment(NewsArticle $news_article, NewsComment $news_comment)
 	{
+		foreach ($news_comment->reports as $report) {
+			if (!$report->delete()) {
+				Session::flash('alert-danger', 'Cannot Delete News Article Comment!');
+				return Redirect::back();
+			}
+		}
 		if (!$news_comment->delete()) {
 			Session::flash('alert-danger', 'Cannot Delete News Article Comment!');
 			return Redirect::back();
 		}
 
 		Session::flash('alert-success', 'Successfully Deleted News Article Comment!');
+		return Redirect::back();
+	}
+
+
+	/**
+	 * Approve News Article Comment
+	 * @param  NewsArticle  $news_article
+	 * @param  NewsComment  $news_comment
+	 * @return Redirect
+	 */
+	public function approveComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	{
+		if (!$news_comment->review(true) || !$news_comment->approve(true)) {
+			$news_comment->review(false);
+			$news_comment->approve(false);
+			Session::flash('alert-danger', 'Cannot Approve News Article Comment!');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Successfully Approved News Article Comment!');
+		return Redirect::back();
+	}
+
+	/**
+	 * Reject News Article Comment
+	 * @param  NewsArticle  $news_article
+	 * @param  NewsComment  $news_comment
+	 * @return Redirect
+	 */
+	public function rejectComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	{
+		if (!$news_comment->review(true) && !$news_comment->approve(false)) {
+			Session::flash('alert-danger', 'Cannot Reject News Article Comment!');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Successfully Rejected News Article Comment!');
+		return Redirect::back();
+	}
+
+	public function destroyReport(NewsArticle $news_article, NewsComment $news_comment, NewsCommentReport $news_comment_report, Request $request)
+	{
+		if (!$news_comment_report->delete()) {
+			Session::flash('alert-danger', 'Cannot Ignore Reject News Article Report!');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Successfully Approved News Article Comment!');
 		return Redirect::back();
 	}
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddReportedColumnsNewsFeedCommentsTable extends Migration
+class AddApprovedByNewsFeedCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddReportedColumnsNewsFeedCommentsTable extends Migration
     public function up()
     {
         Schema::table('news_feed_comments', function (Blueprint $table) {
-            $table->boolean('reported')->after('approved')->default(0);
+            $table->integer('approved_by')->unsigned()->index()->after('approved');
+            $table->integer('reviewed_by')->unsigned()->index()->after('reviewed');
         });
     }
 
@@ -26,7 +27,8 @@ class AddReportedColumnsNewsFeedCommentsTable extends Migration
     public function down()
     {
         Schema::table('news_feed_comments', function (Blueprint $table) {
-            $table->dropColumn('reported');
+            $table->dropColumn('approved_by');
+            $table->dropColumn('reviewed_by');
         });
     }
 }

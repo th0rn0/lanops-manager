@@ -21,25 +21,17 @@
 				</h3> 
 			</div>
 			@foreach ($news_article->comments->reverse() as $comment)
-				@if (Auth::user() && Auth::user()->getAdmin())
-					@if (!$comment->approved && !$comment->reviewed)
-						<div class="alert alert-warning">This comment has not been approved yet. Only Admins can see it. APPROVE/DENY/DELETE BUTTON HERE</div>
-					@endif
-					@if (!$comment->approved && $comment->reviewed)
+				@if ($comment->approved || (Auth::user() && Auth::user()->getAdmin()) || (Auth::user() && Auth::id() == $comment->user_id))
+					@include ('layouts._partials._news.comment-warnings')
+					@include ('layouts._partials._news.comment')
+					@if (Auth::user() && $comment->reports->pluck('user_id')->contains(Auth::id()))
 						<div class="alert alert-danger">
-							This comment has not been approved! Only Admins can see it. DELETE BUTTON HERE
-							@if (Auth::user() && Auth::user()->getAdmin())
-								{{ Form::open(array('url'=>'/admin/news/' . $news_article->slug . '/comments/' . $comment->id)) }}
-									{{ Form::hidden('_method', 'DELETE') }}
-									<button type="submit" class="btn btn-sm btn-danger">Delete Comment</button>
-								{{ Form::close() }}
-							@endif
+							You have Reported this comment!
 						</div>
 					@endif
+					<hr>
+					<br>
 				@endif
-				@include ('layouts._partials._news.comment')
-				<hr>
-				<br>
 			@endforeach
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-4">
@@ -49,7 +41,7 @@
 				</h3> 
 			</div>
 			@if (Auth::user())
-				{{ Form::open(array('url'=>'/news/' . $news_article->slug . '/comment')) }}
+				{{ Form::open(array('url'=>'/news/' . $news_article->slug . '/comments')) }}
 					<div class="form-group">
 						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
 					</div>

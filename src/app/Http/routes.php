@@ -41,7 +41,9 @@ Route::group(['middleware' => ['web']], function () {
 	 */
 	Route::get('/news', 'NewsController@index');
 	Route::get('/news/{news_article}', 'NewsController@show');
-	Route::post('/news/{news_article}/comment', 'NewsController@storeComment');
+	Route::post('/news/{news_article}/comments', 'NewsController@storeComment');
+	Route::get('/news/{news_article}/comments/{news_comment}/report', 'NewsController@reportComment');
+	Route::get('/news/{news_article}/comments/{news_comment}/delete', 'NewsController@destroyComment');
 	Route::get('/news/tags/{news_tag}', 'NewsController@showTag');
 
 	/**
@@ -254,7 +256,11 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/news/{news_article}', 'Admin\NewsController@show');
 		Route::post('/admin/news/{news_article}', 'Admin\NewsController@update');
 		Route::delete('/admin/news/{news_article}', 'Admin\NewsController@destroy');
-		Route::delete('/admin/news/{news_article}/comments/{news_comment}', 'Admin\NewsController@destroyComment');
+		Route::get('/admin/news/{news_article}/comments/{news_comment}/delete', 'Admin\NewsController@destroyComment');
+		Route::get('/admin/news/{news_article}/comments/{news_comment}/approve', 'Admin\NewsController@approveComment');
+		Route::get('/admin/news/{news_article}/comments/{news_comment}/reject', 'Admin\NewsController@rejectComment');
+		Route::get('/admin/news/{news_article}/comments/{news_comment}/reports/{news_comment_report}/delete', 'Admin\NewsController@destroyReport');
+
 
 	});
 

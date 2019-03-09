@@ -19,7 +19,7 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-6">
+	<div class="col-xs-12 col-sm-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-pencil fa-fw"></i> Edit {{ $news_article->title }}
@@ -48,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-6">
+	<div class="col-xs-12 col-sm-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-users fa-fw"></i> Stats
@@ -58,7 +58,17 @@
 				To do
 			</div>  
 		</div>
-		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-comments fa-fw"></i> Comments
+			</div>
+			<div class="panel-body">
+				@foreach ($news_article->comments->reverse() as $comment)
+					@include ('layouts._partials._news.comment-warnings')
+					@include ('layouts._partials._news.comment')
+				@endforeach
+			</div>  
+		</div>
 	</div>
 </div>
  

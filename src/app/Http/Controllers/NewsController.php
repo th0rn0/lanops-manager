@@ -6,6 +6,7 @@ use DB;
 use Auth;
 
 use App\NewsArticle;
+use App\NewsComment;
 use App\NewsTag;
 
 use App\Http\Requests;
@@ -61,19 +62,64 @@ class NewsController extends Controller
 			return Redirect::to('login');
 		}
 		$rules = [
-			'comment'		=> 'required|filled',
+			'comment'		=> 'required|filled|max:200',
 		];
 		$messages = [
 			'comment.required'		=> 'A Comment is required',
 			'comment.filled'		=> 'Comment cannot be empty',
+			'comment.max'			=> 'Comment can only be a max of 200 Characters',
 		];
 		$this->validate($request, $rules, $messages);
 
 		if (!$news_article->storeComment($request->comment, Auth::id())) {
-			$request->session()->flash('alert-danger', 'Cannot post comment. Please try again.');
+			$request->session()->flash('alert-danger', 'Cannot Post Comment. Please try again.');
 			return Redirect::back();
 		}
 		$request->session()->flash('alert-success', 'Comment Posted and is waiting for Admin Approval!');
+		return Redirect::back();
+	}
+
+	/**
+	 * Report News Article Comment
+	 * @param  NewsArticle $news_article
+	 * @param  NewsComment $news_comment
+	 * @return View      
+	 */
+	public function reportComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	{
+		if (!Auth::user()) {
+			$request->session()->flash('alert-danger', 'Please Login.');
+			return Redirect::to('login');
+		}
+		if (!$news_comment->report()) {
+			$request->session()->flash('alert-danger', 'Cannot Report Comment. Please try again.');
+			return Redirect::back();
+		}
+		$request->session()->flash('alert-success', 'Comment Reported and is waiting Admin Review!');
+		return Redirect::back();
+	}
+
+	/**
+	 * Report News Article Comment
+	 * @param  NewsArticle $news_article
+	 * @param  NewsComment $news_comment
+	 * @return View      
+	 */
+	public function destroyComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	{
+		if (!Auth::user()) {
+			$request->session()->flash('alert-danger', 'Please Login.');
+			return Redirect::to('login');
+		}
+		if (Auth::id() != $news_comment->user_id) {
+			$request->session()->flash('alert-danger', 'This is not your comment to delete!');
+			return Redirect::back();
+		}
+		if (!$news_comment->delete()) {
+			$request->session()->flash('alert-danger', 'Cannot Delete Comment. Please try again.');
+			return Redirect::back();
+		}
+		$request->session()->flash('alert-success', 'Comment Deleted!');
 		return Redirect::back();
 	}
 }

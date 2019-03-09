@@ -3,7 +3,6 @@
 @section ('page_title', 'News')
 
 @section ('content')
-true
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">News</h1>
@@ -50,21 +49,39 @@ true
 			</div>
 			<div class="panel-body">
 				<p>To Approve:</p>
-				@foreach ($news_articles->reverse() as $news_article)
-					@foreach ($news_article->comments as $comment)
+				@if (!$comments_to_approve->isEmpty())
+					@foreach ($comments_to_approve->reverse() as $comment)
 						@if (!$comment->reviewed && !$comment->approved)
-							{{ $comment->comment }}
+							<div class="alert alert-warning">
+								{{ $comment->comment }}
+								<span class="pull-right">
+									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/approve">Approve</a> / 
+									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/reject">Reject</a>
+								</span>
+							</div>
 						@endif
 					@endforeach
-				@endforeach
+				@else
+					<div class="alert alert-success">
+						No Comments to Approve!
+					</div>
+				@endif
 				<p>Reported:</p>
-				@foreach ($news_articles->reverse() as $news_article)
-					@foreach ($news_article->comments as $comment)
-						@if ($comment->reported)
-							{{ $comment->comment }}
-						@endif
+				@if (!$comments_reported->isEmpty())
+					@foreach ($comments_reported->reverse() as $report)
+						<div class="alert alert-danger">
+							{{ $report->newsComment->comment }} - Reported by: {{ $report->user->steamname }}
+							<span class="pull-right">
+								<a href="/admin/news/{{ $report->newsComment->newsArticle->slug }}/comments/{{ $report->newsComment->id }}/reports/{{ $report->id }}/delete">Ignore</a> / 
+								<a href="/admin/news/{{ $report->newsComment->newsArticle->slug }}/comments/{{ $report->newsComment->id }}/delete">Delete</a>
+							</span>
+						</div>
 					@endforeach
-				@endforeach
+				@else
+					<div class="alert alert-success">
+						No Reported Comments!
+					</div>
+				@endif
 			</div>
 		</div>
 	</div>

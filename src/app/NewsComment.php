@@ -3,6 +3,7 @@
 namespace App;
 
 use Auth;
+use App\NewsCommentReport;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -26,21 +27,6 @@ class NewsComment extends Model
         'updated_at'
     );
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        $admin = false;
-        if (Auth::user() && Auth::user()->getAdmin()) {
-            $admin = true;
-        }
-        if(!$admin) {
-            static::addGlobalScope('approvedTrue', function (Builder $builder) {
-                $builder->where('approved', true);
-            });
-        }
-    }
-
     /*
      * Relationships
      */
@@ -52,5 +38,68 @@ class NewsComment extends Model
     {
       return $this->belongsTo('App\NewsArticle', 'news_feed_id');
     }
+    public function reports()
+    {
+      return $this->hasMany('App\NewsCommentReport', 'news_feed_comment_id');
+    }
 
+
+    /**
+     * Set Comment as Reported
+     * @return Boolean
+     */
+    public function report()
+    {
+        $report = [
+            'news_feed_comment_id'      => $this->id,
+            'user_id'                   => Auth::id(),
+        ];
+        if (!NewsCommentReport::create($report)) {
+            return false;
+        }
+        return true;
+    }
+
+    /** 
+     * Set Comment as Reviewed
+     * @param  Boolean
+     * @return Boolean
+     */
+    public function review($boolean)
+    {
+        $this->reviewed = $boolean;
+        $this->reviewed_by = Auth::id();
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /** 
+     * Set Comment as Approved
+     * @param  Boolean
+     * @return Boolean
+     */
+    public function approve($boolean)
+    {
+        $this->approved = $boolean;
+        $this->approved_by = Auth::id();
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /** 
+     * Check if any Reports exist
+     * @param  Boolean
+     * @return Boolean
+     */
+    public function hasReports()
+    {
+        if ($this->reports->isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 }
