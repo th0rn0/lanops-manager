@@ -6,7 +6,7 @@
 	<p><a href="/news/{{ $news_article->slug }}">Read More...</a></p>
 	<hr>
 	<div class="row">
-		<div class="col-xs-12 col-sm-8">
+		<div class="col-xs-12 col-sm-6">
 			<div class="row">
 				<div class="col-xs-12">
 					Share:
@@ -20,14 +20,14 @@
 				<div class="col-xs-12">
 					Tags:
 					@foreach ($news_article->tags as $tag)
-						<a href="{{ url('/news/tags')}}/{{ $tag->slug }}">{{ $tag->tag }}</a>,
+						<small><a href="{{ url('/news/tags')}}/{{ $tag->slug }}">{{ $tag->tag }}</a>,</small>
 					@endforeach
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-4">
+		<div class="col-xs-12 col-sm-6">
 			<!-- // TODO - add user account public pages -->
-			<p class="news-post-meta pull-right">{{ date('F d, Y', strtotime($news_article->created_at)) }} by <a href="#">{{ $news_article->user->steamname }}</a></p>
+			<p class="news-post-meta pull-right">{{ date('F d, Y', strtotime($news_article->created_at)) }} by <a href="#">{{ $news_article->user->steamname }}</a><span class="hidden-xs"> | Comments: {{ $news_article->comments->count() }}</span></p>
 		</div>
 	</div>
 </div><br>
