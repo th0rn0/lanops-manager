@@ -23,7 +23,7 @@ class CreateNewsFeedCommentReportsTable extends Migration
             $table->timestamps();
 
             ## Foreign Keys
-            $table->foreign('news_feed_comment_id')->references('id')->on('news_feed')->onDelete('cascade');
+            $table->foreign('news_feed_comment_id')->references('id')->on('news_feed_comments')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

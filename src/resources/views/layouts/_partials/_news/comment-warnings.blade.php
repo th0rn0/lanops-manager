@@ -22,9 +22,7 @@
 		<div class="alert alert-danger">
 			This comment has been Reported.
 			<span class="pull-right">
-				<a href="/admin/news/">View</a> / 
-				<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/report/delete">Ignore</a> / 
-				<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/delete">Delete</a>
+				<a href="/admin/news/">View</a>
 			</span>
 		</div>
 	@endif

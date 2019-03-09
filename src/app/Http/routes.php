@@ -260,8 +260,5 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/news/{news_article}/comments/{news_comment}/approve', 'Admin\NewsController@approveComment');
 		Route::get('/admin/news/{news_article}/comments/{news_comment}/reject', 'Admin\NewsController@rejectComment');
 		Route::get('/admin/news/{news_article}/comments/{news_comment}/reports/{news_comment_report}/delete', 'Admin\NewsController@destroyReport');
-
-
 	});
-
 });
