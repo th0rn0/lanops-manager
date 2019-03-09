@@ -3,7 +3,7 @@
 @section ('page_title', 'News')
 
 @section ('content')
-
+true
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">News</h1>
@@ -42,6 +42,29 @@
 					@endif
 					<button type="submit" class="btn btn-default btn-block">Submit</button> 
 				{{ Form::close() }}
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-comments fa-fw"></i> Comments
+			</div>
+			<div class="panel-body">
+				<p>To Approve:</p>
+				@foreach ($news_articles->reverse() as $news_article)
+					@foreach ($news_article->comments as $comment)
+						@if (!$comment->reviewed && !$comment->approved)
+							{{ $comment->comment }}
+						@endif
+					@endforeach
+				@endforeach
+				<p>Reported:</p>
+				@foreach ($news_articles->reverse() as $news_article)
+					@foreach ($news_article->comments as $comment)
+						@if ($comment->reported)
+							{{ $comment->comment }}
+						@endif
+					@endforeach
+				@endforeach
 			</div>
 		</div>
 	</div>

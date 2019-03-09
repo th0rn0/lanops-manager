@@ -73,7 +73,7 @@ class NewsController extends Controller
 			$request->session()->flash('alert-danger', 'Cannot post comment. Please try again.');
 			return Redirect::back();
 		}
-		$request->session()->flash('alert-success', 'Comment Posted!');
+		$request->session()->flash('alert-success', 'Comment Posted and is waiting for Admin Approval!');
 		return Redirect::back();
 	}
 }

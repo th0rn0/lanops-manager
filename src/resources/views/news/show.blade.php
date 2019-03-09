@@ -21,6 +21,22 @@
 				</h3> 
 			</div>
 			@foreach ($news_article->comments->reverse() as $comment)
+				@if (Auth::user() && Auth::user()->getAdmin())
+					@if (!$comment->approved && !$comment->reviewed)
+						<div class="alert alert-warning">This comment has not been approved yet. Only Admins can see it. APPROVE/DENY/DELETE BUTTON HERE</div>
+					@endif
+					@if (!$comment->approved && $comment->reviewed)
+						<div class="alert alert-danger">
+							This comment has not been approved! Only Admins can see it. DELETE BUTTON HERE
+							@if (Auth::user() && Auth::user()->getAdmin())
+								{{ Form::open(array('url'=>'/admin/news/' . $news_article->slug . '/comments/' . $comment->id)) }}
+									{{ Form::hidden('_method', 'DELETE') }}
+									<button type="submit" class="btn btn-sm btn-danger">Delete Comment</button>
+								{{ Form::close() }}
+							@endif
+						</div>
+					@endif
+				@endif
 				@include ('layouts._partials._news.comment')
 				<hr>
 				<br>

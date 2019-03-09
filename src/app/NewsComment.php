@@ -2,7 +2,10 @@
 
 namespace App;
 
+use Auth;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class NewsComment extends Model
 {
@@ -20,7 +23,23 @@ class NewsComment extends Model
      */
     protected $hidden = array(
         'created_at',
+        'updated_at'
     );
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        $admin = false;
+        if (Auth::user() && Auth::user()->getAdmin()) {
+            $admin = true;
+        }
+        if(!$admin) {
+            static::addGlobalScope('approvedTrue', function (Builder $builder) {
+                $builder->where('approved', true);
+            });
+        }
+    }
 
     /*
      * Relationships

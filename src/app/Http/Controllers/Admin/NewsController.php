@@ -33,6 +33,8 @@ class newsController extends Controller
 		return view('admin.news.index')
 			->withNewsArticles(NewsArticle::all())
 			->withFacebookLinked(Facebook::isLinked())
+			->withCommentsToApprove(NewsComment::where([['approved', '=', false], ['reviewed', '=', false]])->get())
+			->withCommentsReported(NewsComment::where('reported', true)->get())
 		;
 	}
 

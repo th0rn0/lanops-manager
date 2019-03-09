@@ -12,5 +12,11 @@
 				<button type="submit" class="btn btn-sm btn-danger">Delete Comment</button>
 			{{ Form::close() }}
 		@endif
+		@if (Auth::user() && Auth::id() == $comment->user_id) 
+			<button type="submit" class="btn btn-sm btn-danger">Edit Comment</button>
+		@endif
+		@if (Auth::user())
+			<button type="submit" class="btn btn-sm btn-danger">Report Comment</button>
+		@endif
 	</div>
 </div>
