@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/news', 'NewsController@index');
 	Route::get('/news/{news_article}', 'NewsController@show');
 	Route::post('/news/{news_article}/comments', 'NewsController@storeComment');
+	Route::post('/news/{news_article}/comments/{news_comment}', 'NewsController@editComment');
 	Route::get('/news/{news_article}/comments/{news_comment}/report', 'NewsController@reportComment');
 	Route::get('/news/{news_article}/comments/{news_comment}/delete', 'NewsController@destroyComment');
 	Route::get('/news/tags/{news_tag}', 'NewsController@showTag');

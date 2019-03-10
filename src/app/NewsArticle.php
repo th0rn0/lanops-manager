@@ -73,24 +73,6 @@ class NewsArticle extends Model
     }
 
     /**
-     * Store Comment
-     * @param  String $text
-     * @param  String $user_id
-     * @return Boolean
-     */
-    public function storeComment($text, $user_id)
-    {
-        $news_comment = new NewsComment();
-        $news_comment->comment = $text;
-        $news_comment->news_feed_id = $this->id;
-        $news_comment->user_id = $user_id;
-        if (!$news_comment->save()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Store Tags
      * @param  Array $tags
      * @return Boolean

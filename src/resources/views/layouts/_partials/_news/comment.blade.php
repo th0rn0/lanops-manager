@@ -7,7 +7,7 @@
 		<p>{{ $comment->comment }}</p>
 		<span class="text-muted"><small>Posted on: {{ $comment->created_at }}</small></span>
 		@if (Auth::user() && Auth::id() == $comment->user_id) 
-			<a href="">Edit Comment</a> /
+			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-toggle="modal" data-target="#editCommentModal">Edit Comment</a> /
 		@endif
 		@if (Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id()))
 			@php
@@ -34,3 +34,41 @@
 		@endif
 	</div>
 </div>
+
+
+<!-- Edit Comment Modal -->
+<div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog" aria-labelledby="editCommentModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="editCommentModalLabel">Edit Comment</h4>
+			</div>
+			@if (Auth::user())
+				{{ Form::open(array('url'=>'/news/' . $news_article->slug . '/comments', 'id'=>'editCommentFormModal')) }}
+					<div class="modal-body">
+						<div class="form-group">
+							{{ Form::textarea('comment_modal', '',array('id'=>'comment_modal','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">Edit</button>
+						</div>
+					</div>
+				{{ Form::close() }}
+			@else
+				<div class="modal-body">
+					<p>Please log in to post a Comment</p>
+				</div>
+			@endif
+		</div>
+	</div>
+</div>
+
+<script>
+	function editComment(comment, comment_id)
+	{
+		console.log(comment_id);
+		$("#comment_modal").val(comment);
+		$("#editCommentFormModal").prop('action', '/news/{{ $news_article->slug }}/comments/' + comment_id);
+	}
+</script>

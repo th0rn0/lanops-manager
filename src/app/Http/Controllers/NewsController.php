@@ -71,10 +71,15 @@ class NewsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		if (!$news_article->storeComment($request->comment, Auth::id())) {
+        $comment = [
+            'comment' 		=> trim($request->comment),
+            'news_feed_id' 	=> $news_article->id,
+            'user_id'      	=> Auth::id()
+        ];
+        if (!NewsComment::create($comment)) {
 			$request->session()->flash('alert-danger', 'Cannot Post Comment. Please try again.');
 			return Redirect::back();
-		}
+        }
 		$request->session()->flash('alert-success', 'Comment Posted and is waiting for Admin Approval!');
 		return Redirect::back();
 	}
@@ -116,6 +121,39 @@ class NewsController extends Controller
 			return Redirect::back();
 		}
 		if (!$news_comment->delete()) {
+			$request->session()->flash('alert-danger', 'Cannot Delete Comment. Please try again.');
+			return Redirect::back();
+		}
+		$request->session()->flash('alert-success', 'Comment Deleted!');
+		return Redirect::back();
+	}
+
+	/**
+	 * Edit News Article Comment
+	 * @param  NewsArticle $news_article
+	 * @param  NewsComment $news_comment
+	 * @return View      
+	 */
+	public function editComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	{
+		if (!Auth::user()) {
+			$request->session()->flash('alert-danger', 'Please Login.');
+			return Redirect::to('login');
+		}
+		$rules = [
+			'comment_modal'			=> 'filled|max:200',
+		];
+		$messages = [
+			'comment_modal.filled'	=> 'Comment cannot be empty',
+			'comment_modal.max'		=> 'Comment can only be a max of 200 Characters',
+		];
+		$this->validate($request, $rules, $messages);
+
+		if (Auth::id() != $news_comment->user_id) {
+			$request->session()->flash('alert-danger', 'This is not your comment to edit!');
+			return Redirect::back();
+		}
+		if (!$news_comment->editComment($request->comment_modal)) {
 			$request->session()->flash('alert-danger', 'Cannot Delete Comment. Please try again.');
 			return Redirect::back();
 		}

@@ -17,6 +17,8 @@ class NewsComment extends Model
      */
     protected $table = 'news_feed_comments';
 
+    protected $fillable = ['comment', 'news_feed_id', 'user_id'];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -55,6 +57,26 @@ class NewsComment extends Model
             'user_id'                   => Auth::id(),
         ];
         if (!NewsCommentReport::create($report)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Edit Comment
+     * @param  String $text
+     * @param  String $user_id
+     * @return Boolean
+     */
+    public function editComment($text)
+    {
+        $this->comment = $text;
+        $this->approved = 0;
+        $this->approved_by = 0;
+        $this->reviewed = 0;
+        $this->reviewed_by = 0;
+
+        if (!$this->save()) {
             return false;
         }
         return true;
