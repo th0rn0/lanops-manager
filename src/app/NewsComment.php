@@ -68,7 +68,7 @@ class NewsComment extends Model
      * @param  String $user_id
      * @return Boolean
      */
-    public function editComment($text)
+    public function edit($text)
     {
         $this->comment = $text;
         $this->approved = 0;

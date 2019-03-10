@@ -153,11 +153,11 @@ class NewsController extends Controller
 			$request->session()->flash('alert-danger', 'This is not your comment to edit!');
 			return Redirect::back();
 		}
-		if (!$news_comment->editComment($request->comment_modal)) {
-			$request->session()->flash('alert-danger', 'Cannot Delete Comment. Please try again.');
+		if (!$news_comment->edit($request->comment_modal)) {
+			$request->session()->flash('alert-danger', 'Cannot Edit Comment. Please try again.');
 			return Redirect::back();
 		}
-		$request->session()->flash('alert-success', 'Comment Deleted!');
+		$request->session()->flash('alert-success', 'Comment Edited!');
 		return Redirect::back();
 	}
 }
