@@ -57,13 +57,15 @@ class newsController extends Controller
 	{
 		$rules = [
 			'title' 	=> 'required|unique:news_feed,title',
-			'article'	=> 'required',
-			'tags'		=> 'filled',
+			'article'	=> 'required|filled',
+			'tags'		=> 'required|filled',
 		];
 		$messages = [
-			'title.required'	=> 'Title is required,',
-			'article.required'	=> 'Article is required,',
-			'tags.filled'		=> 'You must add Tags.',
+			'title.required'	=> 'Title is required.',
+			'article.required'	=> 'Article is required.',
+			'article.filled'	=> 'Article cannot be empty.',
+			'tags.required'		=> 'You must add Tags.',
+			'tags.filled'		=> 'You cannont be empty.',
 		];
 		$this->validate($request, $rules, $messages);
 
