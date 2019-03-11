@@ -140,6 +140,22 @@ steps:
     status:
     - success
 
+- name: push-image-master
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: 
+    - latest
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  when:
+    branch:
+    - master
+    status:
+    - success
+
 - name: push-image-tagged
   image: plugins/docker
   settings:
@@ -153,23 +169,6 @@ steps:
   when:
     event:
     - tag
-    status:
-    - success
-
-- name: push-image-master
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - ${DRONE_TAG}
-    - latest
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  when:
-    branch:
-    - master
     status:
     - success
 
@@ -281,6 +280,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: fb7b4fe27f541291058702b833fdda585845b23769c6da43216dcb2496408ae3
+hmac: b3c1a795e442d94ed2222e6800aff4130c341dd1a41d73c0f148b1dd72c66303
 
 ...
