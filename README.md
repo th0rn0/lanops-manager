@@ -1,31 +1,28 @@
 # LanOps Lan Manager
 
 Master: [![Build Status](http://drone.th0rn0.co.uk/api/badges/LanOps/Manager/status.svg)](http://drone.th0rn0.co.uk/LanOps/Manager)
-Staging: [![Build Status](http://drone.th0rn0.co.uk/api/badges/LanOps/Manager/status.svg?ref=/refs/heads/staging)](http://drone.th0rn0.co.uk/LanOps/Manager)
 
-The Lan Manager is a fully featured White labeled Event Management system. The only prerequisite is `docker & docker-compose`. Everything is self contained. The purpose of this application was to remove the need for websites like WIX, SquareSpace, EventBrite or bloated Wordpress plugins that charge a small fortune for use of their code base and/or services all the while keeping all of the IPs and rights to your event hosting and ticket sales. Coupled with this there was no decent fully fledged alternative to the likes of ALP (2004 baby!) that did everything we (LanOps) needed. There was a lot of software out there but there wasn't one unified application that tied all these services such as tournaments, ticket management & sales, event signup, server management all in a easily extendable OPEN SOURCE package.
+The Lan Manager is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application was to remove the need for websites like WIX, SquareSpace, EventBrite or bloated Wordpress plugins that charge a small fortune for use of their code base and/or services all the while keeping all of the IPs and rights to your event hosting and ticket sales. Coupled with this there was no decent fully fledged alternative to the likes of ALP (2004 baby!) that did everything we (LanOps) needed. There was a lot of software out there but there wasn't one unified application that tied all these services such as tournaments, ticket management & sales, event signup, server management all in a easily extendable OPEN SOURCE package.
 
 Thus the LanOps Lan Manager was born!
 
 https://lanops.co.uk
 
-#### A Docker image is coming.
-
 ##### Home Page:
 
-![Manager front page](https://i.imgur.com/IqKAK1h.png)
+![Manager front page](resources/images/home-page.png)
 ##### Event Page:
-![Event Page](https://i.imgur.com/BAvJU2l.png)
+![Event Page](resources/images/events-page.png)
 ##### Successful Payment Page
-![Successful Payment](https://i.imgur.com/Qb2fyPw.png)
+![Successful Payment](resources/images/success-payment-page.png)
 ##### Event Management
-![Event Admin Page](https://i.imgur.com/w9aD10o.png)
+![Event Admin Page](resources/images/events-management-page.png)
 ##### Ticket Management
-![Tickets Breakdown](https://i.imgur.com/nM7lcnG.png)
+![Tickets Breakdown](resources/images/tickets-management-page.png)
 ##### Tournament Management
-![Tournament Management](https://i.imgur.com/55zynWs.png)
+![Tournament Management](resources/images/tournaments-management-page.png)
 ##### Tournament Brakcets
-![Tournament Brackets](https://i.imgur.com/lcSCq0s.png)
+![Tournament Brackets](resources/images/tournaments-brackets-page.png)
 
 ##### Features
 
@@ -101,9 +98,27 @@ This method is intended to be run as just a image with your own database
 
 ```
 docker run -it -d lanopsdev/manager:latest \
-  --env=DB_PASSWORD=asdasdasd
-  --ports 80:80
-  --ports 443:443
+  --env=APP_DEBUG=true \
+  --env=APP_ENV=local \
+  --env=APP_URL=localhost \
+  --env=DB_HOST=database \
+  --env=DB_DATABASE=lan_manager \
+  --env=DB_PORT=3306 \
+  --env=DB_USERNAME=lan_manager \
+  --env=DB_PASSWORD=password \
+  --env=ANALYTICS_TRACKING_ID= \
+  --env=PAYPAL_USERNAME= \
+  --env=PAYPAL_PASSWORD= \
+  --env=PAYPAL_SIGNATURE= \
+  --env=STEAM_API_KEY= \
+  --env=CHALLONGE_API_KEY= \
+  --env=FACEBOOK_APP_ID= \
+  --env=FACEBOOK_APP_SECRET= \
+  --env=LOG_FILES=false \
+  --env=ENABLE_HTTPS=false \
+  --env=DB_CONNECTION=mysql \
+  --ports 80:80 \
+  --ports 443:443 \
 ```
 
 ### Docker-compose
@@ -118,7 +133,35 @@ services:
     volumes:
       - $PWD/certs:/etc/nginx/certs
     environment:
-      - asd=asd
+      # App Config
+      - APP_DEBUG=true
+      - APP_ENV=local
+      - APP_URL=localhost
+      # Database Settings
+      - DB_DATABASE=lan_manager
+      - DB_USERNAME=lan_manager
+      - DB_PASSWORD=password
+      # Google Analytics
+      - ANALYTICS_TRACKING_ID=
+      # Paypal
+      - PAYPAL_USERNAME=
+      - PAYPAL_PASSWORD=
+      - PAYPAL_SIGNATURE=
+      # Steam
+      - STEAM_API_KEY=
+      # Challonge
+      - CHALLONGE_API_KEY=
+      # Facebook
+      - FACEBOOK_APP_ID=
+      - FACEBOOK_APP_SECRET=
+      # File Logger
+      - LOG_FILES=false
+      # HTTPS
+      - ENABLE_HTTPS=true
+      # DO NOT CHANGE BELOW
+      - DB_CONNECTION=mysql
+      - DB_PORT=3306
+      - DB_HOST=database
     container_name: lan_manager_app
     ports:
       - 80:80
@@ -127,35 +170,13 @@ services:
     image: mysql:5.6
     volumes:
       - db:/var/lib/mysql
-    env_file: $PWD/src/.env
-    ports:
-      - 3306:3306
-    container_name: lan_manager_database
-volumes:
-  db:
-    name: lan_manager_db
-```
-
-or with a load balancer /w letsEncrypt
-
-```
-version: "3.4"
-services:
-  app:
-    image: lanopsdev/manager:latest
-    volumes:
-      - $PWD/certs:/etc/nginx/certs
     environment:
-      - asd=asd
-    container_name: lan_manager_app
-    ports:
-      - 80:80
-      - 443:443
-  database:
-    image: mysql:5.6
-    volumes:
-      - db:/var/lib/mysql
-    env_file: $PWD/src/.env
+      # Change The password as according
+      - MYSQL_PASSWORD=password
+      # DO NOT CHANGE BELOW
+      - MYSQL_DATABASE=lan_manager
+      - MYSQL_USER=lan_manager
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
     ports:
       - 3306:3306
     container_name: lan_manager_database
@@ -245,7 +266,6 @@ To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, 
 - Twitch Integration
 - Add more payment Gateways
 - Unit Tests
-- Push to Docker Hub
 
 ## Sites that use the Lan Manager
 
