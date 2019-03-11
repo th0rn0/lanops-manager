@@ -140,6 +140,22 @@ steps:
     status:
     - success
 
+- name: push-image-tagged
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: 
+    - ${DRONE_TAG}
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  when:
+    event:
+    - tag
+    status:
+    - success
+
 - name: push-image-master
   image: plugins/docker
   settings:
@@ -152,8 +168,6 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   when:
-    event:
-    - tag
     branch:
     - master
     status:
@@ -214,6 +228,25 @@ steps:
     status:
     - success
 
+- name: notify-discord-image-pushed-master
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - tag
+    branch:
+    - master
+    status:
+    - success
+
 - name: notify-discord-image-pushed-master-tagged
   image: plugins/webhook
   settings:
@@ -248,6 +281,6 @@ services:
     MYSQL_RANDOM_ROOT_PASSWORD: true
 ---
 kind: signature
-hmac: dd6fc58afc46642322402a7f279c6bcd1f0c15d24b161fa24fb5694fdc00d95d
+hmac: fb7b4fe27f541291058702b833fdda585845b23769c6da43216dcb2496408ae3
 
 ...
