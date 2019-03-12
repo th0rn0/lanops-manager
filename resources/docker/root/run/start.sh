@@ -26,5 +26,12 @@ then
 	fi
 fi
 
+# Generate the App Key if it doesn't Exist
+if [ -n "$APP_KEY" ]
+then
+	php aritsan key:generate
+	sleep 30
+fi
+
 # Supervisor Default
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

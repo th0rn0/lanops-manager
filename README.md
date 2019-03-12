@@ -101,6 +101,7 @@ docker run -it -d lanopsdev/manager:latest \
   --env=APP_DEBUG=true \
   --env=APP_ENV=local \
   --env=APP_URL=localhost \
+  --env=APP_KEY=SomeRandomString \
   --env=DB_HOST=database \
   --env=DB_DATABASE=lan_manager \
   --env=DB_PORT=3306 \
@@ -117,9 +118,12 @@ docker run -it -d lanopsdev/manager:latest \
   --env=LOG_FILES=false \
   --env=ENABLE_HTTPS=false \
   --env=DB_CONNECTION=mysql \
+  --env=DB_MIGRATE=true \
   --ports 80:80 \
   --ports 443:443 \
 ```
+
+Follow Post-Docker Below
 
 ### Docker-compose
 
@@ -137,6 +141,7 @@ services:
       - APP_DEBUG=true
       - APP_ENV=local
       - APP_URL=localhost
+      - APP_KEY=SomeRandomString
       # Database Settings
       - DB_DATABASE=lan_manager
       - DB_USERNAME=lan_manager
@@ -158,6 +163,8 @@ services:
       - LOG_FILES=false
       # HTTPS
       - ENABLE_HTTPS=true
+      # Migrate Database on Boot
+      - DB_MIGRATE=true
       # DO NOT CHANGE BELOW
       - DB_CONNECTION=mysql
       - DB_PORT=3306
@@ -183,6 +190,25 @@ services:
 volumes:
   db:
     name: lan_manager_db
+```
+
+Follow Post-Docker Below
+
+### Post-Docker
+
+Once running and the database has migrated you will need to exec into the container and do the following;
+
+Generate a Key and Save it for use in the APP_KEY Env variable above
+```
+php aritsan key:generate
+```
+Seed the Database with initial data
+```
+php artisan db:seed
+```
+Change the R/W properties of the framework
+```
+chmod -R 777 storage/framework
 ```
 
 ### Makefile
