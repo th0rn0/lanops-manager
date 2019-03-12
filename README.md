@@ -98,27 +98,27 @@ This method is intended to be run as just a image with your own database
 
 ```
 docker run -it -d lanopsdev/manager:latest \
-  --env=APP_DEBUG=true \
-  --env=APP_ENV=local \
-  --env=APP_URL=localhost \
-  --env=APP_KEY=SomeRandomString \
-  --env=DB_HOST=database \
-  --env=DB_DATABASE=lan_manager \
-  --env=DB_PORT=3306 \
-  --env=DB_USERNAME=lan_manager \
-  --env=DB_PASSWORD=password \
-  --env=ANALYTICS_TRACKING_ID= \
-  --env=PAYPAL_USERNAME= \
-  --env=PAYPAL_PASSWORD= \
-  --env=PAYPAL_SIGNATURE= \
-  --env=STEAM_API_KEY= \
-  --env=CHALLONGE_API_KEY= \
-  --env=FACEBOOK_APP_ID= \
-  --env=FACEBOOK_APP_SECRET= \
-  --env=LOG_FILES=false \
-  --env=ENABLE_HTTPS=false \
-  --env=DB_CONNECTION=mysql \
-  --env=DB_MIGRATE=true \
+  -e APP_DEBUG=true \
+  -e APP_ENV=local \
+  -e APP_URL=localhost \
+  -e APP_KEY=SomeRandomString \
+  -e DB_HOST=database \
+  -e DB_DATABASE=lan_manager \
+  -e DB_PORT=3306 \
+  -e DB_USERNAME=lan_manager \
+  -e DB_PASSWORD=password \
+  -e ANALYTICS_TRACKING_ID= \
+  -e PAYPAL_USERNAME= \
+  -e PAYPAL_PASSWORD= \
+  -e PAYPAL_SIGNATURE= \
+  -e STEAM_API_KEY= \
+  -e CHALLONGE_API_KEY= \
+  -e FACEBOOK_APP_ID= \
+  -e FACEBOOK_APP_SECRET= \
+  -e LOG_FILES=false \
+  -e ENABLE_HTTPS=false \
+  -e DB_CONNECTION=mysql \
+  -e DB_MIGRATE=true \
   --ports 80:80 \
   --ports 443:443 \
 ```
