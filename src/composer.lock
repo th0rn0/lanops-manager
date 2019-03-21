@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c57d2dc2db0cc424abeac9a806566c98",
+    "content-hash": "c04d3be286ca5316869a121d02031e3c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1394,6 +1394,62 @@
                 "payments"
             ],
             "time": "2017-02-08T19:23:44+00:00"
+        },
+        {
+            "name": "inani/larapoll",
+            "version": "2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akiyamaSM/larapoll.git",
+                "reference": "4dfac37bd32347276e34f201e7197ecb0902f541"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akiyamaSM/larapoll/zipball/4dfac37bd32347276e34f201e7197ecb0902f541",
+                "reference": "4dfac37bd32347276e34f201e7197ecb0902f541",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Inani\\Larapoll\\LarapollServiceProvider"
+                    ],
+                    "aliases": {
+                        "PollWriter": "Inani\\Larapoll\\PollWriterFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Inani\\Larapoll\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Inani El Houssain",
+                    "email": "inanielhoussain@gmail.com"
+                }
+            ],
+            "description": "A Laravel package to create polls",
+            "keywords": [
+                "laravel",
+                "php",
+                "polls",
+                "votes"
+            ],
+            "time": "2019-03-21T13:30:28+00:00"
         },
         {
             "name": "intervention/image",
