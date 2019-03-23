@@ -3,6 +3,8 @@
 namespace App;
 
 use DB;
+use Auth;
+
 use App\PollOptionVote as Vote;
 
 use Illuminate\Database\Eloquent\Model;
@@ -53,14 +55,14 @@ class PollOption extends Model
 
     public function vote()
     {
-        if (!$this->votes->pluck('user_id', Auth::id())) {
+        // if (!$this->votes->pluck('user_id', Auth::id())) {
             $vote = new Vote;
             $vote->user_id = Auth::id();
             $vote->poll_option_id = $this->id;
             if (!$vote->save()) {
                 return false;
             }
-        }
+        // }
         return true;
     }
 

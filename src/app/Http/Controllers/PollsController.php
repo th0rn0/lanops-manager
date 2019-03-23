@@ -41,10 +41,10 @@ class PollsController extends Controller
 	 */
 	public function vote(Poll $poll, PollOption $option)
 	{
-		if ($option->votes->pluck('user_id', Auth::id())) {
-			Session::flash('alert-danger', 'Cannot Vote Twice!');
-			return Redirect::back();
-		}
+		// if ($option->votes->pluck('user_id', Auth::id())) {
+		// 	Session::flash('alert-danger', 'Cannot Vote Twice!');
+		// 	return Redirect::back();
+		// }
 		if (!$option->vote()) {
 			Session::flash('alert-danger', 'Cannot Vote!');
 			return Redirect::back();
