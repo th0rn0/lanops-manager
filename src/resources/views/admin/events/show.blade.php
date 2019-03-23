@@ -59,7 +59,7 @@
 												'status',
 												array(
 													'draft'=>'Draft',
-													'preview'=>'Preivew',
+													'preview'=>'Preview',
 													'published'=>'Published',
 													'private' => 'Private'
 												),

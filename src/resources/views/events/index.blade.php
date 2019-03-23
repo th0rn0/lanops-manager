@@ -1,10 +1,15 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' Events List')
+@section ('page_title', Settings::getOrgName() . ' Tournaments List')
 
 @section ('content')
 			
 <div class="container">
+	<div class="page-header">
+		<h1>
+			Events
+		</h1> 
+	</div>
 	@foreach ($events as $event)
 		<div class="panel panel-default">
 			<div class="panel-heading">
