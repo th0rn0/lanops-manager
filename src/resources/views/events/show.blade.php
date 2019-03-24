@@ -165,123 +165,134 @@
 	</div>
 
 	<!-- SEATING -->
-	@if (!$event->seatingPlans->isEmpty())
+	@if (
+		!$event->seatingPlans->isEmpty() && 
+		(
+			in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) ||
+			in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())
+		)
+	)
 		<div class="page-header">
 			<a name="seating"></a>
 			<h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seating_plan)
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingOne">
-						<h4 class="panel-title">
-							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seating_plan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seating_plan->slug }}">
-								{{ $seating_plan->name }} <small>- {{ ($seating_plan->columns * $seating_plan->rows) - $seating_plan->seats->count() }} / {{ $seating_plan->columns * $seating_plan->rows }} Available</small>
-							</a>
-						</h4>
-					</div>
-					<div id="collapse_{{ $seating_plan->slug }}" class="panel-collapse collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seating_plan->slug }}">
-						<div class="panel-body">
-							<div class="table-responsive text-center">
-								<table class="table">
-									<thead>
-										<tr>
-										<?php
-											$headers = explode(',', $seating_plan->headers);
-											$headers = array_combine(range(1, count($headers)), $headers);
-										?>
-										@for ($column = 1; $column <= $seating_plan->columns; $column++)
-											<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
-										@endfor
-										</tr>
-									 </thead>
-									<tbody>
-										@for ($row = $seating_plan->rows; $row > 0; $row--)
+				@if ($seating_plan->status != 'DRAFT')
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingOne">
+							<h4 class="panel-title">
+								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seating_plan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seating_plan->slug }}">
+									{{ $seating_plan->name }} <small>- {{ ($seating_plan->columns * $seating_plan->rows) - $seating_plan->seats->count() }} / {{ $seating_plan->columns * $seating_plan->rows }} Available</small>
+									@if ($seating_plan->status != 'PUBLISHED')
+										<small> - {{ $seating_plan->status }}</small>
+									@endif
+								</a>
+							</h4>
+						</div>
+						<div id="collapse_{{ $seating_plan->slug }}" class="panel-collapse collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seating_plan->slug }}">
+							<div class="panel-body">
+								<div class="table-responsive text-center">
+									<table class="table">
+										<thead>
 											<tr>
-												@for ($column = 1; $column <= $seating_plan->columns; $column++)
-													<td style="padding-top:14px;">
-														@if ($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
-															@if ($seating_plan->locked)
-																<button class="btn btn-success btn-sm" disabled>
-																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
-																</button>
+											<?php
+												$headers = explode(',', $seating_plan->headers);
+												$headers = array_combine(range(1, count($headers)), $headers);
+											?>
+											@for ($column = 1; $column <= $seating_plan->columns; $column++)
+												<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
+											@endfor
+											</tr>
+										 </thead>
+										<tbody>
+											@for ($row = $seating_plan->rows; $row > 0; $row--)
+												<tr>
+													@for ($column = 1; $column <= $seating_plan->columns; $column++)
+														<td style="padding-top:14px;">
+															@if ($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
+																@if ($seating_plan->locked)
+																	<button class="btn btn-success btn-sm" disabled>
+																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
+																	</button>
+																@else
+																	<button class="btn btn-success btn-sm">
+																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
+																	</button>
+																@endif
 															@else
-																<button class="btn btn-success btn-sm">
-																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
-																</button>
-															@endif
-														@else
-															@if ($seating_plan->locked)
-																<button class="btn btn-primary btn-sm" disabled>
-																	{{ ucwords($headers[$column]) . $row }} - Empty
-																</button>
-															@else
-																@if (Auth::user() && $event->getEventParticipant())
-																	<button 
-																		class="btn btn-primary btn-sm"
-																		onclick="pickSeat(
-																			'{{ $seating_plan->slug }}',
-																			'{{ ucwords($headers[$column]) . $row }}'
-																		)"
-																		data-toggle="modal"
-																		data-target="#pickSeatModal"
-																	>
+																@if ($seating_plan->locked)
+																	<button class="btn btn-primary btn-sm" disabled>
 																		{{ ucwords($headers[$column]) . $row }} - Empty
 																	</button>
 																@else
-																	<button class="btn btn-primary btn-sm">
-																		{{ ucwords($headers[$column]) . $row }} - Empty
-																	</button>
+																	@if (Auth::user() && $event->getEventParticipant())
+																		<button 
+																			class="btn btn-primary btn-sm"
+																			onclick="pickSeat(
+																				'{{ $seating_plan->slug }}',
+																				'{{ ucwords($headers[$column]) . $row }}'
+																			)"
+																			data-toggle="modal"
+																			data-target="#pickSeatModal"
+																		>
+																			{{ ucwords($headers[$column]) . $row }} - Empty
+																		</button>
+																	@else
+																		<button class="btn btn-primary btn-sm">
+																			{{ ucwords($headers[$column]) . $row }} - Empty
+																		</button>
+																	@endif
 																@endif
 															@endif
-														@endif
-													</td>
-												@endfor
-											</tr>
-										@endfor
-									</tbody>
-								</table>
-								@if ($seating_plan->locked)
-									<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
-								@endif
-							</div>
-							<hr>
-							<div class="row" style="display: flex; align-items: center;">
-								<div class="col-xs-12 col-md-8">
-									<img class="img-responsive" src="{{$seating_plan->image_path}}"/>
-								</div>
-								<div class="col-xs-12 col-md-4">
-									<h5>Your Seats</h5>
-									@if ($user && !$user->eventParticipation->isEmpty())
-										@foreach ($user->eventParticipation as $participant) 
-											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
-												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
-													{{ Form::hidden('_method', 'DELETE') }}
-													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
-													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 
-													{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }} 
-													<h5>
-														<button class="btn btn-success btn-block"> 
-														{{ $participant->seat->seat }} - Remove
-														</button>
-													</h5>
-												{{ Form::close() }} 
-											@endif
-										@endforeach
-									@elseif(Auth::user())
-										<div class="alert alert-info">
-											<h5>Please Purchase a ticket</h5>
-										</div>
-									@else
-										<div class="alert alert-info">
-											<h5>Please Log in to Purchase a ticket</h5>
-										</div>
+														</td>
+													@endfor
+												</tr>
+											@endfor
+										</tbody>
+									</table>
+									@if ($seating_plan->locked)
+										<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
 									@endif
+								</div>
+								<hr>
+								<div class="row" style="display: flex; align-items: center;">
+									<div class="col-xs-12 col-md-8">
+										<img class="img-responsive" src="{{$seating_plan->image_path}}"/>
+									</div>
+									<div class="col-xs-12 col-md-4">
+										<h5>Your Seats</h5>
+										@if ($user && !$user->eventParticipation->isEmpty())
+											@foreach ($user->eventParticipation as $participant) 
+												@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
+													{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
+														{{ Form::hidden('_method', 'DELETE') }}
+														{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
+														{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 
+														{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }} 
+														<h5>
+															<button class="btn btn-success btn-block"> 
+															{{ $participant->seat->seat }} - Remove
+															</button>
+														</h5>
+													{{ Form::close() }} 
+												@endif
+											@endforeach
+										@elseif(Auth::user())
+											<div class="alert alert-info">
+												<h5>Please Purchase a ticket</h5>
+											</div>
+										@else
+											<div class="alert alert-info">
+												<h5>Please Log in to Purchase a ticket</h5>
+											</div>
+										@endif
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				@endif
 			@endforeach
 		</div>
 	@endif

@@ -112,7 +112,7 @@ class SeatingController extends Controller
 			"columns"	=> "integer",
 			"rows"		=> "integer",
 			'image'		=> 'image',
-			'status'	=> 'in:draft,published',
+			'status'	=> 'in:draft,preview,published',
 			'locked'	=> 'boolean',
 			'name'		=> 'filled',
 		];
