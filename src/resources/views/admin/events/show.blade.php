@@ -59,7 +59,7 @@
 												'status',
 												array(
 													'draft'=>'Draft',
-													'preview'=>'Preivew',
+													'preview'=>'Preview',
 													'published'=>'Published',
 													'private' => 'Private'
 												),
@@ -246,12 +246,31 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
+				<i class="fa fa-list fa-fw"></i> Polls
+			</div>
+			<div class="panel-body">
+				@if (!$event->polls->isEmpty())
+					<div class="list-group">
+						@foreach ($event->polls as $poll)
+							<a href="/admin/polls/{{ $poll->slug }}" class="list-group-item">
+								<i class="fa fa-pencil fa-fw"></i> {{ $poll->name }}
+							</a>
+						@endforeach
+					</div>
+				@else
+					<h4>None</h4>
+				@endif
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
 				<i class="fa fa-user fa-fw"></i> Attendees <small>Last Ten Signups</small>
 				<a href="/admin/events/{{ $event->slug }}/participants" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Attendees</a>
 				<a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
 			</div>
 			<div class="panel-body">
-				@if ($event->eventParticipants->count() != 0)
+				@if (!$event->eventParticipants->isEmpty())
 					<div class="list-group">
 						@foreach ($event->eventParticipants as $participant)
 							<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
@@ -274,7 +293,7 @@
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addSponsorModal">Add Sponsor</a>
 			</div>
 			<div class="panel-body">
-				@if ($event->sponsors->count() != 0)
+				@if (!$event->sponsors->isEmpty())
 					<div class="list-group">
 						@foreach ($event->sponsors as $sponsor)
 							<a href="/admin/tickets/{{ $ticket->id }}" class="list-group-item">

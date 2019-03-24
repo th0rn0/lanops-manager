@@ -27,9 +27,9 @@ then
 fi
 
 # Generate the App Key if it doesn't Exist
-if [ -n "$APP_KEY" ]
+if [ ! -n "$APP_KEY" ]
 then
-	php aritsan key:generate
+	php artisan key:generate
 	sleep 30
 fi
 

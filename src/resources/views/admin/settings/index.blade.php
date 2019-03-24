@@ -148,13 +148,14 @@
 						<button type="submit" class="btn btn-danger">Unlink Account</button>
 					{{ Form::close() }}
 				@endif
-				<h4>Twitter</h4>
+				<h4>Twitter <small>Coming soon</small></h4>
 				{{ Form::open(array('url'=>'/admin/settings/link/twitter')) }}
-					<button type="submit" class="btn btn-default">Link Account</button>
+					<button type="submit" class="btn btn-default" disabled>Link Account</button>
+
 				{{ Form::close() }}
-				<h4>Instagram</h4>
+				<h4>Instagram <small>Coming soon</small></h4>
 				{{ Form::open(array('url'=>'/admin/settings/link/instagram')) }}
-					<button type="submit" class="btn btn-default">Link Account</button>
+					<button type="submit" class="btn btn-default" disabled>Link Account</button>
 				{{ Form::close() }}
 			</div>
 		</div>

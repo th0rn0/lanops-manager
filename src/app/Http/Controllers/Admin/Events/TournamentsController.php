@@ -121,7 +121,7 @@ class TournamentsController extends Controller
 
 		if (isset($request->status) && $request->status != $tournament->status) {
 			if (!$tournament->setStatus($request->status)) {
-				Session::flash('message', 'Tournament status cannot be updated!');
+				Session::flash('alert-danger', 'Tournament status cannot be updated!');
 				return Redirect::back();
 			}
 		}

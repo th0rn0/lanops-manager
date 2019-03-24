@@ -106,6 +106,15 @@ Route::group(['middleware' => ['web']], function () {
 	Route::delete('/events/{event}/seating/{seating_plan}', 'Events\SeatingController@destroy');
 
 	/**
+	 * Polls
+	 */
+	Route::get('/polls', 'PollsController@index');
+	Route::get('/polls/{poll}', 'PollsController@show');
+	Route::post('/polls/{poll}/options', 'PollsController@storeOption');
+	Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
+	Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
+
+	/**
 	 * Admin
 	 */
 	Route::group(['middleware' => ['admin']], function () {
@@ -261,5 +270,17 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/news/{news_article}/comments/{news_comment}/approve', 'Admin\NewsController@approveComment');
 		Route::get('/admin/news/{news_article}/comments/{news_comment}/reject', 'Admin\NewsController@rejectComment');
 		Route::get('/admin/news/{news_article}/comments/{news_comment}/reports/{news_comment_report}/delete', 'Admin\NewsController@destroyReport');
+
+		/**
+		 * Polls
+		 */
+		Route::get('/admin/polls', 'Admin\PollsController@index');
+		Route::post('/admin/polls', 'Admin\PollsController@store');
+		Route::get('/admin/polls/{poll}', 'Admin\PollsController@show');
+		Route::post('/admin/polls/{poll}', 'Admin\PollsController@update');
+		Route::post('/admin/polls/{poll}/end', 'Admin\PollsController@endPoll');
+		Route::delete('/admin/polls/{poll}', 'Admin\PollsController@destroy');
+		Route::post('/admin/polls/{poll}/options', 'Admin\PollsController@storeOption');
+		Route::delete('/admin/polls/{poll}/options/{option}', 'Admin\PollsController@destroyOption');
 	});
 });
