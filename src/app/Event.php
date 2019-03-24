@@ -111,6 +111,10 @@ class Event extends Model
 	{
 		return $this->hasMany('App\GalleryAlbum');
 	}
+	public function polls()
+	{
+		return $this->hasMany('App\Poll', 'event_id');
+	}
 
 	/**
 	 * Return the sluggable configuration array for this model.

@@ -35,7 +35,13 @@
 						@foreach ($polls->reverse() as $poll)
 							<tr class="table-row odd gradeX" data-href="/admin/polls/{{ $poll->slug }}">
 								<td>{{ $poll->name }}</td>
-								<td>{{ $poll->status }}</td>
+								<td>
+									@if (!$poll->hasEnded())
+										{{ $poll->status }}
+									@else
+										ENDED
+									@endif
+								</td>
 								<td>{{ $poll->getTotalVotes() }}</td>
 								<td>
 									{{ $poll->options->count() }}
@@ -75,11 +81,21 @@
 						{{ Form::textarea('description', '', array('id'=>'','class'=>'form-control', 'rows'=>'3')) }}
 					</div>
 					<div class="form-group">
-						{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
-						{{ Form::text('options[]', '', array('id'=>'', 'class'=>'form-control')) }}
-						{{ Form::text('options[]', '', array('id'=>'', 'class'=>'form-control')) }}
-						{{ Form::text('options[]', '', array('id'=>'', 'class'=>'form-control')) }}
+						{{ Form::label('event_id','Link to Event',array('id'=>'','class'=>'')) }}
+						{{ 
+							Form::select(
+								'event_id',
+								Helpers::getEventNames('DESC', 0, true),
+								'',
+								array(
+									'id'=>'event_id',
+									'class'=>'form-control'
+								)
+							)
+						}}
 					</div>
+					{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
+					@include ('layouts._partials._polls.add-options')
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							<div class="checkbox">
@@ -102,5 +118,5 @@
 		</div>
 	</div>
 </div>
- 
+
 @endsection

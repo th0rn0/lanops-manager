@@ -21,8 +21,8 @@ class CreatePollTable extends Migration
             $table->boolean('allow_options_multi')->default(0);
             $table->boolean('allow_options_user')->default(0);
             $table->integer('user_id')->unsigned()->index();
-            $table->dateTime('start')->nullable();
-            $table->dateTime('end')->nullable();
+            $table->dateTime('start')->nullable()->default(null);
+            $table->dateTime('end')->nullable()->default(null);
             $table->timestamps();
 
             ## Foregin Keys

@@ -43,6 +43,10 @@
 							<li style="font-size:15px; font-weight:bold;"><a href="#timetable">Timetable</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#yourTickets">Your Tickets</a></li>
+						@if (!$event->polls->isEmpty())
+							<li style="font-size:15px; font-weight:bold;"><a href="#polls">Have Your Say</a></li>
+						@endif
+						
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div><!--/.container-fluid -->
@@ -418,6 +422,29 @@
 					@endforeach
 				</tbody>
 			</table>
+		@endforeach
+	@endif
+
+	<!-- POLLS-->
+	@if (!empty($event->polls))
+		<div class="page-header">
+			<a name="polls"></a>
+			<h3>Have Your Say...</h3>
+		</div>
+		@foreach ($event->polls as $poll)
+			<h4>
+				{{ $poll->name }}
+				@if ($poll->status != 'PUBLISHED')
+					<small> - {{ $poll->status }}</small>
+				@endif
+				@if ($poll->hasEnded())
+					<small> - Ended</small>
+				@endif
+			</h4>
+			@if (!empty($poll->description))
+				<p>{{ $poll->description }}</p>
+			@endif
+			@include ('layouts._partials._polls.votes')
 		@endforeach
 	@endif
 

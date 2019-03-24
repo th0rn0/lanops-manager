@@ -49,10 +49,18 @@ class PollsController extends Controller
 			'name.filled'			=> 'Name cannot be empty',
 			'status.in' 			=> 'Status must be draft, preview or published',
 		];
+		if (isset($request->event_id) && $request->event_id != 0) {
+			$rules['event_id'] = 'exists:events,id';
+			$messages['event_id'] = 'Event does not exist';
+		}
 		$this->validate($request, $rules, $messages);
 		$poll->name = $request->name;
 		$poll->status = $request->status;
 		$poll->description = $request->description;
+		$poll->event_id = null;
+		if (isset($request->event_id) && $request->event_id != 0) {
+			$poll->event_id = $request->event_id;
+		}
 		if (!$poll->save()) {
 			Session::flash('alert-danger', 'Cannot update Poll!');
 			return Redirect::to('/admin/polls/' . $poll->slug);
@@ -75,12 +83,20 @@ class PollsController extends Controller
 		$messages = [
 			'name.required'			=> 'Name is required',
 			'options.filled'		=> 'Options cannot be empty',
-			'options.array'			=> 'Options must be an arrau',
+			'options.array'			=> 'Options must be an array',
 		];
+		if (isset($request->event_id) && $request->event_id != 0) {
+			$rules['event_id'] = 'exists:events,id';
+			$messages['event_id'] = 'Event does not exist';
+		}
 		$this->validate($request, $rules, $messages);
 		$poll = new Poll;
 		$poll->name = $request->name;
 		$poll->user_id = Auth::id();
+		$poll->event_id = null;
+		if (isset($request->event_id) && $request->event_id != 0) {
+			$poll->event_id = $request->event_id;
+		}
 		$poll->description = $request->description;
 		$poll->allow_options_multi = ($request->allow_options_multi ? true : false);
 		$poll->allow_options_user = ($request->allow_options_user ? true : false);
@@ -124,17 +140,23 @@ class PollsController extends Controller
 	 */
 	public function storeOption(Poll $poll, Request $request)
 	{
+		if ($poll->hasEnded()) {
+			Session::flash('alert-danger', 'Poll has ended');
+			return Redirect::back();
+		}
 		$rules = [
-			'name'			=> 'required|filled',
+			'options'		=> 'filled|array',
 		];
 		$messages = [
-			'name.required'		=> 'Name is required',
-			'name.filled'		=> 'Name cannot be empty',
+			'options.filled'		=> 'Options cannot be empty',
+			'options.array'			=> 'Options must be an array',
 		];
 		$this->validate($request, $rules, $messages);
-		if (!$poll->addOption($request->name)) {
-			Session::flash('alert-danger', 'Cannot create Option!');
-			return Redirect::back();
+		foreach ($request->options as $option) {
+			if (!$poll->addOption($option)) {
+				Session::flash('alert-danger', 'Cannot create Option!');
+				return Redirect::back();
+			}
 		}
 		Session::flash('alert-success', 'Successfully created Option!');
 		return Redirect::to('/admin/polls/' . $poll->slug);
@@ -156,6 +178,12 @@ class PollsController extends Controller
 		return Redirect::to('/admin/polls/' . $poll->slug);
 	}
 
+	/**
+	 * End a Poll
+	 * @param  Poll $poll
+	 * @param  Request $request
+	 * @return Redirect
+	 */
 	public function endPoll(Poll $poll, Request $request)
 	{
 		if (!$poll->endPoll()) {

@@ -41,6 +41,10 @@ class PollsController extends Controller
 	 */
 	public function vote(Poll $poll, PollOption $option)
 	{
+		if ($poll->hasEnded()) {
+			Session::flash('alert-danger', 'Poll has ended');
+			return Redirect::back();
+		}
 		if ($option->hasVoted()) {
 			Session::flash('alert-danger', 'Cannot Vote Twice!');
 			return Redirect::back();
@@ -67,6 +71,10 @@ class PollsController extends Controller
 	 */
 	public function abstain(Poll $poll, PollOption $option)
 	{
+		if ($poll->hasEnded()) {
+			Session::flash('alert-danger', 'Poll has ended');
+			return Redirect::back();
+		}
 		if (!$option->abstain()) {
 			Session::flash('alert-danger', 'Cannot remove Vote!');
 			return Redirect::back();
@@ -75,23 +83,36 @@ class PollsController extends Controller
 		return Redirect::back();   
 	}
 
+	/**
+	 * Store option for poll from user
+	 * @return Redirect
+	 */
 	public function storeOption(Poll $poll, Request $request)
 	{
+		if ($poll->hasEnded()) {
+			Session::flash('alert-danger', 'Poll has ended');
+			return Redirect::back();
+		}
 		if (!$poll->allow_options_user) {
 			Session::flash('alert-danger', 'Only Admins can add options to this Poll!');
 			return Redirect::back();
 		}
 		$rules = [
-			'name'			=> 'required|filled',
+			'options'		=> 'filled|array',
 		];
 		$messages = [
-			'name.required'		=> 'Option is required',
-			'name.filled'		=> 'Option cannot be empty',
+			'options.filled'		=> 'Options cannot be empty',
+			'options.array'			=> 'Options must be an array',
 		];
 		$this->validate($request, $rules, $messages);
-		if ($poll->options->where('name', $request->name)->count() > 0) {
-			Session::flash('alert-danger', 'Cannot create Option! It Already Exists.');
-			return Redirect::back();
+		foreach ($request->options as $option) {
+			if ($poll->options->where('name', $option)->count() > 0) {
+				continue;
+			}
+			if (!$poll->addOption($option)) {
+				Session::flash('alert-danger', 'Cannot create Option!');
+				return Redirect::back();
+			}
 		}
 		if (!$poll->addOption($request->name)) {
 			Session::flash('alert-danger', 'Cannot create Option!');

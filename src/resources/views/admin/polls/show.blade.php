@@ -6,7 +6,12 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Polls</h1>
+		<h1 class="page-header">
+			Polls - {{ $poll->name }}
+			@if ($poll->hasEnded())
+				<small> - Ended</small>
+			@endif
+		</h1>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/polls/">Polls</a>
@@ -30,7 +35,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Votes</th>
-							<th>%</th>
+							<th>Percentage %</th>
 							<th>Added By</th>
 						</tr>
 					</thead>
@@ -69,6 +74,10 @@
 				<i class="fa fa-pencil fa-fw"></i> Edit {{ $poll->name }}
 			</div>
 			<div class="panel-body">
+					{{ Form::label('name','Poll Link:',array('id'=>'','class'=>'')) }}
+				<a href="{{ $_SERVER['REQUEST_SCHEME'] }}://{{ $_SERVER['HTTP_HOST'] }}/polls/{{ $poll->slug }}">
+					{{ $_SERVER['REQUEST_SCHEME'] }}://{{ $_SERVER['HTTP_HOST'] }}/polls/{{ $poll->slug }}
+				</a>
 				{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug, 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
@@ -97,14 +106,35 @@
 						}}
 					</div>
 					<div class="form-group">
+						{{ Form::label('event_id','Link to Event',array('id'=>'','class'=>'')) }}
+						{{ 
+							Form::select(
+								'event_id',
+								Helpers::getEventNames('DESC', 0, true),
+								$poll->event_id,
+								array(
+									'id'=>'event_id',
+									'class'=>'form-control'
+								)
+							)
+						}}
+					</div>
+					<div class="form-group">
+						{{ Form::label('allow_options_users','Allow User to Add Options',array('id'=>'','class'=>'')) }} @if ($poll->allow_options_user) True @else False @endif
+						<br>
+						{{ Form::label('allow_options_multi','Allow User to Select Multiple Options',array('id'=>'','class'=>'')) }} @if ($poll->allow_options_multi) True @else False @endif
+					</div>
+					<div class="form-group">
 						<button type="submit" class="btn btn-default btn-block">Submit</button> 
 					</div>
 				{{ Form::close() }}
-				<div class="form-group">
-					{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/end')) }}
-						<button type="submit" class="btn btn-danger btn-sm btn-block">End Poll</button>
-					{{ Form::close() }}
-				</div>
+				@if (!$poll->hasEnded())
+					<div class="form-group">
+						{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/end')) }}
+							<button type="submit" class="btn btn-danger btn-sm btn-block">End Poll</button>
+						{{ Form::close() }}
+					</div>
+				@endif
 				<hr>
 				{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 					{{ Form::hidden('_method', 'DELETE') }}
@@ -112,20 +142,21 @@
 				{{ Form::close() }}
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-plus fa-fw"></i> Add Option
+		@if (!$poll->hasEnded())
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-plus fa-fw"></i> Add Options
+				</div>
+				<div class="panel-body">
+					{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options', 'files' => 'true')) }}
+						<div class="form-group">
+							@include ('layouts._partials._polls.add-options')
+						</div>
+						<button type="submit" class="btn btn-default btn-block">Submit</button> 
+					{{ Form::close() }}
+				</div>
 			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options', 'files' => 'true')) }}
-					<div class="form-group">
-						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('name', '', array('id'=>'name','class'=>'form-control')) }}
-					</div>
-					<button type="submit" class="btn btn-default btn-block">Submit</button> 
-				{{ Form::close() }}
-			</div>
-		</div>
+		@endif
 	</div>
 </div>
  

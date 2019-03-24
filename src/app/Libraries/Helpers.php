@@ -56,15 +56,24 @@ class Helpers
 	 * Get Event Names
 	 * @param  string  $order
 	 * @param  integer $limit
+	 * @param  boolean $future
 	 * @param  boolean $obj   Return as Object
 	 * @return Array|Object
 	 */
-	public static function getEventNames($order = 'DESC', $limit = 0, $obj = false)
+	public static function getEventNames($order = 'DESC', $limit = 0, $future = false, $obj = false)
 	{
 		if ($limit != 0) {
-			$events = \App\Event::orderBy('start', $order)->paginate($limit);
+			if ($future) {
+				$events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', $order)->paginate($limit);
+			} else {
+				$events = \App\Event::orderBy('start', $order)->paginate($limit);
+			}
 		} else {
-			$events = \App\Event::orderBy('start', 'DESC')->get();
+			if ($future) {
+				$events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', 'DESC')->get();
+			} else {
+				$events = \App\Event::orderBy('start', 'DESC')->get();
+			}
 		}
 		if (!$obj) {
 			$return[] = 'None';
