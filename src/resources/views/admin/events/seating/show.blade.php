@@ -152,6 +152,7 @@
 										'status',
 										array(
 											'draft'=>'Draft',
+											'preview'=>'Preview',
 											'published'=>'Published',
 										),
 										strtolower($seating_plan->status),
