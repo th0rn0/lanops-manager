@@ -7,8 +7,8 @@
 <meta http-equiv="refresh" content="15">
 
 <div class="container">
-	@foreach ($event->annoucements as $annoucement)
-		<h3><center>{{ $annoucement->message }}</center></h3>
+	@foreach ($event->announcements as $announcement)
+		<h3><center>{{ $announcement->message }}</center></h3>
 	@endforeach
 	<!-- TIMETABLE -->
 	@if (!$event->timetables->isEmpty())

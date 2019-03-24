@@ -99,9 +99,9 @@ class Event extends Model
 	{
 		return $this->hasMany('App\EventInformation');
 	}
-	public function annoucements()
+	public function announcements()
 	{
-		return $this->hasMany('App\EventAnnoucement');
+		return $this->hasMany('App\EventAnnouncement');
 	}
 	public function venue()
 	{

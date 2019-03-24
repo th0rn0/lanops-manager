@@ -6,14 +6,14 @@ use DB;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventAnnoucement extends Model 
+class EventAnnouncement extends Model 
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'event_annoucements';
+    protected $table = 'event_announcements';
     
     /**
      * The attributes that are mass assignable.

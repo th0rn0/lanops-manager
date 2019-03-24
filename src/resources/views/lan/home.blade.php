@@ -64,14 +64,14 @@
 		</div>
 		<div class="col-lg-6 col-md-6 col-xs-12">
 			<div class="page-header">
-				<a name="annoucements"></a>
-				<h3>Annoucements</h3>
+				<a name="announcements"></a>
+				<h3>Announcements</h3>
 			</div>
-			@if ($event->annoucements->isEmpty())
-				<div class="alert alert-info"><strong>No Annoucements</strong></div>
+			@if ($event->announcements->isEmpty())
+				<div class="alert alert-info"><strong>No Announcements</strong></div>
 			@else
-				@foreach ($event->annoucements as $annoucement)
-					<div class="alert alert-info">{{ $annoucement->message }}</div>
+				@foreach ($event->announcements as $announcement)
+					<div class="alert alert-info">{{ $announcement->message }}</div>
 				@endforeach
 			@endif
 		</div>

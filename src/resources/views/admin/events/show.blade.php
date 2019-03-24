@@ -198,15 +198,15 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-bullhorn fa-fw"></i> Annoucements
-				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addAnnoucementModal">Add Annoucement</a>
+				<i class="fa fa-bullhorn fa-fw"></i> Announcements
+				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addAnnouncementModal">Add Announcement</a>
 			</div>
 			<div class="panel-body">
-				@if ($event->annoucements->count() != 0)
+				@if ($event->announcements->count() != 0)
 					<div class="list-group">
-						@foreach ($event->annoucements as $annoucement)
-							<a href="#" class="list-group-item" data-toggle="modal" onclick="editAnnoucement('{{$annoucement->id}}', '{{$annoucement->message}}')" data-target="#editAnnoucementModal">
-								<i class="fa fa-comment fa-fw"></i> {{ $annoucement->message }}
+						@foreach ($event->announcements as $announcement)
+							<a href="#" class="list-group-item" data-toggle="modal" onclick="editAnnouncement('{{$announcement->id}}', '{{$announcement->message}}')" data-target="#editAnnouncementModal">
+								<i class="fa fa-comment fa-fw"></i> {{ $announcement->message }}
 							</a>
 						@endforeach
 					</div>
@@ -372,12 +372,12 @@
 	</div>
 </div>
 
-<div class="modal fade" id="addAnnoucementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnoucementModalLabel" aria-hidden="true">
+<div class="modal fade" id="addAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="annoucementModalLabel">Add Annoucement</h4>
+				<h4 class="modal-title" id="announcementModalLabel">Add Announcement</h4>
 			</div>
 			<div class="modal-body">
 				@if ($errors->any())
@@ -389,24 +389,24 @@
 				        </ul>
 				  	</div>
 				@endif
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/annoucements', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('message', NULL,array('id'=>'message','class'=>'form-control', 'rows' => '2')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-default btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="modal fade" id="editAnnoucementModal" tabindex="-1" role="dialog" aria-labelledby="editAnnoucementModalLabel" aria-hidden="true">
+<div class="modal fade" id="editAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="editAnnoucementModalLabel">Edit Annoucement</h4>
+				<h4 class="modal-title" id="editAnnouncementModalLabel">Edit Announcement</h4>
 			</div>
 			<div class="modal-body">
 				@if ($errors->any())
@@ -418,28 +418,28 @@
 				        </ul>
 				  	</div>
 				@endif
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/annoucements', 'files' => 'true', 'id' => 'editAnnoucementForm')) }}
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true', 'id' => 'editAnnouncementForm')) }}
 					<div class="form-group">
-						{{ Form::label('edit_annoucement','Message',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('edit_annoucement', NULL,array('id'=>'edit_annoucement','class'=>'form-control', 'rows' => '2')) }}
+						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('message', NULL,array('id'=>'edit_announcement','class'=>'form-control', 'rows' => '2')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default btn-block">Submit</button>
+					</div>
 				{{ Form::close() }}
-				{{ Form::open(array('method'  => 'delete', 'url'=>'/admin/events/' . $event->slug . '/annoucements', 'id'=>'deleteAnnoucementForm', 'files' => 'true')) }}
-					<div class="">
-						<button type="submit" class="btn btn-danger">Delete</button>
-					</div>
+				{{ Form::open(array('method'  => 'delete', 'url'=>'/admin/events/' . $event->slug . '/announcements', 'id'=>'deleteAnnouncementForm', 'files' => 'true')) }}
+					<button type="submit" class="btn btn-danger btn-block">Delete</button>
 				{{ Form::close() }}
 			</div>
 		</div>
 	</div>
 </div>
 <script>
-	function editAnnoucement(annoucement_id, message)
+	function editAnnouncement(announcement_id, message)
 	{
-		$("#editAnnoucementForm").prop('action', '/admin/events/{{ $event->slug }}/annoucements/' + annoucement_id);
-		$("#deleteAnnoucementForm").prop('action', '/admin/events/{{ $event->slug }}/annoucements/' + annoucement_id);
-		$('#edit_annoucement').val(message);
+		$("#editAnnouncementForm").prop('action', '/admin/events/{{ $event->slug }}/announcements/' + announcement_id);
+		$("#deleteAnnouncementForm").prop('action', '/admin/events/{{ $event->slug }}/announcements/' + announcement_id);
+		$('#edit_announcement').val(message);
 	}
 </script>
 

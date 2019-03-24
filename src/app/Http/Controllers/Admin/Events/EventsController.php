@@ -10,7 +10,7 @@ use App\User;
 use App\Event;
 use App\EventParticipant;
 use App\EventTicket;
-use App\EventAnnoucement;
+use App\EventAnnouncement;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;

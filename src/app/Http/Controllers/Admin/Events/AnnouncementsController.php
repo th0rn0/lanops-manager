@@ -8,7 +8,7 @@ use Session;
 use Storage;
 
 use App\Event;
-use App\EventAnnoucement;
+use App\EventAnnouncement;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,10 +16,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-class AnnoucementsController extends Controller
+class AnnouncementsController extends Controller
 {
 	/**
-	 * Add Annoucement to Datbase
+	 * Add Announcement to Datbase
 	 * @param  Request $request
 	 * @param  Event   $event
 	 * @return Redirect
@@ -34,27 +34,27 @@ class AnnoucementsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		$annoucement			= new EventAnnoucement();
-		$annoucement->message	= $request->message;
-		$annoucement->event_id	= $event->id;
+		$announcement			= new EventAnnouncement();
+		$announcement->message	= $request->message;
+		$announcement->event_id	= $event->id;
 		
-		if (!$annoucement->save()) {
-			Session::flash('alert-danger', 'Cannot save Annoucement!');
+		if (!$announcement->save()) {
+			Session::flash('alert-danger', 'Cannot save Announcement!');
 			return Redirect::to('admin/events/' . $event->slug);
 		}
 
-		Session::flash('alert-success', 'Successfully saved Annoucement!');
+		Session::flash('alert-success', 'Successfully saved Announcement!');
 		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
-	 * Update Annoucement
+	 * Update Announcement
 	 * @param  Request          $request
 	 * @param  Event            $event
-	 * @param  EventAnnoucement $annoucement
+	 * @param  EventAnnouncement $announcement
 	 * @return Redirect
 	 */
-	public function update(Request $request, Event $event, EventAnnoucement $annoucement)
+	public function update(Request $request, Event $event, EventAnnouncement $announcement)
 	{
 		$rules = [
 			'message'			=> 'required'
@@ -64,31 +64,31 @@ class AnnoucementsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		$annoucement->message	= $request->message;
+		$announcement->message	= $request->message;
 		
-		if (!$annoucement->save()) {
-			Session::flash('alert-danger', 'Cannot update Annoucement!');
+		if (!$announcement->save()) {
+			Session::flash('alert-danger', 'Cannot update Announcement!');
 			return Redirect::to('admin/events/' . $event->slug);
 		}
 
-		Session::flash('message', 'Successfully updated Annoucement!');
+		Session::flash('message', 'Successfully updated Announcement!');
 		return Redirect::to('admin/events/' . $event->slug);
 	}
 
 	/**
-	 * Delete Annoucement from Database
+	 * Delete Announcement from Database
 	 * @param  Event            $event
-	 * @param  EventAnnoucement $annoucement
+	 * @param  EventAnnouncement $announcement
 	 * @return Redirect
 	 */
-	public function destroy(Event $event, EventAnnoucement $annoucement)
+	public function destroy(Event $event, EventAnnouncement $announcement)
 	{
-		if (!$annoucement->delete()) {
-			Session::flash('alert-danger', 'Cannot delete Annoucement!');
+		if (!$announcement->delete()) {
+			Session::flash('alert-danger', 'Cannot delete Announcement!');
 			return Redirect::to('admin/events/' . $event->slug);
 		}
 
-		session::flash('message', 'Successfully deleted Annoucement!');
+		session::flash('message', 'Successfully deleted Announcement!');
 		return Redirect::to('admin/events/' . $event->slug);
 	}
 }

@@ -195,11 +195,11 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/events/{event}/participants/{participant}/signin', 'Admin\Events\ParticipantsController@signIn');
 
 		/**
-		 * Annoucements
+		 * Announcements
 		 */
-		Route::post('/admin/events/{event}/annoucements', 'Admin\Events\AnnoucementsController@store');
-		Route::post('/admin/events/{event}/annoucements/{annoucement}', 'Admin\Events\AnnoucementsController@update');
-		Route::delete('/admin/events/{event}/annoucements/{annoucement}', 'Admin\Events\AnnoucementsController@destroy');
+		Route::post('/admin/events/{event}/announcements', 'Admin\Events\AnnouncementsController@store');
+		Route::post('/admin/events/{event}/announcements/{announcement}', 'Admin\Events\AnnouncementsController@update');
+		Route::delete('/admin/events/{event}/announcements/{announcement}', 'Admin\Events\AnnouncementsController@destroy');
 
 		/**
 		 * Tickets
