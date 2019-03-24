@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDescSettingsTable extends Migration
+class AddDescColumnPollTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDescSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('settings', function (Blueprint $table) {
-            $table->string('description')->after('value')->nullable();
+        Schema::table('polls', function (Blueprint $table) {
+            $table->string('description')->after('slug')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddDescSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('settings', function (Blueprint $table) {
+        Schema::table('polls', function (Blueprint $table) {
             $table->dropColumn('description');
         });
     }

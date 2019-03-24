@@ -200,7 +200,7 @@ Once running and the database has migrated you will need to exec into the contai
 
 Generate a Key and Save it for use in the APP_KEY Env variable above
 ```
-php aritsan key:generate
+php artisan key:generate
 ```
 Seed the Database with initial data
 ```

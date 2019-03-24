@@ -37,6 +37,9 @@
 				<a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
 			</li>
 			<li>
+				<a href="/admin/polls"><i class="fa fa-list fa-fw"></i> Polls</a>
+			</li>
+			<li>
 				<a href="/admin/venues"><i class="fa fa-building fa-fw"></i> Venues</a>
 			</li>
 			<li>
