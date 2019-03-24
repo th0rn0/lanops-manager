@@ -38,10 +38,14 @@
 						@if (!$poll->options->isEmpty())
 							@foreach ($poll->options as $option)
 								<tr class="table-row odd gradeX">
-									<td>{{ $option->name }}</td>
-									<td>{{ $option->getTotalVotes() }}</td>
-									<td></td>
-									<td><small>{{ $option->user->steamname }}</small></td>
+									<td width="30%">{{ $option->name }}</td>
+									<td width="5%">{{ $option->getTotalVotes() }}</td>
+									<td width="40%">
+										<div class="progress-bar" role="progressbar" aria-valuenow="{{ $option->getPercentage() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $option->getPercentage() }}%;">
+											{{ $option->getPercentage() }}%
+										</div>
+									</td>
+									<td width="25%"><small>{{ $option->user->steamname }}</small></td>
 									<td>
 										@if ($option->getTotalVotes() <= 0)
 											{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options/' . $option->id, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -71,6 +75,10 @@
 						{{ Form::text('name', $poll->name, array('id'=>'name','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
+						{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('description', $poll->description, array('id'=>'','class'=>'form-control', 'rows'=>'3')) }}
+					</div>
+					<div class="form-group">
 						{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 						{{ 
 							Form::select(
@@ -88,8 +96,15 @@
 							)
 						}}
 					</div>
-					<button type="submit" class="btn btn-default btn-block">Submit</button> 
+					<div class="form-group">
+						<button type="submit" class="btn btn-default btn-block">Submit</button> 
+					</div>
 				{{ Form::close() }}
+				<div class="form-group">
+					{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/end')) }}
+						<button type="submit" class="btn btn-danger btn-sm btn-block">End Poll</button>
+					{{ Form::close() }}
+				</div>
 				<hr>
 				{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 					{{ Form::hidden('_method', 'DELETE') }}

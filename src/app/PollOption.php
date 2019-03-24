@@ -55,22 +55,38 @@ class PollOption extends Model
 
     public function vote()
     {
-        // if (!$this->votes->pluck('user_id', Auth::id())) {
+        if (!$this->hasVoted()) {
             $vote = new Vote;
             $vote->user_id = Auth::id();
             $vote->poll_option_id = $this->id;
             if (!$vote->save()) {
                 return false;
             }
-        // }
+        }
         return true;
     }
 
     public function abstain()
     {
-        if (!$this->votes->pluck('user_id', Auth::id())->delete()) {
+        if ($this->hasVoted() && !$this->votes->where('user_id', Auth::id())->first()->delete()) {
             return false;
         }
         return true;
+    }
+
+    public function hasVoted()
+    {
+        if ($this->votes->where('user_id', Auth::id())->count() <= 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public function getPercentage()
+    {
+        if ($this->poll->getTotalVotes() == 0) {
+            return 0;
+        }
+        return ($this->getTotalVotes() / $this->poll->getTotalVotes()) * 100;
     }
 }

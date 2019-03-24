@@ -118,4 +118,13 @@ class Poll extends Model
         }
         return $total;
     }
+
+    public function endPoll()
+    {
+        $this->end = date("Y-m-d H:i:s");
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
 }

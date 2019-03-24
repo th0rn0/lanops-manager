@@ -46,14 +46,13 @@ class PollsController extends Controller
 			'status'		=> 'in:draft,preview,published',
 		];
 		$messages = [
-			'name.filled'	=> 'Name cannot be empty',
-			'status.in' 	=> 'Status must be draft, preview or published',
+			'name.filled'			=> 'Name cannot be empty',
+			'status.in' 			=> 'Status must be draft, preview or published',
 		];
 		$this->validate($request, $rules, $messages);
-
 		$poll->name = $request->name;
 		$poll->status = $request->status;
-
+		$poll->description = $request->description;
 		if (!$poll->save()) {
 			Session::flash('alert-danger', 'Cannot update Poll!');
 			return Redirect::to('/admin/polls/' . $poll->slug);
@@ -74,31 +73,39 @@ class PollsController extends Controller
 			'options'		=> 'filled|array',
 		];
 		$messages = [
-			'name.required'		=> 'Name is required',
-			'options.filled'	=> 'Options cannot be empty',
-			'options.array'		=> 'Options cannot be empty',
+			'name.required'			=> 'Name is required',
+			'options.filled'		=> 'Options cannot be empty',
+			'options.array'			=> 'Options must be an arrau',
 		];
 		$this->validate($request, $rules, $messages);
 		$poll = new Poll;
 		$poll->name = $request->name;
 		$poll->user_id = Auth::id();
+		$poll->description = $request->description;
 		$poll->allow_options_multi = ($request->allow_options_multi ? true : false);
 		$poll->allow_options_user = ($request->allow_options_user ? true : false);
 		if (!$poll->save()) {
 			Session::flash('alert-danger', 'Cannot create Poll!');
 			return Redirect::back();
 		}
-		foreach ($request->options as $option) {
-			if (!$poll->addOption($option)) {
-				$poll->delete();
-				Session::flash('alert-danger', 'Cannot create Poll!');
-				return Redirect::back();
+		if (isset($requests->options)) {
+			foreach ($request->options as $option) {
+				if (!$poll->addOption($option)) {
+					$poll->delete();
+					Session::flash('alert-danger', 'Cannot create Poll!');
+					return Redirect::back();
+				}
 			}
 		}
 		Session::flash('alert-success', 'Successfully created Poll!');
 		return Redirect::to('/admin/polls/' . $poll->slug);
 	}
 
+	/**
+	 * Delete from the to Database
+	 * @param  Poll $poll
+	 * @return Redirect
+	 */
 	public function destroy(Poll $poll)
 	{
 		if (!$poll->delete()) {
@@ -109,6 +116,12 @@ class PollsController extends Controller
 		return Redirect::to('/admin/polls/');
 	}
 
+	/**
+	 * Add Poll Option to the Database
+	 * @param  Poll $poll
+	 * @param  Request $request
+	 * @return Redirect
+	 */
 	public function storeOption(Poll $poll, Request $request)
 	{
 		$rules = [
@@ -120,7 +133,6 @@ class PollsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 		if (!$poll->addOption($request->name)) {
-			$poll->delete();
 			Session::flash('alert-danger', 'Cannot create Option!');
 			return Redirect::back();
 		}
@@ -128,14 +140,29 @@ class PollsController extends Controller
 		return Redirect::to('/admin/polls/' . $poll->slug);
 	}
 
+	/**
+	 * Delete Poll Option from the the Database
+	 * @param  Poll $poll
+	 * @param  PollOption $option
+	 * @return Redirect
+	 */
 	public function destroyOption(Poll $poll, PollOption $option)
 	{
 		if (!$option->delete()) {
 			Session::flash('alert-danger', 'Cannot delete Option!');
 			return Redirect::to('/admin/polls/' . $poll->slug);
 		}
-
 		Session::flash('alert-success', 'Successfully deleted Option!');
+		return Redirect::to('/admin/polls/' . $poll->slug);
+	}
+
+	public function endPoll(Poll $poll, Request $request)
+	{
+		if (!$poll->endPoll()) {
+			Session::flash('alert-danger', 'Cannot end Poll!');
+			return Redirect::to('/admin/polls/' . $poll->slug);
+		}
+		Session::flash('alert-success', 'Successfully ended Poll!');
 		return Redirect::to('/admin/polls/' . $poll->slug);
 	}
 }

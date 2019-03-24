@@ -103,6 +103,7 @@
 						<p class="text-muted hidden"><a href="/contact">Contact Us</a></p>
 						<p class="text-muted"><a href="/news">News</a></p>
 						<p class="text-muted"><a href="/about">About Us</a></p>
+						<p class="text-muted"><a href="/polls">Polls</a></p>
 						<p class="text-muted hidden">Lan Guide</p>
 					</div>
 					<div class="col-lg-6 col-md-6">

@@ -110,6 +110,7 @@ Route::group(['middleware' => ['web']], function () {
 	 */
 	Route::get('/polls', 'PollsController@index');
 	Route::get('/polls/{poll}', 'PollsController@show');
+	Route::post('/polls/{poll}/options', 'PollsController@storeOption');
 	Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
 	Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
 
@@ -277,6 +278,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/polls', 'Admin\PollsController@store');
 		Route::get('/admin/polls/{poll}', 'Admin\PollsController@show');
 		Route::post('/admin/polls/{poll}', 'Admin\PollsController@update');
+		Route::post('/admin/polls/{poll}/end', 'Admin\PollsController@endPoll');
 		Route::delete('/admin/polls/{poll}', 'Admin\PollsController@destroy');
 		Route::post('/admin/polls/{poll}/options', 'Admin\PollsController@storeOption');
 		Route::delete('/admin/polls/{poll}/options/{option}', 'Admin\PollsController@destroyOption');

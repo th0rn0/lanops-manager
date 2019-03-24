@@ -71,6 +71,10 @@
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
+						{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('description', '', array('id'=>'','class'=>'form-control', 'rows'=>'3')) }}
+					</div>
+					<div class="form-group">
 						{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
 						{{ Form::text('options[]', '', array('id'=>'', 'class'=>'form-control')) }}
 						{{ Form::text('options[]', '', array('id'=>'', 'class'=>'form-control')) }}
