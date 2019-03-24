@@ -68,6 +68,9 @@ https://lanops.co.uk
   - Terms & Conditions
   - Paypal Express
   - Breakdowns in Admin
+- Voting and Poll Management
+- News Management
+- Comment Management
 - Account Management
 - Fully Encapsulated in Docker Containers
 - Built on Laravel
