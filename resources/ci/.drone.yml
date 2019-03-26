@@ -269,6 +269,9 @@ trigger:
   branch:
   - master
   - staging
+  event:
+  - push
+  - tag
 
 services:
 - name: database
