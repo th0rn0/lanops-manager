@@ -86,15 +86,51 @@
 				More Editing
 			</div>
 			<div class="panel-body">
-				purchase
-				refund
-				ticket
-				@if (!$participant->signed_in)
-					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
-						<button type="submit" class="btn btn-default">Sign in</button>
-					{{ Form::close() }}
+				@if ($participant->signed_in)
+					<h4>User is signed in at present at the event</h4>
+				@endif
+				{{ Form::label('','Ticket',array('id'=>'','class'=>'')) }}
+				@if ($participant->ticket)
+					<p>{{ $participant->ticket->name }}</p>
 				@else
-					User is already signed in at present at the event
+					<p>No Ticket Bought</p>
+				@endif
+				@if ($participant->purchase)
+					{{ Form::label('','Purchase Info',array('id'=>'','class'=>'')) }}
+					<p><a href="/admin/purchases">{{ $participant->purchase->type }}</a></p>
+					@if ($participant->purchase->paypal_email)
+						<p>{{ $participant->purchase->paypal_email }}</p>
+					@endif
+				@endif
+				@if (!$participant->signed_in)
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/transfer')) }}
+						<div class="form-group">
+							{{ Form::label('event_id','Transfer to event',array('id'=>'','class'=>'')) }}
+							{{ 
+								Form::select(
+									'event_id',
+									Helpers::getEventNames('DESC', 0, true),
+									'',
+									array(
+										'id'=>'event_id',
+										'class'=>'form-control'
+									)
+								)
+							}}
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-default btn-block">Transfer</button>
+						</div>
+					{{ Form::close() }}
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
+						<div class="form-group">
+							<button type="submit" class="btn btn-success btn-block">Sign in</button>
+						</div>
+					{{ Form::close() }}
+					<hr>
+					<div class="form-group">
+						<button type="submit" class="btn btn-danger btn-block" disabled>Refund - <small>Coming soon</small></button>
+					</div>
 				@endif
 			</div>
 		</div>

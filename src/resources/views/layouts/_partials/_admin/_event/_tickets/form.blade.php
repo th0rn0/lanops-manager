@@ -59,7 +59,7 @@
 	</div>  
 	<div class="form-group col-md-6 col-sm-6 col-xs-12">
 		{{ Form::label('type','Ticket Type',array('id'=>'','class'=>'')) }}
-		{{ Form::select('type', array('participant' => 'Participant', 'spectator' => 'Spectator'), $ticket->type, array('id'=>'type','class'=>'form-control')) }}
+		{{ Form::select('type', array('participant' => 'Participant', 'spectator' => 'Spectator'), @$ticket->type, array('id'=>'type','class'=>'form-control')) }}
 	</div> 
 	<div class="form-group col-xs-12">
 		<div class="checkbox">

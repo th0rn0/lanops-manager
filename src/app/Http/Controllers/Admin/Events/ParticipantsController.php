@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Events;
 
 use DB;
 use Auth;
+use Session;
 
 use App\User;
 use App\Event;
@@ -59,8 +60,35 @@ class ParticipantsController extends Controller
 	 */
 	public function signIn(Event $event, EventParticipant $participant)
 	{
-		$participant->setSignIn();
+		if (!$participant->setSignIn()) {
+			Session::flash('alert-danger', 'Cannot sign in Participant!');
+			return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+		}
+		Session::flash('alert-success', 'Participant Signed in!');
 		return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+	}
+
+	public function transfer(Event $event, EventParticipant $participant, Request $request)
+	{
+		$rules = [
+			'event_id'	=> 'required',
+			'event_id' 	=> 'exists:events,id',
+		];
+		$messages = [
+			'event_id|required'	=> 'A Event ID is required.',
+			'event_id|exists'	=> 'A Event ID must exist.',
+		];
+		$this->validate($request, $rules, $messages);
+		if ($participant->signed_in) {
+			Session::flash('alert-warning', 'Cannot tranfer Participant already signed in!');
+			return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+		}
+		if (!$participant->transfer($request->event_id)) {
+			Session::flash('alert-danger', 'Cannot tranfer Participant!');
+			return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+		}
+		Session::flash('alert-success', 'Participant Transferred!');
+		return Redirect::to('admin/events/' . $event->slug . '/participants/');
 	}
 }
 

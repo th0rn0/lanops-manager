@@ -194,6 +194,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('/admin/events/{event}/participants/{participant}', 'Admin\Events\ParticipantsController@show');
 		Route::post('/admin/events/{event}/participants/{participant}', 'Admin\Events\ParticipantsController@update');
 		Route::post('/admin/events/{event}/participants/{participant}/signin', 'Admin\Events\ParticipantsController@signIn');
+		Route::post('/admin/events/{event}/participants/{participant}/transfer', 'Admin\Events\ParticipantsController@transfer');
 
 		/**
 		 * Announcements
@@ -283,5 +284,10 @@ Route::group(['middleware' => ['web']], function () {
 		Route::delete('/admin/polls/{poll}', 'Admin\PollsController@destroy');
 		Route::post('/admin/polls/{poll}/options', 'Admin\PollsController@storeOption');
 		Route::delete('/admin/polls/{poll}/options/{option}', 'Admin\PollsController@destroyOption');
+
+		/**
+		 * Purchases
+		 */
+		Route::get('/admin/purchases', 'Admin\PurchasesController@index');
 	});
 });

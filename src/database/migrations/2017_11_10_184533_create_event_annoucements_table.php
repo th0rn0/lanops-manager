@@ -15,7 +15,7 @@ class CreateEventAnnoucementsTable extends Migration
     {
         Schema::create('event_annoucements', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('event_id')->unsigned()->index();;
+            $table->integer('event_id')->unsigned()->index();
             $table->string('message');
             $table->timestamps();
 

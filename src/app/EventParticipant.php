@@ -63,7 +63,10 @@ class EventParticipant extends Model
 		if (!$bool) {
 			$this->signed_in = false;
 		}
-		$this->save();
+		if (!$this->save()) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -100,6 +103,17 @@ class EventParticipant extends Model
 		QrCode::size(300);
 		QrCode::generate($ticket_url, $qr_code_path . $qr_code_file);
 		$this->qrcode = $qr_code_path . $qr_code_file;
+		return true;
+	}
+
+	public function transfer($event_id)
+	{
+		$this->transferred = true;
+		$this->transferred_event_id = $this->event_id;
+		$this->event_id = $event_id;
+		if (!$this->save()) {
+			return false;
+		}
 		return true;
 	}
 }

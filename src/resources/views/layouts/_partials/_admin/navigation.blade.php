@@ -65,7 +65,7 @@
 				<a href="/admin/games"><i class="fa fa-gamepad fa-fw"></i> Games</a>
 			</li>
 			<li>
-				<a><i class="fa fa-credit-card fa-fw"></i> Purchases - TBC</a>
+				<a href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>
 			<li>
 				<a href="/admin/settings"><i class="fa fa-wrench" aria-hidden="true"></i> Settings/Misc</a> 
