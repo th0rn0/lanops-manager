@@ -74,7 +74,7 @@
 								{{ Form::close() }}
 							</td>
 						@endif
-						@if ($tournament->team_size == '1v1' && (@$admin && $user->admin))
+						@if (@$admin && $user->admin)
 							<td>
 								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournament_participant->id  . '/remove')) }}
 									<input type="hidden" name="event_participant_id" value="{{ $tournament_participant->event_participant_id }}">
