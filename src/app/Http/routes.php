@@ -169,6 +169,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/events/{event}/tournaments/{tournament}/finalize', 'Admin\Events\TournamentsController@finalize');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/match', 'Admin\Events\TournamentsController@updateMatch');
 		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team', 'Admin\Events\TournamentsController@updateParticipantTeam');
+		Route::post('/admin/events/{event}/tournaments/{tournament}/participants/{participant}/remove', 'Admin\Events\TournamentsController@unregisterParticipant');
 
 		// TODO - REMOVE THIS AND ALL LIKE IT
 		/**

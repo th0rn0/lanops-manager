@@ -248,6 +248,36 @@ class TournamentsController extends Controller
 		return Redirect::back();
 	}
 
+	/**
+	 * Unregister Participant from Tournament
+	 * @param  Event           $event
+	 * @param  EventTournament $tournament
+	 * @param  Request         $request
+	 * @return Redirect
+	 */
+	public function unregisterParticipant(Event $event, EventTournament $tournament, Request $request)
+	{
+		if (!$tournament_participant = $tournament->getParticipant($request->event_participant_id)) {
+			Session::flash('alert-danger', 'Participant is not signed up.');
+			return Redirect::back();
+		}
+
+		if (!$tournament_participant->delete()) {
+			Session::flash('alert-danger', 'Cannot remove. Please try again.');
+			return Redirect::back();
+		}
+
+		Session::flash('alert-success', 'Participant has been successfully removed from the Tournament.');
+		return Redirect::back();
+	}
+
+	/**
+	 * Update Match on Challone API
+	 * @param  Event           $event
+	 * @param  EventTournament $tournament
+	 * @param  Request         $request
+	 * @return Redirect
+	 */
 	public function updateMatch(Event $event, EventTournament $tournament, Request $request)
 	{
 		$rules = [
@@ -273,6 +303,9 @@ class TournamentsController extends Controller
 		return Redirect::back();
 	}
 
+	/**
+	 * Legacy - Fix All tournament scores before the Tournament Localization Patch
+	 */
 	public function fixScores()
 	{
 		EventTournament::getAllScoresRetroActively();

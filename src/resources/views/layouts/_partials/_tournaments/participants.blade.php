@@ -10,7 +10,7 @@
 					<th>
 						Seat
 					</th>
-					@if($tournament->team_size != '1v1' && ($admin && $user->admin))
+					@if($tournament->team_size != '1v1' && (@$admin && $user->admin))
 						<th>
 							PUG
 						</th>
@@ -47,7 +47,7 @@
 								@endif 
 							</p>
 						</td>
-						@if ($tournament->team_size != '1v1' && ($admin && $user->admin))
+						@if ($tournament->team_size != '1v1' && (@$admin && $user->admin))
 							<td>
 								@if($tournament_participant->pug)
 									Yes
@@ -66,11 +66,19 @@
 									</div>
 									<div class="form-group col-xs-12 col-sm-4">
 										@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-											<button type="submit" class="btn btn-default btn-block" disabled>Update</button>  
+											<button type="submit" class="btn btn-default btn-sm btn-block" disabled>Update</button>  
 										@else
-											<button type="submit" class="btn btn-default btn-block">Update</button>  
+											<button type="submit" class="btn btn-default btn-sm btn-block">Update</button>  
 										@endif
 									</div>
+								{{ Form::close() }}
+							</td>
+						@endif
+						@if ($tournament->team_size == '1v1' && (@$admin && $user->admin))
+							<td>
+								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournament_participant->id  . '/remove')) }}
+									<input type="hidden" name="event_participant_id" value="{{ $tournament_participant->event_participant_id }}">
+									<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
 								{{ Form::close() }}
 							</td>
 						@endif
