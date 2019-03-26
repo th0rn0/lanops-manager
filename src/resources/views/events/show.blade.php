@@ -54,16 +54,16 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3>
-					<strong>{{ max($event->getSeatingCapacity() - $event->eventParticipants->count(), 0) }}/{{ $event->getSeatingCapacity() }}</strong> Tickets Available
+					<strong>{{ max($event->capacity - $event->eventParticipants->count(), 0) }}/{{ $event->capacity }}</strong> Tickets Available
 				</h3>
 			</div>
-			@if ($event->getSeatingCapacity() > 0)
+			@if ($event->capacity > 0)
 				<div class="col-xs-12">
 					<div class="progress">
-						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ ($event->eventParticipants->count() / $event->getSeatingCapacity()) * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($event->eventParticipants->count() / $event->getSeatingCapacity()) * 100}}%;">
+						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ ($event->eventParticipants->count() / $event->capacity) * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
 							Purchased
 						</div>
-						<div class="progress-bar progress-bar-success" style="width: {{ 100 - ($event->eventParticipants->count() / $event->getSeatingCapacity()) * 100}}%;">
+						<div class="progress-bar progress-bar-success" style="width: {{ 100 - ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
 							<span class="sr-only">Available</span>
 							Available
 						</div>
@@ -97,7 +97,7 @@
 				</div>
 				@foreach ($event->tickets as $ticket)
 					<div class="well well-sm col-lg-12" disabled>
-						<h3>{{$ticket->name}} @if ($event->getSeatingCapacity() <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
+						<h3>{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
 						@if ($ticket->quantity != 0)
 							<small>
 								Limited Availablity
@@ -115,7 +115,7 @@
 								@if ($user)
 									{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
 										@if (
-											$event->getSeatingCapacity() <= $event->eventParticipants->count() 
+											$event->capacity <= $event->eventParticipants->count() 
 											|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
 											)
 											<div class="row">

@@ -43,7 +43,7 @@
 									<td>{{ date('d-m-y H:i', strtotime($event->start)) }}</td>
 									<td>{{ date('d-m-y H:i', strtotime($event->end)) }}</td>
 									<td>{{ $event->desc_short }}</td>
-									<td class="center">{{ $event->getSeatingCapacity() }}</td>
+									<td class="center">{{ $event->capacity }} <small>Seats:{{ $event->getSeatingCapacity() }}</small></td>
 									<td width="15%">
 										<a href="/admin/events/{{ $event->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
 									</td>
@@ -114,8 +114,8 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
-								{{ Form::label('cap','Seating Capacity',array('id'=>'','class'=>'')) }}
-								{{ Form::text('cap', '',array('id'=>'cap','class'=>'form-control')) }}
+								{{ Form::label('capacity','Capacity',array('id'=>'','class'=>'')) }}
+								{{ Form::text('capacity', '',array('id'=>'capacity','class'=>'form-control')) }}
 							</div>
 							<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('venue','Venue',array('id'=>'','class'=>'')) }}

@@ -56,10 +56,26 @@ class PaymentsController extends Controller
 			Session::flash('alert-danger', 'No Basket was found. Please try again');
 			return Redirect::back();
 		}
+		foreach ($basket as $ticket_id => $quantity) {
+			$ticket = EventTicket::where('id', $ticket_id)->first();
+			if ($ticket->event->capacity <= $ticket->event->EventParticipants->count()) {
+				Session::flash('alert-danger', '{{ $ticket->event->display_name }} Has sold out!');
+				return Redirect::back();
+			}
+	  		for ($i=1; $i <= $quantity; $i++) { 
+				//Add Participant to databade
+				$participant 				= new EventParticipant;
+				$participant->user_id 		= $params['user_id'];
+				$participant->event_id 		= $ticket->event->id;
+				$participant->ticket_id 	= $ticket->id;
+				$participant->purchase_id 	= $purchase->id;
+				$participant->generateQRCode();
+				$participant->save();
+	  		}
+		}
 	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
 	  	}
-
 	  	$request_scheme = 'http';
 		if ( 
 				(! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
@@ -82,7 +98,6 @@ class PaymentsController extends Controller
 
 	  	Session::put('params', $params);
 	  	Session::save();  
-	  
 	  	$gateway = Omnipay::create('PayPal_Express');
 	  	$gateway->setUsername(env('PAYPAL_USERNAME'));
 	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
@@ -93,7 +108,6 @@ class PaymentsController extends Controller
 	  	} else {
 			$gateway->setTestMode(false);
 	  	}
-	  
 	  	$response = $gateway->purchase($params)->send();
 	  	if ($response->isSuccessful()) {
 			// payment was successful: update database
@@ -117,28 +131,23 @@ class PaymentsController extends Controller
 			Session::flash('alert-danger', 'Payment was CANCELLED!');
 			return Redirect::to('/payment/cancelled');
 	  	}
-
 	  	if (!Session::has('params')) {
 			Session::flash('alert-danger', 'Payment was UNSUCCESSFUL!');
 			return Redirect::to('/payment/failed');
 	  	}
 	  	$params = Session::get('params');
-
 	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
 	  	}
-
 	  	$gateway = Omnipay::create('PayPal_Express');
 	  	$gateway->setUsername(env('PAYPAL_USERNAME'));
 	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
 	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
-
 	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
 	  	} else {
 			$gateway->setTestMode(false);
 	  	}
-
 	  	//Complete Purchase
 	  	$gateway->completePurchase($params)->send();
 	  	$response = $gateway->fetchCheckout($params)->send(); // this is the raw response object
@@ -153,7 +162,6 @@ class PaymentsController extends Controller
 			$purchase->status 			= $paypal_response['ACK'];
 			$purchase->paypal_email 	= $paypal_response['EMAIL'];
 			$purchase->save();
-		
 			foreach (Session::get('basket') as $ticket_id => $quantity) {
 				$ticket = EventTicket::where('id', $ticket_id)->first();
 		  		for ($i=1; $i <= $quantity; $i++) { 

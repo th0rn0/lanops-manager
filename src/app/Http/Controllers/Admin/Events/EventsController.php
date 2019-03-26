@@ -58,6 +58,7 @@ class EventsController extends Controller
 			'end_time'		=> 'required|date_format:H:i',
 			'start_date'	=> 'required|date_format:m/d/Y',
 			'start_time'	=> 'required|date_format:H:i',
+			'capacity'		=> 'required|integer',
 		];
 		$messages = [
 			'event_name.required'		=> 'Event name is required',
@@ -71,6 +72,9 @@ class EventsController extends Controller
 			'start_time.date_format'	=> 'Start Time must be H:i format',
 			'desc_short.required'		=> 'Short Description is required',
 			'desc_long.required'		=> 'Long Description is required',
+			'capacity.required'			=> 'Capacity is required',
+			'capacity.integer'			=> 'Capacity must be a integer',
+
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -82,6 +86,7 @@ class EventsController extends Controller
 		$event->desc_long			= $request->desc_long;
 		$event->desc_short			= $request->desc_short;
 		$event->event_venue_id		= @$request->venue;
+		$event->capacity 			= $request->capacity;
 
 		if (!$event->save()) {
 			Session::flash('alert-danger', 'Cannot Save Event!');
@@ -106,6 +111,7 @@ class EventsController extends Controller
 			'start_date'		=> 'filled|date_format:m/d/Y',
 			'start_time'		=> 'filled|date_format:H:i',
 			'status'			=> 'in:draft,preview,published,private',
+			'capacity'			=> 'filled|integer',
 		];
 		$messages = [
 			'event_name.filled'			=> 'Event Name cannot be empty',
@@ -118,6 +124,8 @@ class EventsController extends Controller
 			'start_time.filled'			=> 'A Start Time cannot be empty',
 			'end_time.date_format'		=> 'A Start Time must be H:i format',
 			'status.in' 				=> 'Status must be draft, preview, published or private',
+			'capacity.filled'			=> 'Capacity is required',
+			'capacity.integer'			=> 'Capacity must be a integer',
 		];
 		$this->validate($request, $rules, $messages);
 
@@ -160,6 +168,11 @@ class EventsController extends Controller
 
 		if (isset($request->essential_info)) {
 			$event->essential_info = $request->essential_info; 
+		}
+
+		
+		if (isset($request->capacity)) {
+			$event->capacity = $request->capacity; 
 		}
 
 		if (!$event->save()) {

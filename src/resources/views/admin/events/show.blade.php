@@ -46,9 +46,19 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6 col-xs-12">
-									<div class="form-group">
-										{{ Form::label('cap','Seating Capacity',array('id'=>'','class'=>'')) }}
-										{{ Form::text('cap',$event->getSeatingCapacity(),array('id'=>'cap','class'=>'form-control', 'disabled'=>'true')) }}
+									<div class="row">
+										<div class="col-md-6 col-xs-12">
+											<div class="form-group">
+												{{ Form::label('capacity','Capacity',array('id'=>'','class'=>'')) }}
+												{{ Form::text('capacity',$event->capacity,array('id'=>'capacity','class'=>'form-control')) }}
+											</div>
+										</div>
+										<div class="col-md-6 col-xs-12">
+											<div class="form-group">
+												{{ Form::label('seating_cap','Seating Capacity',array('id'=>'','class'=>'')) }}
+												{{ Form::text('seating_cap',$event->getSeatingCapacity(),array('id'=>'seating_cap','class'=>'form-control', 'disabled'=>'true')) }}
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="col-md-6 col-xs-12">
