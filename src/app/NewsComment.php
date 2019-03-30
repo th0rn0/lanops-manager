@@ -29,6 +29,21 @@ class NewsComment extends Model
         'updated_at'
     );
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        $admin = false;
+        if (Auth::user() && Auth::user()->getAdmin()) {
+            $admin = true;
+        }
+        if(!$admin) {
+            static::addGlobalScope('approved', function (Builder $builder) {
+                $builder->where('approved', '!=', false);
+            });
+        }
+    }
+
     /*
      * Relationships
      */

@@ -62,16 +62,6 @@ class PaymentsController extends Controller
 				Session::flash('alert-danger', '{{ $ticket->event->display_name }} Has sold out!');
 				return Redirect::back();
 			}
-	  		for ($i=1; $i <= $quantity; $i++) { 
-				//Add Participant to databade
-				$participant 				= new EventParticipant;
-				$participant->user_id 		= $params['user_id'];
-				$participant->event_id 		= $ticket->event->id;
-				$participant->ticket_id 	= $ticket->id;
-				$participant->purchase_id 	= $purchase->id;
-				$participant->generateQRCode();
-				$participant->save();
-	  		}
 		}
 	  	if (env('APP_DEBUG')) {
 			$this->sandbox = TRUE;
