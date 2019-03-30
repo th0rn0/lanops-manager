@@ -50,7 +50,7 @@
 			@if ( count($events) > 0 )
 				<table class="table table-borderless">
 					<tbody>
-						@foreach ( $events->reverse() as $event )
+						@foreach ( $events as $event )
 							@if ($event->start > \Carbon\Carbon::today() )
 								<tr>
 									<td>
