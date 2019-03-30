@@ -13,7 +13,7 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-         $faker = Faker::create();
+        $faker = Faker::create();
 
         ## House Cleaning
         \DB::table('settings')->delete();

@@ -142,7 +142,7 @@ class Poll extends Model
      */
     public function hasEnded()
     {
-        if ($this->end == "0000-00-00 00:00:00" || $this->end >= date("Y-m-d H:i:s")) {
+        if ($this->end == null || ($this->end == "0000-00-00 00:00:00" || $this->end >= date("Y-m-d H:i:s"))) {
             return false;
         }
         return true;
