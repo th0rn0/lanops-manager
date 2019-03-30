@@ -36,7 +36,7 @@
 	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Events <span class="caret"></span></a>
 	<ul class="dropdown-menu">
 		@if ( count($events) > 0 )
-			@foreach ( $events->reverse() as $event )
+			@foreach ( $events as $event )
 				<li>
 					<a href="/events/{{ $event->slug }}">
 						{{ $event->display_name }}
