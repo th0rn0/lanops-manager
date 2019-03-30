@@ -55,6 +55,7 @@
 							<div class="alert alert-warning">
 								{{ $comment->comment }}
 								<span class="pull-right">
+									<small>{{ $comment->user->steamname }} </small>
 									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/approve">Approve</a> / 
 									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/reject">Reject</a>
 								</span>

@@ -46,7 +46,7 @@
 				@endif
 			@else
 				<div class="alert alert-info">
-					<p>Please log in to post a Vote</p>
+					<p>Please log in to Vote</p>
 				</div>
 			@endif
 		</div>
