@@ -10,7 +10,7 @@ steps:
   image: alpine:3.8
   commands:
   - apk add make
-  - make folder-structure layout-images env-file-blank
+  - make folder-structure layout-images env-file
     
 - name: build-composer
   image: composer
@@ -127,23 +127,6 @@ steps:
     - latest
     - staging
     dry_run: true
-  when:
-    event:
-    - push
-
-# Tests
-
-- name: test-phpunit
-  image: lanopsdev/manager:latest
-  environment:
-    APP_KEY:
-      from_secret: TEST_APP_KEY
-  commands:
-  - cd /web/html/
-  - ls
-  - php artisan migrate --force
-  - php artisan db:seed --force
-  - vendor/bin/phpunit
   when:
     event:
     - push
