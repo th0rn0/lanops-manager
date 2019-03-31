@@ -4,26 +4,6 @@ name: test
 
 steps:
 
-# Notifacations - Start
-
-- name: notify-discord-start
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Build Started.",
-        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
-      }
-  when:
-    event:
-    - pull_request
-    branch:
-    - master
-    - staging
-
 # Build Dependencies & Structure
 
 - name: build-structure
@@ -82,44 +62,6 @@ steps:
   when:
     event:
     - pull_request
-
-
-# Notifcations - End
-
-- name: notify-discord-test-success
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Passed. GGWP!",
-        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
-      }
-  when:
-    event:
-    - pull_request
-    status:
-    - success
-
-- name: notify-discord-test-failure
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
-        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
-      }
-  when:
-    event:
-    - pull_request
-    status:
-    - failure
-
 
 trigger:
   event:
@@ -465,6 +407,6 @@ services:
 
 ---
 kind: signature
-hmac: 8df496a1883086c7fa619b733eb8b4218901e10aa2d76d0bb45ef0a8a5fd0393
+hmac: ecdf02dcb634eac2e65b9929fad58bac725761d9b5ec0251e9c3b2c0cdd0e8ff
 
 ...
