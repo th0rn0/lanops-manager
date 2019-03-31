@@ -52,6 +52,7 @@ steps:
     event:
     - push
     - pull_request
+    - tag
     
 - name: build-composer
   image: composer
@@ -62,6 +63,7 @@ steps:
     event:
     - push
     - pull_request
+    - tag
     
 - name: build-npm
   image: node:8
@@ -72,6 +74,7 @@ steps:
     event:
     - push
     - pull_request
+    - tag
 
 # Build Docker Image
 
@@ -189,6 +192,7 @@ steps:
     event:
     - push
     - pull_request
+    - tag
     status:
     - success
 
@@ -207,6 +211,7 @@ steps:
     event:
     - push
     - pull_request
+    - tag
     status:
     - failure
 
@@ -240,7 +245,7 @@ steps:
       }
   when:
     event:
-    - tag
+    - push
     branch:
     - master
     status:
