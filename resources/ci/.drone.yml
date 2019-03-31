@@ -41,9 +41,6 @@ steps:
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
-    DB_DATABASE: lan_manager
-    DB_USERNAME: lan_manager
-    DB_PASSWORD: password
     APP_DEBUG: true
     APP_ENV: testing
     APP_URL: localhost
@@ -123,21 +120,7 @@ steps:
     event:
     - push
 
-# Build Docker Image
-
-- name: build-image
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - latest
-    - staging
-    dry_run: true
-  when:
-    event:
-    - push
-
-# Push Docker Image
+# Build & Push Docker Image
 
 - name: push-image-staging
   image: plugins/docker
@@ -316,6 +299,8 @@ steps:
     event:
     - tag
 
+# Build & Push Docker Image
+
 - name: build-push-image-tagged
   image: plugins/docker
   settings:
@@ -387,6 +372,6 @@ services:
 
 ---
 kind: signature
-hmac: 4b66a9155b50ecdd0aa15f37470d0db5cd37f7e192115cefe2d981f1c26f8746
+hmac: b2462bec083ec51ab43f555bf20fcdf99309afe7345f6f749ae5aa2a6b36a6fd
 
 ...

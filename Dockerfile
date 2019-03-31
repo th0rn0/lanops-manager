@@ -7,9 +7,6 @@ ENV ENABLE_HTTPS false
 ENV LOG_FILES false
 ENV ANALYTICS_PROVIDER GoogleAnalytics
 ENV DB_MIGRATE false
-ENV DB_DATABASE lan_manager
-ENV DB_USERNAME lan_manager
-ENV DB_PASSWORD password
 
 # Files
 
