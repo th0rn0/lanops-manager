@@ -41,6 +41,12 @@ steps:
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
+    DB_DATABASE: lan_manager
+    DB_USERNAME: lan_manager
+    DB_PASSWORD: password
+    APP_DEBUG: true
+    APP_ENV: testing
+    APP_URL: localhost
   commands:
   - cd /web/html/
   - ls
@@ -381,6 +387,6 @@ services:
 
 ---
 kind: signature
-hmac: 44e53c4cb74aa28fe3523fc7b9580ff9d2a4de507f7e2e5a4fa542695f7878c3
+hmac: 4b66a9155b50ecdd0aa15f37470d0db5cd37f7e192115cefe2d981f1c26f8746
 
 ...
