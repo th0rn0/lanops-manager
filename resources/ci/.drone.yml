@@ -362,17 +362,8 @@ trigger:
   event:
   - tag
 
-services:
-- name: database
-  image: mysql:5.6
-  environment:
-    MYSQL_DATABASE: lan_manager
-    MYSQL_USER: lan_manager
-    MYSQL_PASSWORD: password
-    MYSQL_RANDOM_ROOT_PASSWORD: true
-
 ---
 kind: signature
-hmac: 6a0bebaa62a0a8a45bfd057fd0346116dee69fbd8cea3213d6705dec675cf02c
+hmac: e8d2cd4c5f2736a138641a2317c9290802f598737a49d655fa16ce4dd9228f9a
 
 ...
