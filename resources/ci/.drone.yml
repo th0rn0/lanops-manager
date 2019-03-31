@@ -1,12 +1,83 @@
 ---
 kind: pipeline
-name: default
+name: test
+
+steps:
+
+# Build Dependencies & Structure
+
+- name: build-structure
+  image: alpine:3.8
+  commands:
+  - apk add make
+  - make folder-structure layout-images env-file-blank
+    
+- name: build-composer
+  image: composer
+  commands:
+  - cd src/
+  - composer install --ignore-platform-reqs --no-scripts
+    
+- name: build-npm
+  image: node:8
+  commands:
+  - cd src/
+  - npm install && node_modules/.bin/gulp --production
+
+# Build Docker Image
+
+- name: build-image
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: 
+    - latest
+    dry_run: true
+
+# Tests
+
+- name: test-phpunit
+  image: lanopsdev/manager:latest
+  environment:
+    APP_KEY:
+      from_secret: TEST_APP_KEY
+    DB_HOST: database
+    DB_DATABASE: lan_manager
+    DB_USERNAME: lan_manager
+    DB_PASSWORD: password
+    APP_DEBUG: true
+    APP_ENV: testing
+    APP_URL: localhost
+  commands:
+  - cd /web/html/
+  - ls
+  - php artisan migrate --force
+  - php artisan db:seed --force
+  - vendor/bin/phpunit
+
+trigger:
+  branch:
+  - master
+  - staging
+
+services:
+- name: database
+  image: mysql:5.6
+  environment:
+    MYSQL_DATABASE: lan_manager
+    MYSQL_USER: lan_manager
+    MYSQL_PASSWORD: password
+    MYSQL_RANDOM_ROOT_PASSWORD: true
+
+---
+kind: pipeline
+name: build-untagged
 
 steps:
 
 # Notifacations - Start
 
-- name: notify-discord-start-staging
+- name: notify-discord-start
   image: plugins/webhook
   settings:
     urls:
@@ -14,30 +85,12 @@ steps:
     template: |
       {
         "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Docker Build Started.",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Build Started.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
     event:
     - push
-    branch:
-    - master
-    - staging
-
-- name: notify-discord-start-master-tagged
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - **TAGGED** Docker Build Started.",
-        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
-      }
-  when:
-    event:
-    - tag
     branch:
     - master
     - staging
@@ -52,8 +105,6 @@ steps:
   when:
     event:
     - push
-    - pull_request
-    - tag
     
 - name: build-composer
   image: composer
@@ -63,8 +114,6 @@ steps:
   when:
     event:
     - push
-    - pull_request
-    - tag
     
 - name: build-npm
   image: node:8
@@ -74,57 +123,8 @@ steps:
   when:
     event:
     - push
-    - pull_request
-    - tag
 
-# Build Docker Image
-
-- name: build-image
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - latest
-    - staging
-    dry_run: true
-  when:
-    event:
-    - push
-    - pull_request
-
-- name: build-image-tagged
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - ${DRONE_TAG}
-    dry_run: true
-  when:
-    event:
-    - tag
-    branch:
-    - master
-
-# Tests
-
-- name: test-phpunit
-  image: lanopsdev/manager:latest
-  environment:
-    APP_KEY:
-      from_secret: TEST_APP_KEY
-  commands:
-  - cd /web/html/
-  - ls
-  - php artisan migrate --force
-  - php artisan db:seed --force
-  - vendor/bin/phpunit
-  when:
-    event:
-    - push
-    - pull_request
-    - tag
-
-# Push Docker Image
+# Build & Push Docker Image
 
 - name: push-image-staging
   image: plugins/docker
@@ -137,9 +137,6 @@ steps:
     password:
       from_secret: DOCKERHUB_PASSWORD
   when:
-    event:
-      exclude:
-      - pull_request
     branch:
     - staging
     status:
@@ -161,22 +158,6 @@ steps:
     status:
     - success
 
-- name: push-image-tagged
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - ${DRONE_TAG}
-    username:
-      from_secret: DOCKERHUB_USERNAME
-    password:
-      from_secret: DOCKERHUB_PASSWORD
-  when:
-    event:
-    - tag
-    status:
-    - success
-
 # Notifcations - End
 
 - name: notify-discord-test-success
@@ -193,8 +174,6 @@ steps:
   when:
     event:
     - push
-    - pull_request
-    - tag
     status:
     - success
 
@@ -212,8 +191,6 @@ steps:
   when:
     event:
     - push
-    - pull_request
-    - tag
     status:
     - failure
 
@@ -253,6 +230,117 @@ steps:
     status:
     - success
 
+trigger:
+  status:
+  - success
+  event:
+  - push
+  branch:
+  - master
+  - staging
+
+depends_on:
+- test
+
+services:
+- name: database
+  image: mysql:5.6
+  environment:
+    MYSQL_DATABASE: lan_manager
+    MYSQL_USER: lan_manager
+    MYSQL_PASSWORD: password
+    MYSQL_RANDOM_ROOT_PASSWORD: true
+
+---
+kind: pipeline
+name: build-tagged
+
+steps:
+
+# Notifacations - Start
+
+- name: notify-discord-start-master-tagged
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - **TAGGED** Docker Build Started.",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - tag
+
+# Build Dependencies & Structure
+
+- name: build-structure
+  image: alpine:3.8
+  commands:
+  - apk add make
+  - make folder-structure layout-images env-file-blank
+  when:
+    event:
+    - tag
+    
+- name: build-composer
+  image: composer
+  commands:
+  - cd src/
+  - composer install --ignore-platform-reqs --no-scripts
+  when:
+    event:
+    - tag
+    
+- name: build-npm
+  image: node:8
+  commands:
+  - cd src/
+  - npm install && node_modules/.bin/gulp --production
+  when:
+    event:
+    - tag
+
+# Build & Push Docker Image
+
+- name: build-push-image-tagged
+  image: plugins/docker
+  settings:
+    repo: lanopsdev/manager
+    tags: 
+    - ${DRONE_TAG}
+    - latest
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  when:
+    event:
+    - tag
+    status:
+    - success
+
+# Notifcations - End
+
+- name: notify-discord-image-pushed-master-failure
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    event:
+    - tag
+    status:
+    - failure
+
 - name: notify-discord-image-pushed-master-tagged
   image: plugins/webhook
   settings:
@@ -267,18 +355,15 @@ steps:
   when:
     event:
     - tag
-    branch:
-    - master
     status:
     - success
 
 trigger:
-  branch:
-  - master
-  - staging
   event:
-  - push
   - tag
+
+depends_on:
+- test
 
 services:
 - name: database
@@ -288,8 +373,9 @@ services:
     MYSQL_USER: lan_manager
     MYSQL_PASSWORD: password
     MYSQL_RANDOM_ROOT_PASSWORD: true
+
 ---
 kind: signature
-hmac: 8df496a1883086c7fa619b733eb8b4218901e10aa2d76d0bb45ef0a8a5fd0393
+hmac: a46f699db6441ebd681cb87f342ee6508c0552f0459ef76edf24cab73b2e6fdf
 
 ...
