@@ -33,7 +33,6 @@ then
 fi
 
 # Clear the config cache and load in new Variables
-php artisan config:clear
 php artisan config:cache
 
 # Only migrate database if DB_MIGRATE env variable is set to true
