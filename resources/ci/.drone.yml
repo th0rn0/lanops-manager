@@ -11,27 +11,18 @@ steps:
   commands:
   - apk add make
   - make folder-structure layout-images env-file-blank
-  when:
-    event:
-    - pull_request
     
 - name: build-composer
   image: composer
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
-  when:
-    event:
-    - pull_request
     
 - name: build-npm
   image: node:8
   commands:
   - cd src/
   - npm install && node_modules/.bin/gulp --production
-  when:
-    event:
-    - pull_request
 
 # Build Docker Image
 
@@ -42,9 +33,6 @@ steps:
     tags: 
     - latest
     dry_run: true
-  when:
-    event:
-    - pull_request
 
 # Tests
 
@@ -59,13 +47,40 @@ steps:
   - php artisan migrate --force
   - php artisan db:seed --force
   - vendor/bin/phpunit
+
+# Notifcations - End
+
+- name: notify-discord-test-success
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Passed. GGWP!",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
   when:
-    event:
-    - pull_request
+    status:
+    - success
+
+- name: notify-discord-test-failure
+  image: plugins/webhook
+  settings:
+    urls:
+      from_secret: DISCORD_WEBHOOK_URL
+    template: |
+      {
+        "username": "Lan Manager Drone",
+        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
+        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
+      }
+  when:
+    status:
+    - failure
 
 trigger:
-  event:
-  - pull_request
   branch:
   - master
   - staging
@@ -272,11 +287,16 @@ steps:
     - success
 
 trigger:
+  status:
+  - success
   event:
   - push
   branch:
   - master
   - staging
+
+depends_on:
+- test
 
 services:
 - name: database
@@ -395,6 +415,9 @@ steps:
 trigger:
   event:
   - tag
+
+depends_on:
+- test
 
 services:
 - name: database
