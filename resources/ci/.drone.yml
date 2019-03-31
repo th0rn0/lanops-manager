@@ -10,7 +10,7 @@ steps:
   image: alpine:3.8
   commands:
   - apk add make
-  - make folder-structure layout-images env-file
+  - make folder-structure layout-images env-file-blank
     
 - name: build-composer
   image: composer
@@ -41,6 +41,10 @@ steps:
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
+    DB_HOST: database
+    DB_DATABASE: lan_manager
+    DB_USERNAME: lan_manager
+    DB_PASSWORD: password
     APP_DEBUG: true
     APP_ENV: testing
     APP_URL: localhost
@@ -372,6 +376,6 @@ services:
 
 ---
 kind: signature
-hmac: b2462bec083ec51ab43f555bf20fcdf99309afe7345f6f749ae5aa2a6b36a6fd
+hmac: a46f699db6441ebd681cb87f342ee6508c0552f0459ef76edf24cab73b2e6fdf
 
 ...
