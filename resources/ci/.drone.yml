@@ -48,38 +48,6 @@ steps:
   - php artisan db:seed --force
   - vendor/bin/phpunit
 
-# Notifcations - End
-
-- name: notify-discord-test-success
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Passed. GGWP!",
-        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
-      }
-  when:
-    status:
-    - success
-
-- name: notify-discord-test-failure
-  image: plugins/webhook
-  settings:
-    urls:
-      from_secret: DISCORD_WEBHOOK_URL
-    template: |
-      {
-        "username": "Lan Manager Drone",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
-        "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
-      }
-  when:
-    status:
-    - failure
-
 trigger:
   branch:
   - master
@@ -430,6 +398,6 @@ services:
 
 ---
 kind: signature
-hmac: ecdf02dcb634eac2e65b9929fad58bac725761d9b5ec0251e9c3b2c0cdd0e8ff
+hmac: 55e2eda50e7f650e7c5d2ff56f6682f37abe93a0caf9201e9301bac2f01a19a5
 
 ...
