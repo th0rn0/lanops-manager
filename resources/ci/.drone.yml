@@ -349,6 +349,8 @@ services:
 kind: pipeline
 name: build-tagged
 
+steps:
+
 # Notifacations - Start
 
 - name: notify-discord-start-master-tagged
