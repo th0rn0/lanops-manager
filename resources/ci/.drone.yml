@@ -21,6 +21,7 @@ steps:
     event:
     - push
     branch:
+    - master
     - staging
 
 - name: notify-discord-start-master-tagged
@@ -36,10 +37,10 @@ steps:
       }
   when:
     event:
-    - push
     - tag
     branch:
     - master
+    - staging
 
 # Build Dependencies & Structure
 
@@ -121,6 +122,7 @@ steps:
     event:
     - push
     - pull_request
+    - tag
 
 # Push Docker Image
 
