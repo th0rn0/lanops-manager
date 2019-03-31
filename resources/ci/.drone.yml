@@ -362,9 +362,6 @@ trigger:
   event:
   - tag
 
-depends_on:
-- test
-
 services:
 - name: database
   image: mysql:5.6
@@ -376,6 +373,6 @@ services:
 
 ---
 kind: signature
-hmac: a46f699db6441ebd681cb87f342ee6508c0552f0459ef76edf24cab73b2e6fdf
+hmac: 6a0bebaa62a0a8a45bfd057fd0346116dee69fbd8cea3213d6705dec675cf02c
 
 ...
