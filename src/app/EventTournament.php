@@ -64,12 +64,12 @@ class EventTournament extends Model
         parent::boot();
         self::created(function ($model){
             if ($model->format != 'list') {
-                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $challonge = new Challonge(config('challonge.api_key'));
                 $params = [
                     'tournament[name]'                    => $model->name,
                     'tournament[tournament_type]'         => strtolower($model->format),
                     'tournament[url]'                     => $model->challonge_tournament_url,
-                    'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
+                    // 'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
                     'tournament[hold_third_place_match]'  =>@ ($model->allow_bronze ? true : false),
                     'tournament[show_rounds]'             => true,
                 ];
@@ -85,7 +85,7 @@ class EventTournament extends Model
         self::saved(function($model){
             if ($model->format != 'list') {
                 // TODO - fire only when name is updated
-                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $challonge = new Challonge(config('challonge.api_key'));
                 $challonge_tournament = $challonge->getTournament($model->challonge_tournament_id);
                 $params = [
                     'tournament[name]' => $model->name
@@ -96,7 +96,7 @@ class EventTournament extends Model
             }
             if ($model->status == 'COMPLETE' && $model->format != 'list' && !$model->api_complete) {
                 foreach ($model->getStandings('desc', true)->final as $standings) {
-                    $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                    $challonge = new Challonge(config('challonge.api_key'));
                     if (!$challonge_participants = $challonge->getParticipants($model->challonge_tournament_id)) {
                         return false;
                     }
@@ -150,7 +150,7 @@ class EventTournament extends Model
         });
         self::deleting(function($model){
             if ($model->format != 'list') {
-                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $challonge = new Challonge(config('challonge.api_key'));
                 $response = $challonge->getTournament($model->challonge_tournament_id);
                 if (!$response->delete()) {
                    return false;
@@ -210,7 +210,7 @@ class EventTournament extends Model
      */
     public function setStatus($status)
     {
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+        $challonge = new Challonge(config('challonge.api_key'));
         if ($status == 'LIVE') {
             if ($this->tournamentTeams) {
                 foreach ($this->tournamentTeams as $team) {
@@ -303,7 +303,7 @@ class EventTournament extends Model
     public function getMatches($obj = false)
     {
         $tournament_matches = Cache::get($this->challonge_tournament_id . "_matches", function () {
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $challonge = new Challonge(config('challonge.api_key'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
             Cache::forever($this->challonge_tournament_id . "_matches", $matches);
             return $matches;
@@ -355,7 +355,7 @@ class EventTournament extends Model
             }
             ## Pull LIVE standings from Challonge when tournament is in progress
             if ($retroactive || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
-                $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                $challonge = new Challonge(config('challonge.api_key'));
                 $standings = $challonge->getStandings($this->challonge_tournament_id);
             }
 
@@ -385,7 +385,7 @@ class EventTournament extends Model
     public function getNextMatches($limit = 0, $obj = false)
     {
         $tournament_matches = Cache::get($this->challonge_tournament_id . "_matches", function () {
-            $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+            $challonge = new Challonge(config('challonge.api_key'));
             $matches = $challonge->getMatches($this->challonge_tournament_id);
             Cache::forever($this->challonge_tournament_id . "_matches", $matches);
             return $matches;
@@ -416,7 +416,7 @@ class EventTournament extends Model
     public function updateMatch($match_id, $player1_score, $player2_score, $player_winner_verify = null)
     {
         // TODO - add support for multiple sets
-        $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+        $challonge = new Challonge(config('challonge.api_key'));
         $match = $challonge->getMatch($this->challonge_tournament_id, $match_id);
 
         if ($player1_score > $player2_score) {
@@ -458,7 +458,7 @@ class EventTournament extends Model
         foreach (EventTournament::all() as $model) {
             if ($model->status == 'COMPLETE' && $model->format != 'list' && !$model->api_complete) {
                 foreach ($model->getStandings('desc', true, true)->final as $standings) {
-                    $challonge = new Challonge(env('CHALLONGE_API_KEY'));
+                    $challonge = new Challonge(config('challonge.api_key'));
                     if (!$challonge_participants = $challonge->getParticipants($model->challonge_tournament_id)) {
                         return false;
                     }

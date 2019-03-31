@@ -26,6 +26,11 @@ app-build-dep-dev: composer-install-dev npm-install-dev
 env-file:
 	cp .env.example src/.env
 
+# Make blank .env 
+env-file-blank:
+	touch src/.env
+	# echo "APP_KEY=" >> src/.env
+
 # Move default images to Storage
 layout-images:
 	cp -r src/resources/assets/images/* src/storage/app/public/images/main/
@@ -68,7 +73,7 @@ folder-structure:
 
 # Create SSL Keypair for Development
 ssh-keygen:
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/nginx.key -out resources/certs/nginx.crt
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/lan_manager.key -out resources/certs/lan_manager.crt
 
 # Install PHP Dependencies via Composer
 composer-install:

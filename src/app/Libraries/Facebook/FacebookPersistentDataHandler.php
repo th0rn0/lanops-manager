@@ -23,5 +23,4 @@ class FacebookPersistentDataHandler implements \Facebook\PersistentData\Persiste
   {
     \Session::put($this->sessionPrefix . $key, $value);
   }
-
 }

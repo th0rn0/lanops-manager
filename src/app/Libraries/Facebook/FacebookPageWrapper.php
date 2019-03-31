@@ -4,6 +4,7 @@ namespace App\Libraries\Facebook;
 
 use Settings;
 use Facebook\Facebook;
+use \App\Libraries\Facebook\FacebookPersistentDataHandler;
 
 class FacebookPageWrapper
 {
@@ -77,7 +78,9 @@ class FacebookPageWrapper
 	 */
     public static function getLoginUrl()
     {
-    	$api = new Facebook(config('facebook.config'));
+    	$config = config('facebook.config');
+    	$config['persistent_data_handler'] = new FacebookPersistentDataHandler();
+    	$api = new Facebook($config);
     	return $api->getRedirectLoginHelper()->getLoginUrl(url('/admin/settings/link/facebook'), self::$permissions);
     }
 
@@ -88,7 +91,9 @@ class FacebookPageWrapper
 	 */
     public static function getUserAccessToken($long_lived = true)
     {
-    	$api = new Facebook(config('facebook.config'));
+    	$config = config('facebook.config');
+    	$config['persistent_data_handler'] = new FacebookPersistentDataHandler();
+    	$api = new Facebook($config);
     	$facebook_helper = $api->getRedirectLoginHelper();
     	try {
 		  	$user_access_token = $facebook_helper->getAccessToken();
@@ -142,7 +147,9 @@ class FacebookPageWrapper
 	 */
     public static function getPageAccessTokens($user_access_token)
     {
-    	$api = new Facebook(config('facebook.config'));
+    	$config = config('facebook.config');
+    	$config['persistent_data_handler'] = new FacebookPersistentDataHandler();
+    	$api = new Facebook($config);
 		try{
 			$response = ($api->get('/me/accounts?fields=access_token', $user_access_token))->getDecodedBody();
 		} catch (Facebook\Exceptions\FacebookSDKException $e) { 
@@ -165,7 +172,9 @@ class FacebookPageWrapper
 	 */
     public static function postNewsArticleToPage($title, $article, $slug)
     {
-		$api = new Facebook;
+    	$config = config('facebook.config');
+    	$config['persistent_data_handler'] = new FacebookPersistentDataHandler();
+    	$api = new Facebook($config);
 	 	$linkData = [
 		 	'link' => url("/news/{$slug}"),
 		 	'message' => $title . "\n \n" . strip_tags(substr($article, strpos($article, "<p"), strpos($article, "</p>")+4)) . "\n \n" . "Read More Below..."

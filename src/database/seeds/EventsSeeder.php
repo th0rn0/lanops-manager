@@ -30,6 +30,7 @@ class EventsSeeder extends Seeder
         factory(App\Event::class)->create([
             'event_venue_id'    => $venue->id,
             'status'            => 'PUBLISHED',
+            'capacity'          => 30,
         ])->each(
             function ($event) {
                 factory(App\EventTicket::class)->create([

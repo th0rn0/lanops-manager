@@ -63,7 +63,7 @@ class PaymentsController extends Controller
 				return Redirect::back();
 			}
 		}
-	  	if (env('APP_DEBUG')) {
+	  	if (config('app.debug')) {
 			$this->sandbox = TRUE;
 	  	}
 	  	$request_scheme = 'http';
@@ -89,9 +89,9 @@ class PaymentsController extends Controller
 	  	Session::put('params', $params);
 	  	Session::save();  
 	  	$gateway = Omnipay::create('PayPal_Express');
-	  	$gateway->setUsername(env('PAYPAL_USERNAME'));
-	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
-	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
+	  	$gateway->setUsername(config('laravel-omnipay.gateways.paypal.credentials.username'));
+	  	$gateway->setPassword(config('laravel-omnipay.gateways.paypal.credentials.password'));
+	  	$gateway->setSignature(config('laravel-omnipay.gateways.paypal.credentials.signature'));
 
 	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
@@ -126,13 +126,13 @@ class PaymentsController extends Controller
 			return Redirect::to('/payment/failed');
 	  	}
 	  	$params = Session::get('params');
-	  	if (env('APP_DEBUG')) {
+	  	if (config('app.debug')) {
 			$this->sandbox = TRUE;
 	  	}
 	  	$gateway = Omnipay::create('PayPal_Express');
-	  	$gateway->setUsername(env('PAYPAL_USERNAME'));
-	  	$gateway->setPassword(env('PAYPAL_PASSWORD'));
-	  	$gateway->setSignature(env('PAYPAL_SIGNATURE'));
+	  	$gateway->setUsername(config('laravel-omnipay.gateways.paypal.credentials.username'));
+	  	$gateway->setPassword(config('laravel-omnipay.gateways.paypal.credentials.password'));
+	  	$gateway->setSignature(config('laravel-omnipay.gateways.paypal.credentials.signature'));
 	  	if ($this->sandbox) {
 			$gateway->setTestMode(true);
 	  	} else {

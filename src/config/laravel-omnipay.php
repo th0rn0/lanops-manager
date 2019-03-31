@@ -12,7 +12,12 @@ return [
 			'options' => [
 				'solutionType'   => '',
 				'landingPage'    => '',
-				'headerImageUrl' => ''
+				'headerImageUrl' => '',
+			],
+			'credentials' => [
+				'username' => env('PAYPAL_USERNAME'),
+				'password' => env('PAYPAL_PASSWORD'),
+				'signature' => env('PAYPAL_SIGNATURE')
 			]
 		]
 	]

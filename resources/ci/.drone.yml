@@ -47,7 +47,7 @@ steps:
   image: alpine:3.8
   commands:
   - apk add make
-  - make folder-structure layout-images env-file
+  - make folder-structure layout-images env-file-blank
   when:
     event:
     - push

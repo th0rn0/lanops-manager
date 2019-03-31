@@ -97,14 +97,13 @@ There are 3 ways to run the Lan Manager
 
 ### Docker
 
-This method is intended to be run as just a image with your own database
+This method is intended to be run as just a image with your own database. Persistant storage is required for the storage/ directory.
 
 ```
-docker run -it -d lanopsdev/manager:latest \
+docker run -it -d \
   -e APP_DEBUG=true \
   -e APP_ENV=local \
   -e APP_URL=localhost \
-  -e APP_KEY=SomeRandomString \
   -e DB_HOST=database \
   -e DB_DATABASE=lan_manager \
   -e DB_PORT=3306 \
@@ -122,8 +121,11 @@ docker run -it -d lanopsdev/manager:latest \
   -e ENABLE_HTTPS=false \
   -e DB_CONNECTION=mysql \
   -e DB_MIGRATE=true \
-  --ports 80:80 \
-  --ports 443:443 \
+  -p 80:80 \
+  -p 443:443 \
+  -v lan_manager_storage:/web/html/storage/ \
+  --name lan_manager_app \
+  lanopsdev/manager:latest
 ```
 
 Follow Post-Docker Below
@@ -138,13 +140,13 @@ services:
   app:
     image: lanopsdev/manager:latest
     volumes:
-      - $PWD/certs:/etc/nginx/certs
+      - lan_manager_certs:/etc/nginx/certs
+      - lan_manager_storage:/web/html/storage/
     environment:
       # App Config
       - APP_DEBUG=true
       - APP_ENV=local
       - APP_URL=localhost
-      - APP_KEY=SomeRandomString
       # Database Settings
       - DB_DATABASE=lan_manager
       - DB_USERNAME=lan_manager
@@ -179,7 +181,7 @@ services:
   database:
     image: mysql:5.6
     volumes:
-      - db:/var/lib/mysql
+      - lan_manager_db:/var/lib/mysql
     environment:
       # Change The password as according
       - MYSQL_PASSWORD=password
@@ -191,20 +193,19 @@ services:
       - 3306:3306
     container_name: lan_manager_database
 volumes:
-  db:
-    name: lan_manager_db
+  lan_manager_db
+  lan_manager_certs
+  lan_manager_storage
 ```
 
 Follow Post-Docker Below
 
 ### Post-Docker
 
+When running for the first time you'll be a new APP_KEY will be generated. Keep this safe!. You'll need to add it to the env variables (EG ```-e APP_KEY=someRandomKey```) otherwise it will regenerate the APP_KEY on each reboot.
+
 Once running and the database has migrated you will need to exec into the container and do the following;
 
-Generate a Key and Save it for use in the APP_KEY Env variable above
-```
-php artisan key:generate
-```
 Seed the Database with initial data
 ```
 php artisan db:seed
@@ -282,7 +283,7 @@ make stop
 
 ## HTTPS
 
-To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs```
+To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` and rename them ```lan_manager.crt``` and ```lan_manager.key```
 
 ## Contributors
 
