@@ -15,11 +15,11 @@ services:
   database:
     image: mysql:5.6
     volumes:
-      - db:/var/lib/mysql
+      - lan_manager_db:/var/lib/mysql
     env_file: $PWD/src/.env
     ports:
       - 3306:3306
     container_name: lan_manager_database
 volumes:
-  db:
+  lan_manager_db:
     name: lan_manager_db

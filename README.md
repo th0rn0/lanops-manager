@@ -181,7 +181,7 @@ services:
   database:
     image: mysql:5.6
     volumes:
-      - lan_manager_db:/var/lib/mysql
+      - lan_manager_database:/var/lib/mysql
     environment:
       # Change The password as according
       - MYSQL_PASSWORD=password
@@ -193,9 +193,15 @@ services:
       - 3306:3306
     container_name: lan_manager_database
 volumes:
-  lan_manager_db
+  lan_manager_database
+    name:
+      lan_manager_database
   lan_manager_certs
+    name:
+      lan_manager_certs
   lan_manager_storage
+    name:
+      lan_manager_storage
 ```
 
 Follow Post-Docker Below
@@ -209,10 +215,6 @@ Once running and the database has migrated you will need to exec into the contai
 Seed the Database with initial data
 ```
 php artisan db:seed
-```
-Change the R/W properties of the framework
-```
-chmod -R 777 storage/framework
 ```
 
 ### Makefile
@@ -283,7 +285,10 @@ make stop
 
 ## HTTPS
 
-To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` and rename them ```lan_manager.crt``` and ```lan_manager.key```
+To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` or mount in the certs to the ```/etc/nginx/certs``` directory on the container. 
+
+### Caveats
+- You must rename the certs to ```lan_manager.crt``` and ```lan_manager.key```.
 
 ## Secret Managers
 

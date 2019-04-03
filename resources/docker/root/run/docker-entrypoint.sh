@@ -116,6 +116,21 @@ then
 	file_env 'ANALYTICS_TRACKING_ID'
 fi
 
+# Populate Storage Volume if Bind mount - Fix for Bind Mounts on Host system
+ls $NGINX_DOCUMENT_ROOT/storage
+if [ -z "$(ls -A $NGINX_DOCUMENT_ROOT/storage)" ]; then
+	echo "----------------------------------------------------------"
+    echo "Storage on Bind mount is empty. Copying sample data ..."
+ 	cp -a /tmp/storage $NGINX_DOCUMENT_ROOT
+fi
+
+if [[ $(stat -c "%u" $NGINX_DOCUMENT_ROOT/storage) != $UUID ]]; then
+	echo "----------------------------------------------------------"
+    echo "Changing ownership of $NGINX_DOCUMENT_ROOT/storage to $UUID ..."
+    chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
+fi
+
+
 # Database Wait check
 echo "----------------------------------------------------------"
 echo "WAITING FOR $DB_HOST:$DB_PORT..."
