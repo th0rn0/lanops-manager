@@ -37,15 +37,6 @@ then
 	exit 1
 fi
 
-file_env 'DB_PORT'
-if [ -z "$DB_PORT" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because DB_PORT is not specified '
-	echo >&2 'You need to specify DB_PORT'
-	exit 1
-fi
-
 file_env 'DB_HOST'
 if [ -z "$DB_HOST" ]; 
 then

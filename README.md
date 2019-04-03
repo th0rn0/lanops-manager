@@ -296,6 +296,21 @@ If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_
 - Only one entry per file
 - File must only container value
 - The file can be named anything, but it must be reflected in the ```_FILE``` env variable
+- It will only work on the following Env Variables;
+  - FACEBOOK_APP_ID
+  - FACEBOOK_APP_SECRET
+  - DB_DATABASE
+  - DB_USERNAME
+  - DB_PASSWORD
+  - MYSQL_DATABASE
+  - MYSQL_USER
+  - MYSQL_PASSWORD
+  - ANALYTICS_TRACKING_ID
+  - PAYPAL_USERNAME
+  - PAYPAL_PASSWORD
+  - PAYPAL_SIGNATURE
+  - STEAM_API_KEY
+  - CHALLONGE_API_KEY
 
 ## Contributors
 
