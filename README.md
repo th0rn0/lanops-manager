@@ -285,6 +285,18 @@ make stop
 
 To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` and rename them ```lan_manager.crt``` and ```lan_manager.key```
 
+## Secret Managers
+
+The Lan Manager ships with a file reader for Env variables such as Passwords as API Keys for Secrets Managers such as Ranchers Secret Manager, EnvKey and Summon. To use it append ```_FILE``` to the Env variable and change the value to be the location of the secret file located on the container! It is recommended you mount a secrets directory into the container for example:
+
+If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_PASSWORD``` in a file called ```DB_PASSWORD``` in ```resources/secrets/``` directory, we can set ```DB_PASSWORD_FILE=/run/secrets/DB_PASSWORD``` and the app will read the file and inject the password into the Environment Variable ```DB_PASSWORD```.
+
+### Caveats
+
+- Only one entry per file
+- File must only container value
+- The file can be named anything, but it must be reflected in the ```_FILE``` env variable
+
 ## Contributors
 
 - Th0rn0 - https://github.com/th0rn0
