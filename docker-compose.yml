@@ -7,6 +7,7 @@ services:
     volumes:
       - $PWD/src/:/web/html/
       - $PWD/resources/certs:/etc/nginx/certs
+      - $PWD/resources/secrets:/run/secrets
     env_file: $PWD/src/.env
     container_name: lan_manager_app
     ports:
@@ -15,7 +16,7 @@ services:
   database:
     image: mysql:5.6
     volumes:
-      - lan_manager_db:/var/lib/mysql
+      - lan_manager_database:/var/lib/mysql
     env_file: $PWD/src/.env
     ports:
       - 3306:3306

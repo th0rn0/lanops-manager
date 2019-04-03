@@ -20,11 +20,6 @@ file_env() {
 	fi
 	export "$var"="$val"
 	unset "$fileVar"
-	if [ ! -z "$val" ];
-	then
-		echo 'OK'
-	fi
-
 }
 
 # Check Variables Exist & Translate from file
@@ -35,6 +30,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because DB_PORT is not specified '
 	echo >&2 'You need to specify DB_PORT'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'DB_HOST'
@@ -44,6 +41,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because DB_HOST is not specified '
 	echo >&2 'You need to specify DB_HOST'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'DB_PASSWORD'
@@ -53,6 +52,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because DB_PASSWORD is not specified '
 	echo >&2 'You need to specify DB_PASSWORD'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'PAYPAL_USERNAME'
@@ -62,6 +63,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because PAYPAL_USERNAME is not specified '
 	echo >&2 'You need to specify PAYPAL_USERNAME'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'PAYPAL_PASSWORD'
@@ -71,6 +74,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because PAYPAL_PASSWORD is not specified '
 	echo >&2 'You need to specify PAYPAL_PASSWORD'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'PAYPAL_SIGNATURE'
@@ -80,6 +85,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because PAYPAL_SIGNATURE is not specified '
 	echo >&2 'You need to specify PAYPAL_SIGNATURE'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'STEAM_API_KEY'
@@ -89,6 +96,8 @@ then
 	echo >&2 'Lan Manager App is uninitialized because STEAM_API_KEY is not specified '
 	echo >&2 'You need to specify STEAM_API_KEY'
 	exit 1
+else
+	echo 'OK'
 fi
 
 file_env 'CHALLONGE_API_KEY'
@@ -98,22 +107,41 @@ then
 	echo >&2 'Lan Manager App is uninitialized because CHALLONGE_API_KEY is not specified '
 	echo >&2 'You need to specify CHALLONGE_API_KEY'
 	exit 1
+else
+	echo 'OK'
+fi
+
+file_env 'APP_KEY'
+if [ -z "$APP_KEY" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
 fi
 
 # Optional Env Variables
-if [ -n "$FACEBOOK_APP_ID" ] && [ ! -z "$FACEBOOK_APP_ID" ];
+file_env 'FACEBOOK_APP_ID'
+if [ -z "$FACEBOOK_APP_ID" ];
 then
-	file_env 'FACEBOOK_APP_ID'
+	echo 'NOT SET'
+else
+	echo 'OK'
 fi
 
-if [ -n "$FACEBOOK_APP_SECRET" ] && [ ! -z "$FACEBOOK_APP_SECRET" ];
+file_env 'FACEBOOK_APP_SECRET'
+if [ -z "$FACEBOOK_APP_SECRET" ];
 then
-	file_env 'FACEBOOK_APP_SECRET'
+	echo 'NOT SET'
+else
+	echo 'OK'
 fi
 
-if [ -n "$ANALYTICS_TRACKING_ID" ] && [ ! -z "$ANALYTICS_TRACKING_ID" ];
+file_env 'ANALYTICS_TRACKING_ID'
+if [ -z "$ANALYTICS_TRACKING_ID" ];
 then
-	file_env 'ANALYTICS_TRACKING_ID'
+	echo 'NOT SET'
+else
+	echo 'OK'
 fi
 
 # Populate Storage Volume if Bind mount - Fix for Bind Mounts on Host system

@@ -316,6 +316,7 @@ If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_
   - PAYPAL_SIGNATURE
   - STEAM_API_KEY
   - CHALLONGE_API_KEY
+  - APP_KEY
 
 ## Contributors
 
