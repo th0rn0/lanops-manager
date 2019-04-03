@@ -19,4 +19,4 @@ RUN chmod -R 777 $NGINX_DOCUMENT_ROOT/storage
 
 # Default Command
 
-ENTRYPOINT ["/run/start.sh"]
+ENTRYPOINT ["/run/docker-entrypoint.sh"]
