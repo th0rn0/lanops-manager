@@ -117,7 +117,6 @@ then
 fi
 
 # Populate Storage Volume if Bind mount - Fix for Bind Mounts on Host system
-ls $NGINX_DOCUMENT_ROOT/storage
 if [ -z "$(ls -A $NGINX_DOCUMENT_ROOT/storage)" ]; then
 	echo "----------------------------------------------------------"
     echo "Storage on Bind mount is empty. Copying sample data ..."

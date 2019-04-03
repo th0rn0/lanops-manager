@@ -206,7 +206,7 @@ volumes:
 
 Follow Post-Docker Below
 
-### Post-Docker
+#### Post-Docker
 
 When running for the first time you'll be a new APP_KEY will be generated. Keep this safe!. You'll need to add it to the env variables (EG ```-e APP_KEY=someRandomKey```) otherwise it will regenerate the APP_KEY on each reboot.
 

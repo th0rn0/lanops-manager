@@ -18,10 +18,6 @@ COPY src/ $NGINX_DOCUMENT_ROOT
 
 RUN cp -a $NGINX_DOCUMENT_ROOT/storage /tmp/storage
 
-# Volumes
-
-VOLUME $NGINX_DOCUMENT_ROOT/storage
-
 # Default Command
 
 ENTRYPOINT ["/run/docker-entrypoint.sh"]
