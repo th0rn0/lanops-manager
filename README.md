@@ -181,7 +181,7 @@ services:
   database:
     image: mysql:5.6
     volumes:
-      - lan_manager_db:/var/lib/mysql
+      - lan_manager_database:/var/lib/mysql
     environment:
       # Change The password as according
       - MYSQL_PASSWORD=password
@@ -193,14 +193,20 @@ services:
       - 3306:3306
     container_name: lan_manager_database
 volumes:
-  lan_manager_db
+  lan_manager_database
+    name:
+      lan_manager_database
   lan_manager_certs
+    name:
+      lan_manager_certs
   lan_manager_storage
+    name:
+      lan_manager_storage
 ```
 
 Follow Post-Docker Below
 
-### Post-Docker
+#### Post-Docker
 
 When running for the first time you'll be a new APP_KEY will be generated. Keep this safe!. You'll need to add it to the env variables (EG ```-e APP_KEY=someRandomKey```) otherwise it will regenerate the APP_KEY on each reboot.
 
@@ -209,10 +215,6 @@ Once running and the database has migrated you will need to exec into the contai
 Seed the Database with initial data
 ```
 php artisan db:seed
-```
-Change the R/W properties of the framework
-```
-chmod -R 777 storage/framework
 ```
 
 ### Makefile
@@ -283,7 +285,38 @@ make stop
 
 ## HTTPS
 
-To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` and rename them ```lan_manager.crt``` and ```lan_manager.key```
+To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` or mount in the certs to the ```/etc/nginx/certs``` directory on the container. 
+
+### Caveats
+- You must rename the certs to ```lan_manager.crt``` and ```lan_manager.key```.
+
+## Secret Managers
+
+The Lan Manager ships with a file reader for Env variables such as Passwords as API Keys for Secrets Managers such as Ranchers Secret Manager, EnvKey and Summon. To use it append ```_FILE``` to the Env variable and change the value to be the location of the secret file located on the container! It is recommended you mount a secrets directory into the container for example:
+
+If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_PASSWORD``` in a file called ```DB_PASSWORD``` in ```resources/secrets/``` directory, we can set ```DB_PASSWORD_FILE=/run/secrets/DB_PASSWORD``` and the app will read the file and inject the password into the Environment Variable ```DB_PASSWORD```.
+
+### Caveats
+
+- Only one entry per file
+- File must only container value
+- The file can be named anything, but it must be reflected in the ```_FILE``` env variable
+- It will only work on the following Env Variables;
+  - FACEBOOK_APP_ID
+  - FACEBOOK_APP_SECRET
+  - DB_DATABASE
+  - DB_USERNAME
+  - DB_PASSWORD
+  - MYSQL_DATABASE
+  - MYSQL_USER
+  - MYSQL_PASSWORD
+  - ANALYTICS_TRACKING_ID
+  - PAYPAL_USERNAME
+  - PAYPAL_PASSWORD
+  - PAYPAL_SIGNATURE
+  - STEAM_API_KEY
+  - CHALLONGE_API_KEY
+  - APP_KEY
 
 ## Contributors
 

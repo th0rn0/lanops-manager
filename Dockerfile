@@ -14,9 +14,10 @@ COPY resources/docker/root /
 WORKDIR $NGINX_DOCUMENT_ROOT
 COPY src/ $NGINX_DOCUMENT_ROOT
 
-RUN chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
-RUN chmod -R 777 $NGINX_DOCUMENT_ROOT/storage
+# Copy Storage for Bind Mounts - Fix for Bind Mounts on Host system
+
+RUN cp -a $NGINX_DOCUMENT_ROOT/storage /tmp/storage
 
 # Default Command
 
-ENTRYPOINT ["/run/start.sh"]
+ENTRYPOINT ["/run/docker-entrypoint.sh"]
