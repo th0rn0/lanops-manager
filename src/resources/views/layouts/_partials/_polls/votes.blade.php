@@ -1,7 +1,7 @@
 <div class="row">
 		<div class="col-xs-12 col-sm-6 col-md-9">
 			<table width="100%" class="table table-striped table-hover">
-				@foreach ($poll->options as $option)
+				@foreach ($poll->options->reverse() as $option)
 					<tr class="table-row odd gradeX">
 						@if (!$poll->hasEnded())
 							<td width="15%">
@@ -17,12 +17,12 @@
 							</td>
 						@endif
 						<td width="30%">{{ $option->name }}</td>
-						<td width="5%">{{ $option->getTotalVotes() }}</td>
-						<td width="50%">
-							<div class="progress-bar" role="progressbar" aria-valuenow="{{ $option->getPercentage() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $option->getPercentage() }}%;">
-								{{ $option->getPercentage() }}%
+						<td width="40%">
+							<div class="progress-bar" role="progressbar" aria-valuenow="{{ number_format($option->getPercentage(), 2) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $option->getPercentage() }}%;">
+								{{ $option->getTotalVotes() }}
 							</div>
 						</td>
+						<td width="10%">{{ $option->getTotalVotes() }} Votes</td>
 					</tr>
 				@endforeach
 			</table>

@@ -41,7 +41,7 @@
 					</thead>
 					<tbody>
 						@if (!$poll->options->isEmpty())
-							@foreach ($poll->options as $option)
+							@foreach ($poll->options->reverse() as $option)
 								<tr class="table-row odd gradeX">
 									<td width="30%">{{ $option->name }}</td>
 									<td width="5%">{{ $option->getTotalVotes() }}</td>
