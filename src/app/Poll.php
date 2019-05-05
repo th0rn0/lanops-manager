@@ -39,7 +39,7 @@ class Poll extends Model
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
         }
-        if(!$admin) {
+        if (!$admin) {
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
             });
@@ -158,5 +158,12 @@ class Poll extends Model
             return false;
         }
         return true;
+    }
+
+    public function sortOptions()
+    {
+        $this->options = $this->options->sortBy(function ($option, $key) {
+            return $option->getTotalVotes();
+        });
     }
 }

@@ -36,9 +36,7 @@ class PollsController extends Controller
 	 */
 	public function show(Poll $poll)
 	{
-		$poll->options = $poll->options->sortBy(function ($option, $key) {
-		    return $option->getTotalVotes();
-		});
+		$poll->sortOptions();
 		return view('admin.polls.show')->withPoll($poll);
 	}
 
