@@ -52,6 +52,11 @@ class EventsController extends Controller
 			$clauses = ['user_id' => $user->id, 'event_id' => $event->id]; 
 			$user->eventParticipation = EventParticipant::where($clauses)->get();
 		}
+		if (!$event->polls->isEmpty()) {
+			foreach ($event->polls as $poll) {
+				$poll->sortOptions();
+			}
+		}
 		return view('events.show')->withEvent($event);
 	}
 }
