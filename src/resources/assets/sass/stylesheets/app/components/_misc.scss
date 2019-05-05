@@ -1,0 +1,12 @@
+/**
+ * Misc
+ */
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}
+
+
+.btn-orange {
+  @include button-variant(#333333, $colour__orange, #333333);
+}
