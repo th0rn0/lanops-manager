@@ -19,7 +19,9 @@ use App\EventTicket;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Leafo\ScssPhp\Compiler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -245,6 +247,5 @@ class SettingsController extends Controller
 		}
 		Session::flash('alert-success', 'Successfully regenerated ' . $count . ' QR Codes!');
 		return Redirect::back(); 
-
 	}
 }

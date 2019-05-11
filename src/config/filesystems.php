@@ -62,6 +62,16 @@ return [
             'bucket' => 'your-bucket',
         ],
 
+        'assets' => [
+            'driver' => 'local',
+            'root' => base_path('resources/assets'),
+        ],
+
+        'compiled-css' => [
+            'driver' => 'local',
+            'root' => base_path('public/css'),
+        ],
+
     ],
 
 ];

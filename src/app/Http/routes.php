@@ -261,6 +261,12 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
 		/**
+		 * Appearance
+		 */
+		Route::get('/admin/appearance', 'Admin\AppearanceController@index');
+		Route::get('/admin/appearance/recompile/css', 'Admin\AppearanceController@recompileCss');
+
+		/**
 		 * News
 		 */
 		Route::get('/admin/news', 'Admin\NewsController@index');
