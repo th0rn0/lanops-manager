@@ -22,6 +22,15 @@
 			</div>
 			<div class="panel-body">
 				
+				@if ($user_override_css)
+					{{ Form::open(array('url'=>'/admin/appearance/css/override', 'onsubmit' => 'return ConfirmSubmit()')) }}
+						<div class="form-group">
+							{{ Form::label('css','Add Custom CSS',array('id'=>'','class'=>'')) }}
+							{{ Form::textarea('css', $user_override_css ,array('id'=>'','class'=>'form-control', 'rows'=>'25')) }}
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					{{ Form::close() }}
+				@endif
 			</div>  
 		</div>
 	</div>
@@ -31,9 +40,17 @@
 				<i class="fa fa-plus fa-fw"></i> Options
 			</div>
 			<div class="panel-body">
-				<a href="/admin/appearance/recompile/css"><button class="btn btn-default btn-sm">Recompile CSS</button></a>
-				<p>edit main variables for quick colors</p>
-				<p>upload additional custom css</p>
+				{{ Form::open(array('url'=>'/admin/appearance/css/variables', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					@foreach ($css_variables as $css_variable)
+						<div class="form-group">
+							{{ Form::label('css_variables[' . $css_variable->key . ']',$css_variable->key,array('id'=>'','class'=>'')) }}
+							{{ Form::text('css_variables[' . $css_variable->key . ']', $css_variable->value,array('id'=>'css_variable[]','class'=>'form-control')) }}
+						</div>
+					@endforeach
+					<button type="submit" class="btn btn-default">Submit</button>
+				{{ Form::close() }}
+				<hr>
+				<a href="/admin/appearance/css/recompile"><button class="btn btn-default btn-sm">Recompile CSS</button></a>
 			</div>
 		</div>
 	</div>
