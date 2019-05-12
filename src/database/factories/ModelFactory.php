@@ -103,6 +103,12 @@ $factory->define(App\Setting::class, function (Faker\Generator $faker) {
     ];
 });
 
+## Appearance
+$factory->define(App\Appearance::class, function (Faker\Generator $faker) {
+    return [
+    ];
+});
+
 ## Games
 $factory->define(App\Game::class, function (Faker\Generator $faker) {
     return [

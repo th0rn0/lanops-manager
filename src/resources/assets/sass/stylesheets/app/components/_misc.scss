@@ -8,5 +8,5 @@
 
 
 .btn-orange {
-  @include button-variant(#333333, $colour__orange, #333333);
+  @include button-variant(#333333, $color_primary, #333333);
 }

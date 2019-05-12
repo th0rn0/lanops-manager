@@ -11,13 +11,12 @@ use Input;
 
 use App\User;
 use App\Setting;
+use App\Appearance;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Leafo\ScssPhp\Compiler;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class AppearanceController extends Controller
 {
@@ -27,34 +26,68 @@ class AppearanceController extends Controller
 	 */
 	public function index()
 	{
-		return view('admin.appearance.index');
+		return view('admin.appearance.index')
+			->withUserOverrideCss(Appearance::getCssOverride())
+			->withCssVariables(Appearance::getCssVariables());
+		;
 	}
 	
 	/**
 	 * Recompile CSS from SCSS
 	 * @return Redirect
 	 */
-	// TODO
-	// Move to Settings/layout model or settings helper
-	// Permissions from NPM are wrong
-	// Run me on boot plz
-	public function recompileCSS(Compiler $scss)
+	public function cssRecompile()
 	{
-		$scss->setImportPaths('/web/html/resources/assets/sass/');
-		$scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
-		$css_templates = ['app', 'admin'];
-		foreach ($css_templates as $css_template) {
-		    $scss->setSourceMapOptions(array(
-		        'sourceMapWriteTo'  => config('filesystems.disks.compiled-css.root') . '/'. str_replace("/", "_", $css_template) . ".css.map",
-		        'sourceMapFilename' => $css_template . '.css',
-		        'sourceMapBasepath' => config('filesystems.disks.compiled-css.root'),
-		        'sourceRoot'        => '/',
-		    ));
-			Storage::disk('compiled-css')->delete($css_template . '.css');
-			Storage::disk('compiled-css')->delete($css_template . '.css.map');
-			Storage::disk('compiled-css')->put($css_template . '.css', $scss->compile('@import "' . $css_template . '.scss";'));
+		if (!Appearance::cssRecompile()) {
+			Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+			return Redirect::back(); 
 		}
 		Session::flash('alert-success', 'Successfully recompiled the CSS!');
+		return Redirect::back(); 
+	}
+
+	/**
+	 * Add Additional CSS Override
+	 * @param Request $request
+	 * @return Redirect
+	 */
+	public function cssOverride(Request $request)
+	{
+		$rules = [
+			'css'	=> 'required',
+		];
+		$messages = [
+			'css.required'		=> 'CSS is required.',
+		];
+		$this->validate($request, $rules, $messages);
+		if (!Appearance::saveCssOverride($request->css)) {
+			Session::flash('alert-danger', 'Could not save CSS. Please try again.');
+			return Redirect::back(); 
+		}
+		if (!Appearance::cssRecompile()) {
+			Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+			return Redirect::back(); 
+		}
+		Session::flash('alert-success', 'Successfully recompiled the CSS!');
+		return Redirect::back(); 
+	}
+
+	/**
+	 * Update CSS Variables
+	 * @param Request $request
+	 * @return Redirect
+	 */
+	public function cssVariables(Request $request)
+	{
+		if (!Appearance::saveCssVariables($request->css_variables)) {
+			Session::flash('alert-danger', 'Could not save CSS Variables. Please try again.');
+			return Redirect::back(); 
+		}
+		if (!Appearance::cssRecompile()) {
+			Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+			return Redirect::back(); 
+		}
+		Session::flash('alert-success', 'Successfully saved CSS Variables!');
 		return Redirect::back(); 
 	}
 }

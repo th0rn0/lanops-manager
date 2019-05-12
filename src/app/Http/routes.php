@@ -264,7 +264,9 @@ Route::group(['middleware' => ['web']], function () {
 		 * Appearance
 		 */
 		Route::get('/admin/appearance', 'Admin\AppearanceController@index');
-		Route::get('/admin/appearance/recompile/css', 'Admin\AppearanceController@recompileCss');
+		Route::get('/admin/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
+		Route::post('/admin/appearance/css/override', 'Admin\AppearanceController@cssOverride');
+		Route::post('/admin/appearance/css/variables', 'Admin\AppearanceController@cssVariables');
 
 		/**
 		 * News

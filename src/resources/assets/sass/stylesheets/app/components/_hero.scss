@@ -9,12 +9,12 @@
 	color: #FFF;
 	text-align:center;
 	h1, h3, h5 { 
-		color: $colour__orange;
+		color: $color_primary;
 	}
 	h1 {
 	    margin-bottom: 15px;
 	    padding-bottom: 15px;
-	    border-bottom: 5px solid $colour__orange;
+	    border-bottom: 5px solid $color_primary;
 	    display: inline-block;
 	}
 	h3 {

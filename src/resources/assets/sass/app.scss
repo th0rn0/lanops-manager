@@ -1,10 +1,12 @@
 @import 'stylesheets/app/vendor/bootstrap';
 
 @import 'stylesheets/app/modules/variables',
+		'stylesheets/app/modules/user-variables',
 		'stylesheets/app/components/helper',
 		'stylesheets/app/components/hero',
 		'stylesheets/app/components/book-now',
 		'stylesheets/app/components/stats',
 		'stylesheets/app/components/news',
 		'stylesheets/app/components/misc',
-		'stylesheets/app/components/user-navigation';
+		'stylesheets/app/components/user-navigation',
+		'stylesheets/app/components/user-override';
