@@ -298,19 +298,6 @@ The Lan Manager ships with a file reader for Env variables such as Passwords as 
 
 If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_PASSWORD``` in a file called ```DB_PASSWORD``` in ```resources/secrets/``` directory, we can set ```DB_PASSWORD_FILE=/run/secrets/DB_PASSWORD``` and the app will read the file and inject the password into the Environment Variable ```DB_PASSWORD```.
 
-## Custom SCSS & Views
-
-To load in custom SCSS (Sassy CSS) & Views (Blade) mount the following directories;
-
-- ```path_to_scss:/web/html/resources/assets/sass```
-- ```path_to_views:/web/html/resources/assets/views```
-
-CSS must be in SCSS format.
-
-To recompile CSS use the 'Recompile CSS' link located at http://localhost/admin/appearance
-
-You can also change base variables and ad your own in the appearance page.
-
 ### Caveats
 
 - Only one entry per file
@@ -332,6 +319,19 @@ You can also change base variables and ad your own in the appearance page.
   - STEAM_API_KEY
   - CHALLONGE_API_KEY
   - APP_KEY
+  
+## Custom SCSS & Views
+
+To load in custom SCSS (Sassy CSS) & Views (Blade) mount the following directories;
+
+- ```path_to_scss:/web/html/resources/assets/sass```
+- ```path_to_views:/web/html/resources/assets/views```
+
+CSS must be in SCSS format.
+
+To recompile CSS use the 'Recompile CSS' link located at http://localhost/admin/appearance
+
+You can also change base variables and ad your own in the appearance page.
 
 ## Contributors
 
