@@ -59,6 +59,8 @@ https://lanops.co.uk
   - Shows Timetables, Attendees, Tournaments, Announcements and Seating
 - Gallery
 - Admin Interface
+- Web based CSS Editor
+- Expandable templating and CSS System
 - API Endpoints
   - Events
   - Participants
@@ -306,6 +308,8 @@ To load in custom SCSS (Sassy CSS) & Views (Blade) mount the following directori
 CSS must be in SCSS format.
 
 To recompile CSS use the 'Recompile CSS' link located at http://localhost/admin/appearance
+
+You can also change base variables and ad your own in the appearance page.
 
 ### Caveats
 
