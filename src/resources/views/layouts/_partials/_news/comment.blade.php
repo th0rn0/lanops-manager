@@ -11,14 +11,14 @@
 		@endif
 		@if (Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id()))
 			@php
-				$post_url = "";
+				$postUrl = "";
 			@endphp
 			@if (Auth::user()->getAdmin())
 				@php
-					$post_url = "/admin";
+					$postUrl = "/admin";
 				@endphp
 			@endif
-			<a href="{{ $post_url }}/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/delete">
+			<a href="{{ $postUrl }}/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/delete">
 				Delete Comment
 			</a>
 		@endif

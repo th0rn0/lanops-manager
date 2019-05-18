@@ -544,7 +544,7 @@
 											@endif
 										@endforeach
 									@endif
-								@if ($tournament->team_size == '1v1')
+									@if ($tournament->team_size == '1v1')
 										@foreach ($tournament->tournamentParticipants->sortBy('final_rank') as $tournamentParticipant)
 											@if ($tournamentParticipant->final_rank == 1)
 												@if ($tournament->team_size == '1v1')
