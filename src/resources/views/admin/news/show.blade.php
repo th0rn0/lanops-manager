@@ -12,7 +12,7 @@
 				<a href="/admin/news/">News</a>
 			</li>
 			<li class="active">
-				{{ $news_article->title }}
+				{{ $newsArticle->title }}
 			</li>
 		</ol> 
 	</div>
@@ -22,26 +22,26 @@
 	<div class="col-xs-12 col-sm-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-pencil fa-fw"></i> Edit {{ $news_article->title }}
+				<i class="fa fa-pencil fa-fw"></i> Edit {{ $newsArticle->title }}
 			</div>
 			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/news/' . $news_article->slug, 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/news/' . $newsArticle->slug, 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('title','Title',array('id'=>'','class'=>'')) }}
-						{{ Form::text('title', $news_article->title ,array('id'=>'title','class'=>'form-control')) }}
+						{{ Form::text('title', $newsArticle->title ,array('id'=>'title','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('article','Article',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('article', $news_article->article, array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('article', $newsArticle->article, array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
-						{{ Form::text('tags', $news_article->getTags(), array('id'=>'', 'class'=>'form-control')) }}
+						{{ Form::text('tags', $newsArticle->getTags(), array('id'=>'', 'class'=>'form-control')) }}
 					</div>
 					<button type="submit" class="btn btn-default btn-block">Submit</button> 
 				{{ Form::close() }}
 				<hr>
-				{{ Form::open(array('url'=>'/admin/news/' . $news_article->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+				{{ Form::open(array('url'=>'/admin/news/' . $newsArticle->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 					{{ Form::hidden('_method', 'DELETE') }}
 					<button type="submit" class="btn btn-danger btn-block">Delete</button>
 				{{ Form::close() }}
@@ -63,7 +63,7 @@
 				<i class="fa fa-comments fa-fw"></i> Comments
 			</div>
 			<div class="panel-body">
-				@foreach ($news_article->comments->reverse() as $comment)
+				@foreach ($newsArticle->comments->reverse() as $comment)
 					@include ('layouts._partials._news.comment-warnings')
 					@include ('layouts._partials._news.comment')
 				@endforeach

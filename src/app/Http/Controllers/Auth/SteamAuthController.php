@@ -119,9 +119,9 @@ class SteamAuthController extends Controller
 		$user->username_nice 	= strtolower(str_replace(' ', '-', $request->username));
 
 		// Set first user on system as admin
-		// if (User::count() == 0 && User::where('admin', 1)->count() == 0) {
-		// 	$user->admin = 1;
-		// }
+		if (User::count() == 0 && User::where('admin', 1)->count() == 0) {
+			$user->admin = 1;
+		}
 
 		if ($user->save()) {
 			Session::forget('user');

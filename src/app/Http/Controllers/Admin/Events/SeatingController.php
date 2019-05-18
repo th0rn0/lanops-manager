@@ -29,18 +29,21 @@ class SeatingController extends Controller
 	 */
 	public function index(Event $event)
 	{
-		return view('admin.events.seating.index')->withEvent($event);
+		return view('admin.events.seating.index')
+			->withEvent($event);
 	}
 
 	/**
 	 * Show Seating Page
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @return View
 	 */
-	public function show(Event $event, EventSeatingPlan $seating_plan)
+	public function show(Event $event, EventSeatingPlan $seatingPlan)
 	{
-		return view('admin.events.seating.show')->withEvent($event)->withSeatingPlan($seating_plan);
+		return view('admin.events.seating.show')
+			->withEvent($event)
+			->withSeatingPlan($seatingPlan);
 	}
 
 	/**
@@ -67,46 +70,46 @@ class SeatingController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		$seating_plan           = new EventSeatingPlan;
-		$seating_plan->event_id = $event->id;
-		$seating_plan->name     = $request->name;
+		$seatingPlan           = new EventSeatingPlan;
+		$seatingPlan->event_id = $event->id;
+		$seatingPlan->name     = $request->name;
 		
 		$alphabet = range('A', 'Z');
 		for ($i=0; $i < $request->columns; $i++) { 
-			$seating_headers[] = $alphabet[$i];
+			$seatingHeaders[] = $alphabet[$i];
 		}
-		$seating_plan->headers  = implode(',', $seating_headers);
-		$seating_plan->columns  = $request->columns;
-		$seating_plan->rows     = $request->rows;
+		$seatingPlan->headers  = implode(',', $seatingHeaders);
+		$seatingPlan->columns  = $request->columns;
+		$seatingPlan->rows     = $request->rows;
 
 		if ($request->file('image') !== NULL) {
-			$seating_plan->image_path = str_replace(
+			$seatingPlan->image_path = str_replace(
 				'public/', 
 				'/storage/', 
 				Storage::put(
-					'public/images/events/' . $event->slug . '/seating/' . $seating_plan->slug,
+					'public/images/events/' . $event->slug . '/seating/' . $seatingPlan->slug,
 					$request->file('image')
 				)
 			);
 		}
 
-		if (!$seating_plan->save()) {
+		if (!$seatingPlan->save()) {
 			Session::flash('alert-danger', 'Could not save Seating Plan!');
 			return Redirect::back();
 		}
 
 		Session::flash('alert-success', 'Successfully saved Seating Plan!');
-		return Redirect::to('admin/events/' . $event->slug . '/seating/' . $seating_plan->slug);
+		return Redirect::to('admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug);
 	}
 
 	/**
 	 * Update Seating Plan
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @param  Request          $request
 	 * @return Redirect
 	 */
-	public function update(Event $event, EventSeatingPlan $seating_plan, Request $request)
+	public function update(Event $event, EventSeatingPlan $seatingPlan, Request $request)
 	{
 		$rules = [
 			"columns"	=> "integer",
@@ -127,40 +130,40 @@ class SeatingController extends Controller
 		$this->validate($request, $rules, $messages);
 
 		if (isset($request->name)) {
-			$seating_plan->name			= $request->name;
+			$seatingPlan->name			= $request->name;
 		}
 
 		if (isset($request->status)) {
-			$seating_plan->status		= $request->status;
+			$seatingPlan->status		= $request->status;
 		}
 
-		$seating_plan->locked			= ($request->locked ? true : false);
+		$seatingPlan->locked			= ($request->locked ? true : false);
 
 		if (isset($request->rows) || isset($request->columns)) {
-			if ($seating_plan->columns != $request->columns || $seating_plan->rows != $request->rows) {
+			if ($seatingPlan->columns != $request->columns || $seatingPlan->rows != $request->rows) {
 				$alphabet = range('A', 'Z');
 				for ($i=0; $i < $request->columns; $i++) { 
-					$seating_headers[]	= $alphabet[$i];
+					$seatingHeaders[]	= $alphabet[$i];
 				}
-				$seating_plan->headers	= implode(',', $seating_headers);
-				$seating_plan->columns	= $request->columns;
-				$seating_plan->rows		= $request->rows;
+				$seatingPlan->headers	= implode(',', $seatingHeaders);
+				$seatingPlan->columns	= $request->columns;
+				$seatingPlan->rows		= $request->rows;
 			}
 		}
 
 		if ($request->file('image') !== NULL) {
-			Storage::delete($seating_plan->image_path); 
-			$seating_plan->image_path = str_replace(
+			Storage::delete($seatingPlan->image_path); 
+			$seatingPlan->image_path = str_replace(
 				'public/', 
 				'/storage/', 
 				Storage::put(
-					'public/images/events/' . $event->slug . '/seating/' . $seating_plan->slug,
+					'public/images/events/' . $event->slug . '/seating/' . $seatingPlan->slug,
 					$request->file('image')
 				)
 			);
 		}
 
-		if (!$seating_plan->save()) {
+		if (!$seatingPlan->save()) {
 			Session::flash('alert-danger', 'Could not update Seating Plan!');
 			return Redirect::back();
 		}
@@ -172,12 +175,12 @@ class SeatingController extends Controller
 	/**
 	 * Delete Seating Plan
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @return Redirect
 	 */
-	public function destroy(Event $event, EventSeatingPlan $seating_plan)
+	public function destroy(Event $event, EventSeatingPlan $seatingPlan)
 	{
-		if (!$seating_plan->delete()) {
+		if (!$seatingPlan->delete()) {
 			Session::flash('alert-danger', 'Could not delete Seating Plan!');
 			return Redirect::back();
 		}
@@ -189,16 +192,16 @@ class SeatingController extends Controller
 	/**
 	 * Seat Participant
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @param  Request          $request
 	 * @return Redirect
 	 */
-	public function storeSeat(Event $event, EventSeatingPlan $seating_plan, Request $request)
+	public function storeSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
 	{
 		if (
-			!in_array(substr($request->seat_number_modal, 0, 1), explode(',', $seating_plan->headers)) ||
+			!in_array(substr($request->seat_number_modal, 0, 1), explode(',', $seatingPlan->headers)) ||
 			substr($request->seat_number_modal, 1, 1) <= 0 ||
-			substr($request->seat_number_modal, 1, 1) > $seating_plan->rows
+			substr($request->seat_number_modal, 1, 1) > $seatingPlan->rows
 		) {
 			Session::flash('alert-danger', 'Invalid seat selection!');
 			return Redirect::back();
@@ -206,9 +209,9 @@ class SeatingController extends Controller
 
 		if (isset($request->participant_id_modal) && trim($request->participant_id_modal) != '') {
 			$clauses = ['event_participant_id' => $request->participant_id_modal];
-			$previous_seat = EventSeating::where($clauses)->first();
-			if($previous_seat != null){
-				$previous_seat->delete();
+			$previousSeat = EventSeating::where($clauses)->first();
+			if($previousSeat != null){
+				$previousSeat->delete();
 			}
 		}
 
@@ -222,24 +225,24 @@ class SeatingController extends Controller
 		}
 
 		$clauses = ['event_participant_id' => $request->participant_select_modal];
-		$previous_seat = EventSeating::where($clauses)->first();
-		if ($previous_seat != null) {
-			$previous_seat->delete();
+		$previousSeat = EventSeating::where($clauses)->first();
+		if ($previousSeat != null) {
+			$previousSeat->delete();
 		}
 
-		$clauses = ['seat' => $request->seat_number_modal, 'event_seating_plan_id' => $seating_plan->id];
+		$clauses = ['seat' => $request->seat_number_modal, 'event_seating_plan_id' => $seatingPlan->id];
 		$seat = EventSeating::where($clauses)->first();
 		if ($seat != null) {
 			Session::flash('alert-danger', 'Seat is still occupied. Please try again!');
 			return Redirect::back();
 		}
 
-		$new_seat                         = new EventSeating;
-		$new_seat->seat                   = $request->seat_number_modal;
-		$new_seat->event_participant_id   = $request->participant_select_modal;
-		$new_seat->event_seating_plan_id  = $seating_plan->id;
+		$newSeat                         = new EventSeating;
+		$newSeat->seat                   = $request->seat_number_modal;
+		$newSeat->event_participant_id   = $request->participant_select_modal;
+		$newSeat->event_seating_plan_id  = $seatingPlan->id;
 
-		if (!$new_seat->save()) {
+		if (!$newSeat->save()) {
 			Session::flash('alert-danger', 'Could not update Seat!');
 			return Redirect::back();
 		}
@@ -251,13 +254,13 @@ class SeatingController extends Controller
 	/**
 	 * Remove Participant Seating
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @param  Request          $request
 	 * @return Redirect
 	 */
-	public function destroySeat(Event $event, EventSeatingPlan $seating_plan, Request $request)
+	public function destroySeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
 	{
-		if (!$seat = $seating_plan->seats()->where('seat', $request->seat_number)->first()) {
+		if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number)->first()) {
 			Session::flash('alert-danger', 'Could not find seat!');
 			return Redirect::back();
 		}

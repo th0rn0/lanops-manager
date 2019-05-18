@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Seating Plans - {{ $seating_plan->name }}</h1>
+		<h1 class="page-header">Seating Plans - {{ $seatingPlan->name }}</h1>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -18,7 +18,7 @@
 				<a href="/admin/events/{{ $event->slug }}/seating">Seating Plans</a>
 			</li>
 			<li class="active">
-				{{ $seating_plan->name }}
+				{{ $seatingPlan->name }}
 			</li>
 		</ol>
 	</div>
@@ -36,19 +36,19 @@
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table class="table">
-						@for ($column = 1; $column <= $seating_plan->columns; $column++)
+						@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 							<?php
-								$headers = explode(',', $seating_plan->headers);
+								$headers = explode(',', $seatingPlan->headers);
 								$headers = array_combine(range(1, count($headers)), $headers);
 							?>
 							<tr>
 								<td>
 									<h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4>
 								</td>
-								@for ($row = 1; $row <= $seating_plan->rows; $row++)
+								@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 									<td style="padding-top:14px;">
-										@if($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
-											@foreach($seating_plan->seats as $seat)
+										@if($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
+											@foreach($seatingPlan->seats as $seat)
 												<?php
 													if($seat->seat == (ucwords($headers[$column]) . $row)){
 														$username = $seat->eventParticipant->user->steamname;
@@ -91,7 +91,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($seating_plan->seats as $seat)
+							@foreach ($seatingPlan->seats as $seat)
 								<tr class="odd gradeX">
 									<td></td>
 									<td>{{ ucwords($seat->seat) }}</td>
@@ -130,7 +130,7 @@
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
 			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->slug, 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug, 'files' => 'true')) }}
 					@if ($errors->any())
 					  	<div class="alert alert-danger">
 					        <ul>
@@ -143,7 +143,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
-							{{ Form::text('name', $seating_plan->name ,array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::text('name', $seatingPlan->name ,array('id'=>'name','class'=>'form-control')) }}
 						</div>
 						<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
@@ -155,7 +155,7 @@
 											'preview'=>'Preview',
 											'published'=>'Published',
 										),
-										strtolower($seating_plan->status),
+										strtolower($seatingPlan->status),
 										array(
 											'id'=>'status',
 											'class'=>'form-control'
@@ -167,11 +167,11 @@
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('columns','Columns',array('id'=>'','class'=>'')) }}
-							{{ Form::text('columns', $seating_plan->columns ,array('id'=>'columns','class'=>'form-control')) }}
+							{{ Form::text('columns', $seatingPlan->columns ,array('id'=>'columns','class'=>'form-control')) }}
 						</div> 
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('rows','Rows',array('id'=>'','class'=>'')) }}
-							{{ Form::text('rows', $seating_plan->rows ,array('id'=>'rows','class'=>'form-control')) }}
+							{{ Form::text('rows', $seatingPlan->rows ,array('id'=>'rows','class'=>'form-control')) }}
 						</div>
 					</div>
 					<div class="form-group">
@@ -181,7 +181,7 @@
 					<div class="form-group"> 
 						<div class="checkbox"> 
 							<label> 
-								@if ($seating_plan->locked) 
+								@if ($seatingPlan->locked) 
 									{{ Form::checkbox('locked', 1, true)}} Lock Seating 
 								@else 
 									{{ Form::checkbox('locked', 1)}} Lock Seating 
@@ -190,10 +190,10 @@
 						</div> 
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
-					@if ($seating_plan->image_path)
+					@if ($seatingPlan->image_path)
 						<hr>
 						<h4>Image Preview</h4>
-						<img src="{{ $seating_plan->image_path }}" class="img img-responsive" />
+						<img src="{{ $seatingPlan->image_path }}" class="img img-responsive" />
 					@endif
 				{{ Form::close() }}
 			</div>
@@ -211,7 +211,7 @@
 				<h4 class="modal-title" id="editSeatingModalLabel">Edit Seating</h4>
 			</div>
 			<div class="modal-body">
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->slug . '/seat')) }}
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat')) }}
 					<div class="form-group">
 						{{ Form::label('seat_number_modal','Seat Number',array('id'=>'','class'=>'')) }}
 						{{ Form::text('seat_number_modal', null, array('id'=>'seat_number_modal','class'=>'form-control')) }}
@@ -228,7 +228,7 @@
 					</a>
 					<button type="submit" class="btn btn-default">Save Changes</button>
 				{{ Form::close() }}
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seating_plan->slug . '/seat', 'id'=>'clear_seat_form')) }}
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat', 'id'=>'clear_seat_form')) }}
 					<hr>
 					{{ Form::hidden('_method', 'DELETE') }}
 					{{ Form::hidden('seat_number', null, array('id'=>'seat_number')) }}

@@ -27,7 +27,9 @@ class TicketsController extends Controller
 	 */
 	public function index(Event $event)
 	{
-		return view('admin.events.tickets.index')->withEvent($event)->withUsers(User::all());
+		return view('admin.events.tickets.index')
+			->withEvent($event)
+			->withUsers(User::all());
 	}
 
 	/**
@@ -38,7 +40,9 @@ class TicketsController extends Controller
 	 */
 	public function show(Event $event, EventTicket $ticket)
 	{
-		return view('admin.events.tickets.show')->withEvent($event)->withTicket($ticket);
+		return view('admin.events.tickets.show')
+			->withEvent($event)
+			->withTicket($ticket);
 	}
 	
 	/**

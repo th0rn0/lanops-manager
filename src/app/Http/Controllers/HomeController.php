@@ -46,56 +46,56 @@ class HomeController extends Controller
 	 */
 	public function net()
 	{
-		$top_attendees = array();
+		$topAttendees = array();
 		foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
 			if ($attendee->event->end < \Carbon\Carbon::today()) {
 				$recent = false;
-				if (!$attendee->user->admin && array_key_exists($attendee->user->id, $top_attendees)) {
-					$top_attendees[$attendee->user->id]->event_count++;
+				if (!$attendee->user->admin && array_key_exists($attendee->user->id, $topAttendees)) {
+					$topAttendees[$attendee->user->id]->event_count++;
 					$recent = true;
 				}
 				if (!$attendee->user->admin && !$recent) {
 					$attendee->user->event_count = 1;
-					$top_attendees[$attendee->user->id] = $attendee->user;
+					$topAttendees[$attendee->user->id] = $attendee->user;
 				}
 			}
 		}
-		usort($top_attendees, function($a, $b) {
+		usort($topAttendees, function($a, $b) {
 		    return $b['event_count'] <=> $a['event_count'];
 		});
 
-		$top_winners = array();
+		$topWinners = array();
 		foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
 			$recent = false;
 			foreach ($winner_team->tournamentParticipants as $winner) {
-				if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
-					$top_winners[$winner->eventParticipant->user->id]->win_count++;
+				if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
+					$topWinners[$winner->eventParticipant->user->id]->win_count++;
 					$recent = true;
 				}
 				if (!$recent) {
 					$winner->eventParticipant->user->win_count = 1;
-					$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
+					$topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 				}
 			}
 		}
 		foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
 			$recent = false;
-			if (array_key_exists($winner->eventParticipant->user->id, $top_winners)) {
-				$top_winners[$winner->eventParticipant->user->id]->win_count++;
+			if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
+				$topWinners[$winner->eventParticipant->user->id]->win_count++;
 				$recent = true;
 			}
 			if (!$recent) {
 				$winner->eventParticipant->user->win_count = 1;
-				$top_winners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
+				$topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
 			}
 		}
-		usort($top_winners, function($a, $b) {
+		usort($topWinners, function($a, $b) {
 		    return $b['win_count'] <=> $a['win_count'];
 		});
 		return view("home")
 			->withNextEvent(Event::where('end', '>=', \Carbon\Carbon::now())->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first())
-			->withTopAttendees(array_slice($top_attendees, 0, 5))
-			->withTopWinners(array_slice($top_winners, 0, 5))
+			->withTopAttendees(array_slice($topAttendees, 0, 5))
+			->withTopWinners(array_slice($topWinners, 0, 5))
 			->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
 			->withEvents(Event::all());
 		;
@@ -125,7 +125,7 @@ class HomeController extends Controller
 	 */
 	public function lan()
 	{
-		$signed_in = true;
+		$signedIn = true;
 		$event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
 		$event->load('eventParticipants.user');
 		$event->load('timetables');
@@ -151,7 +151,11 @@ class HomeController extends Controller
 				}
 			}
 		}
-		return view("lan.home")->withEvent($event)->withTicketFlag($ticketFlag)->withSignedIn($signed_in)->withUser($user);
+		return view("lan.home")
+			->withEvent($event)
+			->withTicketFlag($ticketFlag)
+			->withSignedIn($signedIn)
+			->withUser($user);
 	}
 
 	/**

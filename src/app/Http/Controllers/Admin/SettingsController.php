@@ -32,13 +32,13 @@ class SettingsController extends Controller
 	public function index()
 	{
 		
-		$facebook_callback = null;
+		$facebookCallback = null;
 		if (Facebook::isEnabled() && !Facebook::isLinked()) {
-			$facebook_callback = Facebook::getLoginUrl();
+			$facebookCallback = Facebook::getLoginUrl();
 		}
 		return view('admin.settings.index')
 			->withSettings(Setting::all())
-			->withFacebookCallback($facebook_callback)
+			->withFacebookCallback($facebookCallback)
 		;
 	}
 	
@@ -185,26 +185,26 @@ class SettingsController extends Controller
 			Session::flash('alert-danger', 'Facebook is already Linked.');
 			return Redirect::to('/admin/settings');
 		}
-		$accepted_social = array(
+		$acceptedSocial = array(
 			'facebook',
 			// 'twitter',
 			// 'instagram',
 		);
-		if (!in_array($social, $accepted_social)) {
+		if (!in_array($social, $acceptedSocial)) {
 			Session::flash('alert-danger', "{$social} is not supported by the Lan Manager.");
 			return Redirect::to('/admin/settings');
 		}
 
 		if ($social == 'facebook' && (Facebook::isEnabled() && !Facebook::isLinked())) {
-			if (!$user_access_token = Facebook::getUserAccessToken()) {
+			if (!$userAccessToken = Facebook::getUserAccessToken()) {
 				Session::flash('alert-danger', 'Facebook: 401 Unauthorized Request.');
 				return Redirect::to('/admin/settings');
 			}
-			if (!$page_access_tokens = Facebook::getPageAccessTokens($user_access_token)) {
+			if (!$pageAccessToken = Facebook::getPageAccessTokens($userAccessToken)) {
 				Session::flash('alert-danger', "Facebook: Error getting long-lived access token");
 				return Redirect::to('/admin/settings');
 			}
-			if (!Settings::setSocialFacebookPageAccessTokens($page_access_tokens)) {
+			if (!Settings::setSocialFacebookPageAccessTokens($pageAccessToken)) {
 				Session::flash('alert-danger', "Could not Link {$social}!");
 				return Redirect::to('/admin/settings');
 			}

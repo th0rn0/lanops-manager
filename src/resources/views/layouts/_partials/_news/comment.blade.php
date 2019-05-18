@@ -27,7 +27,7 @@
 				@if ((Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id())) || (Auth::user() && Auth::id() == $comment->user_id)) 
 					/
 				@endif
-				<a href="/news/{{ $news_article->slug }}/comments/{{ $comment->id }}/report">
+				<a href="/news/{{ $newsArticle->slug }}/comments/{{ $comment->id }}/report">
 					Report Comment
 				</a>
 			@endif
@@ -45,7 +45,7 @@
 				<h4 class="modal-title" id="editCommentModalLabel">Edit Comment</h4>
 			</div>
 			@if (Auth::user())
-				{{ Form::open(array('url'=>'/news/' . $news_article->slug . '/comments', 'id'=>'editCommentFormModal')) }}
+				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments', 'id'=>'edit_comment_modal_form')) }}
 					<div class="modal-body">
 						<div class="form-group">
 							{{ Form::textarea('comment_modal', '',array('id'=>'comment_modal','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
@@ -69,6 +69,6 @@
 	{
 		console.log(comment_id);
 		$("#comment_modal").val(comment);
-		$("#editCommentFormModal").prop('action', '/news/{{ $news_article->slug }}/comments/' + comment_id);
+		$("#edit_comment_modal_form").prop('action', '/news/{{ $newsArticle->slug }}/comments/' + comment_id);
 	}
 </script>

@@ -24,7 +24,9 @@ class GalleryController extends Controller
 	{
 		$event = Event::where('start', '>=', date("Y-m-d 00:00:00"))->first();
 		$albums = GalleryAlbum::all();
-		return view('gallery.index')->withAlbums($albums)->withEvent($event);  
+		return view('gallery.index')
+			->withAlbums($albums)
+			->withEvent($event);  
 	}
 
 	/**
@@ -34,6 +36,7 @@ class GalleryController extends Controller
 	 */
 	public function show(GalleryAlbum $album)
 	{
-		return view('gallery.show')->withAlbum($album);  
+		return view('gallery.show')
+			->withAlbum($album);  
 	}
 }

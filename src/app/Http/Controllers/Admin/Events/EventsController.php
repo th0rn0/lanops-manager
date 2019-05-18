@@ -28,7 +28,9 @@ class EventsController extends Controller
 	{
 		$user = Auth::user();
 		$events = Event::withoutGlobalScopes()->get();
-		return view('admin.events.index')->withUser($user)->withEvents($events);
+		return view('admin.events.index')
+			->withUser($user)
+			->withEvents($events);
 	}
 
 	/**
@@ -40,7 +42,10 @@ class EventsController extends Controller
 	{
 		$user = Auth::user();
 		$events = Event::withoutGlobalScopes();
-		return view('admin.events.show')->withUser($user)->withEvent($event)->withEvents($events);
+		return view('admin.events.show')
+			->withUser($user)
+			->withEvent($event)
+			->withEvents($events);
 	}
 
 	/**
@@ -167,12 +172,12 @@ class EventsController extends Controller
 		}
 
 		if (isset($request->essential_info)) {
-			$event->essential_info = $request->essential_info; 
+			$event->essential_info 	= $request->essential_info; 
 		}
 
 		
 		if (isset($request->capacity)) {
-			$event->capacity = $request->capacity; 
+			$event->capacity 		= $request->capacity; 
 		}
 
 		if (!$event->save()) {

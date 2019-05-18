@@ -23,6 +23,7 @@ class PurchasesController extends Controller
 	 */
 	public function index()
 	{
-		return view('admin.purchases.index')->withPurchases(Purchase::all());
+		return view('admin.purchases.index')
+			->withPurchases(Purchase::all());
 	}
 }

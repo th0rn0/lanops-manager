@@ -39,7 +39,7 @@
 						<table class="table table-striped">
 							<tbody>
 								@php ($total = 0)
-								@foreach ($basket_items as $item)
+								@foreach ($basketItems as $item)
 									<tr>
 										<td>
 											<strong>{{ $item->name }}</strong>

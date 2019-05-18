@@ -3,9 +3,9 @@
 		<div class="alert alert-warning">
 			This comment has not been approved yet. Only Admins can see it.
 			<span class="pull-right">
-				<a href="/admin/news/{{ $news_article->slug }}/comments/{{ $comment->id }}/approve">Approve</a> / 
-				<a href="/admin/news/{{ $news_article->slug }}/comments/{{ $comment->id }}/reject">Reject</a> / 
-				<a href="/admin/news/{{ $news_article->slug }}/comments/{{ $comment->id }}/delete">Delete</a>
+				<a href="/admin/news/{{ $newsArticle->slug }}/comments/{{ $comment->id }}/approve">Approve</a> / 
+				<a href="/admin/news/{{ $newsArticle->slug }}/comments/{{ $comment->id }}/reject">Reject</a> / 
+				<a href="/admin/news/{{ $newsArticle->slug }}/comments/{{ $comment->id }}/delete">Delete</a>
 			</span>
 		</div>
 	@endif

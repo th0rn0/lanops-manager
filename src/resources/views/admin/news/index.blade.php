@@ -34,7 +34,7 @@
 						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
 						{{ Form::text('tags', '', array('id'=>'', 'class'=>'form-control')) }}
 					</div>
-					@if ($facebook_linked)
+					@if ($facebookLinked)
 						<div class="form-group">
 							{{ Form::checkbox('post_to_facebook', true, array('id'=>'post_to_facebook','class'=>'form-control')) }} Post to facebook?
 						</div>
@@ -49,8 +49,8 @@
 			</div>
 			<div class="panel-body">
 				<p>To Approve:</p>
-				@if (!$comments_to_approve->isEmpty())
-					@foreach ($comments_to_approve->reverse() as $comment)
+				@if (!$commentsToApprove->isEmpty())
+					@foreach ($commentsToApprove->reverse() as $comment)
 						@if (!$comment->reviewed && !$comment->approved)
 							<div class="alert alert-warning">
 								{{ $comment->comment }}
@@ -68,8 +68,8 @@
 					</div>
 				@endif
 				<p>Reported:</p>
-				@if (!$comments_reported->isEmpty())
-					@foreach ($comments_reported->reverse() as $report)
+				@if (!$commentsReported->isEmpty())
+					@foreach ($commentsReported->reverse() as $report)
 						<div class="alert alert-danger">
 							{{ $report->newsComment->comment }} - Reported by: {{ $report->user->steamname }}
 							<span class="pull-right">
@@ -104,22 +104,22 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($news_articles->reverse() as $news_article)
+							@foreach ($newsArticles->reverse() as $newsArticle)
 								<tr>
 									<td>
-										{{ $news_article->title }}
+										{{ $newsArticle->title }}
 									</td>
 									<td>
-										{{ $news_article->user->steamname }}
+										{{ $newsArticle->user->steamname }}
 									</td>
 									<td>
-										{{ $news_article->created_at }}
+										{{ $newsArticle->created_at }}
 									</td>
 									<td width="15%">
-										<a href="/admin/news/{{ $news_article->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
+										<a href="/admin/news/{{ $newsArticle->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
 									</td>
 									<td width="15%">
-										{{ Form::open(array('url'=>'/admin/news/' . $news_article->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+										{{ Form::open(array('url'=>'/admin/news/' . $newsArticle->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}

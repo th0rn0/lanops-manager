@@ -23,39 +23,43 @@ class NewsController extends Controller
 	 */
 	public function index()
 	{
-		return view('news.index')->withNewsArticles(NewsArticle::all()->reverse());  
+		return view('news.index')
+			->withNewsArticles(NewsArticle::all()->reverse());  
 	}
 
 	/**
 	 * Show News Article Page
-	 * @param  NewsArticle $news_article
+	 * @param  NewsArticle $newsArticle
 	 * @return View      
 	 */
-	public function show(NewsArticle $news_article)
+	public function show(NewsArticle $newsArticle)
 	{
-		return view('news.show')->withNewsArticle($news_article);  
+		return view('news.show')
+			->withNewsArticle($newsArticle);  
 	}
 
 	/**
 	 * Show News Articles for Given Tag
-	 * @param  NewsTag $news_tag
+	 * @param  NewsTag $newsTag
 	 * @return View      
 	 */
-	public function showTag(NewsTag $news_tag)
+	public function showTag(NewsTag $newsTag)
 	{
-		foreach (NewsTag::where('tag', $news_tag->tag)->get()->reverse() as $news_tag) {
-			$news_articles[] = $news_tag->newsArticle;
+		foreach (NewsTag::where('tag', $newsTag->tag)->get()->reverse() as $newsTag) {
+			$newsArticles[] = $newsTag->newsArticle;
 		}
-		return view('news.tag')->withTag($news_tag->tag)->withNewsArticles($news_articles);  
+		return view('news.tag')
+			->withTag($newsTag->tag)
+			->withNewsArticles($newsArticles);  
 	}
 
 	/**
 	 * Store News Article Comment
-	 * @param  NewsArticle $news_article
+	 * @param  NewsArticle $newsArticle
 	 * @param  Request $request
 	 * @return View      
 	 */
-	public function storeComment(NewsArticle $news_article, Request $request)
+	public function storeComment(NewsArticle $newsArticle, Request $request)
 	{
 		if (!Auth::user()) {
 			$request->session()->flash('alert-danger', 'Please Login.');
@@ -73,7 +77,7 @@ class NewsController extends Controller
 
         $comment = [
             'comment' 		=> trim($request->comment),
-            'news_feed_id' 	=> $news_article->id,
+            'news_feed_id' 	=> $newsArticle->id,
             'user_id'      	=> Auth::id()
         ];
         if (!NewsComment::create($comment)) {
@@ -86,17 +90,17 @@ class NewsController extends Controller
 
 	/**
 	 * Report News Article Comment
-	 * @param  NewsArticle $news_article
-	 * @param  NewsComment $news_comment
+	 * @param  NewsArticle $newsArticle
+	 * @param  NewsComment $newsComment
 	 * @return View      
 	 */
-	public function reportComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	public function reportComment(NewsArticle $newsArticle, NewsComment $newsComment, Request $request)
 	{
 		if (!Auth::user()) {
 			$request->session()->flash('alert-danger', 'Please Login.');
 			return Redirect::to('login');
 		}
-		if (!$news_comment->report()) {
+		if (!$newsComment->report()) {
 			$request->session()->flash('alert-danger', 'Cannot Report Comment. Please try again.');
 			return Redirect::back();
 		}
@@ -106,21 +110,21 @@ class NewsController extends Controller
 
 	/**
 	 * Report News Article Comment
-	 * @param  NewsArticle $news_article
-	 * @param  NewsComment $news_comment
+	 * @param  NewsArticle $newsArticle
+	 * @param  NewsComment $newsComment
 	 * @return View      
 	 */
-	public function destroyComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	public function destroyComment(NewsArticle $newsArticle, NewsComment $newsComment, Request $request)
 	{
 		if (!Auth::user()) {
 			$request->session()->flash('alert-danger', 'Please Login.');
 			return Redirect::to('login');
 		}
-		if (Auth::id() != $news_comment->user_id) {
+		if (Auth::id() != $newsComment->user_id) {
 			$request->session()->flash('alert-danger', 'This is not your comment to delete!');
 			return Redirect::back();
 		}
-		if (!$news_comment->delete()) {
+		if (!$newsComment->delete()) {
 			$request->session()->flash('alert-danger', 'Cannot Delete Comment. Please try again.');
 			return Redirect::back();
 		}
@@ -130,11 +134,11 @@ class NewsController extends Controller
 
 	/**
 	 * Edit News Article Comment
-	 * @param  NewsArticle $news_article
-	 * @param  NewsComment $news_comment
+	 * @param  NewsArticle $newsArticle
+	 * @param  NewsComment $newsComment
 	 * @return View      
 	 */
-	public function editComment(NewsArticle $news_article, NewsComment $news_comment, Request $request)
+	public function editComment(NewsArticle $newsArticle, NewsComment $newsComment, Request $request)
 	{
 		if (!Auth::user()) {
 			$request->session()->flash('alert-danger', 'Please Login.');
@@ -149,11 +153,11 @@ class NewsController extends Controller
 		];
 		$this->validate($request, $rules, $messages);
 
-		if (Auth::id() != $news_comment->user_id) {
+		if (Auth::id() != $newsComment->user_id) {
 			$request->session()->flash('alert-danger', 'This is not your comment to edit!');
 			return Redirect::back();
 		}
-		if (!$news_comment->edit($request->comment_modal)) {
+		if (!$newsComment->edit($request->comment_modal)) {
 			$request->session()->flash('alert-danger', 'Cannot Edit Comment. Please try again.');
 			return Redirect::back();
 		}

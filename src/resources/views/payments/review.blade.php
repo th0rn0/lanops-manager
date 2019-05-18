@@ -14,7 +14,7 @@
 		<div class="col-xs-12 col-md-8">
 			{!! Settings::getPurchaseTermsAndConditions() !!}
 			<hr>
-			@if (!$next_event_flag)
+			@if (!$nextEventFlag)
 				<div class="alert alert-warning">
 					<h5>Please be aware you are not purchasing tickets for our next event but instead a future event after that.</h5>
 				</div>
@@ -35,7 +35,7 @@
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<tbody>
-								@foreach ($basket_items as $item)
+								@foreach ($basketItems as $item)
 									<tr>
 										<td>
 											<strong>{{ $item->name }}</strong>
@@ -54,7 +54,7 @@
 										<strong>Total:</strong>
 									</td>
 									<td>
-										£{{ $basket_total }}
+										£{{ $basketTotal }}
 									</td>
 							</tbody>
 						</table>

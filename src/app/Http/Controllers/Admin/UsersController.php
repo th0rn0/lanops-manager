@@ -26,6 +26,8 @@ class UsersController extends Controller
 	{
 		$user = Auth::user();
 		$users = User::all();
-		return view('admin.users.index')->withUser($user)->withUsers($users);  
+		return view('admin.users.index')
+			->withUser($user)
+			->withUsers($users);  
 	}
 }
