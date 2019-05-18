@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": "7.*",
-        "laravel/framework": "5.6.*",
-        "laravelcollective/html": "5.6.*",
+        "laravel/framework": "5.8.*",
+        "laravelcollective/html": "5.8.*",
         "webonyx/graphql-php": "dev-master",
         "invisnik/laravel-steam-auth": "3.3",
         "laravel/socialite": "~2.0",
@@ -23,7 +23,7 @@
         "laravel/tinker": "^1.0",
         "leafo/scssphp": "^0.7.7",
         "omnipay/paypal": "^3.0",
-        "cviebrock/eloquent-sluggable": "^4.5",
+        "cviebrock/eloquent-sluggable": "^4.8",
         "barryvdh/laravel-debugbar": "^3.2"
     },
     "require-dev": {
