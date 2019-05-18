@@ -182,33 +182,33 @@
 								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
 									@php
 										if ($tournament->team_size != '1v1') {
-											$tournament_participants = $tournament->tournamentTeams;
+											$tournamentParticipants = $tournament->tournamentTeams;
 										}
 										if ($tournament->team_size == '1v1') {
-											$tournament_participants = $tournament->tournamentParticipants;
+											$tournamentParticipants = $tournament->tournamentParticipants;
 										}
-										$tournament_participants = $tournament_participants->sortBy('final_rank');
+										$tournamentParticipants = $tournamentParticipants->sortBy('final_rank');
 									@endphp
-									@foreach ($tournament_participants as $tournament_participant)
-										@if ($tournament_participant->final_rank == 1)
+									@foreach ($tournamentParticipants as $tournamentParticipant)
+										@if ($tournamentParticipant->final_rank == 1)
 											@if ($tournament->team_size == '1v1')
-												<h2>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->eventParticipant->user->steamname }}</h2>
+												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h2>
 											@else
-												<h2>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->name }}</h2>
+												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
 											@endif
 										@endif
-										@if ($tournament_participant->final_rank == 2)
+										@if ($tournamentParticipant->final_rank == 2)
 											@if ($tournament->team_size == '1v1')
-												<h3>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->eventParticipant->user->steamname }}</h3>
+												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h3>
 											@else
-												<h3>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->name }}</h3>
+												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
 											@endif
 										@endif
-										@if ($tournament_participant->final_rank != 2 && $tournament_participant->final_rank != 1)
+										@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
 											@if ($tournament->team_size == '1v1')
-												<h4>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->eventParticipant->user->steamname }}</h4>
+												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h4>
 											@else
-												<h4>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->name }}</h4>
+												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
 											@endif
 										@endif
 									@endforeach

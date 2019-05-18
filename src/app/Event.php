@@ -154,15 +154,15 @@ class Event extends Model
 	
 	/**
 	 * Get Event Participant
-	 * @param  [type] $user_id [description]
-	 * @return [type]          [description]
+	 * @param  $userId
+	 * @return EventParticipant
 	 */
-	public function getEventParticipant($user_id = null)
+	public function getEventParticipant($userId = null)
 	{
-		if ($user_id == null) {
-			$user_id = Auth::id();
+		if ($userId == null) {
+			$userId = Auth::id();
 		}
-		return $this->eventParticipants()->where('user_id', $user_id)->first();
+		return $this->eventParticipants()->where('user_id', $userId)->first();
 	}
 
 	/**

@@ -3,30 +3,30 @@
 	<div class="col-lg-2 col-md-6 col-xs-12">
 		@if ($event->status == 'PUBLISHED')
 			@php 
-				$event_status_color = 'green'; 
-				$event_status_icon = 'fa-check-circle-o';
+				$eventStatusColor = 'green'; 
+				$eventStatusIcon = 'fa-check-circle-o';
 			@endphp
 		@elseif ($event->status == 'DRAFT')
 			@php 
-				$event_status_color = 'red';
-				$event_status_icon = 'fa-times-circle-o';
+				$eventStatusColor = 'red';
+				$eventStatusIcon = 'fa-times-circle-o';
 			@endphp
 		@elseif ($event->status == 'PREVIEW' || $event->status == 'PRIVATE')
 			@php 
-				$event_status_color = 'yellow'; 
-				$event_status_icon = 'fa-ban';
+				$eventStatusColor = 'yellow'; 
+				$eventStatusIcon = 'fa-ban';
 			@endphp
 		@else
 			@php
-				$event_status_color = 'green';
-				$event_status_icon = 'fa-question-circle ';
+				$eventStatusColor = 'green';
+				$eventStatusIcon = 'fa-question-circle ';
 			@endphp
 		@endif
-		<div class="panel panel-{{ $event_status_color }}">
+		<div class="panel panel-{{ $eventStatusColor }}">
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
-						<i class="fa {{ $event_status_icon }} fa-5x"></i>
+						<i class="fa {{ $eventStatusIcon }} fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
 						<div class="huge">

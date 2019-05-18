@@ -61,9 +61,9 @@ class User extends Authenticatable
 	// TODO - Refactor this somehow. It's a bit hacky. - Possible mutators and accessors?
 	/**
 	 * Set Active Event Participant for current User
-	 * @param $event_id
+	 * @param $eventId
 	 */
-	public function setActiveEventParticipant($event_id)
+	public function setActiveEventParticipant($eventId)
 	{
 		$clauses = ['user_id' => $this->id, 'signed_in' => true];
 		$this->active_event_participant = EventParticipant::where($clauses)->orderBy('updated_at', 'DESC')->first();
@@ -71,55 +71,55 @@ class User extends Authenticatable
 
 	/**
 	 * Get Free Tickets for current User
-	 * @param  $event_id
+	 * @param  $eventId
 	 * @return EventParticipants
 	 */
-	public function getFreeTickets($event_id)
+	public function getFreeTickets($eventId)
 	{
-		$clauses = ['user_id' => $this->id, 'free' => true, 'event_id' => $event_id];
+		$clauses = ['user_id' => $this->id, 'free' => true, 'event_id' => $eventId];
 		return EventParticipant::where($clauses)->get();
 	}
 
 	/**
 	 * Get Staff Tickets for current User
-	 * @param  $event_id
+	 * @param  $eventId
 	 * @return EventParticipants
 	 */
-	public function getStaffTickets($event_id)
+	public function getStaffTickets($eventId)
 	{
-		$clauses = ['user_id' => $this->id, 'staff' => true, 'event_id' => $event_id];
+		$clauses = ['user_id' => $this->id, 'staff' => true, 'event_id' => $eventId];
 		return EventParticipant::where($clauses)->get();
 	}
 
 	/**
 	 * Get Tickets for current User
-	 * @param  $event_id
+	 * @param  $eventId
 	 * @param  boolean $obj
 	 * @return Array|Object 
 	 */
-	public function getTickets($event_id, $obj = false)
+	public function getTickets($eventId, $obj = false)
 	{
-		$clauses = ['user_id' => $this->id, 'event_id' => $event_id];
-		$event_participants = EventParticipant::where($clauses)->get();
+		$clauses = ['user_id' => $this->id, 'event_id' => $eventId];
+		$eventParticipants = EventParticipant::where($clauses)->get();
 		$return = array();
-		foreach ($event_participants as $event_participant) {
+		foreach ($eventParticipants as $eventParticipant) {
 			if (
-				($event_participant->ticket && $event_participant->ticket->seatable) ||
-				($event_participant->free || $event_participant->staff)
+				($eventParticipant->ticket && $eventParticipant->ticket->seatable) ||
+				($eventParticipant->free || $eventParticipant->staff)
 			) {
 				$seat = 'Not Seated';
-				if ($event_participant->seat) {
-					$seat = strtoupper($event_participant->seat->seat);
+				if ($eventParticipant->seat) {
+					$seat = strtoupper($eventParticipant->seat->seat);
 				}
-				$return[$event_participant->id] = 'Participant ID: ' . $event_participant->id . $seat;
-				if (!$event_participant->ticket && $event_participant->staff) {
-					$return[$event_participant->id] = 'Staff Ticket - Seat: ' . $seat;
+				$return[$eventParticipant->id] = 'Participant ID: ' . $eventParticipant->id . $seat;
+				if (!$eventParticipant->ticket && $eventParticipant->staff) {
+					$return[$eventParticipant->id] = 'Staff Ticket - Seat: ' . $seat;
 				}
-				if (!$event_participant->ticket && $event_participant->free) {
-					$return[$event_participant->id] = 'Free Ticket - Seat: ' . $seat;
+				if (!$eventParticipant->ticket && $eventParticipant->free) {
+					$return[$eventParticipant->id] = 'Free Ticket - Seat: ' . $seat;
 				} 
-				if ($event_participant->ticket) {
-					$return[$event_participant->id] = $event_participant->ticket->name . ' - Seat: ' . $seat; 
+				if ($eventParticipant->ticket) {
+					$return[$eventParticipant->id] = $eventParticipant->ticket->name . ' - Seat: ' . $seat; 
 				}
 			}
 		}

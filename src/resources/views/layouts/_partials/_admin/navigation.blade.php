@@ -28,10 +28,10 @@
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 			<li>
-					<a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+				<a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 			</li>
 			<li>
-					<a href="/admin/news"><i class="fa fa-comment fa-fw"></i> News</a>
+				<a href="/admin/news"><i class="fa fa-comment fa-fw"></i> News</a>
 			</li>
 			<li>
 				<a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>

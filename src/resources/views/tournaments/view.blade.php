@@ -65,14 +65,14 @@
 				@endif
 			</dd>
 		</dl>
-		@if ($tournament->status == 'OPEN' && !$tournament->get_participant($user->active_event_participant->id) && $tournament->team_size == '1v1')
+		@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size == '1v1')
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 				<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
 				<button type="submit" name="action" value="sign_up" class="btn btn-default">Signup</button>
 			{{ Form::close() }}
 		@endif
 
-		@if ($tournament->status == 'OPEN' && !$tournament->get_participant($user->active_event_participant->id) && $tournament->team_size != '1v1')
+		@if ($tournament->status == 'OPEN' && !$tournament->getParticipant($user->active_event_participant->id) && $tournament->team_size != '1v1')
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/pug', 'files' => true )) }}
 				<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
 				<button type="submit" name="action" value="sign_up" class="btn btn-default">PUG</button>
@@ -87,7 +87,7 @@
 			{{ Form::close() }}
 		@endif
 
-		@if ($tournament->status == 'OPEN' && $tournament->get_participant($user->active_event_participant->id))
+		@if ($tournament->status == 'OPEN' && $tournament->getParticipant($user->active_event_participant->id))
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/remove', 'files' => true )) }}
 				<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
 				<button type="submit" name="action" value="remove_sign_up" class="btn btn-default">Remove Signup</button>
@@ -100,8 +100,8 @@
 
 		@if ($tournament->status == 'COMPLETE' && isset($tournament->challonge_participants))
 			<div class="alert alert-success text-center">
-				@foreach ($tournament->challonge_participants as $challonge_participant)
-					<h2>{{ Helpers::getChallongeRankFormat($challonge_participant->final_rank) }} - {{ $challonge_participant->name }}</h2>
+				@foreach ($tournament->challonge_participants as $challongeParticipants)
+					<h2>{{ Helpers::getChallongeRankFormat($challongeParticipants->final_rank) }} - {{ $challongeParticipants->name }}</h2>
 				@endforeach
 			</div>
 		@endif
@@ -120,15 +120,15 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($tournament->tournamentParticipants as $tournament_participant)
+								@foreach ($tournament->tournamentParticipants as $tournamentParticipant)
 									<tr>
 										<td>
-											<p style="padding-top:7px;"><img class="img-rounded" style="max-width: 4%;" src="{{$tournament_participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournament_participant->eventParticipant->user->steamname }}</p>
+											<p style="padding-top:7px;"><img class="img-rounded" style="max-width: 4%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->steamname }}</p>
 										</td>
 										<td>
 											<p style="padding-top:15px;">
-												@if ($tournament_participant->eventParticipant->seat)
-													{{ $tournament_participant->eventParticipant->seat->seat }}
+												@if ($tournamentParticipant->eventParticipant->seat)
+													{{ $tournamentParticipant->eventParticipant->seat->seat }}
 												@else
 													Not Seated
 												@endif 
@@ -156,16 +156,16 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($tournament->tournamentParticipants as $tournament_participant)
-										@if ($tournament_participant->pug == 'Y')
+									@foreach ($tournament->tournamentParticipants as $tournamentParticipant)
+										@if ($tournamentParticipant->pug == 'Y')
 											<tr>
 												<td>
-													<p><img class="img-rounded" style="max-width: 6%;" src="{{$tournament_participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournament_participant->eventParticipant->user->steamname }}</p>
+													<p><img class="img-rounded" style="max-width: 6%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->steamname }}</p>
 												</td>
 												<td>
 													<p>
-														@if ($tournament_participant->eventParticipant->seat)
-															{{ $tournament_participant->eventParticipant->seat->seat }}
+														@if ($tournamentParticipant->eventParticipant->seat)
+															{{ $tournamentParticipant->eventParticipant->seat->seat }}
 														@else
 															Not Seated
 														@endif 
@@ -196,14 +196,14 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($tournament->tournamentTeams as $tournament_team)
+									@foreach ($tournament->tournamentTeams as $tournamentTeam)
 										<tr>
 											<td>
-												<h4>{{ $tournament_team->name }}</h4>
+												<h4>{{ $tournamentTeam->name }}</h4>
 											</td>
 											<td>
 												<table class="table">
-													@foreach ($tournament_team->tournamentParticipants as $participant)
+													@foreach ($tournamentTeam->tournamentParticipants as $participant)
 														<tr>
 															<td>  
 																<img class="img-rounded" style="max-width: 8%;" src="{{$participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->  steamname }}
@@ -220,10 +220,10 @@
 												</table>
 											</td>
 											<td>
-												@if (!$tournament->get_participant($user->active_event_participant->id))
+												@if (!$tournament->getParticipant($user->active_event_participant->id))
 													{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 														<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-														<input type="hidden" name="event_tournament_team_id" value="{{ $tournament_team->id }}">
+														<input type="hidden" name="event_tournament_team_id" value="{{ $tournamentTeam->id }}">
 														<button type="submit" name="action" value="sign_up" class="btn btn-default">Join Team</button>
 													{{ Form::close() }}
 												@endif

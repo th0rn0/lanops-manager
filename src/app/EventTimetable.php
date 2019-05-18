@@ -78,11 +78,11 @@ class EventTimetable extends Model
     public function getAvailableTimes($obj = false)
     {
         $return = array();
-        $end_date = new \DateTime($this->event->end);
-        $this_date = new \DateTime($this->event->start);
-        while ($this_date <= $end_date) {
-            $return[$this_date->format('Y-m-d H:i:s')] = date("D", strtotime($this_date->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($this_date->format('Y-m-d H:i:s')));
-            $this_date->modify('+30 minutes');
+        $endDate = new \DateTime($this->event->end);
+        $startDate = new \DateTime($this->event->start);
+        while ($startDate <= $endDate) {
+            $return[$startDate->format('Y-m-d H:i:s')] = date("D", strtotime($startDate->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($startDate->format('Y-m-d H:i:s')));
+            $startDate->modify('+30 minutes');
         }
         if ($obj) {
             return json_decode(json_encode($return), FALSE);

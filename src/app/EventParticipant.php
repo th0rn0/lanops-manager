@@ -93,24 +93,24 @@ class EventParticipant extends Model
 	 */
 	public function generateQRCode()
 	{
-		$ticket_url = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
-		$qr_code_path = 'storage/images/events/' . $this->event->slug . '/qr/';
-		$qr_code_file =  $this->event->slug . '-' . str_random(32) . '.png';
-		if (!file_exists($qr_code_path)) {
-			mkdir($qr_code_path, 0775, true);
+		$ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
+		$qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
+		$qrCodeFileName =  $this->event->slug . '-' . str_random(32) . '.png';
+		if (!file_exists($qrCodePath)) {
+			mkdir($qrCodePath, 0775, true);
 		}
 		QrCode::format('png');
 		QrCode::size(300);
-		QrCode::generate($ticket_url, $qr_code_path . $qr_code_file);
-		$this->qrcode = $qr_code_path . $qr_code_file;
+		QrCode::generate($ticketUrl, $qrCodePath . $qrCodeFileName);
+		$this->qrcode = $qrCodePath . $qrCodeFileName;
 		return true;
 	}
 
-	public function transfer($event_id)
+	public function transfer($eventId)
 	{
 		$this->transferred = true;
 		$this->transferred_event_id = $this->event_id;
-		$this->event_id = $event_id;
+		$this->event_id = $eventId;
 		if (!$this->save()) {
 			return false;
 		}
