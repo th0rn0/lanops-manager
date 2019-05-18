@@ -7,12 +7,12 @@
 				<li role="separator" class="divider hidden"></li>
 
 				@foreach ( $user->eventParticipants as $eventParticipant )
-					@foreach ( $eventParticipant->tournamentParticipants as $tournament_participant)
-						@if ($tournament_participant->eventTournament->event_id == $event->id)
-							@if ($tournament_participant->eventTournament->status == 'COMPLETE')
-								<li><a href="/events/{{$event->slug}}/tournaments/{{$tournament_participant->eventTournament->slug}}"><del>{{$tournament_participant->eventTournament->name}}</del></a></li>
+					@foreach ( $eventParticipant->tournamentParticipants as $tournamentParticipant)
+						@if ($tournamentParticipant->eventTournament->event_id == $event->id)
+							@if ($tournamentParticipant->eventTournament->status == 'COMPLETE')
+								<li><a href="/events/{{$event->slug}}/tournaments/{{$tournamentParticipant->eventTournament->slug}}"><del>{{$tournamentParticipant->eventTournament->name}}</del></a></li>
 							@else
-								<li><a href="/events/{{$event->slug}}/tournaments/{{$tournament_participant->eventTournament->slug}}">{{$tournament_participant->eventTournament->name}}</a></li>
+								<li><a href="/events/{{$event->slug}}/tournaments/{{$tournamentParticipant->eventTournament->slug}}">{{$tournamentParticipant->eventTournament->name}}</a></li>
 							@endif
 						@endif
 					@endforeach

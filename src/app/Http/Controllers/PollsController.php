@@ -23,7 +23,8 @@ class PollsController extends Controller
 	 */
 	public function index()
 	{
-		return view("polls.index")->withPolls(Poll::all());   
+		return view("polls.index")
+			->withPolls(Poll::all());   
 	}
 
 	/**
@@ -33,7 +34,8 @@ class PollsController extends Controller
 	public function show(Poll $poll)
 	{
 		$poll->sortOptions();
-		return view("polls.show")->withPoll($poll);   
+		return view("polls.show")
+			->withPoll($poll);   
 	}
 
 	/**
@@ -51,8 +53,8 @@ class PollsController extends Controller
 			return Redirect::back();
 		}
 		if (!$poll->allow_options_multi) {
-			foreach ($poll->options as $poll_option) {
-				if (!$poll_option->votes->where('user_id', Auth::id())->isEmpty()) {
+			foreach ($poll->options as $pollOption) {
+				if (!$pollOption->votes->where('user_id', Auth::id())->isEmpty()) {
 					Session::flash('alert-danger', 'Cannot Vote Twice!');
 					return Redirect::back();
 				}

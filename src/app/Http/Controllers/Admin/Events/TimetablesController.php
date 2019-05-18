@@ -33,7 +33,8 @@ class TimetablesController extends Controller
 			$timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)->orderBy('start_time', 'asc')->get();
 		}
 
-		return view('admin.events.timetables.index')->withEvent($event);
+		return view('admin.events.timetables.index')
+			->withEvent($event);
 	}
 
 	/**
@@ -44,7 +45,9 @@ class TimetablesController extends Controller
 	 */
 	public function show(Event $event, EventTimetable $timetable)
 	{
-		return view('admin.events.timetables.show')->withEvent($event)->withTimetable($timetable);
+		return view('admin.events.timetables.show')
+			->withEvent($event)
+			->withTimetable($timetable);
 	}
 
 	/**

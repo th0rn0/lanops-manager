@@ -22,12 +22,12 @@
 		</div>
 	</div>
 	<div class="hero-overlay hidden-xs">
-			@if ($next_event)
+			@if ($nextEvent)
 				<div>
 					<h3>Next Event</h3>
-					<h1>{{ $next_event->display_name }}</h1>
-					<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
-					<a href="/events/{{ $next_event->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
+					<h1>{{ $nextEvent->display_name }}</h1>
+					<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
+					<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
 				</div>
 			@endif
 		</div>
@@ -75,27 +75,27 @@
 				<div><a href="#">No Future events</a></div>
 			@endif
 		</div>
-		@if ($next_event)
+		@if ($nextEvent)
 			<div class="col-xs-12">
 				<div class="page-header">
 					<h3>
-						{{ $next_event->display_name }} 
-						<small>{{ max($next_event->getSeatingCapacity() - $next_event->eventParticipants->count(), 0) }} / {{ $next_event->getSeatingCapacity() }} Seats Remaining</small>
+						{{ $nextEvent->display_name }} 
+						<small>{{ max($nextEvent->getSeatingCapacity() - $nextEvent->eventParticipants->count(), 0) }} / {{ $nextEvent->getSeatingCapacity() }} Seats Remaining</small>
 					</h3>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-9">
-				<h4>{{ $next_event->desc_short }}</h4>
-				<p>{{ $next_event->desc_long }}</p>
+				<h4>{{ $nextEvent->desc_short }}</h4>
+				<p>{{ $nextEvent->desc_long }}</p>
 			</div>
 			<div class="col-xs-12 col-sm-3">
 				<h4>When:</h4>
-				<h5>{{ date('dS', strtotime($next_event->start)) }} - {{ date('dS', strtotime($next_event->end)) }} {{ date('F', strtotime($next_event->end)) }} {{ date('Y', strtotime($next_event->end)) }}</h5>
+				<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
 				<h4>Where:</h4>
-				<h5>{{ $next_event->venue->display_name }}</h5>
-				@if ($next_event->tickets)
+				<h5>{{ $nextEvent->venue->display_name }}</h5>
+				@if ($nextEvent->tickets)
 					<h4>Price:</h4>
-					<h5>Tickets Start From £{{ $next_event->getCheapestTicket() }}</h5>
+					<h5>Tickets Start From £{{ $nextEvent->getCheapestTicket() }}</h5>
 				@endif
 			</div>
 		@else
@@ -109,8 +109,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12">
-				@if ($next_event)
-					<h3>Want to get in on the action <a href="/events/{{ $next_event->slug }}" class="text-info">Book Now</a></h3>
+				@if ($nextEvent)
+					<h3>Want to get in on the action <a href="/events/{{ $nextEvent->slug }}" class="text-info">Book Now</a></h3>
 				@else
 					<h3>No New Events</h3>
 				@endif
@@ -124,7 +124,7 @@
 			<div class="page-header">
 				<h3>Latest News</h3>
 			</div>
-			@foreach ($news_articles as $news_article)
+			@foreach ($newsArticles as $newsArticle)
 				@include ('layouts._partials._news.short')
 			@endforeach
 		</div>
@@ -133,11 +133,11 @@
 				<h3>The {{ Settings::getOrgName() }} Fam</h3>
 			</div>
 			<iframe class="hidden-md" src="https://discordapp.com/widget?id=118458292686028802&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
-			@if (count($top_attendees) > 0)
+			@if (count($topAttendees) > 0)
 				<div class="page-header">
 					<h5>Top 5 Attendees</h5>
 				</div>
-				@foreach ($top_attendees as $attendee)
+				@foreach ($topAttendees as $attendee)
 					<div class="row">
 						<div class="col-xs-12 col-sm-3">
 							<img class="img-rounded img-responsive" src="{{ $attendee->avatar }}">
@@ -151,11 +151,11 @@
 					</div>
 				@endforeach
 			@endif
-			@if (count($top_winners) > 0)
+			@if (count($topWinners) > 0)
 				<div class="page-header">
 					<h5>Top 5 Winners</h5>
 				</div>
-				@foreach ($top_winners as $winner)
+				@foreach ($topWinners as $winner)
 					<div class="row">
 						<div class="col-xs-12 col-sm-3">
 							<img class="img-rounded img-responsive" src="{{ $winner->avatar }}">

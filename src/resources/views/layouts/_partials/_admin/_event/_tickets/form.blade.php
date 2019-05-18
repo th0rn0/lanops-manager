@@ -22,7 +22,7 @@
 		{{ Form::label('price','Ticket Price',array('id'=>'','class'=>'')) }}
 		<div class="input-group">
 			<div class="input-group-addon">£</div>
-				@if (isset($price_lock) && $price_lock)
+				@if (isset($priceLock) && $priceLock)
 					{{ 
 						Form::text(
 							'price',

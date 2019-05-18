@@ -29,21 +29,21 @@ class SeatingController extends Controller
 	 */
 	public function show(Event $event)
 	{
-		$seating_array = array();
+		$seatingArray = array();
 		foreach($event->participants as $participant){
-			array_push($seating_array, array($participant->seat => $participant->user->username));
+			array_push($seatingArray, array($participant->seat => $participant->user->username));
 		}
-		return json_encode($seating_array);
+		return json_encode($seatingArray);
 	}
 
 	/**
 	 * Seat Participant
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @param  Request          $request
 	 * @return Redirect
 	 */
-	public function store(Event $event, EventSeatingPlan $seating_plan, Request $request)
+	public function store(Event $event, EventSeatingPlan $seatingPlan, Request $request)
 	{
 		$rules = [
 			'participant_id'  => 'required',
@@ -68,12 +68,12 @@ class SeatingController extends Controller
 			$participant->seat()->delete();
 		}
 		//Unseated ticket found
-		if (!$event->getSeat($seating_plan->id, $request->seat)) {
+		if (!$event->getSeat($seatingPlan->id, $request->seat)) {
 			//Seat does not Exists
 			$seat                         = new EventSeating;
 			$seat->seat                   = $request->seat;
 			$seat->event_participant_id   = $participant->id;
-			$seat->event_seating_plan_id  = $seating_plan->id;
+			$seat->event_seating_plan_id  = $seatingPlan->id;
 			$seat->save();
 			$request->session()->flash('alert-success', 'You have been successfully seated in seat ' . $seat->seat . '!');
 			return Redirect::to('events/' . $event->slug);
@@ -85,18 +85,18 @@ class SeatingController extends Controller
 	/**
 	 * Remove Participant Seating
 	 * @param  Event            $event
-	 * @param  EventSeatingPlan $seating_plan
+	 * @param  EventSeatingPlan $seatingPlan
 	 * @param  Request          $request
 	 * @return Redirect
 	 */
-	public function destroy(Event $event, EventSeatingPlan $seating_plan, Request $request)
+	public function destroy(Event $event, EventSeatingPlan $seatingPlan, Request $request)
 	{
 		$clauses = [
 			'event_participant_id'  => $request->participant_id,
 			'seat'                  => $request->seat_number,
-			'event_seating_plan_id' => $seating_plan->id
+			'event_seating_plan_id' => $seatingPlan->id
 		];
-		if (!$seat = $seating_plan->seats()->where($clauses)->first()) {
+		if (!$seat = $seatingPlan->seats()->where($clauses)->first()) {
 			Session::flash('alert-danger', 'Could not find seating');
 			return Redirect::back();
 		}

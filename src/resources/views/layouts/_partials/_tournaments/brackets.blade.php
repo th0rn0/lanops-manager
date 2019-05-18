@@ -4,13 +4,13 @@
 	</div>
 </div>
 @php
-	$match_counter = 1;
+	$matchCounter = 1;
 @endphp
 <div class="row">
 	@php
 		$matches = $tournament->getMatches();
 	@endphp
-	@foreach ($matches as $round_number => $round)
+	@foreach ($matches as $roundNumber => $round)
 		<div class="col-xs-12 col-sm-6 col-md-3">
 			<h4 class="page-header">
 				@if (
@@ -19,7 +19,7 @@
 							$round == end($matches)
 						) ||
 						(
-							$round_number == count($matches) &&
+							$roundNumber == count($matches) &&
 							!Helpers::pregArrayKeyExists('/-$/',$matches)
 						)
 					) && (
@@ -27,12 +27,12 @@
 					)
 				)
 					Finals
-				@elseif ($round_number == count($matches) - 2 && $tournament->format != 'round robin')
+				@elseif ($roundNumber == count($matches) - 2 && $tournament->format != 'round robin')
 					Semi-Finals
-				@elseif (substr($round_number, 0, 1) == '-' && $tournament->format != 'round robin')
-					Losers Round {{ substr($round_number, 1, 1) }}
+				@elseif (substr($roundNumber, 0, 1) == '-' && $tournament->format != 'round robin')
+					Losers Round {{ substr($roundNumber, 1, 1) }}
 				@else
-					Round {{ $round_number }}
+					Round {{ $roundNumber }}
 				@endif
 			</h4>
 			@foreach ($round as $match)
@@ -61,7 +61,7 @@
 						@endphp
 						<tr>
 							<td rowspan="2" class="text-center" width="10%">
-								{{ $match_counter }}
+								{{ $matchCounter }}
 							</td>
 							<td class="text-center " width="10%">
 								1
@@ -76,7 +76,7 @@
 									<span class="badge pull-right">{{ $scores[0] }}</span>
 								@endif
 								@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
-									<small><i>Loser of {{ ($match_counter - 1) }}</i></small>
+									<small><i>Loser of {{ ($matchCounter - 1) }}</i></small>
 								@endif
 							</td>
 							@if ( @$admin && $user->admin )
@@ -126,21 +126,21 @@
 									@endif
 									<span class="badge pull-right">{{ $scores[1] }}</span>
 								@endif
-								@if ($round_number != count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
-									<small><i>Loser of {{ ($match_counter - 2) }}</i></small>
+								@if ($roundNumber != count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
+									<small><i>Loser of {{ ($matchCounter - 2) }}</i></small>
 								@endif
-								@if ($round_number == count($tournament->getMatches()) - 1 && !$match->player2_is_prereq_match_loser && !$match->player2_id)
+								@if ($roundNumber == count($tournament->getMatches()) - 1 && !$match->player2_is_prereq_match_loser && !$match->player2_id)
 									<small><i>Winner of Losers Bracket</i></small>
 								@endif
-								@if ($round_number == count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
-									<small><i>Loser of {{ ($match_counter - 1) }} (if necessary)</i></small>
+								@if ($roundNumber == count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
+									<small><i>Loser of {{ ($matchCounter - 1) }} (if necessary)</i></small>
 								@endif
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				@php
-					$match_counter++
+					$matchCounter++
 				@endphp
 			@endforeach
 			</div>

@@ -99,11 +99,11 @@ class Poll extends Model
     public function addOption($option)
     {
         if (!empty(trim($option))) {
-            $poll_option = new PollOption();
-            $poll_option->name = trim($option);
-            $poll_option->user_id = Auth::id();
-            $poll_option->poll_id = $this->id;
-            if (!$poll_option->save()) {
+            $pollOption = new PollOption();
+            $pollOption->name = trim($option);
+            $pollOption->user_id = Auth::id();
+            $pollOption->poll_id = $this->id;
+            if (!$pollOption->save()) {
                 return false;
             }
         }

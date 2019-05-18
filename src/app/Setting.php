@@ -459,12 +459,12 @@ class Setting extends Model
 
     /**
      * Set Facebook Page Access Tokens
-     * @param Array $facebook_access_tokens
+     * @param Array $facebookAccessTokens
      */
-    public static function setSocialFacebookPageAccessTokens($facebook_access_tokens)
+    public static function setSocialFacebookPageAccessTokens($facebookAccessTokens)
     {
         $setting = self::where('setting', 'social_facebook_page_access_token')->first();
-        $setting->value = serialize($facebook_access_tokens);
+        $setting->value = serialize($facebookAccessTokens);
         if (!$setting->save()) {
             return false;
         }

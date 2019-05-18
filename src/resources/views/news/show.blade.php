@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' ' . $news_article->title)
+@section ('page_title', Settings::getOrgName() . ' ' . $newsArticle->title)
 
 @section ('content')
 			
@@ -8,7 +8,7 @@
 
 	<div class="page-header">
 		<h1>
-			{{ $news_article->title }}
+			{{ $newsArticle->title }}
 		</h1> 
 	</div>
 	@include ('layouts._partials._news.long')
@@ -20,7 +20,7 @@
 					Comments
 				</h3> 
 			</div>
-			@foreach ($news_article->comments->reverse() as $comment)
+			@foreach ($newsArticle->comments->reverse() as $comment)
 				@if ($comment->approved || (Auth::user() && Auth::user()->getAdmin()) || (Auth::user() && Auth::id() == $comment->user_id))
 					@include ('layouts._partials._news.comment-warnings')
 					@include ('layouts._partials._news.comment')
@@ -41,7 +41,7 @@
 				</h3> 
 			</div>
 			@if (Auth::user())
-				{{ Form::open(array('url'=>'/news/' . $news_article->slug . '/comments')) }}
+				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments')) }}
 					<div class="form-group">
 						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
 					</div>

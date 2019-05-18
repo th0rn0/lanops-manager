@@ -40,12 +40,12 @@ Route::group(['middleware' => ['web']], function () {
 	 * News Pages
 	 */
 	Route::get('/news', 'NewsController@index');
-	Route::get('/news/{news_article}', 'NewsController@show');
-	Route::post('/news/{news_article}/comments', 'NewsController@storeComment');
-	Route::post('/news/{news_article}/comments/{news_comment}', 'NewsController@editComment');
-	Route::get('/news/{news_article}/comments/{news_comment}/report', 'NewsController@reportComment');
-	Route::get('/news/{news_article}/comments/{news_comment}/delete', 'NewsController@destroyComment');
-	Route::get('/news/tags/{news_tag}', 'NewsController@showTag');
+	Route::get('/news/{newsArticle}', 'NewsController@show');
+	Route::post('/news/{newsArticle}/comments', 'NewsController@storeComment');
+	Route::post('/news/{newsArticle}/comments/{newsComment}', 'NewsController@editComment');
+	Route::get('/news/{newsArticle}/comments/{newsComment}/report', 'NewsController@reportComment');
+	Route::get('/news/{newsArticle}/comments/{newsComment}/delete', 'NewsController@destroyComment');
+	Route::get('/news/tags/{newsTag}', 'NewsController@showTag');
 
 	/**
 	 * Events
@@ -102,8 +102,8 @@ Route::group(['middleware' => ['web']], function () {
 	/**
 	 * Seating
 	 */
-	Route::post('/events/{event}/seating/{seating_plan}', 'Events\SeatingController@store');
-	Route::delete('/events/{event}/seating/{seating_plan}', 'Events\SeatingController@destroy');
+	Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
+	Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
 
 	/**
 	 * Polls
@@ -140,11 +140,11 @@ Route::group(['middleware' => ['web']], function () {
 		 */
 		Route::get('/admin/events/{event}/seating', 'Admin\Events\SeatingController@index');
 		Route::post('/admin/events/{event}/seating', 'Admin\Events\SeatingController@store');
-		Route::get('/admin/events/{event}/seating/{seating_plan}', 'Admin\Events\SeatingController@show');
-		Route::post('/admin/events/{event}/seating/{seating_plan}', 'Admin\Events\SeatingController@update');
-		Route::delete('/admin/events/{event}/seating/{seating_plan}', 'Admin\Events\SeatingController@destroy');
-		Route::post('/admin/events/{event}/seating/{seating_plan}/seat', 'Admin\Events\SeatingController@storeSeat');
-		Route::delete('/admin/events/{event}/seating/{seating_plan}/seat', 'Admin\Events\SeatingController@destroySeat');
+		Route::get('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@show');
+		Route::post('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@update');
+		Route::delete('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@destroy');
+		Route::post('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@storeSeat');
+		Route::delete('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@destroySeat');
 
 		/**
 		 * Timetables
@@ -273,13 +273,13 @@ Route::group(['middleware' => ['web']], function () {
 		 */
 		Route::get('/admin/news', 'Admin\NewsController@index');
 		Route::post('/admin/news', 'Admin\NewsController@store');
-		Route::get('/admin/news/{news_article}', 'Admin\NewsController@show');
-		Route::post('/admin/news/{news_article}', 'Admin\NewsController@update');
-		Route::delete('/admin/news/{news_article}', 'Admin\NewsController@destroy');
-		Route::get('/admin/news/{news_article}/comments/{news_comment}/delete', 'Admin\NewsController@destroyComment');
-		Route::get('/admin/news/{news_article}/comments/{news_comment}/approve', 'Admin\NewsController@approveComment');
-		Route::get('/admin/news/{news_article}/comments/{news_comment}/reject', 'Admin\NewsController@rejectComment');
-		Route::get('/admin/news/{news_article}/comments/{news_comment}/reports/{news_comment_report}/delete', 'Admin\NewsController@destroyReport');
+		Route::get('/admin/news/{newsArticle}', 'Admin\NewsController@show');
+		Route::post('/admin/news/{newsArticle}', 'Admin\NewsController@update');
+		Route::delete('/admin/news/{newsArticle}', 'Admin\NewsController@destroy');
+		Route::get('/admin/news/{newsArticle}/comments/{newsComment}/delete', 'Admin\NewsController@destroyComment');
+		Route::get('/admin/news/{newsArticle}/comments/{newsComment}/approve', 'Admin\NewsController@approveComment');
+		Route::get('/admin/news/{newsArticle}/comments/{newsComment}/reject', 'Admin\NewsController@rejectComment');
+		Route::get('/admin/news/{newsArticle}/comments/{newsComment}/reports/{newsCommentReport}/delete', 'Admin\NewsController@destroyReport');
 
 		/**
 		 * Polls

@@ -88,11 +88,11 @@ class GalleryAlbum extends Model
 
     /**
      * Set Album Cover
-     * @param $image_id
+     * @param $imageId
      */
-    public function setAlbumCover($image_id)
+    public function setAlbumCover($imageId)
         {
-        $this->album_cover_id = $image_id;
+        $this->album_cover_id = $imageId;
         $this->save();
     }
 

@@ -140,8 +140,8 @@
 			<div class="panel-body">
 				<p>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</p>
 				<h4>Facebook</h4>
-				@if ($facebook_callback != null)
-					<a href="{{ $facebook_callback }}"><button type="button" class="btn btn-default">Link Account</button></a>
+				@if ($facebookCallback != null)
+					<a href="{{ $facebookCallback }}"><button type="button" class="btn btn-default">Link Account</button></a>
 				@else
 					{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
 						{{ Form::hidden('_method', 'DELETE') }}

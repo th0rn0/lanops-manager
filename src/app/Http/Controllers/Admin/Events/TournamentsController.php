@@ -32,7 +32,8 @@ class TournamentsController extends Controller
 	 */
 	public function index(Event $event)
 	{
-		return view('admin.events.tournaments.index')->withEvent($event);
+		return view('admin.events.tournaments.index')
+			->withEvent($event);
 	}
 
 	/**
@@ -43,7 +44,9 @@ class TournamentsController extends Controller
 	 */
 	public function show(Event $event, EventTournament $tournament)
 	{
-		return view('admin.events.tournaments.show')->withEvent($event)->withTournament($tournament);
+		return view('admin.events.tournaments.show')
+			->withEvent($event)
+			->withTournament($tournament);
 	}
    
    	/**
@@ -257,12 +260,12 @@ class TournamentsController extends Controller
 	 */
 	public function unregisterParticipant(Event $event, EventTournament $tournament, Request $request)
 	{
-		if (!$tournament_participant = $tournament->getParticipant($request->event_participant_id)) {
+		if (!$tournamentParticipant = $tournament->getParticipant($request->event_participant_id)) {
 			Session::flash('alert-danger', 'Participant is not signed up.');
 			return Redirect::back();
 		}
 
-		if (!$tournament_participant->delete()) {
+		if (!$tournamentParticipant->delete()) {
 			Session::flash('alert-danger', 'Cannot remove. Please try again.');
 			return Redirect::back();
 		}

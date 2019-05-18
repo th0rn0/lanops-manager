@@ -24,6 +24,8 @@ class AdminController extends Controller
 	{
 		$user = Auth::user();
 		$events = Event::all();
-		return view('admin.index')->withUser($user)->withEvents($events);  
+		return view('admin.index')
+			->withUser($user)
+			->withEvents($events);  
 	}
 }

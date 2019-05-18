@@ -36,7 +36,7 @@
 		</nav>
 	</div>
 	<!-- SIGN IN TO EVENT -->
-	@if (!$signed_in)
+	@if (!$signedIn)
 		Please Sign in at the main desk
 	@endif
 
@@ -182,33 +182,33 @@
 								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
 									@php
 										if ($tournament->team_size != '1v1') {
-											$tournament_participants = $tournament->tournamentTeams;
+											$tournamentParticipants = $tournament->tournamentTeams;
 										}
 										if ($tournament->team_size == '1v1') {
-											$tournament_participants = $tournament->tournamentParticipants;
+											$tournamentParticipants = $tournament->tournamentParticipants;
 										}
-										$tournament_participants = $tournament_participants->sortBy('final_rank');
+										$tournamentParticipants = $tournamentParticipants->sortBy('final_rank');
 									@endphp
-									@foreach ($tournament_participants as $tournament_participant)
-										@if ($tournament_participant->final_rank == 1)
+									@foreach ($tournamentParticipants as $tournamentParticipant)
+										@if ($tournamentParticipant->final_rank == 1)
 											@if ($tournament->team_size == '1v1')
-												<h2>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->eventParticipant->user->steamname }}</h2>
+												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h2>
 											@else
-												<h2>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->name }}</h2>
+												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
 											@endif
 										@endif
-										@if ($tournament_participant->final_rank == 2)
+										@if ($tournamentParticipant->final_rank == 2)
 											@if ($tournament->team_size == '1v1')
-												<h3>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->eventParticipant->user->steamname }}</h3>
+												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h3>
 											@else
-												<h3>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->name }}</h3>
+												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
 											@endif
 										@endif
-										@if ($tournament_participant->final_rank != 2 && $tournament_participant->final_rank != 1)
+										@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
 											@if ($tournament->team_size == '1v1')
-												<h4>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->eventParticipant->user->steamname }}</h4>
+												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h4>
 											@else
-												<h4>{{ Helpers::getChallongeRankFormat($tournament_participant->final_rank) }} - {{ $tournament_participant->name }}</h4>
+												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
 											@endif
 										@endif
 									@endforeach
@@ -277,47 +277,47 @@
 			<h3>Seating Plans <small>- unseatedtickets / total seatable tickets remaining</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			@foreach ($event->seatingPlans as $seating_plan)
+			@foreach ($event->seatingPlans as $seatingPlan)
 				<div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
-							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seating_plan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seating_plan->slug }}">
-								{{ $seating_plan->name }} <small>- Number of seated seats here</small>
+							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
+								{{ $seatingPlan->name }} <small>- Number of seated seats here</small>
 							</a>
 						</h4>
 					</div>
-					<div id="collapse_{{ $seating_plan->slug }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collaspe_{{ $seating_plan->slug }}">
+					<div id="collapse_{{ $seatingPlan->slug }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
 						<div class="panel-body">
 							<div class="table-responsive text-center">
 								<table class="table">
 									<thead>
 										<tr>
 										<?php
-											$headers = explode(',', $seating_plan->headers);
+											$headers = explode(',', $seatingPlan->headers);
 											$headers = array_combine(range(1, count($headers)), $headers);
 										?>
-										@for ($column = 1; $column <= $seating_plan->columns; $column++)
+										@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 											<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
 										@endfor
 										</tr>
 									 </thead>
 									<tbody>
-										@for ($row = $seating_plan->rows; $row > 0; $row--)
+										@for ($row = $seatingPlan->rows; $row > 0; $row--)
 											<tr>
-												@for ($column = 1; $column <= $seating_plan->columns; $column++)
+												@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 													<td style="padding-top:14px;">
-														@if ($event->getSeat($seating_plan->id, ucwords($headers[$column]) . $row))
-															@if ($seating_plan->locked)
+														@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
+															@if ($seatingPlan->locked)
 																<button class="btn btn-success btn-sm" disabled>
-																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
+																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
 																</button>
 															@else
 																<button class="btn btn-success btn-sm">
-																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seating_plan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
+																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
 																</button>
 															@endif
 														@else
-															@if ($seating_plan->locked)
+															@if ($seatingPlan->locked)
 																<button class="btn btn-primary btn-sm" disabled>
 																	{{ ucwords($headers[$column]) . $row }} - Empty
 																</button>
@@ -326,7 +326,7 @@
 																	<button 
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
-																			'{{ $seating_plan->id }}',
+																			'{{ $seatingPlan->id }}',
 																			'{{ ucwords($headers[$column]) . $row }}'
 																		)"
 																		data-toggle="modal"
@@ -347,21 +347,21 @@
 										@endfor
 									</tbody>
 								</table>
-								@if ($seating_plan->locked)
+								@if ($seatingPlan->locked)
 									<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
 								@endif
 							</div>
 							<hr>
 							<div class="row" style="display: flex; align-items: center;">
 								<div class="col-xs-12 col-md-8">
-									<img class="img-responsive" src="{{$seating_plan->image_path}}"/>
+									<img class="img-responsive" src="{{$seatingPlan->image_path}}"/>
 								</div>
 								<div class="col-xs-12 col-md-4">
 									<h5>Your Seats</h5>
-									@if ($ticket_flag)
+									@if ($ticketFlag)
 										@foreach ($user->eventParticipation as $participant) 
-											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seating_plan->id) 
-												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seating_plan->slug)) }}
+											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id) 
+												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
 													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
 													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 

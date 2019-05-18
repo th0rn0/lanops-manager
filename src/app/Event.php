@@ -142,27 +142,27 @@ class Event extends Model
 
     /**
      * Get Seat
-     * @param  $seating_plan_id
+     * @param  $seatingPlanId
      * @param  $seat
      * @return EventSeating
      */
-	public function getSeat($seating_plan_id, $seat)
+	public function getSeat($seatingPlanId, $seat)
 	{
-		$seating_plan = $this->seatingPlans()->find($seating_plan_id);
-		return $seating_plan->seats()->where('seat', ucwords($seat))->first();
+		$seatingPlan = $this->seatingPlans()->find($seatingPlanId);
+		return $seatingPlan->seats()->where('seat', ucwords($seat))->first();
 	}
 	
 	/**
 	 * Get Event Participant
-	 * @param  [type] $user_id [description]
-	 * @return [type]          [description]
+	 * @param  $userId
+	 * @return EventParticipant
 	 */
-	public function getEventParticipant($user_id = null)
+	public function getEventParticipant($userId = null)
 	{
-		if ($user_id == null) {
-			$user_id = Auth::id();
+		if ($userId == null) {
+			$userId = Auth::id();
 		}
-		return $this->eventParticipants()->where('user_id', $user_id)->first();
+		return $this->eventParticipants()->where('user_id', $userId)->first();
 	}
 
 	/**
@@ -187,8 +187,8 @@ class Event extends Model
 	public function getSeatedCount()
 	{
 		$total = 0;
-		foreach ($this->seatingPlans as $seating_plan) {
-			$total += $seating_plan->seats()->count();
+		foreach ($this->seatingPlans as $seatingPlan) {
+			$total += $seatingPlan->seats()->count();
 		}
 		return $total;
 	}
@@ -200,8 +200,8 @@ class Event extends Model
 	public function getSeatingCapacity()
 	{
 		$total = 0;
-		foreach ($this->seatingPlans as $seating_plan) {
-			$total += ($seating_plan->columns * $seating_plan->rows);
+		foreach ($this->seatingPlans as $seatingPlan) {
+			$total += ($seatingPlan->columns * $seatingPlan->rows);
 		}
 		return $total;
 	}

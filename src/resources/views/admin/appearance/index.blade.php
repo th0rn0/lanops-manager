@@ -22,11 +22,11 @@
 			</div>
 			<div class="panel-body">
 				
-				@if ($user_override_css)
+				@if ($userOverrideCss)
 					{{ Form::open(array('url'=>'/admin/appearance/css/override', 'onsubmit' => 'return ConfirmSubmit()')) }}
 						<div class="form-group">
 							{{ Form::label('css','Add Custom CSS',array('id'=>'','class'=>'')) }}
-							{{ Form::textarea('css', $user_override_css ,array('id'=>'','class'=>'form-control', 'rows'=>'25')) }}
+							{{ Form::textarea('css', $userOverrideCss ,array('id'=>'','class'=>'form-control', 'rows'=>'25')) }}
 						</div>
 						<button type="submit" class="btn btn-default">Submit</button>
 					{{ Form::close() }}

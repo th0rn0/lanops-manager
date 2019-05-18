@@ -35,7 +35,7 @@
 			</div>
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets/' . $ticket->id)) }}
-					@if (isset($ticket) && !$ticket->participants->isEmpty()) @php $price_lock = true; @endphp @endif
+					@if (isset($ticket) && !$ticket->participants->isEmpty()) @php $priceLock = true; @endphp @endif
 
 					@include ('layouts._partials._admin._event._tickets.form')
 				{{ Form::close() }}

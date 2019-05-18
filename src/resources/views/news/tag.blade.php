@@ -11,7 +11,7 @@
 			Tagged News: {{ $tag }}
 		</h1> 
 	</div>
-	@foreach ($news_articles as $news_article)
+	@foreach ($newsArticles as $newsArticle)
 		@include ('layouts._partials._news.short')
 	@endforeach
 </div>

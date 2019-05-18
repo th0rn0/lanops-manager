@@ -30,7 +30,9 @@ class GalleryController extends Controller
 	{
 		$user = Auth::user();
 		$albums = GalleryAlbum::all();
-		return view('admin.gallery.index')->withUser($user)->withAlbums($albums);  
+		return view('admin.gallery.index')
+			->withUser($user)
+			->withAlbums($albums);  
 	}
 	
 	/**
@@ -40,7 +42,9 @@ class GalleryController extends Controller
 	public function show(GalleryAlbum $album)
 	{
 		$user = Auth::user();
-		return view('admin.gallery.show')->withUser($user)->withAlbum($album);
+		return view('admin.gallery.show')
+			->withUser($user)
+			->withAlbum($album);
 	}
 	
 	/**
@@ -157,17 +161,17 @@ class GalleryController extends Controller
 		//Counter for uploaded files
 		$uploadcount = 0;
 		foreach ($files as $file) {
-			$image_name	= $file->getClientOriginalName();
-			$destination_path = 'public/images/gallery/' . $album->name;
+			$imageName	= $file->getClientOriginalName();
+			$destinationPath = 'public/images/gallery/' . $album->name;
 
 			$image							= new GalleryAlbumImage;
-			$image->display_name			= $image_name;
-			$image->nice_name				= $image->url = strtolower(str_replace(' ', '-', $image_name));
+			$image->display_name			= $imageName;
+			$image->nice_name				= $image->url = strtolower(str_replace(' ', '-', $imageName));
 			$image->gallery_album_id		= $album->id;
 			$image->path = str_replace(
 					'public/', 
 					'/storage/', 
-					Storage::put($destination_path, 
+					Storage::put($destinationPath, 
 							$file
 					)
 			);

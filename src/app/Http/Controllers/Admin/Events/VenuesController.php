@@ -27,7 +27,8 @@ class VenuesController extends Controller
 	public function index()
 	{
 		$venues = EventVenue::all();
-		return view('admin.events.venues.index')->withVenues($venues);
+		return view('admin.events.venues.index')
+			->withVenues($venues);
 	}
 
 	/**
@@ -37,7 +38,8 @@ class VenuesController extends Controller
 	 */
 	public function show(EventVenue $venue)
 	{
-		return view('admin.events.venues.show')->withVenue($venue);
+		return view('admin.events.venues.show')
+			->withVenue($venue);
 	}
 
 	/**

@@ -35,17 +35,17 @@ class Appearance extends Model
         $scss = new Compiler;
         $scss->setImportPaths('/web/html/resources/assets/sass/');
         $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
-        $css_templates = ['app', 'admin'];
-        foreach ($css_templates as $css_template) {
+        $cssTemplates = ['app', 'admin'];
+        foreach ($cssTemplates as $cssTemplate) {
             $scss->setSourceMapOptions(array(
-                'sourceMapWriteTo'  => config('filesystems.disks.compiled-css.root') . '/'. str_replace("/", "_", $css_template) . ".css.map",
-                'sourceMapFilename' => $css_template . '.css',
+                'sourceMapWriteTo'  => config('filesystems.disks.compiled-css.root') . '/'. str_replace("/", "_", $cssTemplate) . ".css.map",
+                'sourceMapFilename' => $cssTemplate . '.css',
                 'sourceMapBasepath' => config('filesystems.disks.compiled-css.root'),
                 'sourceRoot'        => '/',
             ));
-            @Storage::disk('compiled-css')->delete($css_template . '.css');
-            @Storage::disk('compiled-css')->delete($css_template . '.css.map');
-            if (!Storage::disk('compiled-css')->put($css_template . '.css', $scss->compile('@import "' . $css_template . '.scss";'))) {
+            @Storage::disk('compiled-css')->delete($cssTemplate . '.css');
+            @Storage::disk('compiled-css')->delete($cssTemplate . '.css.map');
+            if (!Storage::disk('compiled-css')->put($cssTemplate . '.css', $scss->compile('@import "' . $cssTemplate . '.scss";'))) {
                 return false;
             }
         }

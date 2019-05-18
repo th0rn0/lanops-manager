@@ -91,10 +91,10 @@ class Game extends Model
         return 'slug';
     }
 
-    public static function getGameSelectArray($public_only = true)
+    public static function getGameSelectArray($publicOnly = true)
     {
         $return[0] = 'None';
-        foreach (Game::where('public', $public_only)->orderBy('name', 'ASC')->get() as $game) {
+        foreach (Game::where('public', $publicOnly)->orderBy('name', 'ASC')->get() as $game) {
             $return[$game->id] = $game->name;
         }
         return $return;

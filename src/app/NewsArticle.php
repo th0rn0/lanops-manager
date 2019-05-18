@@ -83,10 +83,10 @@ class NewsArticle extends Model
         $added_tags = array();
         foreach ($tags as $tag) {
             if (!in_array(trim($tag), $added_tags)) {
-                $news_tag = new NewsTag();
-                $news_tag->tag = trim($tag);
-                $news_tag->news_feed_id = $this->id;
-                if (!$news_tag->save()) {
+                $newsTag = new NewsTag();
+                $newsTag->tag = trim($tag);
+                $newsTag->news_feed_id = $this->id;
+                if (!$newsTag->save()) {
                     return false;
                 }
                 array_push($added_tags, trim($tag));

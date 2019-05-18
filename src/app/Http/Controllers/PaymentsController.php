@@ -36,13 +36,16 @@ class PaymentsController extends Controller
 	  	if (!$basket = Session::get('basket')) {
 			return Redirect::to('/');
 	  	}
-	  	$next_event_flag = true;
-		foreach (Session::get('basket') as $ticket_id => $quantity) {
-			if (EventTicket::where('id', $ticket_id)->first()->event->id != Event::where('end', '>=', \Carbon\Carbon::now())->orderBy(\DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()->id) {
-				$next_event_flag = false;
+	  	$nextEventFlag = true;
+		foreach (Session::get('basket') as $ticketId => $quantity) {
+			if (EventTicket::where('id', $ticketId)->first()->event->id != Event::where('end', '>=', \Carbon\Carbon::now())->orderBy(\DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()->id) {
+				$nextEventFlag = false;
 			}
 		}
-	  	return view('payments.review')->withBasketItems(Helpers::getBasketFormat($basket, true))->withBasketTotal(Helpers::getBasketTotal($basket))->withNextEventFlag($next_event_flag);
+	  	return view('payments.review')
+	  		->withBasketItems(Helpers::getBasketFormat($basket, true))
+	  		->withBasketTotal(Helpers::getBasketTotal($basket))
+	  		->withNextEventFlag($nextEventFlag);
 	}
 	
 	/**
@@ -56,8 +59,8 @@ class PaymentsController extends Controller
 			Session::flash('alert-danger', 'No Basket was found. Please try again');
 			return Redirect::back();
 		}
-		foreach ($basket as $ticket_id => $quantity) {
-			$ticket = EventTicket::where('id', $ticket_id)->first();
+		foreach ($basket as $ticketId => $quantity) {
+			$ticket = EventTicket::where('id', $ticketId)->first();
 			if ($ticket->event->capacity <= $ticket->event->EventParticipants->count()) {
 				Session::flash('alert-danger', '{{ $ticket->event->display_name }} Has sold out!');
 				return Redirect::back();
@@ -66,18 +69,18 @@ class PaymentsController extends Controller
 	  	if (config('app.debug')) {
 			$this->sandbox = TRUE;
 	  	}
-	  	$request_scheme = 'http';
+	  	$requestScheme = 'http';
 		if ( 
 				(! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
 				(! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
 				(! empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') 
 			) {
-			$request_scheme = 'https';
+			$requestScheme = 'https';
 		}
 		//Paypal Post Params
 		$params = array(
-			'cancelUrl'		=> $request_scheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
-			'returnUrl'		=> $request_scheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return', 
+			'cancelUrl'		=> $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
+			'returnUrl'		=> $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return', 
 			'name'			=> Settings::getOrgName() . ' - Tickets Purchase',
 			'description'	=> 'Ticket Purchase for ' . Settings::getOrgName(), 
 			'amount'		=> (float)Helpers::getBasketTotal($basket),
@@ -141,19 +144,19 @@ class PaymentsController extends Controller
 	  	//Complete Purchase
 	  	$gateway->completePurchase($params)->send();
 	  	$response = $gateway->fetchCheckout($params)->send(); // this is the raw response object
- 	 	$paypal_response = $response->getData();
-	  	if (isset($paypal_response['ACK']) && $paypal_response['ACK'] === 'Success' && isset($paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'])) {
+ 	 	$paypalResponse = $response->getData();
+	  	if (isset($paypalResponse['ACK']) && $paypalResponse['ACK'] === 'Success' && isset($paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'])) {
 			//Add Purchase to database
 			$purchase 					= new Purchase;
 			$purchase->user_id 			= $params['user_id'];
 			$purchase->type 			= 'PayPal Express';
-			$purchase->transaction_id 	= $paypal_response['PAYMENTREQUEST_0_TRANSACTIONID'];
-			$purchase->token 			= $paypal_response['TOKEN'];
-			$purchase->status 			= $paypal_response['ACK'];
-			$purchase->paypal_email 	= $paypal_response['EMAIL'];
+			$purchase->transaction_id 	= $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'];
+			$purchase->token 			= $paypalResponse['TOKEN'];
+			$purchase->status 			= $paypalResponse['ACK'];
+			$purchase->paypal_email 	= $paypalResponse['EMAIL'];
 			$purchase->save();
-			foreach (Session::get('basket') as $ticket_id => $quantity) {
-				$ticket = EventTicket::where('id', $ticket_id)->first();
+			foreach (Session::get('basket') as $ticketId => $quantity) {
+				$ticket = EventTicket::where('id', $ticketId)->first();
 		  		for ($i=1; $i <= $quantity; $i++) { 
 					//Add Participant to databade
 					$participant 				= new EventParticipant;
