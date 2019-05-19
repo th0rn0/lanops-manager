@@ -17,13 +17,13 @@ use Illuminate\Http\Request;
 
 class PurchasesController extends Controller
 {
-	/**
-	 * Show Purchases Index Page
-	 * @return View
-	 */
-	public function index()
-	{
-		return view('admin.purchases.index')
-			->withPurchases(Purchase::all());
-	}
+    /**
+     * Show Purchases Index Page
+     * @return View
+     */
+    public function index()
+    {
+        return view('admin.purchases.index')
+            ->withPurchases(Purchase::all());
+    }
 }

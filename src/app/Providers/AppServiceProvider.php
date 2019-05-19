@@ -19,11 +19,11 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         //View::share('events', Event::all());
-        view()->composer('layouts._partials.events-navigation', function($view){
+        view()->composer('layouts._partials.events-navigation', function ($view) {
             $view->with('events', Event::orderBy('display_name', 'desc')->get());
         });
-        view()->composer('*', function($view){
-          $view->with('user', Auth::user());
+        view()->composer('*', function ($view) {
+            $view->with('user', Auth::user());
         });
     }
 

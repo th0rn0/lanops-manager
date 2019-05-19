@@ -22,195 +22,194 @@ use Illuminate\Http\Request;
 
 class TournamentsController extends Controller
 {
-	/**
-	 * Show Tournaments
-	 * @param  Event $event
-	 * @return Tournaments      
-	 */
-	public function index(Event $event)
-	{
-		return $event->tournaments;
-	}
+    /**
+     * Show Tournaments
+     * @param  Event $event
+     * @return Tournaments
+     */
+    public function index(Event $event)
+    {
+        return $event->tournaments;
+    }
 
-	/**
-	 * Show Tournaments Page
-	 * @param  Event 			$event 
-	 * @param  EventTournament 	$tournament
-	 * @param  Request 			$request
-	 * @return View
-	 */
-	public function show(Event $event, EventTournament $tournament, Request $request)
-	{
-		if (!$user = Auth::user()) {
-			Redirect::to('/');
-		}
-		$user->setActiveEventParticipant($event->id);
-		if (!isset($user->active_event_participant)) {
-			Session::flash('alert-danger', 'Please sign in with one of our Admins.');
-			return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
-		}
-		return view('events.tournaments.show')
-			->withTournament($tournament)
-			->withEvent($event)
-			->withUser($user)
-		;
-	}
+    /**
+     * Show Tournaments Page
+     * @param  Event            $event
+     * @param  EventTournament  $tournament
+     * @param  Request          $request
+     * @return View
+     */
+    public function show(Event $event, EventTournament $tournament, Request $request)
+    {
+        if (!$user = Auth::user()) {
+            Redirect::to('/');
+        }
+        $user->setActiveEventParticipant($event->id);
+        if (!isset($user->active_event_participant)) {
+            Session::flash('alert-danger', 'Please sign in with one of our Admins.');
+            return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
+        }
+        return view('events.tournaments.show')
+            ->withTournament($tournament)
+            ->withEvent($event)
+            ->withUser($user)
+        ;
+    }
 
-	/**
-	 * Register to Tournament
-	 * @param  Event           $event
-	 * @param  EventTournament $tournament
-	 * @param  Request         $request
-	 * @return [type]                     
-	 */
-	public function registerSingle(Event $event, EventTournament $tournament, Request $request)
-	{
-		if ($tournament->status != 'OPEN') {
-			Session::flash('alert-danger', 'Signups not permitted at this time.');
-			return Redirect::back();
-		}
-	 
-		if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
-			Session::flash('alert-danger', 'You are not signed in to this event.');
-			return Redirect::back();
-		}
+    /**
+     * Register to Tournament
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @param  Request         $request
+     * @return [type]
+     */
+    public function registerSingle(Event $event, EventTournament $tournament, Request $request)
+    {
+        if ($tournament->status != 'OPEN') {
+            Session::flash('alert-danger', 'Signups not permitted at this time.');
+            return Redirect::back();
+        }
+     
+        if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
+            Session::flash('alert-danger', 'You are not signed in to this event.');
+            return Redirect::back();
+        }
 
-		if ($tournament->getParticipant($request->event_participant_id)) {
-			Session::flash('alert-danger', 'You are already signed up to this tournament.');
-			return Redirect::back();
-		}
+        if ($tournament->getParticipant($request->event_participant_id)) {
+            Session::flash('alert-danger', 'You are already signed up to this tournament.');
+            return Redirect::back();
+        }
 
-		if (
-			isset($request->event_tournament_team_id) &&
-			$tournamentTeam = $tournament->tournamentTeams()->where('id', $request->event_tournament_team_id)->first()
-		) {
-			if ($tournamentTeam->tournamentParticipants->count() == substr($tournament->team_size, 0, 1)) {
-				Session::flash('alert-danger', 'This team is full.');
-				return Redirect::back();
-			}
-		}
+        if (isset($request->event_tournament_team_id) &&
+            $tournamentTeam = $tournament->tournamentTeams()->where('id', $request->event_tournament_team_id)->first()
+        ) {
+            if ($tournamentTeam->tournamentParticipants->count() == substr($tournament->team_size, 0, 1)) {
+                Session::flash('alert-danger', 'This team is full.');
+                return Redirect::back();
+            }
+        }
 
-		// TODO - Refactor
-		$tournamentParticipant 								= new EventTournamentParticipant();
-		$tournamentParticipant->event_participant_id 		= $request->event_participant_id;
-		$tournamentParticipant->event_tournament_id 		= $tournament->id;
-		$tournamentParticipant->event_tournament_team_id 	= @$request->event_tournament_team_id;
+        // TODO - Refactor
+        $tournamentParticipant                              = new EventTournamentParticipant();
+        $tournamentParticipant->event_participant_id        = $request->event_participant_id;
+        $tournamentParticipant->event_tournament_id         = $tournament->id;
+        $tournamentParticipant->event_tournament_team_id    = @$request->event_tournament_team_id;
 
-		if (!$tournamentParticipant->save()) {
-			Session::flash('alert-danger', 'Cannot add participant. Please try again.');
-			return Redirect::back();
-		}
+        if (!$tournamentParticipant->save()) {
+            Session::flash('alert-danger', 'Cannot add participant. Please try again.');
+            return Redirect::back();
+        }
 
-		Session::flash('alert-success', 'Successfully Registered!');
-		return Redirect::back();
-	}
+        Session::flash('alert-success', 'Successfully Registered!');
+        return Redirect::back();
+    }
 
-	/**
-	 * Register Team to Tournament
-	 * @param  Event           $event
-	 * @param  EventTournament $tournament
-	 * @param  Request         $request
-	 * @return Redirect  
-	 */
-	public function registerTeam(Event $event, EventTournament $tournament, Request $request)
-	{
-		if ($tournament->status != 'OPEN') {
-			Session::flash('alert-danger', 'Signups not permitted at this time.');
-			return Redirect::back();
-		}
-	 
-		if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
-			Session::flash('alert-danger', 'You are not signed in to this event.');
-			return Redirect::back();
-		}
+    /**
+     * Register Team to Tournament
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @param  Request         $request
+     * @return Redirect
+     */
+    public function registerTeam(Event $event, EventTournament $tournament, Request $request)
+    {
+        if ($tournament->status != 'OPEN') {
+            Session::flash('alert-danger', 'Signups not permitted at this time.');
+            return Redirect::back();
+        }
+     
+        if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
+            Session::flash('alert-danger', 'You are not signed in to this event.');
+            return Redirect::back();
+        }
 
-		if($tournament->getParticipant($request->event_participant_id)){
-			Session::flash('alert-danger', 'You are already signed up to this tournament.');
-			return Redirect::back();
-		}
+        if ($tournament->getParticipant($request->event_participant_id)) {
+            Session::flash('alert-danger', 'You are already signed up to this tournament.');
+            return Redirect::back();
+        }
 
-		$tournamentTeam 						= new EventTournamentTeam();
-		$tournamentTeam->event_tournament_id 	= $tournament->id;
-		$tournamentTeam->name 					= $request->team_name;
+        $tournamentTeam                         = new EventTournamentTeam();
+        $tournamentTeam->event_tournament_id    = $tournament->id;
+        $tournamentTeam->name                   = $request->team_name;
 
-		if (!$tournamentTeam->save()) {
-			Session::flash('alert-danger', 'Cannot add Team. Please try again.');
-			return Redirect::back();
-		}
+        if (!$tournamentTeam->save()) {
+            Session::flash('alert-danger', 'Cannot add Team. Please try again.');
+            return Redirect::back();
+        }
 
-		// TODO - Refactor
-		$tournamentParticipant 								= new EventTournamentParticipant();
-		$tournamentParticipant->event_participant_id 		= $request->event_participant_id;
-		$tournamentParticipant->event_tournament_id 		= $tournament->id;
-		$tournamentParticipant->event_tournament_team_id 	= $tournamentTeam->id;
+        // TODO - Refactor
+        $tournamentParticipant                              = new EventTournamentParticipant();
+        $tournamentParticipant->event_participant_id        = $request->event_participant_id;
+        $tournamentParticipant->event_tournament_id         = $tournament->id;
+        $tournamentParticipant->event_tournament_team_id    = $tournamentTeam->id;
 
-		if (!$tournamentParticipant->save()) {
-			Session::flash('alert-danger', 'Cannot add participant. Please try again.');
-			return Redirect::back();
-		}
+        if (!$tournamentParticipant->save()) {
+            Session::flash('alert-danger', 'Cannot add participant. Please try again.');
+            return Redirect::back();
+        }
 
-		Session::flash('alert-success', 'Team Successfully Created!');
-		return Redirect::back();
-	}
+        Session::flash('alert-success', 'Team Successfully Created!');
+        return Redirect::back();
+    }
 
-	/**
-	 * Register Pug to Tournament
-	 * @param  Event           $event
-	 * @param  EventTournament $tournament
-	 * @param  Request         $request
-	 * @return Redirect 
-	 */
-	public function registerPug(Event $event, EventTournament $tournament, Request $request)
-	{
-		if ($tournament->status != 'OPEN') {
-			Session::flash('alert-danger', 'Signups not permitted at this time.');
-			return Redirect::back();
-		}
-	 
-		if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
-			Session::flash('alert-danger', 'You are not signed in to this event.');
-			return Redirect::back();
-		}
+    /**
+     * Register Pug to Tournament
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @param  Request         $request
+     * @return Redirect
+     */
+    public function registerPug(Event $event, EventTournament $tournament, Request $request)
+    {
+        if ($tournament->status != 'OPEN') {
+            Session::flash('alert-danger', 'Signups not permitted at this time.');
+            return Redirect::back();
+        }
+     
+        if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
+            Session::flash('alert-danger', 'You are not signed in to this event.');
+            return Redirect::back();
+        }
 
-		if($tournament->getParticipant($request->event_participant_id)){
-			Session::flash('alert-danger', 'You are already signed up to this tournament.');
-			return Redirect::back();
-		}
+        if ($tournament->getParticipant($request->event_participant_id)) {
+            Session::flash('alert-danger', 'You are already signed up to this tournament.');
+            return Redirect::back();
+        }
 
-		$tournamentParticipant 							= new EventTournamentParticipant();
-		$tournamentParticipant->event_participant_id 	= $request->event_participant_id;
-		$tournamentParticipant->event_tournament_id 	= $tournament->id;
-		$tournamentParticipant->pug 					= true;
+        $tournamentParticipant                          = new EventTournamentParticipant();
+        $tournamentParticipant->event_participant_id    = $request->event_participant_id;
+        $tournamentParticipant->event_tournament_id     = $tournament->id;
+        $tournamentParticipant->pug                     = true;
 
-		if (!$tournamentParticipant->save()) {
-			Session::flash('alert-danger', 'Cannot add PUG. Please try again.');
-			return Redirect::back();
-		}
+        if (!$tournamentParticipant->save()) {
+            Session::flash('alert-danger', 'Cannot add PUG. Please try again.');
+            return Redirect::back();
+        }
 
-		Session::flash('alert-success', 'Successfully Registered!');
-		return Redirect::back();
-	}
+        Session::flash('alert-success', 'Successfully Registered!');
+        return Redirect::back();
+    }
 
-	/**
-	 * Unregister from Tournament
-	 * @param  Event           $event
-	 * @param  EventTournament $tournament
-	 * @param  Request         $request
-	 * @return Redirect
-	 */
-	public function unregister(Event $event, EventTournament $tournament, Request $request)
-	{
-		if (!$tournamentParticipant = $tournament->getParticipant($request->event_participant_id)) {
-			Session::flash('alert-danger', 'You are not signed up.');
-			return Redirect::back();
-		}
+    /**
+     * Unregister from Tournament
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @param  Request         $request
+     * @return Redirect
+     */
+    public function unregister(Event $event, EventTournament $tournament, Request $request)
+    {
+        if (!$tournamentParticipant = $tournament->getParticipant($request->event_participant_id)) {
+            Session::flash('alert-danger', 'You are not signed up.');
+            return Redirect::back();
+        }
 
-		if (!$tournamentParticipant->delete()) {
-			Session::flash('alert-danger', 'Cannot remove. Please try again.');
-			return Redirect::back();
-		}
+        if (!$tournamentParticipant->delete()) {
+            Session::flash('alert-danger', 'Cannot remove. Please try again.');
+            return Redirect::back();
+        }
 
-		Session::flash('alert-success', 'You have been successfully removed from the Tournament.');
-		return Redirect::back();
-	}
+        Session::flash('alert-success', 'You have been successfully removed from the Tournament.');
+        return Redirect::back();
+    }
 }

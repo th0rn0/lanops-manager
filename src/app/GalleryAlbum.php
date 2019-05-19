@@ -73,7 +73,7 @@ class GalleryAlbum extends Model
             'slug' => [
                 'source' => 'name'
             ]
-        ];  
+        ];
     }
 
     /**
@@ -91,7 +91,7 @@ class GalleryAlbum extends Model
      * @param $imageId
      */
     public function setAlbumCover($imageId)
-        {
+    {
         $this->album_cover_id = $imageId;
         $this->save();
     }
@@ -100,7 +100,8 @@ class GalleryAlbum extends Model
      * Get Album Cover Path
      * @return String
      */
-    public function getAlbumCoverPath(){
+    public function getAlbumCoverPath()
+    {
         return $this->images()->where('id', $this->album_cover_id)->first()->path;
     }
 }

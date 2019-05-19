@@ -27,7 +27,7 @@ class EventSeating extends Model
 
     /*
      * Relationships
-     */    
+     */
     public function seatingPlan()
     {
         return $this->belongsTo('App\EventSeatingPlan', 'event_seating_plan_id');

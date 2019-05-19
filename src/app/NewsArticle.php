@@ -8,7 +8,6 @@ use App\NewsTag;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-
 class NewsArticle extends Model
 {
     use Sluggable;
@@ -34,17 +33,17 @@ class NewsArticle extends Model
      */
     public function user()
     {
-      return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function comments()
     {
-      return $this->hasMany('App\NewsComment', 'news_feed_id');
+        return $this->hasMany('App\NewsComment', 'news_feed_id');
     }
 
     public function tags()
     {
-      return $this->hasMany('App\NewsTag', 'news_feed_id');
+        return $this->hasMany('App\NewsTag', 'news_feed_id');
     }
 
 
@@ -80,16 +79,16 @@ class NewsArticle extends Model
     public function storeTags($tags)
     {
         $this->tags()->delete();
-        $added_tags = array();
+        $addedTags = array();
         foreach ($tags as $tag) {
-            if (!in_array(trim($tag), $added_tags)) {
+            if (!in_array(trim($tag), $addedTags)) {
                 $newsTag = new NewsTag();
                 $newsTag->tag = trim($tag);
                 $newsTag->news_feed_id = $this->id;
                 if (!$newsTag->save()) {
                     return false;
                 }
-                array_push($added_tags, trim($tag));
+                array_push($addedTags, trim($tag));
             }
         }
         return true;

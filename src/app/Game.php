@@ -30,7 +30,7 @@ class Game extends Model
     protected $fillable = [
         'name',
         'slug',
-        'description', 
+        'description',
         'version',
         'name',
         'active',
@@ -51,7 +51,7 @@ class Game extends Model
     public static function boot()
     {
         parent::boot();
-        self::deleted(function($model){
+        self::deleted(function ($model) {
             if ($model->image_thumbnail_path || $model->image_header_path) {
                 // TODO - redo storage and image calls like this
                 Storage::deleteDirectory('public/images/games/' . $model->slug . '/');

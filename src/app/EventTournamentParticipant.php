@@ -22,9 +22,9 @@ class EventTournamentParticipant extends Model
      * @var array
      */
     protected $fillable = [
-        'event_participant_id', 
-        'challonge_participant_id', 
-        'event_tournament_team_id', 
+        'event_participant_id',
+        'challonge_participant_id',
+        'event_tournament_team_id',
         'event_tournament_id',
         'pug'
     ];
@@ -42,15 +42,17 @@ class EventTournamentParticipant extends Model
     public static function boot()
     {
         parent::boot();
-        self::created(function($model){
-            if (
-                (!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
+        self::created(function ($model) {
+            if ((!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
                 (!$model->pug && $model->event_tournament_team_id == null) &&
                 $model->eventTournament->format != 'list'
             ) {
                 $challonge = new Challonge(config('challonge.api_key'));
                 $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
-                if (!$response = $tournament->addParticipant(['participant[name]' => $model->eventParticipant->user->username])) {
+                if (!$response = $tournament->addParticipant(
+                    ['participant[name]' => $model->eventParticipant->user->username]
+                )
+                ) {
                     $model->delete();
                     return false;
                 }
@@ -59,10 +61,13 @@ class EventTournamentParticipant extends Model
             }
             return true;
         });
-        self::deleting(function($model){
+        self::deleting(function ($model) {
             if (!$model->pug && $model->event_tournament_team_id == null && $model->eventTournament->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
-                $participant = $challonge->getParticipant($model->eventTournament->challonge_tournament_id, $model->challonge_participant_id);
+                $participant = $challonge->getParticipant(
+                    $model->eventTournament->challonge_tournament_id,
+                    $model->challonge_participant_id
+                );
                 if (!$response = $participant->delete()) {
                     return false;
                 }

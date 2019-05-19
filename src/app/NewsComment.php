@@ -37,7 +37,7 @@ class NewsComment extends Model
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
         }
-        if(!$admin) {
+        if (!$admin) {
             static::addGlobalScope('approved', function (Builder $builder) {
                 $builder->where('approved', '!=', false);
             });
@@ -49,15 +49,15 @@ class NewsComment extends Model
      */
     public function user()
     {
-      return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
     public function newsArticle()
     {
-      return $this->belongsTo('App\NewsArticle', 'news_feed_id');
+        return $this->belongsTo('App\NewsArticle', 'news_feed_id');
     }
     public function reports()
     {
-      return $this->hasMany('App\NewsCommentReport', 'news_feed_comment_id');
+        return $this->hasMany('App\NewsCommentReport', 'news_feed_comment_id');
     }
 
 
@@ -97,7 +97,7 @@ class NewsComment extends Model
         return true;
     }
 
-    /** 
+    /**
      * Set Comment as Reviewed
      * @param  Boolean
      * @return Boolean
@@ -112,7 +112,7 @@ class NewsComment extends Model
         return true;
     }
 
-    /** 
+    /**
      * Set Comment as Approved
      * @param  Boolean
      * @return Boolean
@@ -127,7 +127,7 @@ class NewsComment extends Model
         return true;
     }
 
-    /** 
+    /**
      * Check if any Reports exist
      * @param  Boolean
      * @return Boolean

@@ -56,7 +56,6 @@ class NewsTag extends Model
      */
     public function newsArticle()
     {
-      return $this->belongsTo('App\NewsArticle', 'news_feed_id');
+        return $this->belongsTo('App\NewsArticle', 'news_feed_id');
     }
-
 }

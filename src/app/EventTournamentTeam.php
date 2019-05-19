@@ -22,7 +22,7 @@ class EventTournamentTeam extends Model
      * @var array
      */
     protected $fillable = [
-        'event_tournament_id', 
+        'event_tournament_id',
         'challonge_participant_id',
         'name'
     ];
@@ -40,7 +40,7 @@ class EventTournamentTeam extends Model
     public static function boot()
     {
         parent::boot();
-        self::created(function($model){
+        self::created(function ($model) {
             if ($model->eventTournament->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
                 $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
@@ -53,10 +53,13 @@ class EventTournamentTeam extends Model
             }
             return true;
         });
-        self::deleting(function($model){
+        self::deleting(function ($model) {
             if ($model->eventTournament->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
-                $participant = $challonge->getParticipant($model->eventTournament->challonge_tournament_id, $model->challonge_participant_id);
+                $participant = $challonge->getParticipant(
+                    $model->eventTournament->challonge_tournament_id,
+                    $model->challonge_participant_id
+                );
                 if (!$response = $participant->delete()) {
                     return false;
                 }

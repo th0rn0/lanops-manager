@@ -27,7 +27,7 @@ class EventInformation extends Model
 
     /*
      * Relationships
-     */    
+     */
     public function event()
     {
         return $this->belongsTo('App\Event');

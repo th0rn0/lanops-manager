@@ -7,7 +7,7 @@ use Storage;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model 
+class Setting extends Model
 {
     /**
      * The name of the table.
@@ -22,7 +22,7 @@ class Setting extends Model
      * @var array
      */
     protected $fillable = [
-        'setting', 
+        'setting',
         'value',
         'default',
     ];
@@ -80,9 +80,9 @@ class Setting extends Model
             'public/',
             '/storage/',
             Storage::putFileAs(
-              'public/images/main',
-              $logo,
-              'logo_main.png'
+                'public/images/main',
+                $logo,
+                'logo_main.png'
             )
         );
         $setting = self::where('setting', 'org_logo')->first();
@@ -113,9 +113,9 @@ class Setting extends Model
             'public/',
             '/storage/',
             Storage::putFileAs(
-              'public/images/main',
-              $favicon,
-              'favicon.ico'
+                'public/images/main',
+                $favicon,
+                'favicon.ico'
             )
         );
         $setting = self::where('setting', 'org_favicon')->first();
@@ -470,5 +470,4 @@ class Setting extends Model
         }
         return true;
     }
-
 }

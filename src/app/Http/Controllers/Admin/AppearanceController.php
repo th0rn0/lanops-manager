@@ -20,74 +20,74 @@ use Illuminate\Http\Request;
 
 class AppearanceController extends Controller
 {
-	/**
-	 * Show Appearance Index Page
-	 * @return Redirect
-	 */
-	public function index()
-	{
-		return view('admin.appearance.index')
-			->withUserOverrideCss(Appearance::getCssOverride())
-			->withCssVariables(Appearance::getCssVariables());
-		;
-	}
-	
-	/**
-	 * Recompile CSS from SCSS
-	 * @return Redirect
-	 */
-	public function cssRecompile()
-	{
-		if (!Appearance::cssRecompile()) {
-			Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
-			return Redirect::back(); 
-		}
-		Session::flash('alert-success', 'Successfully recompiled the CSS!');
-		return Redirect::back(); 
-	}
+    /**
+     * Show Appearance Index Page
+     * @return Redirect
+     */
+    public function index()
+    {
+        return view('admin.appearance.index')
+            ->withUserOverrideCss(Appearance::getCssOverride())
+            ->withCssVariables(Appearance::getCssVariables());
+        ;
+    }
+    
+    /**
+     * Recompile CSS from SCSS
+     * @return Redirect
+     */
+    public function cssRecompile()
+    {
+        if (!Appearance::cssRecompile()) {
+            Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully recompiled the CSS!');
+        return Redirect::back();
+    }
 
-	/**
-	 * Add Additional CSS Override
-	 * @param Request $request
-	 * @return Redirect
-	 */
-	public function cssOverride(Request $request)
-	{
-		$rules = [
-			'css'	=> 'required',
-		];
-		$messages = [
-			'css.required'		=> 'CSS is required.',
-		];
-		$this->validate($request, $rules, $messages);
-		if (!Appearance::saveCssOverride($request->css)) {
-			Session::flash('alert-danger', 'Could not save CSS. Please try again.');
-			return Redirect::back(); 
-		}
-		if (!Appearance::cssRecompile()) {
-			Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
-			return Redirect::back(); 
-		}
-		Session::flash('alert-success', 'Successfully recompiled the CSS!');
-		return Redirect::back(); 
-	}
+    /**
+     * Add Additional CSS Override
+     * @param Request $request
+     * @return Redirect
+     */
+    public function cssOverride(Request $request)
+    {
+        $rules = [
+            'css'   => 'required',
+        ];
+        $messages = [
+            'css.required'      => 'CSS is required.',
+        ];
+        $this->validate($request, $rules, $messages);
+        if (!Appearance::saveCssOverride($request->css)) {
+            Session::flash('alert-danger', 'Could not save CSS. Please try again.');
+            return Redirect::back();
+        }
+        if (!Appearance::cssRecompile()) {
+            Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully recompiled the CSS!');
+        return Redirect::back();
+    }
 
-	/**
-	 * Update CSS Variables
-	 * @param Request $request
-	 * @return Redirect
-	 */
-	public function cssVariables(Request $request)
-	{
-		if (!Appearance::saveCssVariables($request->css_variables)) {
-			Session::flash('alert-danger', 'Could not save CSS Variables. Please try again.');
-			return Redirect::back(); 
-		}
-		if (!Appearance::cssRecompile()) {
-			Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
-			return Redirect::back(); 
-		}
-		Session::flash('alert-success', 'Successfully saved CSS Variables!');
-		return Redirect::back(); 
-	}
+    /**
+     * Update CSS Variables
+     * @param Request $request
+     * @return Redirect
+     */
+    public function cssVariables(Request $request)
+    {
+        if (!Appearance::saveCssVariables($request->css_variables)) {
+            Session::flash('alert-danger', 'Could not save CSS Variables. Please try again.');
+            return Redirect::back();
+        }
+        if (!Appearance::cssRecompile()) {
+            Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully saved CSS Variables!');
+        return Redirect::back();
+    }
 }

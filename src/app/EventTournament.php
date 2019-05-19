@@ -31,17 +31,17 @@ class EventTournament extends Model
      * @var array
      */
     protected $fillable = [
-        'event_id', 
-        'challonge_tournament_id', 
+        'event_id',
+        'challonge_tournament_id',
         'challonge_tournament_url',
-        'display_name', 
-        'nice_name', 
-        'game', 
-        'format', 
-        'bronze', 
-        'team_size', 
-        'description', 
-        'allow_player_teams', 
+        'display_name',
+        'nice_name',
+        'game',
+        'format',
+        'bronze',
+        'team_size',
+        'description',
+        'allow_player_teams',
         'status'
     ];
 
@@ -60,9 +60,10 @@ class EventTournament extends Model
         'final_ratio' => 'array'
     ];
 
-    public static function boot() {
+    public static function boot()
+    {
         parent::boot();
-        self::created(function ($model){
+        self::created(function ($model) {
             if ($model->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
                 $params = [
@@ -70,7 +71,7 @@ class EventTournament extends Model
                     'tournament[tournament_type]'         => strtolower($model->format),
                     'tournament[url]'                     => $model->challonge_tournament_url,
                     // 'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
-                    'tournament[hold_third_place_match]'  =>@ ($model->allow_bronze ? true : false),
+                    'tournament[hold_third_place_match]'  => @ ($model->allow_bronze ? true : false),
                     'tournament[show_rounds]'             => true,
                 ];
                 if (!$response = $challonge->createTournament($params)) {
@@ -82,7 +83,7 @@ class EventTournament extends Model
             }
             return true;
         });
-        self::saved(function($model){
+        self::saved(function ($model) {
             if ($model->format != 'list') {
                 // TODO - fire only when name is updated
                 $challonge = new Challonge(config('challonge.api_key'));
@@ -148,12 +149,12 @@ class EventTournament extends Model
             }
             return true;
         });
-        self::deleting(function($model){
+        self::deleting(function ($model) {
             if ($model->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
                 $response = $challonge->getTournament($model->challonge_tournament_id);
                 if (!$response->delete()) {
-                   return false;
+                    return false;
                 }
             }
             return true;
@@ -218,7 +219,7 @@ class EventTournament extends Model
                         $team->delete();
                     }
                 }
-            }            
+            }
             if ($this->format != 'list') {
                 $tournament = $challonge->getTournament($this->challonge_tournament_id);
                 try {
@@ -290,7 +291,7 @@ class EventTournament extends Model
             $return[$tournamentTeam->id] = $tournamentTeam->name;
         }
         if ($obj) {
-            return json_decode(json_encode($return), FALSE);
+            return json_decode(json_encode($return), false);
         }
         return $return;
     }
@@ -313,7 +314,7 @@ class EventTournament extends Model
             $return[$match->round][$match->suggested_play_order] = $match;
         }
         if ($obj) {
-            return json_decode(json_encode($return), FALSE);
+            return json_decode(json_encode($return), false);
         }
         return $return;
     }
@@ -327,41 +328,47 @@ class EventTournament extends Model
      */
     public function getStandings($order = null, $obj = false, $retroactive = false)
     {
-        $tournamentStandings = Cache::get($this->challonge_tournament_id . "_standings", function() use ($retroactive) {
-            if ($this->status == 'COMPLETE' && $this->api_complete && $this->format != 'list') {
-                $standings['progress'] = 100;
-                $standingsArray = array();
-                if ($this->team_size != '1v1') {
-                    $participants = $this->tournamentTeams;
-                }
-                if ($this->team_size == '1v1') {
-                    $participants = $this->tournamentParticipants;
-                }
-                foreach ($participants as $participant) {
-                    $ratio = unserialize($participant->final_ratio);
-                    $history = unserialize($participant->final_history);
-                    $params = [
+        $tournamentStandings = Cache::get(
+            $this->challonge_tournament_id . "_standings",
+            function () use ($retroactive) {
+                if ($this->status == 'COMPLETE' && $this->api_complete && $this->format != 'list') {
+                    $standings['progress'] = 100;
+                    $standingsArray = array();
+                    if ($this->team_size != '1v1') {
+                        $participants = $this->tournamentTeams;
+                    }
+                    if ($this->team_size == '1v1') {
+                        $participants = $this->tournamentParticipants;
+                    }
+                    foreach ($participants as $participant) {
+                        $ratio = unserialize($participant->final_ratio);
+                        $history = unserialize($participant->final_history);
+                        $params = [
                         'win' => $ratio['W'],
                         'lose' => $ratio['L'],
                         'tie' => $ratio['T'],
                         'pts' => $participant->final_score,
                         'history' => $history,
-                        'name' => ($this->team_size != '1v1' ? $participant->name : $participant->eventParticipant->user->username),
-                        'id' => $participant->challonge_participant_id
-                    ];
-                    array_push($standingsArray, $params);
+                        'name' => (
+                            $this->team_size != '1v1' ?
+                                $participant->name : $participant->eventParticipant->user->username
+                            ),
+                            'id' => $participant->challonge_participant_id
+                        ];
+                        array_push($standingsArray, $params);
+                    }
+                    $standings['final'] = collect($standingsArray);
                 }
-                $standings['final'] = collect($standingsArray);
-            }
-            ## Pull LIVE standings from Challonge when tournament is in progress
-            if ($retroactive || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
-                $challonge = new Challonge(config('challonge.api_key'));
-                $standings = $challonge->getStandings($this->challonge_tournament_id);
-            }
+                ## Pull LIVE standings from Challonge when tournament is in progress
+                if ($retroactive || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
+                    $challonge = new Challonge(config('challonge.api_key'));
+                    $standings = $challonge->getStandings($this->challonge_tournament_id);
+                }
 
-            Cache::forever($this->challonge_tournament_id . "_standings", $standings);
-            return $standings;
-        });
+                Cache::forever($this->challonge_tournament_id . "_standings", $standings);
+                return $standings;
+            }
+        );
         if ($order == 'asc') {
             $standings = $tournamentStandings['final'];
             $tournamentStandings['final'] = $standings->sortBy('pts');
@@ -371,7 +378,7 @@ class EventTournament extends Model
             $tournamentStandings['final'] = $standings->sortByDesc('pts');
         }
         if ($obj) {
-            return json_decode(json_encode($tournamentStandings), FALSE);
+            return json_decode(json_encode($tournamentStandings), false);
         }
         return $tournamentStandings;
     }
@@ -400,7 +407,7 @@ class EventTournament extends Model
             }
         }
         if ($obj) {
-            return json_decode(json_encode($nextMatches), FALSE);
+            return json_decode(json_encode($nextMatches), false);
         }
         return $nextMatches;
     }

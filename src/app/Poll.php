@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
-
 class Poll extends Model
 {
     use Sluggable;
@@ -54,7 +53,7 @@ class Poll extends Model
 
     /*
      * Relationships
-     */    
+     */
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');

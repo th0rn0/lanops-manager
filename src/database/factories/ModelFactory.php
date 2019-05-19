@@ -23,8 +23,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 ## Events
 
 $factory->define(App\Event::class, function (Faker\Generator $faker) {
-	$event_name = 'EventNameHere ' . $faker->randomDigitNotNull;
-    $start_date = date_format($faker->dateTimeBetween('+1 months', '+2 months'),"Y-m-d");
+    $event_name = 'EventNameHere ' . $faker->randomDigitNotNull;
+    $start_date = date_format($faker->dateTimeBetween('+1 months', '+2 months'), "Y-m-d");
     $end_date   = date('Y-m-d', strtotime($start_date. ' + 2 days'));
     return [
         'display_name'      => $event_name,
@@ -46,8 +46,8 @@ $factory->define(App\EventTicket::class, function (Faker\Generator $faker) {
         'type'          => 'weekend',
         'price'         => '30',
         'seatable'      => true,
-        'sale_start'    => NULL,
-        'sale_end'      => NULL,
+        'sale_start'    => null,
+        'sale_end'      => null,
     ];
 });
 

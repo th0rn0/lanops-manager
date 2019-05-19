@@ -16,16 +16,16 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-	/**
-	 * Show Admin Index Page
-	 * @return view
-	 */
-	public function index()
-	{
-		$user = Auth::user();
-		$events = Event::all();
-		return view('admin.index')
-			->withUser($user)
-			->withEvents($events);  
-	}
+    /**
+     * Show Admin Index Page
+     * @return view
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $events = Event::all();
+        return view('admin.index')
+            ->withUser($user)
+            ->withEvents($events);
+    }
 }

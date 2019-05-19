@@ -18,16 +18,16 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-	/**
-	 * Show Users Index Page
-	 * @return View
-	 */
-	public function index()
-	{
-		$user = Auth::user();
-		$users = User::all();
-		return view('admin.users.index')
-			->withUser($user)
-			->withUsers($users);  
-	}
+    /**
+     * Show Users Index Page
+     * @return View
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $users = User::all();
+        return view('admin.users.index')
+            ->withUser($user)
+            ->withUsers($users);
+    }
 }

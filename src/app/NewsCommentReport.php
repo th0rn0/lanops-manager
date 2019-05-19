@@ -29,12 +29,11 @@ class NewsCommentReport extends Model
      */
     public function newsComment()
     {
-      return $this->belongsTo('App\NewsComment', 'news_feed_comment_id');
+        return $this->belongsTo('App\NewsComment', 'news_feed_comment_id');
     }
 
     public function user()
     {
-      return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
-
 }

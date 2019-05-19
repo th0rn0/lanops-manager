@@ -48,7 +48,7 @@ class EventTimetable extends Model
     }
     public function data()
     {
-       return $this->hasMany('App\EventTimetableData');
+        return $this->hasMany('App\EventTimetableData');
     }
 
     public function sluggable()
@@ -81,13 +81,15 @@ class EventTimetable extends Model
         $endDate = new \DateTime($this->event->end);
         $startDate = new \DateTime($this->event->start);
         while ($startDate <= $endDate) {
-            $return[$startDate->format('Y-m-d H:i:s')] = date("D", strtotime($startDate->format('Y-m-d H:i:s'))) . ' - ' .  date("H:i", strtotime($startDate->format('Y-m-d H:i:s')));
+            $return[$startDate->format('Y-m-d H:i:s')] = date(
+                "D",
+                strtotime($startDate->format('Y-m-d H:i:s'))
+            ) . ' - ' .  date("H:i", strtotime($startDate->format('Y-m-d H:i:s')));
             $startDate->modify('+30 minutes');
         }
         if ($obj) {
-            return json_decode(json_encode($return), FALSE);
+            return json_decode(json_encode($return), false);
         }
         return $return;
     }
-
 }

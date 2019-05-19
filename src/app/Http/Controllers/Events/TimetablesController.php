@@ -19,27 +19,27 @@ use Illuminate\Http\Request;
 class TimetablesController extends Controller
 {
 
-	/**
-	 * API Show all Timetables
-	 * @param  Event  $event
-	 * @return EventTimetables       
-	 */
-	public function index($event)
-	{
-		$event = Event::where('id', $event)->first();
-		return $event->timetables;
-	}
+    /**
+     * API Show all Timetables
+     * @param  Event  $event
+     * @return EventTimetables
+     */
+    public function index($event)
+    {
+        $event = Event::where('id', $event)->first();
+        return $event->timetables;
+    }
 
-	/**
-	 * API Show Timetable
-	 * @param  Event          $event    
-	 * @param  EventTimetable $timetable
-	 * @return EventTimetable
-	 */
-	public function show($event, $timetable)
-	{
-		$event = Event::where('id', $event)->first();
-		$timetable = EventTimetable::where('id', $timetable)->first();
-		return $timetable;
-	}
+    /**
+     * API Show Timetable
+     * @param  Event          $event
+     * @param  EventTimetable $timetable
+     * @return EventTimetable
+     */
+    public function show($event, $timetable)
+    {
+        $event = Event::where('id', $event)->first();
+        $timetable = EventTimetable::where('id', $timetable)->first();
+        return $timetable;
+    }
 }

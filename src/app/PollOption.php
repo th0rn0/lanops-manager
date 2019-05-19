@@ -32,7 +32,7 @@ class PollOption extends Model
 
     /*
      * Relationships
-     */    
+     */
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
@@ -56,7 +56,7 @@ class PollOption extends Model
     public function vote()
     {
         if (!$this->hasVoted()) {
-            $vote = new Vote;
+            $vote = new Vote();
             $vote->user_id = Auth::id();
             $vote->poll_option_id = $this->id;
             if (!$vote->save()) {

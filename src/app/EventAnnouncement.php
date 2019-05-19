@@ -6,7 +6,7 @@ use DB;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventAnnouncement extends Model 
+class EventAnnouncement extends Model
 {
     /**
      * The name of the table.
@@ -21,7 +21,7 @@ class EventAnnouncement extends Model
      * @var array
      */
     protected $fillable = [
-        'message', 
+        'message',
         'event_id',
     ];
 
@@ -42,5 +42,4 @@ class EventAnnouncement extends Model
     {
         return $this->belongsTo('App\Event');
     }
-
 }

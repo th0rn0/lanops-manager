@@ -32,20 +32,26 @@ class Appearance extends Model
      */
     public static function cssRecompile()
     {
-        $scss = new Compiler;
+        $scss = new Compiler();
         $scss->setImportPaths('/web/html/resources/assets/sass/');
         $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
         $cssTemplates = ['app', 'admin'];
         foreach ($cssTemplates as $cssTemplate) {
             $scss->setSourceMapOptions(array(
-                'sourceMapWriteTo'  => config('filesystems.disks.compiled-css.root') . '/'. str_replace("/", "_", $cssTemplate) . ".css.map",
+                'sourceMapWriteTo'  => config('filesystems.disks.compiled-css.root') .
+                    '/' .
+                    str_replace("/", "_", $cssTemplate) .
+                    ".css.map"
+                ,
                 'sourceMapFilename' => $cssTemplate . '.css',
                 'sourceMapBasepath' => config('filesystems.disks.compiled-css.root'),
                 'sourceRoot'        => '/',
             ));
             @Storage::disk('compiled-css')->delete($cssTemplate . '.css');
             @Storage::disk('compiled-css')->delete($cssTemplate . '.css.map');
-            if (!Storage::disk('compiled-css')->put($cssTemplate . '.css', $scss->compile('@import "' . $cssTemplate . '.scss";'))) {
+            if (!Storage::disk('compiled-css')
+                ->put($cssTemplate . '.css', $scss->compile('@import "' . $cssTemplate . '.scss";'))
+            ) {
                 return false;
             }
         }
@@ -72,7 +78,7 @@ class Appearance extends Model
     public static function saveCssOverride($css)
     {
         if (!Storage::disk('assets')->put('sass/stylesheets/app/components/_user-override.scss', $css)) {
-            return false; 
+            return false;
         }
         return true;
     }
@@ -125,7 +131,9 @@ class Appearance extends Model
      */
     public static function saveCssVariableToFile($key, $value)
     {
-        if (!Storage::disk('assets')->append('sass/stylesheets/app/modules/_user-variables.scss', '$' . $key . ': ' . $value . ';')) {
+        if (!Storage::disk('assets')
+            ->append('sass/stylesheets/app/modules/_user-variables.scss', '$' . $key . ': ' . $value . ';')
+        ) {
             return false;
         }
         return true;
