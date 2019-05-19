@@ -32,9 +32,10 @@
 					{{ Form::text('card_expiry_month', '', array('id'=>'card_expiry_month','class'=>'form-control')) }}
 				</div> 
 				<div class="form-group">
-					{{ Form::label('card_expiry_day', 'Card Expiry Day', array('id'=>'','class'=>'')) }}
-					{{ Form::text('card_expiry_day', '', array('id'=>'card_expiry_day','class'=>'form-control')) }}
-				</div> 
+					{{ Form::label('card_expiry_year', 'Card Expiry Year', array('id'=>'','class'=>'')) }}
+					{{ Form::text('card_expiry_year', '', array('id'=>'card_expiry_year','class'=>'form-control')) }}
+				</div>
+				TODO: Card Type, CVV, Billing Address 1, Billing Address 2, Billing County, Billing City, Billing Post Code
 				{{ Form::hidden('gateway', $paymentGateway) }}
 				<button class="btn btn-default">Confirm Order</button>
 			{{ Form::close() }}

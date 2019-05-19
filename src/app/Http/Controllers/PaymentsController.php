@@ -175,6 +175,8 @@ class PaymentsController extends Controller
         switch ($paymentGateway) {
             case 'stripe':
                 // Stripe Post Params
+                // DEBUG
+                // VALIDATE THE REQUESTS HERE!
                 $card = array(
                     'firstName'             => $request->card_first_name,
                     'lastName'              => $request->card_last_name,
