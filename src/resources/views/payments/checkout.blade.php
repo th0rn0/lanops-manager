@@ -1,32 +1,25 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Payment Successful!')
+@section ('page_title', 'Checkout')
 
 @section ('content')
 
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Thank you for your Payment!
+			Checkout
 		</h1> 
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
-			<h3>Your Tickets are now active</h3>
-			<h4>You may now go to the <a href="/events/{{ $purchase->participants{0}->event->slug }}/#seating">Events Page and Book a Seat!</a></h4>
-			<p><strong>Purchase ID:</strong> {{ $purchase->id }}</p>
-			<p><strong>Payment Method:</strong> {{ $purchase->type }}</p>
-			<h3>Tickets</h3>
-			<hr>
-			<div class="row">
-				@foreach ($purchase->participants as $participant)
-					<div class="col-lg-4 col-sm-6 col-xs-12 text-center">
-						<h5>{{ $participant->event->display_name }}</h5>
-						<h5>{{ $participant->ticket->name }}</h5>
-						<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
-					</div>
-				@endforeach
-			</div>
+			{{ Form::open(array('url'=>'/payment/review')) }}
+				{{ Form::hidden('gateway', 'paypal_express') }}
+				<button type="submit" class="btn btn-default">Pay by Paypal</button>
+			{{ Form::close() }}
+			{{ Form::open(array('url'=>'/payment/review')) }}
+				{{ Form::hidden('gateway', 'stripe') }}
+				<button type="submit" class="btn btn-default">Pay by Card</button>
+			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">
 			<div class="panel panel-default">
@@ -37,7 +30,6 @@
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<tbody>
-								@php ($total = 0)
 								@foreach ($basketItems as $item)
 									<tr>
 										<td>
@@ -50,7 +42,6 @@
 											£{{ $item->price }}
 										</td>
 									</tr>
-									@php ($total += ($item->price * $item->quantity))
 								@endforeach
 								<tr>
 									<td></td>
@@ -58,9 +49,8 @@
 										<strong>Total:</strong>
 									</td>
 									<td>
-										£{{ $total }}
+										£{{ $basketTotal }}
 									</td>
-								</tr>
 							</tbody>
 						</table>
 					</div>

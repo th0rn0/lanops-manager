@@ -22,8 +22,26 @@ class EventParticipant extends Model
      */
     protected $hidden = array(
         'created_at',
-        'updated_at'
+        'updated_at',
     );
+
+    protected $fillable = [
+        'user_id',
+        'event_id',
+        'ticket_id',
+        'purchase_id',
+    ];
+
+    public static function boot()
+    {
+        parent::boot();
+        self::created(function ($model) {
+            if (!$model->generateQRCode()) {
+                return false;
+            }
+            return true;
+        });
+    }
 
     /*
      * Relationships
@@ -103,6 +121,9 @@ class EventParticipant extends Model
         QrCode::size(300);
         QrCode::generate($ticketUrl, $qrCodePath . $qrCodeFileName);
         $this->qrcode = $qrCodePath . $qrCodeFileName;
+        if (!$this->save()) {
+            return false;
+        }
         return true;
     }
 

@@ -13,6 +13,15 @@ class Purchase extends Model
      */
     protected $table = 'purchases';
 
+    protected $fillable = [
+        'user_id',
+        'type',
+        'transaction_id',
+        'token',
+        'status',
+        'paypal_email'
+    ];
+
     /**
      * The attributes excluded from the model's JSON form.
      *

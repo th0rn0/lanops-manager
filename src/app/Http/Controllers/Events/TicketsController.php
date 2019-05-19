@@ -87,7 +87,7 @@ class TicketsController extends Controller
         }
 
         Session::put('basket', [$ticket->id => $request->quantity]);
-        return Redirect::to('/payment/review');
+        return Redirect::to('/payment/checkout');
     }
 
     /**

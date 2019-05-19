@@ -1,13 +1,13 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Review Order')
+@section ('page_title', 'Review Terms & Conditions')
 
 @section ('content')
 
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Confirm Order
+			Review Terms & Conditions of Purchase
 		</h1> 
 	</div>
 	<div class="row">
@@ -20,10 +20,11 @@
 				</div>
 			@endif
 			<div class="alert alert-warning">
-				<h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+				<h5>By Clicking on Continue to Payment you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
 			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
-				<button class="btn btn-default">Confirm</button>
+				{{ Form::hidden('gateway', $paymentGateway) }}
+				<button class="btn btn-default">Continue to Payment</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">
