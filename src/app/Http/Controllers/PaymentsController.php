@@ -175,20 +175,43 @@ class PaymentsController extends Controller
         switch ($paymentGateway) {
             case 'stripe':
                 // Stripe Post Params
-                // DEBUG
-                // VALIDATE THE REQUESTS HERE!
+                $rules = [
+                    'card_first_name'   => 'required',
+                    'card_last_name'    => 'required',
+                    'card_number'       => 'required|integer',
+                    'card_expiry_month' => 'required|integer',
+                    'card_expiry_year'  => 'required|integer',
+                    'card_cvv'          => 'integer',
+                    'billing_address_1' => 'required',
+                    'billing_postcode'  => 'required',
+                ];
+                $messages = [
+                    'card_first_name.required'      => 'Card First Name is Required',
+                    'card_last_name.required'       => 'Card Last Name is Required',
+                    'card_number.required'          => 'Card Number is Required',
+                    'card_number.integer'           => 'Card Number is invalid',
+                    'card_expiry_month.required'    => 'Expiry Month is Required',
+                    'card_expiry_month.integer'     => 'Expiry Month Must be a Number',
+                    'card_expiry_year.required'     => 'Expiry Year is Required',
+                    'card_expiry_year.integer'      => 'Expiry Year Must be a Number',
+                    'card_cvv.integer'              => 'CVV must be a Number',
+                    'billing_address_1.required'    => 'Billing Address Required',
+                    'billing_postcode.required'     => 'Billing Postcode Required',
+                ];
+                $this->validate($request, $rules, $messages);
+
                 $card = array(
                     'firstName'             => $request->card_first_name,
                     'lastName'              => $request->card_last_name,
                     'number'                => $request->card_number,
                     'expiryMonth'           => $request->card_expiry_month,
                     'expiryYear'            => $request->card_expiry_year,
-                    'cvv'                   => '123',
-                    'billingAddress1'       => '1 Scrubby Creek Road',
-                    'billingCountry'        => 'AU',
-                    'billingCity'           => 'Scrubby Creek',
-                    'billingPostcode'       => '4999',
-                    'billingState'          => 'QLD',
+                    'cvv'                   => $request->card_cvv,
+                    'billingAddress1'       => $request->billing_address_1,
+                    'billingCountry'        => $request->billing_address_2,
+                    'billingCity'           => $request->billing_country,
+                    'billingPostcode'       => $request->billing_postcode,
+                    'billingState'          => $request->billing_state,
                 );
                 $params = array(
                     'amount' => (float)Helpers::getBasketTotal($basket),
@@ -235,7 +258,6 @@ class PaymentsController extends Controller
         // Process Response
         if ($response->isSuccessful() && $paymentGateway == 'stripe') {
             // payment was successful: update database
-            // dd($response);
             $stripeResponse = $response->getData();
             $purchaseParams = [
                 'user_id'           => Auth::id(),
