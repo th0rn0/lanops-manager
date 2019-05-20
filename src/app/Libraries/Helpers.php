@@ -43,6 +43,7 @@ class Helpers
         } else {
             $events = \App\Event::orderBy('start', 'DESC')->get();
         }
+        $return = array();
         foreach ($events as $event) {
             $return[$event->id] = $event;
         }
