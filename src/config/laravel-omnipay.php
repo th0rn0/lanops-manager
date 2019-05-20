@@ -19,6 +19,12 @@ return [
                 'password' => env('PAYPAL_PASSWORD'),
                 'signature' => env('PAYPAL_SIGNATURE')
             ]
+        ],
+        'stripe' => [
+            'driver'  => 'PayPal_Express',
+            'credentials' => [
+                'apikey' => env('STRIPE_API_KEY')
+            ]
         ]
     ]
 

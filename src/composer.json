@@ -24,7 +24,8 @@
         "leafo/scssphp": "^0.7.7",
         "omnipay/paypal": "^3.0",
         "cviebrock/eloquent-sluggable": "^4.8",
-        "barryvdh/laravel-debugbar": "^3.2"
+        "barryvdh/laravel-debugbar": "^3.2",
+        "omnipay/stripe": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
