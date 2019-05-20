@@ -225,7 +225,12 @@ class PaymentsController extends Controller
         $gateway->setTestMode($this->sandbox);
 
         // Send Payment
-        $response = $gateway->purchase($params)->send();
+        try {
+            $response = $gateway->purchase($params)->send();
+        } catch (\Exception $e) {
+            Session::flash('alert-danger', $e->getMessage());
+            return Redirect::back();
+        }
 
         // Process Response
         if ($response->isSuccessful() && $paymentGateway == 'stripe') {
@@ -256,7 +261,12 @@ class PaymentsController extends Controller
             return Redirect::to('/payment/successful/' . $purchase->id);
         } elseif ($response->isRedirect() && $paymentGateway == 'paypal_express') {
             // redirect to offsite payment gateway such as paypal
-            $response->redirect();
+            try {
+                $response->redirect();
+            } catch (\Exception $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                return Redirect::back();
+            }
         }
         //Failed transaction
         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.' . $response->getMessage());
