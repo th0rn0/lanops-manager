@@ -41,10 +41,10 @@
 			</div>
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/appearance/css/variables', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					@foreach ($css_variables as $css_variable)
+					@foreach ($cssVariables as $cssVariable)
 						<div class="form-group">
-							{{ Form::label('css_variables[' . $css_variable->key . ']',$css_variable->key,array('id'=>'','class'=>'')) }}
-							{{ Form::text('css_variables[' . $css_variable->key . ']', $css_variable->value,array('id'=>'css_variable[]','class'=>'form-control')) }}
+							{{ Form::label('css_variables[' . $cssVariable->key . ']',$cssVariable->key,array('id'=>'','class'=>'')) }}
+							{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[]','class'=>'form-control')) }}
 						</div>
 					@endforeach
 					<button type="submit" class="btn btn-default">Submit</button>
