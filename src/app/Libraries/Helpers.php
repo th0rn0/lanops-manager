@@ -38,6 +38,7 @@ class Helpers
      */
     public static function getEvents($order = 'DESC', $limit = 0, $obj = false)
     {
+        $return = array();
         if ($limit != 0) {
             $events = \App\Event::orderBy('start', $order)->paginate($limit);
         } else {
@@ -62,6 +63,7 @@ class Helpers
      */
     public static function getEventNames($order = 'DESC', $limit = 0, $future = false, $obj = false)
     {
+        $return = array();
         if ($limit != 0) {
             if ($future) {
                 $events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', $order)->paginate($limit);

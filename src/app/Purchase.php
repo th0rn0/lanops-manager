@@ -43,4 +43,20 @@ class Purchase extends Model
     {
         return $this->hasMany('App\EventParticipant', 'purchase_id');
     }
+
+
+    public function getPurchaseType()
+    {
+        switch (strtolower($this->type)) {
+            case 'stripe':
+                return 'Card';
+                break;
+            case 'paypal express':
+                return 'Paypal';
+                break;
+            default:
+                return $this->type;
+                break;
+        }
+    }
 }

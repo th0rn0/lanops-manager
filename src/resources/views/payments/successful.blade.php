@@ -15,7 +15,7 @@
 			<h3>Your Tickets are now active</h3>
 			<h4>You may now go to the <a href="/events/{{ $purchase->participants{0}->event->slug }}/#seating">Events Page and Book a Seat!</a></h4>
 			<p><strong>Purchase ID:</strong> {{ $purchase->id }}</p>
-			<p><strong>Payment Method:</strong> {{ $purchase->type }}</p>
+			<p><strong>Payment Method:</strong> {{ $purchase->getPurchaseType() }}</p>
 			<h3>Tickets</h3>
 			<hr>
 			<div class="row">
