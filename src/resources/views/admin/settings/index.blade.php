@@ -132,13 +132,31 @@
 		</div>
 	</div>
 	<div class="col-lg-6 col-xs-12">
+		<!-- Payment Gateways -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Payment Gateways
+			</div>
+			<div class="panel-body">
+				<h4>Active Gateways</h4>
+				@foreach ($activePaymentGateways as $gateway)
+					{{ $gateway }}
+				@endforeach
+				@foreach ($supportedPaymentGateways as $gateway)
+					<h4>{{ $gateway }}</h4>
+					{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
+						<button type="submit" class="btn btn-default">Enable</button>
+					{{ Form::close() }}
+				@endforeach
+			</div>
+		</div>
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-info-circle fa-fw"></i> Social Media
 			</div>
 			<div class="panel-body">
-				<p>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</p>
+				<p><small>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</small></p>
 				<h4>Facebook</h4>
 				@if ($facebookCallback != null)
 					<a href="{{ $facebookCallback }}"><button type="button" class="btn btn-default">Link Account</button></a>

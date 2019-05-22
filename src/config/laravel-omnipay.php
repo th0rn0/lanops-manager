@@ -21,7 +21,7 @@ return [
             ]
         ],
         'stripe' => [
-            'driver'  => 'PayPal_Express',
+            'driver'  => 'stripe',
             'credentials' => [
                 'apikey' => env('STRIPE_API_KEY')
             ]

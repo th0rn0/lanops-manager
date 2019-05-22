@@ -287,6 +287,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/admin/settings', 'Admin\SettingsController@update');
         Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
         Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
+        Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
+        Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
         Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
         /**

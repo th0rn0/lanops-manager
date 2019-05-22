@@ -45,6 +45,10 @@ class Purchase extends Model
     }
 
 
+    /**
+     * Get Purchase Type
+     * @param String
+     */
     public function getPurchaseType()
     {
         switch (strtolower($this->type)) {

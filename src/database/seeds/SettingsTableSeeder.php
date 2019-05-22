@@ -122,5 +122,15 @@ class SettingsTableSeeder extends Seeder
             'value'         => null,
             'default'       => true,
         ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'payment_gateway_stripe',
+            'value'         => true,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'payment_gateway_paypal_express',
+            'value'         => true,
+            'default'       => true,
+        ]);
     }
 }

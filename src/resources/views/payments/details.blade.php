@@ -81,7 +81,7 @@
 										<td>
 											<strong>{{ $item->name }}</strong>
 										</td>
-										<td>
+										<td class="text-right">
 											x {{ $item->quantity }}
 										</td>
 										<td>
@@ -91,7 +91,7 @@
 								@endforeach
 								<tr>
 									<td></td>
-									<td>
+									<td class="text-right">
 										<strong>Total:</strong>
 									</td>
 									<td>
