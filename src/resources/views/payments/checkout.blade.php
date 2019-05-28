@@ -51,15 +51,25 @@
 					<h3 class="panel-title">Payment</h3>
 				</div>
 				<div class="panel-body">
-					{{ Form::open(array('url'=>'/payment/review')) }}
-						{{ Form::hidden('gateway', 'paypal') }}
-						<button type="submit" class="btn btn-default btn-block">Pay by Paypal</button>
-					{{ Form::close() }}
-					<br>
-					{{ Form::open(array('url'=>'/payment/review')) }}
-						{{ Form::hidden('gateway', 'stripe') }}
-						<button type="submit" class="btn btn-default btn-block">Pay by Card</button>
-					{{ Form::close() }}
+					<div class="row">
+						@foreach ($activePaymentGateways as $gateway)
+							<div class="col-sm-6 col-xs-12">
+								<div class="section-header">
+									<h4>
+										{{ Settings::getPaymentGatewayDisplayName($gateway) }}
+									</h4>
+									<hr>
+								</div>
+								{{ Form::open(array('url'=>'/payment/review')) }}
+									{{ Form::hidden('gateway', $gateway) }}
+									<button type="submit" class="btn btn-default btn-block">
+										Pay by {{ Settings::getPaymentGatewayDisplayName($gateway) }}
+									</button>
+								{{ Form::close() }}
+								<p><small>{{ Settings::getPaymentGatewayNote($gateway) }}</small></p>
+							</div>
+						@endforeach
+					</div>
 				</div>
 			</div>
 		</div>

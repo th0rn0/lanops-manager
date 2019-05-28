@@ -531,4 +531,22 @@ class Setting extends Model
         }
         return true;
     }
+
+    /**
+     * Get Payment Gateway Display Name
+     * @return String
+     */
+    public static function getPaymentGatewayDisplayName($gateway)
+    {
+        return config('laravel-omnipay.gateways.' . $gateway . '.options.displayName');
+    }
+
+    /**
+     * Get Payment Gateway Note
+     * @return String
+     */
+    public static function getPaymentGatewayNote($gateway)
+    {
+        return config('laravel-omnipay.gateways.' . $gateway . '.options.note');
+    }
 }

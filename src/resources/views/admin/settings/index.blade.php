@@ -138,16 +138,22 @@
 				<i class="fa fa-info-circle fa-fw"></i> Payment Gateways
 			</div>
 			<div class="panel-body">
-				<h4>Active Gateways</h4>
-				@foreach ($activePaymentGateways as $gateway)
-					{{ $gateway }}
-				@endforeach
-				@foreach ($supportedPaymentGateways as $gateway)
-					<h4>{{ $gateway }}</h4>
-					{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
-						<button type="submit" class="btn btn-default">Enable</button>
-					{{ Form::close() }}
-				@endforeach
+				<div class="row">
+					@foreach ($supportedPaymentGateways as $gateway)
+						<div class="col-sm-6 col-xs-12">
+							<h4>{{ ucfirst($gateway) }}</h4>
+							@if (in_array($gateway, $activePaymentGateways))
+								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}
+									<button type="submit" class="btn btn-block btn-danger">Disable</button>
+								{{ Form::close() }}
+							@else
+								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
+									<button type="submit" class="btn btn-block btn-success">Enable</button>
+								{{ Form::close() }}
+							@endif
+						</div>
+					@endforeach
+				</div>
 			</div>
 		</div>
 		<!-- Social Media -->

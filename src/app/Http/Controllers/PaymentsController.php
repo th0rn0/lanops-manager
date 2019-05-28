@@ -39,7 +39,9 @@ class PaymentsController extends Controller
         }
         return view('payments.checkout')
             ->withBasketItems(Helpers::getBasketFormat($basket, true))
-            ->withBasketTotal(Helpers::getBasketTotal($basket));
+            ->withBasketTotal(Helpers::getBasketTotal($basket))
+            ->withActivePaymentGateways(Settings::getPaymentGateways())
+        ;
     }
 
     /**
