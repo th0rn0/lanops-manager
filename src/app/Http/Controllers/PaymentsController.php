@@ -39,7 +39,9 @@ class PaymentsController extends Controller
         }
         return view('payments.checkout')
             ->withBasketItems(Helpers::getBasketFormat($basket, true))
-            ->withBasketTotal(Helpers::getBasketTotal($basket));
+            ->withBasketTotal(Helpers::getBasketTotal($basket))
+            ->withActivePaymentGateways(Settings::getPaymentGateways())
+        ;
     }
 
     /**
@@ -51,10 +53,7 @@ class PaymentsController extends Controller
         if (!$basket = Session::get('basket')) {
             return Redirect::to('/');
         }
-        $acceptedPaymentGateways = [
-            'paypal_express',
-            'stripe',
-        ];
+        $acceptedPaymentGateways = Settings::getPaymentGateways();
         if (!isset($request->gateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
@@ -98,10 +97,7 @@ class PaymentsController extends Controller
         if (!$basket = Session::get('basket')) {
             return Redirect::to('/');
         }
-        $acceptedPaymentGateways = [
-            'paypal_express',
-            'stripe',
-        ];
+        $acceptedPaymentGateways = Settings::getPaymentGateways();
         if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
@@ -133,10 +129,7 @@ class PaymentsController extends Controller
                 return Redirect::back();
             }
         }
-        $acceptedPaymentGateways = [
-            'paypal_express',
-            'stripe',
-        ];
+        $acceptedPaymentGateways = Settings::getPaymentGateways();
         if (!isset($request->gateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
@@ -150,7 +143,7 @@ class PaymentsController extends Controller
         }
 
         $offSitePaymentGateways = [
-            'paypal_express',
+            'paypal',
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
         if (
@@ -175,20 +168,46 @@ class PaymentsController extends Controller
         switch ($paymentGateway) {
             case 'stripe':
                 // Stripe Post Params
-                // DEBUG
-                // VALIDATE THE REQUESTS HERE!
+                $rules = [
+                    'card_first_name'   => 'required',
+                    'card_last_name'    => 'required',
+                    'card_number'       => 'required|integer',
+                    'card_expiry_month' => 'required|integer|between:01,12',
+                    'card_expiry_year'  => 'required|integer|between:00,99',
+                    'card_cvv'          => 'integer|between:000,999',
+                    'billing_address_1' => 'required',
+                    'billing_postcode'  => 'required',
+                ];
+                $messages = [
+                    'card_first_name.required'      => 'Card First Name is Required',
+                    'card_last_name.required'       => 'Card Last Name is Required',
+                    'card_number.required'          => 'Card Number is Required',
+                    'card_number.integer'           => 'Card Number is invalid',
+                    'card_expiry_month.required'    => 'Expiry Month is Required',
+                    'card_expiry_month.integer'     => 'Expiry Month must be a Number',
+                    'card_expiry_month.between'     => 'Expiry Month must in the Numeric MM format',
+                    'card_expiry_year.required'     => 'Expiry Year is Required',
+                    'card_expiry_year.integer'      => 'Expiry Year must be a Number',
+                    'card_expiry_year.between'      => 'Expiry Year must in the Numeric YY format',
+                    'card_cvv.integer'              => 'CVV must be a Number',
+                    'card_cvv.between'              => 'CVV must be a 3 Digits long',
+                    'billing_address_1.required'    => 'Billing Address Required',
+                    'billing_postcode.required'     => 'Billing Postcode Required',
+                ];
+                $this->validate($request, $rules, $messages);
+
                 $card = array(
                     'firstName'             => $request->card_first_name,
                     'lastName'              => $request->card_last_name,
                     'number'                => $request->card_number,
                     'expiryMonth'           => $request->card_expiry_month,
                     'expiryYear'            => $request->card_expiry_year,
-                    'cvv'                   => '123',
-                    'billingAddress1'       => '1 Scrubby Creek Road',
-                    'billingCountry'        => 'AU',
-                    'billingCity'           => 'Scrubby Creek',
-                    'billingPostcode'       => '4999',
-                    'billingState'          => 'QLD',
+                    'cvv'                   => $request->card_cvv,
+                    'billingAddress1'       => $request->billing_address_1,
+                    'billingCountry'        => $request->billing_address_2,
+                    'billingCity'           => $request->billing_country,
+                    'billingPostcode'       => $request->billing_postcode,
+                    'billingState'          => $request->billing_state,
                 );
                 $params = array(
                     'amount' => (float)Helpers::getBasketTotal($basket),
@@ -198,7 +217,7 @@ class PaymentsController extends Controller
                 $gateway = Omnipay::create('Stripe');
                 $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.apikey'));
                 break;
-            case 'paypal_express':
+            case 'paypal':
                 //Paypal Post Params
                 $params = array(
                     'cancelUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
@@ -225,12 +244,16 @@ class PaymentsController extends Controller
         $gateway->setTestMode($this->sandbox);
 
         // Send Payment
-        $response = $gateway->purchase($params)->send();
+        try {
+            $response = $gateway->purchase($params)->send();
+        } catch (\Exception $e) {
+            Session::flash('alert-danger', $e->getMessage());
+            return Redirect::back();
+        }
 
         // Process Response
         if ($response->isSuccessful() && $paymentGateway == 'stripe') {
             // payment was successful: update database
-            // dd($response);
             $stripeResponse = $response->getData();
             $purchaseParams = [
                 'user_id'           => Auth::id(),
@@ -254,9 +277,14 @@ class PaymentsController extends Controller
                 }
             }
             return Redirect::to('/payment/successful/' . $purchase->id);
-        } elseif ($response->isRedirect() && $paymentGateway == 'paypal_express') {
+        } elseif ($response->isRedirect() && $paymentGateway == 'paypal') {
             // redirect to offsite payment gateway such as paypal
-            $response->redirect();
+            try {
+                $response->redirect();
+            } catch (\Exception $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                return Redirect::back();
+            }
         }
         //Failed transaction
         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.' . $response->getMessage());

@@ -92,7 +92,7 @@
 												{{ $purchase->id }}
 											</td>
 											<td>
-												{{ $purchase->type }}
+												{{ $purchase->getPurchaseType() }}
 											</td>
 											<td>
 												{{  date('d-m-y H:i', strtotime($purchase->created_at)) }}

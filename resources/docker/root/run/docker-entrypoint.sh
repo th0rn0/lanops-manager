@@ -56,39 +56,6 @@ else
 	echo 'OK'
 fi
 
-file_env 'PAYPAL_USERNAME'
-if [ -z "$PAYPAL_USERNAME" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because PAYPAL_USERNAME is not specified '
-	echo >&2 'You need to specify PAYPAL_USERNAME'
-	exit 1
-else
-	echo 'OK'
-fi
-
-file_env 'PAYPAL_PASSWORD'
-if [ -z "$PAYPAL_PASSWORD" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because PAYPAL_PASSWORD is not specified '
-	echo >&2 'You need to specify PAYPAL_PASSWORD'
-	exit 1
-else
-	echo 'OK'
-fi
-
-file_env 'PAYPAL_SIGNATURE'
-if [ -z "$PAYPAL_SIGNATURE" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because PAYPAL_SIGNATURE is not specified '
-	echo >&2 'You need to specify PAYPAL_SIGNATURE'
-	exit 1
-else
-	echo 'OK'
-fi
-
 file_env 'STEAM_API_KEY'
 if [ -z "$STEAM_API_KEY" ]; 
 then
@@ -130,6 +97,62 @@ fi
 
 file_env 'FACEBOOK_APP_SECRET'
 if [ -z "$FACEBOOK_APP_SECRET" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'STRIPE_API_KEY'
+if [ -z "$STRIPE_API_KEY" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'PAYPAL_USERNAME'
+if [ -z "$PAYPAL_USERNAME" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'PAYPAL_PASSWORD'
+if [ -z "$PAYPAL_PASSWORD" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'PAYPAL_SIGNATURE'
+if [ -z "$PAYPAL_SIGNATURE" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'ANALYTICS_TRACKING_ID'
+if [ -z "$ANALYTICS_TRACKING_ID" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'ANALYTICS_TRACKING_ID'
+if [ -z "$ANALYTICS_TRACKING_ID" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
+file_env 'ANALYTICS_TRACKING_ID'
+if [ -z "$ANALYTICS_TRACKING_ID" ];
 then
 	echo 'NOT SET'
 else

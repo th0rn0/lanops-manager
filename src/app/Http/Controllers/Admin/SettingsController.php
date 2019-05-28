@@ -39,6 +39,8 @@ class SettingsController extends Controller
         return view('admin.settings.index')
             ->withSettings(Setting::all())
             ->withFacebookCallback($facebookCallback)
+            ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
+            ->withActivePaymentGateways(Settings::getPaymentGateways())
         ;
     }
     
@@ -234,6 +236,36 @@ class SettingsController extends Controller
             'alert-success',
             "Successfully Uninked {$social}. You will still need to remove the app access on Facebook!"
         );
+        return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Enable Payment Gateway
+     * @param  String $gateway
+     * @return Redirect
+     */
+    public function enablePaymentGateway($gateway)
+    {
+        if (!Settings::enablePaymentGateway($gateway)) {
+            Session::flash('alert-danger', "Could not Enable {$gateway}!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Enabled {$gateway}!");
+        return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Disable Payment Gateway
+     * @param  String $gateway
+     * @return Redirect
+     */
+    public function disablePaymentGateway($gateway)
+    {
+        if (!Settings::disablePaymentGateway($gateway)) {
+            Session::flash('alert-danger', "Could not Disable {$gateway}!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Disabled {$gateway}!");
         return Redirect::to('/admin/settings');
     }
     

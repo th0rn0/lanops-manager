@@ -312,7 +312,7 @@ class Settings
 
     /**
      * Get Facebook Page Access Tokens
-     * @param Array $facebook_access_tokens
+     * @return Array
      */
     public static function getSocialFacebookPageAccessTokens()
     {
@@ -326,5 +326,59 @@ class Settings
     public static function setSocialFacebookPageAccessTokens($facebook_access_tokens)
     {
         return \App\Setting::setSocialFacebookPageAccessTokens($facebook_access_tokens);
+    }
+
+    /**
+     * Get Active Payment Gateways
+     * @return Array
+     */
+    public static function getPaymentGateways()
+    {
+        return \App\Setting::getPaymentGateways();
+    }
+
+    /**
+     * Get Supported Payment Gateways
+     * @return Array
+     */
+    public static function getSupportedPaymentGateways()
+    {
+        return \App\Setting::getSupportedPaymentGateways();
+    }
+
+    /**
+     * Enable Payment Gateway
+     * @return Boolean
+     */
+    public static function enablePaymentGateway($gateway)
+    {
+        return \App\Setting::enablePaymentGateway($gateway);
+    }
+
+    /**
+     * Disable Payment Gateway
+     * @return Boolean
+     */
+    public static function disablePaymentGateway($gateway)
+    {
+        return \App\Setting::disablePaymentGateway($gateway);
+    }
+
+    /**
+     * Get Payment Gateway Display Name
+     * @return String
+     */
+    public static function getPaymentGatewayDisplayName($gateway)
+    {
+        return \App\Setting::getPaymentGatewayDisplayName($gateway);
+    }
+
+    /**
+     * Get Payment Gateway Note
+     * @return String
+     */
+    public static function getPaymentGatewayNote($gateway)
+    {
+        return \App\Setting::getPaymentGatewayNote($gateway);
     }
 }

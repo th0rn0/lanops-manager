@@ -10,3 +10,8 @@
 .btn-orange {
   @include button-variant(#333333, $color_primary, #333333);
 }
+
+.footer {
+	height: 200px;
+	background-color: #333333;
+}

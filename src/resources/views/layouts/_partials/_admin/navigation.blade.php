@@ -71,7 +71,7 @@
 				<a href="/admin/settings"><i class="fa fa-wrench" aria-hidden="true"></i> Settings/Misc</a> 
 			</li>
 			<li>
-				<a href="/admin/appearance"><i class="fa fa-wrench" aria-hidden="true"></i> WIP: Appearance</a> 
+				<a href="/admin/appearance"><i class="fa fa-wrench" aria-hidden="true"></i> Appearance</a> 
 			</li>
 		</ul>
 	</div>
