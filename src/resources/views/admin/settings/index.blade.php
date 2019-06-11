@@ -132,31 +132,58 @@
 		</div>
 	</div>
 	<div class="col-lg-6 col-xs-12">
+		<!-- Payment Gateways -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Payment Gateways
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					@foreach ($supportedPaymentGateways as $gateway)
+						<div class="col-sm-6 col-xs-12">
+							<h4>{{ ucfirst($gateway) }}</h4>
+							@if (in_array($gateway, $activePaymentGateways))
+								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}
+									<button type="submit" class="btn btn-block btn-danger">Disable</button>
+								{{ Form::close() }}
+							@else
+								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
+									<button type="submit" class="btn btn-block btn-success">Enable</button>
+								{{ Form::close() }}
+							@endif
+						</div>
+					@endforeach
+				</div>
+			</div>
+		</div>
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-info-circle fa-fw"></i> Social Media
 			</div>
 			<div class="panel-body">
-				<p>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</p>
-				<h4>Facebook</h4>
-				@if ($facebookCallback != null)
-					<a href="{{ $facebookCallback }}"><button type="button" class="btn btn-default">Link Account</button></a>
-				@else
-					{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
-						{{ Form::hidden('_method', 'DELETE') }}
-						<button type="submit" class="btn btn-danger">Unlink Account</button>
-					{{ Form::close() }}
-				@endif
-				<h4>Twitter <small>Coming soon</small></h4>
-				{{ Form::open(array('url'=>'/admin/settings/link/twitter')) }}
-					<button type="submit" class="btn btn-default" disabled>Link Account</button>
-
-				{{ Form::close() }}
-				<h4>Instagram <small>Coming soon</small></h4>
-				{{ Form::open(array('url'=>'/admin/settings/link/instagram')) }}
-					<button type="submit" class="btn btn-default" disabled>Link Account</button>
-				{{ Form::close() }}
+				<p><small>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</small></p>
+				<div class="row">
+					<div class="col-xs-12 col-md-6">
+						<h4>Facebook</h4>
+						@if ($facebookCallback != null)
+							<a href="{{ $facebookCallback }}">
+								<button type="button" class="btn btn-block btn-success">Link Account</button>
+							</a>
+						@else
+							{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
+								{{ Form::hidden('_method', 'DELETE') }}
+								<button type="submit" class="btn btn-block btn-danger">Unlink Account</button>
+							{{ Form::close() }}
+						@endif
+					</div>
+					<div class="col-xs-12 col-md-6">
+						<h4>Twitter <small>Coming soon</small></h4>
+						{{ Form::open(array('url'=>'/admin/settings/link/twitter')) }}
+							<button type="submit" class="btn btn-block btn-success" disabled>Link Account</button>
+						{{ Form::close() }}
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- About -->

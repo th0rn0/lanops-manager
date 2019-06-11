@@ -93,7 +93,7 @@ Route::group(['middleware' => ['web']], function () {
      * Payments
      */
     Route::get('/payment/checkout', 'PaymentsController@checkout');
-    Route::post('/payment/review', 'PaymentsController@review');
+    Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
     Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
     Route::get('/payment/callback', 'PaymentsController@process');
     Route::post('/payment/post', 'PaymentsController@post');
@@ -287,6 +287,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/admin/settings', 'Admin\SettingsController@update');
         Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
         Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
+        Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
+        Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
         Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
         /**
