@@ -390,4 +390,22 @@ class Settings
     {
         return \App\Setting::isCreditEnabled();
     }
+
+    /**
+     * Enable Credit System
+     * @return Boolean
+     */
+    public static function enableCreditSystem()
+    {
+        return \App\Setting::enableCreditSystem();
+    }
+
+    /**
+     * Disable Credit System
+     * @return Boolean
+     */
+    public static function disableCreditSystem()
+    {
+        return \App\Setting::disableCreditSystem();
+    }
 }

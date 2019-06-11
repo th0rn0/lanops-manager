@@ -162,22 +162,16 @@
 				<i class="fa fa-info-circle fa-fw"></i> Credit System
 			</div>
 			<div class="panel-body">
-				<div class="row">
-					@foreach ($supportedPaymentGateways as $gateway)
-						<div class="col-sm-6 col-xs-12">
-							<h4>{{ ucfirst($gateway) }}</h4>
-							@if (in_array($gateway, $activePaymentGateways))
-								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}
-									<button type="submit" class="btn btn-block btn-danger">Disable</button>
-								{{ Form::close() }}
-							@else
-								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
-									<button type="submit" class="btn btn-block btn-success">Enable</button>
-								{{ Form::close() }}
-							@endif
-						</div>
-					@endforeach
-				</div>
+				<p>The Credit System is used to award participants with credit they can use to buy things from the shop and events. It can be award for buying tickets, attending events, participanting/winning tournaments or manually assigned.</p>
+				@if ($isCreditEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/credit/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/credit/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
 			</div>
 		</div>
 		<!-- Social Media -->

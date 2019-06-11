@@ -41,6 +41,7 @@ class SettingsController extends Controller
             ->withFacebookCallback($facebookCallback)
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
+            ->withIsCreditEnabled(Settings::isCreditEnabled())
         ;
     }
     
@@ -269,6 +270,35 @@ class SettingsController extends Controller
         return Redirect::to('/admin/settings');
     }
     
+    /**
+     * Enable Credit System
+     * @return Redirect
+     */
+    public function enableCreditSystem()
+    {
+        if (!Settings::enableCreditSystem()) {
+            Session::flash('alert-danger', "Could not Enable the Credit System!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Enabled the Credit System!");
+        return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Disable Credit System
+     * @return Redirect
+     */
+    public function disableCreditSystem()
+    {
+        if (!Settings::disableCreditSystem()) {
+            Session::flash('alert-danger', "Could not Disable the Credit System!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Disabled the Credit System!");
+        return Redirect::to('/admin/settings');
+    }
+    
+
     /**
      * Regenerate QR codes for Event Participants
      * @return Redirect

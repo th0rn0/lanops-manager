@@ -556,6 +556,38 @@ class Setting extends Model
      */
     public static function isCreditEnabled()
     {
-        return self::where('setting', 'credit_enabled')->first();
+        return self::where('setting', 'credit_enabled')->first()->value;
+    }
+
+    /**
+     * Enable Credit System
+     * @return Boolean
+     */
+    public static function enableCreditSystem()
+    {
+        if (!$creditSystemEnabled = self::where('setting', 'credit_enabled')->first()) {
+            return false;
+        }
+        $creditSystemEnabled->value = true;
+        if (!$creditSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Credit System
+     * @return Boolean
+     */
+    public static function disableCreditSystem()
+    {
+        if (!$creditSystemEnabled = self::where('setting', 'credit_enabled')->first()) {
+            return false;
+        }
+        $creditSystemEnabled->value = false;
+        if (!$creditSystemEnabled->save()) {
+            return false;
+        }
+        return true;
     }
 }
