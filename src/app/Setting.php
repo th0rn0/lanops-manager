@@ -549,4 +549,13 @@ class Setting extends Model
     {
         return config('laravel-omnipay.gateways.' . $gateway . '.options.note');
     }
+
+    /**
+     * Is Credit System Enabled
+     * @return Boolean
+     */
+    public static function isCreditEnabled()
+    {
+        return self::where('setting', 'credit_enabled')->first();
+    }
 }

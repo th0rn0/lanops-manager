@@ -127,4 +127,9 @@ class User extends Authenticatable
         }
         return $return;
     }
+
+    public function getCreditTotalByUserId()
+    {
+        return $this->credit_total;
+    }
 }

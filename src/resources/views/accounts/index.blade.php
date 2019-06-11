@@ -40,6 +40,16 @@
 						{{ Form::close() }}
 					</div>
 				</div>
+				@if (Settings::isCreditEnabled())
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Credit</h3>
+						</div>
+						<div class="panel-body">
+							{{ $user->credit_total }}
+						</div>
+					</div>
+				@endif
 			</div>
 
 			<!-- TICKETS -->

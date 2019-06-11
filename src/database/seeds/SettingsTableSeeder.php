@@ -132,5 +132,10 @@ class SettingsTableSeeder extends Seeder
             'value'         => true,
             'default'       => true,
         ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_enabled',
+            'value'         => true,
+            'default'       => true,
+        ]);
     }
 }

@@ -381,4 +381,13 @@ class Settings
     {
         return \App\Setting::getPaymentGatewayNote($gateway);
     }
+
+    /**
+     * Is Credit System Enabled
+     * @return Boolean
+     */
+    public static function isCreditEnabled()
+    {
+        return \App\Setting::isCreditEnabled();
+    }
 }
