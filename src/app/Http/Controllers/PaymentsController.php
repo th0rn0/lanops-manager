@@ -48,18 +48,18 @@ class PaymentsController extends Controller
      * Review Terms and Conditions of Purchase Page
      * @return View
      */
-    public function review(Request $request)
+    public function review($paymentGateway)
     {
         if (!$basket = Session::get('basket')) {
             return Redirect::to('/');
         }
         $acceptedPaymentGateways = Settings::getPaymentGateways();
-        if (!isset($request->gateway)) {
+        if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        if (in_array(strtolower($request->gateway), $acceptedPaymentGateways)) {
-            $paymentGateway = strtolower($request->gateway);
+        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways)) {
+            $paymentGateway = strtolower($paymentGateway);
         }
         if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
@@ -81,7 +81,7 @@ class PaymentsController extends Controller
             }
         }
         return view('payments.review')
-            ->withPaymentGateway($request->gateway)
+            ->withPaymentGateway($paymentGateway)
             ->withBasketItems(Helpers::getBasketFormat($basket, true))
             ->withBasketTotal(Helpers::getBasketTotal($basket))
             ->withNextEventFlag($nextEventFlag);
@@ -95,7 +95,8 @@ class PaymentsController extends Controller
     public function details($paymentGateway)
     {
         if (!$basket = Session::get('basket')) {
-            return Redirect::to('/');
+            Session::flash('alert-danger', 'No Basket was found. Please try again');
+            return Redirect::back();
         }
         $acceptedPaymentGateways = Settings::getPaymentGateways();
         if (!isset($paymentGateway)) {

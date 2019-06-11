@@ -93,7 +93,7 @@ Route::group(['middleware' => ['web']], function () {
      * Payments
      */
     Route::get('/payment/checkout', 'PaymentsController@checkout');
-    Route::post('/payment/review', 'PaymentsController@review');
+    Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
     Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
     Route::get('/payment/callback', 'PaymentsController@process');
     Route::post('/payment/post', 'PaymentsController@post');

@@ -60,12 +60,11 @@
 									</h4>
 									<hr>
 								</div>
-								{{ Form::open(array('url'=>'/payment/review')) }}
-									{{ Form::hidden('gateway', $gateway) }}
-									<button type="submit" class="btn btn-default btn-block">
+								<a href="/payment/review/{{ $gateway }}">
+									<button type="button" class="btn btn-default btn-block">
 										Pay by {{ Settings::getPaymentGatewayDisplayName($gateway) }}
 									</button>
-								{{ Form::close() }}
+								</a>
 								<p><small>{{ Settings::getPaymentGatewayNote($gateway) }}</small></p>
 							</div>
 						@endforeach
