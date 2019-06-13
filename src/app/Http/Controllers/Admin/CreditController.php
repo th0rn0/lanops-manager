@@ -31,10 +31,10 @@ class CreditController extends Controller
     }
 
     /**
-     * Manually Add Credit to User
+     * Manually Edit Credit to User
      * @return View
      */
-    public function add(Request $request)
+    public function edit(Request $request)
     {
 	 	$rules = [
             'user_id'   => 'required|exists:users,id',
@@ -48,7 +48,7 @@ class CreditController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if (!User::where('id', $request->user_id)->first()->addCredit($request->amount, true)) {
+        if (!User::where('id', $request->user_id)->first()->editCredit($request->amount, true)) {
         	Session::flash('alert-danger', 'Could not add credit. Please try again');
         	return Redirect::back();
         }

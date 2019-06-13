@@ -133,14 +133,14 @@ class User extends Authenticatable
     }
 
     /**
-     * Add Credit for current User
+     * Edit Credit for current User
      * @param  $amount
      * @param  Boolean $manual
      * @return Boolean
      */
-    public function addCredit($amount, $manual = false)
+    public function editCredit($amount, $manual = false)
     {
-        $this->credit_total += $this->credit;
+        $this->credit_total += $amount;
         if (!$this->save()) {
             return false;
         }

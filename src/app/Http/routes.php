@@ -339,8 +339,6 @@ Route::group(['middleware' => ['web']], function () {
          * Credit System
          */
         Route::get('/admin/credit', 'Admin\CreditController@index');
-        Route::post('/admin/credit/add', 'Admin\CreditController@add');
-        Route::post('/admin/credit/remove', 'Admin\CreditController@remove');
-
+        Route::post('/admin/credit/edit', 'Admin\CreditController@edit');
     });
 });

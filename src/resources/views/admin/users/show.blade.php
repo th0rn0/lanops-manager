@@ -25,7 +25,7 @@
 				<i class="fa fa-users fa-fw"></i> Add Credit
 			</div>
 			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/credit/add')) }}
+				{{ Form::open(array('url'=>'/admin/credit/edit')) }}
 					<div class="form-group">
 						{{ Form::hidden('user_id', $user->id) }}
 						{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
