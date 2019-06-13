@@ -279,6 +279,7 @@ Route::group(['middleware' => ['web']], function () {
          * Users
          */
         Route::get('/admin/users', 'Admin\UsersController@index');
+        Route::get('/admin/users/{user}', 'Admin\UsersController@show');
 
         /**
          * Settings
@@ -335,8 +336,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/admin/purchases', 'Admin\PurchasesController@index');
 
         /**
-         * Purchases
+         * Credit System
          */
         Route::get('/admin/credit', 'Admin\CreditController@index');
+        Route::post('/admin/credit/add', 'Admin\CreditController@add');
+        Route::post('/admin/credit/remove', 'Admin\CreditController@remove');
+
     });
 });

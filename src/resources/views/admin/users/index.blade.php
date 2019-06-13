@@ -47,7 +47,11 @@
 										<img class="img-responsive img-rounded" width="15%" src="{{ $user->avatar }}">
 									</td>
 									<td>{{ $user->admin }}</td>
-									<td></td>
+									<td>
+										<a href="/admin/users/{{ $user->id }}">
+											<button class="btn btn-default btn-block">Edit</button>
+										</a>
+									</td>
 								</tr>
 							@endforeach
 						</tbody>

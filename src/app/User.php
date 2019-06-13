@@ -48,6 +48,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Purchase');
     }
+    public function creditLogs()
+    {
+        return $this->hasMany('App\CreditLog');
+    }
 
     /**
      * Check if Admin
@@ -128,8 +132,18 @@ class User extends Authenticatable
         return $return;
     }
 
-    public function getCreditTotalByUserId()
+    /**
+     * Add Credit for current User
+     * @param  $amount
+     * @param  Boolean $manual
+     * @return Boolean
+     */
+    public function addCredit($amount, $manual = false)
     {
-        return $this->credit_total;
+        $this->credit_total += $this->credit;
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
     }
 }

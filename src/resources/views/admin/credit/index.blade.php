@@ -16,14 +16,41 @@
 
 <div class="row">
 	<div class="col-xs-12 col-sm-10">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-credit-card fa-fw"></i> Credit System
+		@if ($isCreditEnabled)
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-credit-card fa-fw"></i> Credit System
+				</div>
+				<div class="panel-body">
+					{{ Form::open(array('url'=>'/admin/credit/add')) }}
+						<div class="form-group">
+							{{ Form::label('event_name','Event Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('event_name', '',array('id'=>'event_name','class'=>'form-control')) }}
+						</div>
+					{{ Form::close() }}
+				</div>  
 			</div>
-			<div class="panel-body">
-				
-			</div>  
-		</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-credit-card fa-fw"></i> Settings
+				</div>
+				<div class="panel-body">
+					@foreach ($creditLogs as $creditLog)
+						{{ $creditLog }}
+					@endforeach
+				</div>  
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-credit-card fa-fw"></i> Logs
+				</div>
+				<div class="panel-body">
+					@foreach ($creditLogs as $creditLog)
+						{{ $creditLog }}
+					@endforeach
+				</div>  
+			</div>
+		@endif
 	</div>
 	<div class="col-xs-12 col-sm-2">
 		<div class="panel panel-default">
