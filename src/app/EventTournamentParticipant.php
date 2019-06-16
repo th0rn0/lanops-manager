@@ -47,7 +47,7 @@ class EventTournamentParticipant extends Model
         self::created(function ($model) {
             if (Settings::isCreditEnabled()) {
                 if (Settings::getCreditTournamentParticipation() != 0 || Settings::getCreditTournamentParticipation() != null) {
-                    $model->user->editCredit(-1 * abs(Settings::getCreditTournamentParticipation()), false, 'Tournament Registration');
+                    $model->user->editCredit(Settings::getCreditTournamentParticipation(), false, 'Tournament Registration');
                 }
             }
             if ((!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
