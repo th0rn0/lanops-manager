@@ -57,7 +57,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($user->creditLogs as $creditLog)
+									@foreach ($user->creditLogs->reverse() as $creditLog)
 									<tr class="table-row" class="odd gradeX">
 										<td>{{ $creditLog->action }}</td>
 										<td>{{ $creditLog->amount }}</td>
