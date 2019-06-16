@@ -4,6 +4,7 @@ namespace App;
 
 use DB;
 use Auth;
+use Settings;
 
 use App\CreditLog;
 
@@ -39,6 +40,14 @@ class User extends Authenticatable
     public static function boot()
     {
         parent::boot();
+        self::created(function ($model) {
+            if (Settings::isCreditEnabled()) {
+                if (Settings::getCreditRegistrationSite() != 0 || Settings::getCreditRegistrationSite() != null) {
+                    $model->editCredit(Settings::getCreditRegistrationSite(), false, 'User Registration');
+                }
+            }
+            return true;
+        });
     }
     
     /*
