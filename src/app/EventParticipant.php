@@ -3,6 +3,7 @@
 namespace App;
 
 use QrCode;
+use Settings;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,6 +39,23 @@ class EventParticipant extends Model
         self::created(function ($model) {
             if (!$model->generateQRCode()) {
                 return false;
+            }
+            return true;
+        });
+        self::saved(function ($model) {
+            if (Settings::isCreditEnabled() && $model->staff == 0 && $model->free == 0 && $model->signed_in == 1 && !$model->credit_applied) {
+                if (Settings::getCreditRegistrationEvent() != 0 || Settings::getCreditRegistrationEvent() != null) {
+                    $model->user->editCredit(Settings::getCreditRegistrationEvent(), false, 'Event ' . $model->event->name . ' Registration');
+                    $model->credit_applied = true;
+                }
+            }
+            return true;
+        });
+        self::deleting(function ($model) {
+            if (Settings::isCreditEnabled() && $model->staff == 0 && $model->free == 0 && $model->signed_in == 1 && $model->credit_applied) {
+                if (Settings::getCreditRegistrationEvent() != 0 || Settings::getCreditRegistrationEvent() != null) {
+                    $model->user->editCredit(-1 * abs(Settings::getCreditRegistrationEvent()), false, 'Event ' . $model->event->name . ' De-Registration');
+                }
             }
             return true;
         });

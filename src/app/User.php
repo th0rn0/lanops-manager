@@ -3,6 +3,11 @@
 namespace App;
 
 use DB;
+use Auth;
+use Settings;
+
+use App\CreditLog;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -35,6 +40,14 @@ class User extends Authenticatable
     public static function boot()
     {
         parent::boot();
+        self::created(function ($model) {
+            if (Settings::isCreditEnabled()) {
+                if (Settings::getCreditRegistrationSite() != 0 || Settings::getCreditRegistrationSite() != null) {
+                    $model->editCredit(Settings::getCreditRegistrationSite(), false, 'User Registration');
+                }
+            }
+            return true;
+        });
     }
     
     /*
@@ -47,6 +60,10 @@ class User extends Authenticatable
     public function purchases()
     {
         return $this->hasMany('App\Purchase');
+    }
+    public function creditLogs()
+    {
+        return $this->hasMany('App\CreditLog');
     }
 
     /**
@@ -126,5 +143,52 @@ class User extends Authenticatable
             return json_decode(json_encode($return), false);
         }
         return $return;
+    }
+
+    /**
+     * Check Credit amount for current user
+     * @param  $amount
+     * @return Boolean
+     */
+    public function checkCredit($amount)
+    {
+        if (($this->credit_total += $amount) < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Edit Credit for current User
+     * @param  $amount
+     * @param  Boolean $manual
+     * @return Boolean
+     */
+    public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false)
+    {
+        $this->credit_total += $amount;
+        $admin_id = null;
+        if ($manual) {
+            $admin_id = Auth::id();
+            $reason = 'Manual Edit';
+        }
+        $action = 'ADD';
+        if ($amount < 0) {
+            $action = 'SUB';
+        }
+        if ($buy) {
+            $action = 'BUY';
+        }
+        CreditLog::create([
+            'user_id' => $this->id,
+            'action' => $action,
+            'amount' => $amount,
+            'reason' => $reason,
+            'admin_id' => $admin_id
+        ]);
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
     }
 }

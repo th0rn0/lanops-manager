@@ -40,6 +40,39 @@
 						{{ Form::close() }}
 					</div>
 				</div>
+				@if (Settings::isCreditEnabled())
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Credit - {{ $user->credit_total }}</h3>
+						</div>
+						<div class="panel-body">
+							<table width="100%" class="table table-striped table-hover" id="dataTables-example">
+								<thead>
+									<tr>
+										<th>Action</th>
+										<th>Amount</th>
+										<th>Item</th>
+										<th>Reason</th>
+										<th>Timestamp</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($user->creditLogs->reverse() as $creditLog)
+									<tr class="table-row" class="odd gradeX">
+										<td>{{ $creditLog->action }}</td>
+										<td>{{ $creditLog->amount }}</td>
+										<td></td>
+										<td>{{ $creditLog->reason }}</td>
+										<td>
+											{{ $creditLog->updated_at }}
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				@endif
 			</div>
 
 			<!-- TICKETS -->

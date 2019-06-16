@@ -34,4 +34,8 @@ class EventTicket extends Model
     {
         return $this->hasMany('App\EventParticipant', 'ticket_id');
     }
+    public function creditLogs()
+    {
+        return $this->belongsTo('App\CreditLog');
+    }
 }
