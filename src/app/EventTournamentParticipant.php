@@ -45,11 +45,6 @@ class EventTournamentParticipant extends Model
     {
         parent::boot();
         self::created(function ($model) {
-            if (Settings::isCreditEnabled()) {
-                if (Settings::getCreditTournamentParticipation() != 0 || Settings::getCreditTournamentParticipation() != null) {
-                    $model->user->editCredit(Settings::getCreditTournamentParticipation(), false, 'Tournament Registration');
-                }
-            }
             if ((!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
                 (!$model->pug && $model->event_tournament_team_id == null) &&
                 $model->eventTournament->format != 'list'
@@ -69,11 +64,6 @@ class EventTournamentParticipant extends Model
             return true;
         });
         self::deleting(function ($model) {
-            if (Settings::isCreditEnabled()) {
-                if (Settings::getCreditTournamentParticipation() != 0 || Settings::getCreditTournamentParticipation() != null) {
-                    $model->user->editCredit(-1 * abs(Settings::getCreditTournamentParticipation()), false, 'Tournament De-Registration');
-                }
-            }
             if (!$model->pug && $model->event_tournament_team_id == null && $model->eventTournament->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
                 $participant = $challonge->getParticipant(
