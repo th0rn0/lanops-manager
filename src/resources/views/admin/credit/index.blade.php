@@ -19,19 +19,6 @@
 		@if ($isCreditEnabled)
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="fa fa-credit-card fa-fw"></i> Credit System
-				</div>
-				<div class="panel-body">
-					{{ Form::open(array('url'=>'/admin/credit/add')) }}
-						<div class="form-group">
-							{{ Form::label('event_name','Event Name',array('id'=>'','class'=>'')) }}
-							{{ Form::text('event_name', '',array('id'=>'event_name','class'=>'form-control')) }}
-						</div>
-					{{ Form::close() }}
-				</div>  
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
 					<i class="fa fa-credit-card fa-fw"></i> Logs
 				</div>
 				<div class="panel-body">
@@ -74,6 +61,26 @@
 		@endif
 	</div>
 	<div class="col-xs-12 col-sm-2">
+		@if ($isCreditEnabled)
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-credit-card fa-fw"></i> Add Credit
+				</div>
+				<div class="panel-body">
+					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
+						<div class="form-group">
+							{{ Form::label('user_id','User',array('id'=>'','class'=>'')) }}
+							{{ Form::text('user_id', '',array('id'=>'user_id','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
+							{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}
+						</div>
+						<button class="btn btn-success btn-block">Submit</button>
+					{{ Form::close() }}
+				</div>  
+			</div>
+		@endif
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-credit-card fa-fw"></i> Automated Awards

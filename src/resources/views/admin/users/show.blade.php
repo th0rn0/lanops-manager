@@ -30,8 +30,8 @@
 						{{ Form::hidden('user_id', $user->id) }}
 						{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
 						{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}
-						<button type="submit" class="btn btn-block btn-danger">Add</button>
 					</div>
+					<button type="submit" class="btn btn-block btn-success">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>
