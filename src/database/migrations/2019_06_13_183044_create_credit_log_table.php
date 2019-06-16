@@ -18,6 +18,7 @@ class CreateCreditLogTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->enum('action', array('ADD','SUB','BUY'));
             $table->integer('amount');
+            $table->text('reason');
             $table->integer('event_ticket_id')->unsigned()->index()->nullable();
             $table->integer('admin_id')->unsigned()->index()->nullable();
             $table->timestamps();
@@ -36,9 +37,6 @@ class CreateCreditLogTable extends Migration
      */
     public function down()
     {
-        $table->dropForeign('credit_log_user_id_foreign');
-        $table->dropForeign('credit_log_admin_id_foreign');
-        $table->dropForeign('credit_logs_event_ticket_id_foreign');
         Schema::dropIfExists('credit_log');
     }
 }

@@ -13,7 +13,7 @@ class CreditLog extends Model
      */
     protected $table = 'credit_log';
 
-    protected $fillable = ['user_id', 'action', 'amount', 'event_ticket_id', 'admin_id'];
+    protected $fillable = ['user_id', 'action', 'amount', 'reason', 'event_ticket_id', 'admin_id'];
 
     /**
      * The attributes excluded from the model's JSON form.

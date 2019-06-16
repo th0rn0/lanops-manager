@@ -340,5 +340,6 @@ Route::group(['middleware' => ['web']], function () {
          */
         Route::get('/admin/credit', 'Admin\CreditController@index');
         Route::post('/admin/credit/edit', 'Admin\CreditController@edit');
+        Route::post('/admin/credit/settings', 'Admin\CreditController@settings');
     });
 });

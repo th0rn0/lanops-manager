@@ -3,6 +3,10 @@
 namespace App;
 
 use DB;
+use Auth;
+
+use App\CreditLog;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -133,14 +137,46 @@ class User extends Authenticatable
     }
 
     /**
+     * Check Credit amount for current user
+     * @param  $amount
+     * @return Boolean
+     */
+    public function checkCredit($amount)
+    {
+        if (($this->credit_total += $amount) < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Edit Credit for current User
      * @param  $amount
      * @param  Boolean $manual
      * @return Boolean
      */
-    public function editCredit($amount, $manual = false)
+    public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false)
     {
         $this->credit_total += $amount;
+        $admin_id = null;
+        if ($manual) {
+            $admin_id = Auth::id();
+            $reason = 'Manual Edit';
+        }
+        $action = 'ADD';
+        if ($amount < 0) {
+            $action = 'SUB';
+        }
+        if ($buy) {
+            $action = 'BUY';
+        }
+        CreditLog::create([
+            'user_id' => $this->id,
+            'action' => $action,
+            'amount' => $amount,
+            'reason' => $reason,
+            'admin_id' => $admin_id
+        ]);
         if (!$this->save()) {
             return false;
         }

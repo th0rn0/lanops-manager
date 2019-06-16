@@ -27,11 +27,13 @@
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th></th>
+								<th>Avatar</th>
 								<th>Username</th>
 								<th>Steam Name</th>
 								<th>Name</th>
-								<th>Avatar</th>
+								@if (Settings::isCreditEnabled())
+									<th>Credit</th>
+								@endif
 								<th>Admin</th>
 								<th>Edit</th>
 							</tr>
@@ -39,14 +41,24 @@
 						<tbody>
 							@foreach ($users as $user)
 								<tr class="">
-									<td></td>
+									<td width="3%">
+										<img class="img-responsive img-rounded" src="{{ $user->avatar }}">
+									</td>
 									<td>{{ $user->username }}</td>
 									<td>{{ $user->steamname }}</td>
 									<td>{{ $user->firstname }} {{ $user->surname }}</td>
+									@if (Settings::isCreditEnabled())
+										<td>
+											{{ $user->credit_total }}
+										</td>
+									@endif
 									<td>
-										<img class="img-responsive img-rounded" width="15%" src="{{ $user->avatar }}">
+										@if ($user->admin)
+											Yes
+										@else
+											No
+										@endif
 									</td>
-									<td>{{ $user->admin }}</td>
 									<td>
 										<a href="/admin/users/{{ $user->id }}">
 											<button class="btn btn-default btn-block">Edit</button>

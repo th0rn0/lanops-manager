@@ -408,4 +408,119 @@ class Settings
     {
         return \App\Setting::disableCreditSystem();
     }
+
+    /**
+     * Set Credit Tournament Participation Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentParticipation($amount)
+    {
+        return \App\Setting::setCreditTournamentParticipation($amount);
+    }
+
+    /**
+     * Set Credit Tournament First Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentFirst($amount)
+    {
+        return \App\Setting::setCreditTournamentFirst($amount);
+    }
+
+    /**
+     * Set Credit Tournament Second Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentSecond($amount)
+    {
+        return \App\Setting::setCreditTournamentSecond($amount);
+    }
+
+    /**
+     * Set Credit Tournament Third Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentThird($amount)
+    {
+        return \App\Setting::setCreditTournamentThird($amount);
+    }
+
+    /**
+     * Set Credit Site Registration Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditRegistrationEvent($amount)
+    {
+        return \App\Setting::setCreditRegistrationEvent($amount);
+    }
+
+    /**
+     * Set Credit Event Registration Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditRegistrationSite($amount)
+    {
+        return \App\Setting::setCreditRegistrationSite($amount);
+    }
+
+
+    /**
+     * Get Credit Tournament Participation Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentParticipation()
+    {
+        return \App\Setting::getCreditTournamentParticipation();
+    }
+
+    /**
+     * Get Credit Tournament First Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentFirst()
+    {
+        return \App\Setting::getCreditTournamentFirst();
+    }
+
+    /**
+     * Get Credit Tournament Second Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentSecond()
+    {
+        return \App\Setting::getCreditTournamentSecond();
+    }
+
+    /**
+     * Get Credit Tournament Third Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentThird()
+    {
+        return \App\Setting::getCreditTournamentThird();
+    }
+
+    /**
+     * Get Credit Site Registration Amount
+     * @return Integer $amount
+     */
+    public static function getCreditRegistrationEvent()
+    {
+        return \App\Setting::getCreditRegistrationEvent();
+    }
+
+    /**
+     * Get Credit Event Registration Amount
+     * @return Integer $amount
+     */
+    public static function getCreditRegistrationSite()
+    {
+        return \App\Setting::getCreditRegistrationSite();
+    }
 }
