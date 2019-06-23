@@ -549,4 +549,189 @@ class Setting extends Model
     {
         return config('laravel-omnipay.gateways.' . $gateway . '.options.note');
     }
+
+    /**
+     * Is Credit System Enabled
+     * @return Boolean
+     */
+    public static function isCreditEnabled()
+    {
+        return self::where('setting', 'credit_enabled')->first()->value;
+    }
+
+    /**
+     * Enable Credit System
+     * @return Boolean
+     */
+    public static function enableCreditSystem()
+    {
+        if (!$creditSystemEnabled = self::where('setting', 'credit_enabled')->first()) {
+            return false;
+        }
+        $creditSystemEnabled->value = true;
+        if (!$creditSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Credit System
+     * @return Boolean
+     */
+    public static function disableCreditSystem()
+    {
+        if (!$creditSystemEnabled = self::where('setting', 'credit_enabled')->first()) {
+            return false;
+        }
+        $creditSystemEnabled->value = false;
+        if (!$creditSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Credit Tournament Participation Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentParticipation($amount)
+    {
+        $setting = self::where('setting', 'credit_award_tournament_participation')->first();
+        $setting->value = $amount;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Credit Tournament First Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentFirst($amount)
+    {
+        $setting = self::where('setting', 'credit_award_tournament_first')->first();
+        $setting->value = $amount;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Credit Tournament Second Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentSecond($amount)
+    {
+        $setting = self::where('setting', 'credit_award_tournament_second')->first();
+        $setting->value = $amount;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Credit Tournament Third Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditTournamentThird($amount)
+    {
+        $setting = self::where('setting', 'credit_award_tournament_third')->first();
+        $setting->value = $amount;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Credit Site Registration Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditRegistrationEvent($amount)
+    {
+        $setting = self::where('setting', 'credit_award_registration_event')->first();
+        $setting->value = $amount;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Credit Event Registration Amount
+     * @param Integer $amount
+     * @return Boolean
+     */
+    public static function setCreditRegistrationSite($amount)
+    {
+        $setting = self::where('setting', 'credit_award_registration_site')->first();
+        $setting->value = $amount;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Credit Tournament Participation Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentParticipation()
+    {
+        return self::where('setting', 'credit_award_tournament_participation')->first()->value;
+    }
+
+    /**
+     * Get Credit Tournament First Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentFirst()
+    {
+        return self::where('setting', 'credit_award_tournament_first')->first()->value;
+    }
+
+    /**
+     * Get Credit Tournament Second Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentSecond()
+    {
+        return self::where('setting', 'credit_award_tournament_second')->first()->value;
+    }
+
+    /**
+     * Get Credit Tournament Third Amount
+     * @return Integer $amount
+     */
+    public static function getCreditTournamentThird()
+    {
+        return self::where('setting', 'credit_award_tournament_third')->first()->value;
+    }
+
+    /**
+     * Get Credit Site Registration Amount
+     * @return Integer $amount
+     */
+    public static function getCreditRegistrationEvent()
+    {
+        return self::where('setting', 'credit_award_registration_event')->first()->value;
+    }
+
+    /**
+     * Get Credit Event Registration Amount
+     * @return Integer $amount
+     */
+    public static function getCreditRegistrationSite()
+    {
+        return self::where('setting', 'credit_award_registration_site')->first()->value;
+    }
 }

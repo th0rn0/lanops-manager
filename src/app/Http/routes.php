@@ -279,6 +279,7 @@ Route::group(['middleware' => ['web']], function () {
          * Users
          */
         Route::get('/admin/users', 'Admin\UsersController@index');
+        Route::get('/admin/users/{user}', 'Admin\UsersController@show');
 
         /**
          * Settings
@@ -289,6 +290,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
         Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
         Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
+        Route::post('/admin/settings/credit/enable', 'Admin\SettingsController@enableCreditSystem');
+        Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
         Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
         /**
@@ -331,5 +334,12 @@ Route::group(['middleware' => ['web']], function () {
          * Purchases
          */
         Route::get('/admin/purchases', 'Admin\PurchasesController@index');
+
+        /**
+         * Credit System
+         */
+        Route::get('/admin/credit', 'Admin\CreditController@index');
+        Route::post('/admin/credit/edit', 'Admin\CreditController@edit');
+        Route::post('/admin/credit/settings', 'Admin\CreditController@settings');
     });
 });

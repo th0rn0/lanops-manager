@@ -30,4 +30,14 @@ class UsersController extends Controller
             ->withUser($user)
             ->withUsers($users);
     }
+
+    /**
+     * Show User Page
+     * @return View
+     */
+    public function show(User $user)
+    {
+        return view('admin.users.show')
+            ->withUser($user);
+    }
 }

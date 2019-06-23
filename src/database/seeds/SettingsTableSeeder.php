@@ -132,5 +132,40 @@ class SettingsTableSeeder extends Seeder
             'value'         => true,
             'default'       => true,
         ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_enabled',
+            'value'         => true,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_award_tournament_participation',
+            'value'         => 0,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_award_tournament_first',
+            'value'         => 0,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_award_tournament_second',
+            'value'         => 0,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_award_tournament_third',
+            'value'         => 0,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_award_registration_event',
+            'value'         => 0,
+            'default'       => true,
+        ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'credit_award_registration_site',
+            'value'         => 0,
+            'default'       => true,
+        ]);
     }
 }

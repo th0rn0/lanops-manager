@@ -73,6 +73,11 @@
 			<li>
 				<a href="/admin/appearance"><i class="fa fa-wrench" aria-hidden="true"></i> Appearance</a> 
 			</li>
+			@if(Settings::isCreditEnabled())
+				<li>
+					<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System</a> 
+				</li>
+			@endif
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->

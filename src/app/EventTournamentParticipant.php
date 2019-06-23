@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Settings;
+
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
