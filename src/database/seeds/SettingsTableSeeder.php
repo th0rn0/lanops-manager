@@ -167,5 +167,10 @@ class SettingsTableSeeder extends Seeder
             'value'         => 0,
             'default'       => true,
         ]);
+        factory(App\Setting::class)->create([
+            'setting'       => 'shop_enabled',
+            'value'         => true,
+            'default'       => true,
+        ]);
     }
 }

@@ -42,6 +42,7 @@ class SettingsController extends Controller
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
+            ->withIsShopEnabled(Settings::isShopEnabled())
         ;
     }
     
@@ -298,6 +299,33 @@ class SettingsController extends Controller
         return Redirect::to('/admin/settings');
     }
     
+    /**
+     * Enable Shop System
+     * @return Redirect
+     */
+    public function enableShopSystem()
+    {
+        if (!Settings::enableShopSystem()) {
+            Session::flash('alert-danger', "Could not Enable the Shop System!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Enabled the Shop System!");
+        return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Disable Shop System
+     * @return Redirect
+     */
+    public function disableShopSystem()
+    {
+        if (!Settings::disableShopSystem()) {
+            Session::flash('alert-danger', "Could not Disable the Shop System!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Disabled the Shop System!");
+        return Redirect::to('/admin/settings');
+    }
 
     /**
      * Regenerate QR codes for Event Participants

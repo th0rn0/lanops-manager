@@ -174,6 +174,24 @@
 				@endif
 			</div>
 		</div>
+		<!-- Shop System -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Shop System
+			</div>
+			<div class="panel-body">
+				<p>The Shop can be used for buying tickets, merch or anything you need.</p>
+				@if ($isShopEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
+			</div>
+		</div>
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">

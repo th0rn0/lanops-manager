@@ -734,4 +734,46 @@ class Setting extends Model
     {
         return self::where('setting', 'credit_award_registration_site')->first()->value;
     }
+
+    /**
+     * Is Shop System Enabled
+     * @return Boolean
+     */
+    public static function isShopEnabled()
+    {
+        return self::where('setting', 'shop_enabled')->first()->value;
+    }
+
+    /**
+     * Enable Shop System
+     * @return Boolean
+     */
+    public static function enableShopSystem()
+    {
+        if (!$shopSystemEnabled = self::where('setting', 'shop_enabled')->first()) {
+            return false;
+        }
+        $shopSystemEnabled->value = true;
+        if (!$shopSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Shop System
+     * @return Boolean
+     */
+    public static function disableShopSystem()
+    {
+        if (!$shopSystemEnabled = self::where('setting', 'shop_enabled')->first()) {
+            return false;
+        }
+        $shopSystemEnabled->value = false;
+        if (!$shopSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
 }

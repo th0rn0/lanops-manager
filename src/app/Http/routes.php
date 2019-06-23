@@ -292,6 +292,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
         Route::post('/admin/settings/credit/enable', 'Admin\SettingsController@enableCreditSystem');
         Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
+        Route::post('/admin/settings/shop/enable', 'Admin\SettingsController@enableShopSystem');
+        Route::post('/admin/settings/shop/disable', 'Admin\SettingsController@disableShopSystem');
         Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
         /**
@@ -341,5 +343,13 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/admin/credit', 'Admin\CreditController@index');
         Route::post('/admin/credit/edit', 'Admin\CreditController@edit');
         Route::post('/admin/credit/settings', 'Admin\CreditController@settings');
+
+        /**
+         * Shop
+         */
+        Route::get('/admin/shop', 'Admin\ShopController@index');
+        Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
+        Route::post('/admin/shop/item', 'Admin\ShopController@storeItem');
+
     });
 });

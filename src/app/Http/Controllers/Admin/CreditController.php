@@ -76,7 +76,7 @@ class CreditController extends Controller
     }
 
  	/**
-     * Manually Edit Credit to User
+     * Edit Credit Settings
      * @param Request $request
      * @return View
      */

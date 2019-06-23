@@ -523,4 +523,31 @@ class Settings
     {
         return \App\Setting::getCreditRegistrationSite();
     }
+
+    /**
+     * Is Shop Enabled
+     * @return Boolean
+     */
+    public static function isShopEnabled()
+    {
+        return \App\Setting::isShopEnabled();
+    }
+
+    /**
+     * Enable Shop System
+     * @return Boolean
+     */
+    public static function enableShopSystem()
+    {
+        return \App\Setting::enableShopSystem();
+    }
+
+    /**
+     * Disable Shop System
+     * @return Boolean
+     */
+    public static function disableShopSystem()
+    {
+        return \App\Setting::disableShopSystem();
+    }
 }

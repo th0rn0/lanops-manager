@@ -78,7 +78,12 @@
 					<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System</a> 
 				</li>
 			@endif
-		</ul>
+			@if(Settings::isShopEnabled())
+				<li>
+					<a href="/admin/shop"><i class="fa fa-wrench" aria-hidden="true"></i> Shop</a> 
+				</li>
+			@endif
+			</ul>
 	</div>
 	<!-- /.navbar-collapse -->
 </nav>
