@@ -121,11 +121,11 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/shop', 'ShopController@index');
     Route::get('/shop/cart', 'ShopController@showCart');
+    Route::post('/shop/cart', 'ShopController@addCart');
     Route::get('/shop/checkout', 'ShopController@showCheckout');
     Route::get('/shop/orders', 'ShopController@showOrders');
     Route::get('/shop/{category}', 'ShopController@showCategory');
     Route::get('/shop/{category}/{item}', 'ShopController@showItem');
-
 
     /**
      * Admin

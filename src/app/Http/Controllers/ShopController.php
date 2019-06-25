@@ -40,6 +40,27 @@ class ShopController extends Controller
     }
 
     /**
+     * Update Cart
+     * @return View
+     */
+    public function updateCart(Request $request)
+    {
+        $rules = [
+            'item_id'   => 'required|exists:shop_item,id',
+            'quantity'  => 'number',
+        ];
+        $messages = [
+            'item_id.required'  => 'Item is Required.',
+            'item_id.exists'    => 'Item does not exist.',
+            'quantity.number'   => 'Quantity must be a number.',
+        ];
+        $this->validate($request, $rules, $messages);
+        return view('shop.cart')
+            ->withAllCategories(ShopItemCategory::all()->reverse())
+        ;
+    }
+
+    /**
      * Show Orders Page
      * @return View
      */

@@ -179,13 +179,15 @@ class User extends Authenticatable
         if ($buy) {
             $action = 'BUY';
         }
-        CreditLog::create([
-            'user_id' => $this->id,
-            'action' => $action,
-            'amount' => $amount,
-            'reason' => $reason,
-            'admin_id' => $admin_id
-        ]);
+        if ($amount != 0) {
+            CreditLog::create([
+                'user_id' => $this->id,
+                'action' => $action,
+                'amount' => $amount,
+                'reason' => $reason,
+                'admin_id' => $admin_id
+            ]);
+        }
         if (!$this->save()) {
             return false;
         }

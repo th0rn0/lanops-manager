@@ -90,7 +90,7 @@ class ShopController extends Controller
     	$rules = [
     		'name' 			=> 'required',
     		'quantity' 		=> 'integer',
-    		'category_id' 		=> 'required|exists:shop_item_categories,id',
+    		'category_id' 	=> 'required|exists:shop_item_categories,id',
     		'price_real' 	=> 'integer',
     		'price_credit' 	=> 'integer'
     	];
