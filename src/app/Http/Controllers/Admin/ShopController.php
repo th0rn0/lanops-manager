@@ -31,6 +31,31 @@ class ShopController extends Controller
         ;
     }
 
+    /**
+     * Show Shop Category Page
+     * @return View
+     */
+    public function showCategory(ShopItemCategory $category)
+    {
+        return view('admin.shop.category')
+            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withCategory($category)
+        ;
+    }
+
+    /**
+     * Show Shop Item Page
+     * @return View
+     */
+    public function showItem(ShopItemCategory $category, ShopItem $item)
+    {
+        return view('admin.shop.item')
+            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withCategory($category)
+            ->withItem($item)
+        ;
+    }
+
  	/**
      * Store Shop Category
      * @param $request
@@ -73,7 +98,7 @@ class ShopController extends Controller
     		'name.required' 		=> 'Item Name is Required.',
     		'quantity.integer' 		=> 'Quantity must be a number.',
     		'category_id.required' 	=> 'A Category is required.',
-    		'category_id.exists' 		=> 'A Category must exist.',
+    		'category_id.exists'    => 'A Category must exist.',
     		'price_real.integer' 	=> 'Real Price must be a number.',
     		'price_credit.integer' 	=> 'Credit Price must be a number.',
     	];

@@ -30,9 +30,32 @@
 				<i class="fa fa-th-list fa-fw"></i> Categories
 			</div>
 			<div class="panel-body">
-				@foreach ($categories as $category)
-					{{ $category->name }}
-				@endforeach
+				<div class="dataTable_wrapper">
+					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>No. of Items</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($categories as $category)
+								<tr class="table-row" class="odd gradeX">
+									<td width="70%">{{ $category->name }}</td>
+									<td width="10%">{{ $category->getItemTotal() }}</td>
+									<td width="10%">{{ $category->status }}</td>
+									<td width="10%">
+										<a href="/admin/shop/{{ $category->slug }}">
+											<button class="btn btn-sm btn-block btn-success">Edit</button>
+										</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="panel panel-default">
@@ -40,13 +63,13 @@
 				<i class="fa fa-th-list fa-fw"></i> Items
 			</div>
 			<div class="panel-body">
-				@foreach ($items as $item)
-					{{ $item->name }}
-					{{ $item->price_real }}
-					{{ $item->price_credit }}
-					{{ $item->category->name }}
-					{{ $item->quantity }}
-				@endforeach
+				<div class="row">
+					@foreach ($items as $item)
+						<div class="col-xs-12 col-sm-4 col-md-3">
+							@include ('layouts._partials._shop.item-preview', ['admin' => true])
+						</div>
+					@endforeach
+				</div>
 			</div>
 		</div>
 	</div>

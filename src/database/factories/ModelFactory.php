@@ -122,3 +122,35 @@ $factory->define(App\NewsArticle::class, function (Faker\Generator $faker) {
         'text'      => $faker->paragraphs($nb = 3, $asText = true),
     ];
 });
+
+## Shop Category
+$factory->define(App\ShopItemCategory::class, function (Faker\Generator $faker) {
+    $name = $faker->words(random_int(1, 2), $asText = true);
+    return [
+        'name'      => $name,
+        'status'    => 'PUBLISHED',
+        'slug'      => strtolower(str_replace(' ', '-', $name)),
+    ];
+});
+
+## Shop Item
+$factory->define(App\ShopItem::class, function (Faker\Generator $faker) {
+    $name = $faker->words($nb = random_int(1, 3), $asText = true);
+    return [
+        'name'                  => $name,
+        'slug'                  => strtolower(str_replace(' ', '-', $name)),
+        'featured'              => random_int(0, 1),
+        'description'           => $faker->paragraphs($nb = 2, $asText = true),
+        'price_real'            => number_format(random_int(1, 100), 2),
+        'price_credit'          => random_int(0, 999),
+        'stock'                 => random_int(0, 10),
+        'status'                => 'PUBLISHED',
+        'added_by'              => 1,
+    ];
+});
+
+## Shop Item Image
+$factory->define(App\ShopItemImage::class, function (Faker\Generator $faker) {
+    return [
+    ];
+});

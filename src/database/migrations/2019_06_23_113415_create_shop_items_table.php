@@ -19,7 +19,7 @@ class CreateShopItemsTable extends Migration
             $table->float('price_real', 10, 0)->nullable();
             $table->integer('price_credit')->nullable();
             $table->integer('shop_item_category_id')->unsigned()->index();
-            $table->integer('quantity');
+            $table->integer('stock');
             $table->integer('added_by')->unsigned()->index();
             $table->timestamps();
 

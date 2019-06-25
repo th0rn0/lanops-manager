@@ -117,6 +117,17 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
 
     /**
+     * Shop
+     */
+    Route::get('/shop', 'ShopController@index');
+    Route::get('/shop/cart', 'ShopController@showCart');
+    Route::get('/shop/checkout', 'ShopController@showCheckout');
+    Route::get('/shop/orders', 'ShopController@showOrders');
+    Route::get('/shop/{category}', 'ShopController@showCategory');
+    Route::get('/shop/{category}/{item}', 'ShopController@showItem');
+
+
+    /**
      * Admin
      */
     Route::group(['middleware' => ['admin']], function () {
@@ -348,6 +359,8 @@ Route::group(['middleware' => ['web']], function () {
          * Shop
          */
         Route::get('/admin/shop', 'Admin\ShopController@index');
+        Route::get('/admin/shop/{category}', 'Admin\ShopController@showCategory');
+        Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
         Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
         Route::post('/admin/shop/item', 'Admin\ShopController@storeItem');
 
