@@ -20,7 +20,14 @@
 				{{ $item->name }} - <small>@if($item->stock > 0) In Stock: {{ $item->stock }} @else Out of Stock @endif</small>
 			</h4>
 			<p>{{ $item->description }}</p>
-			<button class="btn btn-success">Add to Cart</button>
+			{{ Form::open(array('url'=>'/shop/cart/')) }}
+				<div class="form-group">
+					{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+					{{ Form::number('quantity', 1, array('id'=>'quantity','class'=>'form-control')) }}
+				</div>
+				{{ Form::hidden('item_id', $item->id) }}
+				<button type="submit" class="btn btn-success">Add to Cart</button>
+			{{ Form::close() }}
 		</div>
 	</div>
 </div>

@@ -111,6 +111,4 @@ class ShopItem extends Model
         }
         return ShopItemImage::where('shop_item_id', $this->id)->path;
     }
-
-
 }

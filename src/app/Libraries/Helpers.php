@@ -315,4 +315,36 @@ class Helpers
     {
         return \App\Game::getGameSelectArray($public_only);
     }
+
+    /**
+     * Stock Check
+     * @param $itemId
+     * @return Boolean
+     */
+    public static function stockCheck($itemId)
+    {
+        $item = \App\ShopItem::where('id', $itemId)->first();
+        if ($item->stock > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Format Shopping Cart into Readable format
+     * @param $itemId
+     * @return Boolean
+     */
+    public static function formatCart($cart)
+    {
+        $formatedCart = \App\ShopItem::whereIn('id', array_keys($cart))->get();
+        $formatedCart->total_real = 0;
+        $formatedCart->total_credit = 0;
+        foreach ($formatedCart as $item) {
+            $item->quantity = $cart[$item->id];
+            $formatedCart->total_real += $item->price_real * $item->quantity;
+            $formatedCart->total_credit += $item->price_credit * $item->quantity;
+        }
+        return $formatedCart;
+    }
 }

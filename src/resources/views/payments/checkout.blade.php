@@ -41,6 +41,7 @@
 									<td>
 										£{{ $basketTotal }}
 									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
