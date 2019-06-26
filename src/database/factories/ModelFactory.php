@@ -141,7 +141,7 @@ $factory->define(App\ShopItem::class, function (Faker\Generator $faker) {
         'slug'                  => strtolower(str_replace(' ', '-', $name)),
         'featured'              => random_int(0, 1),
         'description'           => $faker->paragraphs($nb = 2, $asText = true),
-        'price_real'            => number_format(random_int(1, 100), 2),
+        'price'            => number_format(random_int(1, 100), 2),
         'price_credit'          => random_int(0, 999),
         'stock'                 => random_int(0, 10),
         'status'                => 'PUBLISHED',

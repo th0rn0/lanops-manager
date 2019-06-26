@@ -16,7 +16,7 @@ class CreateShopItemsTable extends Migration
         Schema::create('shop_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->float('price_real', 10, 0)->nullable();
+            $table->float('price', 10, 0)->nullable();
             $table->integer('price_credit')->nullable();
             $table->integer('shop_item_category_id')->unsigned()->index();
             $table->integer('stock');

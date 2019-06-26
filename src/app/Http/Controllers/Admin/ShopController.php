@@ -91,7 +91,7 @@ class ShopController extends Controller
     		'name' 			=> 'required',
     		'quantity' 		=> 'integer',
     		'category_id' 	=> 'required|exists:shop_item_categories,id',
-    		'price_real' 	=> 'integer',
+    		'price' 	=> 'integer',
     		'price_credit' 	=> 'integer'
     	];
     	$messages = [
@@ -99,7 +99,7 @@ class ShopController extends Controller
     		'quantity.integer' 		=> 'Quantity must be a number.',
     		'category_id.required' 	=> 'A Category is required.',
     		'category_id.exists'    => 'A Category must exist.',
-    		'price_real.integer' 	=> 'Real Price must be a number.',
+    		'price.integer' 	=> 'Real Price must be a number.',
     		'price_credit.integer' 	=> 'Credit Price must be a number.',
     	];
     	$this->validate($request, $rules, $messages);
@@ -108,7 +108,7 @@ class ShopController extends Controller
     		'name'					=> $request->name,
     		'quantity'				=> $request->quantity,
     		'shop_item_category_id'	=> $request->category_id,
-    		'price_real'			=> $request->price_real,
+    		'price'			=> $request->price,
     		'price_credit' 			=> $request->price_credit,
     		'added_by' 				=> Auth::id(),
     	];

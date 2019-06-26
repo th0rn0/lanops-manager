@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Events;
 use DB;
 use Auth;
 use Session;
+use Settings;
 
 use App\User;
 use App\Event;
@@ -58,7 +59,6 @@ class TicketsController extends Controller
             Session::flash('alert-danger', 'User not found.');
             return Redirect::to('/events/' . $ticket->event->slug);
         }
-
         if ($ticket->event->status != 'PUBLISHED' && $ticket->event->status != 'PRIVATE') {
             Session::flash(
                 'alert-danger',
@@ -82,11 +82,13 @@ class TicketsController extends Controller
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
-        if (Session::get('basket')) {
-            Session::forget('basket');
-        }
-
-        Session::put('basket', [$ticket->id => $request->quantity]);
+        $params = [
+            'tickets' => [
+                $ticket->id => $request->quantity,
+            ],
+        ];
+        Session::put(Settings::getOrgName() . '-basket', $params);
+        Session::save();
         return Redirect::to('/payment/checkout');
     }
 

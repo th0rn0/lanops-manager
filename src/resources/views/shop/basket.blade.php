@@ -1,23 +1,23 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' Shop | Cart')
+@section ('page_title', Settings::getOrgName() . ' Shop | Basket')
 
 @section ('content')
 			
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Shop - Cart
+			Shop - Basket
 		</h1>
 	</div>
 	@include ('layouts._partials._shop.navigation')
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
 			<div class="table-responsive">
-				@if (isset($cart) && strtolower($cart) != 'empty')
+				@if (isset($basket) && strtolower($basket) != 'empty')
 					<table class="table table-striped">
 						<tbody>
-							@foreach ($cart as $item)
+							@foreach ($basket as $item)
 								<tr>
 									<td>
 										<strong>{{ $item->name }}</strong>
@@ -26,8 +26,8 @@
 										x {{ $item->quantity }}
 									</td>
 									<td class="text-right">
-										@if ($item->price_real != null)
-											£{{ $item->price_real }}
+										@if ($item->price != null)
+											£{{ $item->price }}
 											@if ($item->price_credit != null)
 												/
 											@endif
@@ -38,8 +38,8 @@
 										Each
 									</td>
 									<td class="text-right">
-										@if ($item->price_real != null)
-											£{{ $item->price_real * $item->quantity }}
+										@if ($item->price != null)
+											£{{ $item->price * $item->quantity }}
 											@if ($item->price_credit != null)
 												/
 											@endif
@@ -53,26 +53,27 @@
 							<tr>
 								<td></td>
 								<td></td>
-								<td>
-									
-								</td>
+								<td></td>
 								<td class="text-right">
 									<strong>Total:</strong>
-									@if ($cart->total_real != 0)
-										£{{ $cart->total_real }}
-										@if ($cart->total_credit != 0)
+									@if ($basket->total != 0)
+										£{{ $basket->total }}
+										@if ($basket->total_credit != 0)
 											/
 										@endif
 									@endif
-									@if ($cart->total_credit != 0)
-										{{ $cart->total_credit }} Credits
+									@if ($basket->total_credit != 0)
+										{{ $basket->total_credit }} Credits
 									@endif
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					<a href="/payment/checkout">
+						<button type="button" class="btn btn-sm btn-success">Checkout</button>
+					</a>
 				@else
-					<p>Cart is Empty</p>
+					<p>Basket is Empty</p>
 				@endif
 			</div>
 		</div>

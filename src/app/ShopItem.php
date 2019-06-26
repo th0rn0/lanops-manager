@@ -20,7 +20,7 @@ class ShopItem extends Model
 
     protected $fillable = [
         'name',
-        'price_real',
+        'price',
         'price_credit',
         'shop_item_category_id',
         'quantity',

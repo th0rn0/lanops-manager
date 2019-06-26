@@ -249,35 +249,35 @@ class Helpers
         return $final_rank . 'th';
     }
 
-    /**
-     * Format Basket
-     * @param  $basket
-     * @param  boolean $obj    Return as Object
-     * @return Array|Object
-     */
-    public static function getBasketFormat($basket, $obj = false)
-    {
-        $return = array();
-        if (!$obj) {
-            $return[] = 'None';
-        }
-        foreach ($basket as $ticket_id => $quantity) {
-            $ticket = \App\EventTicket::where('id', $ticket_id)->first();
-            array_push(
-                $return,
-                [
-                    'id'        => $ticket_id,
-                    'name'      => $ticket->name,
-                    'price'     => $ticket->price,
-                    'quantity'  => $quantity
-                ]
-            );
-        }
-        if ($obj) {
-            return json_decode(json_encode($return), false);
-        }
-        return $return;
-    }
+    // /**
+    //  * Format Basket
+    //  * @param  $basket
+    //  * @param  boolean $obj    Return as Object
+    //  * @return Array|Object
+    //  */
+    // public static function getBasketFormat($basket, $obj = false)
+    // {
+    //     $return = array();
+    //     if (!$obj) {
+    //         $return[] = 'None';
+    //     }
+    //     foreach ($basket as $ticket_id => $quantity) {
+    //         $ticket = \App\EventTicket::where('id', $ticket_id)->first();
+    //         array_push(
+    //             $return,
+    //             [
+    //                 'id'        => $ticket_id,
+    //                 'name'      => $ticket->name,
+    //                 'price'     => $ticket->price,
+    //                 'quantity'  => $quantity
+    //             ]
+    //         );
+    //     }
+    //     if ($obj) {
+    //         return json_decode(json_encode($return), false);
+    //     }
+    //     return $return;
+    // }
 
     /**
      * Get Basket Total
@@ -308,12 +308,12 @@ class Helpers
 
     /**
      * Get Games Select Array
-     * @param  $public_only
+     * @param  $publicOnly
      * @return Array
      */
-    public static function getGameSelectArray($public_only = true)
+    public static function getGameSelectArray($publicOnly = true)
     {
-        return \App\Game::getGameSelectArray($public_only);
+        return \App\Game::getGameSelectArray($publicOnly);
     }
 
     /**
@@ -331,20 +331,34 @@ class Helpers
     }
 
     /**
-     * Format Shopping Cart into Readable format
+     * Format Shopping Basket into Readable format
      * @param $itemId
      * @return Boolean
      */
-    public static function formatCart($cart)
+    public static function formatBasket($basket)
     {
-        $formatedCart = \App\ShopItem::whereIn('id', array_keys($cart))->get();
-        $formatedCart->total_real = 0;
-        $formatedCart->total_credit = 0;
-        foreach ($formatedCart as $item) {
-            $item->quantity = $cart[$item->id];
-            $formatedCart->total_real += $item->price_real * $item->quantity;
-            $formatedCart->total_credit += $item->price_credit * $item->quantity;
+        if (array_key_exists('shop', $basket)) {
+            $formattedBasket = \App\ShopItem::whereIn('id', array_keys($basket['shop']))->get();
         }
-        return $formatedCart;
+        if (array_key_exists('tickets', $basket)) {
+            $formattedBasket = \App\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
+        }
+        if (!$formattedBasket) {
+            return false;
+        }
+        $formattedBasket->total = 0;
+        $formattedBasket->total_credit = 0;
+        foreach ($formattedBasket as $item) {
+            if (array_key_exists('shop', $basket)) {
+                $item->quantity = $basket['shop'][$item->id];
+                $formattedBasket->total += $item->price * $item->quantity;
+                $formattedBasket->total_credit += $item->price_credit * $item->quantity;
+            } else {
+                $item->quantity = $basket['tickets'][$item->id];
+                $formattedBasket->total += $item->price * $item->quantity;
+                $formattedBasket->total_credit += $item->price_credit * $item->quantity;
+            }
+        }
+        return $formattedBasket;
     }
 }

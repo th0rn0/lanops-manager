@@ -77,7 +77,7 @@
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<tbody>
-								@foreach ($basketItems as $item)
+								@foreach ($basket as $item)
 									<tr>
 										<td>
 											<strong>{{ $item->name }}</strong>
@@ -96,7 +96,7 @@
 										<strong>Total:</strong>
 									</td>
 									<td>
-										£{{ $basketTotal }}
+										£{{ $basket->total }}
 									</td>
 							</tbody>
 						</table>

@@ -129,8 +129,8 @@
 							{{ Form::text('category_id',NULL,array('id'=>'category_id','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
-							{{ Form::label('price_real','Price (Real)',array('id'=>'','class'=>'')) }}
-							{{ Form::text('price_real',NULL,array('id'=>'price_real','class'=>'form-control')) }}
+							{{ Form::label('price','Price (Real)',array('id'=>'','class'=>'')) }}
+							{{ Form::text('price',NULL,array('id'=>'price','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
 							{{ Form::label('price_credit','Price Credit',array('id'=>'','class'=>'')) }}

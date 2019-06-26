@@ -32,27 +32,27 @@ class ShopController extends Controller
     }
 
     /**
-     * Show Cart Page
+     * Show Basket Page
      * @return View
      */
-    public function showCart()
+    public function showBasket()
     {
-        if (Session::has(Settings::getOrgName() . '-cart')) {
-            $cart = Helpers::formatCart(Session::get(Settings::getOrgName() . '-cart'));
+        if (Session::has(Settings::getOrgName() . '-basket')) {
+            $basket = Helpers::formatBasket(Session::get(Settings::getOrgName() . '-basket'));
         } else {
-            $cart = 'Empty';
+            $basket = 'Empty';
         }
-        return view('shop.cart')
+        return view('shop.basket')
             ->withAllCategories(ShopItemCategory::all()->reverse())
-            ->withCart($cart)
+            ->withBasket($basket)
         ;
     }
 
     /**
-     * Update Cart
+     * Update Basket
      * @return View
      */
-    public function updateCart(Request $request)
+    public function updateBasket(Request $request)
     {
         $rules = [
             'item_id'   => 'required|exists:shop_items,id',
@@ -61,28 +61,34 @@ class ShopController extends Controller
         $messages = [
             'item_id.required'  => 'Item is Required.',
             'item_id.exists'    => 'Item does not exist.',
-            'quantity.integer'   => 'Quantity must be a number.',
+            'quantity.integer'  => 'Quantity must be a number.',
         ];
         $this->validate($request, $rules, $messages);
         if (!Helpers::stockCheck($request->item_id)) {
             Session::flash('alert-danger', 'Not enough in Stock. Please try again later.');
             return Redirect::back();
         }
-        if ($params = Session::get(Settings::getOrgName() . 'cart')) {
-            if (in_array($request->item_id, $params)) {
-                $params[$request->item_id] += $request->quantity;
+        if (
+            Session::has(Settings::getOrgName() . '-basket') && 
+            !array_key_exists('tickets', Session::get(Settings::getOrgName() . '-basket'))
+        ) {
+            $params = Session::get(Settings::getOrgName() . '-basket');
+            if (array_key_exists($request->item_id, $params['shop'])) {
+                $params['shop'][$request->item_id] += $request->quantity;
             } else {
-                array_push($params, [$request->item_id => $request->quantity]);
+                $params['shop'][$request->item_id] = $request->quantity;
             }
         } else {
             $params = [
-                $request->item_id => $request->quantity,
+                'shop' => [
+                    $request->item_id => $request->quantity,
+                ],
             ];
         }
-        Session::put(Settings::getOrgName() . '-cart', $params);
+        Session::put(Settings::getOrgName() . '-basket', $params);
         Session::save();
-        Session::flash('alert-success', 'Cart Updated!');
-        return Redirect::to('/shop/cart');
+        Session::flash('alert-success', 'Basket Updated!');
+        return Redirect::to('/shop/basket');
     }
 
     /**

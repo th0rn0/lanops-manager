@@ -20,7 +20,7 @@
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<tbody>
-								@foreach ($basketItems as $item)
+								@foreach ($basket as $item)
 									<tr>
 										<td>
 											<strong>{{ $item->name }}</strong>
@@ -28,18 +28,46 @@
 										<td class="text-right">
 											x {{ $item->quantity }}
 										</td>
-										<td>
-											£{{ $item->price }}
+										<td class="text-right">
+											@if ($item->price != null)
+												£{{ $item->price }}
+												@if ($item->price_credit != null)
+													/
+												@endif
+											@endif
+											@if ($item->price_credit != null)
+												{{ $item->price_credit }} Credits
+											@endif
+											Each
+										</td>
+										<td class="text-right">
+											@if ($item->price != null)
+												£{{ $item->price * $item->quantity }}
+												@if ($item->price_credit != null)
+													/
+												@endif
+											@endif
+											@if ($item->price_credit != null)
+												{{ $item->price_credit * $item->quantity }} Credits
+											@endif
 										</td>
 									</tr>
 								@endforeach
 								<tr>
 									<td></td>
+									<td></td>
+									<td></td>
 									<td class="text-right">
 										<strong>Total:</strong>
-									</td>
-									<td>
-										£{{ $basketTotal }}
+										@if ($basket->total != null)
+											£{{ $basket->total }}
+											@if ($basket->total_credit != null)
+												/
+											@endif
+										@endif
+										@if ($basket->total_credit != null)
+											{{ $basket->total_credit }} Credits
+										@endif
 									</td>
 								</tr>
 							</tbody>

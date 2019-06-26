@@ -45,8 +45,8 @@
 									<td>{{ $item->stock }}</td>
 									<td>Coming Soon</td>
 									<td>
-										@if ($item->price_real != null)
-											£{{ $item->price_real }}
+										@if ($item->price != null)
+											£{{ $item->price }}
 											@if ($item->price_credit != null)
 												/
 											@endif

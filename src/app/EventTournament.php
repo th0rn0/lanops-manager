@@ -121,7 +121,7 @@ class EventTournament extends Model
                             array_push($finalHistory, $game);
                         }
                         $tournamentParticipant->finalHistory = serialize($finalHistory);
-                        $creditAmount = 0
+                        $creditAmount = 0;
                         if (Settings::isCreditEnabled() && !$tournamentParticipant->credit_applied) {
                             $creditAmount += Settings::getCreditTournamentParticipation();
                             switch ($tournamentParticipant->final_rank) {

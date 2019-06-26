@@ -23,8 +23,8 @@
 	</div>
 	<div class="panel-footer">
 		<p>
-			@if ($item->price_real != null)
-				£{{ $item->price_real }}
+			@if ($item->price != null)
+				£{{ $item->price }}
 				@if ($item->price_credit != null)
 					/
 				@endif

@@ -34,12 +34,11 @@ class PaymentsController extends Controller
      */
     public function checkout()
     {
-        if (!$basket = Session::get('basket')) {
+        if (!Session::has(Settings::getOrgName() . '-basket')) {
             return Redirect::to('/');
         }
         return view('payments.checkout')
-            ->withBasketItems(Helpers::getBasketFormat($basket, true))
-            ->withBasketTotal(Helpers::getBasketTotal($basket))
+            ->withBasket(Helpers::formatBasket(Session::get(Settings::getOrgName() . '-basket')))
             ->withActivePaymentGateways(Settings::getPaymentGateways())
         ;
     }
@@ -50,7 +49,7 @@ class PaymentsController extends Controller
      */
     public function review($paymentGateway)
     {
-        if (!$basket = Session::get('basket')) {
+        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
             return Redirect::to('/');
         }
         $acceptedPaymentGateways = Settings::getPaymentGateways();
@@ -65,26 +64,29 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        $nextEventFlag = true;
-        foreach (Session::get('basket') as $ticketId => $quantity) {
-            if (EventTicket::where('id', $ticketId)
-                ->first()
-                ->event
-                ->id
-                !=
-                Event::where('end', '>=', \Carbon\Carbon::now())
-                ->orderBy(\DB::raw('ABS(DATEDIFF(events.end, NOW()))'))
-                ->first()
-                ->id
-            ) {
-                $nextEventFlag = false;
+        $nextEventFlag = false;
+        if (array_key_exists('tickets', $basket)) {
+            $nextEventFlag = true;
+            foreach ($basket['tickets'] as $ticketId => $quantity) {
+                if (EventTicket::where('id', $ticketId)
+                    ->first()
+                    ->event
+                    ->id
+                    !=
+                    Event::where('end', '>=', \Carbon\Carbon::now())
+                    ->orderBy(\DB::raw('ABS(DATEDIFF(events.end, NOW()))'))
+                    ->first()
+                    ->id
+                ) {
+                    $nextEventFlag = false;
+                }
             }
         }
         return view('payments.review')
             ->withPaymentGateway($paymentGateway)
-            ->withBasketItems(Helpers::getBasketFormat($basket, true))
-            ->withBasketTotal(Helpers::getBasketTotal($basket))
-            ->withNextEventFlag($nextEventFlag);
+            ->withBasket(Helpers::formatBasket($basket))
+            ->withNextEventFlag($nextEventFlag)
+        ;
     }
 
     /**
@@ -94,7 +96,7 @@ class PaymentsController extends Controller
      */
     public function details($paymentGateway)
     {
-        if (!$basket = Session::get('basket')) {
+        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
             Session::flash('alert-danger', 'No Basket was found. Please try again');
             return Redirect::back();
         }
@@ -108,8 +110,8 @@ class PaymentsController extends Controller
         }
         return view('payments.details')
             ->withPaymentGateway($paymentGateway)
-            ->withBasketItems(Helpers::getBasketFormat($basket, true))
-            ->withBasketTotal(Helpers::getBasketTotal($basket));
+            ->withBasket(Helpers::formatBasket($basket, true))
+        ;
     }
     
     /**
@@ -119,7 +121,7 @@ class PaymentsController extends Controller
      */
     public function post(Request $request)
     {
-        if (!$basket = Session::get('basket')) {
+        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
             Session::flash('alert-danger', 'No Basket was found. Please try again');
             return Redirect::back();
         }
@@ -144,7 +146,7 @@ class PaymentsController extends Controller
         }
 
         $offSitePaymentGateways = [
-            'paypal',
+            'paypal_express',
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
         if (
@@ -218,7 +220,7 @@ class PaymentsController extends Controller
                 $gateway = Omnipay::create('Stripe');
                 $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.apikey'));
                 break;
-            case 'paypal':
+            case 'paypal_express':
                 //Paypal Post Params
                 $params = array(
                     'cancelUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
@@ -231,9 +233,9 @@ class PaymentsController extends Controller
                     'user_id'       => Auth::id(),
                 );
                 $gateway = Omnipay::create('PayPal_Express');
-                $gateway->setUsername(config('laravel-omnipay.gateways.paypal.credentials.username'));
-                $gateway->setPassword(config('laravel-omnipay.gateways.paypal.credentials.password'));
-                $gateway->setSignature(config('laravel-omnipay.gateways.paypal.credentials.signature'));
+                $gateway->setUsername(config('laravel-omnipay.gateways.paypal_express.credentials.username'));
+                $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
+                $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
                 break;
         }
         Session::put('params', $params);
@@ -264,7 +266,7 @@ class PaymentsController extends Controller
                 'status'            => 'Success'
             ];
             $purchase = Purchase::create($purchaseParams);
-            foreach (Session::get('basket') as $ticketId => $quantity) {
+            foreach (Session::get(Settings::getOrgName() . '-basket') as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();
                 for ($i = 1; $i <= $quantity; $i++) {
                     //Add Participant to database
@@ -278,7 +280,7 @@ class PaymentsController extends Controller
                 }
             }
             return Redirect::to('/payment/successful/' . $purchase->id);
-        } elseif ($response->isRedirect() && $paymentGateway == 'paypal') {
+        } elseif ($response->isRedirect() && $paymentGateway == 'paypal_express') {
             // redirect to offsite payment gateway such as paypal
             try {
                 $response->redirect();
@@ -299,8 +301,8 @@ class PaymentsController extends Controller
      */
     public function process(Request $request)
     {
-        // DEBUG
-        $paymentGateway = 'paypal';
+        // Currently only PayPal Express
+        $paymentGateway = 'paypal_express';
 
         if ($request->input('type') == 'cancel') {
             Session::flash('alert-danger', 'Payment was CANCELLED!');
@@ -315,9 +317,9 @@ class PaymentsController extends Controller
             $this->sandbox = true;
         }
         $gateway = Omnipay::create('PayPal_Express');
-        $gateway->setUsername(config('laravel-omnipay.gateways.paypal.credentials.username'));
-        $gateway->setPassword(config('laravel-omnipay.gateways.paypal.credentials.password'));
-        $gateway->setSignature(config('laravel-omnipay.gateways.paypal.credentials.signature'));
+        $gateway->setUsername(config('laravel-omnipay.gateways.paypal_express.credentials.username'));
+        $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
+        $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
         $gateway->setTestMode($this->sandbox);
         //Complete Purchase
         $gateway->completePurchase($params)->send();
@@ -337,7 +339,7 @@ class PaymentsController extends Controller
                 'paypal_email'      => $paypalResponse['EMAIL'],
             ];
             $purchase = Purchase::create($purchaseParams);
-            foreach (Session::get('basket') as $ticketId => $quantity) {
+            foreach (Session::get(Settings::getOrgName() . '-basket') as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();
                 for ($i = 1; $i <= $quantity; $i++) {
                     //Add Participant to database
@@ -367,10 +369,13 @@ class PaymentsController extends Controller
         if (!Session::has('params')) {
             return Redirect::to('/');
         }
-        $basket = Helpers::getBasketFormat(Session::get('basket'), true);
+        $basket = Helpers::formatBasket(Session::get(Settings::getOrgName() . '-basket'));
         Session::forget('params');
-        Session::forget('basket');
-        return view('payments.successful')->withBasketItems($basket)->withPurchase($purchase);
+        Session::forget(Settings::getOrgName() . '-basket');
+        return view('payments.successful')
+            ->withBasketItems($basket)
+            ->withPurchase($purchase)
+        ;
     }
 
     /**

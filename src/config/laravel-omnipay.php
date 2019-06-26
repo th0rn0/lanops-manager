@@ -7,7 +7,7 @@ return [
 
     // Add in each gateway here
     'gateways' => [
-        'paypal' => [
+        'paypal_express' => [
             'driver'  => 'PayPal_Express',
             'options' => [
                 'solutionType'      => '',
