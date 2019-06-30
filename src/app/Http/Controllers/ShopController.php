@@ -64,7 +64,7 @@ class ShopController extends Controller
             'quantity.integer'  => 'Quantity must be a number.',
         ];
         $this->validate($request, $rules, $messages);
-        if (!Helpers::stockCheck($request->item_id)) {
+        if (!ShopItem::hasStockByItemId($request->item_id)) {
             Session::flash('alert-danger', 'Not enough in Stock. Please try again later.');
             return Redirect::back();
         }

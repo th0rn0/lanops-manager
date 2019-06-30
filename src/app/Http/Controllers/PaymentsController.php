@@ -12,6 +12,7 @@ use App\Purchase;
 use App\User;
 use App\Event;
 use App\EventTicket;
+use App\ShopItem;
 use App\EventParticipant;
 
 use App\Http\Requests;
@@ -64,9 +65,8 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        $nextEventFlag = false;
+        $nextEventFlag = true;
         if (array_key_exists('tickets', $basket)) {
-            $nextEventFlag = true;
             foreach ($basket['tickets'] as $ticketId => $quantity) {
                 if (EventTicket::where('id', $ticketId)
                     ->first()
@@ -125,11 +125,22 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'No Basket was found. Please try again');
             return Redirect::back();
         }
-        foreach ($basket as $ticketId => $quantity) {
-            $ticket = EventTicket::where('id', $ticketId)->first();
-            if ($ticket->event->capacity <= $ticket->event->EventParticipants->count()) {
-                Session::flash('alert-danger', '{{ $ticket->event->display_name }} Has sold out!');
-                return Redirect::back();
+        if (array_key_exists('tickets', $basket)) {
+            foreach ($basket['tickets'] as $ticketId => $quantity) {
+                $ticket = EventTicket::where('id', $ticketId)->first();
+                if ($ticket->event->capacity <= $ticket->event->EventParticipants->count()) {
+                    Session::flash('alert-danger', '{{ $ticket->event->display_name }} Has sold out!');
+                    return Redirect::back();
+                }
+            }
+        }
+        if (array_key_exists('shop', $basket)) {
+            foreach ($basket['shop'] as $itemId => $quantity) {
+                if (!ShopItem::hasStockByItemId($itemId)) {
+                    $itemName = ShopItem::where('id', $itemId)->first()->name;
+                    Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
+                    return Redirect::to('/payment/checkout');
+                }
             }
         }
         $acceptedPaymentGateways = Settings::getPaymentGateways();
@@ -144,7 +155,6 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-
         $offSitePaymentGateways = [
             'paypal_express',
         ];
@@ -213,7 +223,7 @@ class PaymentsController extends Controller
                     'billingState'          => $request->billing_state,
                 );
                 $params = array(
-                    'amount' => (float)Helpers::getBasketTotal($basket),
+                    'amount' => (float)Helpers::formatBasket($basket)->total,
                     'currency' => 'GBP',
                     'card' => $card
                 );
@@ -227,7 +237,7 @@ class PaymentsController extends Controller
                     'returnUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return',
                     'name'          => Settings::getOrgName() . ' - Tickets Purchase',
                     'description'   => 'Ticket Purchase for ' . Settings::getOrgName(),
-                    'amount'        => (float)Helpers::getBasketTotal($basket),
+                    'amount'        => (float)Helpers::formatBasket($basket)->total,
                     'quantity'      => (string)count($basket),
                     'currency'      => Settings::getCurrency(),
                     'user_id'       => Auth::id(),
@@ -266,17 +276,23 @@ class PaymentsController extends Controller
                 'status'            => 'Success'
             ];
             $purchase = Purchase::create($purchaseParams);
-            foreach (Session::get(Settings::getOrgName() . '-basket') as $ticketId => $quantity) {
-                $ticket = EventTicket::where('id', $ticketId)->first();
-                for ($i = 1; $i <= $quantity; $i++) {
-                    //Add Participant to database
-                    $participant = [
-                        'user_id'       => Auth::id(),
-                        'event_id'      => $ticket->event->id,
-                        'ticket_id'     => $ticket->id,
-                        'purchase_id'   => $purchase->id,
-                    ];
-                    EventParticipant::create($participant);
+            if (array_key_exists('tickets', $basket)) {
+                foreach ($basket['tickets'] as $ticketId => $quantity) {
+                    $ticket = EventTicket::where('id', $ticketId)->first();
+                    for ($i = 1; $i <= $quantity; $i++) {
+                        //Add Participant to database
+                        $participant = [
+                            'user_id'       => Auth::id(),
+                            'event_id'      => $ticket->event->id,
+                            'ticket_id'     => $ticket->id,
+                            'purchase_id'   => $purchase->id,
+                        ];
+                        EventParticipant::create($participant);
+                    }
+                }
+            } elseif(array_key_exists('shop', $basket)) {
+                foreach ($basket['shop'] as $itemId => $quantity) {
+
                 }
             }
             return Redirect::to('/payment/successful/' . $purchase->id);
@@ -369,11 +385,16 @@ class PaymentsController extends Controller
         if (!Session::has('params')) {
             return Redirect::to('/');
         }
+        $basket = Session::get(Settings::getOrgName() . '-basket');
+        $key = 'tickets';
+        if (array_key_exists('shop', $basket)) {
+            $key = 'shop';
+        }
         $basket = Helpers::formatBasket(Session::get(Settings::getOrgName() . '-basket'));
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
         return view('payments.successful')
-            ->withBasketItems($basket)
+            ->withBasket($basket)
             ->withPurchase($purchase)
         ;
     }

@@ -19,13 +19,13 @@
 			<h3>Tickets</h3>
 			<hr>
 			<div class="row">
-				@foreach ($purchase->participants as $participant)
+				<!-- @foreach ($purchase->participants as $participant)
 					<div class="col-lg-4 col-sm-6 col-xs-12 text-center">
 						<h5>{{ $participant->event->display_name }}</h5>
 						<h5>{{ $participant->ticket->name }}</h5>
 						<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
 					</div>
-				@endforeach
+				@endforeach -->
 			</div>
 		</div>
 		<div class="col-xs-12 col-md-4">
@@ -38,7 +38,7 @@
 						<table class="table table-striped">
 							<tbody>
 								@php ($total = 0)
-								@foreach ($basketItems as $item)
+								@foreach ($basket as $item)
 									<tr>
 										<td>
 											<strong>{{ $item->name }}</strong>
@@ -50,7 +50,6 @@
 											£{{ $item->price }}
 										</td>
 									</tr>
-									@php ($total += ($item->price * $item->quantity))
 								@endforeach
 								<tr>
 									<td></td>
@@ -58,7 +57,7 @@
 										<strong>Total:</strong>
 									</td>
 									<td>
-										£{{ $total }}
+										£{{ $basket->total }}
 									</td>
 								</tr>
 							</tbody>

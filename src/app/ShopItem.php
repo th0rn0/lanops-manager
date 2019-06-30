@@ -111,4 +111,18 @@ class ShopItem extends Model
         }
         return ShopItemImage::where('shop_item_id', $this->id)->path;
     }
+
+    /**
+     * Check if item has Stock
+     * @param $itemId
+     * @return Boolean
+     */
+    public static function hasStockByItemId($itemId)
+    {
+        $item = \App\ShopItem::where('id', $itemId)->first();
+        if ($item->stock > 0) {
+            return true;
+        }
+        return false;
+    }
 }

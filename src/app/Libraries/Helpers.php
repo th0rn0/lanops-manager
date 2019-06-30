@@ -317,20 +317,6 @@ class Helpers
     }
 
     /**
-     * Stock Check
-     * @param $itemId
-     * @return Boolean
-     */
-    public static function stockCheck($itemId)
-    {
-        $item = \App\ShopItem::where('id', $itemId)->first();
-        if ($item->stock > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Format Shopping Basket into Readable format
      * @param $itemId
      * @return Boolean

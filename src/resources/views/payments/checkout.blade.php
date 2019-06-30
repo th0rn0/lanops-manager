@@ -31,11 +31,11 @@
 										<td class="text-right">
 											@if ($item->price != null)
 												£{{ $item->price }}
-												@if ($item->price_credit != null)
+												@if ($item->price_credit != null && Settings::isCreditEnabled())
 													/
 												@endif
 											@endif
-											@if ($item->price_credit != null)
+											@if ($item->price_credit != null && Settings::isCreditEnabled())
 												{{ $item->price_credit }} Credits
 											@endif
 											Each
@@ -43,11 +43,11 @@
 										<td class="text-right">
 											@if ($item->price != null)
 												£{{ $item->price * $item->quantity }}
-												@if ($item->price_credit != null)
+												@if ($item->price_credit != null && Settings::isCreditEnabled())
 													/
 												@endif
 											@endif
-											@if ($item->price_credit != null)
+											@if ($item->price_credit != null && Settings::isCreditEnabled())
 												{{ $item->price_credit * $item->quantity }} Credits
 											@endif
 										</td>
@@ -61,11 +61,11 @@
 										<strong>Total:</strong>
 										@if ($basket->total != null)
 											£{{ $basket->total }}
-											@if ($basket->total_credit != null)
+											@if ($basket->total_credit != null && Settings::isCreditEnabled())
 												/
 											@endif
 										@endif
-										@if ($basket->total_credit != null)
+										@if ($basket->total_credit != null && Settings::isCreditEnabled())
 											{{ $basket->total_credit }} Credits
 										@endif
 									</td>
