@@ -120,9 +120,31 @@ class ShopItem extends Model
     public static function hasStockByItemId($itemId)
     {
         $item = \App\ShopItem::where('id', $itemId)->first();
-        if ($item->stock > 0) {
-            return true;
+        if ($item->stock <= 0) {
+            return false;
         }
-        return false;
+        return true;
+    }
+
+    /**
+     * Update Stock
+     * @param $quantity
+     * @param $action
+     * @return Boolean
+     */
+    public function updateStock($quantity, $action = 'SUB')
+    {
+        switch ($action) {
+            case 'ADD':
+                $this->stock += $quantity;
+                break;
+            case 'SUB':
+                $this->stock -= $quantity;
+                break;
+        }
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
     }
 }

@@ -43,6 +43,10 @@ class Purchase extends Model
     {
         return $this->hasMany('App\EventParticipant', 'purchase_id');
     }
+    public function order()
+    {
+        return $this->hasOne('App\ShopOrder', 'purchase_id');
+    }
 
 
     /**

@@ -13,6 +13,8 @@ use App\User;
 use App\Event;
 use App\EventTicket;
 use App\ShopItem;
+use App\ShopOrder;
+use App\ShopOrderItem;
 use App\EventParticipant;
 
 use App\Http\Requests;
@@ -276,25 +278,7 @@ class PaymentsController extends Controller
                 'status'            => 'Success'
             ];
             $purchase = Purchase::create($purchaseParams);
-            if (array_key_exists('tickets', $basket)) {
-                foreach ($basket['tickets'] as $ticketId => $quantity) {
-                    $ticket = EventTicket::where('id', $ticketId)->first();
-                    for ($i = 1; $i <= $quantity; $i++) {
-                        //Add Participant to database
-                        $participant = [
-                            'user_id'       => Auth::id(),
-                            'event_id'      => $ticket->event->id,
-                            'ticket_id'     => $ticket->id,
-                            'purchase_id'   => $purchase->id,
-                        ];
-                        EventParticipant::create($participant);
-                    }
-                }
-            } elseif(array_key_exists('shop', $basket)) {
-                foreach ($basket['shop'] as $itemId => $quantity) {
-
-                }
-            }
+            $this->processBasket($basket, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
         } elseif ($response->isRedirect() && $paymentGateway == 'paypal_express') {
             // redirect to offsite payment gateway such as paypal
@@ -317,6 +301,11 @@ class PaymentsController extends Controller
      */
     public function process(Request $request)
     {
+        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
+            Session::flash('alert-danger', 'No Basket was found. Please try again');
+            return Redirect::back();
+        }
+
         // Currently only PayPal Express
         $paymentGateway = 'paypal_express';
 
@@ -355,24 +344,50 @@ class PaymentsController extends Controller
                 'paypal_email'      => $paypalResponse['EMAIL'],
             ];
             $purchase = Purchase::create($purchaseParams);
-            foreach (Session::get(Settings::getOrgName() . '-basket') as $ticketId => $quantity) {
-                $ticket = EventTicket::where('id', $ticketId)->first();
-                for ($i = 1; $i <= $quantity; $i++) {
-                    //Add Participant to database
-                    $participant = [
-                        'user_id'       => $params['user_id'],
-                        'event_id'      => $ticket->event->id,
-                        'ticket_id'     => $ticket->id,
-                        'purchase_id'   => $purchase->id,
-                    ];
-                    EventParticipant::create($participant);
-                }
-            }
+            $this->processBasket($basket, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
         //Failed transaction
         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.');
         return Redirect::to('/payment/failed');
+    }
+
+    /**
+     * Process Basket for Successful Order
+     * @param  $basket
+     * @param  $purchaseId
+     */
+    private function processBasket($basket, $purchaseId)
+    {
+        if (array_key_exists('tickets', $basket)) {
+            foreach ($basket['tickets'] as $ticketId => $quantity) {
+                $ticket = EventTicket::where('id', $ticketId)->first();
+                for ($i = 1; $i <= $quantity; $i++) {
+                    //Add Participant to database
+                    $participant = [
+                        'user_id'       => Auth::id(),
+                        'event_id'      => $ticket->event->id,
+                        'ticket_id'     => $ticket->id,
+                        'purchase_id'   => $purchaseId,
+                    ];
+                    EventParticipant::create($participant);
+                }
+            }
+        } elseif(array_key_exists('shop', $basket)) {
+            $formattedBasket = Helpers::formatBasket($basket);
+            $orderParams = [
+                'total'         => (float)$formattedBasket->total,
+                'total_credit'  => $formattedBasket->total_credit,
+                'purchase_id'   => $purchaseId,
+                'status'        => 'EVENT'
+            ];
+            $order = ShopOrder::create($orderParams);
+            foreach ($basket['shop'] as $itemId => $quantity) {
+                $item = ShopItem::where('id', $itemId)->first();
+                $item->updateStock($quantity);
+                $order->updateOrder($itemId, $quantity);
+            }
+        }
     }
 
     /**
@@ -386,14 +401,15 @@ class PaymentsController extends Controller
             return Redirect::to('/');
         }
         $basket = Session::get(Settings::getOrgName() . '-basket');
-        $key = 'tickets';
+        $type = 'tickets';
         if (array_key_exists('shop', $basket)) {
-            $key = 'shop';
+            $type = 'shop';
         }
-        $basket = Helpers::formatBasket(Session::get(Settings::getOrgName() . '-basket'));
+        $basket = Helpers::formatBasket($basket);
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
         return view('payments.successful')
+            ->withType($type)
             ->withBasket($basket)
             ->withPurchase($purchase)
         ;
