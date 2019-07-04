@@ -15,10 +15,8 @@ class CreateShopOrdersTable extends Migration
     {
         Schema::create('shop_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->float('total')->nullable();
-            $table->integer('total_credit')->nullable();
             $table->integer('purchase_id')->unsigned()->index();
-            $table->enum('status', array('PROCESSING','SHIPPED', 'EVENT'));
+            $table->enum('status', array('PROCESSING','SHIPPED', 'EVENT', 'COMPLETE'));
             $table->timestamps();
 
             ## Foreign Keys

@@ -18,8 +18,6 @@ class ShopOrder extends Model
     protected $table = 'shop_orders';
 
     protected $fillable = [
-        'total',
-        'total_credit',
         'purchase_id',
         'status',
     ];
@@ -41,10 +39,6 @@ class ShopOrder extends Model
     {
         return $this->belongsTo('App\Purchase', 'purchase_id');
     }
-
-    /*
-     * Relationships
-     */
     public function items()
     {
         return $this->hasMany('App\ShopOrderItem', 'shop_order_id');
@@ -52,15 +46,17 @@ class ShopOrder extends Model
 
     /**
      * Update Order
-     * @param $itemId
+     * @param $item
      * @param $quantity
      * @return Boolean
      */
-    public function updateOrder($itemId, $quantity)
+    public function updateOrder($item)
     {
         $params = [
-            'item_id'       => $itemId,
-            'quantity'      => $quantity,
+            'shop_item_id'  => $item->id,
+            'quantity'      => $item->quantity,
+            'price'         => $item->price,
+            'price_credit'  => $item->price_credit,
             'shop_order_id' => $this->id,
         ];
         if (!ShopOrderItem::create($params)) {

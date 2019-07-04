@@ -16,9 +16,11 @@ class ShopOrderItem extends Model
     protected $table = 'shop_order_items';
 
     protected $fillable = [
-        'item_id',
+        'shop_item_id',
         'quantity',
-        'shop_order_id'
+        'price',
+        'price_credit',
+        'shop_order_id',
     ];
 
     /**
@@ -37,5 +39,9 @@ class ShopOrderItem extends Model
     public function order()
     {
         return $this->belongsTo('App\ShopOrder', 'shop_order_id');
+    }
+    public function item()
+    {
+        return $this->belongsTo('App\ShopItem', 'shop_item_id');
     }
 }

@@ -382,10 +382,9 @@ class PaymentsController extends Controller
                 'status'        => 'EVENT'
             ];
             $order = ShopOrder::create($orderParams);
-            foreach ($basket['shop'] as $itemId => $quantity) {
-                $item = ShopItem::where('id', $itemId)->first();
-                $item->updateStock($quantity);
-                $order->updateOrder($itemId, $quantity);
+            foreach ($formattedBasket as $item) {
+                $item->updateStock($item->quantity);
+                $order->updateOrder($item);
             }
         }
     }

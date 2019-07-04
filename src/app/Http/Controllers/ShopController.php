@@ -55,16 +55,16 @@ class ShopController extends Controller
     public function updateBasket(Request $request)
     {
         $rules = [
-            'item_id'   => 'required|exists:shop_items,id',
-            'quantity'  => 'integer',
+            'shop_item_id'      => 'required|exists:shop_items,id',
+            'quantity'          => 'integer',
         ];
         $messages = [
-            'item_id.required'  => 'Item is Required.',
-            'item_id.exists'    => 'Item does not exist.',
-            'quantity.integer'  => 'Quantity must be a number.',
+            'shop_item_id.required'     => 'Item is Required.',
+            'shop_item_id.exists'       => 'Item does not exist.',
+            'quantity.integer'          => 'Quantity must be a number.',
         ];
         $this->validate($request, $rules, $messages);
-        if (!ShopItem::hasStockByItemId($request->item_id)) {
+        if (!ShopItem::hasStockByItemId($request->shop_item_id)) {
             Session::flash('alert-danger', 'Not enough in Stock. Please try again later.');
             return Redirect::back();
         }
@@ -73,15 +73,15 @@ class ShopController extends Controller
             !array_key_exists('tickets', Session::get(Settings::getOrgName() . '-basket'))
         ) {
             $params = Session::get(Settings::getOrgName() . '-basket');
-            if (array_key_exists($request->item_id, $params['shop'])) {
-                $params['shop'][$request->item_id] += $request->quantity;
+            if (array_key_exists($request->shop_item_id, $params['shop'])) {
+                $params['shop'][$request->shop_item_id] += $request->quantity;
             } else {
-                $params['shop'][$request->item_id] = $request->quantity;
+                $params['shop'][$request->shop_item_id] = $request->quantity;
             }
         } else {
             $params = [
                 'shop' => [
-                    $request->item_id => $request->quantity,
+                    $request->shop_item_id => $request->quantity,
                 ],
             ];
         }

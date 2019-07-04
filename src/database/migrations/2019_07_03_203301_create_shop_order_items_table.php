@@ -15,8 +15,10 @@ class CreateShopOrderItemsTable extends Migration
     {
         Schema::create('shop_order_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('item_id')->unsigned()->index();
+            $table->integer('shop_item_id')->unsigned()->index();
             $table->integer('shop_order_id')->unsigned()->index();
+            $table->float('price')->nullable();
+            $table->integer('price_credit')->nullable();
             $table->integer('quantity');
             $table->timestamps();
         });

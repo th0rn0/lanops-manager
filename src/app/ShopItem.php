@@ -18,12 +18,14 @@ class ShopItem extends Model
      */
     protected $table = 'shop_items';
 
+    public $quantity;
+
     protected $fillable = [
         'name',
         'price',
         'price_credit',
         'shop_item_category_id',
-        'quantity',
+        'stock',
         'status',
         'added_by',
     ];
@@ -143,6 +145,7 @@ class ShopItem extends Model
                 break;
         }
         if (!$this->save()) {
+        dd('nigger');
             return false;
         }
         return true;

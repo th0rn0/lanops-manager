@@ -131,12 +131,34 @@
 												{{  date('d-m-y H:i', strtotime($purchase->created_at)) }}
 											</td>
 											<td>
-												@foreach ($purchase->participants as $participant)
-													{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
-													@if(!$loop->last)
-														<hr>
-													@endif
-												@endforeach
+												@if (!$purchase->participants->isEmpty())
+													@foreach ($purchase->participants as $participant)
+														{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
+														@if (!$loop->last)
+															<hr>
+														@endif
+													@endforeach
+												@elseif ($purchase->order != null)
+													@foreach ($purchase->order->items as $item)
+														@if ($item->item)
+															{{ $item->item->name }}
+														@endif 
+														 - x {{ $item->quantity }}
+														 <br>
+													 	@if ($item->price != null)
+															£{{ $item->price * $item->quantity }}
+															@if ($item->price_credit != null && Settings::isCreditEnabled())
+																/
+															@endif
+														@endif
+														@if ($item->price_credit != null && Settings::isCreditEnabled())
+															{{ $item->price_credit * $item->quantity }} Credits
+														@endif
+														@if (!$loop->last)
+															<hr>
+														@endif
+													@endforeach
+												@endif
 											</td>
 										</tr>
 									@endforeach

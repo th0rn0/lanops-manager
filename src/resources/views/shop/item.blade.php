@@ -26,7 +26,7 @@
 						{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
 						{{ Form::number('quantity', 1, array('id'=>'quantity','class'=>'form-control')) }}
 					</div>
-					{{ Form::hidden('item_id', $item->id) }}
+					{{ Form::hidden('shop_item_id', $item->id) }}
 					<button type="submit" class="btn btn-success">Add to Cart</button>
 				{{ Form::close() }}
 			@else

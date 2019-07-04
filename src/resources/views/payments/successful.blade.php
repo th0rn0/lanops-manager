@@ -20,13 +20,13 @@
 				<h3>Tickets</h3>
 				<hr>
 				<div class="row">
-					<!-- @foreach ($purchase->participants as $participant)
+					@foreach ($purchase->participants as $participant)
 						<div class="col-lg-4 col-sm-6 col-xs-12 text-center">
 							<h5>{{ $participant->event->display_name }}</h5>
 							<h5>{{ $participant->ticket->name }}</h5>
 							<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
 						</div>
-					@endforeach -->
+					@endforeach
 				</div>
 			</div>
 			<div class="col-xs-12 col-md-4">
