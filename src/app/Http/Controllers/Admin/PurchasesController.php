@@ -26,4 +26,15 @@ class PurchasesController extends Controller
         return view('admin.purchases.index')
             ->withPurchases(Purchase::all());
     }
+
+  	/**
+     * Show Purchase Page
+     * @param Purchase $purchase
+     * @return View
+     */
+    public function show(Purchase $purchase)
+    {
+        return view('admin.purchases.show')
+            ->withPurchase($purchase);
+    }
 }

@@ -31,6 +31,7 @@
 							<th>Paypal Email</th>
 							<th>Transaction ID</th>
 							<th>Created At</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,6 +44,13 @@
 								<td>{{ $purchase->paypal_email }}</td>
 								<td>{{ $purchase->transaction_id }}</td>
 								<td>{{ $purchase->created_at }}</td>
+								<td>
+									<a href="/admin/purchases/{{ $purchase->id }}">
+										<button class="btn btn-block btn-success btn-sm">
+											View
+										</button>
+									</a>
+								</td>
 							</tr>
 						@endforeach
 					</tbody>

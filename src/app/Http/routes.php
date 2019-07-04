@@ -347,6 +347,7 @@ Route::group(['middleware' => ['web']], function () {
          * Purchases
          */
         Route::get('/admin/purchases', 'Admin\PurchasesController@index');
+        Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
 
         /**
          * Credit System
