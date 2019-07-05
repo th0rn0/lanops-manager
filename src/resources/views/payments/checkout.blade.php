@@ -82,7 +82,7 @@
 				<div class="panel-body">
 					<div class="row">
 						@foreach ($activePaymentGateways as $gateway)
-							<div class="col-sm-6 col-xs-12">
+							<div class="col-xs-12 col-md-6">
 								<div class="section-header">
 									<h4>
 										{{ Settings::getPaymentGatewayDisplayName($gateway) }}
@@ -97,6 +97,22 @@
 								<p><small>{{ Settings::getPaymentGatewayNote($gateway) }}</small></p>
 							</div>
 						@endforeach
+						@if (Settings::isCreditEnabled())
+							<div class="col-xs-12 col-md-6">
+								<div class="section-header">
+									<h4>
+										Credit
+									</h4>
+									<hr>
+								</div>
+								<a href="/payment/review/credit">
+									<button type="button" class="btn btn-default btn-block">
+										Pay With Credit
+									</button>
+								</a>
+								<p><small>Credit purchases are non refundable.</small></p>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>

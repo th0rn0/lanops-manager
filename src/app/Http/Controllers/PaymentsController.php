@@ -60,8 +60,12 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways)) {
+        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
             $paymentGateway = strtolower($paymentGateway);
+        }
+        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+            Session::flash('alert-danger', 'Credit is not enabled.');
+            return Redirect::back();
         }
         if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
@@ -107,8 +111,16 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways)) {
+        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
             $paymentGateway = strtolower($paymentGateway);
+        }
+        if (!isset($paymentGateway)) {
+            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+            return Redirect::back();
+        }
+        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+            Session::flash('alert-danger', 'Credit is not enabled.');
+            return Redirect::back();
         }
         return view('payments.details')
             ->withPaymentGateway($paymentGateway)
@@ -150,12 +162,20 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        if (in_array(strtolower($request->gateway), $acceptedPaymentGateways)) {
+        if (in_array(strtolower($request->gateway), $acceptedPaymentGateways) || $request->gateway == 'credit') {
             $paymentGateway = strtolower($request->gateway);
         }
         if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
+        }
+        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+            Session::flash('alert-danger', 'Credit is not enabled.');
+            return Redirect::back();
+        }
+        // If Credit Redirect Straight to details page
+        if ($paymentGateway == 'credit') {
+            return Redirect::to('/payment/details/' . $paymentGateway);
         }
         $offSitePaymentGateways = [
             'paypal_express',
