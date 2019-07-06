@@ -136,13 +136,22 @@ $factory->define(App\ShopItemCategory::class, function (Faker\Generator $faker) 
 ## Shop Item
 $factory->define(App\ShopItem::class, function (Faker\Generator $faker) {
     $name = $faker->words($nb = random_int(1, 3), $asText = true);
+    $rng = random_int(1, 3);
+    $price = number_format(random_int(1, 100), 2);
+    $price_credit = random_int(0, 999);
+    if ($rng == 1) {
+        $price = null;
+    }
+    if ($rng == 2) {
+        $price_credit = null;
+    }
     return [
         'name'                  => $name,
         'slug'                  => strtolower(str_replace(' ', '-', $name)),
         'featured'              => random_int(0, 1),
         'description'           => $faker->paragraphs($nb = 2, $asText = true),
-        'price'            => number_format(random_int(1, 100), 2),
-        'price_credit'          => random_int(0, 999),
+        'price'                 => $price,
+        'price_credit'          => $price_credit,
         'stock'                 => random_int(0, 10),
         'status'                => 'PUBLISHED',
         'added_by'              => 1,

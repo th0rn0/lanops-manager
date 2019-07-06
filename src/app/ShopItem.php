@@ -4,8 +4,10 @@ namespace App;
 
 use DB;
 use Auth;
+use Settings;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -54,6 +56,11 @@ class ShopItem extends Model
             });
             static::addGlobalScope('statusPublished', function (Builder $builder) {
                 $builder->where('status', 'PUBLISHED');
+            });
+        }
+        if (!Settings::isCreditEnabled()) {
+            static::addGlobalScope('creditEnabled', function (Builder $builder) {
+                $builder->where('price', '!=', 'null');
             });
         }
     }

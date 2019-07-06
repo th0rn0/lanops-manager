@@ -25,11 +25,11 @@
 		<p>
 			@if ($item->price != null)
 				£{{ $item->price }}
-				@if ($item->price_credit != null)
+				@if ($item->price_credit != null && Settings::isCreditEnabled())
 					/
 				@endif
 			@endif
-			@if ($item->price_credit != null)
+			@if ($item->price_credit != null && Settings::isCreditEnabled())
 				{{ $item->price_credit }} Credits
 			@endif
 		</p>
