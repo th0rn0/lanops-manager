@@ -13,7 +13,7 @@ class CreditLog extends Model
      */
     protected $table = 'credit_log';
 
-    protected $fillable = ['user_id', 'action', 'amount', 'reason', 'event_ticket_id', 'admin_id'];
+    protected $fillable = ['user_id', 'action', 'amount', 'reason', 'purchase_id', 'admin_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -37,8 +37,8 @@ class CreditLog extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
     
-    public function tickets()
+    public function purchase()
     {
-        return $this->belongsTo('App\EventTicket', 'event_ticket_id');
+        return $this->belongsTo('App\Purchase', 'purchase_id');
     }
 }

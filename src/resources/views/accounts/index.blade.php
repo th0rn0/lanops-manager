@@ -61,7 +61,38 @@
 									<tr class="table-row" class="odd gradeX">
 										<td>{{ $creditLog->action }}</td>
 										<td>{{ $creditLog->amount }}</td>
-										<td></td>
+										<td>
+											@if (strtolower($creditLog->action) == 'buy')
+												@if (!$creditLog->purchase->participants->isEmpty())
+													@foreach ($creditLog->purchase->participants as $participant)
+														{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
+														@if (!$loop->last)
+															<hr>
+														@endif
+													@endforeach
+												@elseif ($creditLog->purchase->order != null)
+													@foreach ($creditLog->purchase->order->items as $item)
+														@if ($item->item)
+															{{ $item->item->name }}
+														@endif 
+														 - x {{ $item->quantity }}
+														 <br>
+													 	@if ($item->price != null)
+															£{{ $item->price * $item->quantity }}
+															@if ($item->price_credit != null && Settings::isCreditEnabled())
+																/
+															@endif
+														@endif
+														@if ($item->price_credit != null && Settings::isCreditEnabled())
+															{{ $item->price_credit * $item->quantity }} Credits
+														@endif
+														@if (!$loop->last)
+															<hr>
+														@endif
+													@endforeach
+												@endif
+											@endif
+										</td>
 										<td>{{ $creditLog->reason }}</td>
 										<td>
 											{{ $creditLog->updated_at }}

@@ -47,6 +47,10 @@ class Purchase extends Model
     {
         return $this->hasOne('App\ShopOrder', 'purchase_id');
     }
+    public function creditLog()
+    {
+        return $this->hasOne('App\CreditLog', 'purchase_id');
+    }
 
 
     /**

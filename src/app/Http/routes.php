@@ -122,7 +122,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/shop', 'ShopController@index');
     Route::get('/shop/basket', 'ShopController@showBasket');
     Route::post('/shop/basket', 'ShopController@updateBasket');
-    Route::get('/shop/checkout', 'ShopController@showCheckout');
     Route::get('/shop/orders', 'ShopController@showOrders');
     Route::get('/shop/{category}', 'ShopController@showCategory');
     Route::get('/shop/{category}/{item}', 'ShopController@showItem');

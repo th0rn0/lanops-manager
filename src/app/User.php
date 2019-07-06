@@ -152,7 +152,7 @@ class User extends Authenticatable
      */
     public function checkCredit($amount)
     {
-        if (($this->credit_total += $amount) < 0) {
+        if (($this->credit_total + $amount) < 0) {
             return false;
         }
         return true;
@@ -162,9 +162,12 @@ class User extends Authenticatable
      * Edit Credit for current User
      * @param  $amount
      * @param  Boolean $manual
+     * @param  $reason
+     * @param  Boolean $buy
+     * @param  $purchaseId
      * @return Boolean
      */
-    public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false)
+    public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false, $purchaseId = null)
     {
         $this->credit_total += $amount;
         $admin_id = null;
@@ -181,11 +184,12 @@ class User extends Authenticatable
         }
         if ($amount != 0) {
             CreditLog::create([
-                'user_id' => $this->id,
-                'action' => $action,
-                'amount' => $amount,
-                'reason' => $reason,
-                'admin_id' => $admin_id
+                'user_id'       => $this->id,
+                'action'        => $action,
+                'amount'        => $amount,
+                'reason'        => $reason,
+                'purchase_id'   => $purchaseId,
+                'admin_id'      => $admin_id
             ]);
         }
         if (!$this->save()) {

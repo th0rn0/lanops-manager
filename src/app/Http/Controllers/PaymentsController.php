@@ -174,7 +174,7 @@ class PaymentsController extends Controller
             return Redirect::back();
         }
         // If Credit Redirect Straight to details page
-        if ($paymentGateway == 'credit') {
+        if ($paymentGateway == 'credit' && !isset($request->confirm)) {
             return Redirect::to('/payment/details/' . $paymentGateway);
         }
         $offSitePaymentGateways = [
@@ -182,6 +182,7 @@ class PaymentsController extends Controller
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
         if (
+            $paymentGateway != 'credit' &&
             !in_array($paymentGateway, $offSitePaymentGateways) &&
             !isset($request->card_first_name) &&
             !isset($request->card_last_name) &&
@@ -199,6 +200,8 @@ class PaymentsController extends Controller
             ) {
             $requestScheme = 'https';
         }
+        
+        $processPaymentSkip = false;
 
         switch ($paymentGateway) {
             case 'stripe':
@@ -269,25 +272,32 @@ class PaymentsController extends Controller
                 $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
                 $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
                 break;
+            case 'credit':
+                $processPaymentSkip = true;
+                $params = array();
+                break;
         }
+
         Session::put('params', $params);
         Session::save();
+        if (!$processPaymentSkip) {
 
-        if (config('app.debug')) {
-            $this->sandbox = true;
-        }
-        $gateway->setTestMode($this->sandbox);
+            if (config('app.debug')) {
+                $this->sandbox = true;
+            }
+            $gateway->setTestMode($this->sandbox);
 
-        // Send Payment
-        try {
-            $response = $gateway->purchase($params)->send();
-        } catch (\Exception $e) {
-            Session::flash('alert-danger', $e->getMessage());
-            return Redirect::back();
+            // Send Payment
+            try {
+                $response = $gateway->purchase($params)->send();
+            } catch (\Exception $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                return Redirect::back();
+            }
         }
 
         // Process Response
-        if ($response->isSuccessful() && $paymentGateway == 'stripe') {
+        if (!$processPaymentSkip && $response->isSuccessful() && $paymentGateway == 'stripe') {
             // payment was successful: update database
             $stripeResponse = $response->getData();
             $purchaseParams = [
@@ -300,7 +310,7 @@ class PaymentsController extends Controller
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
-        } elseif ($response->isRedirect() && $paymentGateway == 'paypal_express') {
+        } elseif (!$processPaymentSkip && $response->isRedirect() && $paymentGateway == 'paypal_express') {
             // redirect to offsite payment gateway such as paypal
             try {
                 $response->redirect();
@@ -308,9 +318,29 @@ class PaymentsController extends Controller
                 Session::flash('alert-danger', $e->getMessage());
                 return Redirect::back();
             }
+        } elseif ($processPaymentSkip && $paymentGateway == 'credit') {
+            if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
+                Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
+                return Redirect::to('/payment/failed');
+            }
+            $purchaseParams = [
+                'user_id'           => Auth::id(),
+                'type'              => 'Credit',
+                'transaction_id'    => '',
+                'token'             => '',
+                'status'            => 'Success'
+            ];
+            $purchase = Purchase::create($purchaseParams);
+            $this->processBasket($basket, $purchase->id);
+            Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
+            return Redirect::to('/payment/successful/' . $purchase->id);
         }
         //Failed transaction
-        Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.' . $response->getMessage());
+        $message = '';
+        if (!$processPaymentSkip) {
+            $message = $response->getMessage();
+        }
+        Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.' . $message);
         return Redirect::to('/payment/failed');
     }
 
