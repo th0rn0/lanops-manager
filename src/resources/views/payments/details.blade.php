@@ -71,7 +71,7 @@
 			@else ($paymentGateway == 'credit' && Settings::isCreditEnabled())
 				<h5>Credit: {{ $user->credit_total }}</h5>
 				<h5>Credit After Purchase: {{ $user->credit_total - $basket->total_credit }}</h5>
-				@if ($user->checkCredit(-1 * abs($basket->total_credit)))
+				@if ($user->checkCredit(-1 * abs($basket->total_credit)) && $basket->allow_credit)
 					<hr>
 					<div class="alert alert-warning">
 						<h5>You have enough credit to make this purchase. Please not Credit Purchases are non refundable!</h5>
@@ -81,6 +81,11 @@
 					{{ Form::hidden('confirm', true) }}
 						<button class="btn btn-default">Confirm Order</button>
 					{{ Form::close() }}
+				@elseif (!$basket->allow_credit)
+					<hr>
+					<div class="alert alert-warning">
+						<h5>You cannot use credit to purchase this basket! Please go <a href="/payment/checkout">back</a> and try another method</h5>
+					</div>
 				@else
 					<hr>
 					<div class="alert alert-warning">

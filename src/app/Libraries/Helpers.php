@@ -249,36 +249,6 @@ class Helpers
         return $final_rank . 'th';
     }
 
-    // /**
-    //  * Format Basket
-    //  * @param  $basket
-    //  * @param  boolean $obj    Return as Object
-    //  * @return Array|Object
-    //  */
-    // public static function getBasketFormat($basket, $obj = false)
-    // {
-    //     $return = array();
-    //     if (!$obj) {
-    //         $return[] = 'None';
-    //     }
-    //     foreach ($basket as $ticket_id => $quantity) {
-    //         $ticket = \App\EventTicket::where('id', $ticket_id)->first();
-    //         array_push(
-    //             $return,
-    //             [
-    //                 'id'        => $ticket_id,
-    //                 'name'      => $ticket->name,
-    //                 'price'     => $ticket->price,
-    //                 'quantity'  => $quantity
-    //             ]
-    //         );
-    //     }
-    //     if ($obj) {
-    //         return json_decode(json_encode($return), false);
-    //     }
-    //     return $return;
-    // }
-
     /**
      * Get Basket Total
      * @param  $basket
@@ -334,6 +304,8 @@ class Helpers
         }
         $formattedBasket->total = 0;
         $formattedBasket->total_credit = 0;
+        $formattedBasket->allow_payment = true;
+        $formattedBasket->allow_credit = true;
         foreach ($formattedBasket as $item) {
             if (array_key_exists('shop', $basket)) {
                 $item->quantity = $basket['shop'][$item->id];
@@ -343,6 +315,12 @@ class Helpers
                 $item->quantity = $basket['tickets'][$item->id];
                 $formattedBasket->total += $item->price * $item->quantity;
                 $formattedBasket->total_credit += $item->price_credit * $item->quantity;
+            }
+            if ($item->price_credit == null) {
+                $formattedBasket->allow_credit = false;
+            }
+            if ($item->price == null) {
+                $formattedBasket->allow_payment = false;
             }
         }
         return $formattedBasket;

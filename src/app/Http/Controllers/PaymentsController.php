@@ -52,25 +52,37 @@ class PaymentsController extends Controller
      */
     public function review($paymentGateway)
     {
-        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
-            return Redirect::to('/');
-        }
-        $acceptedPaymentGateways = Settings::getPaymentGateways();
-        if (!isset($paymentGateway)) {
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
-            $paymentGateway = strtolower($paymentGateway);
-        }
-        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
-            Session::flash('alert-danger', 'Credit is not enabled.');
-            return Redirect::back();
-        }
-        if (!isset($paymentGateway)) {
-            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
-            return Redirect::back();
-        }
+        // if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
+        //     return Redirect::to('/');
+        // }
+        // $acceptedPaymentGateways = Settings::getPaymentGateways();
+        // if (!isset($paymentGateway)) {
+        //     Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+        //     return Redirect::back();
+        // }
+        // if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
+        //     $paymentGateway = strtolower($paymentGateway);
+        // }
+        // if (!isset($paymentGateway)) {
+        //     Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+        //     Session::flash('alert-danger', 'Credit is not enabled.');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
+        //     Session::flash('alert-danger', 'You cannot use credit to purchase this basket!');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
+        //     Session::flash('alert-danger', 'You cannot use that method to purchase this basket!');
+        //     return Redirect::back();
+        // }
         $nextEventFlag = true;
         if (array_key_exists('tickets', $basket)) {
             foreach ($basket['tickets'] as $ticketId => $quantity) {
@@ -102,26 +114,38 @@ class PaymentsController extends Controller
      */
     public function details($paymentGateway)
     {
-        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
-            Session::flash('alert-danger', 'No Basket was found. Please try again');
-            return Redirect::back();
-        }
-        $acceptedPaymentGateways = Settings::getPaymentGateways();
-        if (!isset($paymentGateway)) {
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
-        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
-            $paymentGateway = strtolower($paymentGateway);
-        }
-        if (!isset($paymentGateway)) {
-            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
-            return Redirect::back();
-        }
-        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
-            Session::flash('alert-danger', 'Credit is not enabled.');
-            return Redirect::back();
-        }
+        // if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
+        //     Session::flash('alert-danger', 'No Basket was found. Please try again');
+        //     return Redirect::back();
+        // }
+        // $acceptedPaymentGateways = Settings::getPaymentGateways();
+        // if (!isset($paymentGateway)) {
+        //     Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+        //     return Redirect::back();
+        // }
+        // if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
+        //     $paymentGateway = strtolower($paymentGateway);
+        // }
+        // if (!isset($paymentGateway)) {
+        //     Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+        //     Session::flash('alert-danger', 'Credit is not enabled.');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
+        //     Session::flash('alert-danger', 'You cannot use credit to purchase this basket!');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
+        //     Session::flash('alert-danger', 'You cannot use that method to purchase this basket!');
+        //     return Redirect::back();
+        // }
         return view('payments.details')
             ->withPaymentGateway($paymentGateway)
             ->withBasket(Helpers::formatBasket($basket, true))
@@ -135,8 +159,8 @@ class PaymentsController extends Controller
      */
     public function post(Request $request)
     {
-        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
-            Session::flash('alert-danger', 'No Basket was found. Please try again');
+        if (!$paymentGateway = $this->checkParams($request->gateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return Redirect::back();
         }
         if (array_key_exists('tickets', $basket)) {
@@ -157,22 +181,28 @@ class PaymentsController extends Controller
                 }
             }
         }
-        $acceptedPaymentGateways = Settings::getPaymentGateways();
-        if (!isset($request->gateway)) {
-            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
-            return Redirect::back();
-        }
-        if (in_array(strtolower($request->gateway), $acceptedPaymentGateways) || $request->gateway == 'credit') {
-            $paymentGateway = strtolower($request->gateway);
-        }
-        if (!isset($paymentGateway)) {
-            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
-            return Redirect::back();
-        }
-        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
-            Session::flash('alert-danger', 'Credit is not enabled.');
-            return Redirect::back();
-        }
+        // $acceptedPaymentGateways = Settings::getPaymentGateways();
+        // if (!isset($request->gateway)) {
+        // }
+        // if (in_array(strtolower($request->gateway), $acceptedPaymentGateways) || $request->gateway == 'credit') {
+        //     $paymentGateway = strtolower($request->gateway);
+        // }
+        // if (!isset($paymentGateway)) {
+        //     Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+        //     Session::flash('alert-danger', 'Credit is not enabled.');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
+        //     Session::flash('alert-danger', 'You cannot use credit to purchase this basket!');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
+        //     Session::flash('alert-danger', 'You cannot use that method to purchase this basket!');
+        //     return Redirect::back();
+        // }
         // If Credit Redirect Straight to details page
         if ($paymentGateway == 'credit' && !isset($request->confirm)) {
             return Redirect::to('/payment/details/' . $paymentGateway);
@@ -351,13 +381,21 @@ class PaymentsController extends Controller
      */
     public function process(Request $request)
     {
-        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
-            Session::flash('alert-danger', 'No Basket was found. Please try again');
-            return Redirect::back();
-        }
-
         // Currently only PayPal Express
         $paymentGateway = 'paypal_express';
+
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+            return Redirect::back();
+        }
+        // if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
+        //     Session::flash('alert-danger', 'No Basket was found. Please try again');
+        //     return Redirect::back();
+        // }
+        // if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
+        //     Session::flash('alert-danger', 'You cannot use that method to purchase this basket!');
+        //     return Redirect::back();
+        // }
 
         if ($request->input('type') == 'cancel') {
             Session::flash('alert-danger', 'Payment was CANCELLED!');
@@ -403,6 +441,55 @@ class PaymentsController extends Controller
     }
 
     /**
+     * Successful Payment Page
+     * @param  Purchase $purchase
+     * @return View
+     */
+    public function successful(Purchase $purchase)
+    {
+        if (!Session::has('params')) {
+            return Redirect::to('/');
+        }
+        $basket = Session::get(Settings::getOrgName() . '-basket');
+        $type = 'tickets';
+        if (array_key_exists('shop', $basket)) {
+            $type = 'shop';
+        }
+        $basket = Helpers::formatBasket($basket);
+        Session::forget('params');
+        Session::forget(Settings::getOrgName() . '-basket');
+        return view('payments.successful')
+            ->withType($type)
+            ->withBasket($basket)
+            ->withPurchase($purchase)
+        ;
+    }
+
+    /**
+     * Failed Payment Page
+     * @param  Purchase $purchase
+     * @return View
+     */
+    public function failed()
+    {
+        Session::forget('params');
+        Session::forget(Settings::getOrgName() . '-basket');
+        return view('payments.failed');
+    }
+
+    /**
+     * Cancelled Payment Page
+     * @param  Purchase $purchase
+     * @return View
+     */
+    public function cancelled()
+    {
+        Session::forget('params');
+        Session::forget(Settings::getOrgName() . '-basket');
+        return view('payments.cancelled');
+    }
+
+    /**
      * Process Basket for Successful Order
      * @param  $basket
      * @param  $purchaseId
@@ -440,47 +527,36 @@ class PaymentsController extends Controller
     }
 
     /**
-     * Successful Payment Page
-     * @param  Purchase $purchase
-     * @return View
+     * Check Params for the Order are correct
+     * @param  $paymentGateway
+     * @param  $basket
      */
-    public function successful(Purchase $purchase)
+    private function checkParams($paymentGateway, $basket)
     {
-        if (!Session::has('params')) {
-            return Redirect::to('/');
+        $acceptedPaymentGateways = Settings::getPaymentGateways();
+        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
+            $paymentGateway = strtolower($paymentGateway);
         }
-        $basket = Session::get(Settings::getOrgName() . '-basket');
-        $type = 'tickets';
-        if (array_key_exists('shop', $basket)) {
-            $type = 'shop';
+        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
+            Session::flash('alert-danger', 'No Basket was found. Please try again');
+            return Redirect::back();
         }
-        $basket = Helpers::formatBasket($basket);
-        Session::forget('params');
-        Session::forget(Settings::getOrgName() . '-basket');
-        return view('payments.successful')
-            ->withType($type)
-            ->withBasket($basket)
-            ->withPurchase($purchase)
-        ;
-    }
-
-    /**
-     * Failed Payment Page
-     * @param  Purchase $purchase
-     * @return View
-     */
-    public function failed()
-    {
-        return view('payments.failed');
-    }
-
-    /**
-     * Cancelled Payment Page
-     * @param  Purchase $purchase
-     * @return View
-     */
-    public function cancelled()
-    {
-        return view('payments.cancelled');
+        if (!isset($paymentGateway)) {
+            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+            return Redirect::back();
+        }
+        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+            Session::flash('alert-danger', 'Credit is not enabled.');
+            return Redirect::back();
+        }
+        if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
+            Session::flash('alert-danger', 'You cannot use credit to purchase this basket!');
+            return Redirect::back();
+        }
+        if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
+            Session::flash('alert-danger', 'You cannot use that method to purchase this basket!');
+            return Redirect::back();
+        }
+        return $paymentGateway;
     }
 }
