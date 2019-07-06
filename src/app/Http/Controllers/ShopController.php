@@ -87,7 +87,7 @@ class ShopController extends Controller
         }
         if (!Helpers::formatBasket($params)->allow_credit && !Helpers::formatBasket($params)->allow_payment) {
             Session::flash('alert-danger', 'You cannot add a Credit Only Item & a Payment Only Item to the cart at the same time!');
-            return Redirect::to('/shop/basket');
+            return Redirect::back();
         }
         Session::put(Settings::getOrgName() . '-basket', $params);
         Session::save();

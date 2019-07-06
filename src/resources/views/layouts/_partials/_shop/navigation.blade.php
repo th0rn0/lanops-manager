@@ -12,7 +12,7 @@
 			</ul>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			  <li><a href="/shop/cart">Cart</a></li>
+			  <li><a href="/shop/basket">Basket</a></li>
 			  <li><a href="/payment/checkout">Checkout</a></li>
 			  <li><a href="/shop/orders">Orders</a></li>
 			</ul>

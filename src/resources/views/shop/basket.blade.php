@@ -48,6 +48,9 @@
 											{{ $item->price_credit * $item->quantity }} Credits
 										@endif
 									</td>
+									<td>
+										X
+									</td>
 								</tr>
 							@endforeach
 							<tr>
@@ -65,6 +68,8 @@
 									@if ($basket->total_credit != 0 && Settings::isCreditEnabled())
 										{{ $basket->total_credit }} Credits
 									@endif
+								</td>
+								<td>
 								</td>
 							</tr>
 						</tbody>
