@@ -75,12 +75,12 @@
 			</li>
 			@if(Settings::isCreditEnabled())
 				<li>
-					<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System</a> 
+					<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System (Beta)</a> 
 				</li>
 			@endif
 			@if(Settings::isShopEnabled())
 				<li>
-					<a href="/admin/shop"><i class="fa fa-wrench" aria-hidden="true"></i> Shop</a> 
+					<a href="/admin/shop"><i class="fa fa-wrench" aria-hidden="true"></i> Shop (Beta)</a> 
 				</li>
 			@endif
 			</ul>

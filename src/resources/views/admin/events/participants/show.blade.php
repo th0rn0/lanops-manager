@@ -97,7 +97,7 @@
 				@endif
 				@if ($participant->purchase)
 					{{ Form::label('','Purchase Info',array('id'=>'','class'=>'')) }}
-					<p><a href="/admin/purchases">{{ $participant->purchase->type }}</a></p>
+					<p><a href="/admin/purchases/{{ $participant->purchase->id }}">{{ $participant->purchase->type }}</a></p>
 					@if ($participant->purchase->paypal_email)
 						<p>{{ $participant->purchase->paypal_email }}</p>
 					@endif

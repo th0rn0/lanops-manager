@@ -49,7 +49,11 @@
 										@endif
 									</td>
 									<td>
-										X
+										{{ Form::open(array('url'=>'/shop/basket')) }}
+											{{ Form::hidden('shop_item_id', $item->id) }}
+											{{ Form::hidden('action', 'remove') }}
+											<button type="submit" class="btn btn-success">X</button>
+										{{ Form::close() }}
 									</td>
 								</tr>
 							@endforeach
