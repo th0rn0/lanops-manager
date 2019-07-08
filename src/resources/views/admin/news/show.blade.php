@@ -63,10 +63,11 @@
 				<i class="fa fa-comments fa-fw"></i> Comments
 			</div>
 			<div class="panel-body">
-				@foreach ($newsArticle->comments->reverse() as $comment)
+				@foreach ($comments as $comment)
 					@include ('layouts._partials._news.comment-warnings')
 					@include ('layouts._partials._news.comment')
 				@endforeach
+				{{ $comments->links() }}
 			</div>  
 		</div>
 	</div>

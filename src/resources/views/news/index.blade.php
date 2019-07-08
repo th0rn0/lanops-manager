@@ -14,6 +14,7 @@
 	@foreach ($newsArticles as $newsArticle)
 		@include ('layouts._partials._news.short')
 	@endforeach
+	{{ $newsArticles->links() }}
 </div>
 
 @endsection

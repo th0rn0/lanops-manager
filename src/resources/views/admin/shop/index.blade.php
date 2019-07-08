@@ -55,6 +55,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $categories->links() }}
 				</div>
 			</div>
 		</div>
@@ -63,6 +64,7 @@
 				<i class="fa fa-th-list fa-fw"></i> Items
 			</div>
 			<div class="panel-body">
+				{{ $items->links() }}
 				<div class="row">
 					@foreach ($items as $item)
 						<div class="col-xs-12 col-sm-4 col-md-3">
@@ -70,6 +72,7 @@
 						</div>
 					@endforeach
 				</div>
+				{{ $items->links() }}
 			</div>
 		</div>
 	</div>

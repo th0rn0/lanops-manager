@@ -26,7 +26,9 @@ class PollsController extends Controller
      */
     public function index()
     {
-        return view('admin.polls.index')->withPolls(Poll::all());
+        return view('admin.polls.index')
+            ->withPolls(Poll::paginate(10))
+        ;
     }
 
     /**
@@ -37,7 +39,8 @@ class PollsController extends Controller
     public function show(Poll $poll)
     {
         $poll->sortOptions();
-        return view('admin.polls.show')->withPoll($poll);
+        return view('admin.polls.show')
+            ->withPoll($poll);
     }
 
     public function update(Poll $poll, Request $request)

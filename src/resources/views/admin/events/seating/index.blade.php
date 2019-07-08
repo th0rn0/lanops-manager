@@ -42,7 +42,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($event->seatingPlans as $seatingPlan)
+							@foreach ($seatingPlans as $seatingPlan)
 								<tr>
 									<td>
 										{{ $seatingPlan->name }}
@@ -65,6 +65,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $seatingPlans->links() }}
 				</div>        
 			</div>
 		</div>

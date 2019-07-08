@@ -91,7 +91,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($seatingPlan->seats as $seat)
+							@foreach ($seats as $seat)
 								<tr class="odd gradeX">
 									<td></td>
 									<td>{{ ucwords($seat->seat) }}</td>
@@ -118,6 +118,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $seats->links() }}
 				</div>
 			</div>
 		</div>

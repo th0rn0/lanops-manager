@@ -116,14 +116,15 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $purchases->links() }}
 				@else
-					You have no purchases
+					User has no purchases
 				@endif
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-12 col-lg-6">
-		@if (Settings::isCreditEnabled())
+		@if ($creditLogs)
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-users fa-fw"></i> Add Credit
@@ -199,6 +200,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $creditLogs->links() }}
 				</div>
 			</div>
 		@endif

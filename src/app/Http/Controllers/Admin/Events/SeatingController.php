@@ -30,7 +30,8 @@ class SeatingController extends Controller
     public function index(Event $event)
     {
         return view('admin.events.seating.index')
-            ->withEvent($event);
+            ->withEvent($event)
+            ->withSeatingPlans($event->seatingPlans()->paginate(10));
     }
 
     /**
@@ -43,7 +44,8 @@ class SeatingController extends Controller
     {
         return view('admin.events.seating.show')
             ->withEvent($event)
-            ->withSeatingPlan($seatingPlan);
+            ->withSeatingPlan($seatingPlan)
+            ->withSeats($seatingPlan->seats()->paginate(15, ['*'], 'se'));
     }
 
     /**

@@ -28,11 +28,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $albums = GalleryAlbum::all();
         return view('admin.gallery.index')
-            ->withUser($user)
-            ->withAlbums($albums);
+            ->withAlbums(GalleryAlbum::paginate(20))
+        ;
     }
     
     /**
@@ -41,10 +39,10 @@ class GalleryController extends Controller
      */
     public function show(GalleryAlbum $album)
     {
-        $user = Auth::user();
         return view('admin.gallery.show')
-            ->withUser($user)
-            ->withAlbum($album);
+            ->withAlbum($album)
+            ->withImages($album->images()->paginate(10))
+        ;
     }
     
     /**

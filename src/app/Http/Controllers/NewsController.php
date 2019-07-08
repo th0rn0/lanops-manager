@@ -24,7 +24,7 @@ class NewsController extends Controller
     public function index()
     {
         return view('news.index')
-            ->withNewsArticles(NewsArticle::all()->reverse());
+            ->withNewsArticles(NewsArticle::paginate(20));
     }
 
     /**

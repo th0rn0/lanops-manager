@@ -32,7 +32,9 @@ class TournamentsController extends Controller
     public function index(Event $event)
     {
         return view('admin.events.tournaments.index')
-            ->withEvent($event);
+            ->withEvent($event)
+            ->withTournaments($event->tournaments()->paginate(10))
+        ;
     }
 
     /**

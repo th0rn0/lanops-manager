@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Auth;
+use Settings;
 
 use App\User;
 use App\Event;
@@ -24,11 +25,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $users = User::all();
         return view('admin.users.index')
-            ->withUser($user)
-            ->withUsers($users);
+            ->withUser(Auth::user())
+            ->withUsers(User::paginate(20))
+        ;
     }
 
     /**
@@ -37,7 +37,14 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        $creditLogs = false;
+        if (Settings::isCreditEnabled()) {
+            $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'cl');
+        }
         return view('admin.users.show')
-            ->withUser($user);
+            ->withUser($user)
+            ->withCreditLogs($creditLogs)
+            ->withPurchases($user->purchases()->paginate(10, ['*'], 'pu'))
+        ;
     }
 }

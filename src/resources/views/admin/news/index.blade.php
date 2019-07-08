@@ -128,6 +128,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $newsArticles->links() }}
 				</div>
 			</div>  
 		</div>

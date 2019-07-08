@@ -24,7 +24,7 @@ class PurchasesController extends Controller
     public function index()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::simplePaginate(10));
+            ->withPurchases(Purchase::paginate(20));
     }
 
   	/**

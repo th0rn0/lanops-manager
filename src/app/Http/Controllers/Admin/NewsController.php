@@ -32,7 +32,7 @@ class NewsController extends Controller
     public function index()
     {
         return view('admin.news.index')
-            ->withNewsArticles(NewsArticle::all())
+            ->withNewsArticles(NewsArticle::paginate(10))
             ->withFacebookLinked(Facebook::isLinked())
             ->withCommentsToApprove(
                 NewsComment::where([['approved', '=', false], ['reviewed', '=', false]])
@@ -50,7 +50,9 @@ class NewsController extends Controller
     public function show(NewsArticle $newsArticle)
     {
         return view('admin.news.show')
-            ->withNewsArticle($newsArticle);
+            ->withNewsArticle($newsArticle)
+            ->withComments($newsArticle->comments()->paginate(10, ['*'], 'cm'))
+        ;
     }
 
     /**

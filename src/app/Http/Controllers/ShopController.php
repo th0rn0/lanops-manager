@@ -27,8 +27,7 @@ class ShopController extends Controller
     {
         return view('shop.index')
             ->withAllCategories(ShopItemCategory::all()->reverse())
-            ->withFeaturedItems(ShopItem::where('featured', true)->get())
-        ;
+            ->withFeaturedItems(ShopItem::where('featured', true)->get());
     }
 
     /**
@@ -44,8 +43,7 @@ class ShopController extends Controller
         }
         return view('shop.basket')
             ->withAllCategories(ShopItemCategory::all()->reverse())
-            ->withBasket($basket)
-        ;
+            ->withBasket($basket);
     }
 
     /**
@@ -126,8 +124,7 @@ class ShopController extends Controller
     public function showOrders()
     {
         return view('shop.orders')
-            ->withAllCategories(ShopItemCategory::all()->reverse())
-        ;
+            ->withAllCategories(ShopItemCategory::all()->reverse());
     }
 
     /**
@@ -137,8 +134,7 @@ class ShopController extends Controller
     public function showCheckout()
     {
         return view('shop.checkout')
-            ->withAllCategories(ShopItemCategory::all()->reverse())
-        ;
+            ->withAllCategories(ShopItemCategory::all()->reverse());
     }
 
     /**
@@ -150,8 +146,8 @@ class ShopController extends Controller
     {
         return view('shop.category')
             ->withCategory($category)
-            ->withAllCategories(ShopItemCategory::all()->reverse())
-        ;
+            ->withCategoryItems($category->items()->paginate(20))
+            ->withAllCategories(ShopItemCategory::all()->reverse());
     }
 
     /**
@@ -165,8 +161,7 @@ class ShopController extends Controller
         return view('shop.item')
             ->withCategory($category)
             ->withItem($item)
-            ->withAllCategories(ShopItemCategory::all()->reverse())
-        ;
+            ->withAllCategories(ShopItemCategory::all()->reverse());
     }
 
 }

@@ -47,7 +47,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							 @foreach ($event->eventParticipants as $participant)
+							 @foreach ($participants as $participant)
 								<tr class="odd gradeX">
 									<td>{{ $participant->user->steamname }}</td>
 									<td>{{ $participant->user->username }}</td>
@@ -88,6 +88,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $participants->links() }}
 				</div>
 			</div>
 		</div>

@@ -26,7 +26,7 @@ class CreditController extends Controller
     {
         return view('admin.credit.index')
             ->withIsCreditEnabled(Settings::isCreditEnabled())
-            ->withCreditLogs(CreditLog::paginate(10, ['*'], 'credit_logs'))
+            ->withCreditLogs(CreditLog::paginate(10, ['*'], 'cl'))
             ->withCreditAwardTournamentParticipation(Settings::getCreditTournamentParticipation())
             ->withCreditAwardTournamentFirst(Settings::getCreditTournamentFirst())
             ->withCreditAwardTournamentSecond(Settings::getCreditTournamentSecond())

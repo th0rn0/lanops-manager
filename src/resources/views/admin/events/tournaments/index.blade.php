@@ -43,7 +43,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($event->tournaments as $tournament)
+							@foreach ($tournaments as $tournament)
 								<tr class="table-row odd gradeX" data-href="/admin/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
 									<td>{{ $tournament->name }}</td>
 									<td>{{ $tournament->status }}</td>
@@ -71,6 +71,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $tournaments->links() }}
 				</div>            
 			</div>
 		</div>

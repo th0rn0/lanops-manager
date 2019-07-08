@@ -25,7 +25,9 @@ class ParticipantsController extends Controller
      */
     public function index(Event $event)
     {
-        return view('admin.events.participants.index')->withEvent($event);
+        return view('admin.events.participants.index')
+            ->withEvent($event)
+            ->withParticipants($event->eventParticipants()->paginate(20));
     }
 
     /**
@@ -36,7 +38,9 @@ class ParticipantsController extends Controller
      */
     public function show(Event $event, EventParticipant $participant)
     {
-        return view('admin.events.participants.show')->withEvent($event)->withParticipant($participant);
+        return view('admin.events.participants.show')
+            ->withEvent($event)
+            ->withParticipant($participant);
     }
 
     /**

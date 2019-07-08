@@ -26,9 +26,9 @@ class VenuesController extends Controller
      */
     public function index()
     {
-        $venues = EventVenue::all();
         return view('admin.events.venues.index')
-            ->withVenues($venues);
+            ->withVenues(EventVenue::paginate(10))
+        ;
     }
 
     /**

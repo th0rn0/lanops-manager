@@ -32,7 +32,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($polls->reverse() as $poll)
+						@foreach ($polls as $poll)
 							<tr class="table-row odd gradeX" data-href="/admin/polls/{{ $poll->slug }}">
 								<td>{{ $poll->name }}</td>
 								<td>
@@ -62,6 +62,7 @@
 						@endforeach
 					</tbody>
 				</table>
+				{{ $polls->links() }}
 			</div>  
 		</div>
 	</div>

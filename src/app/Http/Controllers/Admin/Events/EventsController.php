@@ -26,11 +26,9 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $events = Event::withoutGlobalScopes()->get();
         return view('admin.events.index')
-            ->withUser($user)
-            ->withEvents($events);
+            ->withUser(Auth::user())
+            ->withEvents(Event::withoutGlobalScopes()->paginate(10));
     }
 
     /**
@@ -40,12 +38,11 @@ class EventsController extends Controller
      */
     public function show(Event $event)
     {
-        $user = Auth::user();
-        $events = Event::withoutGlobalScopes();
         return view('admin.events.show')
-            ->withUser($user)
+            ->withUser(Auth::user())
             ->withEvent($event)
-            ->withEvents($events);
+            ->withAnnouncements($event->announcements()->paginate(5, ['*'], 'an'))
+            ->withParticipants($event->eventParticipants()->paginate(10, ['*'], 'ep'));
     }
 
     /**

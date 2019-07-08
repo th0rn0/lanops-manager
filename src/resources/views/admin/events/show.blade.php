@@ -212,13 +212,14 @@
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addAnnouncementModal">Add Announcement</a>
 			</div>
 			<div class="panel-body">
-				@if ($event->announcements->count() != 0)
+				@if ($announcements->count() != 0)
 					<div class="list-group">
-						@foreach ($event->announcements as $announcement)
+						@foreach ($announcements as $announcement)
 							<a href="#" class="list-group-item" data-toggle="modal" onclick="editAnnouncement('{{$announcement->id}}', '{{$announcement->message}}')" data-target="#editAnnouncementModal">
 								<i class="fa fa-comment fa-fw"></i> {{ $announcement->message }}
 							</a>
 						@endforeach
+						{{ $announcements->links() }}
 					</div>
 				@else
 					<h4>None</h4>
@@ -275,14 +276,14 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-user fa-fw"></i> Attendees <small>Last Ten Signups</small>
+				<i class="fa fa-user fa-fw"></i> Attendees
 				<a href="/admin/events/{{ $event->slug }}/participants" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Attendees</a>
 				<a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
 			</div>
 			<div class="panel-body">
 				@if (!$event->eventParticipants->isEmpty())
 					<div class="list-group">
-						@foreach ($event->eventParticipants as $participant)
+						@foreach ($participants as $participant)
 							<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
 								<i class="fa fa-comment fa-fw"></i> {{ $participant->user->steamname}} - {{ $participant->user->username}}
 								<span class="pull-right text-muted small">
@@ -290,6 +291,7 @@
 								</span>
 							</a>
 						@endforeach
+						{{ $participants->links() }}
 					</div>
 				@else
 					<h4>None</h4>

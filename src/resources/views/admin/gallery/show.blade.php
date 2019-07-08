@@ -40,7 +40,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($album->images as $image)
+							@foreach ($images as $image)
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class=" col-xs-3">
@@ -84,6 +84,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $images->links() }}
 				</div>
 				<!-- /.table-responsive -->
 			</div>

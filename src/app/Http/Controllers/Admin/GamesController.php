@@ -27,7 +27,7 @@ class GamesController extends Controller
     public function index()
     {
         return view('admin.games.index')
-            ->withGames(Game::all());
+            ->withGames(Game::paginate(20));
     }
 
     /**

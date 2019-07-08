@@ -23,8 +23,14 @@ class PollsController extends Controller
      */
     public function index()
     {
+        $activePolls = Poll::where('end', '==', null)
+            ->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")]);
+        $endedPolls = Poll::where('end', '!=', null)
+            ->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")])
+            ->paginate(10, ['*'], 'page');
         return view("polls.index")
-            ->withPolls(Poll::all());
+            ->withActivePolls($activePolls)
+            ->withEndedPolls($endedPolls);
     }
 
     /**
@@ -33,9 +39,8 @@ class PollsController extends Controller
      */
     public function show(Poll $poll)
     {
-        $poll->sortOptions();
         return view("polls.show")
-            ->withPoll($poll);
+            ->withPoll($poll->sortOptions());
     }
 
     /**

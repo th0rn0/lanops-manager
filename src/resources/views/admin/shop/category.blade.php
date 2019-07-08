@@ -39,7 +39,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($category->items as $item)
+							@foreach ($items as $item)
 								<tr class="table-row" class="odd gradeX">
 									<td>{{ $item->name }}</td>
 									<td>{{ $item->stock }}</td>
@@ -72,6 +72,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $items->links() }}
 				</div>
 			</div>
 		</div>
