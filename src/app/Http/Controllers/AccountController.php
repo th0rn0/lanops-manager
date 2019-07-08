@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Settings;
 
 use App\Http\Requests;
 
@@ -18,8 +19,17 @@ class AccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-     
+        $creditLogs = false;
+        if (Settings::isCreditEnabled()) {
+            $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'credit_logs');
+        }
+        $purchases = $user->purchases()->paginate(5, ['*'], 'purchases');
+        $tickets = $user->eventParticipants()->paginate(5, ['*'], 'tickets');
         return view("accounts.index")
-            ->withUser($user);
+            ->withUser($user)
+            ->withCreditLogs($creditLogs)
+            ->withPurchases($purchases)
+            ->withEventParticipants($tickets)
+        ;
     }
 }

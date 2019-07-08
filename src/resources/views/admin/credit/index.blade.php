@@ -87,6 +87,7 @@
 							@endforeach
 						</tbody>
 					</table>
+					{{ $creditLogs->links() }}
 				</div>  
 			</div>
 		@endif

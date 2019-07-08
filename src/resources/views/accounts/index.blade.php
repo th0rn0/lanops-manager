@@ -40,7 +40,7 @@
 						{{ Form::close() }}
 					</div>
 				</div>
-				@if (Settings::isCreditEnabled())
+				@if ($creditLogs)
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h3 class="panel-title">Credit - {{ $user->credit_total }}</h3>
@@ -57,7 +57,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($user->creditLogs->reverse() as $creditLog)
+									@foreach ($creditLogs->reverse() as $creditLog)
 									<tr class="table-row" class="odd gradeX">
 										<td>{{ $creditLog->action }}</td>
 										<td>{{ $creditLog->amount }}</td>
@@ -101,6 +101,7 @@
 									@endforeach
 								</tbody>
 							</table>
+							{{ $creditLogs->links() }}
 						</div>
 					</div>
 				@endif
@@ -113,8 +114,8 @@
 						<h3 class="panel-title">Tickets</h3>
 					</div>
 					<div class="panel-body">
-						@if (count($user->eventParticipants))
-							@foreach ($user->eventParticipants as $participant)
+						@if (count($eventParticipants))
+							@foreach ($eventParticipants as $participant)
 								@include ('layouts._partials._tickets.index')
 							@endforeach
 						@else
@@ -150,7 +151,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($user->purchases as $purchase)
+									@foreach ($purchases as $purchase)
 										<tr>
 											<td>
 												{{ $purchase->id }}
@@ -195,6 +196,7 @@
 									@endforeach
 								</tbody>
 							</table>
+							{{ $purchases->links() }}
 						@else
 							You have no purchases
 						@endif
