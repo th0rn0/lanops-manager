@@ -359,10 +359,12 @@ Route::group(['middleware' => ['web']], function () {
          * Shop
          */
         Route::get('/admin/shop', 'Admin\ShopController@index');
-        Route::get('/admin/shop/{category}', 'Admin\ShopController@showCategory');
-        Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
-        Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
         Route::post('/admin/shop/item', 'Admin\ShopController@storeItem');
+        Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
+        Route::get('/admin/shop/{category}', 'Admin\ShopController@showCategory');
+        Route::post('/admin/shop/{category}', 'Admin\ShopController@updateCategory');
+        Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
+        Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
 
     });
 });

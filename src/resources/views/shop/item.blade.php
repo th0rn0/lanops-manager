@@ -20,6 +20,17 @@
 				{{ $item->name }} - <small>@if($item->stock > 0) In Stock: {{ $item->stock }} @else Out of Stock @endif</small>
 			</h4>
 			<p>{{ $item->description }}</p>
+			<h5>
+				@if ($item->price != null)
+					£{{ $item->price }}
+					@if ($item->price_credit != null && Settings::isCreditEnabled())
+						/
+					@endif
+				@endif
+				@if ($item->price_credit != null && Settings::isCreditEnabled())
+					{{ $item->price_credit }} Credits
+				@endif
+			</h5>
 			@if ($item->hasStockByItemId($item->id))
 				{{ Form::open(array('url'=>'/shop/basket/')) }}
 					<div class="form-group">

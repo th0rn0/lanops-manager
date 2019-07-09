@@ -287,6 +287,16 @@ class Helpers
     }
 
     /**
+     * Get Shop Categories Select Array
+     * @param  $publicOnly
+     * @return Array
+     */
+    public static function getShopCategoriesSelectArray($publicOnly = true)
+    {
+        return \App\ShopItemCategory::getShopCategoriesSelectArray($publicOnly);
+    }
+
+    /**
      * Format Shopping Basket into Readable format
      * @param $itemId
      * @return Boolean

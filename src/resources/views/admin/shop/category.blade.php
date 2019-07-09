@@ -19,7 +19,7 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-10">
+	<div class="col-xs-12 col-sm-8 col-md-9">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-th-list fa-fw"></i> Items
@@ -43,7 +43,7 @@
 								<tr class="table-row" class="odd gradeX">
 									<td>{{ $item->name }}</td>
 									<td>{{ $item->stock }}</td>
-									<td>Coming Soon</td>
+									<td>{{ $item->getTotalSales() }}</td>
 									<td>
 										@if ($item->price != null)
 											£{{ $item->price }}
@@ -55,7 +55,7 @@
 											{{ $item->price_credit }} Credits
 										@endif
 									</td>
-									<td>{{ $item->status }}</td>
+									<td>{{ ucfirst(strtolower($item->status)) }}</td>
 									<td>
 										@if ($item->featured)
 											Yes
@@ -78,7 +78,7 @@
 		</div>
 	</div>
 
-	<div class="col-xs-12 col-sm-2">
+	<div class="col-xs-12 col-sm-4 col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-plus fa-fw"></i> Settings
@@ -103,6 +103,24 @@
 							{{ Form::label('order','Order',array('id'=>'','class'=>'')) }}
 							{{ Form::number('order', $category->order, array('id'=>'order','class'=>'form-control')) }}
 						</div>
+						<div class="form-group">
+							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
+							{{ 
+								Form::select(
+									'status',
+									array(
+										'draft'=>'Draft',
+										'published'=>'Published',
+										'hidden' => 'Hidden'
+									),
+									strtolower($category->status),
+									array(
+										'id'=>'status',
+										'class'=>'form-control'
+									)
+								)
+							}}
+						</div> 
 						<button type="submit" class="btn btn-block btn-success">Submit</button>
 					{{ Form::close() }}
 				</div>

@@ -95,4 +95,18 @@ class ShopItemCategory extends Model
         return $this->items->count();
     }
 
+    public static function getShopCategoriesSelectArray($publicOnly = true)
+    {
+        $return[0] = 'None';
+        if ($publicOnly) {
+            $categories = ShopItemCategory::where('status', 'PUBLISHED')->orderBy('name', 'ASC')->get();
+        } else {
+            $categories = ShopItemCategory::all()->orderBy('name', 'ASC')->get();
+        }
+        foreach ($categories as $category) {
+            $return[$category->id] = $category->name;
+        }
+        return $return;
+    }
+
 }

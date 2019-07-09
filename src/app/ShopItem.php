@@ -6,6 +6,8 @@ use DB;
 use Auth;
 use Settings;
 
+use App\ShopOrderItem;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -13,6 +15,8 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class ShopItem extends Model
 {
+    use Sluggable;
+
     /**
      * The name of the table.
      *
@@ -122,6 +126,15 @@ class ShopItem extends Model
     }
 
     /**
+     * Get Total Sales
+     * @return Integer
+     */
+    public function getTotalSales()
+    {
+        return ShopOrderItem::where('shop_item_id', $this->id)->count();
+    }
+
+    /**
      * Check if item has Stock
      * @param $itemId
      * @return Boolean
@@ -152,7 +165,6 @@ class ShopItem extends Model
                 break;
         }
         if (!$this->save()) {
-        dd('nigger');
             return false;
         }
         return true;
