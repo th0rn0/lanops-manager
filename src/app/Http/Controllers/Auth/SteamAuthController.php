@@ -28,6 +28,15 @@ class SteamAuthController extends Controller
     }
 
     /**
+     * Promt Login User
+     * @return Redirect
+     */
+    public function prompt()
+    {
+        return view('login.prompt');
+    }
+
+    /**
      * Login User
      * @return Redirect
      */

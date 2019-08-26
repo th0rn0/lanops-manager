@@ -1,22 +1,6 @@
 <?php
 
 /**
- * Login & Register
- */
-Route::group(['middleware' => ['web']], function () {
-    
-    Route::get('/login', 'Auth\SteamAuthController@login');
-    Route::get('/register', 'Auth\SteamAuthController@register');
-    Route::post('/account/register', 'Auth\SteamAuthController@store');
-    
-    Route::group(['middleware' => ['auth']], function () {
-        Route::get('/account', 'AccountController@index');
-        Route::post('/account/delete', 'Auth\SteamAuthController@destroy');
-        Route::get('/logout', 'Auth\SteamAuthController@doLogout');
-    });
-});
-
-/**
  * API
  */
 // TODO - Move these endpoints to their own controllers EG src/app/Http/Controllers/Api
@@ -28,8 +12,21 @@ Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@sh
 Route::get('/api/events/{event}/tickets', 'Events\TicketsController@index');
 Route::get('/api/events/{event}/tickets/{ticket}', 'Events\TicketsController@show');
 
-Route::group(['middleware' => ['web']], function () {
 
+Route::group(['middleware' => ['web']], function () {
+    
+    /**
+     * Login & Register
+     */
+    Route::get('/login', 'Auth\SteamAuthController@login');
+    Route::get('/login/prompt', 'Auth\SteamAuthController@prompt');
+    Route::get('/register', 'Auth\SteamAuthController@register');
+    Route::post('/account/register', 'Auth\SteamAuthController@store');
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/account', 'AccountController@index');
+        Route::post('/account/delete', 'Auth\SteamAuthController@destroy');
+        Route::get('/logout', 'Auth\SteamAuthController@doLogout');
+    });
 
     /**
      * Index Page
@@ -63,15 +60,19 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Tickets
      */
-    Route::get('/tickets/retrieve/{participant}', 'Events\TicketsController@retrieve');
-    Route::post('/tickets/purchase/{ticket}', 'Events\TicketsController@purchase');
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/tickets/retrieve/{participant}', 'Events\TicketsController@retrieve');
+        Route::post('/tickets/purchase/{ticket}', 'Events\TicketsController@purchase');
+    });
 
     /**
      * Gifts
      */
-    Route::get('/gift/accept', 'Events\ParticipantsController@acceptGift');
-    Route::post('/gift/{participant}', 'Events\ParticipantsController@gift');
-    Route::post('/gift/{participant}/revoke', 'Events\ParticipantsController@revokeGift');
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/gift/accept', 'Events\ParticipantsController@acceptGift');
+        Route::post('/gift/{participant}', 'Events\ParticipantsController@gift');
+        Route::post('/gift/{participant}/revoke', 'Events\ParticipantsController@revokeGift');
+    });
 
     /**
      * Galleries
@@ -84,45 +85,55 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
     Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-    Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
-    Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
-    Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
-    Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
+    Route::group(['middleware' => ['auth']], function () {    
+        Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
+        Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
+        Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
+        Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
+    });
 
     /**
      * Payments
      */
-    Route::get('/payment/checkout', 'PaymentsController@checkout');
-    Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
-    Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
-    Route::get('/payment/callback', 'PaymentsController@process');
-    Route::post('/payment/post', 'PaymentsController@post');
-    Route::get('/payment/failed', 'PaymentsController@failed');
-    Route::get('/payment/cancelled', 'PaymentsController@cancelled');
-    Route::get('/payment/successful/{purchase}', 'PaymentsController@successful');
+    Route::group(['middleware' => ['auth']], function () {    
+        Route::get('/payment/checkout', 'PaymentsController@checkout');
+        Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
+        Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
+        Route::get('/payment/callback', 'PaymentsController@process');
+        Route::post('/payment/post', 'PaymentsController@post');
+        Route::get('/payment/failed', 'PaymentsController@failed');
+        Route::get('/payment/cancelled', 'PaymentsController@cancelled');
+        Route::get('/payment/successful/{purchase}', 'PaymentsController@successful');
+    });
 
     /**
      * Seating
      */
-    Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
-    Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
+    Route::group(['middleware' => ['auth']], function () {    
+        Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
+        Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
+    });
 
     /**
      * Polls
      */
     Route::get('/polls', 'PollsController@index');
     Route::get('/polls/{poll}', 'PollsController@show');
-    Route::post('/polls/{poll}/options', 'PollsController@storeOption');
-    Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
-    Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
+    Route::group(['middleware' => ['auth']], function () {    
+        Route::post('/polls/{poll}/options', 'PollsController@storeOption');
+        Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
+        Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
+    });
 
     /**
      * Shop
      */
+    Route::group(['middleware' => ['auth']], function () {    
+        Route::get('/shop/orders', 'ShopController@showOrders');
+    });
     Route::get('/shop', 'ShopController@index');
     Route::get('/shop/basket', 'ShopController@showBasket');
     Route::post('/shop/basket', 'ShopController@updateBasket');
-    Route::get('/shop/orders', 'ShopController@showOrders');
     Route::get('/shop/{category}', 'ShopController@showCategory');
     Route::get('/shop/{category}/{item}', 'ShopController@showItem');
 
