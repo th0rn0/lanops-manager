@@ -77,27 +77,32 @@ class SettingsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if (isset($request->steam) && !Settings::setSteamLink($request->steam)) {
+        if (isset($request->steam_link) && !Settings::setSteamLink($request->steam_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (isset($request->teamspeak) && !Settings::setTeamspeakLink($request->teamspeak)) {
+        if (isset($request->teamspeak_link) && !Settings::setTeamspeakLink($request->teamspeak_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (isset($request->discord) && !Settings::setDiscordLink($request->discord)) {
+        if (isset($request->discord_link) && !Settings::setDiscordLink($request->discord_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (isset($request->reddit) && !Settings::setRedditLink($request->reddit)) {
+        if (isset($request->discord_id) && !Settings::setDiscordId($request->discord_id)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (isset($request->facebook) && !Settings::setFacebookLink($request->facebook)) {
+        if (isset($request->reddit_link) && !Settings::setRedditLink($request->reddit_link)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->facebook_link) && !Settings::setFacebookLink($request->facebook_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }

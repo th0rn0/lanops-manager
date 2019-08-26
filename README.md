@@ -45,6 +45,8 @@ https://lanops.co.uk
 - Seating Plans
   - Multiple Plans per Event supported!
   - Manual seating of participants
+- Shop (beta)
+- Credit System (beta)
 - Venue Management
 - User Management
 - Timetable Management
@@ -69,6 +71,7 @@ https://lanops.co.uk
 - Payments
   - Terms & Conditions
   - Paypal Express
+  - Stripe Card payments (beta)
   - Breakdowns in Admin
 - Voting and Poll Management
 - News Management

@@ -113,6 +113,24 @@ class Settings
     }
 
     /**
+     * Get Discord ID
+     * @return String
+     */
+    public static function getDiscordId()
+    {
+        return \App\Setting::getDiscordId();
+    }
+
+    /**
+     * Set Discord ID
+     * @param String $text
+     */
+    public static function setDiscordId($text)
+    {
+        return \App\Setting::setDiscordId($text);
+    }
+
+    /**
      * Get Facebook Link
      * @return String
      */

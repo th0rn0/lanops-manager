@@ -196,6 +196,29 @@ class Setting extends Model
     }
 
     /**
+     * Get Discord ID
+     * @return String
+     */
+    public static function getDiscordId()
+    {
+        return self::where('setting', 'discord_id')->first()->value;
+    }
+
+    /**
+     * Set Discord ID
+     * @param String $text
+     */
+    public static function setDiscordId($text)
+    {
+        $setting = self::where('setting', 'discord_id')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get Facebook Link
      * @return String
      */

@@ -141,7 +141,7 @@
 				<div class="row">
 					@foreach ($supportedPaymentGateways as $gateway)
 						<div class="col-sm-6 col-xs-12">
-							<h4>{{ ucfirst($gateway) }}</h4>
+							<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }}</h4>
 							@if (in_array($gateway, $activePaymentGateways))
 								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}
 									<button type="submit" class="btn btn-block btn-danger">Disable</button>

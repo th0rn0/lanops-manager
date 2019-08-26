@@ -62,6 +62,12 @@ class SettingsTableSeeder extends Seeder
             'description'   => 'IP to your Teamspeak Server'
         ]);
         factory(App\Setting::class)->create([
+            'setting'       => 'discord_id',
+            'value'         => null,
+            'default'       => true,
+            'description'   => 'ID for Discord Widget'
+        ]);
+        factory(App\Setting::class)->create([
             'setting'       => 'discord_link',
             'value'         => null,
             'default'       => true,

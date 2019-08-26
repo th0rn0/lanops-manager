@@ -132,7 +132,9 @@
 			<div class="page-header">
 				<h3>The {{ Settings::getOrgName() }} Fam</h3>
 			</div>
-			<iframe class="hidden-md" src="https://discordapp.com/widget?id=118458292686028802&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
+			@if (Settings::getDiscordId())			
+				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ Settings::getDiscordId() }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
+			@endif
 			@if (count($topAttendees) > 0)
 				<div class="page-header">
 					<h5>Top 5 Attendees</h5>
