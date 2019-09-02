@@ -24,16 +24,6 @@ steps:
   - cd src/
   - npm install && node_modules/.bin/gulp --production
 
-# Build Docker Image
-
-- name: build-image
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - latest
-    dry_run: true
-
 # Tests
 
 - name: test-phpunit
@@ -367,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 2e2649b56e155dc1a2d880f1e74e57c8e16460fecbe981fd9a748aab0a0db0c3
+hmac: a4fed44636e23b2e8cddfad06be6e607dddff73c7e95d30cd8dcb58ce240af45
 
 ...
