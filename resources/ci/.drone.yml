@@ -56,6 +56,9 @@ steps:
   - vendor/bin/phpunit
 
 trigger:
+  event:
+    - push
+    - pull_request
   branch:
   - master
   - staging
@@ -364,6 +367,6 @@ trigger:
 
 ---
 kind: signature
-hmac: e8d2cd4c5f2736a138641a2317c9290802f598737a49d655fa16ce4dd9228f9a
+hmac: 8013a70cce7f33cab76f2cd27cef6fa9fdbdb382d9308072b10dfa65f00ed470
 
 ...
