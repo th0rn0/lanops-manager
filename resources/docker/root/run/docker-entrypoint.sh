@@ -169,19 +169,19 @@ fi
 
 # Populate Storage Volume if Bind mount - Fix for Bind Mounts on Host system
 if [ -z "$(ls -A $NGINX_DOCUMENT_ROOT/storage)" ]; then
-	echo "----------------------------------------------------------"
+	echo "---------------"
     echo "Storage on Bind mount is empty. Copying sample data ..."
  	cp -a /tmp/storage $NGINX_DOCUMENT_ROOT
 fi
 
 if [[ $(stat -c "%u" $NGINX_DOCUMENT_ROOT/storage) != $UUID ]]; then
-	echo "----------------------------------------------------------"
+	echo "---------------"
     echo "Changing ownership of $NGINX_DOCUMENT_ROOT/storage to $UUID ..."
     chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
 fi
 
 
 # Database Wait check
-echo "----------------------------------------------------------"
+echo "---------------"
 echo "WAITING FOR $DB_HOST:$DB_PORT..."
 /run/wait-for.sh $DB_HOST:$DB_PORT --timeout=30 --strict -- /run/start-supervisord.sh

@@ -98,14 +98,14 @@ https://lanops.co.uk
 
 ## Usage
 
-There are 3 ways to run the Lan Manager
+There are 3 ways to run the Lan Manager. Remember to check the logs when running for the first time!
 
 ### Docker
 
 This method is intended to be run as just a image with your own database. Persistant storage is required for the storage/ directory.
 
 ```
-docker run -it -d \
+docker run -it \
   -e APP_DEBUG=true \
   -e APP_ENV=local \
   -e APP_URL=localhost \
