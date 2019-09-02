@@ -41,8 +41,7 @@
     "autoload": {
         "classmap": [
             "database",
-            "tests/TestCase.php",
-            "tests/CreatesApplication.php"
+            "tests/TestCase.php"
         ],
         "psr-4": {
             "App\\": "app/"
@@ -53,8 +52,7 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php",
-            "tests/CreatesApplication.php"
+            "tests/TestCase.php"
         ],
         "psr-4": {
             "App\\": "app/",
