@@ -55,7 +55,11 @@
         "classmap": [
             "tests/TestCase.php",
             "tests/CreatesApplication.php"
-        ]
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [
