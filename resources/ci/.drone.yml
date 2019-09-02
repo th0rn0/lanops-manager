@@ -37,7 +37,7 @@ steps:
 # Tests
 
 - name: test-phpunit
-  image: lanopsdev/manager:latest
+  image: lanopsdev/manager-base:latest
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
