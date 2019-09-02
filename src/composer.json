@@ -40,7 +40,8 @@
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "tests/TestCase.php"
         ],
         "psr-4": {
             "App\\": "app/"
@@ -52,7 +53,11 @@
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"
-        ]
+        ],
+        "psr-4": {
+            "App\\": "app/",
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [

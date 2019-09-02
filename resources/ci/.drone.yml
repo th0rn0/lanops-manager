@@ -24,16 +24,6 @@ steps:
   - cd src/
   - npm install && node_modules/.bin/gulp --production
 
-# Build Docker Image
-
-- name: build-image
-  image: plugins/docker
-  settings:
-    repo: lanopsdev/manager
-    tags: 
-    - latest
-    dry_run: true
-
 # Tests
 
 - name: test-phpunit
@@ -49,13 +39,16 @@ steps:
     APP_ENV: testing
     APP_URL: localhost
   commands:
-  - cd /web/html/
+  - cd src/
   - ls
   - php artisan migrate --force
   - php artisan db:seed --force
   - vendor/bin/phpunit
 
 trigger:
+  event:
+    - push
+    - pull_request
   branch:
   - master
   - staging
@@ -364,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: e8d2cd4c5f2736a138641a2317c9290802f598737a49d655fa16ce4dd9228f9a
+hmac: a4fed44636e23b2e8cddfad06be6e607dddff73c7e95d30cd8dcb58ce240af45
 
 ...
