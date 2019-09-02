@@ -49,6 +49,7 @@ steps:
     APP_ENV: testing
     APP_URL: localhost
   commands:
+  - cd src/
   - ls
   - php artisan migrate --force
   - php artisan db:seed --force
