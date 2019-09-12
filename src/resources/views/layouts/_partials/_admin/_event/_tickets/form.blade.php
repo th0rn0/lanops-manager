@@ -21,7 +21,7 @@
 	<div class="form-group col-sm-6 col-xs-12">
 		{{ Form::label('price','Ticket Price',array('id'=>'','class'=>'')) }}
 		<div class="input-group">
-			<div class="input-group-addon">£</div>
+			<div class="input-group-addon">{{ Settings::getCurrencySymbol() }}</div>
 				@if (isset($priceLock) && $priceLock)
 					{{ 
 						Form::text(

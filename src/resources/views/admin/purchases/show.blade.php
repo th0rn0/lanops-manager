@@ -44,7 +44,7 @@
 									</td>
 									<td>
 										@if ($item->price != null)
-											£{{ $item->price }}
+											{{ Settings::getCurrencySymbol() }}{{ $item->price }}
 											@if ($item->price_credit != null && Settings::isCreditEnabled())
 												/
 											@endif
@@ -54,7 +54,7 @@
 										@endif
 										Each | 
 										@if ($item->price != null)
-											£{{ $item->price * $item->quantity }}
+											{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
 											@if ($item->price_credit != null && Settings::isCreditEnabled())
 												/
 											@endif
@@ -77,7 +77,7 @@
 									</td>
 									<td>
 										@if ($participant->ticket->price != null)
-											£{{ $participant->ticket->price }}
+											{{ Settings::getCurrencySymbol() }}{{ $participant->ticket->price }}
 											@if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
 												/
 											@endif

@@ -78,7 +78,7 @@
 														 - x {{ $item->quantity }}
 														 <br>
 													 	@if ($item->price != null)
-															£{{ $item->price * $item->quantity }}
+															{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
 															@if ($item->price_credit != null && Settings::isCreditEnabled())
 																/
 															@endif
@@ -178,7 +178,7 @@
 														 - x {{ $item->quantity }}
 														 <br>
 													 	@if ($item->price != null)
-															£{{ $item->price * $item->quantity }}
+															{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
 															@if ($item->price_credit != null && Settings::isCreditEnabled())
 																/
 															@endif

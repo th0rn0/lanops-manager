@@ -95,7 +95,7 @@
 				<h5>{{ $nextEvent->venue->display_name }}</h5>
 				@if ($nextEvent->tickets)
 					<h4>Price:</h4>
-					<h5>Tickets Start From £{{ $nextEvent->getCheapestTicket() }}</h5>
+					<h5>Tickets Start From {{ Settings::getCurrencySymbol() }}{{ $nextEvent->getCheapestTicket() }}</h5>
 				@endif
 			</div>
 		@else

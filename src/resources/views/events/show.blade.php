@@ -105,7 +105,7 @@
 						@endif
 						<div class="row" style="display: flex; align-items: center;">
 							<div class="col-sm-12 col-xs-12">
-								<h3>£{{$ticket->price}}
+								<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
 									@if ($ticket->quantity != 0)
 										<small>
 											{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available

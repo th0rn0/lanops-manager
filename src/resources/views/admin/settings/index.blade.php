@@ -26,18 +26,18 @@
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_name', $settings->where('setting', 'org_name')->first()->value ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::text('org_name', Settings::getOrgname() ,array('id'=>'','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
-						@if (trim($settings->where('setting', 'org_logo')->first()->value) != '')
-							<img class="img img-responsive" src="{{ $settings->where('setting', 'org_logo')->first()->value }}" />
+						@if (trim(Settings::getOrgLogo()) != '')
+							<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
 						@endif
 						{{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
 						{{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
 					</div>
 					 <div class="form-group">
-						@if (trim($settings->where('setting', 'org_favicon')->first()->value) != '')
-							<img class="img img-responsive" src="{{ $settings->where('setting', 'org_favicon')->first()->value }}" />
+						@if (trim(Settings::getOrgLogo()) != '')
+							<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
 						@endif
 						{{ Form::label('org_favicon','Favicon',array('id'=>'','class'=>'')) }}
 						{{ Form::file('org_favicon',array('id'=>'','class'=>'form-control')) }}
@@ -116,7 +116,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('registration_terms_and_conditions', $settings->where('setting', 'registration_terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('registration_terms_and_conditions', Settings::getRegistrationTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
@@ -124,7 +124,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('purchase_terms_and_conditions', $settings->where('setting', 'purchase_terms_and_conditions')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
@@ -231,19 +231,19 @@
 				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('about_main','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_main', $settings->where('setting', 'about_main')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('about_main', Settings::getAboutMain() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('about_short','Short',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_short', $settings->where('setting', 'about_short')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('about_short', Settings::getAboutShort() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('about_our_aim','Our Aim',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_our_aim', $settings->where('setting', 'about_our_aim')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('about_our_aim', Settings::getAboutOurAim() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_who', $settings->where('setting', 'about_who')->first()->value ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
@@ -259,7 +259,7 @@
 					<h4>Currency</h4>
 					<div class="form-group">
 						{{ Form::label('currency','Currency',array('id'=>'','class'=>'')) }}
-						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], null, array('id'=>'venue','class'=>'form-control')) }}
+						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], Settings::getCurrency(), array('id'=>'venue','class'=>'form-control')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}

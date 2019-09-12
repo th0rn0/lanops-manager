@@ -248,6 +248,15 @@ class Settings
     }
 
     /**
+     * Get Currency Symbol
+     * @return String
+     */
+    public static function getCurrencySymbol()
+    {
+        return \App\Setting::getCurrencySymbol();
+    }
+
+    /**
      * Set Currency
      * @param String $currency
      */
