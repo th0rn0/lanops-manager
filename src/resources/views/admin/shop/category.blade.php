@@ -46,7 +46,7 @@
 									<td>{{ $item->getTotalSales() }}</td>
 									<td>
 										@if ($item->price != null)
-											£{{ $item->price }}
+											{{ Settings::getCurrencySymbol() }}{{ $item->price }}
 											@if ($item->price_credit != null)
 												/
 											@endif

@@ -53,7 +53,7 @@
 				<div class="list-group">
 					Chart me
 					<h4>Money Made</h4>
-					<p>£{{ $ticket->participants()->count() * $ticket->price }}</p>
+					<p>{{ Settings::getCurrencySymbol() }}{{ $ticket->participants()->count() * $ticket->price }}</p>
 					<h4>Purchases</h4>
 					<p>{{ $ticket->participants()->count() }}</p>
 					@if ($ticket->quantity > 0)

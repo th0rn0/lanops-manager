@@ -199,7 +199,7 @@ class PaymentsController extends Controller
                 );
                 $params = array(
                     'amount' => (float)Helpers::formatBasket($basket)->total,
-                    'currency' => 'GBP',
+                    'currency' => Settings::getCurrency(),
                     'card' => $card
                 );
                 $gateway = Omnipay::create('Stripe');

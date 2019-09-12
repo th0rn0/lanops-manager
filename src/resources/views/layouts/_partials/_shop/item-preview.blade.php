@@ -24,7 +24,7 @@
 	<div class="panel-footer">
 		<p>
 			@if ($item->price != null)
-				£{{ $item->price }}
+				{{ Settings::getCurrencySymbol() }}{{ $item->price }}
 				@if ($item->price_credit != null && Settings::isCreditEnabled())
 					/
 				@endif

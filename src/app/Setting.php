@@ -366,6 +366,30 @@ class Setting extends Model
     }
 
     /**
+     * Get Currency Symbol
+     * @return String
+     */
+    public static function getCurrencySymbol()
+    {
+        $currency = self::where('setting', 'currency')->first()->value;
+        switch ($currency) {
+            case 'USD':
+                $symbol = '$';
+                break;
+            case 'GBP':
+                $symbol = '£';
+                break;
+            case 'EUR':
+                $symbol = '€';
+                break;
+            default:
+                $symbol = '£';
+                break;
+        }
+        return $symbol;
+    }
+
+    /**
      * Set Currency
      * @param String $text
      */

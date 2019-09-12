@@ -48,7 +48,7 @@
 												x {{ $item->quantity }}
 											</td>
 											<td>
-												£{{ $item->price }}
+												{{ Settings::getCurrencySymbol() }}{{ $item->price }}
 											</td>
 										</tr>
 									@endforeach
@@ -58,7 +58,7 @@
 											<strong>Total:</strong>
 										</td>
 										<td>
-											£{{ $basket->total }}
+											{{ Settings::getCurrencySymbol() }}{{ $basket->total }}
 										</td>
 									</tr>
 								</tbody>
@@ -82,7 +82,7 @@
 							<h5>Quantity: {{ $item->quantity }}</h5>
 							<h5>
 								@if ($item->price != null)
-									£{{ $item->price * $item->quantity }}
+									{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
 									@if ($item->price_credit != null && Settings::isCreditEnabled())
 										/
 									@endif

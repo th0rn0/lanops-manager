@@ -11,7 +11,7 @@
 					</td>
 					<td>
 						@if ($item->price != null)
-							£{{ $item->price }}
+							{{ Settings::getCurrencySymbol() }}{{ $item->price }}
 							@if ($item->price_credit != null && Settings::isCreditEnabled())
 								/
 							@endif
@@ -29,7 +29,7 @@
 				</td>
 				<td>
 					@if ($basket->total != null)
-						£{{ $basket->total }}
+						{{ Settings::getCurrencySymbol() }}{{ $basket->total }}
 						@if ($basket->total_credit != null && Settings::isCreditEnabled())
 							/
 						@endif
