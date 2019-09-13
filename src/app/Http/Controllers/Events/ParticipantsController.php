@@ -18,42 +18,6 @@ use Illuminate\Http\Request;
 class ParticipantsController extends Controller
 {
     /**
-     * API Show Participants
-     * @param  Event  $event
-     * @return EventParticipants
-     */
-    public function show($event)
-    {
-        if (is_numeric($event)) {
-            $event = Event::where('id', $event)->first();
-        } else {
-            $event = Event::where('slug', $event)->first();
-        }
-
-        if (!$event) {
-            return Redirect::to('404');
-        }
-
-        $return = array();
-        $x = array();
-        foreach ($event->eventParticipants as $participant) {
-            $x["id"] = $participant->id;
-            $x["user_id"] = $participant->user_id;
-            $x["ticket_id"] = $participant->ticket_id;
-            $x["gift"] = $participant->gift;
-            $x["gift_sendee"] = $participant->gift_sendee;
-            $x['user']['steamname'] = $participant->user->steamname;
-            $x['seat'] = "Not Seated";
-            if ($participant->seat) {
-                $x['seat'] = $participant->seat->seat;
-            }
-            array_push($return, $x);
-        }
-
-        return $return;
-    }
-
-    /**
      * Gift Ticket
      * @param  EventParticipant $participant
      * @param  Request          $request

@@ -4,14 +4,14 @@
  * API
  */
 // TODO - Move these endpoints to their own controllers EG src/app/Http/Controllers/Api
-Route::get('/api/events/{event}/timetables', 'Events\TimetablesController@index');
-Route::get('/api/events/{event}/timetables/{timetable}', 'Events\TimetablesController@show');
-
-Route::get('/api/events/{event}/participants', 'Events\ParticipantsController@show');
-
-Route::get('/api/events/{event}/tickets', 'Events\TicketsController@index');
-Route::get('/api/events/{event}/tickets/{ticket}', 'Events\TicketsController@show');
-
+Route::get('/api/events/', 'Api\Events\EventsController@index');
+Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
+Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
+Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@show');
+Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
+Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
+Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
+Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
 
 Route::group(['middleware' => ['web']], function () {
     

@@ -22,30 +22,6 @@ use App\Http\Controllers\PaymentController as Payment;
 class TicketsController extends Controller
 {
     /**
-     * API Show all Event Tickets
-     * @param  Event  $event
-     * @return EventTickets
-     */
-    public function index($event)
-    {
-        $event = Event::where('id', $event)->first();
-        return $event->tickets;
-    }
-
-    /**
-     * API Show Event Ticket
-     * @param  Event       $event
-     * @param  EventTicket $ticket
-     * @return EventTicket
-     */
-    public function show($event, $ticket)
-    {
-        $event = Event::where('id', $event)->first();
-        $ticket = EventTicket::where('id', $ticket)->first();
-        return $ticket;
-    }
-
-    /**
      * Purchase Ticket
      * @param  Request     $request
      * @param  EventTicket $ticket
