@@ -10,6 +10,8 @@ services:
       - $PWD/resources/secrets:/run/secrets
     env_file: $PWD/src/.env
     container_name: lan_manager_app
+    networks:
+      - lan
     ports:
       - 80:80
       - 443:443
@@ -21,6 +23,11 @@ services:
     ports:
       - 3306:3306
     container_name: lan_manager_database
+    networks:
+      - lan
 volumes:
   lan_manager_database:
     name: lan_manager_database
+networks:
+  lan:
+    external: true
