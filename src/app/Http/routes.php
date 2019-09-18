@@ -6,7 +6,7 @@
 Route::get('/api/events/', 'Api\Events\EventsController@index');
 Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
 Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
-Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@show');
+Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@index');
 Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
 Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
 Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');

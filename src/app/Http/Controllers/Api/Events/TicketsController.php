@@ -32,13 +32,21 @@ class TicketsController extends Controller
         } else {
             $event = Event::where('slug', $event)->first();
         }
-
         if (!$event) {
             abort(404);
         }
 
-        $event = Event::where('id', $event)->first();
-        return $event->tickets;
+        $return = array();
+        $x = array();
+        foreach ($event->tickets as $ticket) {
+            $x['name'] = $ticket->name;
+            $x['type'] = $ticket->type;
+            $x['price'] = $ticket->price;
+            $x['quantity'] = $ticket->quantity;
+            array_push($return, $x);
+        }
+
+        return $return;
     }
 
     /**
@@ -55,16 +63,20 @@ class TicketsController extends Controller
             $event = Event::where('slug', $event)->first();
         }
      	if (is_numeric($ticket)) {
-            $ticket = Event::where('id', $ticket)->first();
+            $ticket = EventTicket::where('id', $ticket)->first();
         } else {
-            $ticket = Event::where('slug', $ticket)->first();
+            $ticket = EventTicket::where('slug', $ticket)->first();
         }
         if (!$event || !$ticket) {
             abort(404);
         }
+        
+        $return = array();
+        $return['name'] = $ticket->name;
+        $return['type'] = $ticket->type;
+        $return['price'] = $ticket->price;
+        $return['quantity'] = $ticket->quantity;
 
-        $event = Event::where('id', $event)->first();
-        $ticket = EventTicket::where('id', $ticket)->first();
-        return $ticket;
+        return $return;
     }
 }
