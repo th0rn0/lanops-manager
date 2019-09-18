@@ -37,13 +37,13 @@ class TicketsController extends Controller
         }
 
         $return = array();
-        $x = array();
         foreach ($event->tickets as $ticket) {
-            $x['name'] = $ticket->name;
-            $x['type'] = $ticket->type;
-            $x['price'] = $ticket->price;
-            $x['quantity'] = $ticket->quantity;
-            array_push($return, $x);
+            $return[] = [
+                'name' => $ticket->name,
+                'type' => $ticket->type,
+                'price' => $ticket->price,
+                'quantity' => $ticket->quantity,
+            ];
         }
 
         return $return;
@@ -71,11 +71,12 @@ class TicketsController extends Controller
             abort(404);
         }
         
-        $return = array();
-        $return['name'] = $ticket->name;
-        $return['type'] = $ticket->type;
-        $return['price'] = $ticket->price;
-        $return['quantity'] = $ticket->quantity;
+        $return = [
+            'name' => $ticket->name,
+            'type' => $ticket->type,
+            'price' => $ticket->price,
+            'quantity' => $ticket->quantity,
+        ];
 
         return $return;
     }

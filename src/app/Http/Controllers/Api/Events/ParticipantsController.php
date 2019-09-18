@@ -35,20 +35,22 @@ class ParticipantsController extends Controller
         }
 
         $return = array();
-        $x = array();
         foreach ($event->eventParticipants as $participant) {
             // $x["id"] = $participant->id;
             // $x["user_id"] = $participant->user_id;
             // $x["ticket_id"] = $participant->ticket_id;
             // $x["gift"] = $participant->gift;
             // $x["gift_sendee"] = $participant->gift_sendee;
-            $x['user']['steamname'] = $participant->user->steamname;
-            $x['user']['username'] = $participant->user->username;
-            $x['seat'] = "Not Seated";
+            $seat = "Not Seated";
             if ($participant->seat) {
-                $x['seat'] = $participant->seat->seat;
+                $seat = $participant->seat->seat;
             }
-            array_push($return, $x);
+            $return[] = [
+                'username' => $participant->user->steamname,
+                'seat' => $seat,
+            ];
+            // $x['user']['steamname'] = $participant->user->steamname;
+            // $x['user']['username'] = $participant->user->username;
         }
 
         return $return;
