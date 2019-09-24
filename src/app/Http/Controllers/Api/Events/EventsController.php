@@ -123,6 +123,38 @@ class EventsController extends Controller
             abort(404);
         }
 
-        return $event;
+        $return = [
+            'name' => $event->display_name,
+            'capacity' => $event->capacity,
+            'start' => $event->start,
+            'end' => $event->end,
+            'desc' => [
+                'short' => $event->desc_short,
+                'long' => $event->desc_long,
+            ],
+            'address' => [
+                'line_1' => $event->venue->address_1,
+                'line_2' => $event->venue->address_2,
+                'street' => $event->venue->address_street,
+                'city' => $event->venue->address_city,
+                'postcode' => $event->venue->address_postcode,
+                'country' => $event->venue->address_country,
+            ],
+            'api' => [
+                'base' => 'http://' . $_SERVER['HTTP_HOST'] . '/api/events/' . $event->slug,
+                'tickets' => '/tickets',
+                'participants' => '/participants',
+                'timetables' => '/timetables',
+                'tournaments' => '/tournaments',
+            ],
+            'url' => [
+                'base' => 'http://' . $_SERVER['HTTP_HOST'] . '/events/' . $event->slug,
+                'tickets' => '#tickets',
+                'participants' => '#participants',
+                'timetables' => '#timetables',
+                'tournaments' => '#tournaments',
+            ],
+        ];
+        return $return;
     }
 }
