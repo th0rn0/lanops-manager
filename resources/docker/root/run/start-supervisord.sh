@@ -45,6 +45,13 @@ then
 		php artisan migrate
 	fi
 fi
+if [ -n "$DB_SEED" ]
+then
+	if [ "$DB_SEED" = "true" ]
+	then
+		php artisan db:seed --class=SettingsTableSeeder
+	fi
+fi
 
 if [ "$APP_KEY_FLAG" = "true" ]
 then

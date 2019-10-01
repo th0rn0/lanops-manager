@@ -36,7 +36,7 @@
 							<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">Attendees</a></li>
-						@if (!$event->tournaments->isEmpty())
+						@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">Tournaments</a></li>
 						@endif
 						@if (!$event->timetables->isEmpty())
@@ -477,7 +477,7 @@
 	@endif
 	
 	<!-- TOURNAMENTS -->
-	@if (!$event->tournaments->isEmpty())
+	@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 		<div class="page-header">
 			<a name="tournaments"></a>
 			<h3>Tournaments</h3>

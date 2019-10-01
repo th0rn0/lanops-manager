@@ -67,16 +67,16 @@ else
 	echo 'OK'
 fi
 
-file_env 'CHALLONGE_API_KEY'
-if [ -z "$CHALLONGE_API_KEY" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because CHALLONGE_API_KEY is not specified '
-	echo >&2 'You need to specify CHALLONGE_API_KEY'
-	exit 1
-else
-	echo 'OK'
-fi
+# file_env 'CHALLONGE_API_KEY'
+# if [ -z "$CHALLONGE_API_KEY" ]; 
+# then
+# 	echo >&2 'ERROR'
+# 	echo >&2 'Lan Manager App is uninitialized because CHALLONGE_API_KEY is not specified '
+# 	echo >&2 'You need to specify CHALLONGE_API_KEY'
+# 	exit 1
+# else
+# 	echo 'OK'
+# fi
 
 file_env 'APP_KEY'
 if [ -z "$APP_KEY" ];
@@ -87,6 +87,14 @@ else
 fi
 
 # Optional Env Variables
+file_env 'CHALLONGE_API_KEY'
+if [ -z "$CHALLONGE_API_KEY" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+
 file_env 'FACEBOOK_APP_ID'
 if [ -z "$FACEBOOK_APP_ID" ];
 then
