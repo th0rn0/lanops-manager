@@ -68,9 +68,21 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/venues/
 	mkdir -p src/storage/app/public/images/main/
 	
-	chmod -R 777 src/storage/app/public/images
-	chmod -R 777 src/storage/logs/
-	chmod -R 777 src/storage/framework/
+# Permissions - Dev
+permissions:
+	chown -R ${USER}:101 src/
+	find src -type f -exec chmod 664 {} \;
+	find src -type d -exec chmod 775 {} \;
+	chgrp -R 101 src/storage src/bootstrap/cache
+	chmod -R ug+rwx src/storage src/bootstrap/cache
+
+# Permissions - Docker
+permissions-docker:
+	chown -R 100:101 src/
+	find src -type f -exec chmod 664 {} \;
+	find src -type d -exec chmod 775 {} \;
+	chgrp -R 101 src/storage src/bootstrap/cache
+	chmod -R ug+rwx src/storage src/bootstrap/cache
 
 # Create SSL Keypair for Development
 ssh-keygen:
