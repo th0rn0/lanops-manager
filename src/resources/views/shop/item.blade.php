@@ -14,6 +14,8 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-4">
 			<img class="img img-thumbnail img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+			<br><br>
+			
 		</div>
 		<div class="col-xs-12 col-sm-8">
 			<h4>
@@ -31,6 +33,13 @@
 					{{ $item->price_credit }} Credits
 				@endif
 			</h5>
+			<div class="row">
+				@foreach ($item->images as $image)
+					<div class="col-xs-12 col-md-3">
+						<img class="img img-responsive img-rounded" src="{{ $image->path }}">
+					</div>
+				@endforeach
+			</div>
 			@if ($item->hasStockByItemId($item->id))
 				{{ Form::open(array('url'=>'/shop/basket/')) }}
 					<div class="form-group">

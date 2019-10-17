@@ -6,6 +6,9 @@ use DB;
 use Auth;
 use Session;
 use Settings;
+use Storage;
+use Input;
+use Image;
 
 use App\ShopItem;
 use App\ShopItemImage;
@@ -58,7 +61,7 @@ class ShopController extends Controller
  	/**
      * Store Shop Category
      * @param $request
-     * @return View
+     * @return Redirect
      */
     public function storeCategory(Request $request)
     {
@@ -83,7 +86,7 @@ class ShopController extends Controller
      * Update Shop Category
      * @param ShopItemCategory $category
      * @param $request
-     * @return View
+     * @return Redirect
      */
     public function updateCategory(ShopItemCategory $category, Request $request)
     {
@@ -115,7 +118,7 @@ class ShopController extends Controller
     /**
      * Store Shop Item
      * @param $request
-     * @return View
+     * @return Redirect
      */
     public function storeItem(Request $request)
     {
@@ -167,7 +170,7 @@ class ShopController extends Controller
      * @param ShopItemCategory $category
      * @param ShopItem $item
      * @param $request
-     * @return View
+     * @return Redirect
      */
     public function updateItem(ShopItemCategory $category, ShopItem $item, Request $request)
     {
@@ -205,6 +208,43 @@ class ShopController extends Controller
             return Redirect::back();
         }
         Session::flash('alert-success', 'Successfully updated Item!');
+        return Redirect::to('admin/shop/' . $category->slug . '/' . $item->slug);
+    }
+
+    /**
+     * Upload Shop Item Image
+     * @param ShopItemCategory $category
+     * @param ShopItem $item
+     * @param $request
+     * @return Redirect
+     */
+    public function uploadItemImage(ShopItemCategory $category, ShopItem $item, Request $request)
+    {
+        $rules = [
+            'image.*'   => 'image',
+        ];
+        $messages = [
+            'image.*.image' => 'Item Image must be of Image type',
+        ];
+        $this->validate($request, $rules, $messages);
+        $destinationPath = '/storage/images/shop/'; // upload path
+        Storage::disk('public')->makeDirectory('/images/shop/' . $category->slug . '/', 0777, true, true);
+        $files = Input::file('images');
+        //Keep a count of uploaded files
+        $fileCount = count($files);
+        //Counter for uploaded files
+        $uploadcount = 0;
+        foreach ($files as $file) {
+            $imageName  = $category->slug . '-' . $file->getClientOriginalName();
+            Image::make($file)->save(public_path() . $destinationPath . $imageName);
+            $item->addImage($destinationPath . $imageName);
+            $uploadcount++;
+        }
+        if ($uploadcount != $fileCount) {
+            Session::flash('alert-danger', 'Cannot upload Image!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully uploaded Image!');
         return Redirect::to('admin/shop/' . $category->slug . '/' . $item->slug);
     }
 }

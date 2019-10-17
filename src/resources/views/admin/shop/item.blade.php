@@ -119,6 +119,31 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-plus fa-fw"></i> Images
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					<div class="row">
+						@foreach ($item->images as $image)
+							<div class="col-xs-12 col-md-3">
+								<img class="img img-responsive img-rounded" src="{{ $image->path }}">
+							</div>
+						@endforeach
+					</div>
+					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images', 'files' => 'true')) }}
+						{{ csrf_field() }}
+						<br>
+						<div class="form-group">
+							{{ Form::label('images','Upload Images',array('id'=>'','class'=>'')) }}
+							{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
+						</div>
+						<button type="submit" class="btn btn-block btn-success">Upload</button>
+					{{ Form::close() }}
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-xs-12 col-sm-4">
@@ -128,7 +153,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-xs-12 col-sm-8 col-md-9">
+					<div class="col-xs-12">
 						<ul class="list-group">
 							<li class="list-group-item">{{ $item->name }}</li>
 							<li class="list-group-item">Stock: {{ $item->stock }}</li>
@@ -137,6 +162,7 @@
 						</ul>
 						<p>Images:</p>
 						<img class="img img-responsive img-rounded" src="{{ $item->getDefaultImageUrl() }}">
+					
 					</div>
 					
 				</div>

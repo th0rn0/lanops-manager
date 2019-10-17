@@ -380,5 +380,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/shop/{category}', 'Admin\ShopController@updateCategory');
     Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
     Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
+    Route::post('/admin/shop/{category}/{item}/images', 'Admin\ShopController@uploadItemImage');
 
 });

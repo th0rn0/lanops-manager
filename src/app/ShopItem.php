@@ -169,4 +169,22 @@ class ShopItem extends Model
         }
         return true;
     }
+
+    /**
+     * Add Item Image
+     * @param $path
+     * @return Boolean
+     */
+    public function addImage($path)
+    {
+        $image = New ShopItemImage();
+        $image->path = $path;
+        $image->default = false;
+        $image->shop_item_id = $this->id;
+        if (!$image->save()) {
+            return false;
+        }
+        return true;
+    }
+
 }
