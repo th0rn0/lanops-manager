@@ -227,7 +227,7 @@ class ShopController extends Controller
             'image.*.image' => 'Item Image must be of Image type',
         ];
         $this->validate($request, $rules, $messages);
-        $destinationPath = '/storage/images/shop/'; // upload path
+        $destinationPath = '/storage/images/shop/' . $category->slug; // upload path
         Storage::disk('public')->makeDirectory('/images/shop/' . $category->slug . '/', 0777, true, true);
         $files = Input::file('images');
         //Keep a count of uploaded files
@@ -235,7 +235,7 @@ class ShopController extends Controller
         //Counter for uploaded files
         $uploadcount = 0;
         foreach ($files as $file) {
-            $imageName  = $category->slug . '-' . $file->getClientOriginalName();
+            $imageName  = $item->slug . '-' . $file->getClientOriginalName();
             Image::make($file)->save(public_path() . $destinationPath . $imageName);
             $item->addImage($destinationPath . $imageName);
             $uploadcount++;
@@ -245,6 +245,36 @@ class ShopController extends Controller
             return Redirect::back();
         }
         Session::flash('alert-success', 'Successfully uploaded Image!');
+        return Redirect::to('admin/shop/' . $category->slug . '/' . $item->slug);
+    }
+
+    /**
+     * Delete Shop Item Image
+     * @param ShopItemCategory $category
+     * @param ShopItem $item
+     * @param ShopItemImage $image
+     * @param $request
+     * @return Redirect
+     */
+    public function deleteItemImage(ShopItemCategory $category, ShopItem $item, ShopItemImage $image, Request $request)
+    {
+        if ($image->path == "/storage/images/shop/default.png") {
+            if (!$image->delete()) {
+                Session::flash('alert-danger', 'Cannot delete Image!');
+                return Redirect::back();
+            }
+        }
+        if (
+            $image->path != "/storage/images/shop/default.png" && 
+            (
+                !Storage::disk('public')->delete(str_replace('/storage', '', $image->path)) || 
+                !$image->delete()
+            )
+        ) {
+            Session::flash('alert-danger', 'Cannot delete Image!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully delete Image!');
         return Redirect::to('admin/shop/' . $category->slug . '/' . $item->slug);
     }
 }

@@ -129,6 +129,11 @@
 						@foreach ($item->images as $image)
 							<div class="col-xs-12 col-md-3">
 								<img class="img img-responsive img-rounded" src="{{ $image->path }}">
+								{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images/' . $image->id, 'files' => 'true')) }}
+				                	<input type="hidden" name="_method" value="DELETE">
+									<br>
+									<button type="submit" class="btn btn-block btn-danger">Delete</button>
+								{{ Form::close() }}
 							</div>
 						@endforeach
 					</div>

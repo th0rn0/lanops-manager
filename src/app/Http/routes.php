@@ -381,5 +381,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
     Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
     Route::post('/admin/shop/{category}/{item}/images', 'Admin\ShopController@uploadItemImage');
+    Route::delete('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@deleteItemImage');
 
 });
