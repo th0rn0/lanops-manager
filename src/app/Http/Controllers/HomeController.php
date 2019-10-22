@@ -7,6 +7,7 @@ use Auth;
 
 use App\Event;
 use App\User;
+use App\SliderImage;
 use App\NewsArticle;
 use App\EventTimetable;
 use App\EventTimetableData;
@@ -102,7 +103,9 @@ class HomeController extends Controller
             ->withTopAttendees(array_slice($topAttendees, 0, 5))
             ->withTopWinners(array_slice($topWinners, 0, 5))
             ->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
-            ->withEvents(Event::all());
+            ->withEvents(Event::all())
+            ->withSliderImages(SliderImage::getImages('frontpage'))
+        ;
     }
     
     /**

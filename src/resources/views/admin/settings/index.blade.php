@@ -265,7 +265,56 @@
 				{{ Form::close() }}
 			</div>
 		</div>
-		 <!-- Misc -->
+		<!-- Front Page Slider -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-wrench fa-fw"></i> Front Page Images
+			</div>
+			<div class="panel-body">
+				<span class="text-muted"><small>Images must be the same dimensions for the slider to function properly!</small></span>
+				{{ Form::open(array('url'=>'/admin/slider/images', 'files' => 'true')) }}
+					{{ csrf_field() }}
+            		<input type="hidden" name="slider" value="frontpage">
+					<div class="form-group">
+						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
+					</div>
+					<button type="submit" class="btn btn-block btn-success">Upload</button>
+				{{ Form::close() }}
+				<hr>
+				@foreach ($sliderImages as $image)
+					<img class="img img-responsive" src="{{ $image->path }}" />
+					<div class="row">
+						<br>
+						{{ Form::open(array('url'=>'/admin/slider/images/' . $image->id, 'files' => 'true', 'class' => "form-inline")) }}
+		                	<input type="hidden" name="slider" value="frontpage">
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									{{ Form::label('order','Order',array('id'=>'')) }}
+									{{ Form::number('order', $image->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
+								</div>
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<button type="submit" class="btn btn-default btn-block">Submit</button>
+							</div>
+						{{ Form::close() }}
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xs-12">
+							{{ Form::open(array('url'=>'/admin/slider/images/' . $image->id, 'files' => 'true', 'onsubmit' => 'return ConfirmDelete()')) }}
+		                		<input type="hidden" name="slider" value="frontpage">
+			                	<input type="hidden" name="_method" value="DELETE">
+								<button type="submit" class="btn btn-block btn-danger">Delete</button>
+							{{ Form::close() }}
+							@if (!$loop->last)
+								<hr>
+							@endif
+						</div>
+					</div>
+				@endforeach
+			</div>
+		</div>
+	 	<!-- Misc -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-wrench fa-fw"></i> Misc

@@ -11,6 +11,7 @@ use Input;
 use FacebookPageWrapper as Facebook;
 
 use App\User;
+use App\SliderImage;
 use App\Setting;
 use App\Event;
 use App\EventParticipant;
@@ -43,6 +44,7 @@ class SettingsController extends Controller
             ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withSliderImages(SliderImage::getImages('frontpage'))
         ;
     }
     
@@ -226,6 +228,16 @@ class SettingsController extends Controller
         }
         Session::flash('alert-success', "Successfully Linked {$social}!");
         return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Update Slider Image
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function updateSliderImage(Request $request)
+    {
+        dd($request);
     }
 
     /**

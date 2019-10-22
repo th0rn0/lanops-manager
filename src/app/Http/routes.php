@@ -322,6 +322,13 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
     /**
+     * Image Sliders
+     */
+    Route::post('/admin/slider/images/', 'Admin\SliderController@upload');
+    Route::post('/admin/slider/images/{image}', 'Admin\SliderController@update');
+    Route::delete('/admin/slider/images/{image}', 'Admin\SliderController@delete');
+
+    /**
      * Appearance
      */
     Route::get('/admin/appearance', 'Admin\AppearanceController@index');
