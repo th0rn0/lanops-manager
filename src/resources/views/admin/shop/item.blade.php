@@ -125,27 +125,43 @@
 			</div>
 			<div class="panel-body">
 				<div class="list-group">
-					<div class="row">
-						@foreach ($item->images as $image)
-							<div class="col-xs-12 col-md-3">
-								<img class="img img-responsive img-rounded" src="{{ $image->path }}">
-								{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images/' . $image->id, 'files' => 'true')) }}
-				                	<input type="hidden" name="_method" value="DELETE">
-									<br>
-									<button type="submit" class="btn btn-block btn-danger">Delete</button>
-								{{ Form::close() }}
-							</div>
-						@endforeach
-					</div>
 					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images', 'files' => 'true')) }}
 						{{ csrf_field() }}
-						<br>
 						<div class="form-group">
 							{{ Form::label('images','Upload Images',array('id'=>'','class'=>'')) }}
 							{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
 						</div>
 						<button type="submit" class="btn btn-block btn-success">Upload</button>
 					{{ Form::close() }}
+					<hr>
+					<div class="row">
+						@foreach ($item->images as $image)
+							<div class="col-xs-12 col-md-3">
+								<img class="img img-responsive img-rounded" src="{{ $image->path }}">
+								<br>
+								<div class="row">
+									{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images/' . $image->id, 'files' => 'true')) }}
+										<div class="col-xs-12 col-md-6">
+											{{ Form::number('order', $image->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
+										</div>
+										<div class="col-xs-12 col-md-6">
+											{{ Form::label('default','Default?',array('id'=>'','class'=>'')) }}
+												{{ Form::checkbox('default', 'true', $image->default, array('id'=>'default', 'name' => 'default', 'class'=>'')) }}
+										</div>
+										<div class="col-xs-12">
+											<br>
+											<button type="submit" class="btn btn-block btn-success">Update</button>
+										</div>
+									{{ Form::close() }}
+								</div>
+								<hr>
+								{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images/' . $image->id, 'files' => 'true')) }}
+				                	<input type="hidden" name="_method" value="DELETE">
+									<button type="submit" class="btn btn-block btn-danger">Delete</button>
+								{{ Form::close() }}
+							</div>
+						@endforeach
+					</div>
 				</div>
 			</div>
 		</div>
@@ -165,11 +181,9 @@
 							<li class="list-group-item">No. of Sales: {{ $item->getTotalSales() }}</li>
 							<li class="list-group-item">Added By: {{ $item->user->steamname }}</li>
 						</ul>
-						<p>Images:</p>
+						<p>Default Image:</p>
 						<img class="img img-responsive img-rounded" src="{{ $item->getDefaultImageUrl() }}">
-					
 					</div>
-					
 				</div>
 			</div>
 		</div>

@@ -122,7 +122,7 @@ class ShopItem extends Model
             ) {
             return $imagePath->path;
         }
-        return ShopItemImage::where('shop_item_id', $this->id)->path;
+        return ShopItemImage::where('shop_item_id', $this->id)->first()->path;
     }
 
     /**

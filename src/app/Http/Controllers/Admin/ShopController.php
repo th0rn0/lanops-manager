@@ -249,6 +249,47 @@ class ShopController extends Controller
     }
 
     /**
+     * Update Shop Item Image
+     * @param ShopItemCategory $category
+     * @param ShopItem $item
+     * @param ShopItemImage $image
+     * @param $request
+     * @return Redirect
+     */
+    public function updateItemImage(ShopItemCategory $category, ShopItem $item, ShopItemImage $image, Request $request)
+    {
+        $rules = [
+            'order'   => 'numeric',
+        ];
+        $messages = [
+            'order.numeric' => 'Order must be a number',
+        ];
+        $this->validate($request, $rules, $messages);
+        $image->default = false;
+        if (isset($request->default) && $request->default) {
+            if ($currentDefault = ShopItemImage::where('shop_item_id', $item->id)->where('default', true)->first()) {
+                if ($currentDefault->id != $image->id) {
+                    $currentDefault->default = false;
+                    if (!$currentDefault->save()) {
+                        Session::flash('alert-danger', 'Cannot update Image! Cannot remove old default image.');
+                        return Redirect::back();
+                    }
+                }
+            }
+            $image->default = true;
+        }
+        if (isset($request->order)) {
+            $image->order = $request->order;
+        }
+        if (!$image->save()) {
+            Session::flash('alert-danger', 'Cannot update Image!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully updated Image!');
+        return Redirect::to('admin/shop/' . $category->slug . '/' . $item->slug);
+    }
+
+    /**
      * Delete Shop Item Image
      * @param ShopItemCategory $category
      * @param ShopItem $item
