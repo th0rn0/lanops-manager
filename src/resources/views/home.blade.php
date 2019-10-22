@@ -5,21 +5,11 @@
 <div id="hero-carousel" class="carousel fade" data-ride="carousel" data-interval="8000">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
-		<div class="item active">
-			<img class="hero-image" src="/storage/images/main/slider/2.jpg">
-		</div>
-		<div class="item">
-			<img class="hero-image" src="/storage/images/main/slider/3.jpg">
-		</div>
-		<div class="item">
-			<img class="hero-image" src="/storage/images/main/slider/5.jpg">
-		</div>
-		<div class="item">
-			<img class="hero-image" src="/storage/images/main/slider/1.jpg">
-		</div>
-		<div class="item">
-			<img class="hero-image" src="/storage/images/main/slider/4.jpg">
-		</div>
+		@foreach ($sliderImages as $image)
+			<div class="item @if ($loop->first) active @endif">
+				<img class="hero-image" src="{{ $image->path }}">
+			</div>
+		@endforeach
 	</div>
 	<div class="hero-overlay hidden-xs">
 			@if ($nextEvent)

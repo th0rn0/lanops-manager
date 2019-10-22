@@ -322,6 +322,13 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
     /**
+     * Image Sliders
+     */
+    Route::post('/admin/slider/images/', 'Admin\SliderController@upload');
+    Route::post('/admin/slider/images/{image}', 'Admin\SliderController@update');
+    Route::delete('/admin/slider/images/{image}', 'Admin\SliderController@delete');
+
+    /**
      * Appearance
      */
     Route::get('/admin/appearance', 'Admin\AppearanceController@index');
@@ -380,5 +387,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/shop/{category}', 'Admin\ShopController@updateCategory');
     Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
     Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
+    Route::post('/admin/shop/{category}/{item}/images', 'Admin\ShopController@uploadItemImage');
+    Route::post('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@updateItemImage');
+    Route::delete('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@deleteItemImage');
 
 });

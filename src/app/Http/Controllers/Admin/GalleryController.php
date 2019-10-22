@@ -155,7 +155,7 @@ class GalleryController extends Controller
 
         $files = Input::file('images');
         //Keep a count of uploaded files
-        $file_count = count($files);
+        $fileCount = count($files);
         //Counter for uploaded files
         $uploadcount = 0;
         foreach ($files as $file) {
@@ -178,7 +178,7 @@ class GalleryController extends Controller
             
             $uploadcount++;
         }
-        if ($uploadcount != $file_count) {
+        if ($uploadcount != $fileCount) {
             Session::flash('alert-danger', 'Upload unsuccessful!');
             return Redirect::to('admin/gallery/' . $album->slug);
         }

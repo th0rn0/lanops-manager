@@ -5,23 +5,18 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use Leafo\ScssPhp\Compiler;
+use Illuminate\Support\Facades\Storage;
 
-class ShopItemImage extends Model
+class SliderImage extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'shop_item_images';
-
-    protected $fillable = [
-        'path',
-        'default',
-        'shop_item_id',
-    ];
-
+    protected $table = 'slider_images';
+    
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -39,11 +34,14 @@ class ShopItemImage extends Model
         });
     }
 
-    /*
-     * Relationships
+    /**
+     * Get Images By Slider Name
+     * @param String $sliderName
+     * @return Array
      */
-    public function item()
+    public static function getImages($sliderName)
     {
-        return $this->belongsTo('App\ShopItem', 'shop_item_id');
+        $images = self::where('slider_name', $sliderName)->get();
+        return $images;
     }
 }

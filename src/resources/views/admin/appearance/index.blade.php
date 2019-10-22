@@ -21,7 +21,6 @@
 				<i class="fa fa-users fa-fw"></i> Appearance
 			</div>
 			<div class="panel-body">
-				
 				@if ($userOverrideCss)
 					{{ Form::open(array('url'=>'/admin/appearance/css/override', 'onsubmit' => 'return ConfirmSubmit()')) }}
 						<div class="form-group">
