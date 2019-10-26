@@ -66,7 +66,7 @@ class Setting extends Model
      */
     public static function getOrgLogo()
     {
-        return self::where('setting', 'org_logo')->first()->value;
+        return (self::where('setting', 'org_logo')->first()->value) . '?cb=' . mt_rand(10, 9999);
     }
 
     /**
@@ -99,7 +99,7 @@ class Setting extends Model
      */
     public static function getOrgFavicon()
     {
-        return self::where('setting', 'org_favicon')->first()->value;
+        return (self::where('setting', 'org_favicon')->first()->value) . '?cb=' . mt_rand(10, 9999);
     }
 
     /**

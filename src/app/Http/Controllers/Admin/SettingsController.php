@@ -65,6 +65,8 @@ class SettingsController extends Controller
             'currency'                  => 'in:GBP,USD,EUR',
             'participant_count_offset'  => 'numeric',
             'lan_count_offset'          => 'numeric',
+            'org_logo'                  => 'image',
+            'org_favicon'               => 'image',
         ];
         $messages = [
             'terms_and_conditions.filled'       => 'Terms And Conditions cannot be empty',
@@ -76,6 +78,8 @@ class SettingsController extends Controller
             'currency.in'                       => 'Currency must be GBP, USD or EUR',
             'participant_count_offset.numeric'  => 'Participant Count Offset must be a number',
             'lan_count_offset.numeric'          => 'Lan Count Offset must be a number',
+            'org_logo.image'                    => 'Org Logo must be a Image',
+            'org_favicon'                       => 'Org Favicon must be a Image'
         ];
         $this->validate($request, $rules, $messages);
 
@@ -228,16 +232,6 @@ class SettingsController extends Controller
         }
         Session::flash('alert-success', "Successfully Linked {$social}!");
         return Redirect::to('/admin/settings');
-    }
-
-    /**
-     * Update Slider Image
-     * @param  Request $request
-     * @return Redirect
-     */
-    public function updateSliderImage(Request $request)
-    {
-        dd($request);
     }
 
     /**
