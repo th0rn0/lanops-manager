@@ -56,7 +56,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							LANs we've hosted
+							EVENTs we've hosted
 						</div>
 					</div>
 
@@ -66,7 +66,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							GAMERs we've entertained
+							PLAYERs we've entertained
 						</div>
 					</div>
 

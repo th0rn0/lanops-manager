@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use Validator;
+use Settings;
+
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -24,7 +28,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login / registration.
@@ -56,6 +60,101 @@ class AuthController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
+    }
+
+    /**
+     * Prompt Login User
+     * @return Redirect
+     */
+    public function prompt()
+    {
+        return view('login.prompt')
+            ->withActiveLoginMethods(Settings::getLoginMethods());
+    }
+
+    /**
+     * Show Register User Page
+     * @param  User   $user
+     */
+    public function showRegister($method)
+    {
+        if (!in_array($method, Settings::getLoginMethods())) {
+            Session::flash('alert-danger', 'Login Method is not supported.');
+            return Redirect::back();
+        }
+        switch ($method) {
+            case 'steam':
+                if (!Session::has('user')) {
+                    return Redirect::to('/');
+                }
+
+                $user = Session::get('user');
+                
+                if (is_null($user['steamid']) ||
+                    is_null($user['avatar']) ||
+                    is_null($user['steamname'])
+                ) {
+                    return redirect('/'); // redirect to site
+                }
+                return view('login.register', $user)->withLoginMethod('steam');
+                break;
+            default:
+                return view('login.register')->withLoginMethod('standard');
+                break;
+        }
+    }
+
+    /**
+     * Register User Page
+     * @param  User   $user
+     * @param  Request   $request
+     * @return Redirect
+     */
+    public function register($method, Request $request)
+    {
+        if (!in_array($method, Settings::getLoginMethods())) {
+            Session::flash('alert-danger', 'Login Method is not supported.');
+            return Redirect::back();
+        }
+        switch ($method) {
+            case 'steam':
+                $this->validate($request, [
+                    'fistname'  => 'string',
+                    'surname'   => 'string',
+                    'surname'   => 'string',
+                    'steamid'   => 'string',
+                    'avatar'    => 'string',
+                    'steamname' => 'string',
+                    'username'  => 'unique:users,username',
+                ]);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+       
+        $user->firstname        = $request->firstname;
+        $user->surname          = $request->surname;
+        $user->username         = $request->username;
+        $user->avatar           = $request->avatar;
+        $user->steamid          = $request->steamid;
+        $user->steamname        = $request->steamname;
+        $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
+
+        // Set first user on system as admin
+        if (User::count() == 0 && User::where('admin', 1)->count() == 0) {
+            $user->admin = 1;
+        }
+
+        if ($user->save()) {
+            Session::forget('user');
+            Auth::login($user, true);
+            return Redirect('/account');
+        }
+        
+        Auth::logout();
+        return Redirect('/')->withError('Something went wrong. Please Try again later');
     }
 
     /**

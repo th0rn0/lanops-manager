@@ -114,9 +114,13 @@
 			<div class="page-header">
 				<h3>Latest News</h3>
 			</div>
-			@foreach ($newsArticles as $newsArticle)
-				@include ('layouts._partials._news.short')
-			@endforeach
+			@if (!$newsArticles->isEmpty())
+				@foreach ($newsArticles as $newsArticle)
+					@include ('layouts._partials._news.short')
+				@endforeach
+			@else
+				<p>Nothing to see here...</p>
+			@endif
 		</div>
 		<div class="col-xs-12 col-sm-3">
 			<div class="page-header">

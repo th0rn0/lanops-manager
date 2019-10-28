@@ -42,6 +42,8 @@ class SettingsController extends Controller
             ->withFacebookCallback($facebookCallback)
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
+            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
+            ->withActiveLoginMethods(Settings::getLoginMethods())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withIsShopEnabled(Settings::isShopEnabled())
             ->withSliderImages(SliderImage::getImages('frontpage'))
@@ -335,6 +337,40 @@ class SettingsController extends Controller
             return Redirect::to('/admin/settings');
         }
         Session::flash('alert-success', "Successfully Disabled the Shop System!");
+        return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Enable Login Method
+     * @param  String $gateway
+     * @return Redirect
+     */
+    public function enableLoginMethod($method)
+    {
+        if (!Settings::enableLoginMethod($method)) {
+            Session::flash('alert-danger', "Could not Enable {$method}!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Enabled {$method}!");
+        return Redirect::to('/admin/settings');
+    }
+
+    /**
+     * Disable Login Method
+     * @param  String $gateway
+     * @return Redirect
+     */
+    public function disableLoginMethod($method)
+    {
+        if (count(Settings::getLoginMethods()) <= 1) {
+            Session::flash('alert-danger', "You must have at least one Login Method enabled!");
+            return Redirect::to('/admin/settings');
+        }
+        if (!Settings::disableLoginMethod($method)) {
+            Session::flash('alert-danger', "Could not Disable {$method}!");
+            return Redirect::to('/admin/settings');
+        }
+        Session::flash('alert-success', "Successfully Disabled {$method}!");
         return Redirect::to('/admin/settings');
     }
 

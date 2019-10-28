@@ -577,4 +577,41 @@ class Settings
     {
         return \App\Setting::disableShopSystem();
     }
+
+    /**
+     * Get Active Login Methods
+     * @return Array
+     */
+    public static function getLoginMethods()
+    {
+        return \App\Setting::getLoginMethods();
+    }
+
+    /**
+     * Get Supported Login Methods
+     * @return Array
+     */
+    public static function getSupportedLoginMethods()
+    {
+        return \App\Setting::getSupportedLoginMethods();
+    }
+
+    /**
+     * Enable Login Method
+     * @return Boolean
+     */
+    public static function enableLoginMethod($method)
+    {
+        return \App\Setting::enableLoginMethod($method);
+    }
+
+    /**
+     * Disable Login Method
+     * @return Boolean
+     */
+    public static function disableLoginMethod($method)
+    {
+        return \App\Setting::disableLoginMethod($method);
+    }
+
 }
