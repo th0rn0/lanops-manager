@@ -66,7 +66,8 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/events/
 	mkdir -p src/storage/app/public/images/venues/
 	mkdir -p src/storage/app/public/images/main/
-	
+	mkdir -p src/storage/app/public/images/shop/
+
 # Permissions - Dev
 permissions:
 	chown -R ${USER}:101 src/
