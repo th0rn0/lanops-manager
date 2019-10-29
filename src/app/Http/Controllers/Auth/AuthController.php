@@ -143,7 +143,6 @@ class AuthController extends Controller
                 $user->password       = Hash::make($request->password);
                 break;
         }
-        dd($request);
        
         $user->firstname        = $request->firstname;
         $user->surname          = $request->surname;
