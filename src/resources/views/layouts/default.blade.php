@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" type="image/png" sizes="32x32" href="{{ Settings::getOrgFavicon() }}">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />
-		<link href="/css/app.css" rel=stylesheet />
+		<link href="/css/app.css?v={{ Helpers::getCssVersion() }}" rel=stylesheet />
 		
 		{!! Analytics::render() !!}
 		
