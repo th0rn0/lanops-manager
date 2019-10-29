@@ -62,7 +62,6 @@ generate-settings:
 
 # Create Default Folder structure
 folder-structure:
-	ln -s src/storage/app/public src/public/storage
 	mkdir -p src/storage/app/public/images/gallery/
 	mkdir -p src/storage/app/public/images/events/
 	mkdir -p src/storage/app/public/images/venues/
