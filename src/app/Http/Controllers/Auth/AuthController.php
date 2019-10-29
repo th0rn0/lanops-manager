@@ -7,9 +7,11 @@ use Settings;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -110,7 +112,7 @@ class AuthController extends Controller
      * @param  Request   $request
      * @return Redirect
      */
-    public function register($method, Request $request)
+    public function register($method, Request $request, User $user)
     {
         if (!in_array($method, Settings::getLoginMethods())) {
             Session::flash('alert-danger', 'Login Method is not supported.');
@@ -121,25 +123,31 @@ class AuthController extends Controller
                 $this->validate($request, [
                     'fistname'  => 'string',
                     'surname'   => 'string',
-                    'surname'   => 'string',
                     'steamid'   => 'string',
                     'avatar'    => 'string',
                     'steamname' => 'string',
                     'username'  => 'unique:users,username',
                 ]);
+                $user->avatar           = $request->avatar;
+                $user->steamid          = $request->steamid;
+                $user->steamname        = $request->steamname;
                 break;
             
             default:
-                # code...
+                $this->validate($request, [
+                    'fistname'  => 'string',
+                    'surname'   => 'string',
+                    'username'  => 'unique:users,username',
+                ]);
+                $user->email          = $request->email;
+                $user->password       = Hash::make($request->password);
                 break;
         }
+        dd($request);
        
         $user->firstname        = $request->firstname;
         $user->surname          = $request->surname;
         $user->username         = $request->username;
-        $user->avatar           = $request->avatar;
-        $user->steamid          = $request->steamid;
-        $user->steamname        = $request->steamname;
         $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
 
         // Set first user on system as admin
@@ -157,23 +165,23 @@ class AuthController extends Controller
         return Redirect('/')->withError('Something went wrong. Please Try again later');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'steamid' => $data['steamid'],
-            'avatar' => $data['avatar'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+    // /**
+    //  * Create a new user instance after a valid registration.
+    //  *
+    //  * @param  array  $data
+    //  * @return User
+    //  */
+    // protected function create(array $data)
+    // {
+    //     return User::create([
+    //         'name' => $data['name'],
+    //         'username' => $data['username'],
+    //         'steamid' => $data['steamid'],
+    //         'avatar' => $data['avatar'],
+    //         'email' => $data['email'],
+    //         'password' => Hash::make($data['password']),
+    //     ]);
+    // }
 
     public function redirectToProvider($provider)
     {

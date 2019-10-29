@@ -9,7 +9,7 @@
 		<h1>Register Details</h1>
 	</div>
 	<div class="row">
-		{{ Form::open(array('url'=>'/account/register/' )) }}
+		{{ Form::open(array('url'=>'/register/' . $loginMethod )) }}
 			{{ csrf_field() }}
 			{{ Form::hidden('method', $loginMethod, array('id'=>'method','class'=>'form-control')) }}
 			@if ($loginMethod == "steam")
