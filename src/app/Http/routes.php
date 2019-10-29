@@ -385,8 +385,10 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
     Route::get('/admin/shop/{category}', 'Admin\ShopController@showCategory');
     Route::post('/admin/shop/{category}', 'Admin\ShopController@updateCategory');
+    Route::delete('/admin/shop/{category}', 'Admin\ShopController@deleteCategory');
     Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
     Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
+    Route::delete('/admin/shop/{category}/{item}', 'Admin\ShopController@deleteItem');
     Route::post('/admin/shop/{category}/{item}/images', 'Admin\ShopController@uploadItemImage');
     Route::post('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@updateItemImage');
     Route::delete('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@deleteItemImage');

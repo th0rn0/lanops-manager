@@ -13,7 +13,9 @@
 	@include ('layouts._partials._shop.navigation')
 	<div class="row">
 		<div class="col-xs-12 col-sm-4">
-			<img class="img img-thumbnail img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+			@if ($item->getDefaultImageUrl())
+				<img class="img img-thumbnail img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+			@endif
 			<br><br>
 			
 		</div>
@@ -21,7 +23,7 @@
 			<h4>
 				{{ $item->name }} - <small>@if($item->stock > 0) In Stock: {{ $item->stock }} @else Out of Stock @endif</small>
 			</h4>
-			<p>{{ $item->description }}</p>
+			<p>{!! $item->description !!}</p>
 			<h5>
 				@if ($item->price != null)
 					{{ Settings::getCurrencySymbol() }}{{ $item->price }}

@@ -34,7 +34,7 @@ env-file-blank:
 # Move default images to Storage
 layout-images:
 	cp -r src/resources/assets/images/* src/storage/app/public/images/main/
-	mv src/storage/app/public/images/main/shop/ src/storage/app/public/images/shop/
+	mv src/storage/app/public/images/main/shop/* src/storage/app/public/images/shop/
 
 # Create Symlink for Storage
 symlink:

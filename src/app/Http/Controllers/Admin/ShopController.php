@@ -76,10 +76,38 @@ class ShopController extends Controller
 
 	  	if (!ShopItemCategory::create(['name' => $request->name])) {
   		 	Session::flash('alert-danger', 'Cannot create Category!');
-        return Redirect::to('admin/shop/');
+        return Redirect::to('/admin/shop/');
 	  	}
         Session::flash('alert-success', 'Successfully created Category!');
-        return Redirect::to('admin/shop/');
+        return Redirect::to('/admin/shop/');
+    }
+
+    /**
+     * Delete Shop Category
+     * @param ShopItemCategory $category
+     * @param $request
+     * @return Redirect
+     */
+    public function deleteCategory(ShopItemCategory $category, Request $request)
+    {
+        foreach ($category->items as $item) {
+            foreach ($item->images as $image) {
+                if (!$image->delete()) {
+                    Session::flash('alert-danger', 'Cannot delete Image!');
+                    return Redirect::back();
+                }
+            }
+            if (!$item->delete()) {
+                Session::flash('alert-danger', 'Cannot delete Category!');
+                return Redirect::to('/admin/shop/');
+            }
+        }
+        if (!$category->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Category!');
+            return Redirect::to('/admin/shop/');
+        }
+        Session::flash('alert-success', 'Successfully deleted Category!');
+        return Redirect::to('/admin/shop/');
     }
 
     /**
@@ -212,6 +240,29 @@ class ShopController extends Controller
     }
 
     /**
+     * Delete Shop Item
+     * @param ShopItemCategory $category
+     * @param ShopItem $item
+     * @param $request
+     * @return Redirect
+     */
+    public function deleteItem(ShopItemCategory $category, ShopItem $item, Request $request)
+    {
+        foreach ($item->images as $image) {
+            if (!$image->delete()) {
+                Session::flash('alert-danger', 'Cannot delete Image!');
+                return Redirect::back();
+            }
+        }
+        if (!$item->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Item!');
+            return Redirect::to('/admin/shop/');
+        }
+        Session::flash('alert-success', 'Successfully deleted Item!');
+        return Redirect::to('admin/shop/' . $category->slug);
+    }
+
+    /**
      * Upload Shop Item Image
      * @param ShopItemCategory $category
      * @param ShopItem $item
@@ -299,23 +350,12 @@ class ShopController extends Controller
      */
     public function deleteItemImage(ShopItemCategory $category, ShopItem $item, ShopItemImage $image, Request $request)
     {
-        if ($image->path == "/storage/images/shop/default.png") {
-            if (!$image->delete()) {
-                Session::flash('alert-danger', 'Cannot delete Image!');
-                return Redirect::back();
-            }
-        }
-        if (
-            $image->path != "/storage/images/shop/default.png" && 
-            (
-                !Storage::disk('public')->delete(str_replace('/storage', '', $image->path)) || 
-                !$image->delete()
-            )
-        ) {
+        if (!$image->delete()) {
             Session::flash('alert-danger', 'Cannot delete Image!');
             return Redirect::back();
         }
         Session::flash('alert-success', 'Successfully delete Image!');
         return Redirect::to('admin/shop/' . $category->slug . '/' . $item->slug);
     }
+
 }

@@ -116,6 +116,11 @@
 						</div>
 						<button type="submit" class="btn btn-block btn-success">Submit</button>
 					{{ Form::close() }}
+					<hr>
+					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug )) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-block btn-danger">Delete</button>
+					{{ Form::close() }}
 				</div>
 			</div>
 		</div>
