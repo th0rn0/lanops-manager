@@ -58,6 +58,7 @@ class SettingsController extends Controller
         $rules = [
             'terms_and_conditions'      => 'filled',
             'org_name'                  => 'filled',
+            'org_tagline'               => 'filled',
             'about_main'                => 'filled',
             'about_short'               => 'filled',
             'about_our_aim'             => 'filled',
@@ -71,6 +72,7 @@ class SettingsController extends Controller
         $messages = [
             'terms_and_conditions.filled'       => 'Terms And Conditions cannot be empty',
             'org_name.filled'                   => 'Org Name cannot be empty',
+            'org_tagline.filled'                => 'Org Tagline cannot be empty',
             'about_main.filled'                 => 'About Main cannot be empty',
             'about_short.filled'                => 'About Short cannot be empty',
             'about_our_aim.filled'              => 'About Our Aim cannot be empty',
@@ -165,6 +167,11 @@ class SettingsController extends Controller
         }
 
         if (isset($request->org_name) && !Settings::setOrgName($request->org_name)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->org_tagline) && !Settings::setOrgTagline($request->org_tagline)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }

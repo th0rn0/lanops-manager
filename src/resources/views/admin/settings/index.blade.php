@@ -26,7 +26,11 @@
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_name', Settings::getOrgname() ,array('id'=>'','class'=>'form-control')) }}
+						{{ Form::text('org_name', Settings::getOrgName() ,array('id'=>'','class'=>'form-control')) }}
+					</div>
+					<div class="form-group">
+						{{ Form::label('org_tagline','Tagline/Title',array('id'=>'','class'=>'')) }}
+						{{ Form::text('org_tagline', Settings::getOrgTagline() ,array('id'=>'','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
 						@if (trim(Settings::getOrgLogo()) != '')

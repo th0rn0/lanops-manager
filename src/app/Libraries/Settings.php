@@ -14,12 +14,30 @@ class Settings
     }
 
     /**
-     * Set Org Name
+     * Set Organization Name
      * @param String $name
      */
     public static function setOrgName($name)
     {
         return \App\Setting::setOrgName($name);
+    }
+
+    /**
+     * Get Organization Tagline
+     * @return String
+     */
+    public static function getOrgTagline()
+    {
+        return \App\Setting::getOrgTagline();
+    }
+
+    /**
+     * Set Organization Tagline
+     * @param String $tagline
+     */
+    public static function setOrgTagline($tagline)
+    {
+        return \App\Setting::setOrgTagline($tagline);
     }
 
     /**

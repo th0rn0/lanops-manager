@@ -14,7 +14,7 @@
 			@hasSection ('page_title')
 				@yield ('page_title') | {{ Settings::getOrgName() }}
 			@else
-				Home of LAN gaming in Yorkshire | {{ Settings::getOrgName() }}
+				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
 			@endif
 		</title>
 	</head>
