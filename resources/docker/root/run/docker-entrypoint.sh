@@ -59,10 +59,7 @@ fi
 file_env 'STEAM_API_KEY'
 if [ -z "$STEAM_API_KEY" ]; 
 then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because STEAM_API_KEY is not specified '
-	echo >&2 'You need to specify STEAM_API_KEY'
-	exit 1
+	echo 'NOT SET'
 else
 	echo 'OK'
 fi
