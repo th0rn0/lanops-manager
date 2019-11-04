@@ -140,7 +140,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-9">
 							<p>
-								{{ $attendee->steamname }}<br>
+								{{ $attendee->username }}<br>
 								<small> {{ $attendee->event_count }} Events Attended</small>
 							</p>
 						</div>
@@ -158,7 +158,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-9">
 							<p>
-								{{ $winner->steamname }}<br>
+								{{ $winner->username }}<br>
 								<small> {{ $winner->win_count }} Wins</small>
 							</p>
 						</div>

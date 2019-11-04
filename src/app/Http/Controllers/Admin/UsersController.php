@@ -27,8 +27,7 @@ class UsersController extends Controller
     {
         return view('admin.users.index')
             ->withUser(Auth::user())
-            ->withUsers(User::paginate(20))
-        ;
+            ->withUsers(User::paginate(20));
     }
 
     /**
@@ -42,9 +41,8 @@ class UsersController extends Controller
             $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'cl');
         }
         return view('admin.users.show')
-            ->withUser($user)
+            ->withUserShow($user)
             ->withCreditLogs($creditLogs)
-            ->withPurchases($user->purchases()->paginate(10, ['*'], 'pu'))
-        ;
+            ->withPurchases($user->purchases()->paginate(10, ['*'], 'pu'));
     }
 }

@@ -9,6 +9,9 @@ use Settings;
 use App\Http\Requests;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+
 
 class AccountController extends Controller
 {
@@ -31,5 +34,45 @@ class AccountController extends Controller
             ->withPurchases($purchases)
             ->withEventParticipants($tickets)
         ;
+
+    }
+
+    public function update(Request $request)
+    {
+        $rules = [
+            'email'         => 'filled|email',
+            'password1'     => 'same:password2',
+            'password2'     => 'same:password1',
+        ];
+        $messages = [
+            'email.filled'      => 'Email Cannot be blank.',
+            'email.email'       => 'Email must be a valid Email Address.',
+            'password1.same'    => 'Passwords must be the same.',
+            'password2.same'    => 'Passwords must be the same.',
+        ];
+        $this->validate($request, $rules, $messages);
+
+        $user = Auth::user();
+        if (isset($request->password1) && $request->password1 != null) {
+            $rules = [
+                'password1'     => 'same:password2|min:8',
+                'password2'     => 'same:password1|min:8',
+            ];
+            $messages = [
+                'password1.same'    => 'Passwords must be the same.',
+                'password1.min'     => 'Password must be atleast 8 characters long.',
+                'password2.same'    => 'Passwords must be the same.',
+                'password2.min'     => 'Password must be atleast 8 characters long.',
+            ];
+            $this->validate($request, $rules, $messages);
+            $user->password = Hash::make($request->password1);
+        }
+
+        $user->email = @$request->email;
+
+        if (!$user->save()) {
+            return Redirect::back()->withFail("Oops, Something went Wrong.");
+        }
+        return Redirect::back()->withSuccess('Account successfully updated!');
     }
 }

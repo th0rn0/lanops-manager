@@ -1,18 +1,17 @@
 @extends ('layouts.admin-default')
 
-@section ('page_title', 'Users - View '. $user->username)
+@section ('page_title', 'Users - View '. $userShow->username)
 
 @section ('content')
-
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">{{ $user->username }} <small>{{ $user->steamname }}</small></h1>
+		<h1 class="page-header">{{ $userShow->username }}</h1>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/users/">Users</a>
 			</li>
 			<li class="active">
-				{{ $user->username }}
+				{{ $userShow->username }}
 			</li>
 		</ol> 
 	</div>
@@ -27,14 +26,14 @@
 			<div class="panel-body">
 				<div class="media">
   					<div class="media-left">
-						<img class="media-object" src="{{ $user->avatar }}">
+						<img class="media-object" src="{{ $userShow->avatar }}">
 			  		</div>
   					<div class="media-body">
 						<ul class="list-group">
-							<li class="list-group-item">Username: {{ $user->username }}</li>
-							<li class="list-group-item">Steam Name: {{ $user->steamname }}</li>
-							<li class="list-group-item">Name: {{ $user->firstname }} {{ $user->surname }}</li>
-							<li class="list-group-item">Admin: @if ($user->admin) Yes @else No @endif</li>
+							<li class="list-group-item">Username: {{ $userShow->username }}</li>
+							@if ($userShow->steamid) <li class="list-group-item">Steam: {{ $userShow->steamname }}</li> @endif
+							<li class="list-group-item">Name: {{ $userShow->firstname }} {{ $userShow->surname }}</li>
+							<li class="list-group-item">Admin: @if ($userShow->admin) Yes @else No @endif</li>
 						</ul>
   					</div>
   				</div>
@@ -45,7 +44,7 @@
 				<h3 class="panel-title">Purchases</h3>
 			</div>
 			<div class="panel-body">
-				@if (count($user->purchases))
+				@if (count($userShow->purchases))
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -66,7 +65,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($user->purchases as $purchase)
+							@foreach ($userShow->purchases as $purchase)
 								<tr>
 									<td>
 										{{ $purchase->id }}
@@ -132,7 +131,7 @@
 				<div class="panel-body">
 					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
 						<div class="form-group">
-							{{ Form::hidden('user_id', $user->id) }}
+							{{ Form::hidden('user_id', $userShow->id) }}
 							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
 							{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}
 						</div>
@@ -142,7 +141,7 @@
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Credit - {{ $user->credit_total }}</h3>
+					<h3 class="panel-title">Credit - {{ $userShow->credit_total }}</h3>
 				</div>
 				<div class="panel-body">
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
@@ -156,7 +155,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($user->creditLogs->reverse() as $creditLog)
+							@foreach ($userShow->creditLogs->reverse() as $creditLog)
 							<tr class="table-row" class="odd gradeX">
 								<td>{{ $creditLog->action }}</td>
 								<td>{{ $creditLog->amount }}</td>

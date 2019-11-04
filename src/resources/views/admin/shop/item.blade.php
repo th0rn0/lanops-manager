@@ -179,7 +179,7 @@
 							<li class="list-group-item">{{ $item->name }}</li>
 							<li class="list-group-item">Stock: {{ $item->stock }}</li>
 							<li class="list-group-item">No. of Sales: {{ $item->getTotalSales() }}</li>
-							<li class="list-group-item">Added By: {{ $item->user->steamname }}</li>
+							<li class="list-group-item">Added By: {{ $item->user->username }}</li>
 						</ul>
 						<p>Default Image:</p>
 						<img class="img img-responsive img-rounded" src="{{ $item->getDefaultImageUrl() }}">

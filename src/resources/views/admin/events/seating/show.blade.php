@@ -51,7 +51,7 @@
 											@foreach($seatingPlan->seats as $seat)
 												<?php
 													if($seat->seat == (ucwords($headers[$column]) . $row)){
-														$username = $seat->eventParticipant->user->steamname;
+														$username = $seat->eventParticipant->user->username;
 														$participant_id = $seat->eventParticipant->id;
 													}
 												?>
@@ -83,8 +83,8 @@
 							<tr>
 								<th></th>
 								<th>Seat Number</th>
+								<th>User</th>
 								<th>Name</th>
-								<th>Steam Name</th>
 								<th>Ticket ID</th>
 								<th>Purchase ID</th>
 								<th></th>
@@ -95,8 +95,13 @@
 								<tr class="odd gradeX">
 									<td></td>
 									<td>{{ ucwords($seat->seat) }}</td>
-									<td>{{ $seat->eventParticipant->user->username }}</td>
-									<td>{{ $seat->eventParticipant->user->steamname }}</td>
+									<td>
+										{{ $seat->eventParticipant->user->username }}
+										@if ($seat->eventParticipant->user->steamid)
+											<br><span class="text-muted"><small>Steam: {{ $seat->eventParticipant->user->steamname }}</small></span>
+										@endif
+									</td>
+									<td>{{ $seat->eventParticipant->user->firstname }} {{ $seat->eventParticipant->user->surname }}</td>
 									<td>
 										@if(empty($seat->eventParticipant->ticket_id))
 											Free

@@ -102,7 +102,13 @@
 			<div class="panel-body">
 				<ul class="list-group">
 					<li class="list-group-item">Purchase ID: {{ $purchase->id }}</li>
-					<li class="list-group-item">User: {{ $purchase->user->steamname }}</li>
+					<li class="list-group-item">
+						User: {{ $purchase->user->username }}
+						@if ($purchase->user->steamid)
+							- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
+						@endif
+					</li>
+					<li class="list-group-item">Name: {{ $purchase->user->firstname }} {{ $purchase->user->surname }}</li>
 					<li class="list-group-item">Status: {{ $purchase->status }}</li>
 					<li class="list-group-item">Type: {{ $purchase->type }}</li>
 					@if ($purchase->paypal_email != null)

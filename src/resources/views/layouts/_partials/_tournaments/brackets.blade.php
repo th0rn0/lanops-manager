@@ -71,7 +71,7 @@
 									@if ($tournament->team_size != '1v1')
 										{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}
 									@else
-										{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+										{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}
 									@endif
 									<span class="badge pull-right">{{ $scores[0] }}</span>
 								@endif
@@ -100,8 +100,8 @@
 										 		class="btn btn-sm btn-primary" 
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
-										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}',
-										 			'{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}'
+										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}',
+										 			'{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}'
 									 			)" 
 									 			data-toggle="modal"
 									 			data-target="#submitScoresModal"
@@ -122,7 +122,7 @@
 									@if ($tournament->team_size != '1v1')
 										{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}
 									@else
-										{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+										{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}
 									@endif
 									<span class="badge pull-right">{{ $scores[1] }}</span>
 								@endif

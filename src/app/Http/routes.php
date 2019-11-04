@@ -31,8 +31,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/login/steam', 'Auth\SteamController@login');
 
+    Route::post('/login/standard', 'Auth\LoginController@login');
+
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/account', 'AccountController@index');
+        Route::post('/account', 'AccountController@update');
         Route::post('/account/delete', 'Auth\SteamController@destroy');
         Route::get('/logout', 'Auth\AuthController@logout');
     });
