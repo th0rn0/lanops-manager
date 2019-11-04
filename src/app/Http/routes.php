@@ -21,14 +21,14 @@ Route::group(['middleware' => ['web']], function () {
      * Login & Register
      */
     // Route::get('/login', 'Auth\SteamController@login');
-    Route::get('/login', 'Auth\AuthController@prompt');
     // Route::get('/login/prompt', 'Auth\SteamController@prompt');
-
     // Route::get('/steam/register', 'Auth\SteamController@register');
+    
     Route::get('/register/{method}', 'Auth\AuthController@showRegister');
-
     Route::post('/register/{method}', 'Auth\AuthController@register');
     
+    Route::get('/login', 'Auth\AuthController@prompt');
+
     Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 
