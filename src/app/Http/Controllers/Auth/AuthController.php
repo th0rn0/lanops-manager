@@ -70,7 +70,7 @@ class AuthController extends Controller
      */
     public function prompt()
     {
-        return view('login.prompt')
+        return view('auth.login')
             ->withActiveLoginMethods(Settings::getLoginMethods());
     }
 
@@ -98,10 +98,10 @@ class AuthController extends Controller
                 ) {
                     return redirect('/'); // redirect to site
                 }
-                return view('login.register', $user)->withLoginMethod('steam');
+                return view('auth.register', $user)->withLoginMethod('steam');
                 break;
             default:
-                return view('login.register')->withLoginMethod('standard');
+                return view('auth.register')->withLoginMethod('standard');
                 break;
         }
     }
