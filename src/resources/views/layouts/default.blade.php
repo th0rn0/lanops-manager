@@ -18,7 +18,7 @@
 			@endif
 		</title>
 	</head>
-	<body class="full-height">
+	<body class="full-height background-color">
 		@include ('layouts._partials.navigation')
 		<div class="container" style="margin-top:30px;">
 			<div class='row'>

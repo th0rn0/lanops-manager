@@ -1,6 +1,21 @@
 /**
  * Helper
  */
+.background-color
+{
+	background-color: $color_background;
+}
+
+.custom-header
+{
+	background-color: $color_secondary;
+	a {
+		&:hover {
+			color: #9d9d9d;
+		}
+
+	}
+}
 .full-height
 {
 	height: 100%;
