@@ -28,6 +28,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/register/{method}', 'Auth\AuthController@showRegister');
 
     Route::post('/register/{method}', 'Auth\AuthController@register');
+    
+    Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+    Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@sendResetForm')->name('password.reset');
 
     Route::get('/login/steam', 'Auth\SteamController@login');
 

@@ -37,6 +37,10 @@
 		          	</label>
 		        </div>
 		        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+	            <a class="btn btn-link" href="/login/forgot">
+                    Forgot Your Password?
+                </a>
 		    </form>
 		@endif
 	</div>
