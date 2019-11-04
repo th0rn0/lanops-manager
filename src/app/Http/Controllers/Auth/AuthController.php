@@ -136,21 +136,21 @@ class AuthController extends Controller
             default:
                 $rules = [
                     'email'         => 'required|filled|email|unique:users,email',
-                    'password1'     => 'required|same:password|min:8',
+                    'password1'     => 'required|same:password2|min:8',
                     'username'      => 'required|unique:users,username',
                     'firstname'     => 'required|string',
                     'surname'       => 'required|string',
                 ];
                 $messages = [
-                    'username.unique'   => 'Username must be unique',
-                    'username.required' => 'Username is required',
-                    'email.filled'      => 'Email Cannot be blank.',
-                    'email.required'    => 'Email is required.',
-                    'email.email'       => 'Email must be a valid Email Address.',
-                    'email.unique'      => 'Email must be unique.',
-                    'password1.same'    => 'Passwords must be the same.',
-                    'password1.same'    => 'Password is required.',
-                    'password1.min'     => 'Password must be atleast 8 characters long.',
+                    'username.unique'       => 'Username must be unique',
+                    'username.required'     => 'Username is required',
+                    'email.filled'          => 'Email Cannot be blank.',
+                    'email.required'        => 'Email is required.',
+                    'email.email'           => 'Email must be a valid Email Address.',
+                    'email.unique'          => 'Email must be unique.',
+                    'password1.same'        => 'Passwords must be the same.',
+                    'password1.required'    => 'Password is required.',
+                    'password1.min'         => 'Password must be atleast 8 characters long.',
                 ];
                 $this->validate($request, $rules, $messages);
                 $user->email          = $request->email;

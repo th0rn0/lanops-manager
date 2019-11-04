@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group @error('password1') has-error @enderror">
                         {{ Form::label('password1','Password',array('id'=>'','class'=>'')) }}
-                         <input id="password1" type="password1" class="form-control" name="password1" required autocomplete="new-password">
+                         <input id="password1" type="password" class="form-control" name="password1" required autocomplete="new-password">
                     </div>
                     <div class="form-group @error('password2') has-error @enderror">
                         {{ Form::label('password2','Confirm Password',array('id'=>'','class'=>'')) }}
