@@ -121,12 +121,12 @@ class AuthController extends Controller
         switch ($method) {
             case 'steam':
                 $this->validate($request, [
-                    'fistname'  => 'string',
-                    'surname'   => 'string',
-                    'steamid'   => 'string',
-                    'avatar'    => 'string',
-                    'steamname' => 'string',
-                    'username'  => 'unique:users,username',
+                    'firstname' => 'required|string',
+                    'surname'   => 'required|string',
+                    'steamid'   => 'required|string',
+                    'avatar'    => 'required|string',
+                    'steamname' => 'required|string',
+                    'username'  => 'required|unique:users,username',
                 ]);
                 $user->avatar           = $request->avatar;
                 $user->steamid          = $request->steamid;
@@ -134,11 +134,25 @@ class AuthController extends Controller
                 break;
             
             default:
-                $this->validate($request, [
-                    'fistname'  => 'string',
-                    'surname'   => 'string',
-                    'username'  => 'unique:users,username',
-                ]);
+                $rules = [
+                    'email'         => 'required|filled|email|unique:users,email',
+                    'password1'     => 'required|same:password|min:8',
+                    'username'      => 'required|unique:users,username',
+                    'firstname'     => 'required|string',
+                    'surname'       => 'required|string',
+                ];
+                $messages = [
+                    'username.unique'   => 'Username must be unique',
+                    'username.required' => 'Username is required',
+                    'email.filled'      => 'Email Cannot be blank.',
+                    'email.required'    => 'Email is required.',
+                    'email.email'       => 'Email must be a valid Email Address.',
+                    'email.unique'      => 'Email must be unique.',
+                    'password1.same'    => 'Passwords must be the same.',
+                    'password1.same'    => 'Password is required.',
+                    'password1.min'     => 'Password must be atleast 8 characters long.',
+                ];
+                $this->validate($request, $rules, $messages);
                 $user->email          = $request->email;
                 $user->password       = Hash::make($request->password);
                 break;
@@ -163,24 +177,6 @@ class AuthController extends Controller
         Auth::logout();
         return Redirect('/')->withError('Something went wrong. Please Try again later');
     }
-
-    // /**
-    //  * Create a new user instance after a valid registration.
-    //  *
-    //  * @param  array  $data
-    //  * @return User
-    //  */
-    // protected function create(array $data)
-    // {
-    //     return User::create([
-    //         'name' => $data['name'],
-    //         'username' => $data['username'],
-    //         'steamid' => $data['steamid'],
-    //         'avatar' => $data['avatar'],
-    //         'email' => $data['email'],
-    //         'password' => Hash::make($data['password']),
-    //     ]);
-    // }
 
     public function redirectToProvider($provider)
     {

@@ -40,12 +40,16 @@ class AccountController extends Controller
     public function update(Request $request)
     {
         $rules = [
+            'firstname'     => 'filled',
+            'surname'       => 'filled',
             'email'         => 'filled|email',
             'password1'     => 'same:password2',
             'password2'     => 'same:password1',
         ];
         $messages = [
             'email.filled'      => 'Email Cannot be blank.',
+            'firstname.filled'  => 'Firstname Cannot be blank.',
+            'surname.filled'    => 'Surname Cannot be blank.',
             'email.email'       => 'Email must be a valid Email Address.',
             'password1.same'    => 'Passwords must be the same.',
             'password2.same'    => 'Passwords must be the same.',
@@ -69,6 +73,8 @@ class AccountController extends Controller
         }
 
         $user->email = @$request->email;
+        $user->firstname = @$request->firstname;
+        $user->surname = @$request->surname;
 
         if (!$user->save()) {
             return Redirect::back()->withFail("Oops, Something went Wrong.");

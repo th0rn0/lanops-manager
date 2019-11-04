@@ -20,34 +20,34 @@
             <div class="col-xs-12 col-md-6">
                 <div class="row">
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
+                        <div class="form-group @error('firstname') has-error @enderror">
                             {{ Form::label('firstname','Firstname',array('id'=>'','class'=>'')) }}
-                            {{ Form::text('firstname', NULL, array('id'=>'firstname','class'=>'form-control', 'required')) }}
+                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname">
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                        <div class="form-group">
+                        <div class="form-group  @error('surname') has-error @enderror">
                             {{ Form::label('surname','Surname',array('id'=>'','class'=>'')) }}
-                            {{ Form::text('surname', NULL, array('id'=>'surname','class'=>'form-control', 'required')) }}
+                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ old('surname') }}" required autocomplete="surname">
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group @error('username') has-error @enderror">
                     {{ Form::label('username','Username',array('id'=>'','class'=>'')) }}
-                    {{ Form::text('username', NULL, array('id'=>'username','class'=>'form-control', 'required')) }}
+                    <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username">
                 </div>
                 @if ($loginMethod == "standard")
-                    <div class="form-group">
+                    <div class="form-group @error('email') has-error @enderror">
                         {{ Form::label('email','E-Mail',array('id'=>'','class'=>'')) }}
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
                     </div>
-                    <div class="form-group">
-                        {{ Form::label('password','Password',array('id'=>'','class'=>'')) }}
-                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                    <div class="form-group @error('password1') has-error @enderror">
+                        {{ Form::label('password1','Password',array('id'=>'','class'=>'')) }}
+                         <input id="password1" type="password1" class="form-control" name="password1" required autocomplete="new-password">
                     </div>
-                    <div class="form-group">
-                        {{ Form::label('password-confirm','Confirm Password',array('id'=>'','class'=>'')) }}
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                    <div class="form-group @error('password2') has-error @enderror">
+                        {{ Form::label('password2','Confirm Password',array('id'=>'','class'=>'')) }}
+                        <input id="password2" type="password" class="form-control" name="password2" required autocomplete="new-password">
                     </div>
                 @endif
                 @if ($loginMethod == "steam")

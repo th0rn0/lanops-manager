@@ -27,8 +27,22 @@
 									@endif
 								</div> 
 								<div class="col-md-10 col-sm-12">
+					                <div class="row">
+					                    <div class="col-xs-12 col-md-6">
+					                        <div class="form-group @error('firstname') has-error @enderror">
+					                            {{ Form::label('firstname','Firstname',array('id'=>'','class'=>'')) }}
+					                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
+					                        </div>
+					                    </div>
+					                    <div class="col-xs-12 col-md-6">
+					                        <div class="form-group  @error('surname') has-error @enderror">
+					                            {{ Form::label('surname','Surname',array('id'=>'','class'=>'')) }}
+					                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ $user->surname }}" required autocomplete="surname">
+					                        </div>
+					                    </div>
+					                </div>
 									<div class="form-group">
-										{{ Form::label('User Name','Name',array('id'=>'','class'=>'')) }}
+										{{ Form::label('Username','User Name',array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
 									</div> 
 									@if ($user->steamid && $user->steamname)
