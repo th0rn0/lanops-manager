@@ -34,7 +34,7 @@ env-file-blank:
 # Move default images to Storage
 layout-images:
 	cp -r src/resources/assets/images/* src/storage/app/public/images/main/
-	mv src/storage/app/public/images/main/shop/ src/storage/app/public/images/shop/
+	mv src/storage/app/public/images/main/shop/* src/storage/app/public/images/shop/
 
 # Create Symlink for Storage
 symlink:
@@ -62,12 +62,12 @@ generate-settings:
 
 # Create Default Folder structure
 folder-structure:
-	ln -s src/storage/app/public src/public/storage
 	mkdir -p src/storage/app/public/images/gallery/
 	mkdir -p src/storage/app/public/images/events/
 	mkdir -p src/storage/app/public/images/venues/
 	mkdir -p src/storage/app/public/images/main/
-	
+	mkdir -p src/storage/app/public/images/shop/
+
 # Permissions - Dev
 permissions:
 	chown -R ${USER}:101 src/

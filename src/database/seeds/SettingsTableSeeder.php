@@ -31,6 +31,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'org_tagline'],
+            [
+                'value'         => env('ORG_TAGLINE', 'Tagline Here'),
+                'default'       => true,
+                'description'   => 'Tagline of the Organization'
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'org_logo'],
             [
                 'value'         => env('ORG_LOGO', '/storage/images/main/logo_main.png'),

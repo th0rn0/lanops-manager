@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Storage;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -37,6 +39,14 @@ class ShopItemImage extends Model
         static::addGlobalScope('order', function (Builder $builder) {
             $builder->orderBy('order', 'asc');
         });
+        self::deleting(function ($model) {
+            if (
+                $model->path != "/storage/images/shop/default.png" && 
+                !Storage::disk('public')->delete(str_replace('/storage', '', $model->path))
+            ) {
+                return false;
+            }
+        });
     }
 
     /*
@@ -46,4 +56,5 @@ class ShopItemImage extends Model
     {
         return $this->belongsTo('App\ShopItem', 'shop_item_id');
     }
+
 }

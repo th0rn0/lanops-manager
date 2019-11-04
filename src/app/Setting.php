@@ -61,6 +61,29 @@ class Setting extends Model
     }
 
     /**
+     * Get Organization Tagline
+     * @return String
+     */
+    public static function getOrgTagline()
+    {
+        return self::where('setting', 'org_tagline')->first()->value;
+    }
+
+    /**
+     * Set Organization Tagline
+     * @param String $tagline
+     */
+    public static function setOrgTagline($tagline)
+    {
+        $setting = self::where('setting', 'org_tagline')->first();
+        $setting->value = $tagline;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get Organization Logo Path
      * @return String
      */

@@ -335,4 +335,13 @@ class Helpers
         }
         return $formattedBasket;
     }
+
+    /**
+     * Get CSS Version Number for Cache Busting
+     * @return integer
+     */
+    public static function getCssVersion()
+    {
+        return \App\Appearance::getCssVersion();
+    }
 }

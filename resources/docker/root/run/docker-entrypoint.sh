@@ -185,6 +185,10 @@ if [[ $(stat -c "%u" $NGINX_DOCUMENT_ROOT/storage) != $UUID ]]; then
     chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
 fi
 
+# Make Symlink for images if it doesn't already exist
+if [ ! -L "$NGINX_DOCUMENT_ROOT/public/storage" ]; then
+	php artisan storage:link
+fi
 
 # Database Wait check
 echo "---------------"
