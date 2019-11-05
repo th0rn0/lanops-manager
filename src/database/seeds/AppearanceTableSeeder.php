@@ -25,7 +25,19 @@ class AppearanceTableSeeder extends Seeder
         ]);
 
         factory(App\Appearance::class)->create([
+            'key'   => 'color_primary_text',
+            'value' => 'orange',
+            'type'  => 'CSS_VAR',
+        ]);
+
+        factory(App\Appearance::class)->create([
             'key'   => 'color_secondary',
+            'value' => '#333',
+            'type'  => 'CSS_VAR',
+        ]);
+
+        factory(App\Appearance::class)->create([
+            'key'   => 'color_secondary_text',
             'value' => '#333',
             'type'  => 'CSS_VAR',
         ]);
@@ -41,5 +53,30 @@ class AppearanceTableSeeder extends Seeder
             'value' => 'white',
             'type'  => 'CSS_VAR',
         ]);
+
+        factory(App\Appearance::class)->create([
+            'key'   => 'color_text',
+            'value' => 'white',
+            'type'  => 'CSS_VAR',
+        ]);
+
+        factory(App\Appearance::class)->create([
+            'key'   => 'color_header_background',
+            'value' => 'white',
+            'type'  => 'CSS_VAR',
+        ]);
+
+        factory(App\Appearance::class)->create([
+            'key'   => 'color_header_text',
+            'value' => 'white',
+            'type'  => 'CSS_VAR',
+        ]);
+
+        factory(App\Appearance::class)->create([
+            'key'   => 'color_header_text_hover',
+            'value' => 'white',
+            'type'  => 'CSS_VAR',
+        ]);
+
     }
 }

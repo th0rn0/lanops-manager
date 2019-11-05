@@ -16,6 +16,14 @@
 
 <div class="row">
 	<div class="col-xs-12 col-sm-8">
+		Primary Color
+		Primary Color Text
+		Secondary Color (footer)
+		Secondary Color Text
+		Body Color
+		Body Text Color
+		Link Color
+		Header - bg, text, text hover
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-users fa-fw"></i> Appearance
