@@ -18,7 +18,7 @@
 			@endif
 		</title>
 	</head>
-	<body class="full-height background-color">
+	<body class="full-height">
 		@include ('layouts._partials.navigation')
 		<div class="container" style="margin-top:30px;">
 			<div class='row'>
@@ -82,7 +82,7 @@
 				</div>
 			</div>
 		</div>
-		<footer class="footer" style="height:30%">
+		<footer class="footer">
 			<div class="container">
 				<div class="hidden-xs hidden-sm">
 					<br><br><br>
@@ -92,25 +92,25 @@
 				</div>
 				<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 					<div class="col-lg-6 col-md-6">
-						<h2 class="text-muted">Links</h2>
-						<p class="text-muted hidden"><a href="/contact">Contact Us</a></p>
-						<p class="text-muted"><a href="/news">News</a></p>
-						<p class="text-muted"><a href="/about">About Us</a></p>
-						<p class="text-muted"><a href="/polls">Polls</a></p>
-						<p class="text-muted hidden">Lan Guide</p>
+						<h2 class="">Links</h2>
+						<p class=" hidden"><a href="/contact">Contact Us</a></p>
+						<p class=""><a href="/news">News</a></p>
+						<p class=""><a href="/about">About Us</a></p>
+						<p class=""><a href="/polls">Polls</a></p>
+						<p class=" hidden">Lan Guide</p>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<h2 class="text-muted">Connect</h2>
-						<p class="text-muted"><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
-						<p class="text-muted"><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
-						<p class="text-muted"><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
+						<h2 class="">Connect</h2>
+						<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
+						<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
+						<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
 					</div>
 					<div class="col-lg-12">
-						<p class="text-muted">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
+						<p class="">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">
-					<p class="text-muted">Powered By <a href="https://lanops.co.uk">LanOps</a> <a href="https://github.com/lanops/manager">Lan Manager</a></p>
+					<p class="">Powered By <a href="https://lanops.co.uk">LanOps</a> <a href="https://github.com/lanops/manager">Lan Manager</a></p>
 				</div>
 			</div>
 		</footer>
