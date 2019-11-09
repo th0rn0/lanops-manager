@@ -85,7 +85,7 @@
 		<footer class="footer">
 			<div class="container">
 				<div class="hidden-xs hidden-sm">
-					<br><br><br>
+					<br><br>
 				</div>
 				<div class="col-lg-4 hidden-md hidden-sm hidden-xs">
 					<img class="img-responsive" src="{{ Settings::getOrgLogo() }}">

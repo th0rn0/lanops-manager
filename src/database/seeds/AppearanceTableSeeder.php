@@ -38,24 +38,24 @@ class AppearanceTableSeeder extends Seeder
 
         factory(App\Appearance::class)->create([
             'key'   => 'color_secondary_text',
-            'value' => '#333',
+            'value' => 'white',
             'type'  => 'CSS_VAR',
         ]);
 
         factory(App\Appearance::class)->create([
-            'key'   => 'color_links',
-            'value' => 'blue',
+            'key'   => 'color_body_links',
+            'value' => 'orange',
             'type'  => 'CSS_VAR',
         ]);
 
         factory(App\Appearance::class)->create([
-            'key'   => 'color_background',
+            'key'   => 'color_body_background',
             'value' => '#fff',
             'type'  => 'CSS_VAR',
         ]);
 
         factory(App\Appearance::class)->create([
-            'key'   => 'color_text',
+            'key'   => 'color_body_text',
             'value' => '#333',
             'type'  => 'CSS_VAR',
         ]);

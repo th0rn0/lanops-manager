@@ -26,9 +26,22 @@ class AppearanceController extends Controller
      */
     public function index()
     {
+        $cssVariables = Appearance::getCssVariables();
+        $sortedCssVariables['primary'] = $cssVariables->filter(function ($item) {
+            return false !== stristr($item->key, 'color_primary');
+        });
+        $sortedCssVariables['secondary'] = $cssVariables->filter(function ($item) {
+            return false !== stristr($item->key, 'color_secondary');
+        });
+        $sortedCssVariables['body'] = $cssVariables->filter(function ($item) {
+            return false !== stristr($item->key, 'color_body');
+        });
+        $sortedCssVariables['header'] = $cssVariables->filter(function ($item) {
+            return false !== stristr($item->key, 'color_header');
+        });
         return view('admin.appearance.index')
             ->withUserOverrideCss(Appearance::getCssOverride())
-            ->withCssVariables(Appearance::getCssVariables());
+            ->withCssVariables($sortedCssVariables);
         ;
     }
     
