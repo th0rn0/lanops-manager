@@ -46,7 +46,7 @@
 								<td>
 									{{ $poll->options->count() }}
 								</td>
-								<td><small>{{ $poll->user->steamname }}</small></td>
+								<td><small>{{ $poll->user->username }}</small></td>
 								<td width="15%">
 									<a href="/admin/polls/{{ $poll->slug }}">
 										<button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>

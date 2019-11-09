@@ -114,9 +114,13 @@
 			<div class="page-header">
 				<h3>Latest News</h3>
 			</div>
-			@foreach ($newsArticles as $newsArticle)
-				@include ('layouts._partials._news.short')
-			@endforeach
+			@if (!$newsArticles->isEmpty())
+				@foreach ($newsArticles as $newsArticle)
+					@include ('layouts._partials._news.short')
+				@endforeach
+			@else
+				<p>Nothing to see here...</p>
+			@endif
 		</div>
 		<div class="col-xs-12 col-sm-3">
 			<div class="page-header">
@@ -136,7 +140,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-9">
 							<p>
-								{{ $attendee->steamname }}<br>
+								{{ $attendee->username }}<br>
 								<small> {{ $attendee->event_count }} Events Attended</small>
 							</p>
 						</div>
@@ -154,7 +158,7 @@
 						</div>
 						<div class="col-xs-12 col-sm-9">
 							<p>
-								{{ $winner->steamname }}<br>
+								{{ $winner->username }}<br>
 								<small> {{ $winner->win_count }} Wins</small>
 							</p>
 						</div>

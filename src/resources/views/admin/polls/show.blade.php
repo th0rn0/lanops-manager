@@ -50,7 +50,7 @@
 											{{ $option->getPercentage() }}%
 										</div>
 									</td>
-									<td width="25%"><small>{{ $option->user->steamname }}</small></td>
+									<td width="25%"><small>{{ $option->user->username }}</small></td>
 									<td>
 										@if ($option->getTotalVotes() <= 0)
 											{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options/' . $option->id, 'onsubmit' => 'return ConfirmDelete()')) }}

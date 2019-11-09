@@ -20,14 +20,29 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Login & Register
      */
-    Route::get('/login', 'Auth\SteamAuthController@login');
-    Route::get('/login/prompt', 'Auth\SteamAuthController@prompt');
-    Route::get('/register', 'Auth\SteamAuthController@register');
-    Route::post('/account/register', 'Auth\SteamAuthController@store');
+    // Route::get('/login', 'Auth\SteamController@login');
+    // Route::get('/login/prompt', 'Auth\SteamController@prompt');
+    // Route::get('/steam/register', 'Auth\SteamController@register');
+    
+    Route::get('/register/{method}', 'Auth\AuthController@showRegister');
+    Route::post('/register/{method}', 'Auth\AuthController@register');
+    
+    Route::get('/login', 'Auth\AuthController@prompt');
+
+    Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+    Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@sendResetForm')->name('password.reset');
+
+    Route::get('/login/steam', 'Auth\SteamController@login');
+
+    Route::post('/login/standard', 'Auth\LoginController@login');
+
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/account', 'AccountController@index');
-        Route::post('/account/delete', 'Auth\SteamAuthController@destroy');
-        Route::get('/logout', 'Auth\SteamAuthController@doLogout');
+        Route::post('/account', 'AccountController@update');
+        Route::post('/account/delete', 'Auth\SteamController@destroy');
+        Route::get('/logout', 'Auth\AuthController@logout');
     });
 
     /**
@@ -315,6 +330,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
     Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
     Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
+    Route::post('/admin/settings/login/{method}/disable', 'Admin\SettingsController@disableLoginMethod');
+    Route::post('/admin/settings/login/{method}/enable', 'Admin\SettingsController@enableLoginMethod');
     Route::post('/admin/settings/credit/enable', 'Admin\SettingsController@enableCreditSystem');
     Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
     Route::post('/admin/settings/shop/enable', 'Admin\SettingsController@enableShopSystem');

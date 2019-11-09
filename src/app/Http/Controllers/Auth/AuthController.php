@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Settings;
 
+use App\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
+use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -24,7 +30,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login / registration.
@@ -59,21 +65,117 @@ class AuthController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
+     * Prompt Login User
+     * @return Redirect
      */
-    protected function create(array $data)
+    public function prompt()
     {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'steamid' => $data['steamid'],
-            'avatar' => $data['avatar'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return view('auth.login')
+            ->withActiveLoginMethods(Settings::getLoginMethods());
+    }
+
+    /**
+     * Show Register User Page
+     * @param  User   $user
+     */
+    public function showRegister($method)
+    {
+        if (!in_array($method, Settings::getLoginMethods())) {
+            Session::flash('alert-danger', 'Login Method is not supported.');
+            return Redirect::back();
+        }
+        switch ($method) {
+            case 'steam':
+                if (!Session::has('user')) {
+                    return Redirect::to('/');
+                }
+
+                $user = Session::get('user');
+                
+                if (is_null($user['steamid']) ||
+                    is_null($user['avatar']) ||
+                    is_null($user['steamname'])
+                ) {
+                    return redirect('/'); // redirect to site
+                }
+                return view('auth.register', $user)->withLoginMethod('steam');
+                break;
+            default:
+                return view('auth.register')->withLoginMethod('standard');
+                break;
+        }
+    }
+
+    /**
+     * Register User Page
+     * @param  User   $user
+     * @param  Request   $request
+     * @return Redirect
+     */
+    public function register($method, Request $request, User $user)
+    {
+        if (!in_array($method, Settings::getLoginMethods())) {
+            Session::flash('alert-danger', 'Login Method is not supported.');
+            return Redirect::back();
+        }
+        switch ($method) {
+            case 'steam':
+                $this->validate($request, [
+                    'firstname' => 'required|string',
+                    'surname'   => 'required|string',
+                    'steamid'   => 'required|string',
+                    'avatar'    => 'required|string',
+                    'steamname' => 'required|string',
+                    'username'  => 'required|unique:users,username',
+                ]);
+                $user->avatar           = $request->avatar;
+                $user->steamid          = $request->steamid;
+                $user->steamname        = $request->steamname;
+                break;
+            
+            default:
+                $rules = [
+                    'email'         => 'required|filled|email|unique:users,email',
+                    'password1'     => 'required|same:password2|min:8',
+                    'username'      => 'required|unique:users,username',
+                    'firstname'     => 'required|string',
+                    'surname'       => 'required|string',
+                ];
+                $messages = [
+                    'username.unique'       => 'Username must be unique',
+                    'username.required'     => 'Username is required',
+                    'email.filled'          => 'Email Cannot be blank.',
+                    'email.required'        => 'Email is required.',
+                    'email.email'           => 'Email must be a valid Email Address.',
+                    'email.unique'          => 'Email must be unique.',
+                    'password1.same'        => 'Passwords must be the same.',
+                    'password1.required'    => 'Password is required.',
+                    'password1.min'         => 'Password must be atleast 8 characters long.',
+                ];
+                $this->validate($request, $rules, $messages);
+                $user->email          = $request->email;
+                $user->password       = Hash::make($request->password);
+                break;
+        }
+       
+        $user->firstname        = $request->firstname;
+        $user->surname          = $request->surname;
+        $user->username         = $request->username;
+        $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
+
+        // Set first user on system as admin
+        if (User::count() == 0 && User::where('admin', 1)->count() == 0) {
+            $user->admin = 1;
+        }
+
+        if ($user->save()) {
+            Session::forget('user');
+            Auth::login($user, true);
+            return Redirect('/account');
+        }
+        
+        Auth::logout();
+        return Redirect('/')->withError('Something went wrong. Please Try again later');
     }
 
     public function redirectToProvider($provider)

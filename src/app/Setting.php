@@ -846,4 +846,66 @@ class Setting extends Model
         return true;
     }
 
+    /**
+     * Get Active Login Methods
+     * @return Array
+     */
+    public static function getLoginMethods()
+    {
+        $loginMethods = self::where('setting', 'like', '%login_%')->get();
+        $return = array();
+        foreach ($loginMethods as $method) {
+            if ($method->value) {
+                $return[] = str_replace('login_', '', $method->setting);
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Get Supported Login Methods
+     * @return Array
+     */
+    public static function getSupportedLoginMethods()
+    {
+        $loginMethods = self::where('setting', 'like', '%login_%')->get();
+        $return = array();
+        foreach ($loginMethods as $method) {
+            $return[] = str_replace('login_', '', $method->setting);
+        }
+        return $return;
+    }
+
+    /**
+     * Enable Login Method
+     * @return Boolean
+     */
+    public static function enableLoginMethod($method)
+    {
+        if (!$loginMethod = self::where('setting', 'like', '%login_'. $method . '%')->first()) {
+            return false;
+        }
+        $loginMethod->value = true;
+        if (!$loginMethod->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Login Method
+     * @return Boolean
+     */
+    public static function disableLoginMethod($method)
+    {
+        if (!$loginMethod = self::where('setting', 'like', '%login_'. $method . '%')->first()) {
+            return false;
+        }
+        $loginMethod->value = false;
+        if (!$loginMethod->save()) {
+            return false;
+        }
+        return true;
+    }
+
 }

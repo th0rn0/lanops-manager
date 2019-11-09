@@ -26,6 +26,7 @@
 						<tr>
 							<th>ID</th>
 							<th>User</th>
+							<th>Name</th>
 							<th>Status</th>
 							<th>Type</th>
 							<th>Paypal Email</th>
@@ -38,7 +39,13 @@
 						@foreach ($purchases->reverse() as $purchase)
 							<tr class="table-row odd gradeX">
 								<td>{{ $purchase->id }}</td>
-								<td>{{ $purchase->user->steamname }}</td>
+								<td>
+									{{ $purchase->user->username }}
+									@if ($purchase->user->steamid)
+										- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
+									@endif
+								</td>
+								<td>{{ $purchase->user->firstname }} {{ $purchase->user->surname }}</td>
 								<td>{{ $purchase->status }}</td>
 								<td>{{ $purchase->type }}</td>
 								<td>{{ $purchase->paypal_email }}</td>

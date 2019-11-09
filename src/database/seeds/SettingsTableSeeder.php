@@ -247,5 +247,19 @@ class SettingsTableSeeder extends Seeder
                 'default'       => true,
             ]
         );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'login_standard'],
+            [
+                'value'         => true,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'login_steam'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
     }
 }

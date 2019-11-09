@@ -38,7 +38,7 @@
 							@foreach ($creditLogs->reverse() as $creditLog)
 								<tr class="table-row" class="odd gradeX">
 									<td>{{ $creditLog->action }}</td>
-									<td>{{ $creditLog->user->steamname }}</td>
+									<td>{{ $creditLog->user->username }}</td>
 									<td>{{ $creditLog->amount }}</td>
 									<td>
 										@if (strtolower($creditLog->action) == 'buy')
@@ -75,9 +75,9 @@
 									<td>{{ $creditLog->reason }}</td>
 									<td>
 										@if ($creditLog->admin_id == null)
-											Automated
+											System Automated
 										@else
-											{{ $creditLog->admin->steamname }}
+											{{ $creditLog->admin->username }}
 										@endif
 									</td>
 									<td>

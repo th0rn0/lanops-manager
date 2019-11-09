@@ -55,7 +55,7 @@
 							<div class="alert alert-warning">
 								{{ $comment->comment }}
 								<span class="pull-right">
-									<small>{{ $comment->user->steamname }} </small>
+									<small>{{ $comment->user->username }} </small>
 									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/approve">Approve</a> / 
 									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/reject">Reject</a>
 								</span>
@@ -71,7 +71,7 @@
 				@if (!$commentsReported->isEmpty())
 					@foreach ($commentsReported->reverse() as $report)
 						<div class="alert alert-danger">
-							{{ $report->newsComment->comment }} - Reported by: {{ $report->user->steamname }}
+							{{ $report->newsComment->comment }} - Reported by: {{ $report->user->username }}
 							<span class="pull-right">
 								<a href="/admin/news/{{ $report->newsComment->newsArticle->slug }}/comments/{{ $report->newsComment->id }}/reports/{{ $report->id }}/delete">Ignore</a> / 
 								<a href="/admin/news/{{ $report->newsComment->newsArticle->slug }}/comments/{{ $report->newsComment->id }}/delete">Delete</a>
@@ -110,7 +110,7 @@
 										{{ $newsArticle->title }}
 									</td>
 									<td>
-										{{ $newsArticle->user->steamname }}
+										{{ $newsArticle->user->username }}
 									</td>
 									<td>
 										{{ $newsArticle->created_at }}

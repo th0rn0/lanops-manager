@@ -32,12 +32,14 @@
 					@endif
 				@endforeach
 				@if (isset($errors) && $errors->any())
-					<div class="alert alert-danger" style="margin-top:30px; margin-bottom:-40px;">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
+					<div class="col-xs-12" style="margin-top:30px; margin-bottom:-40px;">
+						<div class="alert alert-danger">
+							<ul class="list-unstyled">
+								@foreach ($errors->all() as $error)
+									<li><strong>{{ $error }}</strong></li>
+								@endforeach
+							</ul>
+						</div>
 					</div>
 				@endif
 			</div>
@@ -56,7 +58,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							LANs we've hosted
+							EVENTs we've hosted
 						</div>
 					</div>
 
@@ -66,7 +68,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							GAMERs we've entertained
+							PLAYERs we've entertained
 						</div>
 					</div>
 

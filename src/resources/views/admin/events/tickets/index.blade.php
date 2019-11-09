@@ -164,7 +164,10 @@
 						@foreach ( $users as $user )
 							<tr class="table-row odd gradeX">
 								<td>
-									{{ $user->steamname }}
+									{{ $user->username }}
+									@if ($user->steamid)
+										<br><span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
+									@endif
 								</td>
 								<td>
 									{{ $user->getFreeTickets($event->id)->count() }}

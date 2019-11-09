@@ -36,7 +36,7 @@
 					<table width="100%" class="table table-striped table-hover" id="seating_table">
 						<thead>
 							<tr>
-								<th>Steam Name</th>
+								<th>User</th>
 								<th>Name</th>
 								<th>Seat</th>
 								<th>Ticket</th>
@@ -49,12 +49,18 @@
 						<tbody>
 							 @foreach ($participants as $participant)
 								<tr class="odd gradeX">
-									<td>{{ $participant->user->steamname }}</td>
-									<td>{{ $participant->user->username }}</td>
+									<td>
+										{{ $participant->user->username }}
+										@if ($participant->user->steamid)
+											<br><span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+										@endif
+									</td>
+									<td>{{ $participant->user->firstname }} {{ $participant->user->surname }}</td>
 									<td>
 										@if (isset($participant->seat)) {{ $participant->seat->seat }} @endif
 									</td>
 									<td>
+										@if ($participant->free) Free @endif
 										@if ($participant->ticket) {{ $participant->ticket->name }} @endif
 									</td>
 									<td>
@@ -63,13 +69,13 @@
 									<td>
 										@if ($participant->free)
 											<strong>Free</strong>
-											<small>Assigned by: {{ $participant->getAssignedByUser()->steamname }}</small>
+											<small>Assigned by: {{ $participant->getAssignedByUser()->username }}</small>
 										@elseif ($participant->staff)
 											<strong>Staff</strong>
-											<small>Assigned by: {{ $participant->getAssignedByUser()->steamname }}</small>
+											<small>Assigned by: {{ $participant->getAssignedByUser()->username }}</small>
 										@elseif ($participant->gift)
 											<strong>Gift</strong>
-											<small>Assigned by: {{ $participant->getGiftedByUser()->steamname }}</small>
+											<small>Assigned by: {{ $participant->getGiftedByUser()->username }}</small>
 										@endif
 									</td>
 									<td>

@@ -19,7 +19,7 @@
 						<h3 class="panel-title">Account Details</h3>
 					</div>
 					<div class="panel-body">
-						{{ Form::open(array('url'=>'/account/' . $user->id )) }}
+						{{ Form::open(array('url'=>'/account/' )) }}
 							<div class="row" style="display: flex; align-items: center;">
 								<div class="col-md-2 col-sm-12">
 									@if ($user->avatar != NULL)
@@ -27,14 +27,62 @@
 									@endif
 								</div> 
 								<div class="col-md-10 col-sm-12">
+					                <div class="row">
+					                    <div class="col-xs-12 col-md-6">
+					                        <div class="form-group @error('firstname') has-error @enderror">
+					                            {{ Form::label('firstname','Firstname',array('id'=>'','class'=>'')) }}
+					                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
+					                        </div>
+					                    </div>
+					                    <div class="col-xs-12 col-md-6">
+					                        <div class="form-group  @error('surname') has-error @enderror">
+					                            {{ Form::label('surname','Surname',array('id'=>'','class'=>'')) }}
+					                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ $user->surname }}" required autocomplete="surname">
+					                        </div>
+					                    </div>
+					                </div>
 									<div class="form-group">
-										{{ Form::label('User Name','Name',array('id'=>'','class'=>'')) }}
+										{{ Form::label('Username','User Name',array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
 									</div> 
-									<div class="form-group">
-										{{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
-										{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
-									</div>
+									@if ($user->steamid && $user->steamname)
+										<div class="form-group">
+											{{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
+											{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+										</div>
+									@endif
+									@if ($user->email)
+										<div class="form-group">
+											{{ Form::label('email','Email',array('id'=>'','class'=>'')) }}
+											<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="Enter email">
+											@error('email')
+				                                <span class="invalid-feedback" role="alert">
+				                                    <strong>{{ $message }}</strong>
+				                                </span>
+				                            @enderror
+										</div>
+									@endif
+									@if ($user->password)
+										<div class="form-group">
+											<label for="password1">Change Password</label>
+											<input type="password" name="password1" class="form-control @error('password1') is-invalid @enderror" id="password1" placeholder="Password">
+										 	@error('password1')
+				                                <span class="invalid-feedback" role="alert">
+				                                    <strong>{{ $message }}</strong>
+				                                </span>
+				                            @enderror
+										</div>
+										<div class="form-group">
+											<label for="password2">Confirm Password</label>
+											<input type="password" name="password2" class="form-control @error('password2') is-invalid @enderror" id="password2" placeholder="Password">
+										 	@error('password2')
+				                                <span class="invalid-feedback" role="alert">
+				                                    <strong>{{ $message }}</strong>
+				                                </span>
+				                            @enderror
+										</div>
+									@endif
+									<button type="submit" class="btn btn-primary btn-block">Submit</button>
 								</div>
 							</div>
 						{{ Form::close() }}
