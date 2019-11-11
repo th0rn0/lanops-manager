@@ -5,8 +5,11 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Appearance</h1>
+		<h1 class="page-header">Settings - Appearance</h1>
 		<ol class="breadcrumb">
+			<li>
+				<a href="/admin/settings">Settings</a>
+			</li>
 			<li class="active">
 				Appearance
 			</li>
@@ -25,7 +28,7 @@
 					Dark Themes are currently not properly supported. Please feel free to use the Custom CSS form to get it working.<br>
 					Theme editing is not supported for the admin interface.
 				</div>
-				{{ Form::open(array('url'=>'/admin/appearance/css/variables', 'onsubmit' => 'return ConfirmSubmit()')) }}
+				{{ Form::open(array('url'=>'/admin/settings/appearance/css/variables', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<h3>Primary Colors</h3>
 					@foreach ($cssVariables['primary'] as $cssVariable)
 						<div class="row">
@@ -90,7 +93,7 @@
 			</div>
 			<div class="panel-body">
 				@if ($userOverrideCss)
-					{{ Form::open(array('url'=>'/admin/appearance/css/override', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					{{ Form::open(array('url'=>'/admin/settings/appearance/css/override', 'onsubmit' => 'return ConfirmSubmit()')) }}
 						<div class="form-group">
 							{{ Form::textarea('css', $userOverrideCss ,array('id'=>'','class'=>'form-control', 'rows'=>'30')) }}
 						</div>
@@ -106,7 +109,7 @@
 				<i class="fa fa-plus fa-fw"></i> Misc
 			</div>
 			<div class="panel-body">
-				<a href="/admin/appearance/css/recompile"><button class="btn btn-default btn-sm">Recompile CSS</button></a>
+				<a href="/admin/settings/appearance/css/recompile"><button class="btn btn-default btn-sm">Recompile CSS</button></a>
 			</div>
 		</div>
 	</div>

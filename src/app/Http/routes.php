@@ -325,6 +325,9 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      * Settings
      */
     Route::get('/admin/settings', 'Admin\SettingsController@index');
+    Route::get('/admin/settings/org', 'Admin\SettingsController@showOrg');
+    Route::get('/admin/settings/payments', 'Admin\SettingsController@showPayments');
+    Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
     Route::post('/admin/settings', 'Admin\SettingsController@update');
     Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
     Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
@@ -348,10 +351,10 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     /**
      * Appearance
      */
-    Route::get('/admin/appearance', 'Admin\AppearanceController@index');
-    Route::get('/admin/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
-    Route::post('/admin/appearance/css/override', 'Admin\AppearanceController@cssOverride');
-    Route::post('/admin/appearance/css/variables', 'Admin\AppearanceController@cssVariables');
+    Route::get('/admin/settings/appearance', 'Admin\AppearanceController@index');
+    Route::get('/admin/settings/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
+    Route::post('/admin/settings/appearance/css/override', 'Admin\AppearanceController@cssOverride');
+    Route::post('/admin/settings/appearance/css/variables', 'Admin\AppearanceController@cssVariables');
 
     /**
      * News

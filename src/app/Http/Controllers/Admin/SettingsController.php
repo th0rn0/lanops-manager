@@ -39,14 +39,51 @@ class SettingsController extends Controller
         }
         return view('admin.settings.index')
             ->withSettings(Setting::all())
+            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withFacebookCallback($facebookCallback)
-            ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
-            ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
+            ->withSliderImages(SliderImage::getImages('frontpage'))
+        ;
+    }
+
+    /**
+     * Show Settings Org Page
+     * @return Redirect
+     */
+    public function showOrg()
+    {
+        return view('admin.settings.org')
+            ->withSettings(Setting::all())
+        ;
+    }
+
+    /**
+     * Show Settings Payment Page
+     * @return Redirect
+     */
+    public function showPayments()
+    {
+        
+        return view('admin.settings.payments')
+            ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
+            ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withIsShopEnabled(Settings::isShopEnabled())
-            ->withSliderImages(SliderImage::getImages('frontpage'))
+        ;
+    }
+
+    /**
+     * Show Settings Index Page
+     * @return Redirect
+     */
+    public function showAuth()
+    {
+        
+        return view('admin.settings.auth')
+            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
+            ->withActiveLoginMethods(Settings::getLoginMethods())
         ;
     }
     

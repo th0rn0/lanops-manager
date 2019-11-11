@@ -17,61 +17,6 @@
 
 <div class="row">
 	<div class="col-lg-6 col-xs-12">
-		<!-- Login Methods -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Login Methods
-			</div>
-			<div class="panel-body">
-				@foreach ($supportedLoginMethods as $method)
-					<div class="col-sm-6 col-xs-12">
-						<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }}</h4>
-						@if (in_array($method, $activeLoginMethods))
-							{{ Form::open(array('url'=>'/admin/settings/login/' . $method . '/disable')) }}
-								<button type="submit" class="btn btn-block btn-danger">Disable</button>
-							{{ Form::close() }}
-						@else
-							{{ Form::open(array('url'=>'/admin/settings/login/' . $method . '/enable')) }}
-								<button type="submit" class="btn btn-block btn-success">Enable</button>
-							{{ Form::close() }}
-						@endif
-					</div>
-				@endforeach
-			</div>
-		</div>
-		<!-- Name & Logo -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Name & Logo
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-					<div class="form-group">
-						{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_name', Settings::getOrgName() ,array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('org_tagline','Tagline/Title',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_tagline', Settings::getOrgTagline() ,array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						@if (trim(Settings::getOrgLogo()) != '')
-							<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
-						@endif
-						{{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
-						{{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
-					</div>
-					 <div class="form-group">
-						@if (trim(Settings::getOrgLogo()) != '')
-							<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
-						@endif
-						{{ Form::label('org_favicon','Favicon',array('id'=>'','class'=>'')) }}
-						{{ Form::file('org_favicon',array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
 		<!-- Main -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -91,15 +36,15 @@
 						<tbody>
 							@foreach ($settings as $setting)
 								@if (
-									$setting->setting != 'about_main' &&
-									$setting->setting != 'about_short' &&
-									$setting->setting != 'about_our_aim' &&
-									$setting->setting != 'about_who' &&
-									$setting->setting != 'terms_and_conditions' && 
-									$setting->setting != 'org_name' && 
-									$setting->setting != 'org_logo' &&
-									$setting->setting != 'org_favicon' &&
+									strpos($setting->setting, 'about') === false && 
+									strpos($setting->setting, 'terms_and_conditions') === false &&
+									strpos($setting->setting, 'org_') === false &&
+									strpos($setting->setting, 'slider_') === false &&
+									strpos($setting->setting, 'payment') === false &&
+									strpos($setting->setting, 'credit') === false &&
+									strpos($setting->setting, 'login') === false &&
 									$setting->setting != 'currency' &&
+									$setting->setting != 'shop_enabled' &&
 									$setting->setting != 'social_facebook_page_access_token'
 								)
 									<tr>
@@ -133,53 +78,24 @@
 				</div>
 			</div>
 		</div>
-		<!-- Terms & Conditions -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Terms and Conditions
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('registration_terms_and_conditions', Settings::getRegistrationTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-				<hr>
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
 	</div>
 	<div class="col-lg-6 col-xs-12">
-		<!-- Payment Gateways -->
+		<!-- Shop System -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Payment Gateways
+				<i class="fa fa-info-circle fa-fw"></i> Shop System
 			</div>
 			<div class="panel-body">
-				<div class="row">
-					@foreach ($supportedPaymentGateways as $gateway)
-						<div class="col-sm-6 col-xs-12">
-							<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }}</h4>
-							@if (in_array($gateway, $activePaymentGateways))
-								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}
-									<button type="submit" class="btn btn-block btn-danger">Disable</button>
-								{{ Form::close() }}
-							@else
-								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
-									<button type="submit" class="btn btn-block btn-success">Enable</button>
-								{{ Form::close() }}
-							@endif
-						</div>
-					@endforeach
-				</div>
+				<p>The Shop can be used for buying merch, consumables etc.</p>
+				@if ($isShopEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
 			</div>
 		</div>
 		<!-- Credit System -->
@@ -200,24 +116,7 @@
 				@endif
 			</div>
 		</div>
-		<!-- Shop System -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Shop System
-			</div>
-			<div class="panel-body">
-				<p>The Shop can be used for buying merch, consumables etc.</p>
-				@if ($isShopEnabled)
-					{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
-						<button type="submit" class="btn btn-block btn-danger">Disable</button>
-					{{ Form::close() }}
-				@else
-					{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
-						<button type="submit" class="btn btn-block btn-success">Enable</button>
-					{{ Form::close() }}
-				@endif
-			</div>
-		</div>
+
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -246,49 +145,6 @@
 						{{ Form::close() }}
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- About -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> About
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('about_main','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_main', Settings::getAboutMain() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_short','Short',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_short', Settings::getAboutShort() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_our_aim','Our Aim',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_our_aim', Settings::getAboutOurAim() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-		<!-- Currency -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-money fa-fw"></i> Currency
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<h4>Currency</h4>
-					<div class="form-group">
-						{{ Form::label('currency','Currency',array('id'=>'','class'=>'')) }}
-						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], Settings::getCurrency(), array('id'=>'venue','class'=>'form-control')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
 			</div>
 		</div>
 		<!-- Front Page Slider -->

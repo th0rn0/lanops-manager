@@ -68,21 +68,37 @@
 				<a href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>
 			<li>
-				<a href="/admin/settings"><i class="fa fa-wrench" aria-hidden="true"></i> Settings/Misc</a> 
+				<a href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
+				<ul class="nav nav-second-level">
+					<li>
+						<a href="/admin/settings/org">
+							Organization
+						</a>
+					</li>
+					<li>
+						<a href="/admin/settings/auth">
+							Auth & Login
+						</a>
+					</li>
+					<li>
+						<a href="/admin/settings/payments">
+							Payments
+						</a>
+					</li>
+					<li>
+						<a href="/admin/settings/appearance">
+							Appearance
+						</a> 
+					</li>
+				</ul>
+				<!-- /.nav-second-level -->
 			</li>
 			<li>
-				<a href="/admin/appearance"><i class="fa fa-wrench" aria-hidden="true"></i> Appearance/CSS</a> 
+				<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System (Beta)</a> 
 			</li>
-			@if(Settings::isCreditEnabled())
-				<li>
-					<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System (Beta)</a> 
-				</li>
-			@endif
-			@if(Settings::isShopEnabled())
-				<li>
-					<a href="/admin/shop"><i class="fa fa-wrench" aria-hidden="true"></i> Shop (Beta)</a> 
-				</li>
-			@endif
+			<li>
+				<a href="/admin/shop"><i class="fa fa-wrench" aria-hidden="true"></i> Shop (Beta)</a> 
+			</li>
 			</ul>
 	</div>
 	<!-- /.navbar-collapse -->

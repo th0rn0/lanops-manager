@@ -39,7 +39,7 @@ class AppearanceController extends Controller
         $sortedCssVariables['header'] = $cssVariables->filter(function ($item) {
             return false !== stristr($item->key, 'color_header');
         });
-        return view('admin.appearance.index')
+        return view('admin.settings.appearance')
             ->withUserOverrideCss(Appearance::getCssOverride())
             ->withCssVariables($sortedCssVariables);
         ;
