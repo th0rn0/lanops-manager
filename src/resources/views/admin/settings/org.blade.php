@@ -19,42 +19,57 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-6 col-xs-12">
+	<div class="col-xs-12">
 		<!-- Name & Logo -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-wrench fa-fw"></i> Name & Logo
 			</div>
 			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-					<div class="form-group">
-						{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_name', Settings::getOrgName() ,array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('org_tagline','Tagline/Title',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_tagline', Settings::getOrgTagline() ,array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						@if (trim(Settings::getOrgLogo()) != '')
-							<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
-						@endif
-						{{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
-						{{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
-					</div>
-					 <div class="form-group">
-						@if (trim(Settings::getOrgLogo()) != '')
-							<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
-						@endif
-						{{ Form::label('org_favicon','Favicon',array('id'=>'','class'=>'')) }}
-						{{ Form::file('org_favicon',array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
+				<div class="row">
+					{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+						<div class="col-xs-12 col-md-6">
+
+							<div class="form-group">
+								{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
+								{{ Form::text('org_name', Settings::getOrgName() ,array('id'=>'','class'=>'form-control')) }}
+							</div>
+							<div class="form-group">
+								{{ Form::label('org_tagline','Tagline/Title',array('id'=>'','class'=>'')) }}
+								{{ Form::text('org_tagline', Settings::getOrgTagline() ,array('id'=>'','class'=>'form-control')) }}
+							</div>
+							<div class="form-group">
+								{{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
+								{{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
+							</div>
+							 <div class="form-group">
+								{{ Form::label('org_favicon','Favicon',array('id'=>'','class'=>'')) }}
+								{{ Form::file('org_favicon',array('id'=>'','class'=>'form-control')) }}
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<div class="form-group">
+								@if (trim(Settings::getOrgFavicon()) != '')
+									<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
+								@else
+									No Favicon uploaded
+								@endif
+								@if (trim(Settings::getOrgLogo()) != '')
+									<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
+								@else
+									No Logo uploaded
+								@endif
+							</div>
+						</div>
+						<div class="col-xs-12">
+							<button type="submit" class="btn btn-default">Submit</button>
+						</div>
+					{{ Form::close() }}
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-lg-6 col-xs-12">
+	<div class="col-xs-12">
 		<!-- About -->
 		<div class="panel panel-default">
 			<div class="panel-heading">

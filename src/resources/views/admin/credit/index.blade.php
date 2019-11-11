@@ -15,8 +15,28 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-10">
-		@if ($isCreditEnabled)
+	@if (!$isCreditEnabled)
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-info-circle fa-fw"></i> Credit is Currently Disabled...
+				</div>
+				<div class="panel-body">
+					<p>The Credit System is used to award participants with credit they can use to buy things from the shop and events. It can be award for buying tickets, attending events, participanting/winning tournaments or manually assigned.</p>
+					@if ($isCreditEnabled)
+						{{ Form::open(array('url'=>'/admin/settings/credit/disable')) }}
+							<button type="submit" class="btn btn-block btn-danger">Disable</button>
+						{{ Form::close() }}
+					@else
+						{{ Form::open(array('url'=>'/admin/settings/credit/enable')) }}
+							<button type="submit" class="btn btn-block btn-success">Enable</button>
+						{{ Form::close() }}
+					@endif
+				</div>
+			</div>
+		</div>
+	@else
+		<div class="col-xs-12 col-sm-10">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-credit-card fa-fw"></i> Logs
@@ -90,10 +110,8 @@
 					{{ $creditLogs->links() }}
 				</div>  
 			</div>
-		@endif
-	</div>
-	<div class="col-xs-12 col-sm-2">
-		@if ($isCreditEnabled)
+		</div>
+		<div class="col-xs-12 col-sm-2">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="fa fa-credit-card fa-fw"></i> Add Credit
@@ -112,69 +130,69 @@
 					{{ Form::close() }}
 				</div>  
 			</div>
-		@endif
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-credit-card fa-fw"></i> Automated Awards
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/credit/settings/')) }}
-					<h4>Tournaments</h4>
-					<hr>
-					<div class="row">
-						<div class="col-xs-12 col-sm-6">
-							<div class="form-group">
-								{{ Form::label('tournament_participation','Participation') }}
-								{{ Form::number('tournament_participation', $creditAwardTournamentParticipation, array('id'=>'tournament_participation','class'=>'form-control'))}}
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-credit-card fa-fw"></i> Automated Awards
+				</div>
+				<div class="panel-body">
+					{{ Form::open(array('url'=>'/admin/credit/settings/')) }}
+						<h4>Tournaments</h4>
+						<hr>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									{{ Form::label('tournament_participation','Participation') }}
+									{{ Form::number('tournament_participation', $creditAwardTournamentParticipation, array('id'=>'tournament_participation','class'=>'form-control'))}}
+								</div>
+								<div class="form-group">
+									{{ Form::label('tournament_second','Second Place') }}
+									{{ Form::number('tournament_second', $creditAwardTournamentSecond, array('id'=>'tournament_second','class'=>'form-control'))}}
+								</div>
 							</div>
-							<div class="form-group">
-								{{ Form::label('tournament_second','Second Place') }}
-								{{ Form::number('tournament_second', $creditAwardTournamentSecond, array('id'=>'tournament_second','class'=>'form-control'))}}
+							<div class="col-xs-12 col-sm-6">
+								<div class="form-group">
+									{{ Form::label('tournament_first','First Place') }}
+									{{ Form::number('tournament_first', $creditAwardTournamentFirst, array('id'=>'tournament_first','class'=>'form-control'))}}
+								</div>
+								<div class="form-group">
+									{{ Form::label('tournament_third','Third Place') }}
+									{{ Form::number('tournament_third', $creditAwardTournamentThird, array('id'=>'tournament_third','class'=>'form-control'))}}
+								</div>
 							</div>
 						</div>
-						<div class="col-xs-12 col-sm-6">
-							<div class="form-group">
-								{{ Form::label('tournament_first','First Place') }}
-								{{ Form::number('tournament_first', $creditAwardTournamentFirst, array('id'=>'tournament_first','class'=>'form-control'))}}
-							</div>
-							<div class="form-group">
-								{{ Form::label('tournament_third','Third Place') }}
-								{{ Form::number('tournament_third', $creditAwardTournamentThird, array('id'=>'tournament_third','class'=>'form-control'))}}
-							</div>
+						<h4>Registration</h4>
+						<hr>
+						<div class="form-group">
+							{{ Form::label('registration_event','Event') }}
+							{{ Form::number('registration_event', $creditAwardRegistrationEvent, array('id'=>'registration_event','class'=>'form-control'))}}
 						</div>
-					</div>
-					<h4>Registration</h4>
-					<hr>
-					<div class="form-group">
-						{{ Form::label('registration_event','Event') }}
-						{{ Form::number('registration_event', $creditAwardRegistrationEvent, array('id'=>'registration_event','class'=>'form-control'))}}
-					</div>
-					<div class="form-group">
-						{{ Form::label('registration_site','Site') }}
-						{{ Form::number('registration_site', $creditAwardRegistrationSite, array('id'=>'registration_site','class'=>'form-control'))}}
-					</div>
-					<button type="submit" class="btn btn-block btn-success">Submit</button>
-				{{ Form::close() }}
+						<div class="form-group">
+							{{ Form::label('registration_site','Site') }}
+							{{ Form::number('registration_site', $creditAwardRegistrationSite, array('id'=>'registration_site','class'=>'form-control'))}}
+						</div>
+						<button type="submit" class="btn btn-block btn-success">Submit</button>
+					{{ Form::close() }}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-info-circle fa-fw"></i> Enable/Disable
+				</div>
+				<div class="panel-body">
+					<p>The Credit System is used to award participants with credit they can use to buy things from the shop and events. It can be award for buying tickets, attending events, participanting/winning tournaments or manually assigned.</p>
+					@if ($isCreditEnabled)
+						{{ Form::open(array('url'=>'/admin/settings/credit/disable')) }}
+							<button type="submit" class="btn btn-block btn-danger">Disable</button>
+						{{ Form::close() }}
+					@else
+						{{ Form::open(array('url'=>'/admin/settings/credit/enable')) }}
+							<button type="submit" class="btn btn-block btn-success">Enable</button>
+						{{ Form::close() }}
+					@endif
+				</div>
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Enable/Disable
-			</div>
-			<div class="panel-body">
-				<p>The Credit System is used to award participants with credit they can use to buy things from the shop and events. It can be award for buying tickets, attending events, participanting/winning tournaments or manually assigned.</p>
-				@if ($isCreditEnabled)
-					{{ Form::open(array('url'=>'/admin/settings/credit/disable')) }}
-						<button type="submit" class="btn btn-block btn-danger">Disable</button>
-					{{ Form::close() }}
-				@else
-					{{ Form::open(array('url'=>'/admin/settings/credit/enable')) }}
-						<button type="submit" class="btn btn-block btn-success">Enable</button>
-					{{ Form::close() }}
-				@endif
-			</div>
-		</div>
-	</div>
+	@endif
 </div>
 
 @endsection

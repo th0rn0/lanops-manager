@@ -77,7 +77,7 @@
 					</li>
 					<li>
 						<a href="/admin/settings/auth">
-							Auth & Login
+							Authentication
 						</a>
 					</li>
 					<li>

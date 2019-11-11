@@ -20,23 +20,6 @@
 
 <div class="row">
 	<div class="col-lg-6 col-xs-12">
-		<!-- Terms & Conditions -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Terms and Conditions
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-	</div>
-	<div class="col-lg-6 col-xs-12">
 		<!-- Payment Gateways -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -61,6 +44,8 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="col-lg-6 col-xs-12">
 		<!-- Currency -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -68,10 +53,25 @@
 			</div>
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<h4>Currency</h4>
 					<div class="form-group">
-						{{ Form::label('currency','Currency',array('id'=>'','class'=>'')) }}
 						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], Settings::getCurrency(), array('id'=>'venue','class'=>'form-control')) }}
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				{{ Form::close() }}
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<!-- Terms & Conditions -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Terms and Conditions
+			</div>
+			<div class="panel-body">
+				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					<div class="form-group">
+						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}

@@ -342,16 +342,12 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
     /**
-     * Image Sliders
-     */
-    Route::post('/admin/slider/images/', 'Admin\SliderController@upload');
-    Route::post('/admin/slider/images/{image}', 'Admin\SliderController@update');
-    Route::delete('/admin/slider/images/{image}', 'Admin\SliderController@delete');
-
-    /**
      * Appearance
      */
     Route::get('/admin/settings/appearance', 'Admin\AppearanceController@index');
+    Route::post('/admin/settings/appearance/slider/images/', 'Admin\AppearanceController@sliderUpload');
+    Route::post('/admin/settings/appearance/slider/images/{image}', 'Admin\AppearanceController@sliderUpdate');
+    Route::delete('/admin/settings/appearance/slider/images/{image}', 'Admin\AppearanceController@sliderDelete');
     Route::get('/admin/settings/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
     Route::post('/admin/settings/appearance/css/override', 'Admin\AppearanceController@cssOverride');
     Route::post('/admin/settings/appearance/css/variables', 'Admin\AppearanceController@cssVariables');

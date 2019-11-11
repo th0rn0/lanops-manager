@@ -11,7 +11,6 @@ use Input;
 use FacebookPageWrapper as Facebook;
 
 use App\User;
-use App\SliderImage;
 use App\Setting;
 use App\Event;
 use App\EventParticipant;
@@ -44,7 +43,6 @@ class SettingsController extends Controller
             ->withFacebookCallback($facebookCallback)
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
-            ->withSliderImages(SliderImage::getImages('frontpage'))
         ;
     }
 
@@ -246,11 +244,11 @@ class SettingsController extends Controller
     {
         if ($social == 'facebook' && (!Facebook::isEnabled())) {
             Session::flash('alert-danger', 'Facebook App is not configured.');
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         if ($social == 'facebook' && (Facebook::isLinked())) {
             Session::flash('alert-danger', 'Facebook is already Linked.');
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         $acceptedSocial = array(
             'facebook',
@@ -259,25 +257,25 @@ class SettingsController extends Controller
         );
         if (!in_array($social, $acceptedSocial)) {
             Session::flash('alert-danger', "{$social} is not supported by the Lan Manager.");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
 
         if ($social == 'facebook' && (Facebook::isEnabled() && !Facebook::isLinked())) {
             if (!$userAccessToken = Facebook::getUserAccessToken()) {
                 Session::flash('alert-danger', 'Facebook: 401 Unauthorized Request.');
-                return Redirect::to('/admin/settings');
+                return Redirect::back();
             }
             if (!$pageAccessToken = Facebook::getPageAccessTokens($userAccessToken)) {
                 Session::flash('alert-danger', "Facebook: Error getting long-lived access token");
-                return Redirect::to('/admin/settings');
+                return Redirect::back();
             }
             if (!Settings::setSocialFacebookPageAccessTokens($pageAccessToken)) {
                 Session::flash('alert-danger', "Could not Link {$social}!");
-                return Redirect::to('/admin/settings');
+                return Redirect::back();
             }
         }
         Session::flash('alert-success', "Successfully Linked {$social}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -289,13 +287,13 @@ class SettingsController extends Controller
     {
         if (!Settings::setSocialFacebookPageAccessTokens(null)) {
             Session::flash('alert-danger', "Could not Unlink {$social}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash(
             'alert-success',
             "Successfully Uninked {$social}. You will still need to remove the app access on Facebook!"
         );
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -307,10 +305,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enablePaymentGateway($gateway)) {
             Session::flash('alert-danger', "Could not Enable {$gateway}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled {$gateway}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -322,10 +320,10 @@ class SettingsController extends Controller
     {
         if (!Settings::disablePaymentGateway($gateway)) {
             Session::flash('alert-danger', "Could not Disable {$gateway}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled {$gateway}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
     
     /**
@@ -336,10 +334,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enableCreditSystem()) {
             Session::flash('alert-danger', "Could not Enable the Credit System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled the Credit System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -350,10 +348,10 @@ class SettingsController extends Controller
     {
         if (!Settings::disableCreditSystem()) {
             Session::flash('alert-danger', "Could not Disable the Credit System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled the Credit System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
     
     /**
@@ -364,10 +362,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enableShopSystem()) {
             Session::flash('alert-danger', "Could not Enable the Shop System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled the Shop System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -378,10 +376,10 @@ class SettingsController extends Controller
     {
         if (!Settings::disableShopSystem()) {
             Session::flash('alert-danger', "Could not Disable the Shop System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled the Shop System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -393,10 +391,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enableLoginMethod($method)) {
             Session::flash('alert-danger', "Could not Enable {$method}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled {$method}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -408,14 +406,14 @@ class SettingsController extends Controller
     {
         if (count(Settings::getLoginMethods()) <= 1) {
             Session::flash('alert-danger', "You must have at least one Login Method enabled!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         if (!Settings::disableLoginMethod($method)) {
             Session::flash('alert-danger', "Could not Disable {$method}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled {$method}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
