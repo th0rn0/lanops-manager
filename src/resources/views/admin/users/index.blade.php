@@ -64,7 +64,7 @@
 									</td>
 									<td>
 										<a href="/admin/users/{{ $user->id }}">
-											<button class="btn btn-primary btn-block">Edit</button>
+											<button class="btn btn-primary btn-sm btn-block">Edit</button>
 										</a>
 									</td>
 								</tr>

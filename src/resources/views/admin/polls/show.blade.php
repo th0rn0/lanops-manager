@@ -131,7 +131,7 @@
 				@if (!$poll->hasEnded())
 					<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/end')) }}
-							<button type="submit" class="btn btn-primary btn-sm btn-block">End Poll</button>
+							<button type="submit" class="btn btn-primary btn-block">End Poll</button>
 						{{ Form::close() }}
 					</div>
 				@endif
