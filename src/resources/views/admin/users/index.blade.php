@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Users</h1>
+		<h3 class="page-header">Users</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Users
@@ -64,7 +64,7 @@
 									</td>
 									<td>
 										<a href="/admin/users/{{ $user->id }}">
-											<button class="btn btn-default btn-block">Edit</button>
+											<button class="btn btn-primary btn-block">Edit</button>
 										</a>
 									</td>
 								</tr>

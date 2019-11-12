@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Seating Plans - {{ $seatingPlan->name }}</h1>
+		<h3 class="page-header">Seating Plans - {{ $seatingPlan->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -195,7 +195,7 @@
 							</label> 
 						</div> 
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 					@if ($seatingPlan->image_path)
 						<hr>
 						<h4>Image Preview</h4>
@@ -230,15 +230,16 @@
 					{{ Form::hidden('event_id_modal', null, array('id'=>'event_id_modal','class'=>'form-control')) }}
 
 					<a href="" id="participant_link">
-						<button type="button" class="btn btn-default">Go to Participant</button>
+						<button type="button" class="btn btn-default btn-block">Go to Participant</button>
 					</a>
-					<button type="submit" class="btn btn-default">Save Changes</button>
+					<br>
+					<button type="submit" class="btn btn-success btn-block">Save Changes</button>
 				{{ Form::close() }}
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat', 'id'=>'clear_seat_form')) }}
 					<hr>
 					{{ Form::hidden('_method', 'DELETE') }}
 					{{ Form::hidden('seat_number', null, array('id'=>'seat_number')) }}
-					<button type="submit" class="btn btn-danger">Clear Seat</button>
+					<button type="submit" class="btn btn-danger btn-block">Clear Seat</button>
 				{{ Form::close() }}
 			</div>
 		</div>

@@ -78,15 +78,15 @@
 			@include ('layouts._partials._admin.navigation')
 			<div id="page-wrapper">
 				<div class="container-fluid">
-						<div class='row'>
-							@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-								@if (Session::has('alert-' . $msg))
-									<p class="alert alert-{{ $msg }}">
-										<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									</p>
-								@endif
-							@endforeach
-						</div>
+					<div class='row'>
+						@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+							@if (Session::has('alert-' . $msg))
+								<p class="alert alert-{{ $msg }}">
+									<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								</p>
+							@endif
+						@endforeach
+					</div>
 					@yield('content')
 				</div>
 			</div>    

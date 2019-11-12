@@ -5,7 +5,7 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">News</h1>
+		<h3 class="page-header">News</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				News
@@ -39,7 +39,7 @@
 							{{ Form::checkbox('post_to_facebook', true, array('id'=>'post_to_facebook','class'=>'form-control')) }} Post to facebook?
 						</div>
 					@endif
-					<button type="submit" class="btn btn-default btn-block">Submit</button> 
+					<button type="submit" class="btn btn-success btn-block">Submit</button> 
 				{{ Form::close() }}
 			</div>
 		</div>

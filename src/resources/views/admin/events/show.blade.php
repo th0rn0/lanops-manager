@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">{{ $event->display_name }}</h1>
+		<h3 class="page-header">{{ $event->display_name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -55,7 +55,7 @@
 										</div>
 										<div class="col-md-6 col-xs-12">
 											<div class="form-group">
-												{{ Form::label('seating_cap','Seating Capacity',array('id'=>'','class'=>'')) }}
+												{{ Form::label('seating_cap','Seating',array('id'=>'','class'=>'')) }}
 												{{ Form::text('seating_cap',$event->getSeatingCapacity(),array('id'=>'seating_cap','class'=>'form-control', 'disabled'=>'true')) }}
 											</div>
 										</div>
@@ -128,12 +128,7 @@
 							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-				<hr>
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
-					{{ Form::hidden('_method', 'DELETE') }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -175,7 +170,6 @@
 												</div>
 											</div>
 										</div>
-										
 										<div class="form-group">
 											{{ Form::label('text','Text',array('id'=>'','class'=>'')) }}
 											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control', 'rows' => '4')) }}
@@ -191,7 +185,7 @@
 											</div>  
 										</div>
 										SECTION LISTING PRIORITY HERE<br>
-										<button type="submit" class="btn btn-default">Update</button>
+										<button type="submit" class="btn btn-success btn-block">Update</button>
 									{{ Form::close() }}
 								</div>
 							</div>
@@ -320,6 +314,18 @@
 				@else
 					<h4>None</h4>
 				@endif
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-wrench fa-fw"></i> Danger Zone
+			</div>
+			<div class="panel-body">
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+					{{ Form::hidden('_method', 'DELETE') }}
+					<button type="submit" class="btn btn-danger btn-block">Delete</button>
+				{{ Form::close() }}
 			</div>
 		</div>
 

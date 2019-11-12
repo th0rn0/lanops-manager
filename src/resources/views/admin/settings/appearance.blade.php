@@ -5,7 +5,7 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Settings - Appearance</h1>
+		<h3 class="page-header">Appearance</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/settings">Settings</a>
@@ -16,6 +16,8 @@
 		</ol> 
 	</div>
 </div>
+
+@include ('layouts._partials._admin._settings.dashMini')
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6">
@@ -81,7 +83,7 @@
 							</div>
 						</div>
 					@endforeach
-					<button type="submit" class="btn btn-default ">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>  
 		</div>
@@ -95,7 +97,7 @@
 						<div class="form-group">
 							{{ Form::textarea('css', $userOverrideCss ,array('id'=>'','class'=>'form-control', 'rows'=>'30')) }}
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				@endif
 			</div>  
@@ -131,7 +133,7 @@
 								</div>
 							</div>
 							<div class="col-md-6 col-xs-12">
-								<button type="submit" class="btn btn-default btn-block">Submit</button>
+								<button type="submit" class="btn btn-success btn-block">Submit</button>
 							</div>
 						{{ Form::close() }}
 					</div>
@@ -156,7 +158,7 @@
 				<i class="fa fa-plus fa-fw"></i> Misc
 			</div>
 			<div class="panel-body">
-				<a href="/admin/settings/appearance/css/recompile"><button class="btn btn-default btn-sm">Recompile CSS</button></a>
+				<a href="/admin/settings/appearance/css/recompile"><button class="btn btn-success btn-block">Recompile CSS</button></a>
 			</div>
 		</div>
 	</div>

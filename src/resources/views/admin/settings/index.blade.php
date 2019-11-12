@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Settings</h1>
+		<h3 class="page-header">Settings</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Settings
@@ -14,6 +14,8 @@
 		</ol> 
 	</div>
 </div>
+
+@include ('layouts._partials._admin._settings.dashMini')
 
 <div class="row">
 	<div class="col-lg-6 col-xs-12">
@@ -59,7 +61,7 @@
 												{{ Form::text($setting->setting, $setting->value ,array('id'=>'setting','class'=>'form-control')) }}
 											</td>
 											<td>
-												<button type="submit" class="btn btn-default btn-sm btn-block">Update</button>
+												<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
 											</td>
 										{{ Form::close() }}
 										{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmDelete()')) }}

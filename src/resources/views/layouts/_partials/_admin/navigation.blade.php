@@ -31,18 +31,6 @@
 				<a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 			</li>
 			<li>
-				<a href="/admin/news"><i class="fa fa-comment fa-fw"></i> News</a>
-			</li>
-			<li>
-				<a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
-			</li>
-			<li>
-				<a href="/admin/polls"><i class="fa fa-list fa-fw"></i> Polls</a>
-			</li>
-			<li>
-				<a href="/admin/venues"><i class="fa fa-building fa-fw"></i> Venues</a>
-			</li>
-			<li>
 				<a href="/admin/events"><i class="fa fa-book fa-fw"></i> Events</a>
 				<ul class="nav nav-second-level">
 					@foreach (Helpers::getEvents('DESC', 5, true) as $event)
@@ -59,6 +47,19 @@
 				<!-- /.nav-second-level -->
 			</li>
 			<li>
+				<a href="/admin/news"><i class="fa fa-comment fa-fw"></i> News</a>
+			</li>
+			<li>
+				<a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
+			</li>
+			<li>
+				<a href="/admin/polls"><i class="fa fa-list fa-fw"></i> Polls</a>
+			</li>
+			<li>
+				<a href="/admin/venues"><i class="fa fa-building fa-fw"></i> Venues</a>
+			</li>
+			
+			<li>
 				<a href="/admin/gallery"><i class="fa fa-camera fa-fw"></i> Gallery</a>
 			</li>
 			<li>
@@ -69,29 +70,6 @@
 			</li>
 			<li>
 				<a href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
-				<ul class="nav nav-second-level">
-					<li>
-						<a href="/admin/settings/org">
-							Organization
-						</a>
-					</li>
-					<li>
-						<a href="/admin/settings/auth">
-							Authentication
-						</a>
-					</li>
-					<li>
-						<a href="/admin/settings/payments">
-							Payments
-						</a>
-					</li>
-					<li>
-						<a href="/admin/settings/appearance">
-							Appearance
-						</a> 
-					</li>
-				</ul>
-				<!-- /.nav-second-level -->
 			</li>
 			<li>
 				<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System (Beta)</a> 

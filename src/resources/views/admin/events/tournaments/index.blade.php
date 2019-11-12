@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tournaments</h1>
+		<h3 class="page-header">Tournaments</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -179,7 +179,7 @@
 								</div>
 							</div> 
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				@else
 					No Challonge Key Found. Tournaments are disabled.

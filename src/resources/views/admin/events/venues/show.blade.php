@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Venues</h1>
+		<h3 class="page-header">Venues</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/venues">Venues</a>
@@ -70,12 +70,12 @@
 							{{ Form::text('address_country', $venue->address_country,array('id'=>'address_country','class'=>'form-control')) }}
 						</div>
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 				<hr>
 				{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 					{{ Form::hidden('_method', 'DELETE') }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-danger btn-block">Delete</button>
 				{{ Form::close() }}
 			</div>  
 		</div>
@@ -93,7 +93,7 @@
 						{{ Form::label('images','Venue Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images[]','class'=>'form-control', 'multiple'=>'multiple')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Upload</button>
+					<button type="submit" class="btn btn-success btn-block">Upload</button>
 				{{ Form::close() }}
 			</div>
 		</div>

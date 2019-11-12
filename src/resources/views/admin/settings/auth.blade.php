@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Settings - Authentication</h1>
+		<h3 class="page-header">Authentication</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/settings">Settings</a>
@@ -17,6 +17,8 @@
 		</ol> 
 	</div>
 </div>
+
+@include ('layouts._partials._admin._settings.dashMini', ['active' => 'auth'])
 
 <div class="row">
 	<div class="col-xs-12">
@@ -53,7 +55,7 @@
 						{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('registration_terms_and_conditions', Settings::getRegistrationTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>

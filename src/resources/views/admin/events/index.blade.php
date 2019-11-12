@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Events</h1>
+		<h3 class="page-header">Events</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Events
@@ -128,7 +128,7 @@
 								{{ Form::checkbox('allow_spec','Y',true) }} Allow Spectators
 							</label>
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				</div>
 			</div>

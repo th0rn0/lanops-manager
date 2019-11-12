@@ -5,7 +5,7 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Polls</h1>
+		<h3 class="page-header">Polls</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Polls
@@ -113,7 +113,7 @@
 							</div>
 						</div> 
 					</div>
-					<button type="submit" class="btn btn-default btn-block">Submit</button> 
+					<button type="submit" class="btn btn-success btn-block">Submit</button> 
 				{{ Form::close() }}
 			</div>
 		</div>

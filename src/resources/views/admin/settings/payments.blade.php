@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Settings - Payments</h1>
+		<h3 class="page-header">Payments</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/settings">Settings</a>
@@ -17,6 +17,8 @@
 		</ol> 
 	</div>
 </div>
+
+@include ('layouts._partials._admin._settings.dashMini', ['active' => 'payments'])
 
 <div class="row">
 	<div class="col-lg-6 col-xs-12">
@@ -73,7 +75,7 @@
 						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>

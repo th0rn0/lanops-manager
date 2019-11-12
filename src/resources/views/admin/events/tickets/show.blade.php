@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tickets - {{ $ticket->name }}</h1>
+		<h3 class="page-header">Tickets - {{ $ticket->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>

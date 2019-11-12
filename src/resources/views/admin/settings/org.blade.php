@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Settings - Organization</h1>
+		<h3 class="page-header">Organization</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/settings">Settings</a>
@@ -17,6 +17,8 @@
 		</ol> 
 	</div>
 </div>
+
+@include ('layouts._partials._admin._settings.dashMini', ['active' => 'org'])
 
 <div class="row">
 	<div class="col-xs-12">
@@ -46,6 +48,7 @@
 								{{ Form::label('org_favicon','Favicon',array('id'=>'','class'=>'')) }}
 								{{ Form::file('org_favicon',array('id'=>'','class'=>'form-control')) }}
 							</div>
+							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
 						<div class="col-xs-12 col-md-6">
 							<div class="form-group">
@@ -60,9 +63,6 @@
 									No Logo uploaded
 								@endif
 							</div>
-						</div>
-						<div class="col-xs-12">
-							<button type="submit" class="btn btn-default">Submit</button>
 						</div>
 					{{ Form::close() }}
 				</div>
@@ -93,7 +93,7 @@
 						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>

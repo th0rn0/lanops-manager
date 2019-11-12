@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Timetables - {{ $timetable->name }}</h1>
+		<h3 class="page-header">Timetables - {{ $timetable->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -97,7 +97,7 @@
 							{{ Form::text('desc', NULL ,array('id'=>'desc','class'=>'form-control')) }}
 						</div> 
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -150,12 +150,12 @@
 							</label>
 						</div>
 					</div>  
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 				<hr>
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 					{{ Form::hidden('_method', 'DELETE') }}
-					<button type="submit" class="btn btn-danger">Delete</button>
+					<button type="submit" class="btn btn-danger btn-block">Delete</button>
 				{{ Form::close() }}
 			</div>
 		</div>
