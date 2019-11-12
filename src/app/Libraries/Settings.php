@@ -239,21 +239,39 @@ class Settings
     }
 
     /**
-     * Get Lan Count Offset
+     * Get Event Count Offset
      * @return String
      */
-    public static function getLanCountOffset()
+    public static function getEventCountOffset()
     {
-        return \App\Setting::getLanCountOffset();
+        return \App\Setting::getEventCountOffset();
     }
 
     /**
-     * Set Lan Count Offset
+     * Set Event Count Offset
      * @param Integer $number
      */
-    public static function setLanCountOffset($number)
+    public static function setEventCountOffset($number)
     {
-        return \App\Setting::setLanCountOffset($number);
+        return \App\Setting::setEventCountOffset($number);
+    }
+
+    /**
+     * Get Frontpage Alot Tagline
+     * @return String
+     */
+    public static function getFrontpageAlotTagline()
+    {
+        return \App\Setting::getFrontpageAlotTagline();
+    }
+
+    /**
+     * Set Frontpage Alot Tagline
+     * @param String $text
+     */
+    public static function setFrontpageAlotTagline($text)
+    {
+        return \App\Setting::setFrontpageAlotTagline($text);
     }
 
     /**

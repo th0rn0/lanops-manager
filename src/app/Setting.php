@@ -360,19 +360,43 @@ class Setting extends Model
      * Get Lan Count Offset
      * @return Integer
      */
-    public static function getLanCountOffset()
+    public static function getEventCountOffset()
     {
-        return self::where('setting', 'lan_count_offset')->first()->value;
+        return self::where('setting', 'event_count_offset')->first()->value;
     }
 
     /**
      * Set Lan Count Offset
      * @param Integer $number
      */
-    public static function setLanCountOffset($number)
+    public static function setEventCountOffset($number)
     {
-        $setting = self::where('setting', 'lan_count_offset')->first();
+        $setting = self::where('setting', 'event_count_offset')->first();
         $setting->value = $number;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Get Frontpage Alot Tagline
+     * @return Integer
+     */
+    public static function getFrontpageAlotTagline()
+    {
+        return self::where('setting', 'frontpage_alot_tagline')->first()->value;
+    }
+
+    /**
+     * Set Frontpage Alot Tagline
+     * @param string $text
+     */
+    public static function setFrontpageAlotTagline($text)
+    {
+        $setting = self::where('setting', 'frontpage_alot_tagline')->first();
+        $setting->value = $text;
         if (!$setting->save()) {
             return false;
         }

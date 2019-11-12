@@ -78,7 +78,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							PIZZAs we've ordered
+							{{ Settings::getFrontpageAlotTagline() }}
 						</div>
 					</div>
 				</div>

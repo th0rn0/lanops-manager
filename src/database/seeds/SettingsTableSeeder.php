@@ -119,6 +119,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'frontpage_alot_tagline'],
+            [
+                'value'         => "People we've fragged",
+                'default'       => true,
+                'description'   => "Appears on the frontpage on the banner above the footer"
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'participant_count_offset'],
             [
                 'value'         => 0,
@@ -127,11 +135,11 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
-            ['setting'          => 'lan_count_offset'],
+            ['setting'          => 'event_count_offset'],
             [
                 'value'         => 0,
                 'default'       => true,
-                'description'   => 'Increment the Total Lan Count on the Home page'
+                'description'   => 'Increment the Total Event Count on the Home page'
             ]
         );
         App\Setting::firstOrCreate(

@@ -97,7 +97,7 @@ class Helpers
     public static function getEventTotal()
     {
         $events = \App\Event::count();
-        return Settings::getLanCountOffset() + $events;
+        return Settings::getEventCountOffset() + $events;
     }
 
     // TODO - move to model

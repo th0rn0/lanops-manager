@@ -102,7 +102,7 @@ class SettingsController extends Controller
             'about_who'                 => 'filled',
             'currency'                  => 'in:GBP,USD,EUR',
             'participant_count_offset'  => 'numeric',
-            'lan_count_offset'          => 'numeric',
+            'event_count_offset'          => 'numeric',
             'org_logo'                  => 'image',
             'org_favicon'               => 'image',
         ];
@@ -116,7 +116,7 @@ class SettingsController extends Controller
             'about_who.filled'                  => 'About Whos who cannot be empty',
             'currency.in'                       => 'Currency must be GBP, USD or EUR',
             'participant_count_offset.numeric'  => 'Participant Count Offset must be a number',
-            'lan_count_offset.numeric'          => 'Lan Count Offset must be a number',
+            'event_count_offset.numeric'          => 'Lan Count Offset must be a number',
             'org_logo.image'                    => 'Org Logo must be a Image',
             'org_favicon'                       => 'Org Favicon must be a Image'
         ];
@@ -159,12 +159,17 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->lan_count_offset) && !Settings::setLanCountOffset($request->lan_count_offset)) {
+        if (isset($request->event_count_offset) && !Settings::setEventCountOffset($request->event_count_offset)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
         if (isset($request->about_main) && !Settings::setAboutMain($request->about_main)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->frontpage_alot_tagline) && !Settings::setFrontpageAlotTagline($request->frontpage_alot_tagline)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
