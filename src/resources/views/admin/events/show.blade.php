@@ -97,16 +97,6 @@
 					</div>
 					<div class="row">
 						<div class="col-md-8 col-sm-12">
-							<div class="form-group">
-								{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
-								{{ Form::text('desc_short', $event->desc_short,array('id'=>'desc_short','class'=>'form-control')) }}
-							</div>
-							<div class="form-group">
-								{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
-								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control', 'rows' => '4')) }}
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-12">
 							<strong>Venue</strong>
 							<address>
 								@if ($event->venue->display_name) {{ $event->venue->display_name }}<br> @endif
@@ -118,13 +108,23 @@
 								@if ($event->venue->address_country) {{ $event->venue->address_country }}<br> @endif
 							</address>
 						</div>
+						<div class="col-md-4 col-sm-12">
+							
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-								{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
+								{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
+								{{ Form::textarea('desc_short', $event->desc_short,array('id'=>'desc_short','class'=>'form-control wysiwyg-editor')) }}
+							</div>
+							<div class="form-group">
+								{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
+								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
+							</div>
+							<div class="form-group">
+								<label>Essential Info <span class="text-muted"><small>This will show on the event home page</small></span></label>
 								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
-								<small>This will show on the event home page</small>
 							</div>
 						</div>
 					</div>

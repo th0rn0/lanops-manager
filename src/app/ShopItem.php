@@ -194,4 +194,12 @@ class ShopItem extends Model
         return true;
     }
 
+    public function getPriceAttribute($value) {
+        return number_format($value, 2);
+    }
+
+    public function getPriceCreditAttribute($value) {
+        return number_format($value, 2);
+    }
+
 }

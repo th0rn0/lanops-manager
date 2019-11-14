@@ -25,9 +25,14 @@ class ShopController extends Controller
      */
     public function index()
     {
+        $featuredItems = ShopItem::where('featured', true)->get();
+        if ($featuredItems->count() < 16) {
+            $count = 16 - $featuredItems->count();
+            $featuredItems = $featuredItems->merge(ShopItem::inRandomOrder()->where('featured', false)->paginate($count));
+        }
         return view('shop.index')
             ->withAllCategories(ShopItemCategory::all()->sortBy('order'))
-            ->withFeaturedItems(ShopItem::where('featured', true)->get());
+            ->withFeaturedItems($featuredItems);
     }
 
     /**

@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use App\User;
 use App\Event;
+use App\ShopOrder;
 use App\EventParticipant;
 use App\EventTicket;
 
@@ -24,6 +25,8 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $events = Event::all();
+        $orders = ShopOrder::getNewOrders('login');
+        dd($orders);
         return view('admin.index')
             ->withUser($user)
             ->withEvents($events);

@@ -29,7 +29,7 @@
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="/admin/news">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -48,11 +48,11 @@
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge">12</div>
-							<div>New Tasks!</div>
+							<div>New Votes!</div>
 						</div>
 					</div>
 			</div>
-			<a href="#">
+			<a href="/admin/polls">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -75,7 +75,7 @@
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="/admin/purchases">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -94,11 +94,11 @@
 					</div>
 					<div class="col-xs-9 text-right">
 						<div class="huge">13</div>
-						<div>Support Tickets!</div>
+						<div>New Attendees!</div>
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="/admin/events">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

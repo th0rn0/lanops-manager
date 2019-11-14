@@ -64,4 +64,17 @@ class ShopOrder extends Model
         }
         return true;
     }
+
+    public static function getNewOrders($type = 'all')
+    {
+        switch ($type) {
+            case 'login':
+                $orders = self::where('updated_at', '>=', date('now - 1 day'))->get();
+                break;
+            default:
+                $orders = self::where('updated_at', '>=', date('now - 1 day'))->get();
+                break;
+        }
+        return $orders;
+    }
 }
