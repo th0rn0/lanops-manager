@@ -84,7 +84,7 @@
 			<p>{{$event->desc_long}}</p>
 			<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
 			<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
-			<p class="bg-info  padding">Seating Capacity: {{ $event->getSeatingCapacity() }}</p>
+			<p class="bg-info  padding">@if ($event->getSeatingCapacity() == 0) Capacity: {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) Seating Capacity: {{ $event->getSeatingCapacity() }} @endif</p>
 		</div>
 
 		<!-- TICKETS -->

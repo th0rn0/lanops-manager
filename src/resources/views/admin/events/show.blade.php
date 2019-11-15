@@ -169,22 +169,25 @@
 													{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 												</div>
 											</div>
+											<div class="form-group col-lg-6 col-sm-12">
+												{{ Form::label('order','Order',array('id'=>'')) }}
+												{{ Form::number('order', $section->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
+											</div>
 										</div>
 										<div class="form-group">
 											{{ Form::label('text','Text',array('id'=>'','class'=>'')) }}
-											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control', 'rows' => '4')) }}
+											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 										</div>
-										<div class="row">
-											<div class="form-group col-lg-6">
-												{{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
-												@if(isset($section->image_path))
+										@if(isset($section->image_path))
+											<div class="row">
+												<div class="form-group col-lg-6">
+													{{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
 													<center>
 														<img class="img-responsive img-thumbnail" src="{{ $section->image_path }}" />
 													</center>
-												@endif
-											</div>  
-										</div>
-										SECTION LISTING PRIORITY HERE<br>
+												</div>  
+											</div>
+										@endif
 										<button type="submit" class="btn btn-success btn-block">Update</button>
 									{{ Form::close() }}
 								</div>

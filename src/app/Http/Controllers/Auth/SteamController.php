@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Redirect;
 
 use Invisnik\LaravelSteamAuth\SteamAuth;
 
+use Carbon\Carbon;
+
 class SteamController extends Controller
 {
     private $steam;
@@ -59,15 +61,14 @@ class SteamController extends Controller
                         $user->avatar = $info->avatarfull;
                         $steam_changes = true;
                     }
-                    if ($steam_changes) {
-                        $user->save();
-                    }
+                    $user->last_login = Carbon::now()->toDateTimeString();
+                    $user->save();
                     return redirect('/'); // redirect to site
                 } else {
                     $user = [
-                            'steamname' => $info->personaname,
-                            'avatar'    => $info->avatarfull,
-                            'steamid'   => $info->steamID64,
+                            'steamname'     => $info->personaname,
+                            'avatar'        => $info->avatarfull,
+                            'steamid'       => $info->steamID64,
                     ];
                     Session::put('user', $user);
                     Session::save();

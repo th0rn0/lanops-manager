@@ -3,6 +3,7 @@
 namespace App;
 
 use DB;
+use Auth;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,5 +39,26 @@ class PollOptionVote extends Model
     public function pollOption()
     {
         return $this->belongsTo('App\PollOption', 'poll_option_id');
+    }
+
+    /**
+     * Get New Votes
+     * @param $type
+     * @return PollOptionVote
+     */
+    public static function getNewVotes($type = 'all')
+    {
+        if (!$user = Auth::user()) {
+            $type = 'all';
+        }
+        switch ($type) {
+            case 'login':
+                $votes = self::where('created_at', '>=', $user->last_login)->get();
+                break;
+            default:
+                $votes = self::where('created_at', '>=', date('now - 1 day'))->get();
+                break;
+        }
+        return $votes;
     }
 }

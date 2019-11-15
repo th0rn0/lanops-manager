@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+
 use App\ShopOrderItem;
 
 use Illuminate\Database\Eloquent\Model;
@@ -65,14 +67,22 @@ class ShopOrder extends Model
         return true;
     }
 
+    /**
+     * Get New Orders
+     * @param $type
+     * @return Orders
+     */
     public static function getNewOrders($type = 'all')
     {
+        if (!$user = Auth::user()) {
+            $type = 'all';
+        }
         switch ($type) {
             case 'login':
-                $orders = self::where('updated_at', '>=', date('now - 1 day'))->get();
+                $orders = self::where('created_at', '>=', $user->last_login)->get();
                 break;
             default:
-                $orders = self::where('updated_at', '>=', date('now - 1 day'))->get();
+                $orders = self::where('created_at', '>=', date('now - 1 day'))->get();
                 break;
         }
         return $orders;

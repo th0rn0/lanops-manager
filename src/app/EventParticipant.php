@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use QrCode;
 use Settings;
 
@@ -145,6 +146,11 @@ class EventParticipant extends Model
         return true;
     }
 
+    /**
+     * Transfer Participant to another Event
+     * @param $type
+     * @return Orders
+     */
     public function transfer($eventId)
     {
         $this->transferred = true;
@@ -154,5 +160,26 @@ class EventParticipant extends Model
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get New Participants
+     * @param $type
+     * @return EventParticipant
+     */
+    public static function getNewParticipants($type = 'all')
+    {
+        if (!$user = Auth::user()) {
+            $type = 'all';
+        }
+        switch ($type) {
+            case 'login':
+                $particpants = self::where('created_at', '>=', $user->last_login)->get();
+                break;
+            default:
+                $particpants = self::where('created_at', '>=', date('now - 1 day'))->get();
+                break;
+        }
+        return $particpants;
     }
 }

@@ -28,7 +28,8 @@ class User extends Authenticatable
         'steamname',
         'username',
         'avatar',
-        'steamid'
+        'steamid',
+        'last_login'
     ];
 
     /**
