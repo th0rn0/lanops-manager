@@ -85,13 +85,27 @@
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-12">
-							<div class="form-group">
-								{{ Form::label('start','Start Date',array('id'=>'','class'=>'')) }}
-								{{ Form::text('start',$event->start,array('id'=>'start','class'=>'form-control', 'disabled' => 'true')) }}
-							</div>
-							<div class="form-group">
-								{{ Form::label('end','End Date',array('id'=>'','class'=>'')) }}
-								{{ Form::text('end',$event->end,array('id'=>'end','class'=>'form-control', 'disabled' => 'true')) }}
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										{{ Form::label('start_date','Start Date',array('id'=>'','class'=>'')) }}
+										{{ Form::text('start_date', date('m/d/Y', strtotime($event->start)),array('id'=>'start_date','class'=>'form-control')) }}
+									</div>
+									<div class="form-group">
+										{{ Form::label('end_date','End Date',array('id'=>'','class'=>'')) }}
+										{{ Form::text('end_date', date('m/d/Y', strtotime($event->end)),array('id'=>'end_date','class'=>'form-control')) }}
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										{{ Form::label('start_time','Start Time',array('id'=>'','class'=>'')) }}
+										{{ Form::text('start_time', date('H:i', strtotime($event->start)),array('id'=>'start_time','class'=>'form-control')) }}
+									</div>
+									<div class="form-group">
+										{{ Form::label('end_time','End Time',array('id'=>'','class'=>'')) }}
+										{{ Form::text('end_time', date('H:i', strtotime($event->end)),array('id'=>'end_time','class'=>'form-control')) }}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -500,5 +514,13 @@
 		</div>
 	</div>
 </div>
+
+<!-- JavaScript-->
+<script type="text/javascript">
+	$( function() {
+		$( "#start_date" ).datepicker();
+		$( "#end_date" ).datepicker();
+	});
+</script>
 
 @endsection

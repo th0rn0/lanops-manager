@@ -161,7 +161,7 @@ class AuthController extends Controller
                 ];
                 $this->validate($request, $rules, $messages);
                 $user->email          = $request->email;
-                $user->password       = Hash::make($request->password);
+                $user->password       = Hash::make($request->password1);
                 break;
         }
        
