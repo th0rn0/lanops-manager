@@ -85,28 +85,32 @@
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-12">
-							<div class="form-group">
-								{{ Form::label('start','Start Date',array('id'=>'','class'=>'')) }}
-								{{ Form::text('start',$event->start,array('id'=>'start','class'=>'form-control', 'disabled' => 'true')) }}
-							</div>
-							<div class="form-group">
-								{{ Form::label('end','End Date',array('id'=>'','class'=>'')) }}
-								{{ Form::text('end',$event->end,array('id'=>'end','class'=>'form-control', 'disabled' => 'true')) }}
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										{{ Form::label('start_date','Start Date',array('id'=>'','class'=>'')) }}
+										{{ Form::text('start_date', date('m/d/Y', strtotime($event->start)),array('id'=>'start_date','class'=>'form-control')) }}
+									</div>
+									<div class="form-group">
+										{{ Form::label('end_date','End Date',array('id'=>'','class'=>'')) }}
+										{{ Form::text('end_date', date('m/d/Y', strtotime($event->end)),array('id'=>'end_date','class'=>'form-control')) }}
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-12">
+									<div class="form-group">
+										{{ Form::label('start_time','Start Time',array('id'=>'','class'=>'')) }}
+										{{ Form::text('start_time', date('H:i', strtotime($event->start)),array('id'=>'start_time','class'=>'form-control')) }}
+									</div>
+									<div class="form-group">
+										{{ Form::label('end_time','End Time',array('id'=>'','class'=>'')) }}
+										{{ Form::text('end_time', date('H:i', strtotime($event->end)),array('id'=>'end_time','class'=>'form-control')) }}
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-8 col-sm-12">
-							<div class="form-group">
-								{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
-								{{ Form::text('desc_short', $event->desc_short,array('id'=>'desc_short','class'=>'form-control')) }}
-							</div>
-							<div class="form-group">
-								{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
-								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control', 'rows' => '4')) }}
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-12">
 							<strong>Venue</strong>
 							<address>
 								@if ($event->venue->display_name) {{ $event->venue->display_name }}<br> @endif
@@ -118,13 +122,23 @@
 								@if ($event->venue->address_country) {{ $event->venue->address_country }}<br> @endif
 							</address>
 						</div>
+						<div class="col-md-4 col-sm-12">
+							
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group">
-								{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
+								{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
+								{{ Form::textarea('desc_short', $event->desc_short,array('id'=>'desc_short','class'=>'form-control wysiwyg-editor')) }}
+							</div>
+							<div class="form-group">
+								{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
+								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
+							</div>
+							<div class="form-group">
+								<label>Essential Info <span class="text-muted"><small>This will show on the event home page</small></span></label>
 								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
-								<small>This will show on the event home page</small>
 							</div>
 						</div>
 					</div>
@@ -169,22 +183,25 @@
 													{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 												</div>
 											</div>
+											<div class="form-group col-lg-6 col-sm-12">
+												{{ Form::label('order','Order',array('id'=>'')) }}
+												{{ Form::number('order', $section->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
+											</div>
 										</div>
 										<div class="form-group">
 											{{ Form::label('text','Text',array('id'=>'','class'=>'')) }}
-											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control', 'rows' => '4')) }}
+											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 										</div>
-										<div class="row">
-											<div class="form-group col-lg-6">
-												{{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
-												@if(isset($section->image_path))
+										@if(isset($section->image_path))
+											<div class="row">
+												<div class="form-group col-lg-6">
+													{{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
 													<center>
 														<img class="img-responsive img-thumbnail" src="{{ $section->image_path }}" />
 													</center>
-												@endif
-											</div>  
-										</div>
-										SECTION LISTING PRIORITY HERE<br>
+												</div>  
+											</div>
+										@endif
 										<button type="submit" class="btn btn-success btn-block">Update</button>
 									{{ Form::close() }}
 								</div>
@@ -497,5 +514,13 @@
 		</div>
 	</div>
 </div>
+
+<!-- JavaScript-->
+<script type="text/javascript">
+	$( function() {
+		$( "#start_date" ).datepicker();
+		$( "#end_date" ).datepicker();
+	});
+</script>
 
 @endsection

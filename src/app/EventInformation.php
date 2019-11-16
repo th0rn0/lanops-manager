@@ -5,6 +5,7 @@ namespace App;
 use DB;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class EventInformation extends Model
 {
@@ -25,6 +26,13 @@ class EventInformation extends Model
         'updated_at'
     );
 
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('order', 'asc');
+        });
+    }
+    
     /*
      * Relationships
      */

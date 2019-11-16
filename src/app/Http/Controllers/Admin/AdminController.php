@@ -6,7 +6,10 @@ use DB;
 use Auth;
 use App\User;
 use App\Event;
+use App\ShopOrder;
+use App\PollOptionVote;
 use App\EventParticipant;
+use App\NewsComment;
 use App\EventTicket;
 
 use App\Http\Requests;
@@ -24,8 +27,16 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $events = Event::all();
+        $orders = ShopOrder::getNewOrders('login');
+        $participants = EventParticipant::getNewParticipants('login');
+        $votes = PollOptionVote::getNewVotes('login');
+        $comments = NewsComment::getNewComments('login');
         return view('admin.index')
             ->withUser($user)
-            ->withEvents($events);
+            ->withEvents($events)
+            ->withOrders($orders)
+            ->withParticipants($participants)
+            ->withVotes($votes)
+            ->withComments($comments);
     }
 }

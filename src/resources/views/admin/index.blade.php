@@ -24,12 +24,12 @@
 						<i class="fa fa-comments fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">26</div>
+						<div class="huge">{{ $comments->count() }}</div>
 						<div>New Comments!</div>
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="/admin/news">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -47,12 +47,12 @@
 							<i class="fa fa-tasks fa-5x"></i>
 						</div>
 						<div class="col-xs-9 text-right">
-							<div class="huge">12</div>
-							<div>New Tasks!</div>
+							<div class="huge">{{ $votes->count() }}</div>
+							<div>New Votes!</div>
 						</div>
 					</div>
 			</div>
-			<a href="#">
+			<a href="/admin/polls">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -70,12 +70,12 @@
 						<i class="fa fa-shopping-cart fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">124</div>
+						<div class="huge">{{ $orders->count() }}</div>
 						<div>New Orders!</div>
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="/admin/purchases">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -93,12 +93,12 @@
 						<i class="fa fa-support fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">13</div>
-						<div>Support Tickets!</div>
+						<div class="huge">{{ $participants->count() }}</div>
+						<div>New Participants!</div>
 					</div>
 				</div>
 			</div>
-			<a href="#">
+			<a href="/admin/events">
 				<div class="panel-footer">
 					<span class="pull-left">View Details</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

@@ -139,4 +139,25 @@ class NewsComment extends Model
         }
         return true;
     }
+
+    /**
+     * Get New Comments
+     * @param $type
+     * @return NewsComment
+     */
+    public static function getNewComments($type = 'all')
+    {
+        if (!$user = Auth::user()) {
+            $type = 'all';
+        }
+        switch ($type) {
+            case 'login':
+                $comments = self::where('created_at', '>=', $user->last_login)->get();
+                break;
+            default:
+                $comments = self::where('created_at', '>=', date('now - 1 day'))->get();
+                break;
+        }
+        return $comments;
+    }
 }

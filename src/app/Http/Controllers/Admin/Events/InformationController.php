@@ -75,11 +75,13 @@ class InformationController extends Controller
             'image' => 'image',
             'title' => 'filled',
             'text'  => 'filled',
+            'order' => 'integer',
         ];
         $messages = [
             'image.image'   => 'The file must be a Image',
             'title.filled'  => 'Title cannot be blank',
             'text.filled'   => 'Text cannot be blank',
+            'order.integer' => 'Order must be a number',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -91,6 +93,10 @@ class InformationController extends Controller
             $information->text  = $request->text;
         }
 
+        if (isset($request->order)) {
+            $information->order = $request->order;
+        }
+        
         if ($request->file('image') !== null) {
             Storage::delete($information->image_path);
             $information->image_path    = str_replace(

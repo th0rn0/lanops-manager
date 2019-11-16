@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
+use Carbon\Carbon;
+
 class AuthController extends Controller
 {
     /*
@@ -38,6 +40,11 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+
+    public function authenticated(Request $request, $user) {
+        $user->last_login = Carbon::now()->toDateTimeString();
+        $user->save();
+    }
 
     /**
      * Create a new authentication controller instance.
@@ -154,7 +161,7 @@ class AuthController extends Controller
                 ];
                 $this->validate($request, $rules, $messages);
                 $user->email          = $request->email;
-                $user->password       = Hash::make($request->password);
+                $user->password       = Hash::make($request->password1);
                 break;
         }
        

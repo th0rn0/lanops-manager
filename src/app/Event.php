@@ -258,4 +258,5 @@ class Event extends Model
         // TODO - Finish
         return '30';
     }
+
 }

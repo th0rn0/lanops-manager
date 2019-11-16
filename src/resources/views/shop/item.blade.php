@@ -3,7 +3,11 @@
 @section ('page_title', Settings::getOrgName() . ' Shop | ' . $item->name)
 
 @section ('content')
-			
+		
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
+
 <div class="container">
 	<div class="page-header">
 		<h1>
@@ -13,11 +17,17 @@
 	@include ('layouts._partials._shop.navigation')
 	<div class="row">
 		<div class="col-xs-12 col-sm-4">
-			@if ($item->getDefaultImageUrl())
-				<img class="img img-thumbnail img-responsive" src="{{ $item->getDefaultImageUrl() }}">
-			@endif
+			<div class="fotorama" data-nav="thumbs" data-allowfullscreen="full">
+				@if ($item->getDefaultImageUrl())
+					<img src="{{ $item->getDefaultImageUrl() }}">
+				@endif
+				@foreach ($item->images as $image)
+					@if (!$image->default)
+						<img src="{{ $image->path }}">
+					@endif
+				@endforeach
+			</div>
 			<br><br>
-			
 		</div>
 		<div class="col-xs-12 col-sm-8">
 			<h4>
@@ -35,13 +45,6 @@
 					{{ $item->price_credit }} Credits
 				@endif
 			</h5>
-			<div class="row">
-				@foreach ($item->images as $image)
-					<div class="col-xs-12 col-md-3">
-						<img class="img img-responsive img-rounded" src="{{ $image->path }}">
-					</div>
-				@endforeach
-			</div>
 			@if ($item->hasStockByItemId($item->id))
 				{{ Form::open(array('url'=>'/shop/basket/')) }}
 					<div class="form-group">

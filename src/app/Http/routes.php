@@ -3,14 +3,16 @@
 /**
  * API
  */
-Route::get('/api/events/', 'Api\Events\EventsController@index');
-Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
-Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
-Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@index');
-Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
-Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
-Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
-Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
+Route::group(['middleware' => ['api']], function () {
+    Route::get('/api/events/', 'Api\Events\EventsController@index');
+    Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
+    Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
+    Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@index');
+    Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
+    Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
+    Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
+    Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
+});
 
 /**
  * Front End
@@ -34,11 +36,12 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@sendResetForm')->name('password.reset');
 
+
     Route::get('/login/steam', 'Auth\SteamController@login');
 
     Route::post('/login/standard', 'Auth\LoginController@login');
 
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'banned']], function () {
         Route::get('/account', 'AccountController@index');
         Route::post('/account', 'AccountController@update');
         Route::post('/account/delete', 'Auth\SteamController@destroy');
@@ -77,7 +80,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Tickets
      */
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'banned']], function () {
         Route::get('/tickets/retrieve/{participant}', 'Events\TicketsController@retrieve');
         Route::post('/tickets/purchase/{ticket}', 'Events\TicketsController@purchase');
     });
@@ -85,7 +88,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Gifts
      */
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'banned']], function () {
         Route::get('/gift/accept', 'Events\ParticipantsController@acceptGift');
         Route::post('/gift/{participant}', 'Events\ParticipantsController@gift');
         Route::post('/gift/{participant}/revoke', 'Events\ParticipantsController@revokeGift');
@@ -102,7 +105,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
     Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned']], function () {    
         Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
         Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
         Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
@@ -112,7 +115,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Payments
      */
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned']], function () {    
         Route::get('/payment/checkout', 'PaymentsController@checkout');
         Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
         Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
@@ -126,7 +129,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Seating
      */
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned']], function () {    
         Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
         Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
     });
@@ -136,7 +139,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/polls', 'PollsController@index');
     Route::get('/polls/{poll}', 'PollsController@show');
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned']], function () {    
         Route::post('/polls/{poll}/options', 'PollsController@storeOption');
         Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
         Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
@@ -145,7 +148,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Shop
      */
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned']], function () {    
         Route::get('/shop/orders', 'ShopController@showOrders');
     });
     Route::get('/shop', 'ShopController@index');
@@ -320,6 +323,12 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      */
     Route::get('/admin/users', 'Admin\UsersController@index');
     Route::get('/admin/users/{user}', 'Admin\UsersController@show');
+    Route::post('/admin/users/{user}/admin', 'Admin\UsersController@grantAdmin');
+    Route::delete('/admin/users/{user}/admin', 'Admin\UsersController@removeAdmin');
+    Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');
+    Route::post('/admin/users/{user}/unban', 'Admin\UsersController@unban');
+
+
 
     /**
      * Settings

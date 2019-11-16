@@ -24,6 +24,9 @@
 				<i class="fa fa-users fa-fw"></i> User
 			</div>
 			<div class="panel-body">
+				@if ($userShow->banned)
+					<div class="alert alert-danger">This User has been banned!</div>
+				@endif
 				<div class="media">
   					<div class="media-left">
 						<img class="media-object" src="{{ $userShow->avatar }}">
@@ -33,7 +36,12 @@
 							<li class="list-group-item">Username: {{ $userShow->username }}</li>
 							@if ($userShow->steamid) <li class="list-group-item">Steam: {{ $userShow->steamname }}</li> @endif
 							<li class="list-group-item">Name: {{ $userShow->firstname }} {{ $userShow->surname }}</li>
-							<li class="list-group-item">Admin: @if ($userShow->admin) Yes @else No @endif</li>
+							<li class="list-group-item">
+								Admin: @if ($userShow->admin) Yes @else No @endif
+							</li>
+							@if ($userShow->email != null)
+								<li class="list-group-item">Email: {{ $userShow->email }}</li>
+							@endif
 						</ul>
   					</div>
   				</div>
@@ -123,6 +131,60 @@
 		</div>
 	</div>
 	<div class="col-sm-12 col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-users fa-fw"></i> Options
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						@if ($userShow->admin)
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/admin')) }}
+								{{ Form::hidden('_method', 'DELETE') }}
+								<button type="submit" class="btn btn-block btn-info">Remove Admin</button>
+							{{ Form::close() }}
+						@else
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/admin')) }}
+								<button type="submit" class="btn btn-block btn-success">Make Admin</button>
+							{{ Form::close() }}
+						@endif
+						<small>This will add or remove access to this admin panel. This means they can access everything! BE CAREFUL!</small>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/reset')) }}
+							<button type="submit" class="btn btn-block btn-success">Reset Password</button>
+						{{ Form::close() }}
+						<small>This will reset the users password and sent a verification link to their email. If they are using a 3rd party Login this will do nothing.</small>
+					</div>
+				</div>
+				<br>
+				<h4>Danger Zone</h4>
+				<hr>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						@if (!$userShow->banned)
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/ban')) }}
+								<button type="submit" class="btn btn-block btn-danger">Ban</button>
+							{{ Form::close() }}
+						@else
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/unban')) }}
+								<button type="submit" class="btn btn-block btn-success">Un-Ban</button>
+							{{ Form::close() }}
+						@endif
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						@if ($userShow->banned)
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+								{{ Form::hidden('_method', 'DELETE') }}
+								<button type="submit" class="btn btn-block btn-danger">Delete</button>
+							{{ Form::close() }}
+						@else
+							<button type="submit" class="btn btn-block btn-danger" disabled="true">Delete</button>
+						@endif
+					</div>
+				</div>
+			</div>
+		</div>			
 		@if ($creditLogs)
 			<div class="panel panel-default">
 				<div class="panel-heading">
