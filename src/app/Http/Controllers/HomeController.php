@@ -51,7 +51,7 @@ class HomeController extends Controller
     {
         $topAttendees = array();
         foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
-            if ($attendee->event->end < \Carbon\Carbon::today()) {
+            if ($attendee->event && $attendee->event->status == 'PUBLISHED' && $attendee->event->end < \Carbon\Carbon::today()) {
                 $recent = false;
                 if (!$attendee->user->admin && array_key_exists($attendee->user->id, $topAttendees)) {
                     $topAttendees[$attendee->user->id]->event_count++;
