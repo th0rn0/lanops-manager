@@ -113,7 +113,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Ticket Sales
+				<i class="fa fa-ticket fa-fw"></i> Ticket Sales (TBC)
 			</div>
 			<div class="panel-body">
 				<div id="ticket-breakdown"></div>
@@ -124,7 +124,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Orders
+				<i class="fa fa-credit-card fa-fw"></i> Orders (TBC)
 			</div>
 			<div class="panel-body">
 				<div id="orders-breakdown"></div>
@@ -135,7 +135,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Users
+				<i class="fa fa-user fa-fw"></i> Users
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
@@ -153,7 +153,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Events
+				<i class="fa fa-book fa-fw"></i> Events
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
@@ -170,7 +170,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Active Polls
+				<i class="fa fa-list fa-fw"></i> Active Polls
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">

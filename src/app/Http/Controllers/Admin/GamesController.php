@@ -143,7 +143,6 @@ class GamesController extends Controller
 
         $destinationPath = '/storage/images/games/' . $game->slug . '/';
         
-        // TODO - refactor into model
         if ((Input::file('image_thumbnail') || Input::file('image_header')) &&
             !File::exists(public_path() . $destinationPath)
         ) {

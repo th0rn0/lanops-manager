@@ -17,7 +17,6 @@ use App\EventParticipant;
 use App\EventTournament;
 use App\NewsComment;
 use App\EventTicket;
-use App\Setting;
 use App\EventTournamentParticipant;
 
 use App\Http\Requests;
@@ -72,8 +71,8 @@ class AdminController extends Controller
             ->withComments($comments)
             ->withTickets($tickets)
             ->withActivePolls($activePolls)
-            ->withShopEnabled(Setting::isShopEnabled())
-            ->withCreditEnabled(Setting::isCreditEnabled())
+            ->withShopEnabled(Settings::isShopEnabled())
+            ->withCreditEnabled(Settings::isCreditEnabled())
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
             ->withSupportedPaymentGateways($loginSupportedGateways)
