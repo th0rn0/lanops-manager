@@ -13,7 +13,7 @@
 				<small> - {{ $event->status }}</small>
 			@endif
 		</h1> 
-		<h4>{{$event->desc_short}}</h4>
+		<h4>{!! $event->desc_short !!}</h4>
 	</div>
 	<div class="text-center">
 		<nav class="navbar navbar-default navbar-events" style="z-index: 1;">
@@ -81,7 +81,7 @@
 				<a name="event"></a>
 				<h3>Event Information</h3>
 			</div>
-			<p>{{$event->desc_long}}</p>
+			<p>{!! $event->desc_long !!}</p>
 			<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
 			<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
 			<p class="bg-info  padding">@if ($event->getSeatingCapacity() == 0) Capacity: {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) Seating Capacity: {{ $event->getSeatingCapacity() }} @endif</p>
@@ -352,7 +352,7 @@
 						</div>
 						<div class="col-sm-8">
 							<h3 class="hidden-xs"><small>{{$section->title}}</small></h3>
-							<p>{{$section->text}}</p>
+							<p>{!! $section->text !!}</p>
 						</div>
 						<div class="col-sm-4 hidden-xs">
 							@if (isset($section->image_path))
@@ -364,7 +364,7 @@
 					@else
 						<div class="col-sm-12">
 							<h3><small>{{$section->title}}</small></h3>
-							<p>{{$section->text}}</p>
+							<p>{!! $section->text !!}</p>
 						</div>
 					@endif
 				@else
@@ -377,12 +377,12 @@
 						</div>
 						<div class="col-sm-8">
 							<h3 class="hidden-xs"><small>{{$section->title}}</small></h3>
-							<p>{{$section->text}}</p>
+							<p>{!! $section->text !!}</p>
 						</div>
 					@else
 						<div class="col-sm-12">
 							<h3><small>{{$section->title}}</small></h3>
-							<p>{{$section->text}}</p>
+							<p>{!! $section->text !!}</p>
 						</div>
 					@endif
 				@endif
