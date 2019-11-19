@@ -203,4 +203,18 @@ class User extends Authenticatable
         return true;
     }
 
+     /**
+     * Get Orders for Current User
+     * @return ShopOrder
+     */
+    public function getOrders()
+    {
+        $return = collect();
+        foreach ($this->purchases as $purchase) {
+            if ($purchase->order) {
+                $return->prepend($purchase->order);
+            }
+        }
+        return $return;
+    }
 }

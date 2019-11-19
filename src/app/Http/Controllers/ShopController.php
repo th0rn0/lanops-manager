@@ -129,7 +129,8 @@ class ShopController extends Controller
     public function showOrders()
     {
         return view('shop.orders')
-            ->withAllCategories(ShopItemCategory::all()->sortBy('order'));
+            ->withAllCategories(ShopItemCategory::all()->sortBy('order'))
+            ->withOrders(Auth::user()->getOrders());
     }
 
     /**
