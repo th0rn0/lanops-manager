@@ -39,8 +39,9 @@ class PollsController extends Controller
      */
     public function show(Poll $poll)
     {
+        $poll->sortOptions();
         return view("polls.show")
-            ->withPoll($poll->sortOptions());
+            ->withPoll($poll);
     }
 
     /**
