@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'About Us - Lans in South Yorkshire')
+@section ('page_title', Settings::getOrgName() . ' - About Us')
 
 @section ('content')
 			

@@ -19,6 +19,11 @@
 					<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
 					<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
 				</div>
+			@else
+				<div>
+					<h3>Next Event</h3>
+					<h1>Coming soon</h1>
+				</div>
 			@endif
 		</div>
 	</div>
@@ -62,7 +67,7 @@
 					</tbody>
 				</table>
 			@else
-				<div><a href="#">No Future events</a></div>
+				<div>Coming soon...</div>
 			@endif
 		</div>
 		@if ($nextEvent)
@@ -88,10 +93,6 @@
 					<h5>Tickets Start From {{ Settings::getCurrencySymbol() }}{{ $nextEvent->getCheapestTicket() }}</h5>
 				@endif
 			</div>
-		@else
-			<div class="col-xs-12">
-				<h2>No New Events</h2>
-			</div>
 		@endif
 	</div>
 </div>
@@ -102,7 +103,7 @@
 				@if ($nextEvent)
 					<h3>Want to get in on the action <a href="/events/{{ $nextEvent->slug }}" class="text-info">Book Now</a></h3>
 				@else
-					<h3>No New Events</h3>
+					<h3>Events Coming soon!</h3>
 				@endif
 			</div>
 		</div>
