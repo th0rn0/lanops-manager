@@ -871,6 +871,80 @@ class Setting extends Model
     }
 
     /**
+     * Get Shop Status
+     * @return Boolean
+     */
+    public static function getShopStatus()
+    {
+        return self::where('setting', 'shop_status')->first()->value;
+    }
+
+    /**
+     * Set Shop Status
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopStatus($text)
+    {
+        if (!$shop = self::where('setting', 'shop_status')->first()) {
+            return false;
+        }
+        $shop->value = $text;
+        if (!$shop->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Shop Welcome Message
+     * @return String
+     */
+    public static function getShopWelcomeMessage()
+    {
+        return self::where('setting', 'shop_welcome_message')->first()->value;
+    }
+
+    /**
+     * Set Shop Welcome Message
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopWelcomeMessage($text)
+    {
+        $setting = self::where('setting', 'shop_welcome_message')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Shop Closed Message
+     * @return String
+     */
+    public static function getShopClosedMessage()
+    {
+        return self::where('setting', 'shop_closed_message')->first()->value;
+    }
+
+    /**
+     * Set Shop Closed Message
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopClosedMessage($text)
+    {
+        $setting = self::where('setting', 'shop_closed_message')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get Active Login Methods
      * @return Array
      */

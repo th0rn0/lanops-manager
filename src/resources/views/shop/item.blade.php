@@ -45,20 +45,26 @@
 					{{ $item->price_credit }} Credits
 				@endif
 			</h5>
-			@if ($item->hasStockByItemId($item->id))
-				{{ Form::open(array('url'=>'/shop/basket/')) }}
-					<div class="form-group">
-						{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-						{{ Form::number('quantity', 1, array('id'=>'quantity','class'=>'form-control')) }}
+			@if (Settings::getShopStatus() == 'OPEN')
+				@if ($item->hasStockByItemId($item->id))
+					{{ Form::open(array('url'=>'/shop/basket/')) }}
+						<div class="form-group">
+							{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+							{{ Form::number('quantity', 1, array('id'=>'quantity','class'=>'form-control')) }}
+						</div>
+						{{ Form::hidden('shop_item_id', $item->id) }}
+						<button type="submit" class="btn btn-success">Add to Cart</button>
+					{{ Form::close() }}
+				@else
+					<div class="alert alert-info">
+						Not in Stock
 					</div>
-					{{ Form::hidden('shop_item_id', $item->id) }}
-					<button type="submit" class="btn btn-success">Add to Cart</button>
-				{{ Form::close() }}
+				@endif
 			@else
 				<div class="alert alert-info">
-					Not in Stock
+					Shop is Closed
 				</div>
-			@endif	
+			@endif
 		</div>
 	</div>
 </div>

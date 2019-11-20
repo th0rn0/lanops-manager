@@ -615,6 +615,63 @@ class Settings
     }
 
     /**
+     * Get Shop Status
+     * @return Boolean
+     */
+    public static function getShopStatus()
+    {
+        return \App\Setting::getShopStatus();
+    }
+
+    /**
+     * Set Shop Status
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopStatus($text)
+    {
+        return \App\Setting::setShopStatus($text);
+    }
+
+    /**
+     * Get Shop Welcome Message
+     * @return String
+     */
+    public static function getShopWelcomeMessage()
+    {
+        return \App\Setting::getShopWelcomeMessage();
+    }
+
+    /**
+     * Set Shop Welcome Message
+     * @param String $text
+     * @return String
+     */
+    public static function setShopWelcomeMessage($text)
+    {
+        return \App\Setting::setShopWelcomeMessage($text);
+    }
+
+    /**
+     * Get Shop Closed Message
+     * @return Integer $amount
+     */
+    public static function getShopClosedMessage()
+    {
+        return \App\Setting::getShopClosedMessage();
+    }
+
+    /**
+     * Set Shop Closed Message
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopClosedMessage($text)
+    {
+        return \App\Setting::setShopClosedMessage($text);
+    }
+
+    /**
      * Get Active Login Methods
      * @return Array
      */
