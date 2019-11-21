@@ -9,6 +9,7 @@ use Settings;
 use App\CreditLog;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -29,7 +30,8 @@ class User extends Authenticatable
         'username',
         'avatar',
         'steamid',
-        'last_login'
+        'last_login',
+        'email_verified_at'
     ];
 
     /**
@@ -217,4 +219,16 @@ class User extends Authenticatable
         }
         return $return;
     }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\ResetPassword($token));
+    }
+
 }

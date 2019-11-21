@@ -34,8 +34,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 
-    Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@sendResetForm')->name('password.reset');
-
+    Route::post('/login/reset/password', 'Auth\ResetPasswordController@reset')->name('password.update');
+    Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
     Route::get('/login/steam', 'Auth\SteamController@login');
 
