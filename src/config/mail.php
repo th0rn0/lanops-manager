@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => "noreply@lanops.com", 'name' => null],
+    'from' => ['address' => env('APP_EMAIL'), 'name' => null],
 
     /*
     |--------------------------------------------------------------------------

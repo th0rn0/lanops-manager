@@ -23,6 +23,56 @@ file_env() {
 }
 
 # Check Variables Exist & Translate from file
+file_env 'APP_URL'
+if [ -z "$APP_URL" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because APP_URL is not specified '
+	echo >&2 'You need to specify APP_URL'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'APP_EMAIL'
+if [ -z "$APP_EMAIL" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because APP_EMAIL is not specified '
+	echo >&2 'You need to specify APP_EMAIL'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'MAIL_HOST'
+if [ -z "$MAIL_HOST" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because MAIL_HOST is not specified '
+	echo >&2 'You need to specify MAIL_HOST'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'MAIL_USERNAME'
+if [ -z "$MAIL_USERNAME" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because MAIL_USERNAME is not specified '
+	echo >&2 'You need to specify MAIL_USERNAME'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'MAIL_PASSWORD'
+if [ -z "$MAIL_PASSWORD" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because MAIL_PASSWORD is not specified '
+	echo >&2 'You need to specify MAIL_PASSWORD'
+	exit 1
+else
+	echo 'OK'
+fi
 file_env 'DB_PORT'
 if [ -z "$DB_PORT" ]; 
 then
