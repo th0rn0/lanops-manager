@@ -150,12 +150,16 @@
 						@endif
 						<small>This will add or remove access to this admin panel. This means they can access everything! BE CAREFUL!</small>
 					</div>
-					<div class="col-xs-12 col-sm-6">
-						{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/reset')) }}
-							<button type="submit" class="btn btn-block btn-success">Reset Password</button>
-						{{ Form::close() }}
-						<small>This will reset the users password and sent a verification link to their email. If they are using a 3rd party Login this will do nothing.</small>
-					</div>
+					@if ($userShow->email != null && $userShow->password != null)
+						<div class="col-xs-12 col-sm-6">
+							{{ Form::open(array('url'=>'/login/forgot')) }}
+	                            @csrf
+								<input type="hidden" name="email" value="{{ $userShow->email }}">
+								<button type="submit" class="btn btn-block btn-success">Reset Password</button>
+							{{ Form::close() }}
+							<small>This will reset the users password and sent a verification link to their email. If they are using a 3rd party Login this will do nothing.</small>
+						</div>
+					@endif
 				</div>
 				<br>
 				<h4>Danger Zone</h4>

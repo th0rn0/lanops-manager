@@ -9,9 +9,10 @@ use Settings;
 use App\CreditLog;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
 
     use Notifiable;
@@ -29,7 +30,8 @@ class User extends Authenticatable
         'username',
         'avatar',
         'steamid',
-        'last_login'
+        'last_login',
+        'email_verified_at'
     ];
 
     /**
@@ -201,6 +203,32 @@ class User extends Authenticatable
             return false;
         }
         return true;
+    }
+
+     /**
+     * Get Orders for Current User
+     * @return ShopOrder
+     */
+    public function getOrders()
+    {
+        $return = collect();
+        foreach ($this->purchases as $purchase) {
+            if ($purchase->order) {
+                $return->prepend($purchase->order);
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\ResetPassword($token));
     }
 
 }

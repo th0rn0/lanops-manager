@@ -4,13 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Auth;
+use Settings;
+use Helpers;
+use FacebookPageWrapper as Facebook;
+
 use App\User;
 use App\Event;
 use App\ShopOrder;
+use App\Poll;
 use App\PollOptionVote;
 use App\EventParticipant;
+use App\EventTournament;
 use App\NewsComment;
 use App\EventTicket;
+use App\EventTournamentParticipant;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -26,17 +33,57 @@ class AdminController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $users = User::all();
         $events = Event::all();
         $orders = ShopOrder::getNewOrders('login');
         $participants = EventParticipant::getNewParticipants('login');
+        $participantCount = EventParticipant::all()->count();
+        $tournamentCount = EventTournament::all()->count();
+        $tournamentParticipantCount = EventTournamentParticipant::all()->count();
         $votes = PollOptionVote::getNewVotes('login');
         $comments = NewsComment::getNewComments('login');
+        $tickets = EventTicket::all();
+        $activePolls = Poll::where('end', '==', null)->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")]);
+        $facebookCallback = null;
+        if (Facebook::isEnabled() && !Facebook::isLinked()) {
+            $facebookCallback = Facebook::getLoginUrl();
+        }
+        $userLastLoggedIn = User::where('id', '!=', Auth::id())->latest('last_login')->first();
+        $loginSupportedGateways = Settings::getSupportedLoginMethods();
+        foreach ($loginSupportedGateways as $gateway) {
+            $count = 0;
+            switch ($gateway) {
+                case 'steam':
+                    $count = $users->where('steamid', '!=', null)->count();
+                    break;
+                default:
+                    $count = $users->where('password', '!=', null)->count();
+                    break;
+            }
+            $userLoginMethodCount[$gateway] = $count;
+        }
         return view('admin.index')
             ->withUser($user)
             ->withEvents($events)
             ->withOrders($orders)
             ->withParticipants($participants)
             ->withVotes($votes)
-            ->withComments($comments);
+            ->withComments($comments)
+            ->withTickets($tickets)
+            ->withActivePolls($activePolls)
+            ->withShopEnabled(Settings::isShopEnabled())
+            ->withCreditEnabled(Settings::isCreditEnabled())
+            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
+            ->withActiveLoginMethods(Settings::getLoginMethods())
+            ->withSupportedPaymentGateways($loginSupportedGateways)
+            ->withActivePaymentGateways(Settings::getPaymentGateways())
+            ->withFacebookCallback($facebookCallback)
+            ->withUserLastLoggedIn($userLastLoggedIn)
+            ->withUserCount($users->count())
+            ->withUserLoginMethodCount($userLoginMethodCount)
+            ->withParticipantCount($participantCount)
+            ->withNextEvent(Helpers::getNextEventName())
+            ->withTournamentCount($tournamentCount)
+            ->withTournamentParticipantCount($tournamentParticipantCount);
     }
 }

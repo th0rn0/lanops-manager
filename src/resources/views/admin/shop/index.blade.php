@@ -37,6 +37,9 @@
 			</div>
 		</div>
 	@else
+		<div class="col-xs-12">
+			
+		</div>
 		<div class="col-xs-12 col-sm-10">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
@@ -133,6 +136,43 @@
 								</table>
 								{{ $categories->links() }}
 							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-wrench fa-fw"></i> Settings
+						</div>
+						<div class="panel-body">
+							{{ Form::open(array('url'=>'/admin/settings' )) }}
+									<div class="form-group">
+										{{ Form::label('shop_welcome_message','Welcome Message',array('id'=>'','class'=>'')) }}
+										{{ Form::text('shop_welcome_message', Settings::getShopWelcomeMessage(), array('id'=>'shop_welcome_message','class'=>'form-control')) }}
+										<small>Displayed at the top of the index page of the shop.</small>
+									</div> 
+									<div class="form-group">
+										{{ Form::label('shop_open','Shop Status',array('id'=>'','class'=>'')) }}
+										{{ 
+											Form::select(
+												'shop_status',
+												array(
+													'OPEN'=>'Open',
+													'CLOSED'=>'Closed'
+												),
+												Settings::getShopStatus(),
+												array(
+													'id'=>'shop_status',
+													'class'=>'form-control'
+												)
+											)
+										}}
+									</div>
+									<div class="form-group">
+										{{ Form::label('shop_closed_message','Closed Message',array('id'=>'','class'=>'')) }}
+										{{ Form::text('shop_closed_message', Settings::getShopClosedMessage(), array('id'=>'shop_closed_message','class'=>'form-control')) }}
+										<small>Displayed at the top of the index page when the shop is closed.</small>
+									</div> 
+									<button type="submit" class="btn btn-block btn-success">Submit</button>
+							{{ Form::close() }}
 						</div>
 					</div>
 				</div>

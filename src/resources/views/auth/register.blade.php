@@ -49,6 +49,8 @@
                         {{ Form::label('password2','Confirm Password',array('id'=>'','class'=>'')) }}
                         <input id="password2" type="password" class="form-control" name="password2" required autocomplete="new-password">
                     </div>
+                    <input id="url" type="hidden" class="form-control" name="url">
+
                 @endif
                 @if ($loginMethod == "steam")
                     <div class="form-group">

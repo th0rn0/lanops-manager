@@ -6,8 +6,10 @@ use DB;
 use Auth;
 use Storage;
 use Input;
+use Image;
 use Validator;
 use Session;
+use File;
 
 use App\User;
 use App\Event;
@@ -158,22 +160,25 @@ class GalleryController extends Controller
         $fileCount = count($files);
         //Counter for uploaded files
         $uploadcount = 0;
+        $destinationPath = '/storage/images/gallery/' . $album->name . '/';
+        if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
+            File::makeDirectory(public_path() . $destinationPath, 0777, true);
+        }
         foreach ($files as $file) {
             $imageName  = $file->getClientOriginalName();
-            $destinationPath = 'public/images/gallery/' . $album->name;
 
             $image                          = new GalleryAlbumImage();
             $image->display_name            = $imageName;
             $image->nice_name               = $image->url = strtolower(str_replace(' ', '-', $imageName));
             $image->gallery_album_id        = $album->id;
-            $image->path = str_replace(
-                'public/',
-                '/storage/',
-                Storage::put(
-                    $destinationPath,
-                    $file
-                )
-            );
+            Image::make($file)
+                ->resize(null, 1080, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->save(public_path() . $destinationPath . $imageName)
+            ;
+            $image->path = $destinationPath . $imageName;
             $image->save();
             
             $uploadcount++;

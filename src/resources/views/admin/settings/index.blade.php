@@ -45,8 +45,8 @@
 									strpos($setting->setting, 'payment') === false &&
 									strpos($setting->setting, 'credit') === false &&
 									strpos($setting->setting, 'login') === false &&
+									strpos($setting->setting, 'shop') === false &&
 									$setting->setting != 'currency' &&
-									$setting->setting != 'shop_enabled' &&
 									$setting->setting != 'social_facebook_page_access_token'
 								)
 									<tr>

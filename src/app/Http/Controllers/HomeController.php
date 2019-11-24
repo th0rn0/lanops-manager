@@ -118,6 +118,14 @@ class HomeController extends Controller
     }
     
     /**
+     * Show Terms and Conditions Page
+     * @return View
+     */
+    public function terms()
+    {
+        return view("terms");
+    }
+    /**
      * Show Contact Page
      * @return View
      */

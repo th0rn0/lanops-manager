@@ -249,13 +249,6 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
-            ['setting'          => 'shop_enabled'],
-            [
-                'value'         => true,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
             ['setting'          => 'login_standard'],
             [
                 'value'         => true,
@@ -266,6 +259,27 @@ class SettingsTableSeeder extends Seeder
             ['setting'          => 'login_steam'],
             [
                 'value'         => false,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_status'],
+            [
+                'value'         => 'OPEN',
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_welcome_message'],
+            [
+                'value'         => "Welcome to the Shop!",
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_closed_message'],
+            [
+                'value'         => "Shop is currently closed!",
                 'default'       => true,
             ]
         );

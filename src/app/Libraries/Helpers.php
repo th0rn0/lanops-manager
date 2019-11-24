@@ -118,7 +118,7 @@ class Helpers
             }
             return $event->display_name;
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -153,7 +153,7 @@ class Helpers
         ) {
             return $event->desc_long;
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -170,7 +170,7 @@ class Helpers
         ) {
             return date("d-m-Y H:i", strtotime($event->start));
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -187,7 +187,7 @@ class Helpers
         ) {
             return date("d-m-Y H:i", strtotime($event->end));
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
