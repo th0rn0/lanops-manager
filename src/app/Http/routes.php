@@ -22,13 +22,13 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Login & Register
      */
-    // Route::get('/login', 'Auth\SteamController@login');
-    // Route::get('/login/prompt', 'Auth\SteamController@prompt');
-    // Route::get('/steam/register', 'Auth\SteamController@register');
-    
+    Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+    Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
     Route::get('/register/{method}', 'Auth\AuthController@showRegister');
     Route::post('/register/{method}', 'Auth\AuthController@register');
-    
+
     Route::get('/login', 'Auth\AuthController@prompt');
 
     Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -41,13 +41,16 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::post('/login/standard', 'Auth\LoginController@login');
 
-    Route::group(['middleware' => ['auth', 'banned']], function () {
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/account', 'AccountController@index');
         Route::post('/account', 'AccountController@update');
         Route::post('/account/delete', 'Auth\SteamController@destroy');
-        Route::get('/logout', 'Auth\AuthController@logout');
     });
 
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/logout', 'Auth\AuthController@logout');
+    });
+    
     /**
      * Index Page
      */
@@ -82,7 +85,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Tickets
      */
-    Route::group(['middleware' => ['auth', 'banned']], function () {
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/tickets/retrieve/{participant}', 'Events\TicketsController@retrieve');
         Route::post('/tickets/purchase/{ticket}', 'Events\TicketsController@purchase');
     });
@@ -90,7 +93,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Gifts
      */
-    Route::group(['middleware' => ['auth', 'banned']], function () {
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/gift/accept', 'Events\ParticipantsController@acceptGift');
         Route::post('/gift/{participant}', 'Events\ParticipantsController@gift');
         Route::post('/gift/{participant}/revoke', 'Events\ParticipantsController@revokeGift');
@@ -107,7 +110,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
     Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-    Route::group(['middleware' => ['auth', 'banned']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
         Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
         Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
@@ -117,7 +120,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Payments
      */
-    Route::group(['middleware' => ['auth', 'banned']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::get('/payment/checkout', 'PaymentsController@checkout');
         Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
         Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
@@ -131,7 +134,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Seating
      */
-    Route::group(['middleware' => ['auth', 'banned']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
         Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
     });
@@ -141,7 +144,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/polls', 'PollsController@index');
     Route::get('/polls/{poll}', 'PollsController@show');
-    Route::group(['middleware' => ['auth', 'banned']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/polls/{poll}/options', 'PollsController@storeOption');
         Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
         Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
@@ -150,7 +153,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Shop
      */
-    Route::group(['middleware' => ['auth', 'banned']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::get('/shop/orders', 'ShopController@showOrders');
     });
     Route::get('/shop', 'ShopController@index');

@@ -125,6 +125,9 @@ class AuthController extends Controller
             Session::flash('alert-danger', 'Login Method is not supported.');
             return Redirect::back();
         }
+        if (isset($request->url) && $request->url != '') {
+            return Redirect::back();
+        }
         switch ($method) {
             case 'steam':
                 $this->validate($request, [
@@ -135,9 +138,11 @@ class AuthController extends Controller
                     'steamname' => 'required|string',
                     'username'  => 'required|unique:users,username',
                 ]);
-                $user->avatar           = $request->avatar;
-                $user->steamid          = $request->steamid;
-                $user->steamname        = $request->steamname;
+                $user->avatar               = $request->avatar;
+                $user->steamid              = $request->steamid;
+                $user->steamname            = $request->steamname;
+                // No email Verification needed - just add the email_verified_at
+                $user->email_verified_at    = new \DateTime('NOW');
                 break;
             
             default:

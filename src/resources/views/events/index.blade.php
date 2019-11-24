@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' Tournaments List')
+@section ('page_title', Settings::getOrgName() . ' - Events')
 
 @section ('content')
 			
