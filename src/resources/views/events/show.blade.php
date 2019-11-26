@@ -437,7 +437,7 @@
 	@endif
 
 	<!-- POLLS-->
-	@if (!empty($event->polls))
+	@if ($event->polls->count() > 0)
 		<div class="page-header">
 			<a name="polls"></a>
 			<h3>Have Your Say...</h3>

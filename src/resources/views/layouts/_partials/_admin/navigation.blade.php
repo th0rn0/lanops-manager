@@ -77,7 +77,12 @@
 			<li>
 				<a href="/admin/shop"><i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i> Shop (Beta)</a> 
 			</li>
-			</ul>
+			@if (Settings::isShopEnabled())
+				<li>
+					<a href="/admin/orders"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> Orders (Beta)</a> 
+				</li>
+			@endif
+		</ul>
 	</div>
 	<!-- /.navbar-collapse -->
 </nav>

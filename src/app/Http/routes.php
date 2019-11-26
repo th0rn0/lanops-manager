@@ -427,5 +427,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      * Orders
      */
     Route::get('/admin/orders', 'Admin\OrdersController@index');
+    Route::get('/admin/orders/{order}', 'Admin\OrdersController@show');
 
 });
