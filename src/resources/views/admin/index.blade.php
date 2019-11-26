@@ -139,11 +139,11 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
-					<li class="list-group-item list-group-item-info">Last Logged In: <span class="pull-right">{{ $userLastLoggedIn->username }} on {{ $userLastLoggedIn->last_login }}</span></li>
-					<li class="list-group-item list-group-item-info">No. of Users: <span class="pull-right">{{ $userCount }}</span></li>
-					<li class="list-group-item list-group-item-info">No. of Active Login Methods: <span class="pull-right">{{ count($activeLoginMethods) }}</span></li>
+					<li class="list-group-item list-group-item-info"><strong>Last Logged In: <span class="pull-right">{{ $userLastLoggedIn->username }} on {{ $userLastLoggedIn->last_login }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>No. of Users: <span class="pull-right">{{ $userCount }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>No. of Active Login Methods: <span class="pull-right">{{ count($activeLoginMethods) }}</span></strong></li>
 					@foreach ($supportedLoginMethods as $method)
-						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif">No. of {{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Accounts: <span class="pull-right">{{ $userLoginMethodCount[$method] }}</span></li>
+						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif"><strong>No. of {{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Accounts: <span class="pull-right">{{ $userLoginMethodCount[$method] }}</span></strong></li>
 					@endforeach
 				</ul>
 			</div>
@@ -157,11 +157,11 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
-					<li class="list-group-item list-group-item-info">Next Event: <span class="pull-right">{{ $nextEvent }}</span></li>
-					<li class="list-group-item list-group-item-info">No of Events: <span class="pull-right">{{ $events->count() }}</span></li>
-					<li class="list-group-item list-group-item-info">No of Attendees: <span class="pull-right">{{ $participantCount }}</span></li>
-					<li class="list-group-item list-group-item-info">No of Tournaments: <span class="pull-right">{{ $tournamentCount }}</span></li>
-					<li class="list-group-item list-group-item-info">No of Tournament Participants: <span class="pull-right">{{ $tournamentParticipantCount }}</span></li>
+					<li class="list-group-item list-group-item-info"><strong>Next Event: <span class="pull-right">{{ $nextEvent }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>No of Events: <span class="pull-right">{{ $events->count() }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>No of Attendees: <span class="pull-right">{{ $participantCount }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>No of Tournaments: <span class="pull-right">{{ $tournamentCount }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>No of Tournament Participants: <span class="pull-right">{{ $tournamentParticipantCount }}</span></strong></li>
 				</ul>
 			</div>
 		</div>	
@@ -176,10 +176,10 @@
 				<ul class="list-group">
 					@if ($activePolls->count() > 0)
 						@foreach ($activePolls as $poll)
-							<li class="list-group-item list-group-item-info">{{ $poll->name }}: <span class="pull-right">{{ $poll->getTotalVotes() }}</span></li>
+							<li class="list-group-item list-group-item-info"><strong>{{ $poll->name }}: <span class="pull-right">{{ $poll->getTotalVotes() }}</span></strong></li>
 						@endforeach
 					@else
-						<li class="list-group-item list-group-item-info">Nothing to see here...</li>
+						<li class="list-group-item list-group-item-info"><strong>Nothing to see here...</strong></li>
 					@endif
 				</ul>
 			</div>
@@ -193,14 +193,14 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
-					<li class="list-group-item @if($shopEnabled) list-group-item-success @else list-group-item-danger @endif">Shop: <span class="pull-right">@if($shopEnabled) Enabled @else Disabled @endif </span></li>
-					<li class="list-group-item @if($creditEnabled) list-group-item-success @else list-group-item-danger @endif">Credit: <span class="pull-right"> @if($creditEnabled) Enabled @else Disabled @endif </span></li>
+					<li class="list-group-item @if($shopEnabled) list-group-item-success @else list-group-item-danger @endif"><strong>Shop: <span class="pull-right">@if($shopEnabled) Enabled @else Disabled @endif </span></strong></li>
+					<li class="list-group-item @if($creditEnabled) list-group-item-success @else list-group-item-danger @endif"><strong>Credit: <span class="pull-right"> @if($creditEnabled) Enabled @else Disabled @endif </span></strong></li>
 					@foreach ($supportedLoginMethods as $method)
-						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif">{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Login: <span class="pull-right"> @if (in_array($method, $activeLoginMethods)) Enabled @else Disabled @endif </span></li>
+						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Login: <span class="pull-right"> @if (in_array($method, $activeLoginMethods)) Enabled @else Disabled @endif </span></strong></li>
 					@endforeach
-					<li class="list-group-item @if ($facebookCallback != null) list-group-item-success @else list-group-item-danger @endif">Facebook News Link: <span class="pull-right"> @if ($facebookCallback != null) Active @else Inactive @endif </span></li>
+					<li class="list-group-item @if ($facebookCallback != null) list-group-item-success @else list-group-item-danger @endif"><strong>Facebook News Link: <span class="pull-right"> @if ($facebookCallback != null) Active @else Inactive @endif </span></strong></li>
 					@foreach ($supportedPaymentGateways as $gateway)
-						<li class="list-group-item @if (in_array($gateway, $activePaymentGateways)) list-group-item-success @else list-group-item-danger @endif">{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }} Payment Gateway: <span class="pull-right"> @if (in_array($gateway, $activePaymentGateways)) Enabled @else Disabled @endif </span></li>
+						<li class="list-group-item @if (in_array($gateway, $activePaymentGateways)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }} Payment Gateway: <span class="pull-right"> @if (in_array($gateway, $activePaymentGateways)) Enabled @else Disabled @endif </span></strong></li>
 					@endforeach
 				</ul>
 			</div>
