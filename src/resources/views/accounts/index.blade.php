@@ -248,6 +248,11 @@
 						@else
 							You have no purchases
 						@endif
+						@if (Settings::isShopEnabled())
+							<a href="/shop/orders">
+								<button class="btn btn-success">View Shop Orders</button>
+							</a>
+						@endif
 					</div>
 				</div>
 			</div>

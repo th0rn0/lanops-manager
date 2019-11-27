@@ -11,44 +11,39 @@
 		</h1>
 	</div>
 	@include ('layouts._partials._shop.navigation')
-	@foreach ($orders as $order)
-		{{ $order }}
-	@endforeach
-	<table class="table table-striped">
+	<table width="100%" class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th>
-					Purchase ID
-				</th>
-				<th>
-					Status
-				</th>
-				<th>
-					Method
-				</th>
-				<th>
-					Time
-				</th>
-				<th>
-					Basket
-				</th>
+				<th>#</th>
+				<th>User</th>
+				<th>Name</th>
+				<th>Status</th>
+				<th>Payment Type</th>
+				<th>Ordered At</th>
+				<th>Basket</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class="table-row odd gradeX">
 			@foreach ($orders as $order)
-				<tr>
-					<td>
-						{{ $order->purchase->id }}
-					</td>
-					<td>
-						{{ $order->status }}
-					</td>
-					<td>
-						{{ $order->purchase->getPurchaseType() }}
-					</td>
-					<td>
-						{{  date('d-m-y H:i', strtotime($order->purchase->created_at)) }}
-					</td>
+				@php
+					$statusColor = '';
+					if ($order->status == 'CANCELLED') {
+						$statusColor = 'warning';
+					}elseif($order->status == 'EVENT') {
+						$statusColor = 'warning';
+					}elseif($order->status == 'ERROR') {
+						$statusColor = 'danger';
+					}elseif($order->status == 'COMPLETE') {
+						$statusColor = 'success';
+					}
+				@endphp
+				<tr class="{{ $statusColor }}">
+					<td>{{ $order->id }}</td>
+					<td>{{ $order->purchase->user->username }}</td>
+					<td>{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</td>
+					<td>{{ $order->status }}</td>
+					<td>{{ $order->purchase->type }}</td>
+					<td>{{ $order->created_at }}</td>
 					<td>
 						@if ($order->purchase->order != null)
 							@foreach ($order->purchase->order->items as $item)
