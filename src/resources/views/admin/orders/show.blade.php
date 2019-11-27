@@ -81,29 +81,39 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-xs-12 form-group">
-						{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/shipped')) }}
-							<button type="submit" class="btn btn-block btn-success">Mark as Shipped</button>
-						{{ Form::close() }}
-					</div>
-					<div class="col-xs-12 form-group">
-						{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/complete')) }}
-							<button type="submit" class="btn btn-block btn-success">Mark as Complete</button>
-						{{ Form::close() }}
-					</div>
-					<br><br>
+					@if (in_array($order->status, ['SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
+						<div class="col-xs-12 form-group">
+							<h4>Order is {{ $order->status }}</h4>
+						</div>
+					@endif
+					@if (!in_array($order->status, ['SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
+						<div class="col-xs-12 form-group">
+							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/shipped')) }}
+								<button type="submit" class="btn btn-block btn-success">Mark as Shipped</button>
+							{{ Form::close() }}
+						</div>
+					@endif
+					@if (!in_array($order->status, ['ERROR', 'CANCELLED', 'COMPLETE']))
+						<div class="col-xs-12 form-group">
+							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/complete')) }}
+								<button type="submit" class="btn btn-block btn-success">Mark as Complete</button>
+							{{ Form::close() }}
+						</div>
+					@endif
 				</div>
 				<div class="row">
 					<div class="col-sm-6 col-xs-12 form-group">
 						{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/refund')) }}
-							<button type="submit" class="btn btn-block btn-danger">Refund Order</button>
+							<button type="submit" class="btn btn-block btn-danger" disabled='true'>Refund Order</button>
 						{{ Form::close() }}
 					</div>
-					<div class="col-sm-6 col-xs-12 form-group">
-						{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/cancel')) }}
-							<button type="submit" class="btn btn-block btn-danger">Cancel Order</button>
-						{{ Form::close() }}
-					</div>
+					@if (!in_array($order->status, ['COMPLETE', 'CANCELLED']))
+						<div class="col-sm-6 col-xs-12 form-group">
+							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/cancel')) }}
+								<button type="submit" class="btn btn-block btn-danger">Cancel Order</button>
+							{{ Form::close() }}
+						</div>
+					@endif
 				</div>
 			</div>  
 		</div>

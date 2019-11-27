@@ -87,4 +87,46 @@ class ShopOrder extends Model
         }
         return $orders;
     }
+
+    /**
+     * Set Order as Shipped
+     * @param $params
+     * @return Orders
+     */
+    public function setAsShipped($params)
+    {
+        $this->status = 'SHIPPED';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Complete
+     * @param $params
+     * @return Orders
+     */
+    public function setAsComplete($params)
+    {
+        $this->status = 'COMPLETE';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Cancelled
+     * @param $params
+     * @return Orders
+     */
+    public function setAsCancelled($params)
+    {
+        $this->status = 'CANCELLED';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
 }
