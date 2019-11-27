@@ -35,7 +35,7 @@ class PaymentsController extends Controller
      * Checkout Page
      * @return View
      */
-    public function checkout()
+    public function showCheckout()
     {
         if (!Session::has(Settings::getOrgName() . '-basket')) {
             return Redirect::to('/');
@@ -50,7 +50,7 @@ class PaymentsController extends Controller
      * Review Terms and Conditions of Purchase Page
      * @return View
      */
-    public function review($paymentGateway)
+    public function showReview($paymentGateway)
     {
         if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             return Redirect::back();
@@ -84,12 +84,45 @@ class PaymentsController extends Controller
      * @param  $paymentGateway
      * @return View
      */
-    public function details($paymentGateway)
+    public function showDetails($paymentGateway)
     {
         if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             return Redirect::back();
         }
         return view('payments.details')
+            ->withPaymentGateway($paymentGateway)
+            ->withBasket(Helpers::formatBasket($basket, true))
+        ;
+    }
+
+    /**
+     * Delivery Details Page
+     * @param  $paymentGateway
+     * @return View
+     */
+    public function showDelivery($paymentGateway)
+    {
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+            return Redirect::back();
+        }
+        return view('payments.delivery')
+            ->withPaymentGateway($paymentGateway)
+            ->withBasket(Helpers::formatBasket($basket, true))
+        ;
+    }
+
+    /**
+     * Post Delivery Details
+     * @param  Request $request
+     * @return View
+     */
+    public function delivery(Request $request)
+    {
+        dd($request);
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+            return Redirect::back();
+        }
+        return view('payments.delivery')
             ->withPaymentGateway($paymentGateway)
             ->withBasket(Helpers::formatBasket($basket, true))
         ;
@@ -355,7 +388,7 @@ class PaymentsController extends Controller
      * @param  Purchase $purchase
      * @return View
      */
-    public function successful(Purchase $purchase)
+    public function showSuccessful(Purchase $purchase)
     {
         if (!Session::has('params')) {
             return Redirect::to('/');
@@ -380,7 +413,7 @@ class PaymentsController extends Controller
      * @param  Purchase $purchase
      * @return View
      */
-    public function failed()
+    public function showFailed()
     {
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
@@ -392,7 +425,7 @@ class PaymentsController extends Controller
      * @param  Purchase $purchase
      * @return View
      */
-    public function cancelled()
+    public function showCancelled()
     {
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');

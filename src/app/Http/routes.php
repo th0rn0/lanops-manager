@@ -121,14 +121,16 @@ Route::group(['middleware' => ['web']], function () {
      * Payments
      */
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
-        Route::get('/payment/checkout', 'PaymentsController@checkout');
-        Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
-        Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
+        Route::get('/payment/checkout', 'PaymentsController@showCheckout');
+        Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
+        Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
+        Route::post('/payment/delivery', 'PaymentsController@delivery');
+        Route::get('/payment/delivery/{paymentGateway}', 'PaymentsController@showDelivery');
         Route::get('/payment/callback', 'PaymentsController@process');
         Route::post('/payment/post', 'PaymentsController@post');
-        Route::get('/payment/failed', 'PaymentsController@failed');
-        Route::get('/payment/cancelled', 'PaymentsController@cancelled');
-        Route::get('/payment/successful/{purchase}', 'PaymentsController@successful');
+        Route::get('/payment/failed', 'PaymentsController@showFailed');
+        Route::get('/payment/cancelled', 'PaymentsController@showCancelled');
+        Route::get('/payment/successful/{purchase}', 'PaymentsController@showSuccessful');
     });
 
     /**
