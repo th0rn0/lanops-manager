@@ -111,22 +111,15 @@ class PaymentsController extends Controller
         ;
     }
 
-    /**
-     * Post Delivery Details
-     * @param  Request $request
-     * @return View
-     */
-    public function delivery(Request $request)
-    {
-        dd($request);
-        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
-            return Redirect::back();
-        }
-        return view('payments.delivery')
-            ->withPaymentGateway($paymentGateway)
-            ->withBasket(Helpers::formatBasket($basket, true))
-        ;
-    }
+    // /**
+    //  * Post Delivery Details
+    //  * @param  Request $request
+    //  * @return View
+    //  */
+    // public function delivery(Request $request)
+    // {
+    //     dd($request);
+    // }
     
     /**
      * Post Payment to Gateway
@@ -147,6 +140,7 @@ class PaymentsController extends Controller
                 }
             }
         }
+        $deliveryFlag = false;
         if (array_key_exists('shop', $basket)) {
             foreach ($basket['shop'] as $itemId => $quantity) {
                 if (!ShopItem::hasStockByItemId($itemId)) {
@@ -154,6 +148,45 @@ class PaymentsController extends Controller
                     Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
                     return Redirect::to('/payment/checkout');
                 }
+            }
+        }
+        // If Order accepts delivery and no delivery details have been submitted redirect to delivery page
+        if (array_key_exists('shop', $basket)) {
+            if (
+                !isset($request->shipping_first_name) &&
+                !isset($request->shipping_last_name) &&
+                !isset($request->shipping_address_1) &&
+                !isset($request->shipping_postcode) &&
+                !array_key_exists('delivery', $basket)
+            ) {
+                return Redirect::to('/payment/delivery/' . $paymentGateway);
+            }
+            if (!array_key_exists('delivery', $basket)) {
+                // Stripe Post Params
+                $rules = [
+                    'shipping_first_name'   => 'required',
+                    'shipping_last_name'    => 'required',
+                    'shipping_address_1' => 'required',
+                    'shipping_postcode'  => 'required',
+                ];
+                $messages = [
+                    'shipping_first_name.required'      => 'First Name is Required',
+                    'shipping_last_name.required'       => 'Last Name is Required',
+                    'shipping_address_1.required'    => 'Shipping Address Required',
+                    'shipping_postcode.required'     => 'Shipping Postcode Required',
+                ];
+                $this->validate($request, $rules, $messages);
+                $basket['delivery'] = [
+                    'shipping_first_name' => $request->shipping_first_name,
+                    'shipping_last_name' => $request->shipping_last_name,
+                    'shipping_address_1' => $request->shipping_address_1,
+                    'shipping_address_2' => @$request->shipping_address_2,
+                    'shipping_country' => @$request->shipping_country,
+                    'shipping_postcode' => $request->shipping_postcode,
+                    'shipping_state' => @$request->shipping_state,
+                ];
+                Session::put(Settings::getOrgName() . '-basket', $basket);
+                Session::save();
             }
         }
         // If Credit Redirect Straight to details page
@@ -503,6 +536,7 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
             return false;
         }
+
         return $paymentGateway;
     }
 }

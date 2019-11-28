@@ -12,7 +12,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
-			{{ Form::open(array('url'=>'/payment/delivery')) }}
+			{{ Form::open(array('url'=>'/payment/post')) }}
 				<div class="row">
 					<div class="form-group col-sm-6 col-xs-12">
 						{{ Form::label('shipping_first_name', 'First Name *', array('id'=>'','class'=>'')) }}
@@ -47,7 +47,7 @@
 				</div>
 				<p><small>* Required Fields</small></p>
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button class="btn btn-default">Proceed to next page</button>
+				<button class="btn btn-default">Continue</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">
