@@ -86,6 +86,13 @@
 							<h4>Order is {{ $order->status }}</h4>
 						</div>
 					@endif
+					@if (!in_array($order->status, ['PROCESSING', 'SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
+						<div class="col-xs-12 form-group">
+							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/processing')) }}
+								<button type="submit" class="btn btn-block btn-success">Mark as Processing</button>
+							{{ Form::close() }}
+						</div>
+					@endif
 					@if (!in_array($order->status, ['SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
 						<div class="col-xs-12 form-group">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/shipped')) }}
@@ -122,7 +129,35 @@
 				<i class="fa fa-credit-card fa-fw"></i> Details
 			</div>
 			<div class="panel-body">
+				@if ($order->hasShipping())
+					<h4>Shipping Details</h4>
+					<address>
+						<strong>{{ $order->shipping_first_name}} {{ $order->shipping_last_name }}</strong><br>
+						{{ $order->shipping_address_1 }}<br>
+						@if (trim($order->shipping_address_2) != '')
+							{{ $order->shipping_address_2 }}<br>
+						@endif
+						@if (trim($order->shipping_country) != '')
+							{{ $order->shipping_country }}<br>
+						@endif
+						@if (trim($order->shipping_state) != '')
+							{{ $order->shipping_state }}<br>
+						@endif
+						{{ $order->shipping_postcode }}
+					</address>
+				@endif
+				@if ($order->deliver_to_event && !in_array($order->status, ['ERROR', 'CANCELLED', 'COMPLETE']))
+					<h4>User has chosen Delivery At Event</h4>
+					<p>The next Event {{ $order->purchase->user->firstname }} is attending is...</p>
+					@if ($order->purchase->user->getNextEvent())
+						<p><a href="/admin/events/{{ $order->purchase->user->getNextEvent()->slug }}">{{ $order->purchase->user->getNextEvent()->display_name }}</a></p>
+					@else
+						<h5>No future event found</h5>
+					@endif
+					<hr>
+				@endif
 				<ul class="list-group">
+
 					@php
 						$statusColor = 'info';
 						if ($order->status == 'CANCELLED') {

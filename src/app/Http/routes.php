@@ -430,6 +430,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      */
     Route::get('/admin/orders', 'Admin\OrdersController@index');
     Route::get('/admin/orders/{order}', 'Admin\OrdersController@show');
+    Route::post('/admin/orders/{order}/processing', 'Admin\OrdersController@setAsProcessing');
     Route::post('/admin/orders/{order}/shipped', 'Admin\OrdersController@setAsShipped');
     Route::post('/admin/orders/{order}/complete', 'Admin\OrdersController@setAsComplete');
     Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');

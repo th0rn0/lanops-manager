@@ -89,9 +89,19 @@ class PaymentsController extends Controller
         if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             return Redirect::back();
         }
+        $delivery = false;
+        $deliveryDetails = false;
+        if (array_key_exists('shop', $basket)) {
+            $delivery = true;
+            if (array_key_exists('delivery', $basket)) {
+                $deliveryDetails = $basket['delivery'];
+            }
+        }
         return view('payments.details')
             ->withPaymentGateway($paymentGateway)
             ->withBasket(Helpers::formatBasket($basket, true))
+            ->withDelivery($delivery)
+            ->withDeliveryDetails($deliveryDetails)
         ;
     }
 
@@ -111,16 +121,6 @@ class PaymentsController extends Controller
         ;
     }
 
-    // /**
-    //  * Post Delivery Details
-    //  * @param  Request $request
-    //  * @return View
-    //  */
-    // public function delivery(Request $request)
-    // {
-    //     dd($request);
-    // }
-    
     /**
      * Post Payment to Gateway
      * @param  Request $request
@@ -162,29 +162,44 @@ class PaymentsController extends Controller
                 return Redirect::to('/payment/delivery/' . $paymentGateway);
             }
             if (!array_key_exists('delivery', $basket)) {
-                // Stripe Post Params
-                $rules = [
-                    'shipping_first_name'   => 'required',
-                    'shipping_last_name'    => 'required',
-                    'shipping_address_1' => 'required',
-                    'shipping_postcode'  => 'required',
+                 $rules = [
+                    'delivery_type'   => 'required|in:event,shipping'
                 ];
                 $messages = [
-                    'shipping_first_name.required'      => 'First Name is Required',
-                    'shipping_last_name.required'       => 'Last Name is Required',
-                    'shipping_address_1.required'    => 'Shipping Address Required',
-                    'shipping_postcode.required'     => 'Shipping Postcode Required',
+                    'delivery_type.required' => 'A Delivery type is Required',
+                    'delivery_type.in' => 'Delivery type must be event or shipping'
                 ];
                 $this->validate($request, $rules, $messages);
-                $basket['delivery'] = [
-                    'shipping_first_name' => $request->shipping_first_name,
-                    'shipping_last_name' => $request->shipping_last_name,
-                    'shipping_address_1' => $request->shipping_address_1,
-                    'shipping_address_2' => @$request->shipping_address_2,
-                    'shipping_country' => @$request->shipping_country,
-                    'shipping_postcode' => $request->shipping_postcode,
-                    'shipping_state' => @$request->shipping_state,
-                ];
+                // Check if the order is delivery to event or person
+                if ($request->delivery_type == 'shipping') {
+                    // Shipping Details
+                    $rules = [
+                        'shipping_first_name'   => 'required',
+                        'shipping_last_name'    => 'required',
+                        'shipping_address_1' => 'required',
+                        'shipping_postcode'  => 'required',
+                    ];
+                    $messages = [
+                        'shipping_first_name.required'      => 'First Name is Required',
+                        'shipping_last_name.required'       => 'Last Name is Required',
+                        'shipping_address_1.required'    => 'Shipping Address Required',
+                        'shipping_postcode.required'     => 'Shipping Postcode Required',
+                    ];
+                    $this->validate($request, $rules, $messages);
+                    $basket['delivery'] = [
+                        'type' => 'shipping',
+                        'shipping_first_name' => $request->shipping_first_name,
+                        'shipping_last_name' => $request->shipping_last_name,
+                        'shipping_address_1' => $request->shipping_address_1,
+                        'shipping_address_2' => @$request->shipping_address_2,
+                        'shipping_country' => @$request->shipping_country,
+                        'shipping_postcode' => $request->shipping_postcode,
+                        'shipping_state' => @$request->shipping_state,
+                    ];
+                    
+                } else {
+                    $basket['delivery'] = ['type' => 'event'];
+                }
                 Session::put(Settings::getOrgName() . '-basket', $basket);
                 Session::save();
             }
@@ -249,7 +264,6 @@ class PaymentsController extends Controller
                     'billing_postcode.required'     => 'Billing Postcode Required',
                 ];
                 $this->validate($request, $rules, $messages);
-
                 $card = array(
                     'firstName'             => $request->card_first_name,
                     'lastName'              => $request->card_last_name,
@@ -487,12 +501,26 @@ class PaymentsController extends Controller
                 }
             }
         } elseif(array_key_exists('shop', $basket)) {
+            $status = 'EVENT';
+            $deliverToEvent = true;
+            if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
+                $deliveryToEvent = false;
+                $status = 'PENDING';
+            }
             $formattedBasket = Helpers::formatBasket($basket);
             $orderParams = [
-                'total'         => (float)$formattedBasket->total,
-                'total_credit'  => $formattedBasket->total_credit,
-                'purchase_id'   => $purchaseId,
-                'status'        => 'EVENT'
+                'total'                 => (float)$formattedBasket->total,
+                'total_credit'          => $formattedBasket->total_credit,
+                'purchase_id'           => $purchaseId,
+                'status'                => $status,
+                'shipping_first_name'   => @$basket['delivery']['shipping_first_name'],
+                'shipping_last_name'    => @$basket['delivery']['shipping_last_name'],
+                'shipping_address_1'    => @$basket['delivery']['shipping_address_1'],
+                'shipping_address_2'    => @$basket['delivery']['shipping_address_2'],
+                'shipping_country'      => @$basket['delivery']['shipping_country'],
+                'shipping_postcode'     => @$basket['delivery']['shipping_postcode'],
+                'shipping_state'        => @$basket['delivery']['shipping_state'],
+                'deliver_to_event'      => $deliverToEvent,
             ];
             $order = ShopOrder::create($orderParams);
             foreach ($formattedBasket as $item) {

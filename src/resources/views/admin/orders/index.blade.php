@@ -45,6 +45,8 @@
 									$statusColor = 'danger';
 								}elseif($order->status == 'COMPLETE') {
 									$statusColor = 'success';
+								}elseif($order->status == 'PENDING') {
+									$statusColor = 'info';
 								}
 							@endphp
 							<tr class="{{ $statusColor }}">

@@ -103,7 +103,35 @@
 					@include ('layouts._partials._shop.basket-preview')
 				</div>
 			</div>
+			@if ($delivery && $deliveryDetails)
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Delivery Details</h3>
+					</div>
+					<div class="panel-body">
+						@if ($deliveryDetails && $deliveryDetails['type'] == 'shipping')
+							<address>
+								<strong>{{ $delivery['shipping_first_name']}} {{ $delivery['shipping_last_name'] }}</strong><br>
+								{{ $delivery['shipping_address_1'] }}<br>
+								@if (trim($delivery['shipping_address_2']) != '')
+									{{ $delivery['shipping_address_2'] }}<br>
+								@endif
+								@if (trim($delivery['shipping_country']) != '')
+									{{ $delivery['shipping_country'] }}<br>
+								@endif
+								@if (trim($delivery['shipping_state']) != '')
+									{{ $delivery['shipping_state'] }}<br>
+								@endif
+								{{ $delivery['shipping_postcode'] }}
+							</address>
+						@else
+							<strong>Delivery to the next event you Attend</strong>
+						@endif
+					</div>
+				</div>
+			@endif
 		</div>
+
 	</div>
 </div>
 

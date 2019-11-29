@@ -39,6 +39,22 @@ class OrdersController extends Controller
     }
 
     /**
+    * Set Order as Processing
+    * @param  Request $request
+    * @param  Order  $order
+    * @return View
+    */
+    public function setAsProcessing(Request $request, ShopOrder $order)
+    {
+        if (!$order->setAsProcessing($request)) {
+            Session::flash('alert-danger', 'Cannot mark as Processing!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully marked as Processing!');
+        return Redirect::back();
+    }
+
+    /**
     * Set Order as Shipped
     * @param  Request $request
     * @param  Order  $order

@@ -8,6 +8,8 @@ use Settings;
 
 use App\CreditLog;
 
+use \Carbon\Carbon as Carbon;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -205,7 +207,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return true;
     }
 
-     /**
+    /**
      * Get Orders for Current User
      * @return ShopOrder
      */
@@ -229,6 +231,26 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new \App\Notifications\ResetPassword($token));
+    }
+
+    /**
+     * Get Next Event for Current User
+     * @return Event
+     */
+    public function getNextEvent()
+    {
+        $nextEvent = false;
+        foreach ($this->eventParticipants as $eventParticipant) {
+            if ($eventParticipant->event->end >=  Carbon::now()) {
+                if (!isset($nextEvent) || !$nextEvent) {
+                    $nextEvent = $eventParticipant->event;
+                }
+                if ($nextEvent->end >= $eventParticipant->event->end) {
+                    $nextEvent = $eventParticipant->event;
+                }
+            } 
+        }
+        return $nextEvent;
     }
 
 }

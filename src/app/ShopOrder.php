@@ -22,6 +22,14 @@ class ShopOrder extends Model
     protected $fillable = [
         'purchase_id',
         'status',
+        'shipping_first_name',
+        'shipping_last_name',
+        'shipping_address_1',
+        'shipping_address_2',
+        'shipping_country',
+        'shipping_postcode',
+        'shipping_state',
+        'deliver_to_event'
     ];
 
     /**
@@ -86,6 +94,42 @@ class ShopOrder extends Model
                 break;
         }
         return $orders;
+    }
+
+
+    /**
+     * Check if Order has Shipping Details
+     * @return Boolean
+     */
+    public function hasShipping()
+    {
+        if (
+            trim($this->shipping_first_name) == "" &&
+            trim($this->shipping_last_name) == "" &&
+            trim($this->shipping_address_1) == "" &&
+            trim($this->shipping_address_2) == "" &&
+            trim($this->shipping_country) == "" &&
+            trim($this->shipping_postcode) == "" &&
+            trim($this->shipping_state) == ""
+
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Processing
+     * @param $params
+     * @return Orders
+     */
+    public function setAsProcessing($params)
+    {
+        $this->status = 'PROCESSING';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
     }
 
     /**
