@@ -140,7 +140,6 @@ class PaymentsController extends Controller
                 }
             }
         }
-        $deliveryFlag = false;
         if (array_key_exists('shop', $basket)) {
             foreach ($basket['shop'] as $itemId => $quantity) {
                 if (!ShopItem::hasStockByItemId($itemId)) {
@@ -176,27 +175,26 @@ class PaymentsController extends Controller
                     $rules = [
                         'shipping_first_name'   => 'required',
                         'shipping_last_name'    => 'required',
-                        'shipping_address_1' => 'required',
-                        'shipping_postcode'  => 'required',
+                        'shipping_address_1'    => 'required',
+                        'shipping_postcode'     => 'required',
                     ];
                     $messages = [
                         'shipping_first_name.required'      => 'First Name is Required',
                         'shipping_last_name.required'       => 'Last Name is Required',
-                        'shipping_address_1.required'    => 'Shipping Address Required',
-                        'shipping_postcode.required'     => 'Shipping Postcode Required',
+                        'shipping_address_1.required'       => 'Shipping Address Required',
+                        'shipping_postcode.required'        => 'Shipping Postcode Required',
                     ];
                     $this->validate($request, $rules, $messages);
                     $basket['delivery'] = [
-                        'type' => 'shipping',
-                        'shipping_first_name' => $request->shipping_first_name,
-                        'shipping_last_name' => $request->shipping_last_name,
-                        'shipping_address_1' => $request->shipping_address_1,
-                        'shipping_address_2' => @$request->shipping_address_2,
-                        'shipping_country' => @$request->shipping_country,
-                        'shipping_postcode' => $request->shipping_postcode,
-                        'shipping_state' => @$request->shipping_state,
+                        'type'                  => 'shipping',
+                        'shipping_first_name'   => $request->shipping_first_name,
+                        'shipping_last_name'    => $request->shipping_last_name,
+                        'shipping_address_1'    => $request->shipping_address_1,
+                        'shipping_address_2'    => @$request->shipping_address_2,
+                        'shipping_country'      => @$request->shipping_country,
+                        'shipping_postcode'     => $request->shipping_postcode,
+                        'shipping_state'        => @$request->shipping_state,
                     ];
-                    
                 } else {
                     $basket['delivery'] = ['type' => 'event'];
                 }
@@ -504,7 +502,7 @@ class PaymentsController extends Controller
             $status = 'EVENT';
             $deliverToEvent = true;
             if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
-                $deliveryToEvent = false;
+                $deliverToEvent = false;
                 $status = 'PENDING';
             }
             $formattedBasket = Helpers::formatBasket($basket);
