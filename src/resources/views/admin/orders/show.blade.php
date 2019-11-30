@@ -86,6 +86,23 @@
 							<h4>Order is {{ $order->status }}</h4>
 						</div>
 					@endif
+					@if (in_array($order->status, ['SHIPPED']))
+						<div class="col-xs-12 form-group">
+							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/tracking')) }}
+								<div class="form-group">
+									{{ Form::label('shipping_tracking','Add Tracking Number',array('id'=>'','class'=>'')) }}
+									{{ Form::text('shipping_tracking',$order->shipping_tracking,array('id'=>'event_name','class'=>'form-control')) }}
+								</div>
+								<div class="form-group">
+									{{ Form::label('shipping_note','Add Shipping Note',array('id'=>'','class'=>'')) }}
+									{{ Form::text('shipping_note',$order->shipping_note,array('id'=>'event_name','class'=>'form-control')) }}
+									<small>For Example; Courier used</small>
+								</div>
+								<button type="submit" class="btn btn-block btn-success">Submit Tracking Details</button>
+								<hr>
+							{{ Form::close() }}
+						</div>
+					@endif
 					@if (!in_array($order->status, ['PROCESSING', 'SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
 						<div class="col-xs-12 form-group">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/processing')) }}
@@ -111,7 +128,7 @@
 				<div class="row">
 					<div class="col-sm-6 col-xs-12 form-group">
 						{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/refund')) }}
-							<button type="submit" class="btn btn-block btn-danger" disabled='true'>Refund Order</button>
+							<button type="submit" class="btn btn-block btn-danger" disabled='true'>Refund Order (TBC)</button>
 						{{ Form::close() }}
 					</div>
 					@if (!in_array($order->status, ['COMPLETE', 'CANCELLED']))

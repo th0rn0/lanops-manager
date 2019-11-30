@@ -366,12 +366,6 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-	$( function() {
-		$( "#sale_start_date" ).datepicker();
-		$( "#sale_end_date" ).datepicker();
-	});
-</script>
 
 <div class="modal fade" id="addSponsorModal" tabindex="-1" role="dialog" aria-labelledby="addSponsorModalModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

@@ -21,6 +21,7 @@
 				<th>Payment Type</th>
 				<th>Ordered At</th>
 				<th>Basket</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody class="table-row odd gradeX">
@@ -66,6 +67,9 @@
 								@endif
 							@endforeach
 						@endif
+					</td>
+					<td>
+						<a href="/shop/orders/{{ $order->id }}"><button class="btn btn-success btn-sm btn-block">Details</button></a>
 					</td>
 				</tr>
 			@endforeach

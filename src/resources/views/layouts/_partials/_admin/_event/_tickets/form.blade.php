@@ -164,3 +164,11 @@
 </div>
 <hr>
 <button type="submit" class="btn btn-default btn-success btn-block">Submit</button>
+
+<!-- JavaScript-->
+<script type="text/javascript">
+	$( function() {
+		$( "#sale_start_date" ).datepicker();
+		$( "#sale_end_date" ).datepicker();
+	});
+</script>

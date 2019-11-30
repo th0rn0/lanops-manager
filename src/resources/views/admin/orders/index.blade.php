@@ -53,7 +53,7 @@
 								<td>{{ $order->id }}</td>
 								<td>{{ $order->purchase->user->username }}</td>
 								<td>{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</td>
-								<td>{{ $order->status }}</td>
+								<td><strong>{{ $order->status }}</strong></td>
 								<td>{{ $order->purchase->type }}</td>
 								<td>{{ $order->created_at }}</td>
 								<td>

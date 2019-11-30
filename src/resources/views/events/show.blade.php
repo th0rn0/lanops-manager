@@ -76,90 +76,100 @@
 
 	<div class="row">
 		<!-- EVENT INFORMATION -->
-		<div class="col-md-7">
+		<div class="col-md-12">
 			<div class="page-header">
 				<a name="event"></a>
 				<h3>Event Information</h3>
 			</div>
-			<p>{!! $event->desc_long !!}</p>
-			<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
-			<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
-			<p class="bg-info  padding">@if ($event->getSeatingCapacity() == 0) Capacity: {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) Seating Capacity: {{ $event->getSeatingCapacity() }} @endif</p>
+			<div class="row">
+				<div class="col-xs-12 col-sm-5">
+					<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
+					<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
+					<p class="bg-info  padding">@if ($event->getSeatingCapacity() == 0) Capacity: {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) Seating Capacity: {{ $event->getSeatingCapacity() }} @endif</p>
+				</div>
+				<div class="col-xs-12 col-sm-7">
+					<p>{!! $event->desc_long !!}</p>
+				</div>
+			</div>
 		</div>
 
 		<!-- TICKETS -->
-		<div class="col-md-5">
+		<div class="col-md-12">
 			<!-- PURCHASE TICKETS -->
 			@if (!$event->tickets->isEmpty())
 				<div class="page-header">
 					<a name="purchaseTickets"></a>
 					<h3>Purchase Tickets</h3>
 				</div>
-				@foreach ($event->tickets as $ticket)
-					<div class="well well-sm col-lg-12" disabled>
-						<h3>{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
-						@if ($ticket->quantity != 0)
-							<small>
-								Limited Availablity
-							</small>
-						@endif
-						<div class="row" style="display: flex; align-items: center;">
-							<div class="col-sm-12 col-xs-12">
-								<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
-									@if ($ticket->quantity != 0)
-										<small>
-											{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available
-										</small>
-									@endif
-								</h3>
-								@if ($user)
-									{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
-										@if (
-											$event->capacity <= $event->eventParticipants->count() 
-											|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
-											)
-											<div class="row">
-												<div class="form-group col-sm-6 col-xs-12">
-													{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-													{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
-												</div>
-												<div class="form-group col-sm-6 col-xs-12">
-													<button class="btn btn-md btn-primary btn-block"  style="margin-top:25px" disabled >SOLD OUT!</button>
-												</div>
-											</div>
-										@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
-											<h5>
-												This Ticket will be available for purchase at {{ date('H:i', strtotime($ticket->sale_start)) }} on {{ date ('d-m-Y', strtotime($ticket->sale_start)) }}
-											</h5>
-										@elseif(
-											$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s')
-											|| date('Y-m-d H:i:s') >= $event->end 
-										)
-											<h5>
-												This Ticket is no longer available for purchase
-											</h5>
+				<div class="row">
+					@foreach ($event->tickets as $ticket)
+						<div class="col-xs-12 col-sm-4">
+							<div class="well well-sm" disabled>
+								<h3>{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
+								@if ($ticket->quantity != 0)
+									<small>
+										Limited Availablity
+									</small>
+								@endif
+								<div class="row" style="display: flex; align-items: center;">
+									<div class="col-sm-12 col-xs-12">
+										<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
+											@if ($ticket->quantity != 0)
+												<small>
+													{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available
+												</small>
+											@endif
+										</h3>
+										@if ($user)
+											{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
+												@if (
+													$event->capacity <= $event->eventParticipants->count() 
+													|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
+													)
+													<div class="row">
+														<div class="form-group col-sm-6 col-xs-12">
+															{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+															{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
+														</div>
+														<div class="form-group col-sm-6 col-xs-12">
+															<button class="btn btn-md btn-primary btn-block"  style="margin-top:25px" disabled >SOLD OUT!</button>
+														</div>
+													</div>
+												@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
+													<h5>
+														This Ticket will be available for purchase at {{ date('H:i', strtotime($ticket->sale_start)) }} on {{ date ('d-m-Y', strtotime($ticket->sale_start)) }}
+													</h5>
+												@elseif(
+													$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s')
+													|| date('Y-m-d H:i:s') >= $event->end 
+												)
+													<h5>
+														This Ticket is no longer available for purchase
+													</h5>
+												@else
+													<div class="row">
+														<div class="form-group col-sm-6 col-xs-12">
+															{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+															{{ Form::select('quantity', array(1 => 1, 2 => 2), null, array('id'=>'quantity','class'=>'form-control')) }}
+														</div>
+														<div class="form-group col-sm-6 col-xs-12">
+															{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+															<button class="btn btn-md btn-primary btn-block" style="margin-top:25px" >Buy</button>
+														</div>
+													</div>
+												@endif
+											{{ Form::close() }}
 										@else
-											<div class="row">
-												<div class="form-group col-sm-6 col-xs-12">
-													{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-													{{ Form::select('quantity', array(1 => 1, 2 => 2), null, array('id'=>'quantity','class'=>'form-control')) }}
-												</div>
-												<div class="form-group col-sm-6 col-xs-12">
-													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-													<button class="btn btn-md btn-primary btn-block" style="margin-top:25px" >Buy</button>
-												</div>
+											<div class="alert alert-info">
+												<h5>Please Log in to Purchase a ticket</h5>
 											</div>
 										@endif
-									{{ Form::close() }}
-								@else
-									<div class="alert alert-info">
-										<h5>Please Log in to Purchase a ticket</h5>
 									</div>
-								@endif
+								</div>
 							</div>
 						</div>
-					</div>
-				@endforeach
+					@endforeach
+				</div>
 			@endif
 		</div>
 	</div>

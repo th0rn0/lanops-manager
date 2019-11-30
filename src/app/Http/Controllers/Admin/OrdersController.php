@@ -24,7 +24,7 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return view('admin.orders.index')->withOrders(ShopOrder::paginate(10));
+        return view('admin.orders.index')->withOrders(ShopOrder::orderBy('created_at', 'desc')->paginate(10));
     }
 
     /**
@@ -99,6 +99,22 @@ class OrdersController extends Controller
             return Redirect::back();
         }
         Session::flash('alert-success', 'Successfully Cancelled order!');
+        return Redirect::back();
+    }
+
+    /**
+    * Update Tracking Details
+    * @param  Request $request
+    * @param  Order  $order
+    * @return View
+    */
+    public function updateTrackingDetails(Request $request, ShopOrder $order)
+    {
+        if (!$order->updateTrackingDetails($request)) {
+            Session::flash('alert-danger', 'Cannot Update order!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully Updated order!');
         return Redirect::back();
     }
 }

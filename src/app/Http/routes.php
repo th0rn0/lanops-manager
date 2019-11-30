@@ -156,7 +156,8 @@ Route::group(['middleware' => ['web']], function () {
      * Shop
      */
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
-        Route::get('/shop/orders', 'ShopController@showOrders');
+        Route::get('/shop/orders', 'ShopController@showAllOrders');
+        Route::get('/shop/orders/{order}', 'ShopController@showOrder');
     });
     Route::get('/shop', 'ShopController@index');
     Route::get('/shop/basket', 'ShopController@showBasket');
@@ -400,6 +401,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      * Purchases
      */
     Route::get('/admin/purchases', 'Admin\PurchasesController@index');
+    Route::get('/admin/purchases/shop', 'Admin\PurchasesController@showShop');
+    Route::get('/admin/purchases/event', 'Admin\PurchasesController@showEvent');
     Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
 
     /**
@@ -432,6 +435,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/orders/{order}', 'Admin\OrdersController@show');
     Route::post('/admin/orders/{order}/processing', 'Admin\OrdersController@setAsProcessing');
     Route::post('/admin/orders/{order}/shipped', 'Admin\OrdersController@setAsShipped');
+    Route::post('/admin/orders/{order}/tracking', 'Admin\OrdersController@updateTrackingDetails');
     Route::post('/admin/orders/{order}/complete', 'Admin\OrdersController@setAsComplete');
     Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');
 

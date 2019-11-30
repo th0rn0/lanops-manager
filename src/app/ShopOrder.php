@@ -173,4 +173,19 @@ class ShopOrder extends Model
         }
         return true;
     }
+
+    /**
+     * Update Tracking Details
+     * @param $params
+     * @return Orders
+     */
+    public function updateTrackingDetails($params)
+    {
+        $this->shipping_tracking = $params->shipping_tracking;
+        $this->shipping_note = $params->shipping_note;
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
 }
