@@ -112,15 +112,15 @@
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-2">
-			<div class="panel panel-default">
+			<div class="panel panel-default" hidden>
 				<div class="panel-heading">
 					<i class="fa fa-credit-card fa-fw"></i> Add Credit
 				</div>
 				<div class="panel-body">
 					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
 						<div class="form-group">
-							{{ Form::label('user_id','User',array('id'=>'','class'=>'')) }}
-							{{ Form::text('user_id', '',array('id'=>'user_id','class'=>'form-control')) }}
+							{{ Form::label('user','User',array('id'=>'','class'=>'')) }}
+							{{ Form::text('user', '',array('id'=>'user','class'=>'form-control typeahead')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}

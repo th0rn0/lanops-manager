@@ -113,7 +113,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-ticket fa-fw"></i> Ticket Sales (TBC)
+				<i class="fa fa-ticket fa-fw"></i> Ticket Sales Per Month
 			</div>
 			<div class="panel-body">
 				<div id="ticket-breakdown"></div>
@@ -124,7 +124,7 @@
 	<div class="col-md-6 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-credit-card fa-fw"></i> Orders (TBC)
+				<i class="fa fa-credit-card fa-fw"></i> Orders Per Month
 			</div>
 			<div class="panel-body">
 				<div id="orders-breakdown"></div>
@@ -209,27 +209,35 @@
 </div>
 
 <script>
-	Morris.Bar({
+	Morris.Line({
 		element: 'ticket-breakdown',
 		data: [
-			@foreach ($tickets as $ticket)
-				{ y: '{{ $ticket->name }}', a: {{ $ticket->price * $ticket->participants()->count() }} },
+			@foreach ($ticketBreakdown as $key => $month)
+				{ month: '{{ $key }}', value: {{ count($month) }} },
 			@endforeach
 		],
-		xkey: 'y',
-		ykeys: ['a'],
-		labels: ['Pounds']
+		// The name of the data record attribute that contains x-values.
+		xkey: 'month',
+		// A list of names of data record attributes that contain y-values.
+		ykeys: ['value'],
+		// Labels for the ykeys -- will be displayed when you hover over the
+		// chart.
+		labels: ['Number of Tickets']
 	});
-	Morris.Bar({
+	Morris.Line({
 		element: 'orders-breakdown',
 		data: [
-			@foreach ($tickets as $ticket)
-				{ y: '{{ $ticket->name }}', a: {{ $ticket->price * $ticket->participants()->count() }} },
+			@foreach ($orderBreakdown as $key => $month)
+				{ month: '{{ $key }}', value: {{ count($month) }} },
 			@endforeach
 		],
-		xkey: 'y',
-		ykeys: ['a'],
-		labels: ['Pounds']
+		// The name of the data record attribute that contains x-values.
+		xkey: 'month',
+		// A list of names of data record attributes that contain y-values.
+		ykeys: ['value'],
+		// Labels for the ykeys -- will be displayed when you hover over the
+		// chart.
+		labels: ['Number of Orders']
 	});
 </script>
 

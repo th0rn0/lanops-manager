@@ -142,6 +142,11 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     /**
+     * Search
+     */
+    Route::get('/search/users/autocomplete', 'SearchController@usersAutocomplete')->name('autocomplete');
+
+    /**
      * Polls
      */
     Route::get('/polls', 'PollsController@index');

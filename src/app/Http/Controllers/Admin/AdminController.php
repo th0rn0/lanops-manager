@@ -7,6 +7,7 @@ use Auth;
 use Settings;
 use Helpers;
 use FacebookPageWrapper as Facebook;
+use \Carbon\Carbon as Carbon;
 
 use App\User;
 use App\Event;
@@ -62,6 +63,14 @@ class AdminController extends Controller
             }
             $userLoginMethodCount[$gateway] = $count;
         }
+        $orderBreakdown = array();
+        foreach (ShopOrder::where('created_at', '>=', Carbon::now()->subMonths(12)->month)->get() as $order) {
+            $orderBreakdown[date_format($order->created_at, 'm')][] = $order;
+        }
+        $ticketBreakdown = array();
+        foreach (EventParticipant::where('created_at', '>=', Carbon::now()->subMonths(12)->month)->get() as $participant) {
+            $ticketBreakdown[date_format($participant->created_at, 'm')][] = $participant;
+        }
         return view('admin.index')
             ->withUser($user)
             ->withEvents($events)
@@ -84,6 +93,8 @@ class AdminController extends Controller
             ->withParticipantCount($participantCount)
             ->withNextEvent(Helpers::getNextEventName())
             ->withTournamentCount($tournamentCount)
-            ->withTournamentParticipantCount($tournamentParticipantCount);
+            ->withTournamentParticipantCount($tournamentParticipantCount)
+            ->withOrderBreakdown($orderBreakdown)
+            ->withTicketBreakdown($ticketBreakdown);
     }
 }
