@@ -108,7 +108,7 @@ class PollsController extends Controller
             Session::flash('alert-danger', 'Cannot create Poll!');
             return Redirect::back();
         }
-        if (isset($requests->options)) {
+        if (isset($request->options)) {
             foreach ($request->options as $option) {
                 if (!$poll->addOption($option)) {
                     $poll->delete();
