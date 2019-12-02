@@ -344,4 +344,38 @@ class Helpers
     {
         return \App\Appearance::getCssVersion();
     }
+    
+    /**
+     * Get Card Expiry Month Dates
+     * @return array
+     */
+    public static function getCardExpiryMonthDates()
+    {
+        $return = array();
+        for ($i=1; $i<=12; $i++) {
+            $date = $i;
+            // if ($date <= 9) {
+            //     $date = '0' . $i;
+            // }
+            $return[$date] = $date;
+        }
+        return $return;
+    }
+
+    /**
+     * Get Card Expiry Year Dates
+     * @return array
+     */
+    public static function getCardExpiryYearDates()
+    {
+        $return = array();
+        for ($i=(int)date('y'); $i<=99; $i++) {
+            $date = $i;
+            // if ($date <= 9) {
+            //     $date = '0' . $i;
+            // }
+            $return[$date] = $date;
+        }
+        return $return;
+    }
 }

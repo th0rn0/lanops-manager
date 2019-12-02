@@ -60,7 +60,7 @@
 					<p><small>* Required Fields</small></p>
 				</div>
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button id="continue" class="btn btn-default hidden">Continue</button>
+				<button id="continue" class="btn btn-primary btn-block hidden">Continue</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">

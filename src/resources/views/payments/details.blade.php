@@ -31,15 +31,15 @@
 					<div class="row">
 						<div class="form-group col-sm-4 col-xs-6">
 							{{ Form::label('card_expiry_month', 'Card Expiry Month *', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_expiry_month', '', array('id'=>'card_expiry_month','class'=>'form-control')) }}
+							{{ Form::select('card_expiry_month', Helpers::getCardExpiryMonthDates(), null, array('id'=>'card_expiry_month','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group col-sm-4 col-xs-6">
 							{{ Form::label('card_expiry_year', 'Card Expiry Year *', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_expiry_year', '', array('id'=>'card_expiry_year','class'=>'form-control')) }}
+							{{ Form::select('card_expiry_year', Helpers::getCardExpiryYearDates(), null, array('id'=>'card_expiry_year','class'=>'form-control')) }}
 						</div>
 						<div class="form-group col-sm-4 col-xs-12">
 							{{ Form::label('card_cvv', 'Card CVV', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_cvv', '', array('id'=>'card_cvv','class'=>'form-control')) }}
+							{{ Form::text('card_cvv', '', array('id'=>'card_cvv','class'=>'form-control', 'maxlength'=>'3')) }}
 						</div>
 					</div>
 					<div class="form-group">
@@ -66,7 +66,7 @@
 					</div>
 					<p><small>* Required Fields</small></p>
 					{{ Form::hidden('gateway', $paymentGateway) }}
-					<button class="btn btn-default">Confirm Order</button>
+					<button class="btn btn-primary btn-block">Confirm Order</button>
 				{{ Form::close() }}
 			@else ($paymentGateway == 'credit' && Settings::isCreditEnabled())
 				<h5>Credit: {{ $user->credit_total }}</h5>
@@ -79,7 +79,7 @@
 					{{ Form::open(array('url'=>'/payment/post')) }}
 					{{ Form::hidden('gateway', $paymentGateway) }}
 					{{ Form::hidden('confirm', true) }}
-						<button class="btn btn-default">Confirm Order</button>
+						<button class="btn btn-primary btn-block">Confirm Order</button>
 					{{ Form::close() }}
 				@elseif (!$basket->allow_credit)
 					<hr>

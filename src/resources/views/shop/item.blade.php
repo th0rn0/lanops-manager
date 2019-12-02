@@ -53,7 +53,7 @@
 							{{ Form::number('quantity', 1, array('id'=>'quantity','class'=>'form-control')) }}
 						</div>
 						{{ Form::hidden('shop_item_id', $item->id) }}
-						<button type="submit" class="btn btn-success">Add to Cart</button>
+						<button type="submit" class="btn btn-primary btn-block">Add to Cart</button>
 					{{ Form::close() }}
 				@else
 					<div class="alert alert-info">
