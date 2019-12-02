@@ -209,7 +209,7 @@
 </div>
 
 <script>
-	Morris.Line({
+	Morris.Bar({
 		element: 'ticket-breakdown',
 		data: [
 			@foreach ($ticketBreakdown as $key => $month)
@@ -224,7 +224,7 @@
 		// chart.
 		labels: ['Number of Tickets']
 	});
-	Morris.Line({
+	Morris.Bar({
 		element: 'orders-breakdown',
 		data: [
 			@foreach ($orderBreakdown as $key => $month)
