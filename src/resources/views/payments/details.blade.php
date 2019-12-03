@@ -13,7 +13,8 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
 			@if ($paymentGateway == 'stripe')
-				{{ Form::open(array('url'=>'/payment/post')) }}
+				
+				{{ Form::open(array('url'=>'/payment/post', 'id'=>'payment-form')) }}
 					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
 							{{ Form::label('card_first_name', 'First Name *', array('id'=>'','class'=>'')) }}
@@ -24,7 +25,9 @@
 							{{ Form::text('card_last_name', '', array('id'=>'card_last_name','class'=>'form-control')) }}
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group" id="card-element"></div>
+			  		<div id="card-errors" role="alert"></div>
+					<!-- <div class="form-group">
 						{{ Form::label('card_number', 'Card Number *', array('id'=>'','class'=>'')) }}
 						{{ Form::text('card_number', '', array('id'=>'card_number','class'=>'form-control')) }}
 					</div>
@@ -41,8 +44,8 @@
 							{{ Form::label('card_cvv', 'Card CVV', array('id'=>'','class'=>'')) }}
 							{{ Form::text('card_cvv', '', array('id'=>'card_cvv','class'=>'form-control', 'maxlength'=>'3')) }}
 						</div>
-					</div>
-					<div class="form-group">
+					</div> -->
+				<!-- 	<div class="form-group">
 						{{ Form::label('billing_address_1', 'Billing Address 1 *', array('id'=>'','class'=>'')) }}
 						{{ Form::text('billing_address_1', '', array('id'=>'billing_address_1','class'=>'form-control')) }}
 					</div>
@@ -63,10 +66,10 @@
 							{{ Form::label('billing_state', 'Billing State', array('id'=>'','class'=>'')) }}
 							{{ Form::text('billing_state', '', array('id'=>'billing_state','class'=>'form-control')) }}
 						</div>
-					</div>
+					</div> -->
 					<p><small>* Required Fields</small></p>
 					{{ Form::hidden('gateway', $paymentGateway) }}
-					<button class="btn btn-primary btn-block">Confirm Order</button>
+					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">Confirm Order</button>
 				{{ Form::close() }}
 			@else ($paymentGateway == 'credit' && Settings::isCreditEnabled())
 				<h5>Credit: {{ $user->credit_total }}</h5>
@@ -134,5 +137,45 @@
 
 	</div>
 </div>
+@if ($paymentGateway == 'stripe')
+	<script src="https://js.stripe.com/v3/"></script>
+	<script>
+	    const stripe = Stripe( '{!! env('STRIPE_PUBLIC_KEY') !!}' );
+
+	    const elements = stripe.elements();
+	    const cardElement = elements.create('card');
+
+	    cardElement.mount('#card-element');
+
+	    const cardHolderName = document.getElementById('card_first_name') + document.getElementById('card_last_name');
+		const cardButton = document.getElementById('checkout_btn');
+		const clientSecret = cardButton.dataset.secret;
+		cardButton.addEventListener('click', async (e) => {
+			stripe.createToken(cardElement).then(function(result) {
+			    if (result.error) {
+			      	// Inform the customer that there was an error.
+			      	var errorElement = document.getElementById('card-errors');
+			      	errorElement.textContent = result.error.message;
+			    } else {
+			      	// Send the token to your server.
+			      	stripeTokenHandler(result.token);
+			    }
+			});
+		});
+
+		function stripeTokenHandler(token) {
+			// Insert the token ID into the form so it gets submitted to the server
+			var form = document.getElementById('payment-form');
+			var hiddenInput = document.createElement('input');
+			hiddenInput.setAttribute('type', 'hidden');
+			hiddenInput.setAttribute('name', 'stripe_token');
+			hiddenInput.setAttribute('value', token.id);
+			form.appendChild(hiddenInput);
+
+			// Submit the form
+			form.submit();
+		}
+	</script>
+@endif
 
 @endsection

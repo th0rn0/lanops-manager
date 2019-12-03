@@ -238,28 +238,12 @@ class PaymentsController extends Controller
                 $rules = [
                     'card_first_name'   => 'required',
                     'card_last_name'    => 'required',
-                    'card_number'       => 'required|integer',
-                    'card_expiry_month' => 'required|integer|between:1,12',
-                    'card_expiry_year'  => 'required|integer|between:0,99',
-                    'card_cvv'          => 'integer|between:000,999',
-                    'billing_address_1' => 'required',
-                    'billing_postcode'  => 'required',
+                    'stripe_token'      => 'required',
                 ];
                 $messages = [
                     'card_first_name.required'      => 'Card First Name is Required',
                     'card_last_name.required'       => 'Card Last Name is Required',
-                    'card_number.required'          => 'Card Number is Required',
-                    'card_number.integer'           => 'Card Number is invalid',
-                    'card_expiry_month.required'    => 'Expiry Month is Required',
-                    'card_expiry_month.integer'     => 'Expiry Month must be a Number',
-                    'card_expiry_month.between'     => 'Expiry Month must in the Numeric MM format',
-                    'card_expiry_year.required'     => 'Expiry Year is Required',
-                    'card_expiry_year.integer'      => 'Expiry Year must be a Number',
-                    'card_expiry_year.between'      => 'Expiry Year must in the Numeric YY format',
-                    'card_cvv.integer'              => 'CVV must be a Number',
-                    'card_cvv.between'              => 'CVV must be a 3 Digits long',
-                    'billing_address_1.required'    => 'Billing Address Required',
-                    'billing_postcode.required'     => 'Billing Postcode Required',
+                    'stripe_token.required'         => 'Stripe Token is Required',
                 ];
                 $this->validate($request, $rules, $messages);
                 $card = array(
@@ -278,10 +262,10 @@ class PaymentsController extends Controller
                 $params = array(
                     'amount' => (float)Helpers::formatBasket($basket)->total,
                     'currency' => Settings::getCurrency(),
-                    'card' => $card
+                    'source' => $request->stripe_token,
                 );
                 $gateway = Omnipay::create('Stripe');
-                $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.apikey'));
+                $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.secret'));
                 break;
             case 'paypal_express':
                 //Paypal Post Params

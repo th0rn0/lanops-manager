@@ -157,9 +157,16 @@ then
 else
 	echo 'OK'
 fi
+file_env 'STRIPE_PUBLIC_KEY'
+if [ -z "$STRIPE_PUBLIC_KEY" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
 
-file_env 'STRIPE_API_KEY'
-if [ -z "$STRIPE_API_KEY" ];
+file_env 'STRIPE_SECRET_KEY'
+if [ -z "$STRIPE_SECRET_KEY" ];
 then
 	echo 'NOT SET'
 else
