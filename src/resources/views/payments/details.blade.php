@@ -150,17 +150,88 @@
 	    const cardHolderName = document.getElementById('card_first_name') + document.getElementById('card_last_name');
 		const cardButton = document.getElementById('checkout_btn');
 		const clientSecret = cardButton.dataset.secret;
+		const form = document.getElementById('payment-form');
 		cardButton.addEventListener('click', async (e) => {
-			stripe.createToken(cardElement).then(function(result) {
-			    if (result.error) {
-			      	// Inform the customer that there was an error.
-			      	var errorElement = document.getElementById('card-errors');
-			      	errorElement.textContent = result.error.message;
-			    } else {
-			      	// Send the token to your server.
-			      	stripeTokenHandler(result.token);
-			    }
-			});
+			// stripe.createToken(cardElement).then(function(result) {
+			//     if (result.error) {
+			//       	// Inform the customer that there was an error.
+			//       	var errorElement = document.getElementById('card-errors');
+			//       	errorElement.textContent = result.error.message;
+			//     } else {
+			//       	// Send the token to your server.
+			//       	stripeTokenHandler(result.token);
+			//     }
+			// });
+
+	
+
+		    stripe.createPaymentMethod('card', cardElement, {
+                billing_details: {name: cardHolderName.value }
+            }).then(function(result) {
+
+                if (result.error) {
+                    cardButton.disabled = false;
+                    alert(result.error.message);
+                } else {
+					var hiddenInput = document.createElement('input');
+					hiddenInput.setAttribute('type', 'hidden');
+					hiddenInput.setAttribute('name', 'stripe_token');
+					hiddenInput.setAttribute('value', result.paymentMethod.id);
+					form.appendChild(hiddenInput);
+					console.log(result.paymentMethod.id);
+					form.submit();
+                }
+            });
+
+			// const { setupIntent, error } = await stripe.createPaymentMethod(
+		 //        'card', cardElement, {
+	  //               billing_details: { name: cardHolderName.value }
+		 //        }
+		 //    );
+
+			// if (error) {
+		 //        // Display "error.message" to the user...
+	  //        	if (error.code === 'parameter_invalid_empty' &&
+	  //               error.param === 'payment_method_data[billing_details][name]') {
+	  //           	$("#full_name").addClass('is-invalid');
+	  //           	$("#full_name_alert").show();
+	  //           } else {
+	  //           	$("#payment_alert").show();
+	  //               $('#payment_alert').html(error.message);
+	  //           }
+	  //   		$('#checkout_btn').html('Take Payment').removeClass('disabled');
+		 //    } else {
+		 //        // The card has been verified successfully...
+		 //        // $("#stripe_token").val(setupIntent.paymentMethod);
+			// 	var hiddenInput = document.createElement('input');
+			// 	hiddenInput.setAttribute('type', 'hidden');
+			// 	hiddenInput.setAttribute('name', 'stripe_token');
+			// 	hiddenInput.setAttribute('stripe_payment_method', setupIntent.paymentMethod);
+			// 	form.appendChild(hiddenInput);
+
+			// 	// Submit the form
+			// 	form.submit();
+		 //    }
+
+			// stripe.confirmCardPayment(clientSecret, {
+			// 	payment_method: {card: card}
+			// }).then(function(result) {
+			// 	if (result.error) {
+			// 		// Show error to your customer (e.g., insufficient funds)
+			// 		console.log(result.error.message);
+			// 	} else {
+			// 		// The payment has been processed!
+			// 		if (result.paymentIntent.status === 'succeeded') {
+			// 			// Show a success message to your customer
+			// 			// There's a risk of the customer closing the window before callback
+			// 			// execution. Set up a webhook or plugin to listen for the
+			// 			// payment_intent.succeeded event that handles any business critical
+			// 			// post-payment actions.
+			// 			var form = document.getElementById('payment-form');
+			// 			form.submit();
+			// 		}
+			// 	}
+			// });
 		});
 
 		function stripeTokenHandler(token) {

@@ -215,11 +215,14 @@ class PaymentsController extends Controller
             !in_array($paymentGateway, $offSitePaymentGateways) &&
             !isset($request->card_first_name) &&
             !isset($request->card_last_name) &&
-            !isset($request->card_number) &&
-            !isset($request->card_expiry_month) &&
-            !isset($request->card_expiry_year)
+            !isset($request->stripe_token)
         ) {
-            return Redirect::to('/payment/details/' . $paymentGateway);
+            \Stripe\Stripe::setApiKey(config('laravel-omnipay.gateways.stripe.credentials.secret'));
+            $intent = \Stripe\PaymentIntent::create([
+                'amount' => (float)Helpers::formatBasket($basket)->total,
+                'currency' => 'gbp',
+            ]);
+            return Redirect::to('/payment/details/' . $paymentGateway)->withPaymentIntent($intent);
         }
 
         $requestScheme = 'http';
@@ -238,31 +241,35 @@ class PaymentsController extends Controller
                 $rules = [
                     'card_first_name'   => 'required',
                     'card_last_name'    => 'required',
-                    'stripe_token'      => 'required',
+                    'stripe_token'      => 'required|filled',
                 ];
                 $messages = [
                     'card_first_name.required'      => 'Card First Name is Required',
                     'card_last_name.required'       => 'Card Last Name is Required',
                     'stripe_token.required'         => 'Stripe Token is Required',
+                    'stripe_token.filled'           => 'Stripe Token cannot be empty',
                 ];
                 $this->validate($request, $rules, $messages);
-                $card = array(
-                    'firstName'             => $request->card_first_name,
-                    'lastName'              => $request->card_last_name,
-                    'number'                => $request->card_number,
-                    'expiryMonth'           => $request->card_expiry_month,
-                    'expiryYear'            => $request->card_expiry_year,
-                    'cvv'                   => $request->card_cvv,
-                    'billingAddress1'       => $request->billing_address_1,
-                    'billingCountry'        => $request->billing_address_2,
-                    'billingCity'           => $request->billing_country,
-                    'billingPostcode'       => $request->billing_postcode,
-                    'billingState'          => $request->billing_state,
-                );
+                // $card = array(
+                //     'firstName'             => $request->card_first_name,
+                //     'lastName'              => $request->card_last_name,
+                //     'number'                => $request->card_number,
+                //     'expiryMonth'           => $request->card_expiry_month,
+                //     'expiryYear'            => $request->card_expiry_year,
+                //     'cvv'                   => $request->card_cvv,
+                //     'billingAddress1'       => $request->billing_address_1,
+                //     'billingCountry'        => $request->billing_address_2,
+                //     'billingCity'           => $request->billing_country,
+                //     'billingPostcode'       => $request->billing_postcode,
+                //     'billingState'          => $request->billing_state,
+                // );
                 $params = array(
-                    'amount' => (float)Helpers::formatBasket($basket)->total,
-                    'currency' => Settings::getCurrency(),
-                    'source' => $request->stripe_token,
+                    'cancelUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
+                    'returnUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return',
+                    'amount'        => (float)Helpers::formatBasket($basket)->total,
+                    'currency'      => Settings::getCurrency(),
+                    'paymentMethod' => $request->stripe_token,
+                    'confirm'       => true,
                 );
                 $gateway = Omnipay::create('Stripe');
                 $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.secret'));
@@ -309,28 +316,9 @@ class PaymentsController extends Controller
         }
 
         // Process Response
-        if (!$processPaymentSkip && $response->isSuccessful() && $paymentGateway == 'stripe') {
-            // payment was successful: update database
-            $stripeResponse = $response->getData();
-            $purchaseParams = [
-                'user_id'           => Auth::id(),
-                'type'              => 'Stripe',
-                'transaction_id'    => $response->getTransactionReference(),
-                'token'             => $response->getBalanceTransactionReference(),
-                'status'            => 'Success'
-            ];
-            $purchase = Purchase::create($purchaseParams);
-            $this->processBasket($basket, $purchase->id);
-            return Redirect::to('/payment/successful/' . $purchase->id);
-        } elseif (!$processPaymentSkip && $response->isRedirect() && $paymentGateway == 'paypal_express') {
-            // redirect to offsite payment gateway such as paypal
-            try {
-                $response->redirect();
-            } catch (\Exception $e) {
-                Session::flash('alert-danger', $e->getMessage());
-                return Redirect::back();
-            }
-        } elseif ($processPaymentSkip && $paymentGateway == 'credit') {
+
+        // Credit
+        if ($processPaymentSkip && $paymentGateway == 'credit') {
             if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
                 Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
                 return Redirect::to('/payment/failed');
@@ -347,6 +335,82 @@ class PaymentsController extends Controller
             Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
+
+
+        if ($response->isSuccessful()) {
+            // Pop open that champagne bottle, because the payment is complete.
+            // payment was successful: update database
+            $stripeResponse = $response->getData();
+            $purchaseParams = [
+                'user_id'           => Auth::id(),
+                'type'              => 'Stripe',
+                'transaction_id'    => $response->getTransactionReference(),
+                'token'             => $response->getBalanceTransactionReference(),
+                'status'            => 'Success'
+            ];
+            $purchase = Purchase::create($purchaseParams);
+            $this->processBasket($basket, $purchase->id);
+            return Redirect::to('/payment/successful/' . $purchase->id);
+        } else if($response->isRedirect()) {
+            try {
+                $response->redirect();
+            } catch (\Exception $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                return Redirect::back();
+            }
+        }
+
+
+        // if (!$processPaymentSkip && $paymentGateway == 'stripe') {
+
+        //     if ($response->isSuccessful()) {
+        //         // Pop open that champagne bottle, because the payment is complete.
+        //         // payment was successful: update database
+        //         $stripeResponse = $response->getData();
+        //         $purchaseParams = [
+        //             'user_id'           => Auth::id(),
+        //             'type'              => 'Stripe',
+        //             'transaction_id'    => $response->getTransactionReference(),
+        //             'token'             => $response->getBalanceTransactionReference(),
+        //             'status'            => 'Success'
+        //         ];
+        //         $purchase = Purchase::create($purchaseParams);
+        //         $this->processBasket($basket, $purchase->id);
+        //         return Redirect::to('/payment/successful/' . $purchase->id);
+        //     } else if($response->isRedirect()) {
+        //         $response->redirect();
+        //     } else {
+        //         // The payment has failed. Use $response->getMessage() to figure out why and return to step (1).
+        //     }
+
+
+        // } elseif (!$processPaymentSkip && $response->isRedirect() && $paymentGateway == 'paypal_express') {
+        //     // redirect to offsite payment gateway such as paypal
+        //     try {
+        //         $response->redirect();
+        //     } catch (\Exception $e) {
+        //         Session::flash('alert-danger', $e->getMessage());
+        //         return Redirect::back();
+        //     }
+        // } elseif ($processPaymentSkip && $paymentGateway == 'credit') {
+        //     if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
+        //         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
+        //         return Redirect::to('/payment/failed');
+        //     }
+        //     $purchaseParams = [
+        //         'user_id'           => Auth::id(),
+        //         'type'              => 'Credit',
+        //         'transaction_id'    => '',
+        //         'token'             => '',
+        //         'status'            => 'Success'
+        //     ];
+        //     $purchase = Purchase::create($purchaseParams);
+        //     $this->processBasket($basket, $purchase->id);
+        //     Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
+        //     return Redirect::to('/payment/successful/' . $purchase->id);
+        // }
+
+
         //Failed transaction
         $message = '';
         if (!$processPaymentSkip) {
