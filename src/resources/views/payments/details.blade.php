@@ -25,48 +25,9 @@
 							{{ Form::text('card_last_name', '', array('id'=>'card_last_name','class'=>'form-control')) }}
 						</div>
 					</div>
-					<div class="form-group" id="card-element"></div>
+					{{ Form::label('card_number', 'Card Details', array('id'=>'','class'=>'')) }}
+					<div class="form-control" id="card-element"></div>
 			  		<div id="card-errors" role="alert"></div>
-					<!-- <div class="form-group">
-						{{ Form::label('card_number', 'Card Number *', array('id'=>'','class'=>'')) }}
-						{{ Form::text('card_number', '', array('id'=>'card_number','class'=>'form-control')) }}
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-4 col-xs-6">
-							{{ Form::label('card_expiry_month', 'Card Expiry Month *', array('id'=>'','class'=>'')) }}
-							{{ Form::select('card_expiry_month', Helpers::getCardExpiryMonthDates(), null, array('id'=>'card_expiry_month','class'=>'form-control')) }}
-						</div> 
-						<div class="form-group col-sm-4 col-xs-6">
-							{{ Form::label('card_expiry_year', 'Card Expiry Year *', array('id'=>'','class'=>'')) }}
-							{{ Form::select('card_expiry_year', Helpers::getCardExpiryYearDates(), null, array('id'=>'card_expiry_year','class'=>'form-control')) }}
-						</div>
-						<div class="form-group col-sm-4 col-xs-12">
-							{{ Form::label('card_cvv', 'Card CVV', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_cvv', '', array('id'=>'card_cvv','class'=>'form-control', 'maxlength'=>'3')) }}
-						</div>
-					</div> -->
-				<!-- 	<div class="form-group">
-						{{ Form::label('billing_address_1', 'Billing Address 1 *', array('id'=>'','class'=>'')) }}
-						{{ Form::text('billing_address_1', '', array('id'=>'billing_address_1','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('billing_address_2', 'Billing Address 2', array('id'=>'','class'=>'')) }}
-						{{ Form::text('billing_address_2', '', array('id'=>'billing_address_2','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('billing_country', 'Billing Country', array('id'=>'','class'=>'')) }}
-						{{ Form::text('billing_country', '', array('id'=>'billing_country','class'=>'form-control')) }}
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-6 col-xs-12">
-							{{ Form::label('billing_postcode', 'Billing Postcode *', array('id'=>'','class'=>'')) }}
-							{{ Form::text('billing_postcode', '', array('id'=>'billing_postcode','class'=>'form-control')) }}
-						</div>
-						<div class="form-group col-sm-6 col-xs-12">
-							{{ Form::label('billing_state', 'Billing State', array('id'=>'','class'=>'')) }}
-							{{ Form::text('billing_state', '', array('id'=>'billing_state','class'=>'form-control')) }}
-						</div>
-					</div> -->
 					<p><small>* Required Fields</small></p>
 					{{ Form::hidden('gateway', $paymentGateway) }}
 					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">Confirm Order</button>
@@ -141,10 +102,17 @@
 @if ($paymentGateway == 'stripe')
 	<script src="https://js.stripe.com/v3/"></script>
 	<script>
+
+        var style = {
+            base: {
+			  	lineHeight: '1.429'
+            }
+        };
+
 	    const stripe = Stripe( '{!! env('STRIPE_PUBLIC_KEY') !!}' );
 
 	    const elements = stripe.elements();
-	    const cardElement = elements.create('card');
+	    const cardElement = elements.create('card', {style: style});
 
 	    cardElement.mount('#card-element');
 
@@ -153,19 +121,6 @@
 		const clientSecret = cardButton.dataset.secret;
 		const form = document.getElementById('payment-form');
 		cardButton.addEventListener('click', async (e) => {
-			// stripe.createToken(cardElement).then(function(result) {
-			//     if (result.error) {
-			//       	// Inform the customer that there was an error.
-			//       	var errorElement = document.getElementById('card-errors');
-			//       	errorElement.textContent = result.error.message;
-			//     } else {
-			//       	// Send the token to your server.
-			//       	stripeTokenHandler(result.token);
-			//     }
-			// });
-
-	
-
 		    stripe.createPaymentMethod('card', cardElement, {
                 billing_details: {name: cardHolderName.value }
             }).then(function(result) {
@@ -183,70 +138,7 @@
 					form.submit();
                 }
             });
-
-			// const { setupIntent, error } = await stripe.createPaymentMethod(
-		 //        'card', cardElement, {
-	  //               billing_details: { name: cardHolderName.value }
-		 //        }
-		 //    );
-
-			// if (error) {
-		 //        // Display "error.message" to the user...
-	  //        	if (error.code === 'parameter_invalid_empty' &&
-	  //               error.param === 'payment_method_data[billing_details][name]') {
-	  //           	$("#full_name").addClass('is-invalid');
-	  //           	$("#full_name_alert").show();
-	  //           } else {
-	  //           	$("#payment_alert").show();
-	  //               $('#payment_alert').html(error.message);
-	  //           }
-	  //   		$('#checkout_btn').html('Take Payment').removeClass('disabled');
-		 //    } else {
-		 //        // The card has been verified successfully...
-		 //        // $("#stripe_token").val(setupIntent.paymentMethod);
-			// 	var hiddenInput = document.createElement('input');
-			// 	hiddenInput.setAttribute('type', 'hidden');
-			// 	hiddenInput.setAttribute('name', 'stripe_token');
-			// 	hiddenInput.setAttribute('stripe_payment_method', setupIntent.paymentMethod);
-			// 	form.appendChild(hiddenInput);
-
-			// 	// Submit the form
-			// 	form.submit();
-		 //    }
-
-			// stripe.confirmCardPayment(clientSecret, {
-			// 	payment_method: {card: card}
-			// }).then(function(result) {
-			// 	if (result.error) {
-			// 		// Show error to your customer (e.g., insufficient funds)
-			// 		console.log(result.error.message);
-			// 	} else {
-			// 		// The payment has been processed!
-			// 		if (result.paymentIntent.status === 'succeeded') {
-			// 			// Show a success message to your customer
-			// 			// There's a risk of the customer closing the window before callback
-			// 			// execution. Set up a webhook or plugin to listen for the
-			// 			// payment_intent.succeeded event that handles any business critical
-			// 			// post-payment actions.
-			// 			var form = document.getElementById('payment-form');
-			// 			form.submit();
-			// 		}
-			// 	}
-			// });
 		});
-
-		function stripeTokenHandler(token) {
-			// Insert the token ID into the form so it gets submitted to the server
-			var form = document.getElementById('payment-form');
-			var hiddenInput = document.createElement('input');
-			hiddenInput.setAttribute('type', 'hidden');
-			hiddenInput.setAttribute('name', 'stripe_token');
-			hiddenInput.setAttribute('value', token.id);
-			form.appendChild(hiddenInput);
-
-			// Submit the form
-			form.submit();
-		}
 	</script>
 @endif
 
