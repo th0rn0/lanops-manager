@@ -29,7 +29,8 @@ return [
                 'note'          => '3D Secure Payments are currently NOT supported',
             ],
             'credentials' => [
-                'apikey' => env('STRIPE_API_KEY')
+                'public' => env('STRIPE_PUBLIC_KEY'),
+                'secret' => env('STRIPE_SECRET_KEY')
             ]
         ]
     ]

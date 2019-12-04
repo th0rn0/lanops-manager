@@ -355,13 +355,13 @@
 				@if ($x % 2 == 0)
 					@if (isset($section->image_path))
 						<div class="col-sm-4 visible-xs">
-							<h3><small>{{$section->title}}</small></h3>
+							<h4>{{$section->title}}</h4>
 							<center>
 								<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
 							</center>
 						</div>
 						<div class="col-sm-8">
-							<h3 class="hidden-xs"><small>{{$section->title}}</small></h3>
+							<h4 class="hidden-xs">{{$section->title}}</h4>
 							<p>{!! $section->text !!}</p>
 						</div>
 						<div class="col-sm-4 hidden-xs">
@@ -373,25 +373,25 @@
 						</div>
 					@else
 						<div class="col-sm-12">
-							<h3><small>{{$section->title}}</small></h3>
+							<h4>{{$section->title}}</h4>
 							<p>{!! $section->text !!}</p>
 						</div>
 					@endif
 				@else
 					@if (isset($section->image_path))
 						<div class="col-sm-4">
-							<h3 class="visible-xs"><small>{{$section->title}}</small></h3>
+							<h4 class="visible-xs">{{$section->title}}</h4>
 							<center>
 								<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
 							</center>
 						</div>
 						<div class="col-sm-8">
-							<h3 class="hidden-xs"><small>{{$section->title}}</small></h3>
+							<h4 class="hidden-xs">{{$section->title}}</h4>
 							<p>{!! $section->text !!}</p>
 						</div>
 					@else
 						<div class="col-sm-12">
-							<h3><small>{{$section->title}}</small></h3>
+							<h4>{{$section->title}}</h4>
 							<p>{!! $section->text !!}</p>
 						</div>
 					@endif

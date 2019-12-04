@@ -11,7 +11,7 @@
         "webonyx/graphql-php": "dev-master",
         "invisnik/laravel-steam-auth": "3.3",
         "laravel/socialite": "~2.0",
-        "ignited/laravel-omnipay": "3.*",
+        "ignited/laravel-omnipay": "3.1.1",
         "doctrine/dbal": "2.4",
         "simplesoftwareio/simple-qrcode": "~1",
         "guzzlehttp/guzzle": "~5.3|~6.0",
@@ -25,7 +25,8 @@
         "omnipay/paypal": "^3.0",
         "cviebrock/eloquent-sluggable": "^4.8",
         "barryvdh/laravel-debugbar": "^3.2",
-        "omnipay/stripe": "^3.0"
+        "omnipay/stripe": "^3.1",
+        "stripe/stripe-php": "^7.14"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
