@@ -267,9 +267,11 @@ class PaymentsController extends Controller
                     'cancelUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
                     'returnUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return',
                     'amount'        => (float)Helpers::formatBasket($basket)->total,
+                    'description'   => 'Ticket Purchase for ' . Settings::getOrgName(),
                     'currency'      => Settings::getCurrency(),
                     'paymentMethod' => $request->stripe_token,
                     'confirm'       => true,
+                    'source'        => '',
                 );
                 $gateway = Omnipay::create('Stripe');
                 $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.secret'));
