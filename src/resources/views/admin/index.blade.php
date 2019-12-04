@@ -139,7 +139,9 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
-					<li class="list-group-item list-group-item-info"><strong>Last Logged In: <span class="pull-right">{{ $userLastLoggedIn->username }} on {{ $userLastLoggedIn->last_login }}</span></strong></li>
+					@if ($userLastLoggedIn)
+						<li class="list-group-item list-group-item-info"><strong>Last Logged In: <span class="pull-right">{{ $userLastLoggedIn->username }} on {{ $userLastLoggedIn->last_login }}</span></strong></li>
+					@endif
 					<li class="list-group-item list-group-item-info"><strong>No. of Users: <span class="pull-right">{{ $userCount }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>No. of Active Login Methods: <span class="pull-right">{{ count($activeLoginMethods) }}</span></strong></li>
 					@foreach ($supportedLoginMethods as $method)

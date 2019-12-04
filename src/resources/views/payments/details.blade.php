@@ -137,6 +137,7 @@
 
 	</div>
 </div>
+
 @if ($paymentGateway == 'stripe')
 	<script src="https://js.stripe.com/v3/"></script>
 	<script>
