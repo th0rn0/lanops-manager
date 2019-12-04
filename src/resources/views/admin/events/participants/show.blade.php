@@ -121,9 +121,10 @@
 							}}
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-default btn-block">Transfer</button>
+							<button type="submit" class="btn btn-success btn-block">Transfer</button>
 						</div>
 					{{ Form::close() }}
+					<hr>
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
 						<div class="form-group">
 							<button type="submit" class="btn btn-success btn-block">Sign in</button>
