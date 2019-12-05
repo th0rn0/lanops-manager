@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tickets - {{ $ticket->name }}</h1>
+		<h3 class="page-header">Tickets - {{ $ticket->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -73,7 +73,10 @@
 					@foreach ($event->eventParticipants as $participant)
 						@if ($participant->ticket_id == $ticket->id)
 							<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
-								<i class="fa fa-comment fa-fw"></i> {{ $participant->user->username_nice}} - {{ $participant->user->steamname}}
+								<i class="fa fa-comment fa-fw"></i> {{ $participant->user->username }}
+								@if ($participant->user->steamid)
+									- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+								@endif
 								<span class="pull-right text-muted small">
 									<em>
 										{{ date('d-m-Y H:i', strtotime($participant->created_at)) }}

@@ -14,12 +14,30 @@ class Settings
     }
 
     /**
-     * Set Org Name
+     * Set Organization Name
      * @param String $name
      */
     public static function setOrgName($name)
     {
         return \App\Setting::setOrgName($name);
+    }
+
+    /**
+     * Get Organization Tagline
+     * @return String
+     */
+    public static function getOrgTagline()
+    {
+        return \App\Setting::getOrgTagline();
+    }
+
+    /**
+     * Set Organization Tagline
+     * @param String $tagline
+     */
+    public static function setOrgTagline($tagline)
+    {
+        return \App\Setting::setOrgTagline($tagline);
     }
 
     /**
@@ -221,21 +239,39 @@ class Settings
     }
 
     /**
-     * Get Lan Count Offset
+     * Get Event Count Offset
      * @return String
      */
-    public static function getLanCountOffset()
+    public static function getEventCountOffset()
     {
-        return \App\Setting::getLanCountOffset();
+        return \App\Setting::getEventCountOffset();
     }
 
     /**
-     * Set Lan Count Offset
+     * Set Event Count Offset
      * @param Integer $number
      */
-    public static function setLanCountOffset($number)
+    public static function setEventCountOffset($number)
     {
-        return \App\Setting::setLanCountOffset($number);
+        return \App\Setting::setEventCountOffset($number);
+    }
+
+    /**
+     * Get Frontpage Alot Tagline
+     * @return String
+     */
+    public static function getFrontpageAlotTagline()
+    {
+        return \App\Setting::getFrontpageAlotTagline();
+    }
+
+    /**
+     * Set Frontpage Alot Tagline
+     * @param String $text
+     */
+    public static function setFrontpageAlotTagline($text)
+    {
+        return \App\Setting::setFrontpageAlotTagline($text);
     }
 
     /**
@@ -577,4 +613,98 @@ class Settings
     {
         return \App\Setting::disableShopSystem();
     }
+
+    /**
+     * Get Shop Status
+     * @return Boolean
+     */
+    public static function getShopStatus()
+    {
+        return \App\Setting::getShopStatus();
+    }
+
+    /**
+     * Set Shop Status
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopStatus($text)
+    {
+        return \App\Setting::setShopStatus($text);
+    }
+
+    /**
+     * Get Shop Welcome Message
+     * @return String
+     */
+    public static function getShopWelcomeMessage()
+    {
+        return \App\Setting::getShopWelcomeMessage();
+    }
+
+    /**
+     * Set Shop Welcome Message
+     * @param String $text
+     * @return String
+     */
+    public static function setShopWelcomeMessage($text)
+    {
+        return \App\Setting::setShopWelcomeMessage($text);
+    }
+
+    /**
+     * Get Shop Closed Message
+     * @return Integer $amount
+     */
+    public static function getShopClosedMessage()
+    {
+        return \App\Setting::getShopClosedMessage();
+    }
+
+    /**
+     * Set Shop Closed Message
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopClosedMessage($text)
+    {
+        return \App\Setting::setShopClosedMessage($text);
+    }
+
+    /**
+     * Get Active Login Methods
+     * @return Array
+     */
+    public static function getLoginMethods()
+    {
+        return \App\Setting::getLoginMethods();
+    }
+
+    /**
+     * Get Supported Login Methods
+     * @return Array
+     */
+    public static function getSupportedLoginMethods()
+    {
+        return \App\Setting::getSupportedLoginMethods();
+    }
+
+    /**
+     * Enable Login Method
+     * @return Boolean
+     */
+    public static function enableLoginMethod($method)
+    {
+        return \App\Setting::enableLoginMethod($method);
+    }
+
+    /**
+     * Disable Login Method
+     * @return Boolean
+     */
+    public static function disableLoginMethod($method)
+    {
+        return \App\Setting::disableLoginMethod($method);
+    }
+
 }

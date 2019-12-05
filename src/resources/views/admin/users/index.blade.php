@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Users</h1>
+		<h3 class="page-header">Users</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Users
@@ -28,8 +28,7 @@
 						<thead>
 							<tr>
 								<th>Avatar</th>
-								<th>Username</th>
-								<th>Steam Name</th>
+								<th>User</th>
 								<th>Name</th>
 								@if (Settings::isCreditEnabled())
 									<th>Credit</th>
@@ -44,8 +43,12 @@
 									<td width="3%">
 										<img class="img-responsive img-rounded" src="{{ $user->avatar }}">
 									</td>
-									<td>{{ $user->username }}</td>
-									<td>{{ $user->steamname }}</td>
+									<td>
+										{{ $user->username }}
+										@if ($user->steamid)
+											- <span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
+										@endif
+									</td>
 									<td>{{ $user->firstname }} {{ $user->surname }}</td>
 									@if (Settings::isCreditEnabled())
 										<td>
@@ -61,7 +64,7 @@
 									</td>
 									<td>
 										<a href="/admin/users/{{ $user->id }}">
-											<button class="btn btn-default btn-block">Edit</button>
+											<button class="btn btn-primary btn-sm btn-block">Edit</button>
 										</a>
 									</td>
 								</tr>

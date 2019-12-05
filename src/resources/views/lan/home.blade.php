@@ -192,21 +192,21 @@
 									@foreach ($tournamentParticipants as $tournamentParticipant)
 										@if ($tournamentParticipant->final_rank == 1)
 											@if ($tournament->team_size == '1v1')
-												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h2>
+												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
 											@else
 												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
 											@endif
 										@endif
 										@if ($tournamentParticipant->final_rank == 2)
 											@if ($tournament->team_size == '1v1')
-												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h3>
+												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
 											@else
 												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
 											@endif
 										@endif
 										@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
 											@if ($tournament->team_size == '1v1')
-												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h4>
+												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
 											@else
 												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
 											@endif
@@ -253,7 +253,10 @@
 					<img class="img-responsive img-rounded" style="max-width: 70%;" src="{{ $participant->user->avatar }}">
 				</td>
 				<td style="vertical-align: middle;">
-					{{ $participant->user->steamname }}
+					{{ $participant->user->username }}
+					@if ($participant->user->steamid)
+						- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+					@endif
 				</td>
 				<td style="vertical-align: middle;">
 					{{ $participant->user->firstname }}
@@ -309,11 +312,11 @@
 														@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
 															@if ($seatingPlan->locked)
 																<button class="btn btn-success btn-sm" disabled>
-																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
+																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
 																</button>
 															@else
 																<button class="btn btn-success btn-sm">
-																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->steamname }}
+																	{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
 																</button>
 															@endif
 														@else

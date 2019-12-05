@@ -20,11 +20,11 @@
 				</div>
 			@endif
 			<div class="alert alert-warning">
-				<h5>By Clicking on Continue to Payment you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+				<h5>By Clicking on Continue you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
 			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button class="btn btn-default">Continue to Payment</button>
+				<button class="btn btn-primary btn-block">Continue</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">

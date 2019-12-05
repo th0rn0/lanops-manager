@@ -97,7 +97,7 @@ class Helpers
     public static function getEventTotal()
     {
         $events = \App\Event::count();
-        return Settings::getLanCountOffset() + $events;
+        return Settings::getEventCountOffset() + $events;
     }
 
     // TODO - move to model
@@ -118,7 +118,7 @@ class Helpers
             }
             return $event->display_name;
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -153,7 +153,7 @@ class Helpers
         ) {
             return $event->desc_long;
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -170,7 +170,7 @@ class Helpers
         ) {
             return date("d-m-Y H:i", strtotime($event->start));
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -187,7 +187,7 @@ class Helpers
         ) {
             return date("d-m-Y H:i", strtotime($event->end));
         }
-        return 'No new Events';
+        return 'Coming soon...';
     }
 
     /**
@@ -334,5 +334,48 @@ class Helpers
             }
         }
         return $formattedBasket;
+    }
+
+    /**
+     * Get CSS Version Number for Cache Busting
+     * @return integer
+     */
+    public static function getCssVersion()
+    {
+        return \App\Appearance::getCssVersion();
+    }
+    
+    /**
+     * Get Card Expiry Month Dates
+     * @return array
+     */
+    public static function getCardExpiryMonthDates()
+    {
+        $return = array();
+        for ($i=1; $i<=12; $i++) {
+            $date = $i;
+            // if ($date <= 9) {
+            //     $date = '0' . $i;
+            // }
+            $return[$date] = $date;
+        }
+        return $return;
+    }
+
+    /**
+     * Get Card Expiry Year Dates
+     * @return array
+     */
+    public static function getCardExpiryYearDates()
+    {
+        $return = array();
+        for ($i=(int)date('y'); $i<=99; $i++) {
+            $date = $i;
+            // if ($date <= 9) {
+            //     $date = '0' . $i;
+            // }
+            $return[$date] = $date;
+        }
+        return $return;
     }
 }

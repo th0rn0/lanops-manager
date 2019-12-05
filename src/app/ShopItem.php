@@ -31,6 +31,7 @@ class ShopItem extends Model
         'price',
         'price_credit',
         'shop_item_category_id',
+        'description',
         'stock',
         'status',
         'added_by',
@@ -122,7 +123,13 @@ class ShopItem extends Model
             ) {
             return $imagePath->path;
         }
-        return ShopItemImage::where('shop_item_id', $this->id)->first()->path;
+        if ($imagePath = 
+            ShopItemImage::where('shop_item_id', $this->id)
+                ->first()
+            ) {
+            return $imagePath->path;
+        }
+        return null;
     }
 
     /**
@@ -185,6 +192,14 @@ class ShopItem extends Model
             return false;
         }
         return true;
+    }
+
+    public function getPriceAttribute($value) {
+        return number_format($value, 2);
+    }
+
+    public function getPriceCreditAttribute($value) {
+        return number_format($value, 2);
     }
 
 }

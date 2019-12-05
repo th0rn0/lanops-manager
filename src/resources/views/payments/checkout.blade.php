@@ -90,7 +90,7 @@
 									<hr>
 								</div>
 								<a href="/payment/review/{{ $gateway }}">
-									<button type="button" class="btn btn-default btn-block">
+									<button type="button" class="btn btn-primary btn-block">
 										Pay by {{ Settings::getPaymentGatewayDisplayName($gateway) }}
 									</button>
 								</a>
@@ -106,7 +106,7 @@
 									<hr>
 								</div>
 								<a href="/payment/review/credit">
-									<button type="button" class="btn btn-default btn-block">
+									<button type="button" class="btn btn-primary btn-block">
 										Pay With Credit
 									</button>
 								</a>

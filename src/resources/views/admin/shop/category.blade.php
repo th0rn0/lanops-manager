@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Shop - {{ $category->name }}</h1>
+		<h3 class="page-header">Shop - {{ $category->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/shop">Shop</a>
@@ -122,6 +122,11 @@
 							}}
 						</div> 
 						<button type="submit" class="btn btn-block btn-success">Submit</button>
+					{{ Form::close() }}
+					<hr>
+					{{ Form::open(array('url'=>'/admin/shop/' . $category->slug )) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-block btn-danger">Delete</button>
 					{{ Form::close() }}
 				</div>
 			</div>

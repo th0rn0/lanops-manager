@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Settings</h1>
+		<h3 class="page-header">Settings</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Settings
@@ -15,37 +15,10 @@
 	</div>
 </div>
 
+@include ('layouts._partials._admin._settings.dashMini')
+
 <div class="row">
 	<div class="col-lg-6 col-xs-12">
-		<!-- Name & Logo -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Name & Logo
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-					<div class="form-group">
-						{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('org_name', Settings::getOrgname() ,array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						@if (trim(Settings::getOrgLogo()) != '')
-							<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
-						@endif
-						{{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
-						{{ Form::file('org_logo',array('id'=>'','class'=>'form-control')) }}
-					</div>
-					 <div class="form-group">
-						@if (trim(Settings::getOrgLogo()) != '')
-							<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
-						@endif
-						{{ Form::label('org_favicon','Favicon',array('id'=>'','class'=>'')) }}
-						{{ Form::file('org_favicon',array('id'=>'','class'=>'form-control')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
 		<!-- Main -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -65,14 +38,14 @@
 						<tbody>
 							@foreach ($settings as $setting)
 								@if (
-									$setting->setting != 'about_main' &&
-									$setting->setting != 'about_short' &&
-									$setting->setting != 'about_our_aim' &&
-									$setting->setting != 'about_who' &&
-									$setting->setting != 'terms_and_conditions' && 
-									$setting->setting != 'org_name' && 
-									$setting->setting != 'org_logo' &&
-									$setting->setting != 'org_favicon' &&
+									strpos($setting->setting, 'about') === false && 
+									strpos($setting->setting, 'terms_and_conditions') === false &&
+									strpos($setting->setting, 'org_') === false &&
+									strpos($setting->setting, 'slider_') === false &&
+									strpos($setting->setting, 'payment') === false &&
+									strpos($setting->setting, 'credit') === false &&
+									strpos($setting->setting, 'login') === false &&
+									strpos($setting->setting, 'shop') === false &&
 									$setting->setting != 'currency' &&
 									$setting->setting != 'social_facebook_page_access_token'
 								)
@@ -88,7 +61,7 @@
 												{{ Form::text($setting->setting, $setting->value ,array('id'=>'setting','class'=>'form-control')) }}
 											</td>
 											<td>
-												<button type="submit" class="btn btn-default btn-sm btn-block">Update</button>
+												<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
 											</td>
 										{{ Form::close() }}
 										{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -107,53 +80,24 @@
 				</div>
 			</div>
 		</div>
-		<!-- Terms & Conditions -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Terms and Conditions
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('registration_terms_and_conditions', Settings::getRegistrationTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-				<hr>
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
 	</div>
 	<div class="col-lg-6 col-xs-12">
-		<!-- Payment Gateways -->
+		<!-- Shop System -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Payment Gateways
+				<i class="fa fa-info-circle fa-fw"></i> Shop System
 			</div>
 			<div class="panel-body">
-				<div class="row">
-					@foreach ($supportedPaymentGateways as $gateway)
-						<div class="col-sm-6 col-xs-12">
-							<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }}</h4>
-							@if (in_array($gateway, $activePaymentGateways))
-								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}
-									<button type="submit" class="btn btn-block btn-danger">Disable</button>
-								{{ Form::close() }}
-							@else
-								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/enable')) }}
-									<button type="submit" class="btn btn-block btn-success">Enable</button>
-								{{ Form::close() }}
-							@endif
-						</div>
-					@endforeach
-				</div>
+				<p>The Shop can be used for buying merch, consumables etc.</p>
+				@if ($isShopEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
 			</div>
 		</div>
 		<!-- Credit System -->
@@ -174,24 +118,7 @@
 				@endif
 			</div>
 		</div>
-		<!-- Shop System -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Shop System
-			</div>
-			<div class="panel-body">
-				<p>The Shop can be used for buying merch, consumables etc.</p>
-				@if ($isShopEnabled)
-					{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
-						<button type="submit" class="btn btn-block btn-danger">Disable</button>
-					{{ Form::close() }}
-				@else
-					{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
-						<button type="submit" class="btn btn-block btn-success">Enable</button>
-					{{ Form::close() }}
-				@endif
-			</div>
-		</div>
+
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -220,98 +147,6 @@
 						{{ Form::close() }}
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- About -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> About
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('about_main','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_main', Settings::getAboutMain() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_short','Short',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_short', Settings::getAboutShort() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_our_aim','Our Aim',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_our_aim', Settings::getAboutOurAim() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-		<!-- Currency -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-money fa-fw"></i> Currency
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<h4>Currency</h4>
-					<div class="form-group">
-						{{ Form::label('currency','Currency',array('id'=>'','class'=>'')) }}
-						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], Settings::getCurrency(), array('id'=>'venue','class'=>'form-control')) }}
-					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-		<!-- Front Page Slider -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-wrench fa-fw"></i> Front Page Images
-			</div>
-			<div class="panel-body">
-				<span class="text-muted"><small>Images must be the same dimensions for the slider to function properly!</small></span>
-				{{ Form::open(array('url'=>'/admin/slider/images', 'files' => 'true')) }}
-					{{ csrf_field() }}
-            		<input type="hidden" name="slider" value="frontpage">
-					<div class="form-group">
-						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
-					</div>
-					<button type="submit" class="btn btn-block btn-success">Upload</button>
-				{{ Form::close() }}
-				<hr>
-				@foreach ($sliderImages as $image)
-					<img class="img img-responsive" src="{{ $image->path }}" />
-					<div class="row">
-						<br>
-						{{ Form::open(array('url'=>'/admin/slider/images/' . $image->id, 'files' => 'true', 'class' => "form-inline")) }}
-		                	<input type="hidden" name="slider" value="frontpage">
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									{{ Form::label('order','Order',array('id'=>'')) }}
-									{{ Form::number('order', $image->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
-								</div>
-							</div>
-							<div class="col-md-6 col-xs-12">
-								<button type="submit" class="btn btn-default btn-block">Submit</button>
-							</div>
-						{{ Form::close() }}
-					</div>
-					<br>
-					<div class="row">
-						<div class="col-xs-12">
-							{{ Form::open(array('url'=>'/admin/slider/images/' . $image->id, 'files' => 'true', 'onsubmit' => 'return ConfirmDelete()')) }}
-		                		<input type="hidden" name="slider" value="frontpage">
-			                	<input type="hidden" name="_method" value="DELETE">
-								<button type="submit" class="btn btn-block btn-danger">Delete</button>
-							{{ Form::close() }}
-							@if (!$loop->last)
-								<hr>
-							@endif
-						</div>
-					</div>
-				@endforeach
 			</div>
 		</div>
 	 	<!-- Misc -->

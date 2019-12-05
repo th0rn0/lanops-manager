@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Cache;
+
 use Illuminate\Database\Eloquent\Model;
 
 use Leafo\ScssPhp\Compiler;
@@ -32,6 +34,7 @@ class Appearance extends Model
      */
     public static function cssRecompile()
     {
+        @Cache::forget("css_version");
         $scss = new Compiler();
         $scss->setImportPaths('/web/html/resources/assets/sass/');
         $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
@@ -77,6 +80,7 @@ class Appearance extends Model
      */
     public static function saveCssOverride($css)
     {
+        @Cache::forget("css_version");
         if (!Storage::disk('assets')->put('sass/stylesheets/app/components/_user-override.scss', $css)) {
             return false;
         }
@@ -93,11 +97,25 @@ class Appearance extends Model
     }
 
     /**
+     * Get CSS Variable
+     * @return Var
+     */
+    public static function getCssVersion()
+    {
+        return Cache::get("css_version", function () {
+            $int = random_int(1, 999);
+            Cache::forever("css_version", $int);
+            return $int;
+        });
+    }
+
+    /**
      * Save CSS Variable
      * @return Var
      */
     public static function saveCssVariables($variables)
     {
+        @Cache::forget("css_version");
         @Storage::disk('assets')->delete('sass/stylesheets/app/modules/_user-variables.scss');
         Storage::disk('assets')->put('sass/stylesheets/app/modules/_user-variables.scss', '// User Variable Overrides');
         foreach ($variables as $key => $value) {
@@ -117,6 +135,7 @@ class Appearance extends Model
      */
     public static function saveCssVariableToDatabase($key, $value)
     {
+        @Cache::forget("css_version");
         $variable = self::where('key', $key)->first();
         $variable->value = $value;
         if (!$variable->save()) {
@@ -131,6 +150,7 @@ class Appearance extends Model
      */
     public static function saveCssVariableToFile($key, $value)
     {
+        @Cache::forget("css_version");
         if (!Storage::disk('assets')
             ->append('sass/stylesheets/app/modules/_user-variables.scss', '$' . $key . ': ' . $value . ';')
         ) {

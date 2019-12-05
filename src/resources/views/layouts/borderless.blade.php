@@ -9,7 +9,7 @@
 			@hasSection ('page_title')
 				@yield('page_title') | {{ Settings::getOrgName() }}
 			@else
-				Home of LAN gaming in Yorkshire | {{ Settings::getOrgName() }}
+				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
 			@endif
 		</title>
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />

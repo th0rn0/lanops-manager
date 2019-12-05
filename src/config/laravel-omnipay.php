@@ -26,10 +26,11 @@ return [
             'driver'  => 'stripe',
             'options' => [
                 'displayName'   => 'Debit/Credit Card',
-                'note'          => '3D Secure Payments are currently NOT supported',
+                'note'          => 'You may be redirected offsite for this payment.',
             ],
             'credentials' => [
-                'apikey' => env('STRIPE_API_KEY')
+                'public' => env('STRIPE_PUBLIC_KEY'),
+                'secret' => env('STRIPE_SECRET_KEY')
             ]
         ]
     ]

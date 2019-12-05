@@ -71,21 +71,21 @@
 							@foreach ($tournamentParticipants as $tournamentParticipant)
 								@if ($tournamentParticipant->final_rank == 1)
 									@if ($tournament->team_size == '1v1')
-										<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h2>
+										<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
 									@else
 										<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
 									@endif
 								@endif
 								@if ($tournamentParticipant->final_rank == 2)
 									@if ($tournament->team_size == '1v1')
-										<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h3>
+										<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
 									@else
 										<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
 									@endif
 								@endif
 								@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
 									@if ($tournament->team_size == '1v1')
-										<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->steamname }}</h4>
+										<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
 									@else
 										<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
 									@endif
@@ -135,7 +135,7 @@
 													@if ($tournament->team_size != '1v1')
 														{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}
 													@else
-														{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->steamname }}
+														{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}
 													@endif
 												@endif
 											</td>
@@ -149,7 +149,7 @@
 													@if ($tournament->team_size != '1v1')
 														{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}
 													@else
-														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->steamname }}
+														{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}
 													@endif
 												@endif
 											</td>

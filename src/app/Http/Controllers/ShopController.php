@@ -8,6 +8,7 @@ use Settings;
 use Helpers;
 
 use App\ShopItem;
+use App\ShopOrder;
 use App\ShopItemCategory;
 
 use App\Http\Requests;
@@ -25,9 +26,14 @@ class ShopController extends Controller
      */
     public function index()
     {
+        $featuredItems = ShopItem::where('featured', true)->get();
+        if ($featuredItems->count() < 16) {
+            $count = 16 - $featuredItems->count();
+            $featuredItems = $featuredItems->merge(ShopItem::inRandomOrder()->where('featured', false)->paginate($count));
+        }
         return view('shop.index')
             ->withAllCategories(ShopItemCategory::all()->sortBy('order'))
-            ->withFeaturedItems(ShopItem::where('featured', true)->get());
+            ->withFeaturedItems($featuredItems);
     }
 
     /**
@@ -118,13 +124,25 @@ class ShopController extends Controller
     }
 
     /**
-     * Show Orders Page
+     * Show All Orders Page
      * @return View
      */
-    public function showOrders()
+    public function showAllOrders()
     {
-        return view('shop.orders')
-            ->withAllCategories(ShopItemCategory::all()->sortBy('order'));
+        return view('shop.orders.index')
+            ->withAllCategories(ShopItemCategory::all()->sortBy('order'))
+            ->withOrders(Auth::user()->getOrders());
+    }
+
+    /**
+     * Show Order Page
+     * @return View
+     */
+    public function showOrder(ShopOrder $order)
+    {
+        return view('shop.orders.show')
+            ->withAllCategories(ShopItemCategory::all()->sortBy('order'))
+            ->withOrder($order);
     }
 
     /**

@@ -3,14 +3,16 @@
 /**
  * API
  */
-Route::get('/api/events/', 'Api\Events\EventsController@index');
-Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
-Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
-Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@index');
-Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
-Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
-Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
-Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
+Route::group(['middleware' => ['api']], function () {
+    Route::get('/api/events/', 'Api\Events\EventsController@index');
+    Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
+    Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
+    Route::get('/api/events/{event}/participants', 'Api\Events\ParticipantsController@index');
+    Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
+    Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
+    Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
+    Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
+});
 
 /**
  * Front End
@@ -20,16 +22,35 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Login & Register
      */
-    Route::get('/login', 'Auth\SteamAuthController@login');
-    Route::get('/login/prompt', 'Auth\SteamAuthController@prompt');
-    Route::get('/register', 'Auth\SteamAuthController@register');
-    Route::post('/account/register', 'Auth\SteamAuthController@store');
-    Route::group(['middleware' => ['auth']], function () {
+    Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+    Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
+    Route::get('/register/{method}', 'Auth\AuthController@showRegister');
+    Route::post('/register/{method}', 'Auth\AuthController@register');
+
+    Route::get('/login', 'Auth\AuthController@prompt');
+
+    Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+    Route::post('/login/reset/password', 'Auth\ResetPasswordController@reset')->name('password.update');
+    Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+
+    Route::get('/login/steam', 'Auth\SteamController@login');
+
+    Route::post('/login/standard', 'Auth\LoginController@login');
+
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/account', 'AccountController@index');
-        Route::post('/account/delete', 'Auth\SteamAuthController@destroy');
-        Route::get('/logout', 'Auth\SteamAuthController@doLogout');
+        Route::post('/account', 'AccountController@update');
+        Route::post('/account/delete', 'Auth\SteamController@destroy');
     });
 
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/logout', 'Auth\AuthController@logout');
+    });
+    
     /**
      * Index Page
      */
@@ -58,11 +79,13 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/about', 'HomeController@about');
     Route::get('/contact', 'HomeController@contact');
+    Route::get('/terms', 'HomeController@terms');
+
 
     /**
      * Tickets
      */
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/tickets/retrieve/{participant}', 'Events\TicketsController@retrieve');
         Route::post('/tickets/purchase/{ticket}', 'Events\TicketsController@purchase');
     });
@@ -70,7 +93,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Gifts
      */
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/gift/accept', 'Events\ParticipantsController@acceptGift');
         Route::post('/gift/{participant}', 'Events\ParticipantsController@gift');
         Route::post('/gift/{participant}/revoke', 'Events\ParticipantsController@revokeGift');
@@ -87,7 +110,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
     Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
         Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
         Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
@@ -97,31 +120,38 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Payments
      */
-    Route::group(['middleware' => ['auth']], function () {    
-        Route::get('/payment/checkout', 'PaymentsController@checkout');
-        Route::get('/payment/review/{paymentGateway}', 'PaymentsController@review');
-        Route::get('/payment/details/{paymentGateway}', 'PaymentsController@details');
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+        Route::get('/payment/checkout', 'PaymentsController@showCheckout');
+        Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
+        Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
+        Route::post('/payment/delivery', 'PaymentsController@delivery');
+        Route::get('/payment/delivery/{paymentGateway}', 'PaymentsController@showDelivery');
         Route::get('/payment/callback', 'PaymentsController@process');
         Route::post('/payment/post', 'PaymentsController@post');
-        Route::get('/payment/failed', 'PaymentsController@failed');
-        Route::get('/payment/cancelled', 'PaymentsController@cancelled');
-        Route::get('/payment/successful/{purchase}', 'PaymentsController@successful');
+        Route::get('/payment/failed', 'PaymentsController@showFailed');
+        Route::get('/payment/cancelled', 'PaymentsController@showCancelled');
+        Route::get('/payment/successful/{purchase}', 'PaymentsController@showSuccessful');
     });
 
     /**
      * Seating
      */
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
         Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
     });
+
+    /**
+     * Search
+     */
+    Route::get('/search/users/autocomplete', 'SearchController@usersAutocomplete')->name('autocomplete');
 
     /**
      * Polls
      */
     Route::get('/polls', 'PollsController@index');
     Route::get('/polls/{poll}', 'PollsController@show');
-    Route::group(['middleware' => ['auth']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/polls/{poll}/options', 'PollsController@storeOption');
         Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
         Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
@@ -130,8 +160,9 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Shop
      */
-    Route::group(['middleware' => ['auth']], function () {    
-        Route::get('/shop/orders', 'ShopController@showOrders');
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+        Route::get('/shop/orders', 'ShopController@showAllOrders');
+        Route::get('/shop/orders/{order}', 'ShopController@showOrder');
     });
     Route::get('/shop', 'ShopController@index');
     Route::get('/shop/basket', 'ShopController@showBasket');
@@ -305,16 +336,27 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      */
     Route::get('/admin/users', 'Admin\UsersController@index');
     Route::get('/admin/users/{user}', 'Admin\UsersController@show');
+    Route::post('/admin/users/{user}/admin', 'Admin\UsersController@grantAdmin');
+    Route::delete('/admin/users/{user}/admin', 'Admin\UsersController@removeAdmin');
+    Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');
+    Route::post('/admin/users/{user}/unban', 'Admin\UsersController@unban');
+
+
 
     /**
      * Settings
      */
     Route::get('/admin/settings', 'Admin\SettingsController@index');
+    Route::get('/admin/settings/org', 'Admin\SettingsController@showOrg');
+    Route::get('/admin/settings/payments', 'Admin\SettingsController@showPayments');
+    Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
     Route::post('/admin/settings', 'Admin\SettingsController@update');
     Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
     Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
     Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
     Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
+    Route::post('/admin/settings/login/{method}/disable', 'Admin\SettingsController@disableLoginMethod');
+    Route::post('/admin/settings/login/{method}/enable', 'Admin\SettingsController@enableLoginMethod');
     Route::post('/admin/settings/credit/enable', 'Admin\SettingsController@enableCreditSystem');
     Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
     Route::post('/admin/settings/shop/enable', 'Admin\SettingsController@enableShopSystem');
@@ -322,19 +364,15 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
     /**
-     * Image Sliders
-     */
-    Route::post('/admin/slider/images/', 'Admin\SliderController@upload');
-    Route::post('/admin/slider/images/{image}', 'Admin\SliderController@update');
-    Route::delete('/admin/slider/images/{image}', 'Admin\SliderController@delete');
-
-    /**
      * Appearance
      */
-    Route::get('/admin/appearance', 'Admin\AppearanceController@index');
-    Route::get('/admin/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
-    Route::post('/admin/appearance/css/override', 'Admin\AppearanceController@cssOverride');
-    Route::post('/admin/appearance/css/variables', 'Admin\AppearanceController@cssVariables');
+    Route::get('/admin/settings/appearance', 'Admin\AppearanceController@index');
+    Route::post('/admin/settings/appearance/slider/images/', 'Admin\AppearanceController@sliderUpload');
+    Route::post('/admin/settings/appearance/slider/images/{image}', 'Admin\AppearanceController@sliderUpdate');
+    Route::delete('/admin/settings/appearance/slider/images/{image}', 'Admin\AppearanceController@sliderDelete');
+    Route::get('/admin/settings/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
+    Route::post('/admin/settings/appearance/css/override', 'Admin\AppearanceController@cssOverride');
+    Route::post('/admin/settings/appearance/css/variables', 'Admin\AppearanceController@cssVariables');
 
     /**
      * News
@@ -368,6 +406,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      * Purchases
      */
     Route::get('/admin/purchases', 'Admin\PurchasesController@index');
+    Route::get('/admin/purchases/shop', 'Admin\PurchasesController@showShop');
+    Route::get('/admin/purchases/event', 'Admin\PurchasesController@showEvent');
     Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
 
     /**
@@ -385,10 +425,23 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
     Route::get('/admin/shop/{category}', 'Admin\ShopController@showCategory');
     Route::post('/admin/shop/{category}', 'Admin\ShopController@updateCategory');
+    Route::delete('/admin/shop/{category}', 'Admin\ShopController@deleteCategory');
     Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
     Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
+    Route::delete('/admin/shop/{category}/{item}', 'Admin\ShopController@deleteItem');
     Route::post('/admin/shop/{category}/{item}/images', 'Admin\ShopController@uploadItemImage');
     Route::post('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@updateItemImage');
     Route::delete('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@deleteItemImage');
+
+    /**
+     * Orders
+     */
+    Route::get('/admin/orders', 'Admin\OrdersController@index');
+    Route::get('/admin/orders/{order}', 'Admin\OrdersController@show');
+    Route::post('/admin/orders/{order}/processing', 'Admin\OrdersController@setAsProcessing');
+    Route::post('/admin/orders/{order}/shipped', 'Admin\OrdersController@setAsShipped');
+    Route::post('/admin/orders/{order}/tracking', 'Admin\OrdersController@updateTrackingDetails');
+    Route::post('/admin/orders/{order}/complete', 'Admin\OrdersController@setAsComplete');
+    Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');
 
 });

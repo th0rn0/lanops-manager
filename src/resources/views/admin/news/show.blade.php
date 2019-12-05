@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">News</h1>
+		<h3 class="page-header">News</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/news/">News</a>
@@ -38,7 +38,7 @@
 						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
 						{{ Form::text('tags', $newsArticle->getTags(), array('id'=>'', 'class'=>'form-control')) }}
 					</div>
-					<button type="submit" class="btn btn-default btn-block">Submit</button> 
+					<button type="submit" class="btn btn-success btn-block">Submit</button> 
 				{{ Form::close() }}
 				<hr>
 				{{ Form::open(array('url'=>'/admin/news/' . $newsArticle->slug, 'onsubmit' => 'return ConfirmDelete()')) }}

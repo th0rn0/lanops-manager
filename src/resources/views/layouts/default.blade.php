@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" type="image/png" sizes="32x32" href="{{ Settings::getOrgFavicon() }}">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />
-		<link href="/css/app.css" rel=stylesheet />
+		<link href="/css/app.css?v={{ Helpers::getCssVersion() }}" rel=stylesheet />
 		
 		{!! Analytics::render() !!}
 		
@@ -14,7 +14,7 @@
 			@hasSection ('page_title')
 				@yield ('page_title') | {{ Settings::getOrgName() }}
 			@else
-				Home of LAN gaming in Yorkshire | {{ Settings::getOrgName() }}
+				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
 			@endif
 		</title>
 	</head>
@@ -32,12 +32,14 @@
 					@endif
 				@endforeach
 				@if (isset($errors) && $errors->any())
-					<div class="alert alert-danger" style="margin-top:30px; margin-bottom:-40px;">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
+					<div class="col-xs-12" style="margin-top:30px; margin-bottom:-40px;">
+						<div class="alert alert-danger">
+							<ul class="list-unstyled">
+								@foreach ($errors->all() as $error)
+									<li><strong>{{ $error }}</strong></li>
+								@endforeach
+							</ul>
+						</div>
 					</div>
 				@endif
 			</div>
@@ -56,7 +58,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							LANs we've hosted
+							EVENTs we've hosted
 						</div>
 					</div>
 
@@ -66,7 +68,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							GAMERs we've entertained
+							PLAYERs we've entertained
 						</div>
 					</div>
 
@@ -76,41 +78,42 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							PIZZAs we've ordered
+							{{ Settings::getFrontpageAlotTagline() }}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<footer class="footer" style="height:30%">
+		<footer class="footer">
 			<div class="container">
 				<div class="hidden-xs hidden-sm">
-					<br><br><br>
+					<br><br>
 				</div>
 				<div class="col-lg-4 hidden-md hidden-sm hidden-xs">
 					<img class="img-responsive" src="{{ Settings::getOrgLogo() }}">
 				</div>
 				<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 					<div class="col-lg-6 col-md-6">
-						<h2 class="text-muted">Links</h2>
-						<p class="text-muted hidden"><a href="/contact">Contact Us</a></p>
-						<p class="text-muted"><a href="/news">News</a></p>
-						<p class="text-muted"><a href="/about">About Us</a></p>
-						<p class="text-muted"><a href="/polls">Polls</a></p>
-						<p class="text-muted hidden">Lan Guide</p>
+						<h2 class="">Links</h2>
+						<p class=" hidden"><a href="/contact">Contact Us</a></p>
+						<p class=""><a href="/news">News</a></p>
+						<p class=""><a href="/terms">Terms & Conditions</a></p>
+						<p class=""><a href="/about">About Us</a></p>
+						<p class=""><a href="/polls">Polls</a></p>
+						<p class=" hidden">Lan Guide</p>
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<h2 class="text-muted">Connect</h2>
-						<p class="text-muted"><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
-						<p class="text-muted"><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
-						<p class="text-muted"><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
+						<h2 class="">Connect</h2>
+						<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
+						<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
+						<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
 					</div>
 					<div class="col-lg-12">
-						<p class="text-muted">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
+						<p class="">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">
-					<p class="text-muted">Powered By <a href="https://lanops.co.uk">LanOps</a> <a href="https://github.com/lanops/manager">Lan Manager</a></p>
+					<p class="">Powered By <a href="https://lanops.co.uk">LanOps</a> <a href="https://github.com/lanops/manager">Lan Manager</a></p>
 				</div>
 			</div>
 		</footer>

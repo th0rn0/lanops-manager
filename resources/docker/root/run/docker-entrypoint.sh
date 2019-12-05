@@ -23,6 +23,56 @@ file_env() {
 }
 
 # Check Variables Exist & Translate from file
+file_env 'APP_URL'
+if [ -z "$APP_URL" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because APP_URL is not specified '
+	echo >&2 'You need to specify APP_URL'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'APP_EMAIL'
+if [ -z "$APP_EMAIL" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because APP_EMAIL is not specified '
+	echo >&2 'You need to specify APP_EMAIL'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'MAIL_HOST'
+if [ -z "$MAIL_HOST" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because MAIL_HOST is not specified '
+	echo >&2 'You need to specify MAIL_HOST'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'MAIL_USERNAME'
+if [ -z "$MAIL_USERNAME" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because MAIL_USERNAME is not specified '
+	echo >&2 'You need to specify MAIL_USERNAME'
+	exit 1
+else
+	echo 'OK'
+fi
+file_env 'MAIL_PASSWORD'
+if [ -z "$MAIL_PASSWORD" ]; 
+then
+	echo >&2 'ERROR'
+	echo >&2 'Lan Manager App is uninitialized because MAIL_PASSWORD is not specified '
+	echo >&2 'You need to specify MAIL_PASSWORD'
+	exit 1
+else
+	echo 'OK'
+fi
 file_env 'DB_PORT'
 if [ -z "$DB_PORT" ]; 
 then
@@ -59,10 +109,7 @@ fi
 file_env 'STEAM_API_KEY'
 if [ -z "$STEAM_API_KEY" ]; 
 then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because STEAM_API_KEY is not specified '
-	echo >&2 'You need to specify STEAM_API_KEY'
-	exit 1
+	echo 'NOT SET'
 else
 	echo 'OK'
 fi
@@ -110,9 +157,16 @@ then
 else
 	echo 'OK'
 fi
+file_env 'STRIPE_PUBLIC_KEY'
+if [ -z "$STRIPE_PUBLIC_KEY" ];
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
 
-file_env 'STRIPE_API_KEY'
-if [ -z "$STRIPE_API_KEY" ];
+file_env 'STRIPE_SECRET_KEY'
+if [ -z "$STRIPE_SECRET_KEY" ];
 then
 	echo 'NOT SET'
 else
@@ -188,6 +242,10 @@ if [[ $(stat -c "%u" $NGINX_DOCUMENT_ROOT/storage) != $UUID ]]; then
     chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
 fi
 
+# Make Symlink for images if it doesn't already exist
+if [ ! -L "$NGINX_DOCUMENT_ROOT/public/storage" ]; then
+	php artisan storage:link
+fi
 
 # Database Wait check
 echo "---------------"

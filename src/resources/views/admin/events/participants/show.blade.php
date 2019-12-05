@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Events - {{ $event->display_name }} - Participant - {{ $participant->user->username }}</h1>
+		<h3 class="page-header">Events - {{ $event->display_name }} - Participant - {{ $participant->user->username }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -16,7 +16,7 @@
 				<a href="/admin/events/{{ $event->slug }}/participants">Participants</a>
 			</li>
 			<li class="active">
-				{{ $participant->user->steamname }}
+				{{ $participant->user->username }}
 			</li>
 		</ol>
 	</div>
@@ -39,9 +39,8 @@
 					<table width="100%" class="table table-striped table-hover" id="seating_table">
 						<thead>
 							<tr>
-								<th></th>
+								<th>User</th>
 								<th>Name</th>
-								<th>Steam Name</th>
 								<th>Seat</th>
 								<th>Ticket</th>
 								<th>Paypal Email</th>
@@ -51,22 +50,25 @@
 						<tbody>
 							<tr>
 								<td>
+									{{ $participant->user->username }}
+									@if ($participant->user->steamid)
+										<br><span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+									@endif
 								</td>
-								<td>{{ $participant->user->username }}</td>
-								<td>{{ $participant->user->steamname }}</td>
+								<td>{{ $participant->user->firstname }} {{ $participant->user->surname }}</td>
 								<td>@if($participant->seat) {{ $participant->seat->seat }} @endif</td>
 								<td>
 									@if ($participant->ticket)
 										{{ $participant->ticket->name }}
 									@else
-										No Ticket Bought
+										No Ticket Bought / Free
 									@endif
 								</td>
 								<td>@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif</td>
 								<td>
 									@if ($participant->gift)
 										<strong>Yes</strong>
-										<small>Assigned by: {{ $participant->getGiftedByUser()->steamname }}</small>
+										<small>Assigned by: {{ $participant->getGiftedByUser()->username }}</small>
 									@else
 										No
 									@endif
@@ -93,7 +95,7 @@
 				@if ($participant->ticket)
 					<p>{{ $participant->ticket->name }}</p>
 				@else
-					<p>No Ticket Bought</p>
+					<p>No Ticket Bought / Free</p>
 				@endif
 				@if ($participant->purchase)
 					{{ Form::label('','Purchase Info',array('id'=>'','class'=>'')) }}
@@ -119,9 +121,10 @@
 							}}
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-default btn-block">Transfer</button>
+							<button type="submit" class="btn btn-success btn-block">Transfer</button>
 						</div>
 					{{ Form::close() }}
+					<hr>
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
 						<div class="form-group">
 							<button type="submit" class="btn btn-success btn-block">Sign in</button>

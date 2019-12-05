@@ -34,7 +34,7 @@
 						<td>
 							<p style="padding-top:7px;">
 								<img class="img-rounded" style="max-width: 4%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->steamname }}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
 								<small> - {{ $tournamentParticipant->eventParticipant->user->username }}</small>
 							</p>
 						</td>
@@ -113,7 +113,7 @@
 						<td>
 							@if ($tournamentTeam->tournamentParticipants)
 								@foreach ($tournamentTeam->tournamentParticipants as $participant)
-									<img class="img-rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->steamname }}
+									<img class="img-rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
 									<span class="pull-right">
 										@if ($participant->eventParticipant->seat)
 											{{ $participant->eventParticipant->seat->seat }}
@@ -153,7 +153,7 @@
 							<td>
 								<p>
 									<img class="img-rounded" style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->steamname }}
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
 								</p>
 							</td>
 							<td>

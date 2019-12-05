@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Gallery - {{ $album->name }}</h1>
+		<h3 class="page-header">Gallery - {{ $album->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/gallery">Gallery</a>
@@ -104,7 +104,7 @@
 						{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}
 					</div>
-					<button type="submit" class="btn btn-default">Upload</button>
+					<button type="submit" class="btn btn-primary btn-block">Upload</button>
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -165,12 +165,12 @@
 								}}
 							</div>
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 					<hr>
 					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 						{{ Form::hidden('_method', 'DELETE') }}
-						<button type="submit" class="btn btn-danger">Delete</button>
+						<button type="submit" class="btn btn-danger btn-block">Delete</button>
 					{{ Form::close() }}
 				</div>
 			</div>

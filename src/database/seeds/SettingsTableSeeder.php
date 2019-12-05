@@ -31,6 +31,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'org_tagline'],
+            [
+                'value'         => env('ORG_TAGLINE', 'Tagline Here'),
+                'default'       => true,
+                'description'   => 'Tagline of the Organization'
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'org_logo'],
             [
                 'value'         => env('ORG_LOGO', '/storage/images/main/logo_main.png'),
@@ -111,6 +119,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'frontpage_alot_tagline'],
+            [
+                'value'         => "People we've fragged",
+                'default'       => true,
+                'description'   => "Appears on the frontpage on the banner above the footer"
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'participant_count_offset'],
             [
                 'value'         => 0,
@@ -119,11 +135,11 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
-            ['setting'          => 'lan_count_offset'],
+            ['setting'          => 'event_count_offset'],
             [
                 'value'         => 0,
                 'default'       => true,
-                'description'   => 'Increment the Total Lan Count on the Home page'
+                'description'   => 'Increment the Total Event Count on the Home page'
             ]
         );
         App\Setting::firstOrCreate(
@@ -233,11 +249,48 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
-            ['setting'          => 'shop_enabled'],
+            ['setting'          => 'login_standard'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
         );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'login_steam'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_status'],
+            [
+                'value'         => 'OPEN',
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_welcome_message'],
+            [
+                'value'         => "Welcome to the Shop!",
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_closed_message'],
+            [
+                'value'         => "Shop is currently closed!",
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
     }
 }
+
+

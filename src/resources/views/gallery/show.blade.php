@@ -16,7 +16,7 @@
 			<h4>From {{ $album->event->display_name }}</h4>
 		@endif
 	</div>
-	<div class="fotorama" data-nav="thumbs" data-allowfullscreen="full">
+	<div class="center-align fotorama" data-nav="thumbs" data-allowfullscreen="full">
 		@foreach ($album->images as $image)
 			<img src="{{ $image->path }}">
 		@endforeach

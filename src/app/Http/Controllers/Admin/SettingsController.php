@@ -11,7 +11,6 @@ use Input;
 use FacebookPageWrapper as Facebook;
 
 use App\User;
-use App\SliderImage;
 use App\Setting;
 use App\Event;
 use App\EventParticipant;
@@ -39,12 +38,50 @@ class SettingsController extends Controller
         }
         return view('admin.settings.index')
             ->withSettings(Setting::all())
+            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withFacebookCallback($facebookCallback)
+            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
+            ->withActiveLoginMethods(Settings::getLoginMethods())
+        ;
+    }
+
+    /**
+     * Show Settings Org Page
+     * @return Redirect
+     */
+    public function showOrg()
+    {
+        return view('admin.settings.org')
+            ->withSettings(Setting::all())
+        ;
+    }
+
+    /**
+     * Show Settings Payment Page
+     * @return Redirect
+     */
+    public function showPayments()
+    {
+        
+        return view('admin.settings.payments')
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withIsShopEnabled(Settings::isShopEnabled())
-            ->withSliderImages(SliderImage::getImages('frontpage'))
+        ;
+    }
+
+    /**
+     * Show Settings Index Page
+     * @return Redirect
+     */
+    public function showAuth()
+    {
+        
+        return view('admin.settings.auth')
+            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
+            ->withActiveLoginMethods(Settings::getLoginMethods())
         ;
     }
     
@@ -58,26 +95,30 @@ class SettingsController extends Controller
         $rules = [
             'terms_and_conditions'      => 'filled',
             'org_name'                  => 'filled',
+            'org_tagline'               => 'filled',
             'about_main'                => 'filled',
             'about_short'               => 'filled',
             'about_our_aim'             => 'filled',
             'about_who'                 => 'filled',
             'currency'                  => 'in:GBP,USD,EUR',
+            'shop_status'               => 'in:OPEN,CLOSED',
             'participant_count_offset'  => 'numeric',
-            'lan_count_offset'          => 'numeric',
+            'event_count_offset'        => 'numeric',
             'org_logo'                  => 'image',
             'org_favicon'               => 'image',
         ];
         $messages = [
             'terms_and_conditions.filled'       => 'Terms And Conditions cannot be empty',
             'org_name.filled'                   => 'Org Name cannot be empty',
+            'org_tagline.filled'                => 'Org Tagline cannot be empty',
             'about_main.filled'                 => 'About Main cannot be empty',
             'about_short.filled'                => 'About Short cannot be empty',
             'about_our_aim.filled'              => 'About Our Aim cannot be empty',
             'about_who.filled'                  => 'About Whos who cannot be empty',
             'currency.in'                       => 'Currency must be GBP, USD or EUR',
+            'shop_status.in'                    => 'Shop Status must be OPEN or CLOSED',
             'participant_count_offset.numeric'  => 'Participant Count Offset must be a number',
-            'lan_count_offset.numeric'          => 'Lan Count Offset must be a number',
+            'event_count_offset.numeric'        => 'Lan Count Offset must be a number',
             'org_logo.image'                    => 'Org Logo must be a Image',
             'org_favicon'                       => 'Org Favicon must be a Image'
         ];
@@ -120,12 +161,17 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->lan_count_offset) && !Settings::setLanCountOffset($request->lan_count_offset)) {
+        if (isset($request->event_count_offset) && !Settings::setEventCountOffset($request->event_count_offset)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
         if (isset($request->about_main) && !Settings::setAboutMain($request->about_main)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->frontpage_alot_tagline) && !Settings::setFrontpageAlotTagline($request->frontpage_alot_tagline)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
@@ -169,6 +215,26 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        if (isset($request->org_tagline) && !Settings::setOrgTagline($request->org_tagline)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->shop_status) && !Settings::setShopStatus($request->shop_status)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->shop_welcome_message) && !Settings::setShopWelcomeMessage($request->shop_welcome_message)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        if (isset($request->shop_closed_message) && !Settings::setShopClosedMessage($request->shop_closed_message)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         if (Input::file('org_logo') && !Settings::setOrgLogo(Input::file('org_logo'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
@@ -200,11 +266,11 @@ class SettingsController extends Controller
     {
         if ($social == 'facebook' && (!Facebook::isEnabled())) {
             Session::flash('alert-danger', 'Facebook App is not configured.');
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         if ($social == 'facebook' && (Facebook::isLinked())) {
             Session::flash('alert-danger', 'Facebook is already Linked.');
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         $acceptedSocial = array(
             'facebook',
@@ -213,25 +279,25 @@ class SettingsController extends Controller
         );
         if (!in_array($social, $acceptedSocial)) {
             Session::flash('alert-danger', "{$social} is not supported by the Lan Manager.");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
 
         if ($social == 'facebook' && (Facebook::isEnabled() && !Facebook::isLinked())) {
             if (!$userAccessToken = Facebook::getUserAccessToken()) {
                 Session::flash('alert-danger', 'Facebook: 401 Unauthorized Request.');
-                return Redirect::to('/admin/settings');
+                return Redirect::back();
             }
             if (!$pageAccessToken = Facebook::getPageAccessTokens($userAccessToken)) {
                 Session::flash('alert-danger', "Facebook: Error getting long-lived access token");
-                return Redirect::to('/admin/settings');
+                return Redirect::back();
             }
             if (!Settings::setSocialFacebookPageAccessTokens($pageAccessToken)) {
                 Session::flash('alert-danger', "Could not Link {$social}!");
-                return Redirect::to('/admin/settings');
+                return Redirect::back();
             }
         }
         Session::flash('alert-success', "Successfully Linked {$social}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -243,13 +309,13 @@ class SettingsController extends Controller
     {
         if (!Settings::setSocialFacebookPageAccessTokens(null)) {
             Session::flash('alert-danger', "Could not Unlink {$social}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash(
             'alert-success',
             "Successfully Uninked {$social}. You will still need to remove the app access on Facebook!"
         );
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -261,10 +327,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enablePaymentGateway($gateway)) {
             Session::flash('alert-danger', "Could not Enable {$gateway}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled {$gateway}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -276,10 +342,10 @@ class SettingsController extends Controller
     {
         if (!Settings::disablePaymentGateway($gateway)) {
             Session::flash('alert-danger', "Could not Disable {$gateway}!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled {$gateway}!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
     
     /**
@@ -290,10 +356,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enableCreditSystem()) {
             Session::flash('alert-danger', "Could not Enable the Credit System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled the Credit System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -304,10 +370,10 @@ class SettingsController extends Controller
     {
         if (!Settings::disableCreditSystem()) {
             Session::flash('alert-danger', "Could not Disable the Credit System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled the Credit System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
     
     /**
@@ -318,10 +384,10 @@ class SettingsController extends Controller
     {
         if (!Settings::enableShopSystem()) {
             Session::flash('alert-danger', "Could not Enable the Shop System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled the Shop System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
     }
 
     /**
@@ -332,10 +398,44 @@ class SettingsController extends Controller
     {
         if (!Settings::disableShopSystem()) {
             Session::flash('alert-danger', "Could not Disable the Shop System!");
-            return Redirect::to('/admin/settings');
+            return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Disabled the Shop System!");
-        return Redirect::to('/admin/settings');
+        return Redirect::back();
+    }
+
+    /**
+     * Enable Login Method
+     * @param  String $gateway
+     * @return Redirect
+     */
+    public function enableLoginMethod($method)
+    {
+        if (!Settings::enableLoginMethod($method)) {
+            Session::flash('alert-danger', "Could not Enable {$method}!");
+            return Redirect::back();
+        }
+        Session::flash('alert-success', "Successfully Enabled {$method}!");
+        return Redirect::back();
+    }
+
+    /**
+     * Disable Login Method
+     * @param  String $gateway
+     * @return Redirect
+     */
+    public function disableLoginMethod($method)
+    {
+        if (count(Settings::getLoginMethods()) <= 1) {
+            Session::flash('alert-danger', "You must have at least one Login Method enabled!");
+            return Redirect::back();
+        }
+        if (!Settings::disableLoginMethod($method)) {
+            Session::flash('alert-danger', "Could not Disable {$method}!");
+            return Redirect::back();
+        }
+        Session::flash('alert-success', "Successfully Disabled {$method}!");
+        return Redirect::back();
     }
 
     /**

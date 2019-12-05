@@ -61,6 +61,29 @@ class Setting extends Model
     }
 
     /**
+     * Get Organization Tagline
+     * @return String
+     */
+    public static function getOrgTagline()
+    {
+        return self::where('setting', 'org_tagline')->first()->value;
+    }
+
+    /**
+     * Set Organization Tagline
+     * @param String $tagline
+     */
+    public static function setOrgTagline($tagline)
+    {
+        $setting = self::where('setting', 'org_tagline')->first();
+        $setting->value = $tagline;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get Organization Logo Path
      * @return String
      */
@@ -337,19 +360,43 @@ class Setting extends Model
      * Get Lan Count Offset
      * @return Integer
      */
-    public static function getLanCountOffset()
+    public static function getEventCountOffset()
     {
-        return self::where('setting', 'lan_count_offset')->first()->value;
+        return self::where('setting', 'event_count_offset')->first()->value;
     }
 
     /**
      * Set Lan Count Offset
      * @param Integer $number
      */
-    public static function setLanCountOffset($number)
+    public static function setEventCountOffset($number)
     {
-        $setting = self::where('setting', 'lan_count_offset')->first();
+        $setting = self::where('setting', 'event_count_offset')->first();
         $setting->value = $number;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Get Frontpage Alot Tagline
+     * @return Integer
+     */
+    public static function getFrontpageAlotTagline()
+    {
+        return self::where('setting', 'frontpage_alot_tagline')->first()->value;
+    }
+
+    /**
+     * Set Frontpage Alot Tagline
+     * @param string $text
+     */
+    public static function setFrontpageAlotTagline($text)
+    {
+        $setting = self::where('setting', 'frontpage_alot_tagline')->first();
+        $setting->value = $text;
         if (!$setting->save()) {
             return false;
         }
@@ -818,6 +865,142 @@ class Setting extends Model
         }
         $shopSystemEnabled->value = false;
         if (!$shopSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Shop Status
+     * @return Boolean
+     */
+    public static function getShopStatus()
+    {
+        return self::where('setting', 'shop_status')->first()->value;
+    }
+
+    /**
+     * Set Shop Status
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopStatus($text)
+    {
+        if (!$shop = self::where('setting', 'shop_status')->first()) {
+            return false;
+        }
+        $shop->value = $text;
+        if (!$shop->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Shop Welcome Message
+     * @return String
+     */
+    public static function getShopWelcomeMessage()
+    {
+        return self::where('setting', 'shop_welcome_message')->first()->value;
+    }
+
+    /**
+     * Set Shop Welcome Message
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopWelcomeMessage($text)
+    {
+        $setting = self::where('setting', 'shop_welcome_message')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Shop Closed Message
+     * @return String
+     */
+    public static function getShopClosedMessage()
+    {
+        return self::where('setting', 'shop_closed_message')->first()->value;
+    }
+
+    /**
+     * Set Shop Closed Message
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setShopClosedMessage($text)
+    {
+        $setting = self::where('setting', 'shop_closed_message')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Active Login Methods
+     * @return Array
+     */
+    public static function getLoginMethods()
+    {
+        $loginMethods = self::where('setting', 'like', '%login_%')->get();
+        $return = array();
+        foreach ($loginMethods as $method) {
+            if ($method->value) {
+                $return[] = str_replace('login_', '', $method->setting);
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Get Supported Login Methods
+     * @return Array
+     */
+    public static function getSupportedLoginMethods()
+    {
+        $loginMethods = self::where('setting', 'like', '%login_%')->get();
+        $return = array();
+        foreach ($loginMethods as $method) {
+            $return[] = str_replace('login_', '', $method->setting);
+        }
+        return $return;
+    }
+
+    /**
+     * Enable Login Method
+     * @return Boolean
+     */
+    public static function enableLoginMethod($method)
+    {
+        if (!$loginMethod = self::where('setting', 'like', '%login_'. $method . '%')->first()) {
+            return false;
+        }
+        $loginMethod->value = true;
+        if (!$loginMethod->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Login Method
+     * @return Boolean
+     */
+    public static function disableLoginMethod($method)
+    {
+        if (!$loginMethod = self::where('setting', 'like', '%login_'. $method . '%')->first()) {
+            return false;
+        }
+        $loginMethod->value = false;
+        if (!$loginMethod->save()) {
             return false;
         }
         return true;

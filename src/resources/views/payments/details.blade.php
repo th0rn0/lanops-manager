@@ -13,7 +13,8 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
 			@if ($paymentGateway == 'stripe')
-				{{ Form::open(array('url'=>'/payment/post')) }}
+				
+				{{ Form::open(array('url'=>'/payment/post', 'id'=>'payment-form')) }}
 					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
 							{{ Form::label('card_first_name', 'First Name *', array('id'=>'','class'=>'')) }}
@@ -24,49 +25,12 @@
 							{{ Form::text('card_last_name', '', array('id'=>'card_last_name','class'=>'form-control')) }}
 						</div>
 					</div>
-					<div class="form-group">
-						{{ Form::label('card_number', 'Card Number *', array('id'=>'','class'=>'')) }}
-						{{ Form::text('card_number', '', array('id'=>'card_number','class'=>'form-control')) }}
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-4 col-xs-6">
-							{{ Form::label('card_expiry_month', 'Card Expiry Month *', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_expiry_month', '', array('id'=>'card_expiry_month','class'=>'form-control')) }}
-						</div> 
-						<div class="form-group col-sm-4 col-xs-6">
-							{{ Form::label('card_expiry_year', 'Card Expiry Year *', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_expiry_year', '', array('id'=>'card_expiry_year','class'=>'form-control')) }}
-						</div>
-						<div class="form-group col-sm-4 col-xs-12">
-							{{ Form::label('card_cvv', 'Card CVV', array('id'=>'','class'=>'')) }}
-							{{ Form::text('card_cvv', '', array('id'=>'card_cvv','class'=>'form-control')) }}
-						</div>
-					</div>
-					<div class="form-group">
-						{{ Form::label('billing_address_1', 'Billing Address 1 *', array('id'=>'','class'=>'')) }}
-						{{ Form::text('billing_address_1', '', array('id'=>'billing_address_1','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('billing_address_2', 'Billing Address 2', array('id'=>'','class'=>'')) }}
-						{{ Form::text('billing_address_2', '', array('id'=>'billing_address_2','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('billing_country', 'Billing Country', array('id'=>'','class'=>'')) }}
-						{{ Form::text('billing_country', '', array('id'=>'billing_country','class'=>'form-control')) }}
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-6 col-xs-12">
-							{{ Form::label('billing_postcode', 'Billing Postcode *', array('id'=>'','class'=>'')) }}
-							{{ Form::text('billing_postcode', '', array('id'=>'billing_postcode','class'=>'form-control')) }}
-						</div>
-						<div class="form-group col-sm-6 col-xs-12">
-							{{ Form::label('billing_state', 'Billing State', array('id'=>'','class'=>'')) }}
-							{{ Form::text('billing_state', '', array('id'=>'billing_state','class'=>'form-control')) }}
-						</div>
-					</div>
+					{{ Form::label('card_number', 'Card Details', array('id'=>'','class'=>'')) }}
+					<div class="form-control" id="card-element"></div>
+			  		<div id="card-errors" role="alert"></div>
 					<p><small>* Required Fields</small></p>
 					{{ Form::hidden('gateway', $paymentGateway) }}
-					<button class="btn btn-default">Confirm Order</button>
+					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">Confirm Order</button>
 				{{ Form::close() }}
 			@else ($paymentGateway == 'credit' && Settings::isCreditEnabled())
 				<h5>Credit: {{ $user->credit_total }}</h5>
@@ -79,7 +43,7 @@
 					{{ Form::open(array('url'=>'/payment/post')) }}
 					{{ Form::hidden('gateway', $paymentGateway) }}
 					{{ Form::hidden('confirm', true) }}
-						<button class="btn btn-default">Confirm Order</button>
+						<button class="btn btn-primary btn-block">Confirm Order</button>
 					{{ Form::close() }}
 				@elseif (!$basket->allow_credit)
 					<hr>
@@ -103,8 +67,79 @@
 					@include ('layouts._partials._shop.basket-preview')
 				</div>
 			</div>
+			@if ($delivery && $deliveryDetails)
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Delivery Details</h3>
+					</div>
+					<div class="panel-body">
+						@if ($deliveryDetails && $deliveryDetails['type'] == 'shipping')
+							<address>
+								<strong>{{ $delivery['shipping_first_name']}} {{ $delivery['shipping_last_name'] }}</strong><br>
+								{{ $delivery['shipping_address_1'] }}<br>
+								@if (trim($delivery['shipping_address_2']) != '')
+									{{ $delivery['shipping_address_2'] }}<br>
+								@endif
+								@if (trim($delivery['shipping_country']) != '')
+									{{ $delivery['shipping_country'] }}<br>
+								@endif
+								@if (trim($delivery['shipping_state']) != '')
+									{{ $delivery['shipping_state'] }}<br>
+								@endif
+								{{ $delivery['shipping_postcode'] }}
+							</address>
+						@else
+							<strong>Delivery to the next event you Attend</strong>
+						@endif
+					</div>
+				</div>
+			@endif
 		</div>
+
 	</div>
 </div>
+
+@if ($paymentGateway == 'stripe')
+	<script src="https://js.stripe.com/v3/"></script>
+	<script>
+
+        var style = {
+            base: {
+			  	lineHeight: '1.429'
+            }
+        };
+
+	    const stripe = Stripe( '{!! env('STRIPE_PUBLIC_KEY') !!}' );
+
+	    const elements = stripe.elements();
+	    const cardElement = elements.create('card', {style: style});
+
+	    cardElement.mount('#card-element');
+
+	    const cardHolderName = document.getElementById('card_first_name') + document.getElementById('card_last_name');
+		const cardButton = document.getElementById('checkout_btn');
+		const clientSecret = cardButton.dataset.secret;
+		const form = document.getElementById('payment-form');
+		cardButton.addEventListener('click', async (e) => {
+		    stripe.createPaymentMethod('card', cardElement, {
+                billing_details: {name: cardHolderName.value }
+            }).then(function(result) {
+
+                if (result.error) {
+                    cardButton.disabled = false;
+                    alert(result.error.message);
+                } else {
+					var hiddenInput = document.createElement('input');
+					hiddenInput.setAttribute('type', 'hidden');
+					hiddenInput.setAttribute('name', 'stripe_token');
+					hiddenInput.setAttribute('value', result.paymentMethod.id);
+					form.appendChild(hiddenInput);
+					console.log(result.paymentMethod.id);
+					form.submit();
+                }
+            });
+		});
+	</script>
+@endif
 
 @endsection

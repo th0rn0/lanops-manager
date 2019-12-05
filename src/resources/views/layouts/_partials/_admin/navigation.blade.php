@@ -12,7 +12,7 @@
 	<!-- Top Menu Items -->
 	<ul class="nav navbar-right top-nav">
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ $user->steamname }} <b class="caret"></b></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ $user->username }} <b class="caret"></b></a>
 			<ul class="dropdown-menu">
 				<li>
 					<a href="/account"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -31,18 +31,6 @@
 				<a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 			</li>
 			<li>
-				<a href="/admin/news"><i class="fa fa-comment fa-fw"></i> News</a>
-			</li>
-			<li>
-				<a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
-			</li>
-			<li>
-				<a href="/admin/polls"><i class="fa fa-list fa-fw"></i> Polls</a>
-			</li>
-			<li>
-				<a href="/admin/venues"><i class="fa fa-building fa-fw"></i> Venues</a>
-			</li>
-			<li>
 				<a href="/admin/events"><i class="fa fa-book fa-fw"></i> Events</a>
 				<ul class="nav nav-second-level">
 					@foreach (Helpers::getEvents('DESC', 5, true) as $event)
@@ -59,6 +47,19 @@
 				<!-- /.nav-second-level -->
 			</li>
 			<li>
+				<a href="/admin/news"><i class="fa fa-comment fa-fw"></i> News</a>
+			</li>
+			<li>
+				<a href="/admin/users"><i class="fa fa-user fa-fw"></i> Users</a>
+			</li>
+			<li>
+				<a href="/admin/polls"><i class="fa fa-list fa-fw"></i> Polls</a>
+			</li>
+			<li>
+				<a href="/admin/venues"><i class="fa fa-building fa-fw"></i> Venues</a>
+			</li>
+			
+			<li>
 				<a href="/admin/gallery"><i class="fa fa-camera fa-fw"></i> Gallery</a>
 			</li>
 			<li>
@@ -68,22 +69,20 @@
 				<a href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>
 			<li>
-				<a href="/admin/settings"><i class="fa fa-wrench" aria-hidden="true"></i> Settings/Misc</a> 
+				<a href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
 			</li>
 			<li>
-				<a href="/admin/appearance"><i class="fa fa-wrench" aria-hidden="true"></i> Appearance/CSS</a> 
+				<a href="/admin/credit"><i class="fa fa-refresh fa-fw" aria-hidden="true"></i> Credit System (Beta)</a> 
 			</li>
-			@if(Settings::isCreditEnabled())
+			<li>
+				<a href="/admin/shop"><i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i> Shop (Beta)</a> 
+			</li>
+			@if (Settings::isShopEnabled())
 				<li>
-					<a href="/admin/credit"><i class="fa fa-wrench" aria-hidden="true"></i> Credit System (Beta)</a> 
+					<a href="/admin/orders"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> Orders (Beta)</a> 
 				</li>
 			@endif
-			@if(Settings::isShopEnabled())
-				<li>
-					<a href="/admin/shop"><i class="fa fa-wrench" aria-hidden="true"></i> Shop (Beta)</a> 
-				</li>
-			@endif
-			</ul>
+		</ul>
 	</div>
 	<!-- /.navbar-collapse -->
 </nav>

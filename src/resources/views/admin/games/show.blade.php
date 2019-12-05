@@ -6,8 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Games</h1>
-		
+		<h3 class="page-header">Games</h3>		
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/games/">Games</a>
@@ -85,7 +84,7 @@
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
-						<button type="submit" class="btn btn-default btn-block">Submit</button>
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 					<hr>
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug, 'onsubmit' => 'return ConfirmDelete()')) }}

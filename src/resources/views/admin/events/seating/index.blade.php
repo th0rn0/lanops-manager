@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Seating Plans</h1>
+		<h3 class="page-header">Seating Plans</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -106,7 +106,7 @@
 						{{ Form::label('image','Seating Plan Image',array('id'=>'','class'=>'')) }}
 						{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>

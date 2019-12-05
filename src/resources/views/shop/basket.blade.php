@@ -52,7 +52,7 @@
 										{{ Form::open(array('url'=>'/shop/basket')) }}
 											{{ Form::hidden('shop_item_id', $item->id) }}
 											{{ Form::hidden('action', 'remove') }}
-											<button type="submit" class="btn btn-success">X</button>
+											<button type="submit" class="btn btn-primary">X</button>
 										{{ Form::close() }}
 									</td>
 								</tr>
@@ -79,7 +79,7 @@
 						</tbody>
 					</table>
 					<a href="/payment/checkout">
-						<button type="button" class="btn btn-sm btn-success">Checkout</button>
+						<button type="button" class="btn btn-primary btn-block">Checkout</button>
 					</a>
 				@else
 					<p>Basket is Empty</p>

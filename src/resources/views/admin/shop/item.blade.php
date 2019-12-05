@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Shop - {{ $item->name }}</h1>
+		<h3 class="page-header">Shop - {{ $item->name }}</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/shop">Shop</a>
@@ -116,6 +116,11 @@
 						</div>
 						<button type="submit" class="btn btn-block btn-success">Submit</button>
 					{{ Form::close() }}
+					<hr>
+					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug )) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-block btn-danger">Delete</button>
+					{{ Form::close() }}
 				</div>
 			</div>
 		</div>
@@ -179,7 +184,7 @@
 							<li class="list-group-item">{{ $item->name }}</li>
 							<li class="list-group-item">Stock: {{ $item->stock }}</li>
 							<li class="list-group-item">No. of Sales: {{ $item->getTotalSales() }}</li>
-							<li class="list-group-item">Added By: {{ $item->user->steamname }}</li>
+							<li class="list-group-item">Added By: {{ $item->user->username }}</li>
 						</ul>
 						<p>Default Image:</p>
 						<img class="img img-responsive img-rounded" src="{{ $item->getDefaultImageUrl() }}">

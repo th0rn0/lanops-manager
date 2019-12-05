@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Tickets</h1>
+		<h3 class="page-header">Tickets</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/events/">Events</a>
@@ -164,7 +164,10 @@
 						@foreach ( $users as $user )
 							<tr class="table-row odd gradeX">
 								<td>
-									{{ $user->steamname }}
+									{{ $user->username }}
+									@if ($user->steamid)
+										<br><span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
+									@endif
 								</td>
 								<td>
 									{{ $user->getFreeTickets($event->id)->count() }}

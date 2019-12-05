@@ -6,12 +6,12 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">
+		<h3 class="page-header">
 			Polls - {{ $poll->name }}
 			@if ($poll->hasEnded())
 				<small> - Ended</small>
 			@endif
-		</h1>
+		</h3>
 		<ol class="breadcrumb">
 			<li>
 				<a href="/admin/polls/">Polls</a>
@@ -50,7 +50,7 @@
 											{{ $option->getPercentage() }}%
 										</div>
 									</td>
-									<td width="25%"><small>{{ $option->user->steamname }}</small></td>
+									<td width="25%"><small>{{ $option->user->username }}</small></td>
 									<td>
 										@if ($option->getTotalVotes() <= 0)
 											{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options/' . $option->id, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -125,13 +125,13 @@
 						{{ Form::label('allow_options_multi','Allow User to Select Multiple Options',array('id'=>'','class'=>'')) }} @if ($poll->allow_options_multi) True @else False @endif
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-default btn-block">Submit</button> 
+						<button type="submit" class="btn btn-success btn-block">Submit</button> 
 					</div>
 				{{ Form::close() }}
 				@if (!$poll->hasEnded())
 					<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/end')) }}
-							<button type="submit" class="btn btn-danger btn-sm btn-block">End Poll</button>
+							<button type="submit" class="btn btn-primary btn-block">End Poll</button>
 						{{ Form::close() }}
 					</div>
 				@endif

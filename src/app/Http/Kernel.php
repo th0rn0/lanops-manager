@@ -45,11 +45,14 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => \App\Http\Middleware\Admin::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'auth'          => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin'         => \App\Http\Middleware\Admin::class,
+        'banned'        => \App\Http\Middleware\Banned::class,
+        'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
     ];
 }

@@ -8,10 +8,17 @@ use Settings;
 
 use App\CreditLog;
 
+use \Carbon\Carbon as Carbon;
+
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
+
+    use Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,7 +31,9 @@ class User extends Authenticatable
         'steamname',
         'username',
         'avatar',
-        'steamid'
+        'steamid',
+        'last_login',
+        'email_verified_at'
     ];
 
     /**
@@ -197,4 +206,51 @@ class User extends Authenticatable
         }
         return true;
     }
+
+    /**
+     * Get Orders for Current User
+     * @return ShopOrder
+     */
+    public function getOrders()
+    {
+        $return = collect();
+        foreach ($this->purchases as $purchase) {
+            if ($purchase->order) {
+                $return->prepend($purchase->order);
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\ResetPassword($token));
+    }
+
+    /**
+     * Get Next Event for Current User
+     * @return Event
+     */
+    public function getNextEvent()
+    {
+        $nextEvent = false;
+        foreach ($this->eventParticipants as $eventParticipant) {
+            if ($eventParticipant->event->end >=  Carbon::now()) {
+                if (!isset($nextEvent) || !$nextEvent) {
+                    $nextEvent = $eventParticipant->event;
+                }
+                if ($nextEvent->end >= $eventParticipant->event->end) {
+                    $nextEvent = $eventParticipant->event;
+                }
+            } 
+        }
+        return $nextEvent;
+    }
+
 }

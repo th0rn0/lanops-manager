@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-4">
 			<!-- // TODO - add user account public pages -->
-			<p class="news-post-meta pull-right">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by <a href="#">{{ $newsArticle->user->steamname }}</a></p>
+			<p class="news-post-meta pull-right">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by <a href="#">{{ $newsArticle->user->username }}</a></p>
 		</div>
 	</div>
 </div>

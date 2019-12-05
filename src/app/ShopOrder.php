@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Auth;
+
 use App\ShopOrderItem;
 
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +22,14 @@ class ShopOrder extends Model
     protected $fillable = [
         'purchase_id',
         'status',
+        'shipping_first_name',
+        'shipping_last_name',
+        'shipping_address_1',
+        'shipping_address_2',
+        'shipping_country',
+        'shipping_postcode',
+        'shipping_state',
+        'deliver_to_event'
     ];
 
     /**
@@ -60,6 +70,120 @@ class ShopOrder extends Model
             'shop_order_id' => $this->id,
         ];
         if (!ShopOrderItem::create($params)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get New Orders
+     * @param $type
+     * @return Orders
+     */
+    public static function getNewOrders($type = 'all')
+    {
+        if (!$user = Auth::user()) {
+            $type = 'all';
+        }
+        switch ($type) {
+            case 'login':
+                $orders = self::where('created_at', '>=', $user->last_login)->get();
+                break;
+            default:
+                $orders = self::where('created_at', '>=', date('now - 1 day'))->get();
+                break;
+        }
+        return $orders;
+    }
+
+
+    /**
+     * Check if Order has Shipping Details
+     * @return Boolean
+     */
+    public function hasShipping()
+    {
+        if (
+            trim($this->shipping_first_name) == "" &&
+            trim($this->shipping_last_name) == "" &&
+            trim($this->shipping_address_1) == "" &&
+            trim($this->shipping_address_2) == "" &&
+            trim($this->shipping_country) == "" &&
+            trim($this->shipping_postcode) == "" &&
+            trim($this->shipping_state) == ""
+
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Processing
+     * @param $params
+     * @return Orders
+     */
+    public function setAsProcessing($params)
+    {
+        $this->status = 'PROCESSING';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Shipped
+     * @param $params
+     * @return Orders
+     */
+    public function setAsShipped($params)
+    {
+        $this->status = 'SHIPPED';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Complete
+     * @param $params
+     * @return Orders
+     */
+    public function setAsComplete($params)
+    {
+        $this->status = 'COMPLETE';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Order as Cancelled
+     * @param $params
+     * @return Orders
+     */
+    public function setAsCancelled($params)
+    {
+        $this->status = 'CANCELLED';
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Update Tracking Details
+     * @param $params
+     * @return Orders
+     */
+    public function updateTrackingDetails($params)
+    {
+        $this->shipping_tracking = $params->shipping_tracking;
+        $this->shipping_note = $params->shipping_note;
+        if (!$this->save()) {
             return false;
         }
         return true;

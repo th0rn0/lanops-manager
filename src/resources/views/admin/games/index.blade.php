@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Games</h1>
+		<h3 class="page-header">Games</h3>
 		<ol class="breadcrumb">
 			<li class="active">
 				Games
@@ -74,13 +74,13 @@
 									</td>
 									<td width="15%">
 										<a href="/admin/games/{{ $game->slug }}">
-											<button class="btn btn-primary btn-block">Edit</button>
+											<button class="btn btn-primary btn-sm btn-block">Edit</button>
 										</a>
 									</td>
 									<td width="15%">
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
-											<button type="submit" class="btn btn-danger btn-block">Delete</button>
+											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
 									</td>
 								</tr>
@@ -130,7 +130,7 @@
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				</div>
 			</div>

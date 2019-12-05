@@ -35,7 +35,7 @@ class PaymentsController extends Controller
      * Checkout Page
      * @return View
      */
-    public function checkout()
+    public function showCheckout()
     {
         if (!Session::has(Settings::getOrgName() . '-basket')) {
             return Redirect::to('/');
@@ -50,7 +50,7 @@ class PaymentsController extends Controller
      * Review Terms and Conditions of Purchase Page
      * @return View
      */
-    public function review($paymentGateway)
+    public function showReview($paymentGateway)
     {
         if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             return Redirect::back();
@@ -84,17 +84,43 @@ class PaymentsController extends Controller
      * @param  $paymentGateway
      * @return View
      */
-    public function details($paymentGateway)
+    public function showDetails($paymentGateway)
     {
         if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             return Redirect::back();
         }
+        $delivery = false;
+        $deliveryDetails = false;
+        if (array_key_exists('shop', $basket)) {
+            $delivery = true;
+            if (array_key_exists('delivery', $basket)) {
+                $deliveryDetails = $basket['delivery'];
+            }
+        }
         return view('payments.details')
+            ->withPaymentGateway($paymentGateway)
+            ->withBasket(Helpers::formatBasket($basket, true))
+            ->withDelivery($delivery)
+            ->withDeliveryDetails($deliveryDetails)
+        ;
+    }
+
+    /**
+     * Delivery Details Page
+     * @param  $paymentGateway
+     * @return View
+     */
+    public function showDelivery($paymentGateway)
+    {
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+            return Redirect::back();
+        }
+        return view('payments.delivery')
             ->withPaymentGateway($paymentGateway)
             ->withBasket(Helpers::formatBasket($basket, true))
         ;
     }
-    
+
     /**
      * Post Payment to Gateway
      * @param  Request $request
@@ -123,6 +149,59 @@ class PaymentsController extends Controller
                 }
             }
         }
+        // If Order accepts delivery and no delivery details have been submitted redirect to delivery page
+        if (array_key_exists('shop', $basket)) {
+            if (
+                !isset($request->shipping_first_name) &&
+                !isset($request->shipping_last_name) &&
+                !isset($request->shipping_address_1) &&
+                !isset($request->shipping_postcode) &&
+                !array_key_exists('delivery', $basket)
+            ) {
+                return Redirect::to('/payment/delivery/' . $paymentGateway);
+            }
+            if (!array_key_exists('delivery', $basket)) {
+                 $rules = [
+                    'delivery_type'   => 'required|in:event,shipping'
+                ];
+                $messages = [
+                    'delivery_type.required' => 'A Delivery type is Required',
+                    'delivery_type.in' => 'Delivery type must be event or shipping'
+                ];
+                $this->validate($request, $rules, $messages);
+                // Check if the order is delivery to event or person
+                if ($request->delivery_type == 'shipping') {
+                    // Shipping Details
+                    $rules = [
+                        'shipping_first_name'   => 'required',
+                        'shipping_last_name'    => 'required',
+                        'shipping_address_1'    => 'required',
+                        'shipping_postcode'     => 'required',
+                    ];
+                    $messages = [
+                        'shipping_first_name.required'      => 'First Name is Required',
+                        'shipping_last_name.required'       => 'Last Name is Required',
+                        'shipping_address_1.required'       => 'Shipping Address Required',
+                        'shipping_postcode.required'        => 'Shipping Postcode Required',
+                    ];
+                    $this->validate($request, $rules, $messages);
+                    $basket['delivery'] = [
+                        'type'                  => 'shipping',
+                        'shipping_first_name'   => $request->shipping_first_name,
+                        'shipping_last_name'    => $request->shipping_last_name,
+                        'shipping_address_1'    => $request->shipping_address_1,
+                        'shipping_address_2'    => @$request->shipping_address_2,
+                        'shipping_country'      => @$request->shipping_country,
+                        'shipping_postcode'     => $request->shipping_postcode,
+                        'shipping_state'        => @$request->shipping_state,
+                    ];
+                } else {
+                    $basket['delivery'] = ['type' => 'event'];
+                }
+                Session::put(Settings::getOrgName() . '-basket', $basket);
+                Session::save();
+            }
+        }
         // If Credit Redirect Straight to details page
         if ($paymentGateway == 'credit' && !isset($request->confirm)) {
             return Redirect::to('/payment/details/' . $paymentGateway);
@@ -136,21 +215,11 @@ class PaymentsController extends Controller
             !in_array($paymentGateway, $offSitePaymentGateways) &&
             !isset($request->card_first_name) &&
             !isset($request->card_last_name) &&
-            !isset($request->card_number) &&
-            !isset($request->card_expiry_month) &&
-            !isset($request->card_expiry_year)
+            !isset($request->stripe_token)
         ) {
             return Redirect::to('/payment/details/' . $paymentGateway);
         }
 
-        $requestScheme = 'http';
-        if ((! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
-                (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
-                (! empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
-            ) {
-            $requestScheme = 'https';
-        }
-        
         $processPaymentSkip = false;
 
         switch ($paymentGateway) {
@@ -159,63 +228,37 @@ class PaymentsController extends Controller
                 $rules = [
                     'card_first_name'   => 'required',
                     'card_last_name'    => 'required',
-                    'card_number'       => 'required|integer',
-                    'card_expiry_month' => 'required|integer|between:01,12',
-                    'card_expiry_year'  => 'required|integer|between:00,99',
-                    'card_cvv'          => 'integer|between:000,999',
-                    'billing_address_1' => 'required',
-                    'billing_postcode'  => 'required',
+                    'stripe_token'      => 'required|filled',
                 ];
                 $messages = [
                     'card_first_name.required'      => 'Card First Name is Required',
                     'card_last_name.required'       => 'Card Last Name is Required',
-                    'card_number.required'          => 'Card Number is Required',
-                    'card_number.integer'           => 'Card Number is invalid',
-                    'card_expiry_month.required'    => 'Expiry Month is Required',
-                    'card_expiry_month.integer'     => 'Expiry Month must be a Number',
-                    'card_expiry_month.between'     => 'Expiry Month must in the Numeric MM format',
-                    'card_expiry_year.required'     => 'Expiry Year is Required',
-                    'card_expiry_year.integer'      => 'Expiry Year must be a Number',
-                    'card_expiry_year.between'      => 'Expiry Year must in the Numeric YY format',
-                    'card_cvv.integer'              => 'CVV must be a Number',
-                    'card_cvv.between'              => 'CVV must be a 3 Digits long',
-                    'billing_address_1.required'    => 'Billing Address Required',
-                    'billing_postcode.required'     => 'Billing Postcode Required',
+                    'stripe_token.required'         => 'Stripe Token is Required',
+                    'stripe_token.filled'           => 'Stripe Token cannot be empty',
                 ];
                 $this->validate($request, $rules, $messages);
-
-                $card = array(
-                    'firstName'             => $request->card_first_name,
-                    'lastName'              => $request->card_last_name,
-                    'number'                => $request->card_number,
-                    'expiryMonth'           => $request->card_expiry_month,
-                    'expiryYear'            => $request->card_expiry_year,
-                    'cvv'                   => $request->card_cvv,
-                    'billingAddress1'       => $request->billing_address_1,
-                    'billingCountry'        => $request->billing_address_2,
-                    'billingCity'           => $request->billing_country,
-                    'billingPostcode'       => $request->billing_postcode,
-                    'billingState'          => $request->billing_state,
-                );
                 $params = array(
-                    'amount' => (float)Helpers::formatBasket($basket)->total,
-                    'currency' => Settings::getCurrency(),
-                    'card' => $card
+                    'cancelUrl'     => $this->getCallbackCancelUrl($paymentGateway),
+                    'returnUrl'     => $this->getCallbackReturnUrl($paymentGateway),
+                    'amount'        => (float)Helpers::formatBasket($basket)->total,
+                    'description'   => 'Purchase for ' . Settings::getOrgName(),
+                    'currency'      => Settings::getCurrency(),
+                    'paymentMethod' => $request->stripe_token,
+                    'confirm'       => true,
                 );
-                $gateway = Omnipay::create('Stripe');
-                $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.apikey'));
+                $gateway = Omnipay::create('Stripe\PaymentIntents');
+                $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.secret'));
                 break;
             case 'paypal_express':
                 //Paypal Post Params
                 $params = array(
-                    'cancelUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=cancel',
-                    'returnUrl'     => $requestScheme . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?type=return',
+                    'cancelUrl'     => $this->getCallbackCancelUrl($paymentGateway),
+                    'returnUrl'     => $this->getCallbackReturnUrl($paymentGateway),
                     'name'          => Settings::getOrgName() . ' - Tickets Purchase',
-                    'description'   => 'Ticket Purchase for ' . Settings::getOrgName(),
+                    'description'   => 'Purchase for ' . Settings::getOrgName(),
                     'amount'        => (float)Helpers::formatBasket($basket)->total,
                     'quantity'      => (string)count($basket),
                     'currency'      => Settings::getCurrency(),
-                    'user_id'       => Auth::id(),
                 );
                 $gateway = Omnipay::create('PayPal_Express');
                 $gateway->setUsername(config('laravel-omnipay.gateways.paypal_express.credentials.username'));
@@ -227,7 +270,6 @@ class PaymentsController extends Controller
                 $params = array();
                 break;
         }
-
         Session::put('params', $params);
         Session::save();
         if (!$processPaymentSkip) {
@@ -247,28 +289,8 @@ class PaymentsController extends Controller
         }
 
         // Process Response
-        if (!$processPaymentSkip && $response->isSuccessful() && $paymentGateway == 'stripe') {
-            // payment was successful: update database
-            $stripeResponse = $response->getData();
-            $purchaseParams = [
-                'user_id'           => Auth::id(),
-                'type'              => 'Stripe',
-                'transaction_id'    => $response->getTransactionReference(),
-                'token'             => $response->getBalanceTransactionReference(),
-                'status'            => 'Success'
-            ];
-            $purchase = Purchase::create($purchaseParams);
-            $this->processBasket($basket, $purchase->id);
-            return Redirect::to('/payment/successful/' . $purchase->id);
-        } elseif (!$processPaymentSkip && $response->isRedirect() && $paymentGateway == 'paypal_express') {
-            // redirect to offsite payment gateway such as paypal
-            try {
-                $response->redirect();
-            } catch (\Exception $e) {
-                Session::flash('alert-danger', $e->getMessage());
-                return Redirect::back();
-            }
-        } elseif ($processPaymentSkip && $paymentGateway == 'credit') {
+        // Credit
+        if ($processPaymentSkip && $paymentGateway == 'credit') {
             if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
                 Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
                 return Redirect::to('/payment/failed');
@@ -285,6 +307,41 @@ class PaymentsController extends Controller
             Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
+
+
+        if ($response->isSuccessful()) {
+            // Payment was successful: update database
+            try {
+                $gateway->confirm([
+                    'paymentIntentReference' => $response->getPaymentIntentReference(),
+                    'returnUrl' => $this->getCallbackReturnUrl($paymentGateway),
+                ])->send();
+            } catch (\Exception $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                return Redirect::back();
+            }
+            $responseStripe = $response->getData();
+          
+            $purchaseParams = [
+                'user_id'           => Auth::id(),
+                'type'              => 'Stripe',
+                'transaction_id'    => $response->getTransactionReference(),
+                'token'             => $response->getPaymentIntentReference(),
+                'status'            => 'Success'
+            ];
+            $purchase = Purchase::create($purchaseParams);
+            $this->processBasket($basket, $purchase->id);
+            return Redirect::to('/payment/successful/' . $purchase->id);
+        } else if($response->isRedirect()) {
+            // Payment Requires redirect
+            try {
+                $response->redirect();
+            } catch (\Exception $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                return Redirect::back();
+            }
+        }
+
         //Failed transaction
         $message = '';
         if (!$processPaymentSkip) {
@@ -301,10 +358,7 @@ class PaymentsController extends Controller
      */
     public function process(Request $request)
     {
-        // Currently only PayPal Express
-        $paymentGateway = 'paypal_express';
-
-        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+        if (!$paymentGateway = $this->checkParams($request->gate, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
             return Redirect::back();
         }
         if ($request->input('type') == 'cancel') {
@@ -319,28 +373,58 @@ class PaymentsController extends Controller
         if (config('app.debug')) {
             $this->sandbox = true;
         }
-        $gateway = Omnipay::create('PayPal_Express');
-        $gateway->setUsername(config('laravel-omnipay.gateways.paypal_express.credentials.username'));
-        $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
-        $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
-        $gateway->setTestMode($this->sandbox);
-        //Complete Purchase
-        $gateway->completePurchase($params)->send();
-        $response = $gateway->fetchCheckout($params)->send(); // this is the raw response object
-        $paypalResponse = $response->getData();
-        if (isset($paypalResponse['ACK']) &&
-            $paypalResponse['ACK'] === 'Success' &&
-            isset($paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'])
-        ) {
-            //Add Purchase to database
-            $purchaseParams = [
-                'user_id'           => $params['user_id'],
-                'type'              => 'PayPal Express',
-                'transaction_id'    => $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'],
-                'token'             => $paypalResponse['TOKEN'],
-                'status'            => $paypalResponse['ACK'],
-                'paypal_email'      => $paypalResponse['EMAIL'],
-            ];
+        $successful = false;
+        switch ($paymentGateway) {
+            case 'stripe':
+                $gateway = Omnipay::create('Stripe\PaymentIntents');
+                $gateway->setApiKey(config('laravel-omnipay.gateways.stripe.credentials.secret'));
+
+                //Complete Purchase
+                $response = $gateway->confirm([
+                    'paymentIntentReference' => $request->get('payment_intent'),
+                    'returnUrl'     => $this->getCallbackReturnUrl($paymentGateway),
+                ])->send();
+
+                if ($response->isSuccessful()) {
+                    //Add Purchase to database
+                    $purchaseParams = [
+                        'user_id'           => Auth::id(),
+                        'type'              => 'Stripe',
+                        'transaction_id'    => $response->getTransactionReference(),
+                        'token'             => $response->getPaymentIntentReference(),
+                        'status'            => 'Success'
+                    ];
+                    $successful = true;
+                }
+                break;
+            case 'paypal_express':
+                $gateway = Omnipay::create('PayPal_Express');
+                $gateway->setUsername(config('laravel-omnipay.gateways.paypal_express.credentials.username'));
+                $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
+                $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
+                $gateway->setTestMode($this->sandbox);
+                //Complete Purchase
+                $gateway->completePurchase($params)->send();
+                $response = $gateway->fetchCheckout($params)->send(); // this is the raw response object
+                $paypalResponse = $response->getData();
+                if (isset($paypalResponse['ACK']) &&
+                    $paypalResponse['ACK'] === 'Success' &&
+                    isset($paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'])
+                ) {
+                    //Add Purchase to database
+                    $purchaseParams = [
+                        'user_id'           => Auth::id(),
+                        'type'              => 'PayPal Express',
+                        'transaction_id'    => $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'],
+                        'token'             => $paypalResponse['TOKEN'],
+                        'status'            => $paypalResponse['ACK'],
+                        'paypal_email'      => $paypalResponse['EMAIL'],
+                    ];
+                    $successful = true;
+                }
+                break;
+        }
+        if ($successful) {
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
@@ -355,7 +439,7 @@ class PaymentsController extends Controller
      * @param  Purchase $purchase
      * @return View
      */
-    public function successful(Purchase $purchase)
+    public function showSuccessful(Purchase $purchase)
     {
         if (!Session::has('params')) {
             return Redirect::to('/');
@@ -380,7 +464,7 @@ class PaymentsController extends Controller
      * @param  Purchase $purchase
      * @return View
      */
-    public function failed()
+    public function showFailed()
     {
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
@@ -392,7 +476,7 @@ class PaymentsController extends Controller
      * @param  Purchase $purchase
      * @return View
      */
-    public function cancelled()
+    public function showCancelled()
     {
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
@@ -421,12 +505,26 @@ class PaymentsController extends Controller
                 }
             }
         } elseif(array_key_exists('shop', $basket)) {
+            $status = 'EVENT';
+            $deliverToEvent = true;
+            if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
+                $deliverToEvent = false;
+                $status = 'PENDING';
+            }
             $formattedBasket = Helpers::formatBasket($basket);
             $orderParams = [
-                'total'         => (float)$formattedBasket->total,
-                'total_credit'  => $formattedBasket->total_credit,
-                'purchase_id'   => $purchaseId,
-                'status'        => 'EVENT'
+                'total'                 => (float)$formattedBasket->total,
+                'total_credit'          => $formattedBasket->total_credit,
+                'purchase_id'           => $purchaseId,
+                'status'                => $status,
+                'shipping_first_name'   => @$basket['delivery']['shipping_first_name'],
+                'shipping_last_name'    => @$basket['delivery']['shipping_last_name'],
+                'shipping_address_1'    => @$basket['delivery']['shipping_address_1'],
+                'shipping_address_2'    => @$basket['delivery']['shipping_address_2'],
+                'shipping_country'      => @$basket['delivery']['shipping_country'],
+                'shipping_postcode'     => @$basket['delivery']['shipping_postcode'],
+                'shipping_state'        => @$basket['delivery']['shipping_state'],
+                'deliver_to_event'      => $deliverToEvent,
             ];
             $order = ShopOrder::create($orderParams);
             foreach ($formattedBasket as $item) {
@@ -470,6 +568,44 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
             return false;
         }
+
         return $paymentGateway;
+    }
+
+    /**
+     * Get Callback Return Url
+     * @param  $paymentGateway
+     * @return String
+     */
+    private function getCallbackReturnUrl($paymentGateway)
+    {
+        return $this->getRequestScheme($paymentGateway) . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?gate=' . $paymentGateway . '&type=return';
+    }
+
+    /**
+     * Get Callback Cancel Url
+     * @param  $paymentGateway
+     * @return String
+     */
+    private function getCallbackCancelUrl($paymentGateway)
+    {
+        return $this->getRequestScheme($paymentGateway) . '://' . $_SERVER['HTTP_HOST'] . '/payment/callback?gate=' . $paymentGateway . '&type=cancel';
+    }
+
+    /**
+     * Get Request Scheme
+     * @param  $paymentGateway
+     * @return $requestScheme
+     */
+    private function getRequestScheme($paymentGateway)
+    {
+        $requestScheme = 'http';
+        if ((! empty($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'] == 'https') ||
+                (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ||
+                (! empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
+            ) {
+            $requestScheme = 'https';
+        }
+        return $requestScheme;
     }
 }

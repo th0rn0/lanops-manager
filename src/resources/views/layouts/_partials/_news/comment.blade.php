@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-2">
 		<img class="img-responsive img-rounded img-small news-post-comment-image" src="{{ $comment->user->avatar }}"/>
-		<p class="news-post-comment-image-text">{{ $comment->user->steamname }}</p>
+		<p class="news-post-comment-image-text">{{ $comment->user->username }}</p>
 	</div>
 	<div class="col-xs-10">
 		<p>{{ $comment->comment }}</p>

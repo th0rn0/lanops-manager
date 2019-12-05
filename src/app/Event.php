@@ -255,7 +255,7 @@ class Event extends Model
      */
     public function getCheapestTicket()
     {
-        // TODO - Finish
-        return '30';
+        return $this->tickets->where('price', '!==', null)->min('price');
     }
+
 }

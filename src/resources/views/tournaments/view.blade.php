@@ -123,7 +123,7 @@
 								@foreach ($tournament->tournamentParticipants as $tournamentParticipant)
 									<tr>
 										<td>
-											<p style="padding-top:7px;"><img class="img-rounded" style="max-width: 4%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->steamname }}</p>
+											<p style="padding-top:7px;"><img class="img-rounded" style="max-width: 4%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}</p>
 										</td>
 										<td>
 											<p style="padding-top:15px;">
@@ -160,7 +160,7 @@
 										@if ($tournamentParticipant->pug == 'Y')
 											<tr>
 												<td>
-													<p><img class="img-rounded" style="max-width: 6%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->steamname }}</p>
+													<p><img class="img-rounded" style="max-width: 6%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}</p>
 												</td>
 												<td>
 													<p>
@@ -206,7 +206,7 @@
 													@foreach ($tournamentTeam->tournamentParticipants as $participant)
 														<tr>
 															<td>  
-																<img class="img-rounded" style="max-width: 8%;" src="{{$participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->  steamname }}
+																<img class="img-rounded" style="max-width: 8%;" src="{{$participant->eventParticipant->user->avatar}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
 															</td>
 															<td>
 																@if ($participant->eventParticipant->seat)
