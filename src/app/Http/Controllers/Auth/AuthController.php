@@ -180,14 +180,17 @@ class AuthController extends Controller
             $user->admin = 1;
         }
 
-        if ($user->save()) {
-            Session::forget('user');
-            Auth::login($user, true);
-            return Redirect('/account');
+        if (!$user->save()) {
+            Auth::logout();
+            return Redirect('/')->withError('Something went wrong. Please Try again later');
         }
-        
-        Auth::logout();
-        return Redirect('/')->withError('Something went wrong. Please Try again later');
+        Session::forget('user');
+        Auth::login($user, true);
+        if ($method == 'standard') {
+            $user->sendEmailVerificationNotification();
+        }
+        return Redirect('/account');
+      
     }
 
     public function redirectToProvider($provider)
