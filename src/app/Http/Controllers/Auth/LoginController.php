@@ -61,9 +61,11 @@ class LoginController extends Controller
 
             return $this->sendLockoutResponse($request);
         }
-        if (User::where('email', $request->email)->first()->banned) {
-            Session::flash('alert-danger', 'You have been banned!');
-            return Redirect::back()->withError('You have been banned.');
+        if ($user = User::where('email', $request->email)->first()) {
+            if ($user->banned) {
+                Session::flash('alert-danger', 'You have been banned!');
+                return Redirect::back()->withError('You have been banned.');
+            }
         }
         if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);
