@@ -147,11 +147,19 @@
 					  	</div>
 					@endif
 					<div class="row">
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-12 col-sm-12 form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $seatingPlan->name ,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-12 col-sm-12 form-group">
+							{{ Form::label('name_short','Short Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name_short', $seatingPlan->name_short ,array('id'=>'name_short','class'=>'form-control')) }}
+							<small>For display on Attendance Lists</small>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-lg-12 col-sm-12 form-group">
 								{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
 								{{ 
 									Form::select(

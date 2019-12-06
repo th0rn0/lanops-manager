@@ -72,10 +72,11 @@ class SeatingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        $seatingPlan           = new EventSeatingPlan();
-        $seatingPlan->event_id = $event->id;
-        $seatingPlan->name     = $request->name;
-        
+        $seatingPlan                = new EventSeatingPlan();
+        $seatingPlan->event_id      = $event->id;
+        $seatingPlan->name          = $request->name;
+        $seatingPlan->short_name    = @$request->short_name;
+
         $alphabet = range('A', 'Z');
         for ($i = 0; $i < $request->columns; $i++) {
             $seatingHeaders[] = $alphabet[$i];
@@ -133,6 +134,10 @@ class SeatingController extends Controller
 
         if (isset($request->name)) {
             $seatingPlan->name          = $request->name;
+        }
+
+        if (isset($request->name_short)) {
+            $seatingPlan->name_short        = $request->name_short;
         }
 
         if (isset($request->status)) {

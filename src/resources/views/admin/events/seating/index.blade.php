@@ -46,6 +46,9 @@
 								<tr>
 									<td>
 										{{ $seatingPlan->name }}
+										@if ($seatingPlan->name_short)
+											| {{ $seatingPlan->name_short }}
+										@endif
 									</td>
 									<td>
 										{{ $seatingPlan->status }}
@@ -92,6 +95,11 @@
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
+					<div class="form-group">
+							{{ Form::label('name_short','Short Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name_short', NULL,array('id'=>'name_short','class'=>'form-control')) }}
+							<small>For display on Attendance Lists</small>
+						</div>
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('columns','Columns',array('id'=>'','class'=>'')) }}
