@@ -290,6 +290,78 @@ class SettingsTableSeeder extends Seeder
                 'default'       => true,
             ]
         );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_primary'],
+            [
+                'value' => 'orange',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_primary_text'],
+            [
+                'value' => 'white',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_secondary'],
+            [
+                'value' => '#333',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_secondary_text'],
+            [
+                'value' => 'white',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_body_links'],
+            [
+                'value' => 'orange',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_body_background'],
+            [
+                'value' => '#fff',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_body_text'],
+            [
+                'value' => '#333',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_header_background'],
+            [
+                'value' => '#333',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_header_text'],
+            [
+                'value' => '#9d9d9d',
+                'type'  => 'CSS_VAR',
+            ]
+        );
     }
 }
 
