@@ -60,6 +60,14 @@ generate-key:
 generate-settings:
 	docker exec lan_manager_app php artisan db:seed --class=SettingsTableSeeder
 
+# Generate Appearance - This will erase your current settings!
+generate-appearance:
+	docker exec lan_manager_app php artisan db:seed --class=AppearanceTableSeeder
+
+# Generate Images - This will erase your current settings!
+generate-images:
+	docker exec lan_manager_app php artisan db:seed --class=SliderImageTableSeeder
+
 # Create Default Folder structure
 folder-structure:
 	mkdir -p src/storage/app/public/images/gallery/

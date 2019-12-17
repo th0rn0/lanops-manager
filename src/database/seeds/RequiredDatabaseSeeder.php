@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 
 use Faker\Factory as Faker;
 
-class SettingsTableSeeder extends Seeder
+class RequiredDatabaseSeeder extends Seeder
 {
     private $settings = [
 
@@ -19,7 +19,7 @@ class SettingsTableSeeder extends Seeder
         $faker = Faker::create();
 
         ## House Cleaning
-        \DB::table('settings')->truncate();
+        // DB::table('settings')->truncate();
 
         ## Settings
         App\Setting::firstOrCreate(
@@ -288,6 +288,118 @@ class SettingsTableSeeder extends Seeder
             [
                 'value'         => false,
                 'default'       => true,
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_primary'],
+            [
+                'value' => 'orange',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_primary_text'],
+            [
+                'value' => 'white',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_secondary'],
+            [
+                'value' => '#333',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_secondary_text'],
+            [
+                'value' => 'white',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_body_links'],
+            [
+                'value' => 'orange',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_body_background'],
+            [
+                'value' => '#fff',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_body_text'],
+            [
+                'value' => '#333',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_header_background'],
+            [
+                'value' => '#333',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\Appearance::firstOrCreate(
+            ['key'   => 'color_header_text'],
+            [
+                'value' => '#9d9d9d',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        App\SliderImage::firstOrCreate(
+            ['slider_name'   => 'frontpage'],
+            [
+            	'path'  => '/storage/images/main/slider/frontpage/1.jpg',
+            	'order' => '4',
+            ]
+        );
+
+        App\SliderImage::firstOrCreate(
+            ['slider_name'   => 'frontpage'],
+            [
+            	'path'  => '/storage/images/main/slider/frontpage/2.jpg',
+            	'order' => '1',
+            ]
+        );
+
+        App\SliderImage::firstOrCreate(
+            ['slider_name'   => 'frontpage'],
+            [
+            	'path'  => '/storage/images/main/slider/frontpage/3.jpg',
+            	'order' => '2',
+            ]
+        );
+
+        App\SliderImage::firstOrCreate(
+            ['slider_name'   => 'frontpage'],
+            [
+            	'path'  => '/storage/images/main/slider/frontpage/4.jpg',
+            	'order' => '5',
+            ]
+        );
+
+        App\SliderImage::firstOrCreate(
+            ['slider_name'   => 'frontpage'],
+            [
+            	'path'  => '/storage/images/main/slider/frontpage/5.jpg',
+            	'order' => '3',
             ]
         );
     }
