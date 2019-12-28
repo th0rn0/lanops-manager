@@ -84,4 +84,18 @@ class EventSeatingPlan extends Model
     {
         return 'slug';
     }
+
+    /**
+     * Get the Short Name for Lists.
+     *
+     * @return string
+     */
+    public function getShortName()
+    {
+        $name = $this->name;
+        if ($this->name_short !== null) {
+            $name = $this->name_short;
+        }
+        return $name;
+    }
 }

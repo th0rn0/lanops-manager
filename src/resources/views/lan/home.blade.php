@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', $event->display_name . ' - Lans in South Yorkshire')
+@section ('page_title', Settings::getOrgName() . ' - ' . $event->display_name)
 
 @section ('content')
 			

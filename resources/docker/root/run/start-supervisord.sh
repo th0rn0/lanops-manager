@@ -50,7 +50,7 @@ if [ -n "$DB_SEED" ]
 then
 	if [ "$DB_SEED" = "true" ]
 	then
-		php artisan db:seed --class=SettingsTableSeeder
+		php artisan db:seed --class=RequiredDatabaseSeeder
 	fi
 fi
 
