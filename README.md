@@ -133,7 +133,7 @@ Follow Post-Docker Below
 
 ### Docker-compose
 
-This method is intended to be run with docker-compose. It will create a full stack including database.
+This method is intended to be run with docker-compose. It will create a full stack including database, load balancer & SSL Encryption.
 
 ```
 version: "3.4"
@@ -168,7 +168,7 @@ services:
       # File Logger
       - LOG_FILES=false
       # HTTPS
-      - ENABLE_HTTPS=true
+      - ENABLE_HTTPS=false
       # Migrate Database on Boot
       - DB_MIGRATE=true
       # DO NOT CHANGE BELOW
@@ -193,16 +193,41 @@ services:
     ports:
       - 3306:3306
     container_name: lan_manager_database
+  loadbalancer:
+    image: traefik:v2.0
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - lan_manager_certs:/certs:z
+    - lan_manager_acme:/acme:z
+    ports:
+    - 80:80/tcp
+    - 443:443/tcp
+    # Debug Only
+    # - 8080:8080/tcp
+    command:
+    # Debug Only
+    # - --api.insecure=true
+    - --providers.docker=true
+    - --entryPoints.web.address=:80
+    - --entryPoints.websecure.address=:443
+    - --providers.docker.exposedByDefault=false
+    - --certificatesresolvers.le.acme.email=me@mydomain.com
+    - --certificatesresolvers.le.acme.storage=/acme/acme.json
+    - --certificatesresolvers.le.acme.tlschallenge=true
+    container_name: lan_manager_loadbalancer
 volumes:
-  lan_manager_database
+  lan_manager_database:
     name:
       lan_manager_database
-  lan_manager_certs
+  lan_manager_certs:
     name:
       lan_manager_certs
-  lan_manager_storage
+  lan_manager_storage:
     name:
       lan_manager_storage
+  lan_manager_acme:
+    name:
+      lan_manager_acme
 ```
 
 Follow Post-Docker Below
