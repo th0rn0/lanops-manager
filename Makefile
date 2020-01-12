@@ -101,28 +101,28 @@ composer-install:
 	docker run --rm --name compose-maintainence --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
-    composer install --ignore-platform-reqs --no-scripts
+    composer install --ignore-platform-reqs
 
 # Install Dev PHP Dependencies via Composer
 composer-install-dev:
 	docker run --rm --name compose-maintainence-dev --interactive \
     -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
-    composer install --ignore-platform-reqs --no-scripts --dev
+    composer install --ignore-platform-reqs --dev
 
 # Update Dev PHP Dependencies via Composer
 composer-update:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
-    composer update --ignore-platform-reqs --no-scripts
+    composer update --ignore-platform-reqs
 
 # Update Dev PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
-    composer require $(module) --ignore-platform-reqs --no-scripts
+    composer require $(module) --ignore-platform-reqs
 
 # Install JS Dependencies via NPM
 npm-install:
