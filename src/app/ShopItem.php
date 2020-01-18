@@ -56,8 +56,8 @@ class ShopItem extends Model
             $admin = true;
         }
         if (!$admin) {
-            static::addGlobalScope('statusDraft', function (Builder $builder) {
-                $builder->where('status', '!=', 'DRAFT');
+             static::addGlobalScope('caStatusPublished', function (Builder $builder) {
+                $builder->whereHas('category')->where('status', 'PUBLISHED');
             });
             static::addGlobalScope('statusPublished', function (Builder $builder) {
                 $builder->where('status', 'PUBLISHED');

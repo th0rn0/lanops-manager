@@ -49,6 +49,9 @@ class ShopItemCategory extends Model
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
             });
+            static::addGlobalScope('statusHidden', function (Builder $builder) {
+                $builder->where('status', '!=', 'HIDDEN');
+            });
             static::addGlobalScope('statusPublished', function (Builder $builder) {
                 $builder->where('status', 'PUBLISHED');
             });

@@ -71,7 +71,6 @@ class EventTournament extends Model
                     'tournament[name]'                    => $model->name,
                     'tournament[tournament_type]'         => strtolower($model->format),
                     'tournament[url]'                     => $model->challonge_tournament_url,
-                    // 'tournament[subdomain]'               => env('CHALLONGE_SUBDOMAIN'),
                     'tournament[hold_third_place_match]'  => @ ($model->allow_bronze ? true : false),
                     'tournament[show_rounds]'             => true,
                 ];

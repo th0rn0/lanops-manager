@@ -61,6 +61,7 @@ class EventsController extends Controller
             'start_date'    => 'required|date_format:m/d/Y',
             'start_time'    => 'required|date_format:H:i',
             'capacity'      => 'required|integer',
+            'venue'         => 'exists:event_venues,id',
         ];
         $messages = [
             'event_name.required'       => 'Event name is required',
@@ -76,6 +77,7 @@ class EventsController extends Controller
             'desc_long.required'        => 'Long Description is required',
             'capacity.required'         => 'Capacity is required',
             'capacity.integer'          => 'Capacity must be a integer',
+            'venue.exists'              => 'A venue is required'
 
         ];
         $this->validate($request, $rules, $messages);
@@ -114,6 +116,7 @@ class EventsController extends Controller
             'start_time'        => 'filled|date_format:H:i',
             'status'            => 'in:draft,preview,published,private',
             'capacity'          => 'filled|integer',
+            'venue'             => 'exists:event_venues,id',
         ];
         $messages = [
             'event_name.filled'         => 'Event Name cannot be empty',
@@ -128,6 +131,7 @@ class EventsController extends Controller
             'status.in'                 => 'Status must be draft, preview, published or private',
             'capacity.filled'           => 'Capacity is required',
             'capacity.integer'          => 'Capacity must be a integer',
+            'venue.exists'              => 'A venue is required'
         ];
         $this->validate($request, $rules, $messages);
 
