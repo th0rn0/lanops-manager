@@ -1,6 +1,6 @@
-# LanOps Lan Manager
+# Eventula Event Manager - ECO System
 
-The Lan Manager is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management. 
+The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management. 
 
 https://lanops.co.uk
 
@@ -106,9 +106,9 @@ docker run -it \
   -e APP_ENV=local \
   -e APP_URL=localhost \
   -e DB_HOST=database \
-  -e DB_DATABASE=lan_manager \
+  -e DB_DATABASE=eventula_manager_database \
   -e DB_PORT=3306 \
-  -e DB_USERNAME=lan_manager \
+  -e DB_USERNAME=eventula_manager \
   -e DB_PASSWORD=password \
   -e ANALYTICS_TRACKING_ID= \
   -e PAYPAL_USERNAME= \
@@ -124,8 +124,8 @@ docker run -it \
   -e DB_MIGRATE=true \
   -p 80:80 \
   -p 443:443 \
-  -v lan_manager_storage:/web/html/storage/ \
-  --name lan_manager_app \
+  -v eventula_manager_storage:/web/html/storage/ \
+  --name eventula_manager_app \
   lanopsdev/manager:latest
 ```
 
@@ -141,16 +141,16 @@ services:
   app:
     image: lanopsdev/manager:latest
     volumes:
-      - lan_manager_certs:/etc/nginx/certs
-      - lan_manager_storage:/web/html/storage/
+      - eventula_manager_certs:/etc/nginx/certs
+      - eventula_manager_storage:/web/html/storage/
     environment:
       # App Config
       - APP_DEBUG=true
       - APP_ENV=local
       - APP_URL=localhost
       # Database Settings
-      - DB_DATABASE=lan_manager
-      - DB_USERNAME=lan_manager
+      - DB_DATABASE=eventula_manager
+      - DB_USERNAME=eventula_manager
       - DB_PASSWORD=password
       # Google Analytics
       - ANALYTICS_TRACKING_ID=
@@ -175,30 +175,30 @@ services:
       - DB_CONNECTION=mysql
       - DB_PORT=3306
       - DB_HOST=database
-    container_name: lan_manager_app
+    container_name: eventula_manager_app
     ports:
       - 80:80
       - 443:443
   database:
     image: mysql:5.6
     volumes:
-      - lan_manager_database:/var/lib/mysql
+      - eventula_manager_database:/var/lib/mysql
     environment:
       # Change The password as according
       - MYSQL_PASSWORD=password
       # DO NOT CHANGE BELOW
-      - MYSQL_DATABASE=lan_manager
-      - MYSQL_USER=lan_manager
+      - MYSQL_DATABASE=eventula_manager_database
+      - MYSQL_USER=eventula_manager
       - MYSQL_RANDOM_ROOT_PASSWORD=true
     ports:
       - 3306:3306
-    container_name: lan_manager_database
+    container_name: eventula_manager_database
   loadbalancer:
     image: traefik:v2.0
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
-    - lan_manager_certs:/certs:z
-    - lan_manager_acme:/acme:z
+    - eventula_manager_certs:/certs:z
+    - eventula_manager_acme:/acme:z
     ports:
     - 80:80/tcp
     - 443:443/tcp
@@ -214,20 +214,20 @@ services:
     - --certificatesresolvers.le.acme.email=me@mydomain.com
     - --certificatesresolvers.le.acme.storage=/acme/acme.json
     - --certificatesresolvers.le.acme.tlschallenge=true
-    container_name: lan_manager_loadbalancer
+    container_name: eventula_manager_loadbalancer
 volumes:
-  lan_manager_database:
+  eventula_manager_database:
     name:
-      lan_manager_database
-  lan_manager_certs:
+      eventula_manager_database
+  eventula_manager_certs:
     name:
-      lan_manager_certs
-  lan_manager_storage:
+      eventula_manager_certs
+  eventula_manager_storage:
     name:
-      lan_manager_storage
-  lan_manager_acme:
+      eventula_manager_storage
+  eventula_manager_acme:
     name:
-      lan_manager_acme
+      eventula_manager_acme
 ```
 
 Follow Post-Docker Below
@@ -314,7 +314,7 @@ make stop
 To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` or mount in the certs to the ```/etc/nginx/certs``` directory on the container. 
 
 ### Caveats
-- You must rename the certs to ```lan_manager.crt``` and ```lan_manager.key```.
+- You must rename the certs to ```eventula_manager.crt``` and ```eventula_manager.key```.
 
 ## Secret Managers
 

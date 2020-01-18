@@ -32,8 +32,8 @@ steps:
     APP_KEY:
       from_secret: TEST_APP_KEY
     DB_HOST: database
-    DB_DATABASE: lan_manager
-    DB_USERNAME: lan_manager
+    DB_DATABASE: eventula_manager_database
+    DB_USERNAME: eventula_manager
     DB_PASSWORD: password
     APP_DEBUG: true
     APP_ENV: testing
@@ -41,9 +41,9 @@ steps:
   commands:
   - cd src/
   - ls
-  # - php artisan migrate --force
-  # - php artisan db:seed --force
-  # - vendor/bin/phpunit
+  - php artisan migrate --force
+  - php artisan db:seed --force
+  - vendor/bin/phpunit
 
 trigger:
   event:
@@ -57,8 +57,8 @@ services:
 - name: database
   image: mysql:5.6
   environment:
-    MYSQL_DATABASE: lan_manager
-    MYSQL_USER: lan_manager
+    MYSQL_DATABASE: eventula_manager_database
+    MYSQL_USER: eventula_manager
     MYSQL_PASSWORD: password
     MYSQL_RANDOM_ROOT_PASSWORD: true
 
@@ -239,8 +239,8 @@ services:
 - name: database
   image: mysql:5.6
   environment:
-    MYSQL_DATABASE: lan_manager
-    MYSQL_USER: lan_manager
+    MYSQL_DATABASE: eventula_manager_database
+    MYSQL_USER: eventula_manager
     MYSQL_PASSWORD: password
     MYSQL_RANDOM_ROOT_PASSWORD: true
 
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: cc239773ec96956aa0c5a242b80aecee5037cc7892502c372df7ab0f887ad34c
+hmac: fcdef2494706fe6f0bb1b52feb1b73a66234e98fb13f949dda5e2c1136dddf89
 
 ...
