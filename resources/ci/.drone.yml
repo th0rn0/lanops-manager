@@ -41,8 +41,8 @@ steps:
   commands:
   - cd src/
   - ls
-  - php artisan migrate --force
-  - php artisan db:seed --force
+  # - php artisan migrate --force
+  # - php artisan db:seed --force
   # - vendor/bin/phpunit
 
 trigger:
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: b98da90b9c48f7e59cd2d56cc8a2aeffaafac19b6f3c5592932fcc46c8dfb251
+hmac: cc239773ec96956aa0c5a242b80aecee5037cc7892502c372df7ab0f887ad34c
 
 ...
