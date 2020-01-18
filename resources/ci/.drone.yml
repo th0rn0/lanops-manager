@@ -43,7 +43,7 @@ steps:
   - ls
   - php artisan migrate --force
   - php artisan db:seed --force
-  - vendor/bin/phpunit
+  # - vendor/bin/phpunit
 
 trigger:
   event:
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: fcdef2494706fe6f0bb1b52feb1b73a66234e98fb13f949dda5e2c1136dddf89
+hmac: b98da90b9c48f7e59cd2d56cc8a2aeffaafac19b6f3c5592932fcc46c8dfb251
 
 ...
