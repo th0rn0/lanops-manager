@@ -16,7 +16,7 @@ steps:
   image: composer
   commands:
   - cd src/
-  - composer install --ignore-platform-reqs
+  - composer install --ignore-platform-reqs --no-scripts
     
 - name: build-npm
   image: node:8
@@ -103,7 +103,7 @@ steps:
   image: composer
   commands:
   - cd src/
-  - composer install --ignore-platform-reqs
+  - composer install --ignore-platform-reqs --no-scripts
   when:
     event:
     - push
@@ -282,7 +282,7 @@ steps:
   image: composer
   commands:
   - cd src/
-  - composer install --ignore-platform-reqs
+  - composer install --ignore-platform-reqs --no-scripts
   when:
     event:
     - tag
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 8e4684ec6676746d54294f328ba5c38ae2b2936051523484dc61f3379f5124d8
+hmac: fb952bd64dbf1adc5296d2e2277b14561dbd232e32f951e3cde2af532bb7181d
 
 ...
