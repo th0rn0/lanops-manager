@@ -23,11 +23,13 @@ file_env() {
 }
 
 # Check Variables Exist & Translate from file
+# Required Env Variables
+echo 'Required Env Variable Check:'
 file_env 'APP_URL'
 if [ -z "$APP_URL" ]; 
 then
 	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because APP_URL is not specified '
+	echo >&2 'Event Manager App is uninitialized because APP_URL is not specified '
 	echo >&2 'You need to specify APP_URL'
 	exit 1
 else
@@ -37,38 +39,8 @@ file_env 'APP_EMAIL'
 if [ -z "$APP_EMAIL" ]; 
 then
 	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because APP_EMAIL is not specified '
+	echo >&2 'Event Manager App is uninitialized because APP_EMAIL is not specified '
 	echo >&2 'You need to specify APP_EMAIL'
-	exit 1
-else
-	echo 'OK'
-fi
-file_env 'MAIL_HOST'
-if [ -z "$MAIL_HOST" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because MAIL_HOST is not specified '
-	echo >&2 'You need to specify MAIL_HOST'
-	exit 1
-else
-	echo 'OK'
-fi
-file_env 'MAIL_USERNAME'
-if [ -z "$MAIL_USERNAME" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because MAIL_USERNAME is not specified '
-	echo >&2 'You need to specify MAIL_USERNAME'
-	exit 1
-else
-	echo 'OK'
-fi
-file_env 'MAIL_PASSWORD'
-if [ -z "$MAIL_PASSWORD" ]; 
-then
-	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because MAIL_PASSWORD is not specified '
-	echo >&2 'You need to specify MAIL_PASSWORD'
 	exit 1
 else
 	echo 'OK'
@@ -77,7 +49,7 @@ file_env 'DB_PORT'
 if [ -z "$DB_PORT" ]; 
 then
 	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because DB_PORT is not specified '
+	echo >&2 'Event Manager App is uninitialized because DB_PORT is not specified '
 	echo >&2 'You need to specify DB_PORT'
 	exit 1
 else
@@ -88,7 +60,7 @@ file_env 'DB_HOST'
 if [ -z "$DB_HOST" ]; 
 then
 	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because DB_HOST is not specified '
+	echo >&2 'Event Manager App is uninitialized because DB_HOST is not specified '
 	echo >&2 'You need to specify DB_HOST'
 	exit 1
 else
@@ -99,13 +71,37 @@ file_env 'DB_PASSWORD'
 if [ -z "$DB_PASSWORD" ]; 
 then
 	echo >&2 'ERROR'
-	echo >&2 'Lan Manager App is uninitialized because DB_PASSWORD is not specified '
+	echo >&2 'Event Manager App is uninitialized because DB_PASSWORD is not specified '
 	echo >&2 'You need to specify DB_PASSWORD'
 	exit 1
 else
 	echo 'OK'
 fi
 
+
+# Optional Env Variables
+echo 'Option Env Variable Check:'
+file_env 'MAIL_HOST'
+if [ -z "$MAIL_HOST" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+file_env 'MAIL_USERNAME'
+if [ -z "$MAIL_USERNAME" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
+file_env 'MAIL_PASSWORD'
+if [ -z "$MAIL_PASSWORD" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
 file_env 'STEAM_API_KEY'
 if [ -z "$STEAM_API_KEY" ]; 
 then
@@ -114,16 +110,13 @@ else
 	echo 'OK'
 fi
 
-# file_env 'CHALLONGE_API_KEY'
-# if [ -z "$CHALLONGE_API_KEY" ]; 
-# then
-# 	echo >&2 'ERROR'
-# 	echo >&2 'Lan Manager App is uninitialized because CHALLONGE_API_KEY is not specified '
-# 	echo >&2 'You need to specify CHALLONGE_API_KEY'
-# 	exit 1
-# else
-# 	echo 'OK'
-# fi
+file_env 'CHALLONGE_API_KEY'
+if [ -z "$CHALLONGE_API_KEY" ]; 
+then
+	echo 'NOT SET'
+else
+	echo 'OK'
+fi
 
 file_env 'APP_KEY'
 if [ -z "$APP_KEY" ];
@@ -133,7 +126,6 @@ else
 	echo 'OK'
 fi
 
-# Optional Env Variables
 file_env 'CHALLONGE_API_KEY'
 if [ -z "$CHALLONGE_API_KEY" ]; 
 then

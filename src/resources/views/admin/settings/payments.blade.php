@@ -58,7 +58,7 @@
 					<div class="form-group">
 						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], Settings::getCurrency(), array('id'=>'venue','class'=>'form-control')) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>

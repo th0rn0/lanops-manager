@@ -707,4 +707,21 @@ class Settings
         return \App\Setting::disableLoginMethod($method);
     }
 
+    /**
+     * Is the App Installed
+     * @return Boolean
+     */
+    public static function isInstalled()
+    {
+        return \App\Setting::isInstalled();
+    }
+
+    /**
+     * Set the App as Installed
+     * @return Boolean
+     */
+    public static function setInstalled()
+    {
+        return \App\Setting::setInstalled();
+    }
 }

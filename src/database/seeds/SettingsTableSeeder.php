@@ -25,7 +25,7 @@ class SettingsTableSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_name'],
             [
-                'value'         => env('ORG_NAME', 'OrgNameHere'),
+                'value'         => env('APP_NAME', 'OrgNameHere'),
                 'default'       => true,
                 'description'   => 'Name of the Organization'
             ]
@@ -33,7 +33,7 @@ class SettingsTableSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_tagline'],
             [
-                'value'         => env('ORG_TAGLINE', 'Tagline Here'),
+                'value'         => env('APP_TAGLINE', 'Tagline Here'),
                 'default'       => true,
                 'description'   => 'Tagline of the Organization'
             ]
@@ -41,7 +41,7 @@ class SettingsTableSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_logo'],
             [
-                'value'         => env('ORG_LOGO', '/storage/images/main/logo_main.png'),
+                'value'         => env('APP_LOGO', '/storage/images/main/logo_main.png'),
                 'default'       => true,
                 'description'   => 'Organization Logo'
             ]
@@ -49,7 +49,7 @@ class SettingsTableSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_favicon'],
             [
-                'value'         => env('ORG_FAVICON', '/storage/images/main/favicon.ico'),
+                'value'         => env('APP_FAVICON', '/storage/images/main/favicon.ico'),
                 'default'       => true,
                 'description'   => 'Organization Favicon'
             ]
@@ -285,6 +285,13 @@ class SettingsTableSeeder extends Seeder
         );
         App\Setting::firstOrCreate(
             ['setting'          => 'shop_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'installed'],
             [
                 'value'         => false,
                 'default'       => true,

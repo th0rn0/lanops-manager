@@ -25,7 +25,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_name'],
             [
-                'value'         => env('ORG_NAME', 'OrgNameHere'),
+                'value'         => env('APP_NAME', 'OrgNameHere'),
                 'default'       => true,
                 'description'   => 'Name of the Organization'
             ]
@@ -33,7 +33,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_tagline'],
             [
-                'value'         => env('ORG_TAGLINE', 'Tagline Here'),
+                'value'         => env('APP_TAGLINE', 'Tagline Here'),
                 'default'       => true,
                 'description'   => 'Tagline of the Organization'
             ]
@@ -41,7 +41,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_logo'],
             [
-                'value'         => env('ORG_LOGO', '/storage/images/main/logo_main.png'),
+                'value'         => env('APP_LOGO', '/storage/images/main/logo_main.png'),
                 'default'       => true,
                 'description'   => 'Organization Logo'
             ]
@@ -49,7 +49,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'org_favicon'],
             [
-                'value'         => env('ORG_FAVICON', '/storage/images/main/favicon.ico'),
+                'value'         => env('APP_FAVICON', '/storage/images/main/favicon.ico'),
                 'default'       => true,
                 'description'   => 'Organization Favicon'
             ]
@@ -290,7 +290,15 @@ class RequiredDatabaseSeeder extends Seeder
                 'default'       => true,
             ]
         );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'installed'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
 
+        ## Apperance
         App\Appearance::firstOrCreate(
             ['key'   => 'color_primary'],
             [
@@ -363,6 +371,7 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
 
+        ## Slider Images
         App\SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],
             [
@@ -400,6 +409,42 @@ class RequiredDatabaseSeeder extends Seeder
             [
             	'path'  => '/storage/images/main/slider/frontpage/5.jpg',
             	'order' => '3',
+            ]
+        );
+
+        ## Api Keys
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'paypal_username'],
+            [
+                'value'         => env('PAYPAL_USERNAME', null),
+            ]
+        );
+        
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'paypal_password'],
+            [
+                'value'         => env('PAYPAL_PASSWORD', null),
+            ]
+        );
+        
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'paypal_signature'],
+            [
+                'value'         => env('PAYPAL_SIGNATURE', null),
+            ]
+        );
+        
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'stripe_public_key'],
+            [
+                'value'         => env('STRIPE_PUBLIC_KEY', null),
+            ]
+        );
+        
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'stripe_secret_key'],
+            [
+                'value'         => env('STRIPE_SECRET_KEY', null),
             ]
         );
     }

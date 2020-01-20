@@ -10,6 +10,7 @@ use Settings;
 use Input;
 use FacebookPageWrapper as Facebook;
 
+use App\ApiKey;
 use App\User;
 use App\Setting;
 use App\Event;
@@ -83,6 +84,16 @@ class SettingsController extends Controller
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
         ;
+    }
+
+    /**
+     * Show API Index Page
+     * @return Redirect
+     */
+    public function showApi()
+    {
+        
+        return view('admin.settings.api')->withApiKeys(ApiKey::all());
     }
     
     /**

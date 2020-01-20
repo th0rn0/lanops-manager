@@ -56,9 +56,9 @@
 	</div>
 	<div class="col-lg-2 col-md-6">
 		<div class="panel panel-primary">
-			<a href="#">
+			<a href="/admin/settings/api">
 				<div class="panel-footer">
-					<span class="pull-left">API Keys (Coming Soon)</span>
+					<span class="pull-left">API Keys</span>
 					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 					<div class="clearfix"></div>
 				</div>
