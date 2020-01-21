@@ -49,6 +49,36 @@ class ApiKeyTableSeeder extends Seeder
                 'value'         => env('STRIPE_SECRET_KEY', null),
             ]
         );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'facebook_app_id'],
+            [
+                'value'         => env('FACEBOOK_APP_ID', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'facebook_app_secret'],
+            [
+                'value'         => env('FACEBOOK_APP_SECRET', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'challonge_api_key'],
+            [
+                'value'         => env('CHALLONGE_API_KEY', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'google_analytics_tracking_id'],
+            [
+                'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'steam_api_key'],
+            [
+                'value'         => env('STEAM_API_KEY', null),
+            ]
+        );
     }
 }
 

@@ -6,16 +6,15 @@ use Closure;
 use Auth;
 use Settings;
 
-class RedirectIfNotInstalled
+class NotInstalled
 {
 
     public function handle($request, Closure $next)
     {
 
-        if (!Settings::isInstalled()) {
-        	return redirect('/install');
+        if (Settings::isInstalled()) {
+			return redirect('/');
         }
-
-        return $next($request);
+		return $next($request);
     }
 }

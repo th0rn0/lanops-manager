@@ -92,10 +92,60 @@ class SettingsController extends Controller
      */
     public function showApi()
     {
-        
-        return view('admin.settings.api')->withApiKeys(ApiKey::all());
+        return view('admin.settings.api')
+            ->withApiKeys(ApiKey::all())
+            ->withPaypalUsername(ApiKey::where('key', 'paypal_username')->first()->value)
+            ->withPaypalPassword(ApiKey::where('key', 'paypal_password')->first()->value)
+            ->withPaypalSignature(ApiKey::where('key', 'paypal_signature')->first()->value)
+            ->withStripePublicKey(ApiKey::where('key', 'stripe_public_key')->first()->value)
+            ->withStripeSecretKey(ApiKey::where('key', 'stripe_secret_key')->first()->value)
+            ->withFacebookAppId(ApiKey::where('key', 'facebook_app_id')->first()->value)
+            ->withFacebookAppSecret(ApiKey::where('key', 'facebook_app_secret')->first()->value)
+            ->withChallongeApiKey(ApiKey::where('key', 'challonge_api_key')->first()->value)
+            ->withGoogleAnalyticsTrackingId(ApiKey::where('key', 'google_analytics_tracking_id')->first()->value)
+            ->withSteamApiKey(ApiKey::where('key', 'steam_api_key')->first()->value)
+        ;
     }
     
+     /**
+     * Update API
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function updateApi(Request $request)
+    {
+        if (isset($request->challonge_api_key) && !ApiKey::setChallongeApiKey($request->challonge_api_key)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->steam_api_key) && !ApiKey::setSteamApiKey($request->steam_api_key)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->facebook_app_id) && !ApiKey::setFacebookAppId($request->facebook_app_id)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->facebook_app_secret) && !ApiKey::setFacebookAppSecret($request->facebook_app_secret)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->paypal_username) && !ApiKey::setPaypalUsername($request->paypal_username)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->paypal_password) && !ApiKey::setPaypalPassword($request->paypal_password)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->paypal_signature) && !ApiKey::setPaypalSignature($request->paypal_signature)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully updated!');
+        return Redirect::back();
+    }
+
     /**
      * Update Settings
      * @param  Request $request
@@ -256,14 +306,6 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Successfully updated!');
-        return Redirect::back();
-
-        $setting->value = $request->setting;
-        if (!$setting->save()) {
-            Session::flash('alert-danger', 'Could not Save!');
-            return Redirect::back();
-        }
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }

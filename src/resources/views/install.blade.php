@@ -52,6 +52,7 @@
 			        </div>
                 	<div class="col-sm-12 col-md-6">
 						<p>Once Registered you can link your account to any other login method.</p>
+						<p>Once Installed you can add more admins via the admin panel</p>
                 	</div>
 	            </div>
 				<h2>Step 2: Confirm Organization Details</h2>

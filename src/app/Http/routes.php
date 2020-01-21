@@ -3,7 +3,7 @@
 /**
  * Install
  */
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web', 'notInstalled']], function () {
     Route::get('/install', 'InstallController@installation');
     Route::post('/install', 'InstallController@install');
 });
@@ -356,11 +356,12 @@ Route::group(['middleware' => ['installed']], function () {
          * Settings
          */
         Route::get('/admin/settings', 'Admin\SettingsController@index');
+        Route::post('/admin/settings', 'Admin\SettingsController@update');
         Route::get('/admin/settings/org', 'Admin\SettingsController@showOrg');
         Route::get('/admin/settings/payments', 'Admin\SettingsController@showPayments');
         Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
         Route::get('/admin/settings/api', 'Admin\SettingsController@showApi');
-        Route::post('/admin/settings', 'Admin\SettingsController@update');
+        Route::post('/admin/settings/api', 'Admin\SettingsController@updateApi');
         Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
         Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
         Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');

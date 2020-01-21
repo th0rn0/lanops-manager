@@ -8,6 +8,8 @@ use Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+use Illuminate\Contracts\Encryption\DecryptException;
+
 class ApiKey extends Model
 {
     /**
@@ -40,7 +42,7 @@ class ApiKey extends Model
     public static function setPayPalUsername($username)
     {
  		$key = self::where('key', 'paypal_username')->first();
-        $key->value = encrypt($username);
+        $key->value = $username;
         if (!$key->save()) {
             return false;
         }
@@ -55,7 +57,7 @@ class ApiKey extends Model
 	public static function setPayPalPassword($password)
     {
  		$key = self::where('key', 'paypal_password')->first();
-        $key->value = encrypt($password);
+        $key->value = $password;
         if (!$key->save()) {
             return false;
         }
@@ -70,7 +72,7 @@ class ApiKey extends Model
  	public static function setPayPalSignature($signature)
     {
  		$key = self::where('key', 'paypal_signature')->first();
-        $key->value = encrypt($signature);
+        $key->value = $signature;
         if (!$key->save()) {
             return false;
         }
@@ -85,7 +87,7 @@ class ApiKey extends Model
  	public static function setStripePublicKey($publicKey)
     {
  		$key = self::where('key', 'stripe_public_key')->first();
-        $key->value = encrypt($publicKey);
+        $key->value = $publicKey;
         if (!$key->save()) {
             return false;
         }
@@ -93,17 +95,95 @@ class ApiKey extends Model
     }    
 
 	/**
-     * Set Stripe Private Key
-     * @param String $privateKey
+     * Set Stripe Secret Key
+     * @param String $secretKey
      * @return Boolean
      */	
- 	public static function setStripePrivateKey($privateKey)
+ 	public static function setStripeSecretKey($secretKey)
     {
- 		$key = self::where('key', 'stripe_private_key')->first();
-        $key->value = encrypt($privateKey);
+ 		$key = self::where('key', 'stripe_secret_key')->first();
+        $key->value = $secretKey;
         if (!$key->save()) {
             return false;
         }
         return true;
-    }    
+    }
+
+    /**
+     * Set Challonge Api Key
+     * @param String $apiKey
+     * @return Boolean
+     */ 
+    public static function setChallongeApiKey($apiKey)
+    {
+        $key = self::where('key', 'challonge_api_key')->first();
+        $key->value = $apiKey;
+        if (!$key->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Steam Api Key
+     * @param String $apiKey
+     * @return Boolean
+     */ 
+    public static function setSteamApiKey($apiKey)
+    {
+        $key = self::where('key', 'steam_api_key')->first();
+        $key->value = $apiKey;
+        if (!$key->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Facebook App ID
+     * @param String $appId
+     * @return Boolean
+     */ 
+    public static function setFacebookAppId($appId)
+    {
+        $key = self::where('key', 'facebook_app_id')->first();
+        $key->value = $appId;
+        if (!$key->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Set Facebook App Secret
+     * @param String $appId
+     * @return Boolean
+     */ 
+    public static function setFacebookAppSecret($appSecret)
+    {
+        $key = self::where('key', 'facebook_app_secret')->first();
+        $key->value = $appSecret;
+        if (!$key->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    public function getValueAttribute($value)
+    {
+        if ($value == null) {
+            return null;
+        }
+        try {
+            $decrypted = decrypt($value);
+        } catch (DecryptException $e) {
+            return null;
+        }
+        return $decrypted;
+    }
+
+    public function setValueAttribute($value)
+    {
+        $this->attributes['value'] = encrypt($value);
+    }
 }
