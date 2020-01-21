@@ -36,8 +36,8 @@ return [
     ],
 
     'facebook' => [
-        'client_id' =>  env('FACEBOOK_APP_ID'),
-        'client_secret' => env('FACEBOOK_APP_SECRET'),
+        'client_id' =>  '',
+        'client_secret' => '',
         'redirect' => env('FACEBOOK_REDIRECT'),
     ],
     'igdb' => [

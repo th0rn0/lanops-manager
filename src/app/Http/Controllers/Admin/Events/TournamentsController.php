@@ -58,6 +58,10 @@ class TournamentsController extends Controller
      */
     public function store(Event $event, Request $request)
     {
+        if (config('challonge.api_key') == null) {
+            Session::flash('message', 'Cannot create Tournament! Please enter the Challonge API Key in Settings');
+            return Redirect::back();
+        }
         $rules = [
             'name'          => 'required',
             'format'        => 'required|in:single elimination,double elimination,round robin,list',

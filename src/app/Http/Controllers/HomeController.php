@@ -18,6 +18,7 @@ use App\EventTournamentParticipant;
 use App\Http\Requests;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 use Facebook\Facebook;
 
@@ -29,6 +30,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Check for Installation
+        // TODO installation check in settings
+        // if (User::all()->count() <= 0) {
+        //     return Redirect::to('/install');
+        // }
+
+        // Check for Event
         $user = Auth::user();
         if ($user && !empty($user->eventParticipants)) {
             foreach ($user->eventParticipants as $participant) {
@@ -36,7 +44,7 @@ class HomeController extends Controller
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
                     $participant->signed_in
                 ) {
-                    return $this->lan();
+                    return $this->event();
                 }
             }
         }
@@ -135,10 +143,10 @@ class HomeController extends Controller
     }
     
     /**
-     * Show Lan Page
+     * Show Event Page
      * @return View
      */
-    public function lan()
+    public function event()
     {
         $signedIn = true;
         $event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
@@ -168,7 +176,7 @@ class HomeController extends Controller
                 }
             }
         }
-        return view("lan.home")
+        return view("events.home")
             ->withEvent($event)
             ->withTicketFlag($ticketFlag)
             ->withSignedIn($signedIn)
@@ -182,6 +190,6 @@ class HomeController extends Controller
      */
     public function bigScreen(Event $event)
     {
-        return view("lan.big")->withEvent($event);
+        return view("events.big")->withEvent($event);
     }
 }
