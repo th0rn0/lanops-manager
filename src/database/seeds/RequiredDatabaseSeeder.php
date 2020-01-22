@@ -375,40 +375,40 @@ class RequiredDatabaseSeeder extends Seeder
         App\SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],
             [
-            	'path'  => '/storage/images/main/slider/frontpage/1.jpg',
-            	'order' => '4',
+                'path'  => '/storage/images/main/slider/frontpage/1.jpg',
+                'order' => '4',
             ]
         );
 
         App\SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],
             [
-            	'path'  => '/storage/images/main/slider/frontpage/2.jpg',
-            	'order' => '1',
+                'path'  => '/storage/images/main/slider/frontpage/2.jpg',
+                'order' => '1',
             ]
         );
 
         App\SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],
             [
-            	'path'  => '/storage/images/main/slider/frontpage/3.jpg',
-            	'order' => '2',
+                'path'  => '/storage/images/main/slider/frontpage/3.jpg',
+                'order' => '2',
             ]
         );
 
         App\SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],
             [
-            	'path'  => '/storage/images/main/slider/frontpage/4.jpg',
-            	'order' => '5',
+                'path'  => '/storage/images/main/slider/frontpage/4.jpg',
+                'order' => '5',
             ]
         );
 
         App\SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],
             [
-            	'path'  => '/storage/images/main/slider/frontpage/5.jpg',
-            	'order' => '3',
+                'path'  => '/storage/images/main/slider/frontpage/5.jpg',
+                'order' => '3',
             ]
         );
 
@@ -445,6 +445,36 @@ class RequiredDatabaseSeeder extends Seeder
             ['key'          => 'stripe_secret_key'],
             [
                 'value'         => env('STRIPE_SECRET_KEY', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'facebook_app_id'],
+            [
+                'value'         => env('FACEBOOK_APP_ID', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'facebook_app_secret'],
+            [
+                'value'         => env('FACEBOOK_APP_SECRET', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'challonge_api_key'],
+            [
+                'value'         => env('CHALLONGE_API_KEY', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'google_analytics_tracking_id'],
+            [
+                'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
+            ['key'          => 'steam_api_key'],
+            [
+                'value'         => env('STEAM_API_KEY', null),
             ]
         );
     }

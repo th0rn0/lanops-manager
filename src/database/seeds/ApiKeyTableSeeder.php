@@ -18,67 +18,49 @@ class ApiKeyTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        \DB::table('api_keys')->delete();
+        
         ## Api Keys
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'paypal_username'],
-            [
-                'value'         => env('PAYPAL_USERNAME', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'paypal_password'],
-            [
-                'value'         => env('PAYPAL_PASSWORD', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'paypal_signature'],
-            [
-                'value'         => env('PAYPAL_SIGNATURE', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'stripe_public_key'],
-            [
-                'value'         => env('STRIPE_PUBLIC_KEY', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'stripe_secret_key'],
-            [
-                'value'         => env('STRIPE_SECRET_KEY', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'facebook_app_id'],
-            [
-                'value'         => env('FACEBOOK_APP_ID', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'facebook_app_secret'],
-            [
-                'value'         => env('FACEBOOK_APP_SECRET', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'challonge_api_key'],
-            [
-                'value'         => env('CHALLONGE_API_KEY', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'google_analytics_tracking_id'],
-            [
-                'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'steam_api_key'],
-            [
-                'value'         => env('STEAM_API_KEY', null),
-            ]
-        );
+        factory(App\ApiKey::class)->create([
+            'key'          => 'paypal_username',
+            'value'         => env('PAYPAL_USERNAME', null),
+        ]);
+       factory(App\ApiKey::class)->create([
+            'key'          => 'paypal_password',
+            'value'         => env('PAYPAL_PASSWORD', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'paypal_signature',
+            'value'         => env('PAYPAL_SIGNATURE', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'stripe_public_key',
+            'value'         => env('STRIPE_PUBLIC_KEY', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'stripe_secret_key',
+            'value'         => env('STRIPE_SECRET_KEY', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'facebook_app_id',
+            'value'         => env('FACEBOOK_APP_ID', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'facebook_app_secret',
+            'value'         => env('FACEBOOK_APP_SECRET', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'challonge_api_key',
+            'value'         => env('CHALLONGE_API_KEY', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'google_analytics_tracking_id',
+            'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
+        ]);
+        factory(App\ApiKey::class)->create([
+            'key'          => 'steam_api_key',
+            'value'         => env('STEAM_API_KEY', null),
+        ]);
     }
 }
 
