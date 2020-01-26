@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use DB;
+use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 
 class Helpers
@@ -377,5 +378,20 @@ class Helpers
             $return[$date] = $date;
         }
         return $return;
+    }
+
+    /**
+     * Get Supported Event Tags from Eventula
+     * @return array
+     */
+    public static function getEventulaEventTags()
+    {
+        $client = new Client();
+        try {
+            $response = $client->get(config('eventula.url') . '/api/tags/events');
+        } catch (\Exception $e) {
+            return false;
+        }
+        return json_decode($response->getBody());
     }
 }

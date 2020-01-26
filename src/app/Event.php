@@ -115,6 +115,10 @@ class Event extends Model
     {
         return $this->hasMany('App\Poll', 'event_id');
     }
+    public function tags()
+    {
+        return $this->hasMany('App\EventTag', 'event_id');
+    }
 
     /**
      * Return the sluggable configuration array for this model.
@@ -256,6 +260,38 @@ class Event extends Model
     public function getCheapestTicket()
     {
         return $this->tickets->where('price', '!==', null)->min('price');
+    }
+
+
+    /**
+     * Add Tags for Eventula
+     * @param  Array $tags
+     * @return Boolean
+     */
+    public function addTagsById($tags)
+    {
+        foreach($this->tags as $tag) {
+            $tag->delete();
+        }
+        foreach ($tags as $tag) {
+            if (!$this->addTagById($tag)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Add Tag for Eventula
+     * @param  String $tags
+     * @return Boolean
+     */
+    public function addTagById($tag)
+    {
+        if (!EventTag::create(['event_id' => $this->id, 'tag_id' => $tag])) {
+            return false;
+        }
+        return true;
     }
 
 }
