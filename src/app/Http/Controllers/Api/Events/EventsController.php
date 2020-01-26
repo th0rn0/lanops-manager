@@ -58,6 +58,7 @@ class EventsController extends Controller
                     'timetables' => '#timetables',
                     'tournaments' => '#tournaments',
                 ],
+                'eventula_tags' => $event->tags()->pluck('tag_id'),
             ];
         }
         return $return;

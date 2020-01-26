@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Events;
 use DB;
 use Auth;
 use Session;
+use Helpers;
 
 use App\User;
 use App\Event;
@@ -28,7 +29,8 @@ class EventsController extends Controller
     {
         return view('admin.events.index')
             ->withUser(Auth::user())
-            ->withEvents(Event::withoutGlobalScopes()->paginate(10));
+            ->withEvents(Event::withoutGlobalScopes()->paginate(10))
+            ->withEventTags(Helpers::getEventulaEventTags());
     }
 
     /**
@@ -95,6 +97,9 @@ class EventsController extends Controller
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
             return Redirect::to('admin/events/' . $event->slug);
+        }
+        if ($request->has('event_tags')) {
+            $event->addTagsById($request->event_tags);
         }
         Session::flash('alert-success', 'Successfully saved Event!');
         return Redirect::to('admin/events/' . $event->slug);
