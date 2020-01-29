@@ -221,6 +221,17 @@ else
 	echo 'OK'
 fi
 
+if [ "$ENV_OVERRIDE" ];
+then
+	echo 'WARNING!'
+	echo 'ENV OVERRIDE IS SET!'
+	echo 'ALL API KEYS WILL BE OVERWRITTEN BY THE ENV VARIABLES'
+	echo 'DATABASE API KEYS WILL NOT BE USED'
+else
+	echo 'ENV OVERRIDE IS NOT SET!'
+	echo 'API Keys from the Database will be used'
+fi
+
 # Populate Storage Volume if Bind mount - Fix for Bind Mounts on Host system
 if [ -z "$(ls -A $NGINX_DOCUMENT_ROOT/storage)" ]; then
 	echo "---------------"
