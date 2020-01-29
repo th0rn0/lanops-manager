@@ -74,7 +74,7 @@ class AppServiceProvider extends ServiceProvider
 
         if (\Schema::hasTable('settings')) {
             foreach (\App\Setting::all() as $setting) {
-                \Config::set('settings.'.$setting->setting, $setting->value);
+                @\Config::set('settings.'.$setting->setting, $setting->value);
             }
         }
     }

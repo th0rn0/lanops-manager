@@ -18,6 +18,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use Sirprize\PostalCodeValidator\Validator as PostcodeValidator;
+
 class VenuesController extends Controller
 {
     /**
@@ -66,6 +68,15 @@ class VenuesController extends Controller
             'image.*.image'             => 'Venue Image must be of Image type',
         ];
         $this->validate($request, $rules, $messages);
+
+        // Validation
+        if (isset($request->address_postcode) && $request->address_postcode != null && trim($request->address_postcode) != '') {
+            $validator = new PostcodeValidator();
+            if (!$validator->isValid('GB', $request->address_postcode, true)) {
+                Session::flash('alert-danger', 'That postcode appears to be invalid. Please use a valid one.');
+                return Redirect::back();
+            }
+        }
 
         $venue                      = new EventVenue();
         $venue->display_name        = $request->name;

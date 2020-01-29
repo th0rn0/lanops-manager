@@ -221,7 +221,7 @@ else
 	echo 'OK'
 fi
 
-if [ "$ENV_OVERRIDE" ];
+if [ -n "$ENV_OVERRIDE" ] && [ "$ENV_OVERRIDE" = 'true' ];
 then
 	echo 'WARNING!'
 	echo 'ENV OVERRIDE IS SET!'
