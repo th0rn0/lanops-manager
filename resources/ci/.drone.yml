@@ -27,7 +27,7 @@ steps:
 # Tests
 
 - name: test-phpunit
-  image: lanopsdev/manager:latest
+  image: th0rn0/eventula-manager:latest
   environment:
     APP_KEY:
       from_secret: TEST_APP_KEY
@@ -122,7 +122,7 @@ steps:
 - name: push-image-staging
   image: plugins/docker
   settings:
-    repo: lanopsdev/manager
+    repo: th0rn0/eventula-manager
     tags: 
     - staging
     username:
@@ -138,7 +138,7 @@ steps:
 - name: push-image-master
   image: plugins/docker
   settings:
-    repo: lanopsdev/manager
+    repo: th0rn0/eventula-manager
     tags: 
     - latest
     username:
@@ -301,7 +301,7 @@ steps:
 - name: build-push-image-tagged
   image: plugins/docker
   settings:
-    repo: lanopsdev/manager
+    repo: th0rn0/eventula-manager
     tags: 
     - ${DRONE_TAG}
     - latest
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: fb952bd64dbf1adc5296d2e2277b14561dbd232e32f951e3cde2af532bb7181d
+hmac: 8a033373b7381f3744a2269e12ce8ab47466dd52bd2a06b99f7cc386c0b3e3bc
 
 ...
