@@ -24,26 +24,26 @@ steps:
   - cd src/
   - npm install && node_modules/.bin/gulp --production
 
-# Tests
+# # Tests
 
-- name: test-phpunit
-  image: th0rn0/eventula-manager:latest
-  environment:
-    APP_KEY:
-      from_secret: TEST_APP_KEY
-    DB_HOST: database
-    DB_DATABASE: eventula_manager_database
-    DB_USERNAME: eventula_manager
-    DB_PASSWORD: password
-    APP_DEBUG: true
-    APP_ENV: testing
-    APP_URL: localhost
-  commands:
-  - cd src/
-  - ls
-  - php artisan migrate --force
-  - php artisan db:seed --force
-  - vendor/bin/phpunit
+# - name: test-phpunit
+#   image: th0rn0/eventula-manager:latest
+#   environment:
+#     APP_KEY:
+#       from_secret: TEST_APP_KEY
+#     DB_HOST: database
+#     DB_DATABASE: eventula_manager_database
+#     DB_USERNAME: eventula_manager
+#     DB_PASSWORD: password
+#     APP_DEBUG: true
+#     APP_ENV: testing
+#     APP_URL: localhost
+#   commands:
+#   - cd src/
+#   - ls
+#   - php artisan migrate --force
+#   - php artisan db:seed --force
+#   - vendor/bin/phpunit
 
 trigger:
   event:
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 8a033373b7381f3744a2269e12ce8ab47466dd52bd2a06b99f7cc386c0b3e3bc
+hmac: 1de2fca2b9d5493ee9d3186dd07c83ea6515bd4d9225937d8121b37000414415
 
 ...
