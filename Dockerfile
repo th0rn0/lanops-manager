@@ -1,4 +1,4 @@
-FROM lanopsdev/manager-base:v1.0-rc2
+FROM th0rn0/php-nginx-base:v1.0
 MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
 
 # ENV - App Defaults
