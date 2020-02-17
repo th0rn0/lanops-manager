@@ -202,7 +202,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'credit_enabled'],
             [
-                'value'         => true,
+                'value'         => false,
                 'default'       => true,
             ]
         );
