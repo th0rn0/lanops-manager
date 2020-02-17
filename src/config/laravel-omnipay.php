@@ -17,9 +17,9 @@ return [
                 'note'              => 'You will be redirected offsite for this payment.',
             ],
             'credentials' => [
-                'username' => env('PAYPAL_USERNAME'),
-                'password' => env('PAYPAL_PASSWORD'),
-                'signature' => env('PAYPAL_SIGNATURE')
+                'username' => '',
+                'password' => '',
+                'signature' => ''
             ]
         ],
         'stripe' => [

@@ -1,6 +1,6 @@
 version: "3.4"
 services:
-  app:
+  eventula_manager_app:
     build:
       context: .
     working_dir: /web/html/
@@ -9,25 +9,25 @@ services:
       - $PWD/resources/certs:/etc/nginx/certs
       - $PWD/resources/secrets:/run/secrets
     env_file: $PWD/src/.env
-    container_name: lan_manager_app
+    container_name: eventula_manager_app
     networks:
       - lan
     ports:
       - 80:80
       - 443:443
-  database:
+  eventula_manager_database:
     image: mysql:5.6
     volumes:
-      - lan_manager_database:/var/lib/mysql
+      - eventula_manager_database:/var/lib/mysql
     env_file: $PWD/src/.env
     ports:
       - 3306:3306
-    container_name: lan_manager_database
+    container_name: eventula_manager_database
     networks:
       - lan
 volumes:
-  lan_manager_database:
-    name: lan_manager_database
+  eventula_manager_database:
+    name: eventula_manager_database
 networks:
   lan:
     external: true

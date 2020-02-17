@@ -104,16 +104,22 @@
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<h2 class="">Connect</h2>
-						<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
-						<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
-						<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
+						@if (Settings::getFacebookLink() != "")
+							<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
+						@endif
+						@if (Settings::getDiscordLink() != "")
+							<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
+						@endif
+						@if (Settings::getDiscordLink() != "")
+							<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
+						@endif
 					</div>
 					<div class="col-lg-12">
 						<p class="">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">
-					<p class="">Powered By <a href="https://lanops.co.uk">LanOps</a> <a href="https://github.com/lanops/manager">Lan Manager</a></p>
+					<p class="">Powered By <a href="https://eventula.com">Eventula Event Manager</a></p>
 				</div>
 			</div>
 		</footer>

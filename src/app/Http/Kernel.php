@@ -15,6 +15,7 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+        \App\Http\Middleware\TrustProxies::class,
     ];
 
     /**
@@ -48,6 +49,8 @@ class Kernel extends HttpKernel
         'auth'          => \App\Http\Middleware\Authenticate::class,
         'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'installed'     => \App\Http\Middleware\Installed::class,
+        'notInstalled'  => \App\Http\Middleware\NotInstalled::class,
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin'         => \App\Http\Middleware\Admin::class,
         'banned'        => \App\Http\Middleware\Banned::class,

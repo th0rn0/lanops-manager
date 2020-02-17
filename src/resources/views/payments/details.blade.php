@@ -109,7 +109,7 @@
             }
         };
 
-	    const stripe = Stripe( '{!! env('STRIPE_PUBLIC_KEY') !!}' );
+	    const stripe = Stripe( "{!! config('laravel-omnipay.gateways.stripe.credentials.public') !!}" );
 
 	    const elements = stripe.elements();
 	    const cardElement = elements.create('card', {style: style});

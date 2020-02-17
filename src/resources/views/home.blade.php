@@ -74,8 +74,12 @@
 			<div class="col-xs-12">
 				<div class="page-header">
 					<h3>
-						{{ $nextEvent->display_name }} 
-						<small>{{ max($nextEvent->getSeatingCapacity() - $nextEvent->eventParticipants->count(), 0) }} / {{ $nextEvent->getSeatingCapacity() }} Seats Remaining</small>
+						{{ $nextEvent->display_name }}
+						@if (count($nextEvent->seatingPlans) > 0)
+							<small>{{ max($nextEvent->getSeatingCapacity() - $nextEvent->eventParticipants->count(), 0) }} / {{ $nextEvent->getSeatingCapacity() }} Seats Remaining</small>
+						@else 
+							<small>{{ max($nextEvent->capacity - $nextEvent->eventParticipants->count(), 0) }} / {{ $nextEvent->capacity }} Tickets Remaining</small>
+						@endif
 					</h3>
 				</div>
 			</div>

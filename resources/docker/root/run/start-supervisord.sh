@@ -43,14 +43,14 @@ if [ -n "$DB_MIGRATE" ]
 then
 	if [ "$DB_MIGRATE" = "true" ]
 	then
-		php artisan migrate
+		php artisan migrate --force
 	fi
 fi
 if [ -n "$DB_SEED" ]
 then
 	if [ "$DB_SEED" = "true" ]
 	then
-		php artisan db:seed --class=RequiredDatabaseSeeder
+		php artisan db:seed --class=RequiredDatabaseSeeder --force
 	fi
 fi
 

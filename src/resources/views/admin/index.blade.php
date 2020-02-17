@@ -110,7 +110,7 @@
 </div>
 
 <div class="row">
-	<div class="col-md-6 col-xs-12">
+	<div class="col-md-6 col-xs-12" hidden>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-ticket fa-fw"></i> Ticket Sales Per Month
@@ -121,7 +121,7 @@
 		</div>	
 	</div>
 
-	<div class="col-md-6 col-xs-12">
+	<div class="col-md-6 col-xs-12" hidden>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-credit-card fa-fw"></i> Orders Per Month

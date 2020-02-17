@@ -38,35 +38,35 @@ layout-images:
 
 # Create Symlink for Storage
 symlink:
-	docker exec lan_manager_app php artisan storage:link
+	docker exec eventula_manager_app php artisan storage:link
 
 # Create & Update the Database
 database-migrate:
-	docker exec lan_manager_app php artisan migrate
+	docker exec eventula_manager_app php artisan migrate
 
 # Seed the Database
 database-seed:
-	docker exec lan_manager_app php artisan db:seed
+	docker exec eventula_manager_app php artisan db:seed
 
 # Rollback last Database Migration
 database-rollback:
-	docker exec lan_manager_app php artisan db:rollback
+	docker exec eventula_manager_app php artisan db:rollback
 
 # Generate Application key
 generate-key:
-	docker exec lan_manager_app php artisan key:generate
+	docker exec eventula_manager_app php artisan key:generate
 
 # Generate Settings - This will erase your current settings!
 generate-settings:
-	docker exec lan_manager_app php artisan db:seed --class=SettingsTableSeeder
+	docker exec eventula_manager_app php artisan db:seed --class=SettingsTableSeeder
 
 # Generate Appearance - This will erase your current settings!
 generate-appearance:
-	docker exec lan_manager_app php artisan db:seed --class=AppearanceTableSeeder
+	docker exec eventula_manager_app php artisan db:seed --class=AppearanceTableSeeder
 
 # Generate Images - This will erase your current settings!
 generate-images:
-	docker exec lan_manager_app php artisan db:seed --class=SliderImageTableSeeder
+	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
 
 # Create Default Folder structure
 folder-structure:
@@ -94,7 +94,7 @@ permissions-docker:
 
 # Create SSL Keypair for Development
 ssh-keygen:
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/lan_manager.key -out resources/certs/lan_manager.crt
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/eventula_manager.key -out resources/certs/eventula_manager.crt
 
 # Install PHP Dependencies via Composer
 composer-install:
@@ -147,11 +147,11 @@ gulp:
 
 # Purge Containers
 purge-containers:
-	docker-compose -f docker-compose.yml -p lan_manager stop
-	docker-compose -f docker-compose.yml -p lan_manager rm -vf
-	docker rm lan_manager_app
-	docker rm lan_manager_database
-	docker volume rm lan_manager_db
+	docker-compose -f docker-compose.yml -p eventula_manager stop
+	docker-compose -f docker-compose.yml -p eventula_manager rm -vf
+	docker rm eventula_manager_app
+	docker rm eventula_manager_database
+	docker volume rm eventula_manager_db
 
 # Purge Caches
 purge-cache:

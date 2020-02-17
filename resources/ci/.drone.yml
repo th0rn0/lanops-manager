@@ -24,26 +24,26 @@ steps:
   - cd src/
   - npm install && node_modules/.bin/gulp --production
 
-# Tests
+# # Tests
 
-- name: test-phpunit
-  image: lanopsdev/manager:latest
-  environment:
-    APP_KEY:
-      from_secret: TEST_APP_KEY
-    DB_HOST: database
-    DB_DATABASE: lan_manager
-    DB_USERNAME: lan_manager
-    DB_PASSWORD: password
-    APP_DEBUG: true
-    APP_ENV: testing
-    APP_URL: localhost
-  commands:
-  - cd src/
-  - ls
-  - php artisan migrate --force
-  - php artisan db:seed --force
-  - vendor/bin/phpunit
+# - name: test-phpunit
+#   image: th0rn0/eventula-manager:latest
+#   environment:
+#     APP_KEY:
+#       from_secret: TEST_APP_KEY
+#     DB_HOST: database
+#     DB_DATABASE: eventula_manager_database
+#     DB_USERNAME: eventula_manager
+#     DB_PASSWORD: password
+#     APP_DEBUG: true
+#     APP_ENV: testing
+#     APP_URL: localhost
+#   commands:
+#   - cd src/
+#   - ls
+#   - php artisan migrate --force
+#   - php artisan db:seed --force
+#   - vendor/bin/phpunit
 
 trigger:
   event:
@@ -57,8 +57,8 @@ services:
 - name: database
   image: mysql:5.6
   environment:
-    MYSQL_DATABASE: lan_manager
-    MYSQL_USER: lan_manager
+    MYSQL_DATABASE: eventula_manager_database
+    MYSQL_USER: eventula_manager
     MYSQL_PASSWORD: password
     MYSQL_RANDOM_ROOT_PASSWORD: true
 
@@ -122,7 +122,7 @@ steps:
 - name: push-image-staging
   image: plugins/docker
   settings:
-    repo: lanopsdev/manager
+    repo: th0rn0/eventula-manager
     tags: 
     - staging
     username:
@@ -138,7 +138,7 @@ steps:
 - name: push-image-master
   image: plugins/docker
   settings:
-    repo: lanopsdev/manager
+    repo: th0rn0/eventula-manager
     tags: 
     - latest
     username:
@@ -239,8 +239,8 @@ services:
 - name: database
   image: mysql:5.6
   environment:
-    MYSQL_DATABASE: lan_manager
-    MYSQL_USER: lan_manager
+    MYSQL_DATABASE: eventula_manager_database
+    MYSQL_USER: eventula_manager
     MYSQL_PASSWORD: password
     MYSQL_RANDOM_ROOT_PASSWORD: true
 
@@ -301,7 +301,7 @@ steps:
 - name: build-push-image-tagged
   image: plugins/docker
   settings:
-    repo: lanopsdev/manager
+    repo: th0rn0/eventula-manager
     tags: 
     - ${DRONE_TAG}
     - latest
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: a4fed44636e23b2e8cddfad06be6e607dddff73c7e95d30cd8dcb58ce240af45
+hmac: 1de2fca2b9d5493ee9d3186dd07c83ea6515bd4d9225937d8121b37000414415
 
 ...

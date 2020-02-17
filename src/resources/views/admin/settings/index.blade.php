@@ -47,7 +47,8 @@
 									strpos($setting->setting, 'login') === false &&
 									strpos($setting->setting, 'shop') === false &&
 									$setting->setting != 'currency' &&
-									$setting->setting != 'social_facebook_page_access_token'
+									$setting->setting != 'social_facebook_page_access_token' &&
+									$setting->setting != 'installed'
 								)
 									<tr>
 										{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
