@@ -160,7 +160,7 @@ class GalleryController extends Controller
         $fileCount = count($files);
         //Counter for uploaded files
         $uploadcount = 0;
-        $destinationPath = '/storage/images/gallery/' . $album->name . '/';
+        $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
         if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
