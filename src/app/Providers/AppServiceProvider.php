@@ -77,6 +77,15 @@ class AppServiceProvider extends ServiceProvider
                 @\Config::set('settings.'.$setting->setting, $setting->value);
             }
         }
+
+        // Set SEO Defaults
+        @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
+        if (config('settings.seo_keywords') != null) {
+            @\Config::set('seotools.meta.defaults.keywords', explode(',',config('settings.seo_keywords')));
+        }
+        @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
+        @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
+        
     }
 
     /**

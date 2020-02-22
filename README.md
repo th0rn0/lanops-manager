@@ -309,7 +309,7 @@ If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_
   - STEAM_API_KEY
   - CHALLONGE_API_KEY
   - APP_KEY
-  
+
 ## Custom SCSS & Views
 
 To load in custom SCSS (Sassy CSS) & Views (Blade) mount the following directories;

@@ -165,6 +165,22 @@
 			</div>  
 		</div>
 	</div>
+	<div class="col-xs-12">
+		<!-- Shop System -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> SEO
+			</div>
+			<div class="panel-body">
+				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					{{ Form::label('seo_keywords', "SEO Keywords" ,array('id'=>'','class'=>'')) }}
+					{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting','class'=>'form-control')) }}
+					<small>Separate each keyword with a Comma.</small>
+					<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
+				{{ Form::close() }}
+			</div>
+		</div>
+	</div>
 </div>
  
 @endsection

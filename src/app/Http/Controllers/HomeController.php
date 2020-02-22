@@ -18,7 +18,13 @@ use App\EventTournamentParticipant;
 use App\Http\Requests;
 
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Redirect;
+use Artesaos\SEOTools\Facades\SEOTools;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\TwitterCard;
+use Artesaos\SEOTools\Facades\JsonLd;
 
 use Facebook\Facebook;
 
@@ -30,12 +36,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Check for Installation
-        // TODO installation check in settings
-        // if (User::all()->count() <= 0) {
-        //     return Redirect::to('/install');
-        // }
-
         // Check for Event
         $user = Auth::user();
         if ($user && !empty($user->eventParticipants)) {
