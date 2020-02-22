@@ -296,6 +296,7 @@ If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_
 - It will only work on the following Env Variables;
   - FACEBOOK_APP_ID
   - FACEBOOK_APP_SECRET
+  - FACEBOOK_PIXEL_ID
   - DB_DATABASE
   - DB_USERNAME
   - DB_PASSWORD
