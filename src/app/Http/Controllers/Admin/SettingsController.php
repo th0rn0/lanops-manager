@@ -302,6 +302,15 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        if (isset($request->analytics_google_id) && !ApiKey::setGoogleAnalyticsId($request->analytics_google_id)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->analytics_facebook_pixel) && !ApiKey::setFacebookPixelId($request->analytics_facebook_pixel)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         if (Input::file('org_logo') && !Settings::setOrgLogo(Input::file('org_logo'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();

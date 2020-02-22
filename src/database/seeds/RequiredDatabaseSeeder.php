@@ -480,6 +480,12 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\ApiKey::firstOrCreate(
+            ['key'          => 'facebook_pixel_id'],
+            [
+                'value'         => env('FACEBOOK_PIXEL_ID', null),
+            ]
+        );
+        App\ApiKey::firstOrCreate(
             ['key'          => 'steam_api_key'],
             [
                 'value'         => env('STEAM_API_KEY', null),
