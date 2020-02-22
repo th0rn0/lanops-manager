@@ -39,6 +39,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'seo_keywords'],
+            [
+                'value'         => env('SEO_KEYWORDS', "Events,OrgNameHere,Tagline Here"),
+                'default'       => true,
+                'description'   => 'Keywords for the Organization SEO'
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'org_logo'],
             [
                 'value'         => env('APP_LOGO', '/storage/images/main/logo_main.png'),

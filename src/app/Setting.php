@@ -1031,4 +1031,28 @@ class Setting extends Model
         return true;
     }
 
+    /**
+     * Get SEO Keywords
+     * @return String
+     */
+    public static function getSeoKeywords()
+    {
+        return self::where('setting', 'seo_keywords')->first()->value;
+    }
+
+    /**
+     * Set SEO Keywords
+     * @param String $keywords
+     */
+    public static function setSeoKeywords($keywords)
+    {
+        
+        $setting = self::where('setting', 'seo_keywords')->first();
+        $setting->value = implode(',', array_map('trim', explode(',', $keywords)));
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
 }
