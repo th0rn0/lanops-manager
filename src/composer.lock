@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b97900fd8bb0ebbbd1cdb29c3187cf56",
+    "content-hash": "e32615732fe4acc8ce23508e42b46bbf",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -5692,6 +5692,68 @@
                 "environment"
             ],
             "time": "2019-09-10T21:37:39+00:00"
+        },
+        {
+            "name": "weblagence/laravel-facebook-pixel",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weblagence/laravel-facebook-pixel.git",
+                "reference": "96b526cc57ce5e8f055d8beb917667443ef9cb7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/weblagence/laravel-facebook-pixel/zipball/96b526cc57ce5e8f055d8beb917667443ef9cb7d",
+                "reference": "96b526cc57ce5e8f055d8beb917667443ef9cb7d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=7.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "WebLAgence\\LaravelFacebookPixel\\LaravelFacebookPixelServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelFacebookPixel": "WebLAgence\\LaravelFacebookPixel\\LaravelFacebookPixelFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "WebLAgence\\LaravelFacebookPixel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Bellaiche",
+                    "email": "jeremy@weblagence.com",
+                    "homepage": "https://weblagence.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Facebook Pixel integration for Laravel",
+            "homepage": "https://github.com/weblagence/laravel-facebook-pixel",
+            "keywords": [
+                "facebook pixel",
+                "laravel",
+                "laravel-facebook-pixel",
+                "weblagence"
+            ],
+            "time": "2019-01-15T11:54:37+00:00"
         },
         {
             "name": "webonyx/graphql-php",
