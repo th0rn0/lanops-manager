@@ -42,9 +42,9 @@ class AppServiceProvider extends ServiceProvider
             // Challonge
             @\Config::set('challonge.api_key', env('CHALLONGE_API_KEY'));
             // Google Analytics
-            @\Config::set('analytics.configurations.GoogleAnalytics.tracking_id', env('GOOGLE_ANALYTICS_TRACKING_ID'));
+            @\Config::set('analytics.configurations.GoogleAnalytics.tracking_id', env('GOOGLE_ANALYTICS_TRACKING_ID', null));
             // Facebook Analytics
-            @\Config::set('analytics.configurations.GoogleAnalytics.tracking_id', env('FACEBOOK_PIXEL_ID'));
+            @\Config::set('facebook-pixel.facebook_pixel_id', env('FACEBOOK_PIXEL_ID', null));
             // Steam
             @\Config::set('steam-auth.api_key', env('STEAM_API_KEY'));
         } elseif (\Schema::hasTable('api_keys')) {
