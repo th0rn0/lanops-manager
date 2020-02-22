@@ -52,6 +52,8 @@ return [
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
         Ipunkt\LaravelAnalytics\AnalyticsServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+        WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -116,6 +118,11 @@ return [
         'Helpers'               => App\Libraries\Helpers::class,
         'FacebookPageWrapper'   => App\Libraries\Facebook\FacebookPageWrapper::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
+        'SEOMeta'               => Artesaos\SEOTools\Facades\SEOMeta::class,
+        'OpenGraph'             => Artesaos\SEOTools\Facades\OpenGraph::class,
+        'Twitter'               => Artesaos\SEOTools\Facades\TwitterCard::class,
+        'JsonLd'                => Artesaos\SEOTools\Facades\JsonLd::class,
+        'LaravelFacebookPixel'  => WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelFacade::class,
     ],
 
 ];

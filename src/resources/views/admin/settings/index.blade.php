@@ -46,6 +46,7 @@
 									strpos($setting->setting, 'credit') === false &&
 									strpos($setting->setting, 'login') === false &&
 									strpos($setting->setting, 'shop') === false &&
+									strpos($setting->setting, 'seo') === false &&
 									$setting->setting != 'currency' &&
 									$setting->setting != 'social_facebook_page_access_token' &&
 									$setting->setting != 'installed'
@@ -163,6 +164,34 @@
 					{{ dd($config) }}
 				@endforeach
 			</div>  
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<!-- Shop System -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> SEO & Analytics
+			</div>
+			<div class="panel-body">
+				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					<div class="row">
+						<div class="form-group col-xs-12">
+							{{ Form::label('seo_keywords', "SEO Keywords" ,array('id'=>'','class'=>'')) }}
+							{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting','class'=>'form-control')) }}
+							<small>Separate each keyword with a Comma.</small>
+						</div>
+						<div class="form-group col-xs-12 col-md-6">
+							{{ Form::label('analytics_google_id', "Google Analyics ID" ,array('id'=>'','class'=>'')) }}
+							{{ Form::text("analytics_google_id", config('analytics.configurations.GoogleAnalytics.tracking_id') ,array('id'=>'setting','class'=>'form-control')) }}
+						</div>
+						<div class="form-group col-xs-12 col-md-6">
+							{{ Form::label('analytics_facebook_pixel', "Facebook Pixel ID" ,array('id'=>'','class'=>'')) }}
+							{{ Form::text("analytics_facebook_pixel", config('facebook-pixel.facebook_pixel_id') ,array('id'=>'setting','class'=>'form-control')) }}
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
+				{{ Form::close() }}
+			</div>
 		</div>
 	</div>
 </div>

@@ -58,6 +58,10 @@ class ApiKeyTableSeeder extends Seeder
             'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
         ]);
         factory(App\ApiKey::class)->create([
+            'key'          => 'facebook_pixel_id',
+            'value'         => env('FACEBOOK_PIXEL_ID', null),
+        ]);
+        factory(App\ApiKey::class)->create([
             'key'          => 'steam_api_key',
             'value'         => env('STEAM_API_KEY', null),
         ]);

@@ -724,4 +724,23 @@ class Settings
     {
         return \App\Setting::setInstalled();
     }
+
+    /**
+     * Get SEO Keywords
+     * @return Integer $amount
+     */
+    public static function getSeoKeywords()
+    {
+        return \App\Setting::getSeoKeywords();
+    }
+
+    /**
+     * Set SEO Keywords
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setSeoKeywords($text)
+    {
+        return \App\Setting::setSeoKeywords($text);
+    }
 }
