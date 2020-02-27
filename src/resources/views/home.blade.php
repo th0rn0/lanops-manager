@@ -84,8 +84,8 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-9">
-				<h4>{{ $nextEvent->desc_short }}</h4>
-				<p>{{ $nextEvent->desc_long }}</p>
+				<h4>{!! $nextEvent->desc_short !!}</h4>
+				<p>{!! $nextEvent->desc_long !!}</p>
 			</div>
 			<div class="col-xs-12 col-sm-3">
 				<h4>When:</h4>
