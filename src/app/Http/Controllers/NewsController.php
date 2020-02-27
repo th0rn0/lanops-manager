@@ -49,7 +49,7 @@ class NewsController extends Controller
         foreach ($newsArticle->tags as $tag) {
             $seoKeywords[] = $tag->tag;
         }
-        SEOMeta::setDescription($event->desc_short);
+        SEOMeta::setDescription($newsArticle->title);
         SEOMeta::addKeyword($seoKeywords);
         OpenGraph::setDescription($newsArticle->title);
         OpenGraph::addProperty('type', 'article');
