@@ -10,13 +10,13 @@
 		@if (@$admin)
 			<a href="/admin/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				<center>
-					<img style="max-height:230px !important;" class="img img-rounded img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img img-rounded img-responsive" src="{{ $item->getDefaultImageUrl() }}">
 				</center>
 			</a>
 		@else
 			<a href="/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				<center>
-					<img style="max-height:230px !important;" class="img img-rounded img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img img-rounded img-responsive" src="{{ $item->getDefaultImageUrl() }}">
 				</center>
 			</a>
 		@endif

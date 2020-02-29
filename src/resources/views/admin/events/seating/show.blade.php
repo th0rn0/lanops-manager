@@ -207,7 +207,7 @@
 					@if ($seatingPlan->image_path)
 						<hr>
 						<h4>Image Preview</h4>
-						<img src="{{ $seatingPlan->image_path }}" class="img img-responsive" />
+						<img src="{{ $seatingPlan->image_path }}" alt="{{ $seatingPlan->name }} Layout" class="img img-responsive" />
 					@endif
 				{{ Form::close() }}
 			</div>

@@ -7,7 +7,7 @@
 	<div class="carousel-inner" role="listbox">
 		@foreach ($sliderImages as $image)
 			<div class="item @if ($loop->first) active @endif">
-				<img class="hero-image" src="{{ $image->path }}">
+				<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}">
 			</div>
 		@endforeach
 	</div>
@@ -141,7 +141,7 @@
 				@foreach ($topAttendees as $attendee)
 					<div class="row">
 						<div class="col-xs-12 col-sm-3">
-							<img class="img-rounded img-responsive" src="{{ $attendee->avatar }}">
+							<img class="img-rounded img-responsive" alt="{{ $attendee->username }}'s Avatar" src="{{ $attendee->avatar }}">
 						</div>
 						<div class="col-xs-12 col-sm-9">
 							<p>
@@ -159,7 +159,7 @@
 				@foreach ($topWinners as $winner)
 					<div class="row">
 						<div class="col-xs-12 col-sm-3">
-							<img class="img-rounded img-responsive" src="{{ $winner->avatar }}">
+							<img class="img-rounded img-responsive" alt="{{ $winner->username }}'s Avatar" src="{{ $winner->avatar }}">
 						</div>
 						<div class="col-xs-12 col-sm-9">
 							<p>
