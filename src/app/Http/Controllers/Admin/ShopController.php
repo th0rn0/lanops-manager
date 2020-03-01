@@ -76,7 +76,7 @@ class ShopController extends Controller
 
 	  	if (!ShopItemCategory::create(['name' => $request->name])) {
   		 	Session::flash('alert-danger', 'Cannot create Category!');
-        return Redirect::to('/admin/shop/');
+            return Redirect::to('/admin/shop/');
 	  	}
         Session::flash('alert-success', 'Successfully created Category!');
         return Redirect::to('/admin/shop/');
@@ -167,12 +167,21 @@ class ShopController extends Controller
     	];
     	$this->validate($request, $rules, $messages);
 
+        $price = $request->price;
+        if ($request->price == 0) {
+            $price = null;
+        }
+        $price_credit = $request->price_credit;
+        if ($request->price_credit == 0) {
+            $price_credit = null;
+        }
+
     	$params = [
     		'name'                    => $request->name,
     		'stock'                   => $request->stock,
     		'shop_item_category_id'	  => $request->category_id,
-    		'price'                   => $request->price,
-    		'price_credit'            => $request->price_credit,
+    		'price'                   => $price,
+    		'price_credit'            => $price_credit,
     		'added_by'                => Auth::id(),
             'description'             => @$request->description,
     	];
@@ -206,8 +215,8 @@ class ShopController extends Controller
             'name'          => 'filled',
             'stock'         => 'integer',
             'category_id'   => 'required|exists:shop_item_categories,id',
-            'price'         => 'integer',
-            'price_credit'  => 'integer',
+            'price'         => 'numeric',
+            'price_credit'  => 'numeric',
             'featured'      => 'boolean',
             'status'        => 'in:draft,published,hidden'
         ];
@@ -216,18 +225,27 @@ class ShopController extends Controller
             'stock.integer'         => 'Stock must be a number.',
             'category_id.required'  => 'A Category is required.',
             'category_id.exists'    => 'A Category must exist.',
-            'price.integer'         => 'Real Price must be a number.',
-            'price_credit.integer'  => 'Credit Price must be a number.',
+            'price.numeric'         => 'Real Price must be a number.',
+            'price_credit.numeric'  => 'Credit Price must be a number.',
             'featured.boolean'      => 'Featured must be a boolean.',
             'status.in'             => 'Status must be Draft, Published or Hidden.',
         ];
         $this->validate($request, $rules, $messages);
 
+        $price = $request->price;
+        if ($request->price == 0) {
+            $price = null;
+        }
+        $price_credit = $request->price_credit;
+        if ($request->price_credit == 0) {
+            $price_credit = null;
+        }
+
         $item->name = @$request->name;
         $item->stock = @$request->stock;
         $item->shop_item_category_id = @$request->category_id;
-        $item->price = @$request->price;
-        $item->price_credit = @$request->price_credit;
+        $item->price = @$price;
+        $item->price_credit = @$price_credit;
         $item->description = @$request->description;
         $item->featured = @$request->featured;
         $item->status = @strtoupper($request->status);

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-xs-2">
-		<img class="img-responsive img-rounded img-small news-post-comment-image" src="{{ $comment->user->avatar }}"/>
+		<img class="img-responsive img-rounded img-small news-post-comment-image" alt="{{ $comment->user->username }}'s Avatar" src="{{ $comment->user->avatar }}"/>
 		<p class="news-post-comment-image-text">{{ $comment->user->username }}</p>
 	</div>
 	<div class="col-xs-10">

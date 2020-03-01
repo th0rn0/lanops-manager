@@ -268,7 +268,7 @@
 								<hr>
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-xs-12 col-md-8">
-										<img class="img-responsive" src="{{$seatingPlan->image_path}}"/>
+										<img class="img-responsive" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
 									</div>
 									<div class="col-xs-12 col-md-4">
 										<h5>Your Seats</h5>
@@ -326,7 +326,7 @@
 		</div>
 		<div class="col-lg-5">
 			@foreach ($event->venue->images as $image)
-				<img class="img-responsive img-rounded" src="{{$image->path}}"/>
+				<img class="img-responsive img-rounded" alt="{{ $event->venue->display_name }}" src="{{$image->path}}"/>
 			@endforeach
 		</div>
 	</div>
@@ -338,8 +338,8 @@
 			<h3>{{$event->display_name}} is sponsored by</h3>
 		</div>
 		@foreach ($event->sponsors as $sponsor)
-			<a href="{{$sponsor->website}}">
-				<img class="img-responsive img-rounded" src="{{$sponsor->image_path}}"/>
+			<a href="{{ $sponsor->website }}">
+				<img class="img-responsive img-rounded" src="{{ $sponsor->image_path }}" alt="{{ $sponsor->website}}" />
 			</a>
 		@endforeach
 	@endif
@@ -357,7 +357,7 @@
 						<div class="col-sm-4 visible-xs">
 							<h4>{{$section->title}}</h4>
 							<center>
-								<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
+								<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
 							</center>
 						</div>
 						<div class="col-sm-8">
@@ -367,7 +367,7 @@
 						<div class="col-sm-4 hidden-xs">
 							@if (isset($section->image_path))
 								<center>
-									<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
+									<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
 								</center>
 							@endif
 						</div>
@@ -382,7 +382,7 @@
 						<div class="col-sm-4">
 							<h4 class="visible-xs">{{$section->title}}</h4>
 							<center>
-								<img class="img-responsive img-rounded" src="{{$section->image_path}}" />
+								<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
 							</center>
 						</div>
 						<div class="col-sm-8">
@@ -611,7 +611,7 @@
 			@foreach ($event->eventParticipants as $participant)
 			<tr>
 				<td>
-					<img class="img-responsive img-rounded img-small" style="max-width: 30%;" src="{{$participant->user->avatar}}">
+					<img class="img-responsive img-rounded img-small" style="max-width: 30%;" alt="{{ $participant->user->username}}'s Avatar" src="{{ $participant->user->avatar }}">
 				</td>
 				<td style="vertical-align: middle;">
 					{{ $participant->user->username }}

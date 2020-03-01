@@ -48,7 +48,7 @@
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
-				<img class="img-responsive img-rounded" src="{{ $sponsor->image_path }}"/>
+				<img alt="{{ $sponsor->website}}" class="img-responsive img-rounded" src="{{ $sponsor->image_path }}"/>
 			</a>
 		@endforeach
 	@endif
@@ -250,7 +250,7 @@
 			@foreach ($event->eventParticipants as $participant)
 			<tr>
 				<td>
-					<img class="img-responsive img-rounded" style="max-width: 70%;" src="{{ $participant->user->avatar }}">
+					<img class="img-responsive img-rounded" style="max-width: 70%;" alt="{{ $participant->user->username }}'s Avatar" src="{{ $participant->user->avatar }}">
 				</td>
 				<td style="vertical-align: middle;">
 					{{ $participant->user->username }}

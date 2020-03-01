@@ -29,26 +29,26 @@
 											x {{ $item->quantity }}
 										</td>
 										<td class="text-right">
-											@if ($item->price != null)
-												{{ Settings::getCurrencySymbol() }}{{ $item->price }}
-												@if ($item->price_credit != null && Settings::isCreditEnabled())
+											@if ($item->price != null && $item->price != 0)
+												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
+												@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 													/
 												@endif
 											@endif
-											@if ($item->price_credit != null && Settings::isCreditEnabled())
-												{{ $item->price_credit }} Credits
+											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+												{{ number_format($item->price_credit, 2) }} Credits
 											@endif
 											Each
 										</td>
 										<td class="text-right">
-											@if ($item->price != null)
-												{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-												@if ($item->price_credit != null && Settings::isCreditEnabled())
+											@if ($item->price != null && $item->price != 0)
+												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price * $item->quantity, 2) }}
+												@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 													/
 												@endif
 											@endif
-											@if ($item->price_credit != null && Settings::isCreditEnabled())
-												{{ $item->price_credit * $item->quantity }} Credits
+											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+												{{ number_format($item->price_credit * $item->quantity, 2) }} Credits
 											@endif
 										</td>
 									</tr>
@@ -60,13 +60,13 @@
 									<td class="text-right">
 										<strong>Total:</strong>
 										@if ($basket->total != null)
-											{{ Settings::getCurrencySymbol() }}{{ $basket->total }}
+											{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
 											@if ($basket->total_credit != null && Settings::isCreditEnabled())
 												/
 											@endif
 										@endif
 										@if ($basket->total_credit != null && Settings::isCreditEnabled())
-											{{ $basket->total_credit }} Credits
+											{{ number_format($basket->total_credit, 2) }} Credits
 										@endif
 									</td>
 								</tr>

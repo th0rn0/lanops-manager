@@ -144,7 +144,7 @@ $factory->define(App\ShopItem::class, function (Faker\Generator $faker) {
     $name = $faker->words($nb = random_int(1, 3), $asText = true);
     $rng = random_int(1, 3);
     $price = number_format(random_int(1, 100), 2);
-    $price_credit = random_int(0, 999);
+    $price_credit = random_int(1, 999);
     if ($rng == 1) {
         $price = null;
     }

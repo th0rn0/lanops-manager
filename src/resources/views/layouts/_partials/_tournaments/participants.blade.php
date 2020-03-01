@@ -33,7 +33,7 @@
 					<tr class='{{ $context }}'>
 						<td>
 							<p style="padding-top:7px;">
-								<img class="img-rounded" style="max-width: 4%;" src="{{$tournamentParticipant->eventParticipant->user->avatar}}">
+								<img alt="{{ $tournamentParticipant->eventParticipant->user->username }}'s Avatar" class="img-rounded" style="max-width: 4%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
 								<small> - {{ $tournamentParticipant->eventParticipant->user->username }}</small>
 							</p>
@@ -113,7 +113,7 @@
 						<td>
 							@if ($tournamentTeam->tournamentParticipants)
 								@foreach ($tournamentTeam->tournamentParticipants as $participant)
-									<img class="img-rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
+									<img alt="{{ $participant->eventParticipant->user->username }}'s Avatar" class="img-rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
 									<span class="pull-right">
 										@if ($participant->eventParticipant->seat)
 											{{ $participant->eventParticipant->seat->seat }}
@@ -152,7 +152,7 @@
 						<tr>
 							<td>
 								<p>
-									<img class="img-rounded" style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
+									<img alt="{{ $tournamentParticipant->eventParticipant->user->username }}'s Avatar" class="img-rounded" style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
 								</p>
 							</td>

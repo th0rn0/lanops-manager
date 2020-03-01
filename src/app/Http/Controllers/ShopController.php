@@ -78,6 +78,10 @@ class ShopController extends Controller
             Session::flash('alert-danger', 'Not enough in Stock. Please try again later.');
             return Redirect::back();
         }
+        if (!ShopItem::hasEnoughStockByItemId($request->shop_item_id, $request->quantity) && $request->action == 'add') {
+            Session::flash('alert-danger', 'Not enough in Stock. Please try again later.');
+            return Redirect::back();
+        }
         switch ($request->action) {
             case 'add':
                 if (
