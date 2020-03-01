@@ -156,6 +156,20 @@ class ShopItem extends Model
     }
 
     /**
+     * Check if item has Enough Stock
+     * @param $itemId
+     * @return Boolean
+     */
+    public static function hasEnoughStockByItemId($itemId, $quantity)
+    {
+        $item = \App\ShopItem::where('id', $itemId)->first();
+        if ($item->stock <= 0 || $quantity > $item->stock) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Update Stock
      * @param $quantity
      * @param $action

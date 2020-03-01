@@ -10,14 +10,14 @@
 						x {{ $item->quantity }}
 					</td>
 					<td>
-						@if ($item->price != null)
-							{{ Settings::getCurrencySymbol() }}{{ $item->price }}
-							@if ($item->price_credit != null && Settings::isCreditEnabled())
+						@if ($item->price != null && $item->price != 0)
+							{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
+							@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 								/
 							@endif
 						@endif
-						@if ($item->price_credit != null && Settings::isCreditEnabled())
-							{{ $item->price_credit }} Credits
+						@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+							{{ number_format($item->price_credit, 2) }} Credits
 						@endif
 					</td>
 				</tr>
@@ -29,13 +29,13 @@
 				</td>
 				<td>
 					@if ($basket->total != null)
-						{{ Settings::getCurrencySymbol() }}{{ $basket->total }}
-						@if ($basket->total_credit != null && Settings::isCreditEnabled())
+						{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
+						@if ($basket->total_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 							/
 						@endif
 					@endif
-					@if ($basket->total_credit != null && Settings::isCreditEnabled())
-						{{ $basket->total_credit }} Credits
+					@if ($basket->total_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+						{{ number_format($basket->total_credit, 2) }} Credits
 					@endif
 				</td>
 		</tbody>

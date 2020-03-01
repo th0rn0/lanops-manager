@@ -320,21 +320,26 @@ class Helpers
         foreach ($formattedBasket as $item) {
             if (array_key_exists('shop', $basket)) {
                 $item->quantity = $basket['shop'][$item->id];
-                $formattedBasket->total += $item->price * $item->quantity;
-                $formattedBasket->total_credit += $item->price_credit * $item->quantity;
+                if ($item->price != null && $item->price != 0) {
+                    $formattedBasket->total += $item->price * $item->quantity;
+                }
+                if ($item->price_credit != null && $item->price_credit != 0) {
+                    $formattedBasket->total_credit += $item->price_credit * $item->quantity;
+                }
             } else {
                 $item->quantity = $basket['tickets'][$item->id];
                 $formattedBasket->total += $item->price * $item->quantity;
                 $formattedBasket->total_credit += $item->price_credit * $item->quantity;
             }
-            if ($item->price_credit == null) {
+            if ($item->price_credit == null || $item->price_credit == 0) {
                 $formattedBasket->allow_credit = false;
             }
-            if ($item->price == null) {
+            if ($item->price == null || $item->price == 0) {
                 $formattedBasket->allow_payment = false;
             }
         }
         return $formattedBasket;
+
     }
 
     /**

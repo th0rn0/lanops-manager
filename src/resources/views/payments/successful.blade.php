@@ -81,13 +81,13 @@
 							<h5>{{ $item->name }}</h5>
 							<h5>Quantity: {{ $item->quantity }}</h5>
 							<h5>
-								@if ($item->price != null)
+								@if ($item->price != null && $item->price != 0)
 									{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-									@if ($item->price_credit != null && Settings::isCreditEnabled())
+									@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 										/
 									@endif
 								@endif
-								@if ($item->price_credit != null && Settings::isCreditEnabled())
+								@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 									{{ $item->price_credit * $item->quantity }} Credits
 								@endif
 							</h5>

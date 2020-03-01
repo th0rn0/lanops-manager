@@ -23,13 +23,13 @@
 	</div>
 	<div class="panel-footer">
 		<p>
-			@if ($item->price != null)
+			@if ($item->price != null && $item->price != 0)
 				{{ Settings::getCurrencySymbol() }}{{ $item->price }}
-				@if ($item->price_credit != null && Settings::isCreditEnabled())
+				@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 					/
 				@endif
 			@endif
-			@if ($item->price_credit != null && Settings::isCreditEnabled())
+			@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 				{{ $item->price_credit }} Credits
 			@endif
 		</p>
