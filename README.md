@@ -4,6 +4,8 @@ The Eventula Event Manager / ECO System is a fully featured White labeled Event 
 
 https://eventula.co.uk
 
+If you are using this please consider signing up to eventula for event mapping.
+
 ##### Home Page:
 
 ![Manager front page](resources/images/home-page.png)
