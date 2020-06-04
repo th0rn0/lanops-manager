@@ -2,7 +2,7 @@
 
 The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management. 
 
-https://eventula.co.uk
+https://eventula.com
 
 If you are using this please consider signing up to eventula for event mapping.
 
