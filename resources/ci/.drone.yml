@@ -135,6 +135,22 @@ steps:
     status:
     - success
 
+- name: push-image-master
+  image: plugins/docker
+  settings:
+    repo: th0rn0/eventula-manager
+    tags: 
+    - latest
+    username:
+      from_secret: DOCKERHUB_USERNAME
+    password:
+      from_secret: DOCKERHUB_PASSWORD
+  when:
+    branch:
+    - master
+    status:
+    - success
+
 # Notifcations - End
 
 - name: notify-discord-test-success
@@ -341,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 45a1e10c371a60728828a9ae324676022e392303621ceafe6d0d09bd37cb3a31
+hmac: 1de2fca2b9d5493ee9d3186dd07c83ea6515bd4d9225937d8121b37000414415
 
 ...
