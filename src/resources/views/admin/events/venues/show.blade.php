@@ -67,7 +67,13 @@
 						</div>
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('address_country','Address Country',array('id'=>'','class'=>'')) }}
-							{{ Form::text('address_country', $venue->address_country,array('id'=>'address_country','class'=>'form-control')) }}
+                            <select class="form-control @error('address_country') is-invalid @enderror" name="address_country" id="address_country" aria-describedby="address_country" value="{{ old('address_country', 'GB') }}">
+                                @foreach (Helpers::getSelectCountries() as $country)
+                                    <option value="{{ $country }}" {{ ( $country == $venue->address_country) ? 'selected' : '' }}> 
+                                        {{ $country }} 
+                                    </option>
+                                @endforeach
+                            </select>
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
