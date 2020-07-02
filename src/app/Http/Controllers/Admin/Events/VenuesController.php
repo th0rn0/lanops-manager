@@ -176,7 +176,7 @@ class VenuesController extends Controller
             $venue->address_city        = $request->address_city;
         }
 
-        if (isset($request->address_postcode) || isset($request->address_country) {
+        if (isset($request->address_postcode) || isset($request->address_country)) {
             $validCountry = false;
             $countryCode = null;
             $country = null;
