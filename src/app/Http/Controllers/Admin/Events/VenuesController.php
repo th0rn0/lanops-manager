@@ -57,6 +57,7 @@ class VenuesController extends Controller
             'address_street'    => 'required',
             'address_city'      => 'required',
             'address_postcode'  => 'required',
+            'address_country'   => 'required',
             'image.*'           => 'image',
         ];
         $messages = [
@@ -65,14 +66,30 @@ class VenuesController extends Controller
             'address_street.required'   => 'Street name is Required',
             'address_city.required'     => 'City name is Required',
             'address_postcode.required' => 'Postcode is Required',
+            'address_country.required'  => 'Country is Required',
             'image.*.image'             => 'Venue Image must be of Image type',
         ];
         $this->validate($request, $rules, $messages);
 
         // Validation
+        $validCountry = false;
+        $countryCode = null;
+        $country = null;
+        foreach (json_decode(file_get_contents("http://country.io/names.json"), true) as $thisCountryCode => $thisCountry) {
+            if (strtolower($thisCountry) == strtolower($request->address_country) || strtolower($thisCountryCode) == strtolower($request->address_country)) {
+                $validCountry = true;
+                $countryCode = $thisCountryCode;
+                $country = $thisCountry;
+            }
+        }
+        if (!$validCountry) {
+            Session::flash('alert-danger', 'That country appears to be invalid. Please use a valid one.');
+            return Redirect::back()->withInput($request->input())->withError('That country appears to be invalid. Please use a valid one.');
+        }
+
         if (isset($request->address_postcode) && $request->address_postcode != null && trim($request->address_postcode) != '') {
             $validator = new PostcodeValidator();
-            if (!$validator->isValid('GB', $request->address_postcode, true)) {
+            if (!$validator->isValid($countryCode, $request->address_postcode, true)) {
                 Session::flash('alert-danger', 'That postcode appears to be invalid. Please use a valid one.');
                 return Redirect::back();
             }
@@ -125,14 +142,16 @@ class VenuesController extends Controller
             'address_street'    => 'filled',
             'address_city'      => 'filled',
             'address_postcode'  => 'filled',
+            'address_country'   => 'filled',
             'image.*'           => 'image',
         ];
         $messages = [
-            'name.required'             => 'Venue Name cannot be empty',
-            'address_1.required'        => 'Address cannot be empty',
-            'address_street.required'   => 'Street name cannot be empty',
-            'address_city.required'     => 'City name cannot be empty',
-            'address_postcode.required' => 'Postcode cannot be empty',
+            'name.filled'               => 'Venue Name cannot be empty',
+            'address_1.filled'          => 'Address cannot be empty',
+            'address_street.filled'     => 'Street name cannot be empty',
+            'address_city.filled'       => 'City name cannot be empty',
+            'address_postcode.filled'   => 'Postcode cannot be empty',
+            'address_country.filled'    => 'Country cannot be empty',
             'image.*.image'             => 'Venue Image must be of Image type',
         ];
         $this->validate($request, $rules, $messages);
@@ -157,12 +176,32 @@ class VenuesController extends Controller
             $venue->address_city        = $request->address_city;
         }
 
-        if (isset($request->address_postcode)) {
-            $venue->address_postcode    = $request->address_postcode;
-        }
+        if (isset($request->address_postcode) || isset($request->address_country) {
+            $validCountry = false;
+            $countryCode = null;
+            $country = null;
+            foreach (json_decode(file_get_contents("http://country.io/names.json"), true) as $thisCountryCode => $thisCountry) {
+                if (strtolower($thisCountry) == strtolower($request->address_country) || strtolower($thisCountryCode) == strtolower($request->address_country)) {
+                    $validCountry = true;
+                    $countryCode = $thisCountryCode;
+                    $country = $thisCountry;
+                }
+            }
+            if (!$validCountry) {
+                Session::flash('alert-danger', 'That country appears to be invalid. Please use a valid one.');
+                return Redirect::back()->withInput($request->input())->withError('That country appears to be invalid. Please use a valid one.');
+            }
 
-        if (isset($request->address_country)) {
+            if (isset($request->address_postcode) && $request->address_postcode != null && trim($request->address_postcode) != '') {
+                $validator = new PostcodeValidator();
+                if (!$validator->isValid($countryCode, $request->address_postcode, true)) {
+                    Session::flash('alert-danger', 'That postcode appears to be invalid. Please use a valid one.');
+                    return Redirect::back();
+                }
+            }
+            $venue->address_postcode    = $request->address_postcode;
             $venue->address_country     = $request->address_country;
+
         }
 
         if (Input::file('images')) {
