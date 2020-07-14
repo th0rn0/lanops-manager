@@ -260,7 +260,7 @@ steps:
     template: |
       {
         "username": "Event Manager CI",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - **TAGGED** Docker Build Started.",
+        "content": "__**TAGGED**__ - \"${DRONE_COMMIT_MESSAGE}\" - Build Started.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -325,7 +325,7 @@ steps:
     template: |
       {
         "username": "Event Manager CI",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
+        "content": "__**TAGGED**__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -342,7 +342,7 @@ steps:
     template: |
       {
         "username": "Event Manager CI",
-        "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
+        "content": "__**TAGGED**__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
   when:
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: ab20bfeea6b6bf33f2c2cb97f22e0b9f330946459aad0bd204b72354389f4894
+hmac: 3bc9a2664941587c72af4d0d2292bd0970c19f068ef20f9949757d8e8518ce61
 
 ...
