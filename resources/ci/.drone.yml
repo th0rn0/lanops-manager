@@ -77,7 +77,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Build Started.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -160,7 +160,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Passed. GGWP!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -177,7 +177,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -194,7 +194,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -211,7 +211,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -259,7 +259,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - **TAGGED** Docker Build Started.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -324,7 +324,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} Failed. Fix me please!",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -341,7 +341,7 @@ steps:
       from_secret: DISCORD_WEBHOOK_URL
     template: |
       {
-        "username": "Lan Manager Drone",
+        "username": "Event Manager CI",
         "content": "__***{{uppercase build.branch }}***__ - \"${DRONE_COMMIT_MESSAGE}\" - Commit: {{ build.commit }} - Image has been built and pushed to Docker Hub.",
         "avatar_url": "https://cdn.worldvectorlogo.com/logos/drone.svg"
       }
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 1de2fca2b9d5493ee9d3186dd07c83ea6515bd4d9225937d8121b37000414415
+hmac: ab20bfeea6b6bf33f2c2cb97f22e0b9f330946459aad0bd204b72354389f4894
 
 ...
