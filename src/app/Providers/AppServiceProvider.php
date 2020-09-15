@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 use View;
 use Auth;
+use URL;
 use App\Event;
 
 class AppServiceProvider extends ServiceProvider
@@ -96,6 +97,9 @@ class AppServiceProvider extends ServiceProvider
         @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
         @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
         
+        if (env('APP_ENV') === 'production') {
+            URL::forceSchema('https');
+        }
     }
 
     /**
