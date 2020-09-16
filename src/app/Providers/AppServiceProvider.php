@@ -97,7 +97,7 @@ class AppServiceProvider extends ServiceProvider
         @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
         @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
         
-        if (env('APP_ENV') === 'production') {
+        if (env('ENABLE_HTTPS') || env('FORCE_APP_HTTPS')) {
             URL::forceSchema('https');
         }
     }
