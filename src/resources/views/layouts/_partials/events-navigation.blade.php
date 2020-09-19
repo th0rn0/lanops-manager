@@ -5,6 +5,7 @@
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#purchaseTickets">Tickets</a></li>
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#timetable">Timetable</a></li>
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#attendees">Attendees</a></li>
+		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#tournaments">Tournaments</a></li>
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#seating">Seating</a></li>
 		@if(Auth::user())
 			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#yourTickets">Your Tickets</a></li>
