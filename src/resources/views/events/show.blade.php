@@ -95,12 +95,14 @@
 
 						@if (Settings::getTeamspeakLink())			
 							<div>
+							<i class="fab fa-teamspeak fa-3x"></i>
 								<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" >TeamSpeak Server</a>
 							</div>
 						@endif
 						
 						@if (Settings::getMumbleLink())			
 							<div>
+							<img src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48">
 								<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" >Mumble Server</a>
 							</div>
 						@endif
