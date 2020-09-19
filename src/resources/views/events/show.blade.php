@@ -90,6 +90,15 @@
 				</div>
 				<div class="col-xs-12 col-sm-7">
 					<p>{!! $event->desc_long !!}</p>
+				
+					@if (Settings::getTeamspeakLink())			
+						<a href="ts3server://{{ Settings::getTeamspeakLink() }}" >TeamSpeak Server</a>
+						
+					@endif
+					
+					@if (Settings::getMumbleLink())			
+						<a href="mumble://{{ $user->username }}@{{ Settings::getMumbleLink() }}" width="100%" >Mumble Server</a>
+					@endif
 				</div>
 			</div>
 		</div>
