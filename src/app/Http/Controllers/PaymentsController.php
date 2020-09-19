@@ -582,7 +582,7 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'You cannot use credit to purchase this Basket!');
             return false;
         }
-        if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
+        if ($paymentGateway != 'credit' && $paymentGateway != 'free' && !Helpers::formatBasket($basket)->allow_payment) {
             Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
             return false;
         }
