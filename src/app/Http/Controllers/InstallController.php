@@ -109,6 +109,7 @@ class InstallController extends Controller
 	        Apikey::setStripeSecretKey($request->stripe_secret);
 	        Settings::enablePaymentGateway('stripe');
         }
+		Settings::enablePaymentGateway('free');
 
         // Clear Cache
         Artisan::call('config:clear');

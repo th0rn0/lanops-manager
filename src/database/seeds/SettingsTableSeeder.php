@@ -207,6 +207,13 @@ class SettingsTableSeeder extends Seeder
                 'default'       => true,
             ]
         );
+		App\Setting::firstOrCreate(
+            ['setting'          => 'payment_gateway_free'],
+            [
+                'value'         => true,
+                'default'       => true,
+            ]
+        );
         App\Setting::firstOrCreate(
             ['setting'          => 'credit_enabled'],
             [
