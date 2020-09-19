@@ -163,12 +163,13 @@
 
 				<!-- REGISTRATION -->
 				@if ($tournament->status == 'OPEN')
-					<h4 class="section-header">
-						Registration
-					</h4>
+				@if ($user && $user->active_event_participant)
+					
+						<h4 class="section-header">
+							Registration
+						</h4>
 
-				    @if ($user && $user->active_event_participant)
-						<!-- Team Registration -->
+				 		<!-- Team Registration -->
 						@if ($tournament->team_size != '1v1' && !$tournament->getParticipant($user->active_event_participant->id))
 							<div class="row border-between">
 								<div class="col-xs-12 col-sm-6">
