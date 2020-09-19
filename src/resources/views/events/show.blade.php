@@ -29,6 +29,7 @@
 				<div id="navbar" class="navbar-collapse collapse" style="text-align:center;">
 					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
 						<li style="font-size:15px; font-weight:bold;"><a href="#event">Event Information</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#purchaseTickets">Tickets</a></li>
 						@if (!$event->sponsors->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#sponsors">Sponsors</a></li>
 						@endif
