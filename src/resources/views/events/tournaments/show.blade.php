@@ -16,10 +16,10 @@
 				<span class="pull-right">
 					<small>
 						<span class="label label-success">{{ $tournament->status }}</span>
-						@if (!$tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
+						@if ((!$user || !$tournament->getParticipant($user->active_event_participant->id)) && $tournament->status != 'COMPLETE')
 							<span class="label label-danger">Not Signed up</span>
 						@endif
-						@if ($tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
+						@if ($user && $tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
 							<span class="label label-success">Signed up</span>
 						@endif
 					</small>
@@ -167,7 +167,7 @@
 						Registration
 					</h4>
 
-				    @if ($user->active_event_participant)
+				    @if ($user && $user->active_event_participant)
 						<!-- Team Registration -->
 						@if ($tournament->team_size != '1v1' && !$tournament->getParticipant($user->active_event_participant->id))
 							<div class="row border-between">
