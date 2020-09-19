@@ -320,7 +320,7 @@ class Setting extends Model
     }
 
     /**
-     * Set Discord Link
+     * Set Teamspeak Link
      * @param String $text
      */
     public static function setTeamspeakLink($text)
