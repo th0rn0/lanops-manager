@@ -119,7 +119,7 @@ class EventTournament extends Model
                         foreach ($standings->history as $game) {
                             array_push($finalHistory, $game);
                         }
-                        $tournamentParticipant->finalHistory = serialize($finalHistory);
+                        $tournamentParticipant->final_History = serialize($finalHistory);
                         $creditAmount = 0;
                         if (Settings::isCreditEnabled() && !$tournamentParticipant->credit_applied) {
                             $creditAmount += Settings::getCreditTournamentParticipation();
@@ -157,7 +157,7 @@ class EventTournament extends Model
                         foreach ($standings->history as $game) {
                             array_push($finalHistory, $game);
                         }
-                        $tournamentTeam->finalHistory = serialize($finalHistory);
+                        $tournamentTeam->final_History = serialize($finalHistory);
                         if (Settings::isCreditEnabled()) {
                             foreach ($tournamentTeam->tournamentParticipants as $tournamentParticipant) {
                                 $creditAmount = 0;
