@@ -94,14 +94,17 @@
 					@if (Auth::user() && $event->getEventParticipant())
 
 						@if (Settings::getTeamspeakLink())			
-							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" >TeamSpeak Server</a>
-							
+							<div>
+								<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" >TeamSpeak Server</a>
+							</div>
 						@endif
 						
 						@if (Settings::getMumbleLink())			
-							<a href="mumble://{{ $user->username }}@{{ Settings::getMumbleLink() }}" width="100%" >Mumble Server</a>
+							<div>
+								<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" >Mumble Server</a>
+							</div>
 						@endif
-						
+
 					@endif
 				</div>
 			</div>
