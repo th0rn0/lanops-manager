@@ -66,6 +66,9 @@ class Purchase extends Model
             case 'paypal express':
                 return 'Paypal';
                 break;
+            case 'free':
+                return 'free';
+                break;
             default:
                 return $this->type;
                 break;
