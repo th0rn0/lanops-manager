@@ -501,7 +501,7 @@
 								<img class="img img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
 							@endif
 							<div class="caption">
-								<h3>{{ $tournament->name }}</h3>
+								<a href="/events/wan2play/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
 								<hr>
 								@if ($tournament->status != 'COMPLETE')
 									<dl>
