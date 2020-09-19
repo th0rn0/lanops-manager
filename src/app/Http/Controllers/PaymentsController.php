@@ -208,6 +208,7 @@ class PaymentsController extends Controller
         }
         $offSitePaymentGateways = [
             'paypal_express',
+            'free'
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
         if (
@@ -269,6 +270,10 @@ class PaymentsController extends Controller
                 $processPaymentSkip = true;
                 $params = array();
                 break;
+            case 'free':
+                $processPaymentSkip = true;
+                $params = array();
+                break;
         }
         Session::put('params', $params);
         Session::save();
@@ -308,6 +313,19 @@ class PaymentsController extends Controller
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
 
+        // Free
+        if ($processPaymentSkip && $paymentGateway == 'free') {
+            $purchaseParams = [
+                'user_id'           => Auth::id(),
+                'type'              => 'free',
+                'transaction_id'    => '',
+                'token'             => '',
+                'status'            => 'Success'
+            ];
+            $purchase = Purchase::create($purchaseParams);
+            $this->processBasket($basket, $purchase->id);
+            return Redirect::to('/payment/successful/' . $purchase->id);
+        }
 
         if ($response->isSuccessful()) {
             // Payment was successful: update database

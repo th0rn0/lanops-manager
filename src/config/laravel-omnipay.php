@@ -32,6 +32,13 @@ return [
                 'public' => env('STRIPE_PUBLIC_KEY'),
                 'secret' => env('STRIPE_SECRET_KEY')
             ]
+        ],
+        'free' => [
+            'driver'  => 'free_driver',
+            'options' => [
+                'displayName'   => 'Kostenlos',
+                'note'          => '',
+            ]
         ]
     ]
 
