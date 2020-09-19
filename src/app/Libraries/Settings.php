@@ -221,6 +221,24 @@ class Settings
     }
 
     /**
+     * Get Mumble Link
+     * @return String
+     */
+    public static function getMumbleLink()
+    {
+        return \App\Setting::getMumbleLink();
+    }
+
+    /**
+     * Set Mumble Link
+     * @param String $text
+     */
+    public static function setMumbleLink($text)
+    {
+        return \App\Setting::setMumbleLink($text);
+    }
+
+    /**
      * Get Participant Count Offset
      * @return String
      */

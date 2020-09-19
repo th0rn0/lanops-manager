@@ -333,6 +333,29 @@ class Setting extends Model
         return true;
     }
 
+        /**
+     * Get Mumble Link
+     * @return String
+     */
+    public static function getMumbleLink()
+    {
+        return self::where('setting', 'mumble_link')->first()->value;
+    }
+
+    /**
+     * Set Mumble Link
+     * @param String $text
+     */
+    public static function setMumbleLink($text)
+    {
+        $setting = self::where('setting', 'mumble_link')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Get Participant Count Offset
      * @return Integer

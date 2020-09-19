@@ -95,6 +95,14 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'mumble_link'],
+            [
+                'value'         => null,
+                'default'       => true,
+                'description'   => 'IP to your Mumble Server'
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'discord_id'],
             [
                 'value'         => null,

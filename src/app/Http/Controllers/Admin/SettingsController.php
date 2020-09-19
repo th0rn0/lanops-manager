@@ -197,6 +197,11 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        if (isset($request->mumble_link) && !Settings::setMumbleLink($request->mumble_link)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         if (isset($request->discord_link) && !Settings::setDiscordLink($request->discord_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
