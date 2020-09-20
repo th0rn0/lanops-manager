@@ -16,11 +16,11 @@ class Controller extends BaseController
         // Set Locale
         if ($locale = \App\Setting::getSiteLocale())
         {
-            $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
-            if(in_array($locale, locale_dirs))
-            {
+            // $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
+            // if(in_array($locale, locale_dirs))
+            // {
                 App::setLocale($locale);
-            }
+            // }
         }
 
         return parent::view($view);
