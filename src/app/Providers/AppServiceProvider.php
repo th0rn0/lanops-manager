@@ -90,7 +90,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Set Locale
-        if ($locale = Settings::getSiteLocale())
+        if ($locale = \App\Setting::getSiteLocale())
         {
             $locale_dirs = array_filter(glob('../../resources/lang/*'), 'is_dir');
             if(in_array($locale, locale_dirs))
