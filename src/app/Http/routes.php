@@ -27,16 +27,6 @@ Route::group(['middleware' => ['installed']], function () {
      * Front End
      */
     Route::group(['middleware' => ['web']], function () {
-        
-        // Set Locale
-        if ($locale = \App\Setting::getSiteLocale())
-        {
-            $locale_dirs = array_filter(glob('../../resources/lang/*'), 'is_dir');
-            if(in_array($locale, locale_dirs))
-            {
-                App::setLocale($locale);
-            }
-        }
 
         /**
          * Login & Register
