@@ -24,21 +24,16 @@ class LanguageSwitcher
         //    Session::put('locale',Config::get('app.locale'));
         // }
         // App::setLocale(session('locale'));
-        try 
+       
+        if ($locale = Setting::getSiteLocale())
         {
-            if ($locale = Setting::getSiteLocale())
-            {
-                // $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
-                // if(in_array($locale, locale_dirs))
-                // {
-                App::setLocale($locale);
-                // }
-            }
-        } 
-        catch (\Throwable $th) 
-        {
-            App::setLocale('de');
+            // $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
+            // if(in_array($locale, locale_dirs))
+            // {
+            App::setLocale($locale);
+            // }
         }
+       
 
         return $next($request);
     }
