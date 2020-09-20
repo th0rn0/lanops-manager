@@ -16,10 +16,10 @@
 				<span class="pull-right">
 					<small>
 						<span class="label label-success">{{ $tournament->status }}</span>
-						@if ((!$user || !$tournament->getParticipant($user->active_event_participant->id)) && $tournament->status != 'COMPLETE')
+						@if ((!$user || !$user->active_event_participant || !$tournament->getParticipant($user->active_event_participant->id)) && $tournament->status != 'COMPLETE')
 							<span class="label label-danger">Not Signed up</span>
 						@endif
-						@if ($user && $tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
+						@if ($user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
 							<span class="label label-success">Signed up</span>
 						@endif
 					</small>
