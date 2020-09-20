@@ -23,6 +23,6 @@ class Controller extends BaseController
             // }
         }
 
-        return parent::view($view);
+        return parent::view($view)->withLocale($locale);
     }
 }
