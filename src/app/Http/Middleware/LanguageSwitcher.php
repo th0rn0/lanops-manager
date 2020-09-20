@@ -6,7 +6,7 @@ use Closure;
 use Session;
 use App;
 use Config;
-use Setting;
+use App\Setting;
 
 class LanguageSwitcher
 {
