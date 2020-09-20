@@ -37,6 +37,7 @@ class LanguageSwitcher
         } 
         catch (\Throwable $th) 
         {
+            App::setLocale('de');
         }
 
         return $next($request);
