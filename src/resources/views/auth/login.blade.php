@@ -10,7 +10,11 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <p>Use one of the login methods below to continue or <a href="/register/standard">register</a></p>
+                <p>Use one of the login methods below to continue 
+                @if (in_array('standard', $activeLoginMethods))
+                or <a href="/register/standard">register</a>
+                @endif
+                </p>
                 @if (in_array('steam', $activeLoginMethods))
                     <a href="/login/steam">
                         <img class="img img-responsive" src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png">
