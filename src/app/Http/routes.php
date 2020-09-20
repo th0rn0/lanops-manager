@@ -9,6 +9,7 @@ Route::group(['middleware' => ['web', 'notInstalled']], function () {
 });
 
 Route::group(['middleware' => ['installed']], function () {
+    
     /**
      * API
      */
@@ -185,16 +186,6 @@ Route::group(['middleware' => ['installed']], function () {
      * Admin
      */
     Route::group(['middleware' => ['web', 'admin']], function () {
-
-        // Set Locale
-        if ($locale = \App\Setting::getSiteLocale())
-        {
-            $locale_dirs = array_filter(glob('../../resources/lang/*'), 'is_dir');
-            if(in_array($locale, locale_dirs))
-            {
-                App::setLocale($locale);
-            }
-        }
 
         /**
          * Index Page
