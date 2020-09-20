@@ -89,16 +89,6 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
-        // // Set Locale
-        // if ($locale = \App\Setting::getSiteLocale())
-        // {
-        //     $locale_dirs = array_filter(glob('../../resources/lang/*'), 'is_dir');
-        //     if(in_array($locale, locale_dirs))
-        //     {
-        //         App::setLocale($locale);
-        //     }
-        // }
-
         // Set SEO Defaults
         @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
         if (config('settings.seo_keywords') != null) {
