@@ -19,37 +19,15 @@ class LanguageSwitcher
      */
     public function handle($request, Closure $next)
     {
-        // if (!Session::has('locale'))
-        //  {
-        //    Session::put('locale',Config::get('app.locale'));
-        // }
-        // App::setLocale(session('locale'));
-       
         if ($locale = Setting::getSiteLocale())
         {
-            // $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
-            // if(in_array($locale, locale_dirs))
-            // {
-            App::setLocale($locale);
-            // }
+            $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
+            if(in_array($locale, locale_dirs))
+            {
+                App::setLocale($locale);
+            }
         }
-       
 
         return $next($request);
     }
 }
-
-  // function view($view)
-    // {
-    //     // Set Locale
-    //     if ($locale = \App\Setting::getSiteLocale())
-    //     {
-    //         // $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
-    //         // if(in_array($locale, locale_dirs))
-    //         // {
-    //             App::setLocale($locale);
-    //         // }
-    //     }
-
-    //     return parent::view($view)->withLocale($locale);
-    // }
