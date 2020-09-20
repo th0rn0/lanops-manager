@@ -11,10 +11,10 @@
 				<div class="col-xs-12">
 					Share:
 					<a href="https://www.facebook.com/sharer/sharer.php?u={{ url('/news') }}/{{ $newsArticle->slug }}&t={{ $newsArticle->title }}" target="_blank">
-						<img alt="Facebook Share" class="img img-responsive img-rounded news-post-share-button" src="/storage/images/main/social/facebook.png">
+						<i class="fab fa-facebook-f"></i>	
 					</a>
 					<a href="http://twitter.com/share?text={{ $newsArticle->title }}&url=http://{{ url('/news') }}/{{ $newsArticle->slug }}&hashtags={{ $newsArticle->getTags(',') }}" target="_blank">
-						<img alt="Twitter Share" class="img img-responsive img-rounded news-post-share-button" src="/storage/images/main/social/twitter.png">
+						<i class="fab fa-twitter"></i>
 					</a>
 				</div>
 				<div class="col-xs-12">
