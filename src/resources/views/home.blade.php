@@ -14,14 +14,14 @@
 	<div class="hero-overlay hidden-xs">
 			@if ($nextEvent)
 				<div>
-					<h3>Next Event</h3>
+					<h3>@lang('messages.next_event')</h3>
 					<h1>{{ $nextEvent->display_name }}</h1>
 					<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
-					<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
+					<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">@lang('messages.book_now')</button></a>
 				</div>
 			@else
 				<div>
-					<h3>Next Event</h3>
+					<h3>@lang('messages.next_event')</h3>
 					<h1>Coming soon</h1>
 				</div>
 			@endif
@@ -105,7 +105,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				@if ($nextEvent)
-					<h3>Want to get in on the action <a href="/events/{{ $nextEvent->slug }}" class="text-info">Book Now</a></h3>
+					<h3>Want to get in on the action <a href="/events/{{ $nextEvent->slug }}" class="text-info">@lang('messages.book_now')</a></h3>
 				@else
 					<h3>Events Coming soon!</h3>
 				@endif

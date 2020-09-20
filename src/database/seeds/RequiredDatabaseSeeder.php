@@ -320,6 +320,14 @@ class RequiredDatabaseSeeder extends Seeder
                 'default'       => true,
             ]
         );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'site_locale'],
+            [
+                'value'         => 'en',
+                'default'       => true,
+                'description'   => 'Locale that is used for all the Site Default Texts'
+            ]
+        );
 
         ## Apperance
         App\Appearance::firstOrCreate(

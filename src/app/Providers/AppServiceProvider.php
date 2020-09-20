@@ -89,6 +89,16 @@ class AppServiceProvider extends ServiceProvider
             }
         }
 
+        // Set Locale
+        if ($locale = Settings::getSiteLocale())
+        {
+            $locale_dirs = array_filter(glob('../../resources/lang/*'), 'is_dir');
+            if(in_array($locale, locale_dirs))
+            {
+                App::setLocale($locale);
+            }
+        }
+
         // Set SEO Defaults
         @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
         if (config('settings.seo_keywords') != null) {
@@ -97,6 +107,7 @@ class AppServiceProvider extends ServiceProvider
         @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
         @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
         
+        // Foce HTTPS if required
         if (env('ENABLE_HTTPS') || env('FORCE_APP_HTTPS')) {
             URL::forceScheme('https');
         }

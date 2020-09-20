@@ -1,5 +1,5 @@
 <li class="dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Next Event: {{ Helpers::getNextEventName() }} <span class="caret"></span></a>
+	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('messages.next_event'): {{ Helpers::getNextEventName() }} <span class="caret"></span></a>
 	<ul class="dropdown-menu">
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}">Information</a></li>
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#purchaseTickets">Tickets</a></li>

@@ -1078,4 +1078,27 @@ class Setting extends Model
         return true;
     }
 
+    /**
+     * Set Site Locale
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setSiteLocale($text)
+    {
+        $setting = self::where('setting', 'site_locale')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Get Site Locale
+     * @return String
+     */
+    public static function getSiteLocale()
+    {
+        return self::where('setting', 'site_locale')->first()->value;
+    }
 }

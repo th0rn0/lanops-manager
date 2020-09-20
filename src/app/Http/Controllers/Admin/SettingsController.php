@@ -326,6 +326,11 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        if (isset($request->site_locale) && !Settings::setSiteLocale($request->site_locale)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }

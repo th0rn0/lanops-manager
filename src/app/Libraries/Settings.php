@@ -761,4 +761,22 @@ class Settings
     {
         return \App\Setting::setSeoKeywords($text);
     }
+
+    /**
+     * Get Site Locale
+     * @return String
+     */
+    public static function getSiteLocale()
+    {
+        return \App\Setting::getSiteLocale();
+    }
+
+    /**
+     * Set Site Locale
+     * @param String $text
+     */
+    public static function setSiteLocale($text)
+    {
+        return \App\Setting::setSiteLocale($text);
+    }
 }
