@@ -97,11 +97,11 @@
 							<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 								<thead>
 									<tr>
-										<th>Action</th>
-										<th>Amount</th>
-										<th>Item</th>
-										<th>Reason</th>
-										<th>Timestamp</th>
+										<th>@lang('accounts_index.credit_action')</th>
+										<th>@lang('accounts_index.credit_amount')</th>
+										<th>@lang('accounts_index.credit_item')</th>
+										<th>@lang('accounts_index.credit_reason')</th>
+										<th>@lang('accounts_index.credit_timestamp')</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -159,7 +159,7 @@
 			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-7">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Tickets</h3>
+						<h3 class="panel-title">@lang('accounts_index.tickets')</h3>
 					</div>
 					<div class="panel-body">
 						@if (count($eventParticipants))
@@ -167,7 +167,7 @@
 								@include ('layouts._partials._tickets.index')
 							@endforeach
 						@else
-							You currently have no tickets.
+							@lang('accounts_index.no_tickets')
 						@endif
 					</div>
 				</div>
@@ -177,7 +177,7 @@
 			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-5">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Purchases</h3>
+						<h3 class="panel-title">@lang('accounts_index.purchases')</h3>
 					</div>
 					<div class="panel-body">
 						@if (count($user->purchases))
@@ -185,16 +185,16 @@
 								<thead>
 									<tr>
 										<th>
-											ID
+											@lang('accounts_index.purchases_id')
 										</th>
 										<th>
-											Method
+											@lang('accounts_index.purchases_method')
 										</th>
 										<th>
-											Time
+											@lang('accounts_index.purchases_time')
 										</th>
 										<th>
-											Basket
+											@lang('accounts_index.purchases_basket')
 										</th>
 									</tr>
 								</thead>
@@ -246,11 +246,11 @@
 							</table>
 							{{ $purchases->links() }}
 						@else
-							You have no purchases
+							@lang('accounts_index.no_purchases')
 						@endif
 						@if (Settings::isShopEnabled())
 							<a href="/shop/orders">
-								<button class="btn btn-success">View Shop Orders</button>
+								<button class="btn btn-success">@lang('accounts_index.show_shop_orders')</button>
 							</a>
 						@endif
 					</div>
@@ -264,11 +264,11 @@
 						<h3 class="panel-title">Danger Zone</h3>
 					</div>
 					<div class="panel-body">
-						<button type="button" name="" value="" class="btn btn-danger hidden">Remove Steam Account</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">Add Secondary Steam Account</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">Add Twitch Account</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">Remove Twitch Account</button>
-						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete Account</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.remove_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.add_second_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.add_twitch_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.remove_twitch_account')</button>
+						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">@lang('accounts_index.remove_account')</button>
 					</div>
 				</div>
 			</div>
@@ -282,23 +282,23 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="confirmDeleteModalLabel">Are you sure you want to Delete your Account?</h4>
+					<h4 class="modal-title" id="confirmDeleteModalLabel">@lang('accounts_index.confirm_remove_account')</h4>
 				</div>
 				{{ Form::open(array('url'=>'/account/delete/', 'id'=>'confirmDeleteFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
-							<p>Once it's gone... It's gone, puff... Aaaannnd it's gone!</p>
-							<p><strong>All</strong> user records will be deleted.</p>
-							<p><strong>All</strong> tickets for upcoming events will be forfeit.</p>
-							<p><strong>All</strong> tickets gifted to you for upcoming will be forfeit.</p> 
-							<p>Tickets gifted to you will <strong>not</strong> be transferred back to the gifter</p>
-							<p>Refunds will <strong>not</strong> be given for any forfeit tickets.</p>
-							<p><strong>By clicking Accept you are agreeing to these terms.</strong></p>
+							<p>@lang('accounts_index.remove_account_line1')</p>
+							<p><strong>@lang('accounts_index.remove_account_all')</strong> @lang('accounts_index.remove_account_line2')</p>
+							<p><strong>@lang('accounts_index.remove_account_all')</strong> @lang('accounts_index.remove_account_line3')</p>
+							<p><strong>@lang('accounts_index.remove_account_all')</strong> @lang('accounts_index.remove_account_line4')</p> 
+							<p>@lang('accounts_index.remove_account_line5_1') <strong>@lang('accounts_index.remove_account_not')</strong> @lang('accounts_index.remove_account_line5_1')</p>
+							<p>@lang('accounts_index.remove_account_line6_1') <strong>@lang('accounts_index.remove_account_not')</strong> @lang('accounts_index.remove_account_line6_2')</p>
+							<p><strong>@lang('accounts_index.remove_account_line7')</strong></p>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">Accept</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-success">@lang('accounts_index.remove_account_accept')Accept</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('accounts_index.remove_account_cancel')Cancel</button>
 					</div>
 				{{ Form::close() }}
 			</div>
