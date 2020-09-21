@@ -129,7 +129,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-3">
 			<div class="page-header">
-				<h3>@lang('home.thefam', ['orgName' => {{ Settings::getOrgName() }}])</h3>
+				<h3>@lang('home.thefam', ['orgName' => Settings::getOrgName()])</h3>
 			</div>
 			@if (Settings::getDiscordId())			
 				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ Settings::getDiscordId() }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
@@ -179,7 +179,7 @@
 		<div class="row">
 			<div class="col-md-8  col-md-offset-2 text-center">
 				<div class="text-center">
-					<h2 class="section-heading  text-center">@lang('home.allaboutorg', ['orgName' => {{ Settings::getOrgName() }}])</h2>
+					<h2 class="section-heading  text-center">@lang('home.allaboutorg', ['orgName' => Settings::getOrgName() ])</h2>
 				</div>
 				{!! Settings::getAboutShort() !!}
 			</div>
