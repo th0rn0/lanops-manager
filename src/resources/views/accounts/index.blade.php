@@ -30,7 +30,7 @@
 					                <div class="row">
 					                    <div class="col-xs-12 col-md-6">
 					                        <div class="form-group @error('firstname') has-error @enderror">
-					                            {{ Form::label('firstname','@lang('accounts_index.firstname')',array('id'=>'','class'=>'')) }}
+					                            {{ Form::label('firstname',@lang('accounts_index.firstname'),array('id'=>'','class'=>'')) }}
 					                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
 					                        </div>
 					                    </div>
