@@ -24,6 +24,12 @@ class LanguageSwitcher
             $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
             print("testdebug");
             print_r(glob('../../../resources/lang/*'));
+            print("testdebug2");
+            print_r(glob('../../resources/lang/*'));
+            print("testdebug3");
+            print_r(glob('../resources/lang/*'));
+            print("testdebug4");
+            print_r(glob('./resources/lang/*'));
             print_r($locale_dirs);
             if(in_array($locale, $locale_dirs))
             {
