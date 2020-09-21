@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' News')
+@section ('page_title', Settings::getOrgName() . ' - ' . __('news.news'))
 
 @section ('content')
 			
@@ -8,7 +8,7 @@
 
 	<div class="page-header">
 		<h1>
-			News
+		@lang('news.news')
 		</h1> 
 	</div>
 	@foreach ($newsArticles as $newsArticle)
