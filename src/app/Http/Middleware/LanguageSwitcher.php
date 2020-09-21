@@ -21,8 +21,8 @@ class LanguageSwitcher
     {
         if ($locale = Setting::getSiteLocale())
         {
-            $locale_dirs = array_filter(glob('../../../resources/lang/*'), 'is_dir');
-            if(in_array($locale, locale_dirs))
+            $locale_dirs = array_filter(glob('../resources/lang/*'), 'is_dir');
+            if(in_array('../resources/lang/'.$locale, $locale_dirs))
             {
                 App::setLocale($locale);
             }
