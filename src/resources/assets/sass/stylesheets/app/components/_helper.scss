@@ -81,6 +81,15 @@
     background-color: #4e4e4eab;
 }
 
-.well {
-    color: #333;
+.well,
+.panel,
+.panel-heading,
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+    background-color: #4e4e4eab;
+}
+
+.panel-default>.panel-heading {
+    color: $color_primary_text;
 }
