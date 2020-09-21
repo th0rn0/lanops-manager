@@ -80,6 +80,7 @@ return [
     'removeitanytime' => 'Sie können ihn jederzeit wieder freigeben.',
     'yes' => 'Ja',
     'no' => 'Nein',
+    'buy' => 'Kaufen',
 
 
 

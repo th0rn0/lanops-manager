@@ -84,6 +84,7 @@ return [
     'removeitanytime' => 'You can remove it at anytime.',
     'yes' => 'Yes',
     'no' => 'No',
+    'buy' => 'Buy',
 
 
 
