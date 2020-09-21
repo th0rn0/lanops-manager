@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Updating your Profile')
+@section ('page_title', __('accounts_title'))
 
 @section ('content')
 
