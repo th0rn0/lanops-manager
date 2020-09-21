@@ -12,7 +12,7 @@
             <div class="col-sm-12 col-md-6">
                 <p>@lang('auth.login_methods')  
                 @if (in_array('standard', $activeLoginMethods))
-                @lang('auth.or')or <a href="/register/standard">@lang('auth.register_now')</a>
+                @lang('auth.or') <a href="/register/standard">@lang('auth.register_now')</a>
                 @endif
                 </p>
                 @if (in_array('steam', $activeLoginMethods))
@@ -28,13 +28,13 @@
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 control-label">@lang('auth.email_short')</label>
                             <div class="col-sm-10 @error('email') has-error @enderror">
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="@lang('auth.email')" required autofocus>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="password" class="col-sm-2 control-label">@lang('auth.password')</label>
                             <div class="col-sm-10 @error('password') has-error @enderror">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="@lang('auth.password')" required>
                             </div>
                         </div>
                         <div class="form-group">

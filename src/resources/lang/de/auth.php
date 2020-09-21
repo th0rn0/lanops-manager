@@ -18,7 +18,7 @@ return [
     'login_to_continue' => 'Anmelden um fortzufahren',
     'login_methods' => 'Nutze eine der aufgelisteten Login Methoden um fortzufahren',
     'or' => 'oder',
-    'register_now' => 'Registriere dich jetzt',
+    'register_now' => 'registriere dich jetzt',
     'please_login' => 'Bitte melde dich an',
     'email_short' => 'Email',
     'password' => 'Passwort',
