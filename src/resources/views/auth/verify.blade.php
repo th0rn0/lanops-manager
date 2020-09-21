@@ -1,11 +1,11 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Verify Email')
+@section ('page_title', Settings::getOrgName() . ' - ' . __('auth.verify_mail'))
 
 @section ('content')
 <div class="container">
     <div class="page-header">
-        <h1>Verify Email</h1>
+        <h1>@lang('auth.verify_mail')</h1>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -13,12 +13,12 @@
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+                            @lang('auth.fresh_verification')
                         </div>
                     @endif
 
-                    <p>Before proceeding, please check your email for a verification link.</p>
-                    <p>If you did not receive the email, <a href="{{ route('verification.resend') }}">click here to request another</a>.</p>
+                    <p>@lang('auth.check_mail')</p>
+                    <p>@lang('auth.mail_not_received') <a href="{{ route('verification.resend') }}">@lang('auth.request_verification')</a>.</p>
                 </div>
             </div>
         </div>

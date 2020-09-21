@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - Reset Password')
+@section ('page_title', Settings::getOrgName() . ' - ' __('reset_password'))
 
 @section ('content')
 
@@ -8,7 +8,7 @@
 
         <div class="page-header">
             <h1>
-                Reset Password
+                @lang('auth.reset_password')
             </h1>
         </div>
         <div class="row justify-content-center">
@@ -25,7 +25,7 @@
                             @csrf
 
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                <label for="email" class="col-md-4 col-form-label text-md-right">@lang('auth.email')</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -41,7 +41,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Send Password Reset Link') }}
+                                        @lang('auth.send_password_link')
                                     </button>
                                 </div>
                             </div>
