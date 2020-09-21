@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' News Tag: ' . $tag)
+@section ('page_title', Settings::getOrgName() . __('news.news_tag') . $tag)
 
 @section ('content')
 			
@@ -8,7 +8,7 @@
 
 	<div class="page-header">
 		<h1>
-			Tagged News: {{ $tag }}
+			@lang('news.tagged_news') {{ $tag }}
 		</h1> 
 	</div>
 	@foreach ($newsArticles as $newsArticle)

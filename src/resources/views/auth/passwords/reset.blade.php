@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - ' __('reset_password'))
+@section ('page_title', Settings::getOrgName() . ' - ' . __('reset_password'))
 
 @section ('content')
 

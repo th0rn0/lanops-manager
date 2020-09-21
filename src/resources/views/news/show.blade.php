@@ -17,7 +17,7 @@
 		<div class="col-xs-12 col-sm-6 col-md-8">
 			<div class="page-header">
 				<h3>
-					Comments
+				@lang('news.comments')
 				</h3> 
 			</div>
 			@foreach ($newsArticle->comments->reverse() as $comment)
@@ -26,7 +26,7 @@
 					@include ('layouts._partials._news.comment')
 					@if (Auth::user() && $comment->reports->pluck('user_id')->contains(Auth::id()))
 						<div class="alert alert-danger">
-							You have Reported this comment!
+							@lang('news.comment_reported')
 						</div>
 					@endif
 					<hr>
@@ -37,18 +37,18 @@
 		<div class="col-xs-12 col-sm-6 col-md-4">
 			<div class="page-header">
 				<h3>
-					Post a Comment
+				@lang('news.post_comment')
 				</h3> 
 			</div>
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments')) }}
 					<div class="form-group">
-						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
+						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>__('news.post_comment'))) }}
 					</div>
 					<button type="submit" class="btn btn-default">Submit</button>
 				{{ Form::close() }}
 			@else
-				<p>Please log in to post a Comment</p>
+				<p>@lang('news.login_to_post_comment')</p>
 			@endif
 		</div>
 	</div>
