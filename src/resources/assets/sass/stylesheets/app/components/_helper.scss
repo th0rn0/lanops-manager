@@ -76,3 +76,7 @@
 .bg-info {
     color: #31708f;
 }
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #4e4e4eab;
+}
