@@ -17,10 +17,10 @@
 					<small>
 						<span class="label label-success">{{ $tournament->status }}</span>
 						@if ((!$user || !$user->active_event_participant || !$tournament->getParticipant($user->active_event_participant->id)) && $tournament->status != 'COMPLETE')
-							<span class="label label-danger">Not Signed up</span>
+							<span class="label label-danger">@lang('events.notsignedup')</span>
 						@endif
 						@if ($user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
-							<span class="label label-success">Signed up</span>
+							<span class="label label-success">@lang('events.signedup')</span>
 						@endif
 					</small>
 				</span>
@@ -34,20 +34,20 @@
 				<dl>
 					@if ($tournament->game)
 						<dt>
-							Game
+						@lang('events.game')
 						</dt>
 						<dd>
 							{{ $tournament->game->name }}
 						</dd>
 					@endif
 					<dt>
-						Team Sizes
+						@lang('events.teamsizes')
 					</dt>
 					<dd>
 						{{ $tournament->team_size }}
 					</dd>
 					<dt>
-						Format:
+						@lang('events.format')
 					</dt>
 					<dd>
 						{{ $tournament->format }}
@@ -98,7 +98,7 @@
 				<!-- PROGRESS -->
 				@if ($tournament->status == 'LIVE' && $tournament->format != 'list')
 					<h4 class="section-header">
-						Next Match
+						@lang('events.nextmatch')
 					</h4>
 					<div class="row">
 						@foreach ($tournament->getNextMatches(2) as $match)
@@ -166,14 +166,14 @@
 				@if ($user && $user->active_event_participant)
 					
 						<h4 class="section-header">
-							Registration
+							@lang('events.registration')
 						</h4>
 
 				 		<!-- Team Registration -->
 						@if ($tournament->team_size != '1v1' && !$tournament->getParticipant($user->active_event_participant->id))
 							<div class="row border-between">
 								<div class="col-xs-12 col-sm-6">
-									<label>Join a Team</label>
+									<label>@lang('events.jointeam')</label>
 									<div class="row">
 										@foreach ($tournament->tournamentTeams as $tournamentTeam)
 											<div class="col-xs-6 col-sm-6">
@@ -188,14 +188,14 @@
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
-									<label>Create a Team</label>
+									<label>@lang('events.createateam')</label>
 									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
 										<div class="row">
 											<div class="form-group col-sm-6 col-xs-12">
 												{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required', 'placeholder' => 'Team Name')) }}
 											</div>
 											<div class="form-group col-sm-6 col-xs-12">
-												<button type="submit" class="btn btn-default btn-block">Create Team</button>
+												<button type="submit" class="btn btn-default btn-block">@lang('events.createteam')</button>
 											</div>
 										</div>
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
@@ -203,7 +203,7 @@
 									<hr>
 									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/pug', 'files' => true )) }}
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-										<button type="submit" class="btn btn-default btn-block">Sign up as PUG</button>
+										<button type="submit" class="btn btn-default btn-block">@lang('events.signinaspug')</button>
 									{{ Form::close() }}
 								</div>
 							</div>
@@ -214,7 +214,7 @@
 								<div class="col-xs-6 col-sm-6">
 									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-										<button type="submit" class="btn btn-default btn-block">Signup</button>
+										<button type="submit" class="btn btn-default btn-block">@lang('events.signup')</button>
 									{{ Form::close() }}
 								</div>
 							</div>
@@ -226,15 +226,15 @@
 									<div class="col-xs-12 col-md-6">
 										@if ($tournament->team_size != '1v1')
 											@if (($tournament->getParticipant($user->active_event_participant->id))->pug && !($tournament->getParticipant($user->active_event_participant->id))->tournamentTeam)
-												<h4>You are signed up as a PUG. Team will be assigned shortly.</h4>
+												<h4>@lang('events.signedupaspugteamassignedshortly')</h4>
 											@else
-												<h4>You are signed up with {{ ($tournament->getParticipant($user->active_event_participant->id))->tournamentTeam->name }}</h4>
+												<h4>@lang('events.signedupwithteam', ['team' => ($tournament->getParticipant($user->active_event_participant->id))->tournamentTeam->name ])</h4>
 											@endif
 										@else
-											<h4>You are signed up</h4>
+											<h4>@lang('events.signedup')</h4>
 										@endif
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-										<button type="submit" class="btn btn-default btn-block">Remove Signup</button>
+										<button type="submit" class="btn btn-default btn-block">@lang('events.removesignup')</button>
 									</div>
 								</div>
 							{{ Form::close() }}
@@ -248,13 +248,13 @@
 		@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && $tournament->format != 'list')
 			<div class="row">
 				<div class="page-header">
-					<h3>Brackets</h3>
+					<h3>@lang('events.brackets')</h3>
 				</div>
 				@include ('layouts._partials._tournaments.brackets')
 			</div>
 			<div class="row">
 				<div class="page-header">
-					<h3>Standings</h3>
+					<h3>@lang('events.standings')</h3>
 				</div>
 				@include ('layouts._partials._tournaments.standings')
 			</div>
@@ -264,7 +264,7 @@
 		@if (($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE') || $tournament->format == 'list')
 			<div class="row">
 				<div class="page-header">
-					<h3>Participants</h3>
+					<h3>@lang('events.participants')</h3>
 				</div>
 				@php
 					$participants_view = true;

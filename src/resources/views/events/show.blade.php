@@ -28,24 +28,24 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse" style="text-align:center;">
 					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
-						<li style="font-size:15px; font-weight:bold;"><a href="#event">Event Information</a></li>
-						<li style="font-size:15px; font-weight:bold;"><a href="#purchaseTickets">Tickets</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#event">@lang('events.eventinfo')</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#purchaseTickets">@lang('events.tickets')</a></li>
 						@if (!$event->sponsors->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#sponsors">Sponsors</a></li>
+							<li style="font-size:15px; font-weight:bold;"><a href="#sponsors">@lang('events.sponsors')</a></li>
 						@endif
 						@if (!$event->seatingPlans->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
+							<li style="font-size:15px; font-weight:bold;"><a href="#seating">@lang('events.seating')</a></li>
 						@endif
-						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">Attendees</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">@lang('events.attendees')</a></li>
 						@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
-							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">Tournaments</a></li>
+							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif
 						@if (!$event->timetables->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#timetable">Timetable</a></li>
+							<li style="font-size:15px; font-weight:bold;"><a href="#timetable">@lang('events.timetable')</a></li>
 						@endif
-						<li style="font-size:15px; font-weight:bold;"><a href="#yourTickets">Your Tickets</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#yourTickets">@lang('events.yourtickets')</a></li>
 						@if (!$event->polls->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#polls">Have Your Say</a></li>
+							<li style="font-size:15px; font-weight:bold;"><a href="#polls">@lang('events.haveyoursay')</a></li>
 						@endif
 						
 					</ul>
@@ -55,18 +55,18 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h3>
-					<strong>{{ max($event->capacity - $event->eventParticipants->count(), 0) }}/{{ $event->capacity }}</strong> Tickets Available
+					<strong>{{ max($event->capacity - $event->eventParticipants->count(), 0) }}/{{ $event->capacity }}</strong> >@lang('events.ticketsavailable')
 				</h3>
 			</div>
 			@if ($event->capacity > 0)
 				<div class="col-xs-12">
 					<div class="progress">
 						<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ ($event->eventParticipants->count() / $event->capacity) * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
-							Purchased
+							@lang('events.purchased')
 						</div>
 						<div class="progress-bar progress-bar-success" style="width: {{ 100 - ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
-							<span class="sr-only">Available</span>
-							Available
+							<span class="sr-only">@lang('events.available')</span>
+							@lang('events.available')
 						</div>
 					</div>
 				</div>
@@ -80,13 +80,13 @@
 		<div class="col-md-12">
 			<div class="page-header">
 				<a name="event"></a>
-				<h3>Event Information</h3>
+				<h3>@lang('events.eventinfo')</h3>
 			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-5">
-					<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
-					<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
-					<p class="bg-info  padding">@if ($event->getSeatingCapacity() == 0) Capacity: {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) Seating Capacity: {{ $event->getSeatingCapacity() }} @endif</p>
+					<p class="bg-success  padding">@lang('events.start'): {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
+					<p class="bg-danger  padding">@lang('events.end'): {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
+					<p class="bg-info  padding">@if ($event->getSeatingCapacity() == 0) @lang('events.capacity'): {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) @lang('events.seatingcapacity'): {{ $event->getSeatingCapacity() }} @endif</p>
 				</div>
 				<div class="col-xs-12 col-sm-7">
 					<p>{!! $event->desc_long !!}</p>
@@ -116,16 +116,16 @@
 			@if (!$event->tickets->isEmpty())
 				<div class="page-header">
 					<a name="purchaseTickets"></a>
-					<h3>Purchase Tickets</h3>
+					<h3>@lang('events.purchasetickets')</h3>
 				</div>
 				<div class="row">
 					@foreach ($event->tickets as $ticket)
 						<div class="col-xs-12 col-sm-4">
 							<div class="well well-sm" disabled>
-								<h3>{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>SOLD OUT!</strong> @endif</h3>
+								<h3>{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
 								@if ($ticket->quantity != 0)
 									<small>
-										Limited Availablity
+										@lang('events.limitedavailability')
 									</small>
 								@endif
 								<div class="row" style="display: flex; align-items: center;">
@@ -149,19 +149,19 @@
 															{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
 														</div>
 														<div class="form-group col-sm-6 col-xs-12">
-															<button class="btn btn-md btn-primary btn-block"  style="margin-top:25px" disabled >SOLD OUT!</button>
+															<button class="btn btn-md btn-primary btn-block"  style="margin-top:25px" disabled >@lang('events.soldout')</button>
 														</div>
 													</div>
 												@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
 													<h5>
-														This Ticket will be available for purchase at {{ date('H:i', strtotime($ticket->sale_start)) }} on {{ date ('d-m-Y', strtotime($ticket->sale_start)) }}
+														@lang('events.availablefrom', ['time' => date('H:i', strtotime($ticket->sale_start)), 'date'=> date ('d-m-Y', strtotime($ticket->sale_start))])
 													</h5>
 												@elseif(
 													$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s')
 													|| date('Y-m-d H:i:s') >= $event->end 
 												)
 													<h5>
-														This Ticket is no longer available for purchase
+														@lang('events.ticketnolongavailable')
 													</h5>
 												@else
 													<div class="row">
@@ -171,14 +171,14 @@
 														</div>
 														<div class="form-group col-sm-6 col-xs-12">
 															{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-															<button class="btn btn-md btn-primary btn-block" style="margin-top:25px" >Buy</button>
+															<button class="btn btn-md btn-primary btn-block" style="margin-top:25px" >@lang('events.buy')</button>
 														</div>
 													</div>
 												@endif
 											{{ Form::close() }}
 										@else
 											<div class="alert alert-info">
-												<h5>Please Log in to Purchase a ticket</h5>
+												<h5>@lang('events.plslogintopurchaseticket')</h5>
 											</div>
 										@endif
 									</div>
@@ -201,7 +201,7 @@
 	)
 		<div class="page-header">
 			<a name="seating"></a>
-			<h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
+			<h3>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
@@ -210,7 +210,7 @@
 						<div class="panel-heading" role="tab" id="headingOne">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} Available</small>
+									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} @lang('events.available')</small>
 									@if ($seatingPlan->status != 'PUBLISHED')
 										<small> - {{ $seatingPlan->status }}</small>
 									@endif
@@ -228,7 +228,7 @@
 												$headers = array_combine(range(1, count($headers)), $headers);
 											?>
 											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-												<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
+												<th class="text-center"><h4><strong>@lang('events.row') {{ucwords($headers[$column])}}</strong></h4></th>
 											@endfor
 											</tr>
 										 </thead>
@@ -250,7 +250,7 @@
 															@else
 																@if ($seatingPlan->locked)
 																	<button class="btn btn-primary btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - Empty
+																		{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																	</button>
 																@else
 																	@if (Auth::user() && $event->getEventParticipant())
@@ -263,11 +263,11 @@
 																			data-toggle="modal"
 																			data-target="#pickSeatModal"
 																		>
-																			{{ ucwords($headers[$column]) . $row }} - Empty
+																			{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																		</button>
 																	@else
 																		<button class="btn btn-primary btn-sm">
-																			{{ ucwords($headers[$column]) . $row }} - Empty
+																			{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																		</button>
 																	@endif
 																@endif
@@ -279,7 +279,7 @@
 										</tbody>
 									</table>
 									@if ($seatingPlan->locked)
-										<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
+										<p class="text-center"><strong> @lang('events.seatingplanlocked')</strong></p>
 									@endif
 								</div>
 								<hr>
@@ -288,7 +288,7 @@
 										<img class="img-responsive" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
 									</div>
 									<div class="col-xs-12 col-md-4">
-										<h5>Your Seats</h5>
+										<h5>@lang('events.yourseats')</h5>
 										@if ($user && !$user->eventParticipation->isEmpty())
 											@foreach ($user->eventParticipation as $participant) 
 												@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id) 
@@ -299,7 +299,7 @@
 														{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }} 
 														<h5>
 															<button class="btn btn-success btn-block"> 
-															{{ $participant->seat->seat }} - Remove
+															{{ $participant->seat->seat }} - @lang('events.remove')
 															</button>
 														</h5>
 													{{ Form::close() }} 
@@ -307,11 +307,11 @@
 											@endforeach
 										@elseif(Auth::user())
 											<div class="alert alert-info">
-												<h5>Please Purchase a ticket</h5>
+												<h5>@lang('events.plspurchaseticket')</h5>
 											</div>
 										@else
 											<div class="alert alert-info">
-												<h5>Please Log in to Purchase a ticket</h5>
+												<h5>@lang('events.plslogintopurchaseticket')</h5>
 											</div>
 										@endif
 									</div>
@@ -327,7 +327,7 @@
 	<!-- VENUE INFORMATION -->
 	<div class="page-header">
 		<a name="venue"></a>
-		<h3>Venue Information</h3>
+		<h3>@lang('events.venueinformation')</h3>
 	</div>
 	<div class="row">
 		<div class="col-lg-7">
@@ -352,7 +352,7 @@
 	@if (!$event->sponsors->isEmpty())
 		<div class="page-header">
 			<a name="sponsors"></a>
-			<h3>{{$event->display_name}} is sponsored by</h3>
+			<h3>>@lang('events.eventsponsoredby', ['event', $event->display_name]</h3>
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{ $sponsor->website }}">
@@ -364,7 +364,7 @@
 	<!-- EVENT INFORMATION SECTIONS -->
 	@if (!empty($event->information))
 		<div class="page-header">
-			<h3>And there's more...</h3>
+			<h3>@lang('events.therismore')</h3>
 		</div>
 		@php($x = 0)
 		@foreach ($event->information as $section)
@@ -423,7 +423,7 @@
 	@if (!$event->timetables->isEmpty())
 		<div class="page-header">
 			<a name="timetable"></a>
-			<h3>Timetable</h3>
+			<h3>@lang('events.timetable')</h3>
 		</div>
 		@foreach ($event->timetables as $timetable)
 			@if (strtoupper($timetable->status) == 'DRAFT')
@@ -433,13 +433,13 @@
 			<table class="table table-striped">
 				<thead>
 					<th>
-						Time
+						@lang('events.time')
 					</th>
 					<th>
-						Game
+						@lang('events.game')
 					</th>
 					<th>
-						Description
+						@lang('events.description')
 					</th>
 				</thead>
 				<tbody>
@@ -467,7 +467,7 @@
 	@if ($event->polls->count() > 0)
 		<div class="page-header">
 			<a name="polls"></a>
-			<h3>Have Your Say...</h3>
+			<h3>@lang('events.haveyoursay')</h3>
 		</div>
 		@foreach ($event->polls as $poll)
 			<h4>
@@ -476,7 +476,7 @@
 					<small> - {{ $poll->status }}</small>
 				@endif
 				@if ($poll->hasEnded())
-					<small> - Ended</small>
+					<small> - @lang('events.ended')</small>
 				@endif
 			</h4>
 			@if (!empty($poll->description))
@@ -489,7 +489,7 @@
 	<!-- MY TICKETS -->
 	<div class="page-header">
 		<a name="yourTickets"></a>
-		<h3>My Tickets</h3>
+		<h3>@lang('events.mytickets')</h3>
 	</div>
 	@if (Auth::user())
 		@if (!$user->eventParticipation->isEmpty())
@@ -497,17 +497,17 @@
 				@include('layouts._partials._tickets.index')
 			@endforeach
 		@else
-			<div class="alert alert-info">Please Purchase a ticket to pick a seats</div>
+			<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
 		@endif
 	@else
-		<div class="alert alert-info">Please Log in to Purchase a ticket</div>
+		<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
 	@endif
 	
 	<!-- TOURNAMENTS -->
 	@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 		<div class="page-header">
 			<a name="tournaments"></a>
-			<h3>Tournaments</h3>
+			<h3>@lang('events.tournaments')</h3>
 		</div>
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
@@ -523,21 +523,21 @@
 								@if ($tournament->status != 'COMPLETE')
 									<dl>
 										<dt>
-											Team Sizes:
+											@lang('events.teamsizes'):
 										</dt>
 										<dd>
 											{{ $tournament->team_size }}
 										</dd>
 										@if ($tournament->game)
 											 <dt>
-												Game:
+											 	@lang('events.game'):
 											</dt>
 											<dd>
 												{{ $tournament->game->name }}
 											</dd>
 										@endif
 										<dt>
-											Format:
+											@lang('events.format'):
 										</dt>
 										<dd>
 											{{ $tournament->format }}
@@ -608,20 +608,20 @@
 	<!-- ATTENDEES -->
 	<div class="page-header">
 		<a name="attendees"></a>
-		<h3>Attendees</h3>
+		<h3>@lang('events.attendees')</h3>
 	</div>
 	<table class="table table-striped">
 		<thead>
 			<th width="15%">
 			</th>
 			<th>
-				User
+				@lang('events.user')
 			</th>
 			<th>
-				Name
+				@lang('events.name')
 			</th>
 			<th>
-				Seat
+				@lang('events.seat')
 			</th>
 		</thead>
 		<tbody>
@@ -643,7 +643,7 @@
 					@if ($participant->seat)
 						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
 					@else
-						Not Seated
+						@lang('events.notseated')
 					@endif
 				</td>
 			</tr>
@@ -664,7 +664,7 @@
 				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
-							<h4>Which ticket would you like to seat?</h4>
+							<h4>@lang('events.wichtickettoseat')</h4>
 							{{
 								Form::select(
 									'participant_id',
@@ -676,15 +676,15 @@
 									)
 								)
 							}}
-							<p>Are you sure you want this seat?</p>
-							<p>You can remove it at anytime.</p>
+							<p>>@lang('events.wantthisseat')</p>
+							<p>@lang('events.removeitanytime')</p>
 						</div>
 					</div>
 					{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
 					{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">Yes</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<button type="submit" class="btn btn-success">@lang('events.yes')</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('events.no')</button>
 					</div>
 				{{ Form::close() }}
 			@endif

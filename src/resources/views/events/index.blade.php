@@ -18,9 +18,9 @@
 			<div class="panel-body">
 				<h5>{{ $event->desc_short }}</h5>
 				<p>{{ $event->desc_long }}</p>
-				<p class="bg-success  padding">Start: {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
-				<p class="bg-danger  padding">End: {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
-				<p class="bg-info  padding">Seating Capacity: {{ $event->getSeatingCapacity() }}</p>
+				<p class="bg-success  padding">@lang('events.start'): {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
+				<p class="bg-danger  padding">@lang('events.end'): {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
+				<p class="bg-info  padding">@lang('events.seatingcapacity'): {{ $event->getSeatingCapacity() }}</p>
 			</div>
 		</div>
 	@endforeach

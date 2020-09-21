@@ -37,14 +37,14 @@
 	</div>
 	<!-- SIGN IN TO EVENT -->
 	@if (!$signedIn)
-		Please Sign in at the main desk
+		@lang('events.plssignin')
 	@endif
 
 	<!-- EVENT SPONSORS -->
 	@if (!$event->sponsors->isEmpty())
 		<div class="page-header">
 			<a name="sponsors"></a>
-			<h3>{{ $event->display_name }} is sponsored by</h3>
+			<h3>@lang('events.eventsponsoredby', ['event', $event->display_name])</h3>
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
@@ -58,17 +58,17 @@
 		<div class="col-lg-6 col-md-6 col-xs-12">
 			<div class="page-header">
 				<a name="information"></a>
-				<h3>Essential Information</h3>
+				<h3>@lang('events.essentialinfo')</h3>
 			</div>
 			{!! $event->essential_info !!}
 		</div>
 		<div class="col-lg-6 col-md-6 col-xs-12">
 			<div class="page-header">
 				<a name="announcements"></a>
-				<h3>Announcements</h3>
+				<h3>@lang('events.announcements')</h3>
 			</div>
 			@if ($event->announcements->isEmpty())
-				<div class="alert alert-info"><strong>No Announcements</strong></div>
+				<div class="alert alert-info"><strong>@lang('events.noannouncements')</strong></div>
 			@else
 				@foreach ($event->announcements as $announcement)
 					<div class="alert alert-info">{{ $announcement->message }}</div>
@@ -81,7 +81,7 @@
 	@if (!$event->timetables->isEmpty())
 		<div class="page-header">
 			<a name="timetable"></a>
-			<h3>Timetable</h3>
+			<h3>@lang('events.timetable')</h3>
 		</div>
 		@foreach ($event->timetables as $timetable)
 			@if (strtoupper($timetable->status) == 'DRAFT')
@@ -91,13 +91,13 @@
 			<table class="table table-striped">
 				<thead>
 					<th>
-						Time
+						@lang('events.time')
 					</th>
 					<th>
-						Game
+						@lang('events.game')
 					</th>
 					<th>
-						Description
+						@lang('events.description')
 					</th>
 				</thead>
 				<tbody>
@@ -125,7 +125,7 @@
 	@if (!$event->tournaments->isEmpty())
 		<div class="page-header">
 			<a name="tournaments"></a>
-			<h3>Tournaments</h3>
+			<h3>@lang('events.tournaments')</h3>
 		</div>
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
@@ -141,37 +141,37 @@
 								<h3>{{ $tournament->name }}</h3>
 								<span class="small">
 									@if ($tournament->status == 'COMPLETE')
-										<span class="label label-success">Ended</span>
+										<span class="label label-success">@lang('events.ended')</span>
 									@endif
 									@if ($tournament->status == 'LIVE')
-										<span class="label label-success">Live</span>
+										<span class="label label-success">@lang('events.live')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->active_event_participant->id))
-										<span class="label label-danger">Not Signed up</span>
+										<span class="label label-danger">@lang('events.notsignedup')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->active_event_participant->id))
-										<span class="label label-success">Signed up</span>
+										<span class="label label-success">@lang('events.signedup')</span>
 									@endif
 								</span>
 								<hr>
 								@if ($tournament->status != 'COMPLETE')
 									<dl>
 										<dt>
-											Team Sizes:
+											@lang('events.teamsizes'):
 										</dt>
 										<dd>
 											{{ $tournament->team_size }}
 										</dd>
 										@if ($tournament->game)
 											 <dt>
-												Game:
+												@lang('events.teamsizes'):
 											</dt>
 											<dd>
 												{{ $tournament->game->name }}
 											</dd>
 										@endif
 										<dt>
-											Format:
+											@lang('events.format'):
 										</dt>
 										<dd>
 											{{ $tournament->format }}
@@ -212,10 +212,10 @@
 											@endif
 										@endif
 									@endforeach
-									<h4>Signups Closed</h4>
+									<h4>@lang('events.signupsclosed')</h4>
 								@endif
 								<strong>
-									{{ $tournament->tournamentParticipants->count() }} Signups
+									{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
 								</strong>
 								<hr>
 								<p><a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="btn btn-primary btn-block" role="button">View</a></p>
@@ -237,13 +237,13 @@
 			<th width="7%">
 			</th>
 			<th>
-				Steam Name
+				@lang('events.steamname')
 			</th>
 			<th>
-				Name
+				@lang('events.name')
 			</th>
 			<th>
-				Seat
+				@lang('events.seat')
 			</th>
 		</thead>
 		<tbody>
@@ -265,7 +265,7 @@
 					@if ($participant->seat)
 						{{ $participant->seat->seat }}
 					@else
-						Not Seated
+						@lang('events.notseated')
 					@endif 
 				</td>
 			</tr>
@@ -277,7 +277,7 @@
 	@if (!$event->seatingPlans->isEmpty())
 		<div class="page-header">
 			<a name="seating"></a>
-			<h3>Seating Plans <small>- unseatedtickets / total seatable tickets remaining</small></h3>
+			<h3>@lang('events.seatingplans') <small>- @lang('events.unseatedtickets') / @lang('events.seatableticketsremaining')</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
@@ -285,7 +285,7 @@
 					<div class="panel-heading" role="tab" id="headingOne">
 						<h4 class="panel-title">
 							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-								{{ $seatingPlan->name }} <small>- Number of seated seats here</small>
+								{{ $seatingPlan->name }} <small>- @lang('events.numofseatedseats')</small>
 							</a>
 						</h4>
 					</div>
@@ -351,7 +351,7 @@
 									</tbody>
 								</table>
 								@if ($seatingPlan->locked)
-									<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
+									<p class="text-center"><strong>@lang('events.seatingplanlocked')</strong></p>
 								@endif
 							</div>
 							<hr>
@@ -360,7 +360,7 @@
 									<img class="img-responsive" src="{{$seatingPlan->image_path}}"/>
 								</div>
 								<div class="col-xs-12 col-md-4">
-									<h5>Your Seats</h5>
+									<h5>@lang('events.yourseats')</h5>
 									@if ($ticketFlag)
 										@foreach ($user->eventParticipation as $participant) 
 											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id) 
@@ -371,7 +371,7 @@
 													{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }} 
 													<h5>
 														<button class="btn btn-success btn-block"> 
-														{{ $participant->seat->seat }} - Remove
+														{{ $participant->seat->seat }} - @lang('events.remove')
 														</button>
 													</h5>
 												{{ Form::close() }} 
@@ -379,11 +379,11 @@
 										@endforeach
 									@elseif(Auth::user())
 										<div class="alert alert-info">
-											<h5>Please Purchase a ticket</h5>
+											<h5>@lang('events.plspurchaseticket')</h5>
 										</div>
 									@else
 										<div class="alert alert-info">
-											<h5>Please Log in to Purchase a ticket</h5>
+											<h5>@lang('events.plslogintopurchaseticket')</h5>
 										</div>
 									@endif
 								</div>
@@ -398,7 +398,7 @@
 	<!-- Image Uploader -->
 	<div class="page-header" hidden>
 		<a name="image_uploader"></a>
-		<h3>Image Uploader</h3>
+		<h3>@lang('events.imageuploader')</h3>
 	</div>
 	<div class="row" hidden>
 	</div>

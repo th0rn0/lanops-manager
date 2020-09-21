@@ -16,13 +16,13 @@
 			<table class="table table-striped">
 				<thead>
 					<th>
-						Time
+						@lang('events.time')
 					</th>
 					<th>
-						Game
+						@lang('events.game')
 					</th>
 					<th>
-						Description
+						@lang('events.description')
 					</th>
 				</thead>
 				<tbody>
