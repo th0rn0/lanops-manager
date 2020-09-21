@@ -7,14 +7,14 @@
 <div class="container">
 
 	<div class="page-header">
-		<h1>Terms & Conditions</h1> 
+		<h1>@lang('terms.termsandconditions')</h1> 
 	</div>
 	<div class="page-header">
-		<h3>Registration Terms & Conditions</h3> 
+		<h3>@lang('terms.registrationtermsandconditions')</h3> 
 	</div>
 	{!! Settings::getRegistrationTermsAndConditions() !!}
 	<div class="page-header">
-		<h3>Purchase Terms & Conditions</h3> 
+		<h3>@lang('terms.purchaseandconditions')</h3> 
 	</div>
 	{!! Settings::getPurchaseTermsAndConditions() !!}
 	
