@@ -9,7 +9,7 @@ return [
     |
     |
     */
-
+    'accounts_title' => 'Updating your Profile', 
     'my_account' => 'My Account',
     'account_details' => 'Account Details',
     'firstname' => 'Firstname',
