@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', __('auth.login_to_continue'))
+@section ('page_title', Settings::getOrgName() . ' - ' . __('auth.login_to_continue'))
 
 @section ('content')
 
@@ -12,7 +12,7 @@
             <div class="col-sm-12 col-md-6">
                 <p>@lang('auth.login_methods')  
                 @if (in_array('standard', $activeLoginMethods))
-                @lang('auth.or')or <a href="/register/standard">@lang('auth.register')</a>
+                @lang('auth.or')or <a href="/register/standard">@lang('auth.register_now')</a>
                 @endif
                 </p>
                 @if (in_array('steam', $activeLoginMethods))
@@ -26,7 +26,7 @@
                     <form method="POST" action="/login/standard" class="form-horizontal">
                         @csrf
                         <div class="form-group row">
-                            <label for="email" class="col-sm-2 control-label">@lang('auth.email')</label>
+                            <label for="email" class="col-sm-2 control-label">@lang('auth.email_short')</label>
                             <div class="col-sm-10 @error('email') has-error @enderror">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
                             </div>
