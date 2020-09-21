@@ -1,9 +1,9 @@
 /**
  * Helper
  */
-.background-color
-{
-	background-color: $color_body_background;
+
+.background-color {
+    background-color: $color_body_background;
 }
 
 // .custom-header
@@ -13,64 +13,66 @@
 // 		&:hover {
 // 			color: $color_header_text;
 // 		}
-
 // 	}
 // }
-.full-height
-{
-	height: 100%;
+.full-height {
+    height: 100%;
 }
 
-.section-heading
-{
-	font-size: 16px;
-	font-weight: bold;
-
-	display: inline-block;
-
-	margin-bottom: 35px;
-	padding-bottom: 15px;
-
-	text-transform: uppercase;
-
-	border-bottom: 5px solid $color_primary;
+.section-heading {
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 35px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 5px solid $color_primary;
 }
 
-.section-padding
-{
-	padding-top: 50px;
-	padding-bottom: 50px;
+.section-padding {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
-.section-margin
-{
-	margin-bottom: 50px;
+.section-margin {
+    margin-bottom: 50px;
 }
-
 
 .padding {
-	padding: 15px;
+    padding: 15px;
 }
 
-.border-between > [class*='col-']:before {
-	background: #e3e3e3;
-	bottom: 0;
-	content: " ";
-	left: 0;
-	position: absolute;
-	width: 1px;
-	top: 0;
+.border-between>[class*='col-']:before {
+    background: #e3e3e3;
+    bottom: 0;
+    content: " ";
+    left: 0;
+    position: absolute;
+    width: 1px;
+    top: 0;
 }
 
-.border-between > [class*='col-']:first-child:before {
-	display: none;
+.border-between>[class*='col-']:first-child:before {
+    display: none;
 }
 
-.table-borderless > tbody > tr > td,
-.table-borderless > tbody > tr > th,
-.table-borderless > tfoot > tr > td,
-.table-borderless > tfoot > tr > th,
-.table-borderless > thead > tr > td,
-.table-borderless > thead > tr > th {
-	border: none;
+.table-borderless>tbody>tr>td,
+.table-borderless>tbody>tr>th,
+.table-borderless>tfoot>tr>td,
+.table-borderless>tfoot>tr>th,
+.table-borderless>thead>tr>td,
+.table-borderless>thead>tr>th {
+    border: none;
+}
+
+.bg-success {
+    color: #216704;
+}
+
+.bg-danger {
+    color: #a01414;
+}
+
+.bg-info {
+    color: #31708f;
 }
