@@ -8,7 +8,7 @@
 
 		<div class="page-header">
 			<h1>
-				My Account
+			@lang('accounts_index.my_account')
 			</h1>
 		</div>
 		<div class="row">
@@ -16,7 +16,7 @@
 			<div class="col-xs-12  col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Account Details</h3>
+						<h3 class="panel-title">@lang('accounts_index.account_details')</h3>
 					</div>
 					<div class="panel-body">
 						{{ Form::open(array('url'=>'/account/' )) }}
@@ -30,30 +30,30 @@
 					                <div class="row">
 					                    <div class="col-xs-12 col-md-6">
 					                        <div class="form-group @error('firstname') has-error @enderror">
-					                            {{ Form::label('firstname','Firstname',array('id'=>'','class'=>'')) }}
+					                            {{ Form::label('firstname','@lang('accounts_index.firstname')',array('id'=>'','class'=>'')) }}
 					                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
 					                        </div>
 					                    </div>
 					                    <div class="col-xs-12 col-md-6">
 					                        <div class="form-group  @error('surname') has-error @enderror">
-					                            {{ Form::label('surname','Surname',array('id'=>'','class'=>'')) }}
+					                            {{ Form::label('surname','@lang('accounts_index.surname')',array('id'=>'','class'=>'')) }}
 					                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ $user->surname }}" required autocomplete="surname">
 					                        </div>
 					                    </div>
 					                </div>
 									<div class="form-group">
-										{{ Form::label('Username','User Name',array('id'=>'','class'=>'')) }}
+										{{ Form::label('Username','@lang('accounts_index.username')',array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
 									</div> 
 									@if ($user->steamid && $user->steamname)
 										<div class="form-group">
-											{{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
+											{{ Form::label('steamname','@lang('accounts_index.steamname')',array('id'=>'','class'=>'')) }}
 											{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
 										</div>
 									@endif
 									@if ($user->email)
 										<div class="form-group">
-											{{ Form::label('email','Email',array('id'=>'','class'=>'')) }}
+											{{ Form::label('email','@lang('accounts_index.email')',array('id'=>'','class'=>'')) }}
 											<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="Enter email">
 											@error('email')
 				                                <span class="invalid-feedback" role="alert">
@@ -64,7 +64,7 @@
 									@endif
 									@if ($user->password)
 										<div class="form-group">
-											<label for="password1">Change Password</label>
+											<label for="password1">@lang('accounts_index.change_password')</label>
 											<input type="password" name="password1" class="form-control @error('password1') is-invalid @enderror" id="password1" placeholder="Password">
 										 	@error('password1')
 				                                <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
 				                            @enderror
 										</div>
 										<div class="form-group">
-											<label for="password2">Confirm Password</label>
+											<label for="password2">@lang('accounts_index.confirm_password')</label>
 											<input type="password" name="password2" class="form-control @error('password2') is-invalid @enderror" id="password2" placeholder="Password">
 										 	@error('password2')
 				                                <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
 				                            @enderror
 										</div>
 									@endif
-									<button type="submit" class="btn btn-primary btn-block">Submit</button>
+									<button type="submit" class="btn btn-primary btn-block">@lang('accounts_index.submit')</button>
 								</div>
 							</div>
 						{{ Form::close() }}
