@@ -53,8 +53,7 @@ return [
     'remove_account_line7' => 'By clicking Accept you are agreeing to these terms.',
     'remove_account_accept' => 'Accept',
     'remove_account_cancel' => 'Cancel',
-    
-
+    'danger_zone' => 'Danger Zone',
 
     
 ];
