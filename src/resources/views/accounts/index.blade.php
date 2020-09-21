@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', __('accounts_title'))
+@section ('page_title', __('accounts.title'))
 
 @section ('content')
 
@@ -8,7 +8,7 @@
 
 		<div class="page-header">
 			<h1>
-			@lang('accounts_index.my_account')
+			@lang('accounts.my_account')
 			</h1>
 		</div>
 		<div class="row">
@@ -16,7 +16,7 @@
 			<div class="col-xs-12  col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts_index.account_details')</h3>
+						<h3 class="panel-title">@lang('accounts.account_details')</h3>
 					</div>
 					<div class="panel-body">
 						{{ Form::open(array('url'=>'/account/' )) }}
@@ -30,30 +30,30 @@
 					                <div class="row">
 					                    <div class="col-xs-12 col-md-6">
 					                        <div class="form-group @error('firstname') has-error @enderror">
-					                            {{ Form::label('firstname',__('accounts_index.firstname'),array('id'=>'','class'=>'')) }}
+					                            {{ Form::label('firstname',__('accounts.firstname'),array('id'=>'','class'=>'')) }}
 					                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
 					                        </div>
 					                    </div>
 					                    <div class="col-xs-12 col-md-6">
 					                        <div class="form-group  @error('surname') has-error @enderror">
-					                            {{ Form::label('surname',__('accounts_index.surname'),array('id'=>'','class'=>'')) }}
+					                            {{ Form::label('surname',__('accounts.surname'),array('id'=>'','class'=>'')) }}
 					                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ $user->surname }}" required autocomplete="surname">
 					                        </div>
 					                    </div>
 					                </div>
 									<div class="form-group">
-										{{ Form::label('Username',__('accounts_index.username'),array('id'=>'','class'=>'')) }}
+										{{ Form::label('Username',__('accounts.username'),array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
 									</div> 
 									@if ($user->steamid && $user->steamname)
 										<div class="form-group">
-											{{ Form::label('steamname',__('accounts_index.steamname'),array('id'=>'','class'=>'')) }}
+											{{ Form::label('steamname',__('accounts.steamname'),array('id'=>'','class'=>'')) }}
 											{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
 										</div>
 									@endif
 									@if ($user->email)
 										<div class="form-group">
-											{{ Form::label('email',__('accounts_index.email'),array('id'=>'','class'=>'')) }}
+											{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
 											<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="Enter email">
 											@error('email')
 				                                <span class="invalid-feedback" role="alert">
@@ -64,7 +64,7 @@
 									@endif
 									@if ($user->password)
 										<div class="form-group">
-											<label for="password1">@lang('accounts_index.change_password')</label>
+											<label for="password1">@lang('accounts.change_password')</label>
 											<input type="password" name="password1" class="form-control @error('password1') is-invalid @enderror" id="password1" placeholder="Password">
 										 	@error('password1')
 				                                <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
 				                            @enderror
 										</div>
 										<div class="form-group">
-											<label for="password2">@lang('accounts_index.confirm_password')</label>
+											<label for="password2">@lang('accounts.confirm_password')</label>
 											<input type="password" name="password2" class="form-control @error('password2') is-invalid @enderror" id="password2" placeholder="Password">
 										 	@error('password2')
 				                                <span class="invalid-feedback" role="alert">
@@ -82,7 +82,7 @@
 				                            @enderror
 										</div>
 									@endif
-									<button type="submit" class="btn btn-primary btn-block">@lang('accounts_index.submit')</button>
+									<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
 								</div>
 							</div>
 						{{ Form::close() }}
@@ -97,11 +97,11 @@
 							<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 								<thead>
 									<tr>
-										<th>@lang('accounts_index.credit_action')</th>
-										<th>@lang('accounts_index.credit_amount')</th>
-										<th>@lang('accounts_index.credit_item')</th>
-										<th>@lang('accounts_index.credit_reason')</th>
-										<th>@lang('accounts_index.credit_timestamp')</th>
+										<th>@lang('accounts.credit_action')</th>
+										<th>@lang('accounts.credit_amount')</th>
+										<th>@lang('accounts.credit_item')</th>
+										<th>@lang('accounts.credit_reason')</th>
+										<th>@lang('accounts.credit_timestamp')</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -159,7 +159,7 @@
 			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-7">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts_index.tickets')</h3>
+						<h3 class="panel-title">@lang('accounts.tickets')</h3>
 					</div>
 					<div class="panel-body">
 						@if (count($eventParticipants))
@@ -167,7 +167,7 @@
 								@include ('layouts._partials._tickets.index')
 							@endforeach
 						@else
-							@lang('accounts_index.no_tickets')
+							@lang('accounts.no_tickets')
 						@endif
 					</div>
 				</div>
@@ -177,7 +177,7 @@
 			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-5">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts_index.purchases')</h3>
+						<h3 class="panel-title">@lang('accounts.purchases')</h3>
 					</div>
 					<div class="panel-body">
 						@if (count($user->purchases))
@@ -185,16 +185,16 @@
 								<thead>
 									<tr>
 										<th>
-											@lang('accounts_index.purchases_id')
+											@lang('accounts.purchases_id')
 										</th>
 										<th>
-											@lang('accounts_index.purchases_method')
+											@lang('accounts.purchases_method')
 										</th>
 										<th>
-											@lang('accounts_index.purchases_time')
+											@lang('accounts.purchases_time')
 										</th>
 										<th>
-											@lang('accounts_index.purchases_basket')
+											@lang('accounts.purchases_basket')
 										</th>
 									</tr>
 								</thead>
@@ -246,11 +246,11 @@
 							</table>
 							{{ $purchases->links() }}
 						@else
-							@lang('accounts_index.no_purchases')
+							@lang('accounts.no_purchases')
 						@endif
 						@if (Settings::isShopEnabled())
 							<a href="/shop/orders">
-								<button class="btn btn-success">@lang('accounts_index.show_shop_orders')</button>
+								<button class="btn btn-success">@lang('accounts.show_shop_orders')</button>
 							</a>
 						@endif
 					</div>
@@ -261,14 +261,14 @@
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Danger Zone</h3>
+						<h3 class="panel-title">@lang('accounts.danger_zone')</h3>
 					</div>
 					<div class="panel-body">
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.remove_steam_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.add_second_steam_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.add_twitch_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts_index.remove_twitch_account')</button>
-						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">@lang('accounts_index.remove_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.remove_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.add_second_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.add_twitch_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.remove_twitch_account')</button>
+						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">@lang('accounts.remove_account')</button>
 					</div>
 				</div>
 			</div>
@@ -282,23 +282,23 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="confirmDeleteModalLabel">@lang('accounts_index.confirm_remove_account')</h4>
+					<h4 class="modal-title" id="confirmDeleteModalLabel">@lang('accounts.confirm_remove_account')</h4>
 				</div>
 				{{ Form::open(array('url'=>'/account/delete/', 'id'=>'confirmDeleteFormModal')) }}
 					<div class="modal-body">
 						<div class="form-group">
-							<p>@lang('accounts_index.remove_account_line1')</p>
-							<p><strong>@lang('accounts_index.remove_account_all')</strong> @lang('accounts_index.remove_account_line2')</p>
-							<p><strong>@lang('accounts_index.remove_account_all')</strong> @lang('accounts_index.remove_account_line3')</p>
-							<p><strong>@lang('accounts_index.remove_account_all')</strong> @lang('accounts_index.remove_account_line4')</p> 
-							<p>@lang('accounts_index.remove_account_line5_1') <strong>@lang('accounts_index.remove_account_not')</strong> @lang('accounts_index.remove_account_line5_1')</p>
-							<p>@lang('accounts_index.remove_account_line6_1') <strong>@lang('accounts_index.remove_account_not')</strong> @lang('accounts_index.remove_account_line6_2')</p>
-							<p><strong>@lang('accounts_index.remove_account_line7')</strong></p>
+							<p>@lang('accounts.remove_account_line1')</p>
+							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line2')</p>
+							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line3')</p>
+							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line4')</p> 
+							<p>@lang('accounts.remove_account_line5_1') <strong>@lang('accounts.remove_account_not')</strong> @lang('accounts.remove_account_line5_1')</p>
+							<p>@lang('accounts.remove_account_line6_1') <strong>@lang('accounts.remove_account_not')</strong> @lang('accounts.remove_account_line6_2')</p>
+							<p><strong>@lang('accounts.remove_account_line7')</strong></p>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">@lang('accounts_index.remove_account_accept')Accept</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('accounts_index.remove_account_cancel')Cancel</button>
+						<button type="submit" class="btn btn-success">@lang('accounts.remove_account_accept')Accept</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('accounts.remove_account_cancel')Cancel</button>
 					</div>
 				{{ Form::close() }}
 			</div>

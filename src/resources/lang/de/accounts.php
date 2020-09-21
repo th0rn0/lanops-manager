@@ -53,5 +53,6 @@ return [
     'remove_account_line7' => 'Beim klick auf Bestätigen erklärst du dich mit diesen Umständen einverstanden!',
     'remove_account_accept' => 'Bestätigen',
     'remove_account_cancel' => 'Abbrechen',
+    'danger_zone' => 'Danger Zone',
 
 ];
