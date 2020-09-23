@@ -1,13 +1,13 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Payment Details')
+@section ('page_title', __('payments.payment_details'))
 
 @section ('content')
 
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Payment Details
+		@lang('payments.payment_details')
 		</h1> 
 	</div>
 	<div class="row">
@@ -17,20 +17,20 @@
 				{{ Form::open(array('url'=>'/payment/post', 'id'=>'payment-form')) }}
 					<div class="row">
 						<div class="form-group col-sm-6 col-xs-12">
-							{{ Form::label('card_first_name', 'First Name *', array('id'=>'','class'=>'')) }}
+							{{ Form::label('card_first_name', __('payments.firstname') , array('id'=>'','class'=>'')) }}
 							{{ Form::text('card_first_name', '', array('id'=>'card_first_name','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group col-sm-6 col-xs-12">
-							{{ Form::label('card_last_name', 'Last Name *', array('id'=>'','class'=>'')) }}
+							{{ Form::label('card_last_name', __('payments.lastname') , array('id'=>'','class'=>'')) }}
 							{{ Form::text('card_last_name', '', array('id'=>'card_last_name','class'=>'form-control')) }}
 						</div>
 					</div>
-					{{ Form::label('card_number', 'Card Details', array('id'=>'','class'=>'')) }}
+					{{ Form::label('card_number', __('payments.card_details'), array('id'=>'','class'=>'')) }}
 					<div class="form-control" id="card-element"></div>
 			  		<div id="card-errors" role="alert"></div>
-					<p><small>* Required Fields</small></p>
+					<p><small>@lang('payments.delivery_required_fields)</small></p>
 					{{ Form::hidden('gateway', $paymentGateway) }}
-					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">Confirm Order</button>
+					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">@lang('payments.confirm_order')</button>
 				{{ Form::close() }}
 			@else ($paymentGateway == 'credit' && Settings::isCreditEnabled())
 				<h5>Credit: {{ $user->credit_total }}</h5>
@@ -38,22 +38,22 @@
 				@if ($user->checkCredit(-1 * abs($basket->total_credit)) && $basket->allow_credit)
 					<hr>
 					<div class="alert alert-warning">
-						<h5>You have enough credit to make this purchase. Please not Credit Purchases are non refundable!</h5>
+						<h5>@lang('payments.enough_credits')</h5>
 					</div>
 					{{ Form::open(array('url'=>'/payment/post')) }}
 					{{ Form::hidden('gateway', $paymentGateway) }}
 					{{ Form::hidden('confirm', true) }}
-						<button class="btn btn-primary btn-block">Confirm Order</button>
+						<button class="btn btn-primary btn-block">@lang('payments.confirm_order')</button>
 					{{ Form::close() }}
 				@elseif (!$basket->allow_credit)
 					<hr>
 					<div class="alert alert-warning">
-						<h5>You cannot use credit to purchase this basket! Please go <a href="/payment/checkout">back</a> and try another method</h5>
+						<h5>@lang('payments.cannot_use_credit_1') <a href="/payment/checkout">@lang('payments.back')</a> @lang('payments.cannot_use_credit_2')</h5>
 					</div>
 				@else
 					<hr>
 					<div class="alert alert-warning">
-						<h5>You do not have enough credit to make this purchase on your account! Please go <a href="/payment/checkout">back</a> and try another method</h5>
+						<h5>@lang('payments.not_enough_credits_1') <a href="/payment/checkout">@lang('payments.back')</a> @lang('payments.not_enough_credits_1')</h5>
 					</div>
 				@endif
 			@endif
@@ -61,7 +61,7 @@
 		<div class="col-xs-12 col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Order Details</h3>
+					<h3 class="panel-title">@lang('payments.order_details')</h3>
 				</div>
 				<div class="panel-body">
 					@include ('layouts._partials._shop.basket-preview')
@@ -70,7 +70,15 @@
 			@if ($delivery && $deliveryDetails)
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Delivery Details</h3>
+
+
+
+
+
+
+
+
+						<h3 class="panel-title">@lang('payments.delivery_details')</h3>
 					</div>
 					<div class="panel-body">
 						@if ($deliveryDetails && $deliveryDetails['type'] == 'shipping')
@@ -89,7 +97,7 @@
 								{{ $delivery['shipping_postcode'] }}
 							</address>
 						@else
-							<strong>Delivery to the next event you Attend</strong>
+							<strong>@lang('payments.delivery_next_event')</strong>
 						@endif
 					</div>
 				</div>
