@@ -42,6 +42,10 @@
     padding: 15px;
 }
 
+.margin {
+    margin: 15px;
+}
+
 .border-between>[class*='col-']:before {
     background: #e3e3e3;
     bottom: 0;
