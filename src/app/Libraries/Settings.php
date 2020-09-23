@@ -392,6 +392,25 @@ class Settings
     }
 
     /**
+     * Get Impressum
+     * @return String
+     */
+    public static function getImpressum()
+    {
+        return \App\Setting::getImpressum();
+    }
+
+    /**
+     * Set Impressum
+     * @param String $text
+     */
+    public static function setImpressum($text)
+    {
+        return \App\Setting::setImpressum($text);
+    }
+
+
+    /**
      * Get Facebook Page Access Tokens
      * @return Array
      */

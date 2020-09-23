@@ -93,6 +93,10 @@
 						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
+					<div class="form-group">
+						{{ Form::label('impressum','Impressum' ,array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('impressum', Settings::getImpressum() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>

@@ -161,6 +161,7 @@ class SettingsController extends Controller
             'about_short'               => 'filled',
             'about_our_aim'             => 'filled',
             'about_who'                 => 'filled',
+            'impressum'                 => 'filled',
             'seo_keywords'              => 'filled',
             'currency'                  => 'in:GBP,USD,EUR',
             'shop_status'               => 'in:OPEN,CLOSED',
@@ -177,6 +178,7 @@ class SettingsController extends Controller
             'about_short.filled'                => 'About Short cannot be empty',
             'about_our_aim.filled'              => 'About Our Aim cannot be empty',
             'about_who.filled'                  => 'About Whos who cannot be empty',
+            'impressum.filled'                  => 'Impressum is required in Germany',
             'seo_keywords.filled'               => 'SEO Keywords cannot be empty',
             'currency.in'                       => 'Currency must be GBP, USD or EUR',
             'shop_status.in'                    => 'Shop Status must be OPEN or CLOSED',
@@ -255,6 +257,11 @@ class SettingsController extends Controller
         }
 
         if (isset($request->about_who) && !Settings::setAboutWho($request->about_who)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        
+        if (isset($request->impressum) && !Settings::setAboutWho($request->impressum)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }

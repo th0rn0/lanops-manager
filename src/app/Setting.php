@@ -565,6 +565,29 @@ class Setting extends Model
         return true;
     }
 
+      /**
+     * Get Impressum
+     * @return String
+     */
+    public static function getImpressum()
+    {
+        return self::where('setting', 'impressum')->first()->value;
+    }
+
+    /**
+     * Set About Who's
+     * @param String $text
+     */
+    public static function setImpressum($text)
+    {
+        $setting = self::where('setting', 'impressum')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Get Facebook Page Access Tokens
      * @return String
