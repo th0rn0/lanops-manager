@@ -1,13 +1,13 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Review Terms & Conditions')
+@section ('page_title', __('payments.review_terms'))
 
 @section ('content')
 
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Review Terms & Conditions of Purchase
+		@lang('payments.review_terms_long')
 		</h1> 
 	</div>
 	<div class="row">
@@ -16,21 +16,21 @@
 			<hr>
 			@if (!$nextEventFlag)
 				<div class="alert alert-warning">
-					<h5>Please be aware you are not purchasing tickets for our next event but instead a future event after that.</h5>
+					<h5>@lang('payments.purchase_future_event')</h5>
 				</div>
 			@endif
 			<div class="alert alert-warning">
-				<h5>By Clicking on Continue you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+				<h5>@lang('payments.purchase_future_event') {!! Settings::getOrgName() !!}</h5>
 			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button class="btn btn-primary btn-block">Continue</button>
+				<button class="btn btn-primary btn-block">@lang('payments.delivery_continue)</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Order Details</h3>
+					<h3 class="panel-title">@lang('payments.order_details')</h3>
 				</div>
 				<div class="panel-body">
 					@include ('layouts._partials._shop.basket-preview')

@@ -1,23 +1,23 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Payment Successful!')
+@section ('page_title', __('payments.payment_successful'))
 
 @section ('content')
 
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Thank you for your Payment!
+			@lang('payments.thank_you')
 		</h1> 
 	</div>
 	<div class="row">
 		@if ($type == 'tickets')
 			<div class="col-xs-12 col-md-8">
-				<h3>Your Tickets are now active</h3>
-				<h4>You may now go to the <a href="/events/{{ $purchase->participants{0}->event->slug }}/#seating">Events Page and Book a Seat!</a></h4>
-				<p><strong>Purchase ID:</strong> {{ $purchase->id }}</p>
-				<p><strong>Payment Method:</strong> {{ $purchase->getPurchaseType() }}</p>
-				<h3>Tickets</h3>
+				<h3>@lang('payments.tickets_active')</h3>
+				<h4>@lang('payments.payment_successful_text1') <a href="/events/{{ $purchase->participants{0}->event->slug }}/#seating">@lang('payments.payment_successful_linktext1')</a></h4>
+				<p><strong>@lang('payments.purchase_id')</strong> {{ $purchase->id }}</p>
+				<p><strong>@lang('payments.payment_method')</strong> {{ $purchase->getPurchaseType() }}</p>
+				<h3>@lang('payments.tickets')</h3>
 				<hr>
 				<div class="row">
 					@foreach ($purchase->participants as $participant)
@@ -32,7 +32,7 @@
 			<div class="col-xs-12 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Order Details</h3>
+						<h3 class="panel-title">@lang('payments.order_details')</h3>
 					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
@@ -69,17 +69,17 @@
 			</div>
 		@elseif ($type == 'shop')
 			<div class="col-xs-12 col-md-12">
-				<h3>Order Successful!</h3>
+				<h3>@lang('payments.order_successful')</h3>
 				<h4></h4>
-				<p><strong>Purchase ID:</strong> {{ $purchase->id }}</p>
-				<p><strong>Payment Method:</strong> {{ $purchase->getPurchaseType() }}</p>
-				<h3>Items</h3>
+				<p><strong>@lang('payments.purchase_id')</strong> {{ $purchase->id }}</p>
+				<p><strong>@lang('payments.payment_method')</strong> {{ $purchase->getPurchaseType() }}</p>
+				<h3>@lang('payments.items')</h3>
 				<hr>
 				<div class="row">
 					@foreach ($basket as $item)
 						<div class="col-lg-3 col-sm-4 col-xs-12 text-center">
 							<h5>{{ $item->name }}</h5>
-							<h5>Quantity: {{ $item->quantity }}</h5>
+							<h5>@lang('payments.quantity') {{ $item->quantity }}</h5>
 							<h5>
 								@if ($item->price != null && $item->price != 0)
 									{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
@@ -88,7 +88,7 @@
 									@endif
 								@endif
 								@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-									{{ $item->price_credit * $item->quantity }} Credits
+									{{ $item->price_credit * $item->quantity }} @lang('payments.credits')
 								@endif
 							</h5>
 							<img class="img img-responsive img-rounded" src="{{ $item->getDefaultImageUrl() }}"/>

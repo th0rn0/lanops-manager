@@ -118,28 +118,28 @@
 				</div>
 				<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 					<div class="col-lg-6 col-md-6">
-						<h2 class="">Links</h2>
-						<p class=" hidden"><a href="/contact">Contact Us</a></p>
-						<p class=""><a href="/news">News</a></p>
-						<p class=""><a href="/terms">Terms & Conditions</a></p>
-						<p class=""><a href="/about">About Us</a></p>
-						<p class=""><a href="/polls">Polls</a></p>
-						<p class=" hidden">Lan Guide</p>
+						<h2 class="">@lang('layouts.default_links')</h2>
+						<p class=" hidden"><a href="/contact">@lang('layouts.default_contact_us')</a></p>
+						<p class=""><a href="/news">@lang('layouts.default_news')</a></p>
+						<p class=""><a href="/terms">@lang('layouts.default_terms_and_conditions')</a></p>
+						<p class=""><a href="/about">@lang('layouts.default_about_us')</a></p>
+						<p class=""><a href="/polls">@lang('layouts.default_polls')</a></p>
+						<p class=" hidden">@lang('layouts.default_lan_guide')</p>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<h2 class="">Connect</h2>
 						@if (Settings::getFacebookLink() != "")
-							<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
+							<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">@lang('layouts.default_facebook')</a></p>
 						@endif
 						@if (Settings::getDiscordLink() != "")
-							<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
+							<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">@lang('layouts.default_discord')</a></p>
 						@endif
 						@if (Settings::getDiscordLink() != "")
-							<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
+							<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">@lang('layouts.default_steam')</a></p>
 						@endif
 					</div>
 					<div class="col-lg-12">
-						<p class="">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
+						<p class="">© {{ Settings::getOrgName() }} {{ date("Y") }}. @lang('layouts.default_rights_reserved')</p>
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">

@@ -1,20 +1,20 @@
 @extends ('layouts.default')
 
-@section ('page_title', 'Checkout')
+@section ('page_title', __('payments.checkout'))
 
 @section ('content')
 
 <div class="container">
 	<div class="page-header">
 		<h1>
-			Checkout
+			__('payments.checkout')
 		</h1> 
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Order Details</h3>
+					<h3 class="panel-title">@lang('payments.order_details')</h3>
 				</div>
 				<div class="panel-body">
 					<div class="table-responsive">
@@ -36,7 +36,7 @@
 												@endif
 											@endif
 											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-												{{ number_format($item->price_credit, 2) }} Credits
+												{{ number_format($item->price_credit, 2) }} @lang('payments.credits')
 											@endif
 											Each
 										</td>
@@ -48,7 +48,7 @@
 												@endif
 											@endif
 											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-												{{ number_format($item->price_credit * $item->quantity, 2) }} Credits
+												{{ number_format($item->price_credit * $item->quantity, 2) }} @lang('payments.credits')
 											@endif
 										</td>
 									</tr>
@@ -58,7 +58,7 @@
 									<td></td>
 									<td></td>
 									<td class="text-right">
-										<strong>Total:</strong>
+										<strong>@lang('payments.total')</strong>
 										@if ($basket->total != null)
 											{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
 											@if ($basket->total_credit != null && Settings::isCreditEnabled())
@@ -66,7 +66,7 @@
 											@endif
 										@endif
 										@if ($basket->total_credit != null && Settings::isCreditEnabled())
-											{{ number_format($basket->total_credit, 2) }} Credits
+											{{ number_format($basket->total_credit, 2) }} @lang('payments.credits')
 										@endif
 									</td>
 								</tr>
@@ -77,7 +77,7 @@
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Payment</h3>
+					<h3 class="panel-title">@lang('payments.payment')</h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -101,16 +101,16 @@
 							<div class="col-xs-12 col-md-6">
 								<div class="section-header">
 									<h4>
-										Credit
+									@lang('payments.credit')
 									</h4>
 									<hr>
 								</div>
 								<a href="/payment/review/credit">
 									<button type="button" class="btn btn-primary btn-block">
-										Pay With Credit
+									@lang('payments.pay_with_credit')
 									</button>
 								</a>
-								<p><small>Credit purchases are non refundable.</small></p>
+								<p><small>@lang('payments.credit_no_refund')</small></p>
 							</div>
 						@endif
 					</div>
