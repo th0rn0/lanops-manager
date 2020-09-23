@@ -25,5 +25,12 @@ return [
     'default_discord' => 'Discord',
     'default_steam' => 'Steam',
     'default_rights_reserved' => 'All rights reserved.',
+    'user_navi_admin' => 'Admin',
+    'user_navi_profile' => 'Profile',
+    'user_navi_logout' => 'Logout',
+    'navi_toggle' => 'Toggle navigation',
+    'navi_gallery' => 'Gallery',
+    'navi_shop' => 'Shop',
+    'navi_login' => 'Login', 
 
 ];
