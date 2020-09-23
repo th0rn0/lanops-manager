@@ -3,14 +3,14 @@
 	<ul class="dropdown-menu">
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}">@lang('layouts.events_navi_information')</a></li>
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#purchaseTickets">@lang('layouts.events_navi_tickets')</a></li>
-		@if (!$event->timetables->isEmpty())
+		@if ($event && !$event->timetables->isEmpty())
 			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#timetable">@lang('layouts.events_navi_timetable')</a></li>
 		@endif
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#attendees">@lang('layouts.events_navi_attendees')</a></li>
-		@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
+		@if ($event && !$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#tournaments">@lang('layouts.events_navi_tournaments')</a></li>
 		@endif
-		@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray()))	)
+		@if ($event && !$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray()))	)
 			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#seating">@lang('layouts.events_navi_seating')</a></li>
 		@endif
 		@if(Auth::user())

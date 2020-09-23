@@ -48,7 +48,6 @@ class HomeController extends Controller
                 }
             }
         }
-        $event = Event::where('start', '>=', date("Y-m-d 00:00:00"))->first();
         return $this->net();
     }
 
