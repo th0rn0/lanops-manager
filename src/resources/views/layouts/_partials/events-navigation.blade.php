@@ -3,10 +3,16 @@
 	<ul class="dropdown-menu">
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}">Information</a></li>
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#purchaseTickets">Tickets</a></li>
-		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#timetable">Timetable</a></li>
+		@if (!$event->timetables->isEmpty())
+			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#timetable">Timetable</a></li>
+		@endif
 		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#attendees">Attendees</a></li>
-		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#tournaments">Tournaments</a></li>
-		<li><a href="/events/{{ Helpers::getNextEventSlug() }}#seating">Seating</a></li>
+		@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
+			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#tournaments">Tournaments</a></li>
+		@endif
+		@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray()))	)
+			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#seating">Seating</a></li>
+		@endif
 		@if(Auth::user())
 			<li><a href="/events/{{ Helpers::getNextEventSlug() }}#yourTickets">Your Tickets</a></li>
 		@endif

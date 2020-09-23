@@ -33,7 +33,7 @@
 						@if (!$event->sponsors->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#sponsors">@lang('events.sponsors')</a></li>
 						@endif
-						@if (!$event->seatingPlans->isEmpty())
+						@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray()))	)
 							<li style="font-size:15px; font-weight:bold;"><a href="#seating">@lang('events.seating')</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">@lang('events.attendees')</a></li>
