@@ -29,6 +29,17 @@ return [
     'navi_toggle' => 'Toggle Navigation',
     'navi_gallery' => 'Galerie',
     'navi_shop' => 'Shop',
-    'navi_login' => 'Einloggen', 
+    'navi_login' => 'Einloggen',
+    'events_navi_information' => 'Informationen',
+    'events_navi_tickets' => 'Tickets',
+    'events_navi_timetable' => 'Zeitplan',
+    'events_navi_attendees' => 'Teilnehmer',
+    'events_navi_tournaments' => 'Turniere',
+    'events_navi_seating' => 'Sitzplätze',
+    'events_navi_your_tickets' => 'Deine Tickets',
+    'events_navi_future_events' => 'Zukünftige Events',
+    'events_navi_no_future_events' => 'keine zukünftigen Events',
+    'events_all_events' => 'Alle Events',
+    'events_navi_no_future_events' => 'Keine Events', 
 
 ];
