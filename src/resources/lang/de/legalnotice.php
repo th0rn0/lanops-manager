@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'legalnoticeandprivacy' => 'Legal Notice & Privacy Policy',
-    'legalnoticetitle' => 'Legal Notice',
-    'privacy' => 'Privacy Policy',
+    'legalnoticeandprivacy' => 'Impressum & Datenschutzerklärung',
+    'legalnoticetitle' => 'Impressum',
+    'privacy' => 'Datenschutzerklärung',
     
 ];
