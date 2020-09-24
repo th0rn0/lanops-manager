@@ -32,5 +32,16 @@ return [
     'navi_gallery' => 'Gallery',
     'navi_shop' => 'Shop',
     'navi_login' => 'Login', 
+    'events_navi_information' => 'Information',
+    'events_navi_tickets' => 'Tickets',
+    'events_navi_timetable' => 'Timetable',
+    'events_navi_attendees' => 'Attendees',
+    'events_navi_tournaments' => 'Tournaments',
+    'events_navi_seating' => 'Seating',
+    'events_navi_your_tickets' => 'Your Tickets',
+    'events_navi_future_events' => 'Future Events',
+    'events_navi_no_future_events' => 'No Future events',
+    'events_all_events' => 'All Events',
+    'events_navi_no_future_events' => 'No events',
 
 ];
