@@ -42,6 +42,7 @@ class EventTournament extends Model
         'bronze',
         'team_size',
         'description',
+        'rules',
         'allow_player_teams',
         'status'
     ];
