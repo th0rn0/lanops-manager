@@ -18,6 +18,7 @@ return [
     'default_contact_us' => 'Contact Us',
     'default_news' => 'News',
     'default_terms_and_conditions' => 'Terms & Conditions',
+    'default_legal_and_privacy' => 'Legal Notice & Privacy Policy',
     'default_about_us' => 'About Us',
     'default_polls' => 'Polls',
     'default_lan_guide' => 'Lan Guide',

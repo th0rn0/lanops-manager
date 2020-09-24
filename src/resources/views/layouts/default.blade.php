@@ -122,6 +122,7 @@
 						<p class=" hidden"><a href="/contact">@lang('layouts.default_contact_us')</a></p>
 						<p class=""><a href="/news">@lang('layouts.default_news')</a></p>
 						<p class=""><a href="/terms">@lang('layouts.default_terms_and_conditions')</a></p>
+						<p class=""><a href="/legalnotice">@lang('layouts.default_legal_and_privacy')</a></p>
 						<p class=""><a href="/about">@lang('layouts.default_about_us')</a></p>
 						<p class=""><a href="/polls">@lang('layouts.default_polls')</a></p>
 						<p class=" hidden">@lang('layouts.default_lan_guide')</p>

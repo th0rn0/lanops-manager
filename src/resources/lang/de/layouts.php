@@ -16,6 +16,7 @@ return [
     'default_contact_us' => 'Kontakt',
     'default_news' => 'Neuigkeiten',
     'default_terms_and_conditions' => 'LegalNotice & Nutzungsbedingungen',
+    'default_legal_and_privacy' => 'Impressum & Datenschutzerklärung',
     'default_about_us' => 'Über uns',
     'default_polls' => 'Umfragen',
     'default_lan_guide' => 'Lan Guide',
