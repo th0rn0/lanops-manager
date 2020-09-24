@@ -9,11 +9,16 @@ button.js-cookie-consent-agree.cookie-consent__agree {
     color: #333333;
     border-radius: 4px;
     padding: 0.8em;
-    float: right;
+    float: right;   
 }
 
-
-
+span.cookie-consent__message{
+    font-size: 18px;
+    flex: 1;
+}
+span.cookie-consent__message>a{
+    text-decoration: underline;
+}
 .cookie-consent {
     position: fixed;
     bottom: 10px ;
@@ -28,4 +33,6 @@ button.js-cookie-consent-agree.cookie-consent__agree {
     padding-bottom: 0.3em;
     padding-left: 1em;
     padding-right: 1em;
+    display: flex;
+    align-items: center;
 }

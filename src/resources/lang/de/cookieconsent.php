@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'message1' => 'Diese Seite verwendet Cookies um das Nutzererlebnis zu steigern. Weitere Informationen findest du auf unserer',
+    'message' => 'Diese Seite verwendet Cookies um das Nutzererlebnis zu steigern. Weitere Informationen findest du auf unserer Seite',
     'agree' => 'Akzeptieren',
 
 
