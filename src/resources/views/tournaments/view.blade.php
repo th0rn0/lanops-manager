@@ -236,6 +236,11 @@
 					</div>
 				@endif
 		</div>
+
+		<div class="row">
+			<h3>Rules</h3>
+			{!! $tournament->rules !!}
+		</div>
 	</div>
 
 

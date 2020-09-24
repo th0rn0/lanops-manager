@@ -67,6 +67,7 @@ class TournamentsController extends Controller
             'format'        => 'required|in:single elimination,double elimination,round robin,list',
             'team_size'     => 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
             'description'   => 'required',
+            'rules'         => 'required',
             'image'         => 'image',
         ];
         $messages = [
@@ -76,6 +77,7 @@ class TournamentsController extends Controller
             'team_size.required'    => 'Team size is required',
             'team_size.in'          => 'Team Size must be in format 1v1, 2v2, 3v3 etc',
             'description.required'  => 'Description is required',
+            'rules.required'        => 'Rules are required',
             'image.image'           => 'Tournament image must be a Image'
         ];
         $this->validate($request, $rules, $messages);
@@ -94,6 +96,7 @@ class TournamentsController extends Controller
         $tournament->format                     = $request->format;
         $tournament->team_size                  = $request->team_size;
         $tournament->description                = $request->description;
+        $tournament->rules                      = $request->rules;
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
         $tournament->status                     = 'DRAFT';
@@ -106,6 +109,7 @@ class TournamentsController extends Controller
         Session::flash('message', 'Successfully created Tournament!');
         return Redirect::back();
     }
+
     /**
      * Update Tournament
      * @param  Event           $event
@@ -119,11 +123,13 @@ class TournamentsController extends Controller
             'name'          => 'filled',
             'status'        => 'in:DRAFT,OPEN,CLOSED,LIVE,COMPLETE',
             'description'   => 'filled',
+            'rules'         => 'filled',
         ];
         $messages = [
             'name.filled'           => 'Tournament name cannot be empty',
             'status.in'             => 'Status must be DRAFT, OPEN, CLOSED, LIVE or COMPLETE',
             'description.filled'    => 'Description cannot be empty',
+            'rules.filled'          => 'Rules cannot be empty',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -136,6 +142,7 @@ class TournamentsController extends Controller
 
         $tournament->name           = $request->name;
         $tournament->description    = $request->description;
+        $tournament->rules          = $request->rules;
         $disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
         if (!in_array($tournament->status, $disallowed_array)) {
             $game_id = null;
