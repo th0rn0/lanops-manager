@@ -93,7 +93,7 @@ return [
     'signedup' => 'Angemeldet',
     'game' => 'Spiel',
     'teamsizes' => 'Teamgröße',
-    'format' => 'Format:',
+    'format' => 'Format',
     'nextmatch' => 'Nächste Begegnung',
     'registration' => 'Registrierung',
     'jointeam' => 'Team wählen',
