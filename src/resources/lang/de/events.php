@@ -108,6 +108,6 @@ return [
     'brackets' => 'Gruppe',
     'standings' => 'Rangliste',
     'participants' => 'Teilnehmer',
-
+    'rules' => 'Regeln',
 
 ];

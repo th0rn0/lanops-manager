@@ -112,6 +112,7 @@ return [
     'brackets' => 'Brackets',
     'standings' => 'Standings',
     'participants' => 'Participants',
+    'rules' => 'Rules',
 
 
 ];

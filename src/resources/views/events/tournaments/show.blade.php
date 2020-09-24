@@ -275,6 +275,11 @@
 				@include ('layouts._partials._tournaments.participants', ['all' => $participants_view])
 			</div>
 		@endif
+
+		<div class="row">
+			<h3>@lang('events.rules')</h3>
+			{!! $tournament->rules !!}
+		</div>
 	</div>
 
 @endsection
