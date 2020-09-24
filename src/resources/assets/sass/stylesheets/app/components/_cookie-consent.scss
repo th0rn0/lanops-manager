@@ -16,12 +16,12 @@ button.js-cookie-consent-agree.cookie-consent__agree {
 
 .cookie-consent {
     position: fixed;
-    bottom: 2% ;
-    left: 1%;
+    bottom: 10px ;
+    left: 10px;
     text-align: left;
     color: $color_primary;
     z-index: 10;
-    width: 98%;
+    width: calc(100% - 20px);
     background-color: #4e4e4ecc;
     border-radius: 4px;
     padding-top: 0.3em;
