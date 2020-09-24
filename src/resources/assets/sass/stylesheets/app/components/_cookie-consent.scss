@@ -4,18 +4,16 @@
 
 
 button.js-cookie-consent-agree.cookie-consent__agree {
-    position: absolute;
-    top: 6%;
-    left: 91%;
     z-index: 10;
     background-color: $color_primary;
     border-radius: 4px;
     padding: 0.8em;
+    float: right;
 }
 
 
 
-span.cookie-consent__message {
+span.js-cookie-consent cookie-consent {
     position: absolute;
     top: 6%;
     text-align: left;
@@ -25,5 +23,8 @@ span.cookie-consent__message {
     width: 98%;
     background-color: #4e4e4ecc;
     border-radius: 4px;
-    padding: 1em;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
