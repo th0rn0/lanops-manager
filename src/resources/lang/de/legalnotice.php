@@ -13,7 +13,6 @@ return [
     |
     */
 
-    'legalnoticeandprivacy' => 'Impressum & Datenschutzerklärung',
     'legalnoticetitle' => 'Impressum',
     'privacy' => 'Datenschutzerklärung',
     
