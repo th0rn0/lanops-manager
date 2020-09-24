@@ -92,7 +92,7 @@
 				<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
 				<h4>@lang('home.where'):</h4>
 				<h5>{{ $nextEvent->venue->display_name }}</h5>
-				@if ($nextEvent->tickets)
+				@if ($nextEvent->tickets && $user)
 					<h4>@lang('home.price'):</h4>
 					<h5>@lang('home.ticketsstartfrom') {{ Settings::getCurrencySymbol() }}{{ $nextEvent->getCheapestTicket() }}</h5>
 				@endif
