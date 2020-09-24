@@ -97,3 +97,26 @@ fieldset[disabled] .form-control {
 .panel-default>.panel-heading {
     color: $color_primary_text;
 }
+
+.full-width {
+    width: 100vw;
+    max-width: unset;
+}
+
+@media (min-width: 768px) {
+    .full-width {
+        margin-left: calc((-100vw / 2) + (750px / 2));
+    }
+}
+
+@media (min-width: 992px) {
+    .full-width {
+        margin-left: calc((-100vw / 2) + (970px / 2));
+    }
+}
+
+@media (min-width: 1200px) {
+    .full-width {
+        margin-left: calc((-100vw / 2) + (1170px / 2));
+    }
+}
