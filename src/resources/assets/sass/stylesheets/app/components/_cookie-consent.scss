@@ -13,9 +13,11 @@ button.js-cookie-consent-agree.cookie-consent__agree {
 }
 
 span.cookie-consent__message{
-    font-size: 24px;
+    font-size: 18px;
 }
-
+span.cookie-consent__message.a{
+    text-decoration: underline;
+}
 .cookie-consent {
     position: fixed;
     bottom: 10px ;
