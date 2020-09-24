@@ -14,8 +14,9 @@ button.js-cookie-consent-agree.cookie-consent__agree {
 
 span.cookie-consent__message{
     font-size: 18px;
+    flex: 1;
 }
-span.cookie-consent__message.a{
+span.cookie-consent__message>a{
     text-decoration: underline;
 }
 .cookie-consent {
@@ -32,4 +33,6 @@ span.cookie-consent__message.a{
     padding-bottom: 0.3em;
     padding-left: 1em;
     padding-right: 1em;
+    display: flex;
+    align-items: center;
 }
