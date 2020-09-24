@@ -44,5 +44,8 @@ return [
     'events_navi_no_future_events' => 'No Future events',
     'events_all_events' => 'All Events',
     'events_navi_no_future_events' => 'No events',
+    'read_more' => 'Read More...',
+    'share' => 'Share:',
+    'comments' => 'Comments:',
 
 ];
