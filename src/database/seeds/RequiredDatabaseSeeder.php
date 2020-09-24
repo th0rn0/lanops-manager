@@ -202,6 +202,13 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'privacy_policy'],
+            [
+                'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'social_facebook_page_access_token'],
             [
                 'value'         => null,
