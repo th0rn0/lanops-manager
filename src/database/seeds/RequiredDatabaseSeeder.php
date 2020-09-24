@@ -195,7 +195,7 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
-            ['setting'          => 'impressum'],
+            ['setting'          => 'legal_notice'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
                 'default'       => true,

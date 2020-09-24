@@ -47,6 +47,7 @@
 									strpos($setting->setting, 'login') === false &&
 									strpos($setting->setting, 'shop') === false &&
 									strpos($setting->setting, 'seo') === false &&
+									strpos($setting->setting, 'legal_notice') === false &&
 									$setting->setting != 'currency' &&
 									$setting->setting != 'social_facebook_page_access_token' &&
 									$setting->setting != 'installed'

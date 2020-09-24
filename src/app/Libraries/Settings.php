@@ -392,23 +392,40 @@ class Settings
     }
 
     /**
-     * Get Impressum
+     * Get LegalNotice
      * @return String
      */
-    public static function getImpressum()
+    public static function getLegalNotice()
     {
-        return \App\Setting::getImpressum();
+        return \App\Setting::getLegalNotice();
     }
 
     /**
-     * Set Impressum
+     * Set LegalNotice
      * @param String $text
      */
-    public static function setImpressum($text)
+    public static function setLegalNotice($text)
     {
-        return \App\Setting::setImpressum($text);
+        return \App\Setting::setLegalNotice($text);
     }
 
+    /**
+     * Get PrivacyPolicy
+     * @return String
+     */
+    public static function getPrivacyPolicy()
+    {
+        return \App\Setting::getPrivacyPolicy();
+    }
+
+    /**
+     * Set PrivacyPolicy
+     * @param String $text
+     */
+    public static function setPrivacyPolicy($text)
+    {
+        return \App\Setting::setPrivacyPolicy($text);
+    }
 
     /**
      * Get Facebook Page Access Tokens

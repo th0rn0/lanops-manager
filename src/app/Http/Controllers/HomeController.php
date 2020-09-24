@@ -133,6 +133,16 @@ class HomeController extends Controller
     {
         return view("terms");
     }
+
+    /**
+     * Show LegalNotice Page
+     * @return View
+     */
+    public function legalNotice()
+    {
+        return view("legalnotice");
+    }
+
     /**
      * Show Contact Page
      * @return View

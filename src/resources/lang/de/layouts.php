@@ -15,7 +15,7 @@ return [
     'default_links' => 'Links',
     'default_contact_us' => 'Kontakt',
     'default_news' => 'Neuigkeiten',
-    'default_terms_and_conditions' => 'Impressum & Nutzungsbedingungen',
+    'default_terms_and_conditions' => 'LegalNotice & Nutzungsbedingungen',
     'default_about_us' => 'Über uns',
     'default_polls' => 'Umfragen',
     'default_lan_guide' => 'Lan Guide',

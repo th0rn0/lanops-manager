@@ -565,22 +565,45 @@ class Setting extends Model
         return true;
     }
 
-      /**
-     * Get Impressum
+    /**
+     * Get Legal Notice
      * @return String
      */
-    public static function getImpressum()
+    public static function getLegalNotice()
     {
-        return self::where('setting', 'impressum')->first()->value;
+        return self::where('setting', 'legal_notice')->first()->value;
     }
 
     /**
-     * Set About Who's
+     * Set Legal Notice
      * @param String $text
      */
-    public static function setImpressum($text)
+    public static function setLegalNotice($text)
     {
-        $setting = self::where('setting', 'impressum')->first();
+        $setting = self::where('setting', 'legal_notice')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+     /**
+     * Get Privacy Policy
+     * @return String
+     */
+    public static function getPrivacyPolicy()
+    {
+        return self::where('setting', 'privacy_policy')->first()->value;
+    }
+
+    /**
+     * Set Privacy Policy
+     * @param String $text
+     */
+    public static function setPrivacyPolicy($text)
+    {
+        $setting = self::where('setting', 'privacy_policy')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;

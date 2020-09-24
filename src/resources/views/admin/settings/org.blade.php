@@ -94,8 +94,12 @@
 						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<div class="form-group">
-						{{ Form::label('impressum','Impressum' ,array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('impressum', Settings::getImpressum() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::label('legal_notice','LegalNotice' ,array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('legal_notice', Settings::getLegalNotice() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
+					</div>
+					<div class="form-group">
+						{{ Form::label('privacy_policy','PrivacyPolicy' ,array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('privacy_policy', Settings::getPrivacyPolicy() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
