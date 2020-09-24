@@ -1,0 +1,29 @@
+/**
+ * cookie consent
+ */
+
+
+button.js-cookie-consent-agree.cookie-consent__agree {
+    position: absolute;
+    top: 6%;
+    left: 91%;
+    z-index: 10;
+    background-color: $color_primary;
+    border-radius: 4px;
+    padding: 0.8em;
+}
+
+
+
+span.cookie-consent__message {
+    position: absolute;
+    top: 6%;
+    text-align: left;
+    color: $color_primary;
+    left: 1%;
+    z-index: 10;
+    width: 98%;
+    background-color: #4e4e4ecc;
+    border-radius: 4px;
+    padding: 1em;
+}
