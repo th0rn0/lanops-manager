@@ -277,7 +277,7 @@
 		@endif
 
 		<div class="row">
-			<h3>@lang('events.rules')</h3>
+			<h3 id="rules">@lang('events.rules')</h3>
 			{!! $tournament->rules !!}
 		</div>
 	</div>
