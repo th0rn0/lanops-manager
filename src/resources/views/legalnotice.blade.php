@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - ' . @lang('legalnotice.legalnoticeandprivacy'))
+@section ('page_title', Settings::getOrgName() . ' - ' . __('legalnotice.legalnoticeandprivacy'))
 
 @section ('content')
 			
