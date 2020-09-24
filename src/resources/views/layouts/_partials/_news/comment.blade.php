@@ -5,9 +5,9 @@
 	</div>
 	<div class="col-xs-10">
 		<p>{{ $comment->comment }}</p>
-		<span class="text-muted"><small>Posted on: {{ $comment->created_at }}</small></span>
+		<span class="text-muted"><small>@lang('layouts.posted_on') {{ $comment->created_at }}</small></span>
 		@if (Auth::user() && Auth::id() == $comment->user_id) 
-			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-toggle="modal" data-target="#editCommentModal">Edit Comment</a> /
+			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-toggle="modal" data-target="#editCommentModal">@lang('layouts.edit_comment')</a> /
 		@endif
 		@if (Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id()))
 			@php
@@ -19,7 +19,7 @@
 				@endphp
 			@endif
 			<a href="{{ $postUrl }}/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/delete">
-				Delete Comment
+				@lang('layouts.delete_comment')
 			</a>
 		@endif
 		@if ($comment->approved && $comment->reviewed)
@@ -28,7 +28,7 @@
 					/
 				@endif
 				<a href="/news/{{ $newsArticle->slug }}/comments/{{ $comment->id }}/report">
-					Report Comment
+					@lang('layouts.report_comment')
 				</a>
 			@endif
 		@endif
@@ -42,22 +42,22 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="editCommentModalLabel">Edit Comment</h4>
+				<h4 class="modal-title" id="editCommentModalLabel">@lang('layouts.edit_comment')</h4>
 			</div>
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments', 'id'=>'edit_comment_modal_form')) }}
 					<div class="modal-body">
 						<div class="form-group">
-							{{ Form::textarea('comment_modal', '',array('id'=>'comment_modal','class'=>'form-control', 'rows'=>'4', 'placeholder'=>'Post a Comment')) }}
+							{{ Form::textarea('comment_modal', '',array('id'=>'comment_modal','class'=>'form-control', 'rows'=>'4', 'placeholder'=>__('layouts.post_a_comment'))) }}
 						</div>
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-success">Edit</button>
+							<button type="submit" class="btn btn-success">@lang('layouts.edit')</button>
 						</div>
 					</div>
 				{{ Form::close() }}
 			@else
 				<div class="modal-body">
-					<p>Please log in to post a Comment</p>
+					<p>@lang('layouts.please_logon_for_comment')</p>
 				</div>
 			@endif
 		</div>
