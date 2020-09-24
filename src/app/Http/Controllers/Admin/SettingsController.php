@@ -263,7 +263,12 @@ class SettingsController extends Controller
             return Redirect::back();
         }
         
-        if (isset($request->legal_notice) && !Settings::setAboutWho($request->legal_notice)) {
+        if (isset($request->legal_notice) && !Settings::setLegalNotice($request->legal_notice)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        
+        if (isset($request->privacy_policy) && !Settings::setPrivacyPolicy($request->privacy_policy)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
