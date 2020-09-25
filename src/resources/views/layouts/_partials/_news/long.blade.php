@@ -5,7 +5,7 @@
 		<div class="col-xs-12 col-sm-8">
 			<div class="row">
 				<div class="col-xs-2">
-					Share:
+				@lang('layouts.share')
 				</div>
 				<div class="col-xs-10">
 					<a href="https://www.facebook.com/sharer/sharer.php?u={{ url('/news') }}/{{ $newsArticle->slug }}&t={{ $newsArticle->title }}" target="_blank">
@@ -16,7 +16,7 @@
 					</a>
 				</div>
 				<div class="col-xs-2">
-					Tags:
+					@lang('layouts.tags')
 				</div>
 				<div class="col-xs-10">
 					@foreach ($newsArticle->tags as $tag)

@@ -18,7 +18,7 @@
 					</a>
 				</div>
 				<div class="col-xs-12">
-					Tags:
+					@lang('layouts.tags')
 					@foreach ($newsArticle->tags as $tag)
 						<small><a href="{{ url('/news/tags')}}/{{ $tag->slug }}">{{ $tag->tag }}</a>,</small>
 					@endforeach
