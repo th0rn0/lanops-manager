@@ -68,6 +68,6 @@ return [
     /**
      * disable Analytics <script> block
      */
-    'disable_script_block' => false,
+    'disable_script_block' => env('GOOGLE_ANALYTICS_TRACKING_ID', 'UA-XXXXXXXX-1') !== false,
 
 ];
