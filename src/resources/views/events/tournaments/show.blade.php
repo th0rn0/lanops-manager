@@ -278,7 +278,7 @@
 
 		<div class="row">
 			<div class="page-header">
-				<h3>@lang('events.rules')</h3>
+				<h3 id="rules">@lang('events.rules')</h3>
 			</div>
 			<p>{!! $tournament->rules !!}</p>
 		</div>
