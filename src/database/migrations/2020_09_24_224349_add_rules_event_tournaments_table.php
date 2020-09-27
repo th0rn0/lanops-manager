@@ -14,7 +14,7 @@ class AddRulesEventTournamentsTable extends Migration
     public function up()
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->string('rules', 4294967295)->after('description')->nullable();
+            $table->string('rules')->after('description')->nullable();
         });
     }
 
