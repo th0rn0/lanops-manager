@@ -133,7 +133,7 @@
 										<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
 											@if ($ticket->quantity != 0)
 												<small>
-													{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available
+													{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} @lang('events.available')
 												</small>
 											@endif
 										</h3>
