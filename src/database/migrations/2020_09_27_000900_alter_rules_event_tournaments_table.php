@@ -14,7 +14,7 @@ class AddRulesEventTournamentsTable extends Migration
     public function up()
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->longText('rules')->change();
+            $table->string('rules', 4294967295)->change();
         });
     }
 
