@@ -668,7 +668,7 @@ class Helpers
         }
         
         $result = array();
-        for ($i = 1; $i <= $ticket->$ticketCount; $i++) {
+        for ($i = 1; $i <= $ticketCount; $i++) {
             $array[$i] = $i;
         }
         
