@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRulesEventTournamentsTable extends Migration
+class AddNoTicketsPerUserTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddRulesEventTournamentsTable extends Migration
     public function up()
     {
         Schema::table('event_tickets', function (Blueprint $table) {
-            $table->integer('no_tickets_per_user')->after('sale_price')->unsigned()->nullable();
+            $table->integer('no_tickets_per_user')->after('price')->unsigned()->nullable();
         });
     }
 

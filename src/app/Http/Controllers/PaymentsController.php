@@ -135,7 +135,7 @@ class PaymentsController extends Controller
             foreach ($basket['tickets'] as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();
                 if ($ticket->event->capacity <= $ticket->event->EventParticipants->count()) {
-                    Session::flash('alert-danger', '{{ $ticket->event->display_name }} Has sold out!');
+                    Session::flash('alert-danger', __('payments.sold_out', ['eventname' => $'{{ $ticket->event->display_name }}']));
                     return Redirect::back();
                 }
             }
@@ -144,7 +144,7 @@ class PaymentsController extends Controller
             foreach ($basket['shop'] as $itemId => $quantity) {
                 if (!ShopItem::hasStockByItemId($itemId)) {
                     $itemName = ShopItem::where('id', $itemId)->first()->name;
-                    Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
+                    Session::flash('alert-danger', __('payments.basket_sold_out', ['itemname' => $itemName]));
                     return Redirect::to('/payment/checkout');
                 }
             }
@@ -165,8 +165,8 @@ class PaymentsController extends Controller
                     'delivery_type'   => 'required|in:event,shipping'
                 ];
                 $messages = [
-                    'delivery_type.required' => 'A Delivery type is Required',
-                    'delivery_type.in' => 'Delivery type must be event or shipping'
+                    'delivery_type.required' => __('payments.delivery_type_required'),
+                    'delivery_type.in' => __('payments.delivery_type_in')
                 ];
                 $this->validate($request, $rules, $messages);
                 // Check if the order is delivery to event or person
@@ -179,10 +179,10 @@ class PaymentsController extends Controller
                         'shipping_postcode'     => 'required',
                     ];
                     $messages = [
-                        'shipping_first_name.required'      => 'First Name is Required',
-                        'shipping_last_name.required'       => 'Last Name is Required',
-                        'shipping_address_1.required'       => 'Shipping Address Required',
-                        'shipping_postcode.required'        => 'Shipping Postcode Required',
+                        'shipping_first_name.required'      =>  __('payments.shipping_first_name_required'),
+                        'shipping_last_name.required'       =>  __('payments.shipping_last_name_required'),
+                        'shipping_address_1.required'       =>  __('payments.shipping_address_1_required'),
+                        'shipping_postcode.required'        =>  __('payments.shipping_postcode_required'),
                     ];
                     $this->validate($request, $rules, $messages);
                     $basket['delivery'] = [
@@ -232,10 +232,10 @@ class PaymentsController extends Controller
                     'stripe_token'      => 'required|filled',
                 ];
                 $messages = [
-                    'card_first_name.required'      => 'Card First Name is Required',
-                    'card_last_name.required'       => 'Card Last Name is Required',
-                    'stripe_token.required'         => 'Stripe Token is Required',
-                    'stripe_token.filled'           => 'Stripe Token cannot be empty',
+                    'card_first_name.required'      =>  __('payments.card_first_name_required'),
+                    'card_last_name.required'       =>  __('payments.card_last_name_required'),
+                    'stripe_token.required'         =>  __('payments.stripe_token_required'),
+                    'stripe_token.filled'           =>  __('payments.stripe_token_filled'),
                 ];
                 $this->validate($request, $rules, $messages);
                 $params = array(
@@ -297,7 +297,7 @@ class PaymentsController extends Controller
         // Credit
         if ($processPaymentSkip && $paymentGateway == 'credit') {
             if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
-                Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
+                Session::flash('alert-danger', __('payments.credit_payment_unsuccessful'));
                 return Redirect::to('/payment/failed');
             }
             $purchaseParams = [
@@ -365,7 +365,7 @@ class PaymentsController extends Controller
         if (!$processPaymentSkip) {
             $message = $response->getMessage();
         }
-        Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.' . $message);
+        Session::flash('alert-danger', __('payments.payment_unsuccessful') . $message);
         return Redirect::to('/payment/failed');
     }
 
@@ -380,11 +380,11 @@ class PaymentsController extends Controller
             return Redirect::back();
         }
         if ($request->input('type') == 'cancel') {
-            Session::flash('alert-danger', 'Payment was CANCELLED!');
+            Session::flash('alert-danger', __('payments.payment_cancelled'));
             return Redirect::to('/payment/cancelled');
         }
         if (!Session::has('params')) {
-            Session::flash('alert-danger', 'Payment was UNSUCCESSFUL!');
+            Session::flash('alert-danger', __('payments.payment_unsuccessful_basic'));
             return Redirect::to('/payment/failed');
         }
         $params = Session::get('params');
@@ -448,7 +448,7 @@ class PaymentsController extends Controller
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
         //Failed transaction
-        Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Please try again.');
+        Session::flash('alert-danger', __('payments.payment_unsuccessful'));
         return Redirect::to('/payment/failed');
     }
 
@@ -563,31 +563,31 @@ class PaymentsController extends Controller
         if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
             $paymentGateway = strtolower($paymentGateway);
         } else {
-            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+            Session::flash('alert-danger', __('payments.payment_gateways_required', ['paymentGateways' => implode(" ", $acceptedPaymentGateways)]));
             return false;
         }
         if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
-            Session::flash('alert-danger', 'No Basket was found. Please try again');
+            Session::flash('alert-danger', __('payments.payment_no_basket'));
             return false;
         }
         if (!isset($paymentGateway)) {
-            Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
+            Session::flash('alert-danger', __('payments.payment_gateways_required', ['paymentGateways' => implode(" ", $acceptedPaymentGateways)]));
             return false;
         }
         if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
-            Session::flash('alert-danger', 'Credit is not enabled.');
+            Session::flash('alert-danger', __('payments.payment_credit_not_enabled'));
             return false;
         }
         if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
-            Session::flash('alert-danger', 'You cannot use credit to purchase this Basket!');
+            Session::flash('alert-danger', __('payments.payment_credit_not_allowed'));
             return false;
         }	
 		if($paymentGateway == 'free' && (Helpers::formatBasket($basket)->total > 0 || Helpers::formatBasket($basket)->total_credit > 0)) {
-			Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
+			Session::flash('alert-danger', __('payments.payment_method_not_allowed'));
 			return false;
 		}	
         if ($paymentGateway != 'credit' && $paymentGateway != 'free' && !Helpers::formatBasket($basket)->allow_payment) {
-            Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
+            Session::flash('alert-danger', __('payments.payment_method_not_allowed'));
             return false;
         }
 
