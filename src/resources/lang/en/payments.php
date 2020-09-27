@@ -88,4 +88,6 @@ return [
     'payment_credit_not_enabled' => 'Credit system is not enabled.',
     'payment_credit_not_allowed' => 'You cannot use credit to purchase this basket!',
     'payment_method_not_allowed' => 'You cannot use that method to purchase this basket!',
+    'pay_by_1' => 'Pay by paymentprovider',
+    'pay_by_2' => '',
 ];
