@@ -64,5 +64,8 @@ return [
     'comment_view' => 'View',
     'comment_rejected_by_admins' => 'This comment rejected by admins.',
     'comment_not_reviewed_yet' => 'This comment hasn\'t been reviewed by admins yet.',
+    'events_weve_hosted' => 'EVENTs we\'ve hosted',
+    'players_weve_entertained' => 'PLAYERs we\'ve entertained',
+    'a_lot' => 'A LOT',
 
 ];

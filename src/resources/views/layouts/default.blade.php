@@ -82,7 +82,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							EVENTs we've hosted
+							@lang('layouts.events_weve_hosted')EVENTs we've hosted
 						</div>
 					</div>
 
@@ -92,13 +92,13 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							PLAYERs we've entertained
+							@lang('layouts.players_weve_entertained')PLAYERs we've entertained
 						</div>
 					</div>
 
 					<div class="col-md-4  text-center">
 						<div class="stats-number">
-							A LOT
+							@lang('layouts.a_lot')A LOT
 						</div>
 						<hr />
 						<div class="stats-title">

@@ -62,5 +62,8 @@ return [
     'comment_view' => 'Anzeigen',
     'comment_rejected_by_admins' => 'Dieser Kommentar wurde von Admins abgelehnt.',
     'comment_not_reviewed_yet' => 'Dieser Kommentar wurde noch nicht von Admins überprüft.',
+    'events_weve_hosted' => 'Veranstaltungen',
+    'players_weve_entertained' => 'Teilnehmer',
+    'a_lot' => 'A LOT',
 
 ];
