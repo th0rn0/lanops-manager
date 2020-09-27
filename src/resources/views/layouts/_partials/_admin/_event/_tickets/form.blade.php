@@ -61,6 +61,17 @@
 		{{ Form::label('type','Ticket Type',array('id'=>'','class'=>'')) }}
 		{{ Form::select('type', array('participant' => 'Participant', 'spectator' => 'Spectator'), @$ticket->type, array('id'=>'type','class'=>'form-control')) }}
 	</div> 
+	<div class="form-group col-md-6 col-sm-6 col-xs-12">
+		{{ Form::label('no_tickets_per_user','No. of Tickets per User',array('id'=>'','class'=>'')) }}
+		{{ 
+			Form::text(
+				'no_tickets_per_user',
+				(@$empty ? null : @$ticket->no_tickets_per_user),
+				array('id'=>'no_tickets_per_user','class'=>'form-control')
+			)
+		}}
+		<small>If unlimited, leave blank</small>
+	</div>
 	<div class="form-group col-xs-12">
 		<div class="checkbox">
 			<label>

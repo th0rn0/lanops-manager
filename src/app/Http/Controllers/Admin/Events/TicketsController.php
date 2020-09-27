@@ -63,6 +63,7 @@ class TicketsController extends Controller
             'type'              => 'required',
             'seatable'          => 'boolean',
             'quantity'          => 'numeric',
+            'no_tickets_per_user' => 'numeric',
         ];
         $messages = [
             'name.required'                 => 'A Ticket Name is required',
@@ -105,6 +106,7 @@ class TicketsController extends Controller
         $ticket->sale_start = @$saleStart;
         $ticket->sale_end   = @$saleEnd;
         $ticket->quantity   = @$request->quantity;
+        $ticket->no_tickets_per_user = $request->no_tickets_per_user;
 
         if (!$ticket->save()) {
             Session::flash('alert-danger', 'Cannot save Ticket');
@@ -134,6 +136,7 @@ class TicketsController extends Controller
             'seatable'          => 'boolean',
             'type'              => 'filled',
             'quantity'          => 'numeric',
+            'no_tickets_per_user' => 'numeric',
         ];
         $messages = [
             'price|numeric'                 => 'Price must be a number',
@@ -188,6 +191,11 @@ class TicketsController extends Controller
         if (isset($request->quantity)) {
             $ticket->quantity   = $request->quantity;
         }
+
+        if (isset($request->no_tickets_per_user)) {
+            $ticket->no_tickets_per_user = $request->no_tickets_per_user;
+        }
+
 
         $ticket->seatable   = ($request->seatable ? true : false);
 
