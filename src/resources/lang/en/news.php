@@ -18,6 +18,7 @@ return [
     'news_tag' => 'News Tag:',
     'tagged_news' => 'Tagged News:',
     'please_login' => 'Please Login.',
+    'submit' => 'Submit',
     'comment_required' => 'A Comment is required',
     'comment_cannot_be_empty' => 'Comment cannot be empty',
     'comment_max_characters' => 'Comment can only be a max of 200 Characters',

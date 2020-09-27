@@ -45,7 +45,7 @@
 					<div class="form-group">
 						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>__('news.post_comment'))) }}
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-default">@lang('news.submit')</button>
 				{{ Form::close() }}
 			@else
 				<p>@lang('news.login_to_post_comment')</p>

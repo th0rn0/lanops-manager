@@ -17,6 +17,7 @@ return [
     'login_to_post_comment' => 'melde dich an um Kommentare schreiben zu können',
     'news_tag' => 'Neuigkeiten Tag:',
     'tagged_news' => 'Tagged Neuigkeiten:',
+    'submit' => 'Kommentieren',
     'comment_required' => 'Ein Kommentar wird benötigt',
     'comment_cannot_be_empty' => 'Ein Kommentar kann nicht leer sein',
     'comment_max_characters' => 'Ein Kommentar darf maximal 200 Zeichen lang sein',
