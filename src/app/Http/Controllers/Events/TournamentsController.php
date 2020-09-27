@@ -47,10 +47,6 @@ class TournamentsController extends Controller
 
         if (!empty($user)) {
             $user->setActiveEventParticipant($event->id);
-            // if (!isset($user->active_event_participant)) {
-            //     Session::flash('alert-danger', 'Please sign in with one of our Admins.');
-            //     return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
-            // }
         }
 
         return view('events.tournaments.show')

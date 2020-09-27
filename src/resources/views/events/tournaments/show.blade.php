@@ -163,7 +163,7 @@
 
 				<!-- REGISTRATION -->
 				@if ($tournament->status == 'OPEN')
-				@if ($user && $user->active_event_participant)
+					@if ($user && $user->active_event_participant)
 					
 						<h4 class="section-header">
 							@lang('events.registration')
