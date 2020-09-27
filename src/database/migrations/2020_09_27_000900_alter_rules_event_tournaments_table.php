@@ -15,7 +15,7 @@ class AlterRulesEventTournamentsTable extends Migration
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
             #$table->longText('rules')->change();
-            $table->string('rules', 4294967295)->change();
+            #$table->string('rules', 4294967295)->change();
         });
     }
 
@@ -27,7 +27,7 @@ class AlterRulesEventTournamentsTable extends Migration
     public function down()
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->string('rules')->change();
+            #$table->string('rules')->change();
         });
     }
 }
