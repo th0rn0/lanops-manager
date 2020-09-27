@@ -18,6 +18,7 @@ return [
     'steamname' => 'Steam Username',
     'email' => 'Email Adress',
     'change_password' => 'Change Password',
+    'password' => 'Password',
     'confirm_password' => 'Confirm Password',
     'submit' => 'Submit',
     'credit_action' => 'Action',
