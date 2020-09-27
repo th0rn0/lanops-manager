@@ -667,7 +667,7 @@ class Helpers
             $ticketCount = $ticket->no_tickets_per_user;
         }
         
-        $result;
+        $result = array();
         for ($i = 1; $i <= $ticket->$ticketCount; $i++) {
             $array[$i] = $i;
         }
