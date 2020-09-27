@@ -135,7 +135,7 @@ class PaymentsController extends Controller
             foreach ($basket['tickets'] as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();
                 if ($ticket->event->capacity <= $ticket->event->EventParticipants->count()) {
-                    Session::flash('alert-danger', __('payments.sold_out', ['eventname' => $'{{ $ticket->event->display_name }}']));
+                    Session::flash('alert-danger', __('payments.sold_out', ['eventname' => $ticket->event->display_name]));
                     return Redirect::back();
                 }
             }
