@@ -14,7 +14,7 @@ return [
     */
 
     'message' => 'Your experience on this site will be improved by allowing cookies. You can find more information on',
-    'agree' => 'Akzeptieren',
+    'agree' => 'Agree',
 
 
 ];

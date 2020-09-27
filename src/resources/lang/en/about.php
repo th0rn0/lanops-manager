@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'aboutus' => 'About Us',
-    'whoeweare' => 'Who We Are',
-    'ouraim' => 'Our Aim',
-    'whoswho' => 'The Who\'s Who',
+    'aboutus' => 'About us',
+    'whoeweare' => 'Who we are',
+    'ouraim' => 'Our aim',
+    'whoswho' => 'The who\'s who',
 
 ];
