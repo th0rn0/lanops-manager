@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="page-header">
 		<h1>
-			__('payments.checkout')
+			@lang('payments.checkout')
 		</h1> 
 	</div>
 	<div class="row">
