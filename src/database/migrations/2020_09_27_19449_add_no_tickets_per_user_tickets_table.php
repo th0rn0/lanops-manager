@@ -14,7 +14,7 @@ class AddNoTicketsPerUserTicketsTable extends Migration
     public function up()
     {
         Schema::table('event_tickets', function (Blueprint $table) {
-            $table->integer('no_tickets_per_user')->after('sale_price')->unsigned()->nullable();
+            $table->integer('no_tickets_per_user')->after('price')->unsigned()->nullable();
         });
     }
 
