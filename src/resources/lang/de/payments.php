@@ -87,4 +87,6 @@ return [
     'payment_credit_not_enabled' => 'Credit System ist nicht aktiviert.',
     'payment_credit_not_allowed' => 'Sie können keine Credits verwenden um diesen Warenkorb zu bezahlen!',
     'payment_method_not_allowed' => 'Sie können diese Bezahlmethode nicht verwenden um diesen Warenkorb zu bezahlen!',
+    'pay_by_1' => 'Mit Bezahlanbieter',
+    'pay_by_2' => 'bezahlen',
 ];

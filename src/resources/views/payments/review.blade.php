@@ -24,7 +24,7 @@
 			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button class="btn btn-primary btn-block">@lang('payments.delivery_continue)</button>
+				<button class="btn btn-primary btn-block">@lang('payments.delivery_continue')</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-xs-12 col-md-4">

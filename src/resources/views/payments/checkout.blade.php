@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="page-header">
 		<h1>
-			__('payments.checkout')
+			@lang('payments.checkout')
 		</h1> 
 	</div>
 	<div class="row">
@@ -91,7 +91,7 @@
 								</div>
 								<a href="/payment/review/{{ $gateway }}">
 									<button type="button" class="btn btn-primary btn-block">
-										Pay by {{ Settings::getPaymentGatewayDisplayName($gateway) }}
+										@lang('payments.pay_by_1') {{ Settings::getPaymentGatewayDisplayName($gateway) }} @lang('payments.pay_by_2')
 									</button>
 								</a>
 								<p><small>{{ Settings::getPaymentGatewayNote($gateway) }}</small></p>
