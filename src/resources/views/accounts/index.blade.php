@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', __('accounts.title'))
+@section ('page_title', __('accounts.accounts_title'))
 
 @section ('content')
 
