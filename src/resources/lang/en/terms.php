@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'termsandconditions' => 'Terms & Conditions',
-    'registrationtermsandconditions' => 'Registration Terms & Conditions',
-    'purchaseandconditions' => 'Purchase Terms & Conditions',
+    'termsandconditions' => 'Terms & conditions',
+    'registrationtermsandconditions' => 'Registration terms & conditions',
+    'purchaseandconditions' => 'Purchase terms & conditions',
 
 ];

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'legalnoticetitle' => 'Legal Notice',
-    'privacy' => 'Privacy Policy',
+    'legalnoticetitle' => 'Legal notice',
+    'privacy' => 'Privacy policy',
     
 ];

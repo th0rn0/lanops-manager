@@ -1,11 +1,11 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - ' . __('auth.verify_mail'))
+@section ('page_title', Settings::getOrgName() . ' - ' . __('auth.verify_email'))
 
 @section ('content')
 <div class="container">
     <div class="page-header">
-        <h1>@lang('auth.verify_mail')</h1>
+        <h1>@lang('auth.verify_email')</h1>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
