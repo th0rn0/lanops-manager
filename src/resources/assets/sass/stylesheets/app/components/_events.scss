@@ -8,7 +8,8 @@
 		> li {
 		    &:hover > a {
 	      		border-bottom: 4px solid $color_primary !important;
-	      		margin-bottom: 11px ;
+				margin-bottom: 11px ;
+				color: #777777;
 	    	}
 	    }
 	}
