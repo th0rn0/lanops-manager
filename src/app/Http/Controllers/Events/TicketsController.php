@@ -49,19 +49,19 @@ class TicketsController extends Controller
         }
 
         if ($ticket->sale_start != null && date('Y-m-d H:i:s') <= $ticket->sale_start) {
-            Session::flash('alert-danger', 'You cannot buy this ticket yet');
+            Session::flash('alert-danger', __('ticket_not_yet'));
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
         if ($ticket->sale_end != null && date('Y-m-d H:i:s') >= $ticket->sale_end) {
-            Session::flash('alert-danger', 'You cannot buy this ticket anymore');
+            Session::flash('alert-danger', __('ticket_not_anymore'));
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
         
-        $user_event_tickets = $user->getTickets( $ticket->event->id);
+        $user_event_tickets = $user->getAllTickets( $ticket->event->id);
         if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0 && count($user_event_tickets) + $request->quantity > $ticket->no_tickets_per_user) {
-            Session::flash('alert-danger', 'You cannot buy this ticket anymore. Max Ticket count of ' . $ticket->no_tickets_per_user . ' reached.');
+            Session::flash('alert-danger', __('max_ticket_count_reached',['maxticketcount' =>  $ticket->no_tickets_per_user]));
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 

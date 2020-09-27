@@ -118,7 +118,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get Tickets for current User
+     * Get all Tickets for current user
+     */
+    public function getAllTickets($eventId)    {
+        $clauses = ['user_id' => $this->id, 'event_id' => $eventId];
+        $eventParticipants = EventParticipant::where($clauses)->get();
+        return $eventParticipants;
+    }
+
+    /**
+     * Get seatable Tickets for current User
      * @param  $eventId
      * @param  boolean $obj
      * @return Array|Object
