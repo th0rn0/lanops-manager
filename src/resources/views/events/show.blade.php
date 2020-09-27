@@ -4,24 +4,6 @@
 
 @section ('content')
 
-<? 
-function getTicketQuantitySelection($ticket, $remainingcapacity){
-	
-	$ticketCount = $remainingcapacity;
-	
-	if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0){
-		$ticketCount = $ticket->no_tickets_per_user;
-	}
-	
-	$result;
-	for ($i = 1; $i <= $ticket->$ticketCount; $i++) {
-		$array[$i] = $i;
-	}
-	
-	return $result;
-}
-?>
-
 <div class="container">
 
 	<div class="page-header">
@@ -185,7 +167,7 @@ function getTicketQuantitySelection($ticket, $remainingcapacity){
 													<div class="row">
 														<div class="form-group col-sm-6 col-xs-12">
 															{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-															{{ Form::select('quantity', getTicketQuantitySelection($ticket, $ticket->quantity - $ticket->participants()->count()), null, array('id'=>'quantity','class'=>'form-control')) }}
+															{{ Form::select('quantity', Helpers::getTicketQuantitySelection($ticket, $ticket->quantity - $ticket->participants()->count()), null, array('id'=>'quantity','class'=>'form-control')) }}
 														</div>
 														<div class="form-group col-sm-6 col-xs-12">
 															{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}

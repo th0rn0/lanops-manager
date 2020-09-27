@@ -654,4 +654,24 @@ class Helpers
         ];
         return $countriesArray;
     }
+
+      /**
+     * Get Ticket quatntity for Select
+     * @return array
+     */
+    public static function getTicketQuantitySelection($ticket, $remainingcapacity){
+	
+        $ticketCount = $remainingcapacity;
+        
+        if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0){
+            $ticketCount = $ticket->no_tickets_per_user;
+        }
+        
+        $result;
+        for ($i = 1; $i <= $ticket->$ticketCount; $i++) {
+            $array[$i] = $i;
+        }
+        
+        return $result;
+    }
 }
