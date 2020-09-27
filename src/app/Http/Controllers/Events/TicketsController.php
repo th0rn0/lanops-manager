@@ -58,6 +58,13 @@ class TicketsController extends Controller
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
+        
+        $user_event_tickets = $user->getTiclets( $ticket->event->id);
+        if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0 && count($user_event_tickets) >= $ticket->no_tickets_per_user) {
+            Session::flash('alert-danger', 'You cannot buy this ticket anymore. Max Ticket count of ' . $ticket->no_tickets_per_user . ' reached.');
+            return Redirect::to('/events/' . $ticket->event->slug);
+        }
+
         $params = [
             'tickets' => [
                 $ticket->id => $request->quantity,
