@@ -74,11 +74,11 @@ class TournamentsController extends Controller
                 
                 if(count($team1Participants) <= 0)
                 {
-                    return "Team 1 has no participants"
+                    return "Team 1 has no participants";
                 }
                 if(count($team2Participants) <= 0)
                 {
-                    return "Team 2 has no participants"
+                    return "Team 2 has no participants";
                 }
 
 
