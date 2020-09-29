@@ -56,24 +56,24 @@ class TournamentsController extends Controller
         ;
     }
 
-    public function matchConfig(Event $event, EventTournament $tournament, int $match, Request $request){
+    public function matchConfig(Event $event, EventTournament $tournament, int $matchServer, Request $request){
         $nextMatches = $tournament->getNextMatches(4);
         
         if(count($nextMatches)<=0){
             return "No Next Matches found!";
         }
 
-        foreach ($nextMatches as $key => $match) {
-            if($match->id % $match == 0){
+        foreach ($nextMatches as $key => $nextMatch) {
+            if(($nextMatch->id % $matchServer) == 0){
                 
-                $team1 = $tournament->getTeamByChallongeId($match->player1_id);
-                $team2 = $tournament->getTeamByChallongeId($match->player2_id);
+                $team1 = $tournament->getTeamByChallongeId($nextMatch->player1_id);
+                $team2 = $tournament->getTeamByChallongeId($nextMatch->player2_id);
                 
                 $team1Participants = $team1->tournamentParticipants();
                 $team2Participants = $team2->tournamentParticipants();
                 
                 $result = new stdObject();
-                $result->matchid = "Match $match";
+                $result->matchid = "Match $matchServer";
                 $result->num_maps = 1;
                 $result->players_per_team = 1;
                 $result->min_players_to_ready= 1;
@@ -111,7 +111,7 @@ class TournamentsController extends Controller
                 }
 
                 $result->cvars = new stdObject();
-                $result->cvars->hostname = "Match server #$match";
+                $result->cvars->hostname = "Match server #$matchServer";
 
                 return $result;
             }
