@@ -72,15 +72,7 @@ class TournamentsController extends Controller
                 $team1Participants = $team1->tournamentParticipants();
                 $team2Participants = $team2->tournamentParticipants();
                 
-                if(count($team1Participants) <= 0)
-                {
-                    return "Team 1 has no participants";
-                }
-                if(count($team2Participants) <= 0)
-                {
-                    return "Team 2 has no participants";
-                }
-
+                return json_encode($team1Participants);
 
                 $result = new \stdClass();
                 $result->matchid = "Match $matchServer";
