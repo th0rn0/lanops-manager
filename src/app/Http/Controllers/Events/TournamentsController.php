@@ -68,11 +68,7 @@ class TournamentsController extends Controller
                 
                 $team1 = $tournament->getTeamByChallongeId($nextMatch->player1_id);
                 $team2 = $tournament->getTeamByChallongeId($nextMatch->player2_id);
-                
 
-                $team1Participant = $team1->tournamentParticipants;
-                $team2Participant = $team2->tournamentParticipants;
-                              
                 $result = new \stdClass();
                 $result->matchid = "Match $matchServer";
                 $result->num_maps = 1;
@@ -94,7 +90,7 @@ class TournamentsController extends Controller
                 $result->team1->tag = $team1->name;
                 $result->team1->flag = "DE";
                 $result->team1->players = new \stdClass();
-                foreach ($team1Participants as $key => $team1Participant) {
+                foreach ($team1->tournamentParticipants as $key => $team1Participant) {
                     $eventParticipant = $team1Participant->eventParticipant;
                     $user = $eventParticipant->user;
                     $result->team1->players->{$user->steamid} = $user->steamname;
@@ -105,7 +101,7 @@ class TournamentsController extends Controller
                 $result->team2->tag = $team2->name;
                 $result->team2->flag = "DE";
                 $result->team2->players = new \stdClass();
-                foreach ($team2Participants as $key => $team2Participants) {
+                foreach ($team2->tournamentParticipants as $key => $team2Participants) {
                     $eventParticipant = $team2Participants->eventParticipant;
                     $user = $eventParticipant->user;
                     $result->team2->players->{$user->steamid} = $user->steamname;
