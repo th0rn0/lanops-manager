@@ -59,7 +59,7 @@ class TournamentsController extends Controller
     public function matchConfig(Event $event, EventTournament $tournament, int $match, Request $request){
         $nextMatches = $tournament->getNextMatches(4);
         
-        if(count($array)<=0){
+        if(count($nextMatches)<=0){
             return "No Next Matches found!";
         }
 
