@@ -59,7 +59,7 @@ class TournamentsController extends Controller
     public function matchConfig(Event $event, EventTournament $tournament, int $match, Request $request){
         $nextMatches = $tournament->getNextMatches(4);
         
-        foreach ($nextMatchese as $key => $match) {
+        foreach ($nextMatches as $key => $match) {
             if($match->id % $match == 0){
                 
                 $team1 = $tournament->getTeamByChallongeId($match->player1_id);
