@@ -72,7 +72,7 @@ class TournamentsController extends Controller
                 $team1Participants = $team1->tournamentParticipants();
                 $team2Participants = $team2->tournamentParticipants();
                 
-                $result = new stdClass();
+                $result = new \stdClass();
                 $result->matchid = "Match $matchServer";
                 $result->num_maps = 1;
                 $result->players_per_team = 1;
@@ -88,29 +88,29 @@ class TournamentsController extends Controller
                                         "de_nuke",
                                         "de_overpass",
                                         "de_train");
-                $result->team1 = new stdClass();
+                $result->team1 = new \stdClass();
                 $result->team1->name = $team1->name;
                 $result->team1->tag = $team1->name;
                 $result->team1->flag = "DE";
-                $result->team1->players = new stdClass();
+                $result->team1->players = new \stdClass();
                 foreach ($team1Participants as $key => $team1Participant) {
                     $eventParticipant = $team1Participant->eventParticipant();
                     $user = $eventParticipant->user();
                     $result->team1->players->{$user->steamid} = $user->steamname;
                 }
 
-                $result->team2 = new stdClass();
+                $result->team2 = new \stdClass();
                 $result->team2->name = $team2->name;
                 $result->team2->tag = $team2->name;
                 $result->team2->flag = "DE";
-                $result->team2->players = new stdClass();
+                $result->team2->players = new \stdClass();
                 foreach ($team2Participants as $key => $team2Participants) {
                     $eventParticipant = $team2Participants->eventParticipant();
                     $user = $eventParticipant->user();
                     $result->team2->players->{$user->steamid} = $user->steamname;
                 }
 
-                $result->cvars = new stdClass();
+                $result->cvars = new \stdClass();
                 $result->cvars->hostname = "Match server #$matchServer";
 
                 return $result;
