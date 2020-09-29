@@ -165,7 +165,7 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
-							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
+							{{ Form::textarea('rules', NULL,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
 						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
