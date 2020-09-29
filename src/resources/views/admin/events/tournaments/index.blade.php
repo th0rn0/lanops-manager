@@ -163,6 +163,10 @@
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', NULL,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
+						<div class="form-group">
+							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
+							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
+						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
 								<div class="checkbox">
