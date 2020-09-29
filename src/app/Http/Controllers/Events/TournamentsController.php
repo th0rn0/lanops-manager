@@ -59,6 +59,10 @@ class TournamentsController extends Controller
     public function matchConfig(Event $event, EventTournament $tournament, int $match, Request $request){
         $nextMatches = $tournament->getNextMatches(4);
         
+        if(count($array)<=0){
+            return "No Next Matches found!";
+        }
+
         foreach ($nextMatches as $key => $match) {
             if($match->id % $match == 0){
                 
@@ -109,10 +113,11 @@ class TournamentsController extends Controller
                 $result->cvars = new stdObject();
                 $result->cvars->hostname = "Match server #$match";
 
-                return json_encode($result);
+                return $result;
             }
         }
 
+        return $nextMatches;
     }
 
     /**
