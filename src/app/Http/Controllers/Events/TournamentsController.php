@@ -56,6 +56,65 @@ class TournamentsController extends Controller
         ;
     }
 
+    public function matchConfig(Event $event, EventTournament $tournament, integer $match, Request $request){
+        $nextMatches = $tournament->getNextMatches(4);
+        
+        foreach ($nextMatchese as $key => $match) {
+            if($match->id % $match == 0){
+                
+                $team1 = $tournament->getTeamByChallongeId($match->player1_id);
+                $team2 = $tournament->getTeamByChallongeId($match->player2_id);
+                
+                $team1Participants = $team1->tournamentParticipants();
+                $team2Participants = $team2->tournamentParticipants();
+                
+                $result = new stdObject();
+                $result->matchid = "Match $match";
+                $result->num_maps = 1;
+                $result->players_per_team = 1;
+                $result->min_players_to_ready= 1;
+                $result->min_spectators_to_ready= 0;
+                $result->skip_veto= false;
+                $result->veto_first= "team1";
+                $result->side_type= "standard";
+                $result->maplist = array("de_cache",
+                                        "de_dust2",
+                                        "de_inferno",
+                                        "de_mirage",
+                                        "de_nuke",
+                                        "de_overpass",
+                                        "de_train");
+                $result->team1 = new stdObject();
+                $result->team1->name = $team1->name;
+                $result->team1->tag = $team1->name;
+                $result->team1->flag = "DE";
+                $result->team1->players = new stdObject();
+                foreach ($team1Participants as $key => $team1Participant) {
+                    $eventParticipant = $team1Participant->eventParticipant();
+                    $user = $eventParticipant->user();
+                    $result->team1->players->{$user->steamid} = $user->steamname;
+                }
+
+                $result->team2 = new stdObject();
+                $result->team2->name = $team2->name;
+                $result->team2->tag = $team2->name;
+                $result->team2->flag = "DE";
+                $result->team2->players = new stdObject();
+                foreach ($team2Participants as $key => $team2Participants) {
+                    $eventParticipant = $team2Participants->eventParticipant();
+                    $user = $eventParticipant->user();
+                    $result->team2->players->{$user->steamid} = $user->steamname;
+                }
+
+                $result->cvars = new stdObject();
+                $result->cvars->hostname = "Match server #$match";
+
+                return json_encode($result);
+            }
+        }
+
+    }
+
     /**
      * Register to Tournament
      * @param  Event           $event
