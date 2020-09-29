@@ -72,9 +72,7 @@ class TournamentsController extends Controller
 
                 $team1Participant = $team1->tournamentParticipants;
                 $team2Participant = $team2->tournamentParticipants;
-                
-                return json_encode($team1Participants);
-
+                              
                 $result = new \stdClass();
                 $result->matchid = "Match $matchServer";
                 $result->num_maps = 1;
