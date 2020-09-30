@@ -56,7 +56,7 @@ class TournamentsController extends Controller
         ;
     }
 
-    public function matchConfig(Event $event, EventTournament $tournament, int $matchServer, Request $request){
+    public function matchConfig(Event $event, EventTournament $tournament, int $matchServer){
         $nextMatches = $tournament->getNextMatches(4);
         
         if(count($nextMatches)<=0){
@@ -110,11 +110,11 @@ class TournamentsController extends Controller
                 $result->cvars = new \stdClass();
                 $result->cvars->hostname = "Match server #$matchServer";
 
-                return json_encode($result);
+                return $result;
             }
         }
 
-        return json_encode($nextMatches);
+        return $nextMatches;
     }
 
     /**
