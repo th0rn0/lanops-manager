@@ -64,7 +64,7 @@ class GameServerCommandsController extends Controller
         $gameServerCommand->game_server_id = $game->id;
         $gameServerCommand->command        = $request->command;
 
-        if (!$gameServer->save()) {
+        if (!$gameServerCommand->save()) {
             Session::flash('alert-danger', 'Could not save GameServerCommand!');
             return Redirect::back();
         }
