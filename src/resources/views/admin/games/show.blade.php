@@ -179,7 +179,7 @@
 						</div> 
 						<div class="form-group">
 							{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
-							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::text('address', NULL, array('id'=>'name','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
@@ -191,11 +191,11 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
-							{{ Form::number('game_port', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::number('rcon_port', NULL, array('id'=>'name','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
-							{{ Form::text('game_password', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::text('rcon_password', NULL, array('id'=>'name','class'=>'form-control')) }}
 						</div>
 											
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
