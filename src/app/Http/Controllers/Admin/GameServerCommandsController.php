@@ -59,10 +59,10 @@ class GameServerCommandsController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $gameServer                 = new GameServer();
-        $gameServer->name           = $request->name;
-        $gameServer->game_server_id = $game->id;
-        $gameServer->command        = $request->command;
+        $gameServerCommand                 = new GameServerCommand();
+        $gameServerCommand->name           = $request->name;
+        $gameServerCommand->game_server_id = $game->id;
+        $gameServerCommand->command        = $request->command;
 
         if (!$gameServer->save()) {
             Session::flash('alert-danger', 'Could not save GameServerCommand!');
