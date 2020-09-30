@@ -69,7 +69,7 @@
 										{{ $gameServer->game_port }}
 									</td>
 									<td>
-										@if (isset($gameServer->game_password)
+										@if (isset($gameServer->game_password))
 											********
 										@endif
 									</td>
@@ -77,7 +77,7 @@
 										{{ $gameServer->rcon_port }}
 									</td>
 									<td>
-										@if (isset($gameServer->rcon_password)
+										@if (isset($gameServer->rcon_password))
 											********
 										@endif
 									</td>
