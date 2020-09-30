@@ -41,6 +41,7 @@
 				<thead>
 							<tr>
 								<th>Name</th>
+								<th>Slug</th>
 								<th>Address</th>
 								<th>Game Port</th>
 								<th>Game Password</th>
@@ -61,6 +62,9 @@
 									
 									<td>
 										{{ $gameServer->name }}
+									</td>
+									<td>
+										{{ $gameServer->slug }}
 									</td>
 									<td>
 										{{ $gameServer->address }}
@@ -103,6 +107,7 @@
 				<thead>
 							<tr>
 								<th>Name</th>
+								<th>Slug</th>
 								<th>Command</th>
 								<th><th>
 							</tr>
@@ -119,6 +124,9 @@
 									
 									<td>
 										{{ $gameServerCommand->name }}
+									</td>
+									<td>
+										{{ $gameServerCommand->slug }}
 									</td>
 									<td>
 										{{ $gameServerCommand->command }}
