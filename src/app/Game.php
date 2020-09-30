@@ -4,9 +4,6 @@ namespace App;
 
 use Storage;
 
-use GameServer;
-use GameServerCommand;
-
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
@@ -75,7 +72,7 @@ class Game extends Model
     }
     public function gameServerCommands()
     {
-        return $this->hasMany('App\GameServerCommands');
+        return $this->hasMany('App\GameServerCommand');
     }
 
     /**
