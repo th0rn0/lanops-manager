@@ -19,6 +19,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use xPaw\SourceQuery\SourceQuery;
+
 class GameServerCommandsController extends Controller
 {
     // /**
@@ -148,8 +150,9 @@ class GameServerCommandsController extends Controller
    }
 
     /**
-     * Delete Game from Database
+     * Delete GameServerCommand from Database
      * @param  Game  $game
+     * @param  GameServerCommand  $gameServerCommand
      * @return Redirect
      */
     public function destroy(Game $game, GameServerCommand $gameServerCommand)
@@ -166,5 +169,46 @@ class GameServerCommandsController extends Controller
 
         Session::flash('alert-success', 'Successfully deleted GameServerCommand!');
         return Redirect::back();
+    }
+
+    /**
+     * execute gameServerCommand
+     * @param  Game  $game
+     * @param  GameServerCommand  $gameServerCommand
+     * @param  GameServer  $gameServer
+     * @return Redirect
+     */
+    public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
+    {
+        $Query = new SourceQuery( );
+        try
+        {
+            $Query->Connect( $gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE );
+            
+            $Query->SetRconPassword( $gameServer->rcon_password );
+            
+            $result = $Query->Rcon( $gameServerCommand->command );
+        }
+        catch( Exception $e )
+        {
+            $error = $e->getMessage();
+        }
+        finally
+        {
+            $Query->Disconnect( );
+        }
+
+        if (!isset($error))
+        {
+            Session::flash('alert-success', 'Successfully executed command!' . var_export($result, true));
+            return Redirect::back();
+        }
+        else 
+        {
+            Session::flash('alert-danger', 'error while executing command!' .  var_export($error, true));
+            return Redirect::back();
+        }
+
+        
     }
 }
