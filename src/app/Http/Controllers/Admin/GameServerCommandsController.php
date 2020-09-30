@@ -61,7 +61,7 @@ class GameServerCommandsController extends Controller
 
         $gameServerCommand                 = new GameServerCommand();
         $gameServerCommand->name           = $request->name;
-        $gameServerCommand->game_server_id = $game->id;
+        $gameServerCommand->game_id = $game->id;
         $gameServerCommand->command        = $request->command;
 
         if (!$gameServerCommand->save()) {
