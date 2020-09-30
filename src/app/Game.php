@@ -66,6 +66,14 @@ class Game extends Model
     {
         return $this->hasMany('App\EventTournament');
     }
+    public function gameServers()
+    {
+        return $this->hasMany('App\GameServer');
+    }
+    public function gameServerCommands()
+    {
+        return $this->hasMany('App\GameServerCommands');
+    }
 
     /**
      * Return the sluggable configuration array for this model.

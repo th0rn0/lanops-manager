@@ -123,7 +123,9 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
             Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-            Route::get('/events/{event}/tournaments/{tournament}/{match}', 'Events\TournamentsController@matchConfig');
+            Route::group(['middleware' => ['api']], function () {
+                Route::get('/events/{event}/tournaments/{tournament}/{match}', 'Events\TournamentsController@matchConfig');
+            });            
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
                 Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
                 Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
@@ -273,6 +275,25 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/games/{game}', 'Admin\GamesController@show');
             Route::post('/admin/games/{game}', 'Admin\GamesController@update');
             Route::delete('/admin/games/{game}', 'Admin\GamesController@destroy');
+            
+            /**
+             * GameServers
+             */
+            Route::get('/admin/games/{game}/gameservers', 'Admin\GameServersController@index');
+            Route::post('/admin/games/{game}/gameservers', 'Admin\GameServersController@store');
+            Route::get('/admin/games/{game}/gameservers/{gameserver}', 'Admin\GameServersController@show');
+            Route::post('/admin/games/{game}/gameservers/{gameserver}', 'Admin\GameServersController@update');
+            Route::delete('/admin/games/{game}/gameservers/{gameserver}', 'Admin\GameServersController@destroy');
+
+            /**
+             * GameServerCommandss
+             */
+            Route::get('/admin/games/{game}/gameservers/{gameserver}/gameservercommands', 'Admin\GameServerCommandsController@index');
+            Route::post('/admin/games/{game}/gameservers/{gameserver}/gameservercommands', 'Admin\GameServerCommandsController@store');
+            Route::get('/admin/games/{game}/gameservers/{gameserver}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@show');
+            Route::post('/admin/games/{game}/gameservers/{gameserver}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@update');
+            Route::delete('/admin/games/{game}/gameservers/{gameserver}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@destroy');
+
 
             /**
              * Participants

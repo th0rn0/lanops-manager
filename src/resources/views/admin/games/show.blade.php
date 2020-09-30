@@ -31,6 +31,68 @@
 				</table>
 			</div>
 		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-th-list fa-fw"></i> Game Servers
+			</div>
+			<div class="panel-body">
+				<table width="100%" class="table table-hover" id="dataTables-example">
+				<thead>
+							<tr>
+								<th>Name</th>
+								<th>Address</th>
+								<th>Game Port</th>
+								<th>Game Password</th>
+								<th>RCON Port</th>
+								<th>RCON Password</th>
+								<th><th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($game->gameServers as $gameServer)
+								@php
+									$context = 'default';
+									if (!$game->public) {
+										$context = 'danger';
+									}
+								@endphp
+								<tr class="{{ $context }}">
+									
+									<td>
+										{{ $gameServer->name }}
+									</td>
+									<td>
+										{{ $gameServer->address }}
+									</td>
+									<td>
+										{{ $gameServer->game_port }}
+									</td>
+									<td>
+										@if (isset($gameServer->game_password)
+											********
+										@endif
+									</td>
+									<td>
+										{{ $gameServer->rcon_port }}
+									</td>
+									<td>
+										@if (isset($gameServer->rcon_password)
+											********
+										@endif
+									</td>
+									<td width="15%">
+										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . 'gameservers' - $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+											{{ Form::hidden('_method', 'DELETE') }}
+											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+										{{ Form::close() }}
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-lg-4">
@@ -91,6 +153,53 @@
 						{{ Form::hidden('_method', 'DELETE') }}
 						<button type="submit" class="btn btn-danger btn-block">Delete</button>
 					{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-add fa-fw"></i> Add Game Server
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' )) }}
+						@if ($errors->any())
+						  	<div class="alert alert-danger">
+						        <ul>
+						          	@foreach ($errors->all() as $error)
+						            	<li>{{ $error }}</li>
+						          	@endforeach
+						        </ul>
+						  	</div>
+						@endif
+						<div class="form-group">
+							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div> 
+						<div class="form-group">
+							{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
+							{{ Form::number('game_port', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
+							{{ Form::text('game_password', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
+							{{ Form::number('game_port', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
+							{{ Form::text('game_password', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div>
+											
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
+					{{ Form::close() }}					
 				</div>
 			</div>
 		</div>
