@@ -11,6 +11,7 @@ use Image;
 use File;
 
 use App\Game;
+use App\GameServer;
 use App\GameServerCommand;
 
 use App\Http\Requests;
