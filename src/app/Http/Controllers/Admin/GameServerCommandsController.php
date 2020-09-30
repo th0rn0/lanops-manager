@@ -181,6 +181,8 @@ class GameServerCommandsController extends Controller
      */
     public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
     {
+        var_dump($gameServerCommand);
+        var_dump($gameServer);
         $Query = new SourceQuery( );
         try
         {
