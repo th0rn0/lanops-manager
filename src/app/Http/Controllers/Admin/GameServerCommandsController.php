@@ -10,7 +10,8 @@ use Input;
 use Image;
 use File;
 
-use App\GameServer;
+use App\Game;
+use App\GameServerCommand;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -45,7 +46,7 @@ class GameServerCommandsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function store(Game $game, GameServer $gameServer, Request $request)
+    public function store(Game $game, Request $request)
     {
         $rules = [
             'name'              => 'required',
@@ -80,7 +81,7 @@ class GameServerCommandsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function update(Game $game, GameServer $gameServer, GameServerCommand $gameServerCommand, Request $request)
+    public function update(Game $game, GameServerCommand $gameServerCommand, Request $request)
     {
         // $rules = [
         //     'name'              => 'filled',
@@ -153,7 +154,7 @@ class GameServerCommandsController extends Controller
      * @param  Game  $game
      * @return Redirect
      */
-    public function destroy(Game $game, GameServer $gameServer, GameServerCommand $gameServerCommand)
+    public function destroy(Game $game, GameServerCommand $gameServerCommand)
     {
         // if ($game->eventTournaments && !$game->eventTournaments->isEmpty()) {
         //     Session::flash('alert-danger', 'Cannot delete game with tournaments!');

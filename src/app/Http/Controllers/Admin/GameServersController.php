@@ -11,6 +11,7 @@ use Image;
 use File;
 
 use App\Game;
+use App\GameServer;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -156,7 +157,7 @@ class GameServersController extends Controller
    }
 
     /**
-     * Delete GameServer from Database
+     * Delete GameSe rver from Database
      * @param  Game  $game
      * @param  GameServer  $gameServer
      * @return Redirect

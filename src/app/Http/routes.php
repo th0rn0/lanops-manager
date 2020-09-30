@@ -288,11 +288,11 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * GameServerCommandss
              */
-            Route::get('/admin/games/{game}/gameservers/{gameserver}/gameservercommands', 'Admin\GameServerCommandsController@index');
-            Route::post('/admin/games/{game}/gameservers/{gameserver}/gameservercommands', 'Admin\GameServerCommandsController@store');
-            Route::get('/admin/games/{game}/gameservers/{gameserver}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@show');
-            Route::post('/admin/games/{game}/gameservers/{gameserver}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@update');
-            Route::delete('/admin/games/{game}/gameservers/{gameserver}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@destroy');
+            Route::get('/admin/games/{game}/gameservercommands', 'Admin\GameServerCommandsController@index');
+            Route::post('/admin/games/{game}/gameservercommands', 'Admin\GameServerCommandsController@store');
+            Route::get('/admin/games/{game}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@show');
+            Route::post('/admin/games/{game}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@update');
+            Route::delete('/admin/games/{game}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@destroy');
 
 
             /**
