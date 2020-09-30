@@ -50,12 +50,10 @@ class GameServerCommandsController extends Controller
     {
         $rules = [
             'name'              => 'required',
-            'game_server_id'    => 'required',
             'command'           => 'required',
         ];
         $messages = [
             'name.required'           => 'Command name is required',
-            'game_server_id.required' => 'Command game server id is required',
             'command.required'        => 'Command is required',
         ];
 
@@ -63,7 +61,7 @@ class GameServerCommandsController extends Controller
 
         $gameServer                 = new GameServer();
         $gameServer->name           = $request->name;
-        $gameServer->game_server_id = $gameServer->id;
+        $gameServer->game_server_id = $game->id;
         $gameServer->command        = $request->command;
 
         if (!$gameServer->save()) {
