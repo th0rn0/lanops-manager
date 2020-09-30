@@ -110,11 +110,11 @@ class TournamentsController extends Controller
                 $result->cvars = new \stdClass();
                 $result->cvars->hostname = "Match server #$matchServer";
 
-                return $result;
+                return json_encode($result);
             }
         }
 
-        return $nextMatches;
+        return json_encode($nextMatches);
     }
 
     /**
