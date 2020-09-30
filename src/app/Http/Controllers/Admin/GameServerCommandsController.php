@@ -183,6 +183,7 @@ class GameServerCommandsController extends Controller
     {
         var_dump($gameServerCommand);
         var_dump($gameServer);
+        var_dump($game);
         $Query = new SourceQuery( );
         try
         {
