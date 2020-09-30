@@ -164,7 +164,9 @@ class GameServersController extends Controller
      */
     public function destroy(Game $game, GameServer $gameServer)
     {
-        if (!$gameServer->delete()) {
+        $gameServerToDelete = GameServer::find($gameServer->id);
+
+        if (!$gameServerToDelete->delete()) {
             Session::flash('alert-danger', 'Cannot delete GameServer!');
             return Redirect::back();
         }
