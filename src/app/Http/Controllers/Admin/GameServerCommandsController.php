@@ -187,7 +187,7 @@ class GameServerCommandsController extends Controller
             
             $Query->SetRconPassword( $gameServer->rcon_password );
             
-            $result = $Query->Rcon( $gameServerCommand );
+            $result = $Query->Rcon( $gameServerCommand->command );
         }
         catch( Exception $e )
         {
