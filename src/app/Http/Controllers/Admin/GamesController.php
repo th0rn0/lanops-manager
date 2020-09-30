@@ -191,6 +191,14 @@ class GamesController extends Controller
             Session::flash('alert-danger', 'Cannot delete game with tournaments!');
             return Redirect::back();
         }
+        if ($game->gameServers && !$game->gameServers->isEmpty()) {
+            Session::flash('alert-danger', 'Cannot delete game with game servers!');
+            return Redirect::back();
+        }
+        if ($game->gameServerCommands && !$game->gameServerCommands->isEmpty()) {
+            Session::flash('alert-danger', 'Cannot delete game with game Server Commands!');
+            return Redirect::back();
+        }
 
         if (!$game->delete()) {
             Session::flash('alert-danger', 'Cannot delete Game!');
