@@ -279,19 +279,19 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/admin/games/{game}/gameservers', 'Admin\GameServersController@index');
             Route::post('/admin/games/{game}/gameservers', 'Admin\GameServersController@store');
-            Route::get('/admin/games/{game}/gameservers/{gameserver}', 'Admin\GameServersController@show');
-            Route::post('/admin/games/{game}/gameservers/{gameserver}', 'Admin\GameServersController@update');
-            Route::delete('/admin/games/{game}/gameservers/{gameserver}', 'Admin\GameServersController@destroy');
+            Route::get('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@show');
+            Route::post('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@update');
+            Route::delete('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@destroy');
 
             /**
              * GameServerCommands
              */
             Route::get('/admin/games/{game}/gameservercommands', 'Admin\GameServerCommandsController@index');
             Route::post('/admin/games/{game}/gameservercommands', 'Admin\GameServerCommandsController@store');
-            Route::get('/admin/games/{game}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@show');
-            Route::post('/admin/games/{game}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@update');
-            Route::delete('/admin/games/{game}/gameservercommands/{gameservercommand}', 'Admin\GameServerCommandsController@destroy');
-            Route::get('/admin/games/{game}/gameservercommands/{gameservercommand}/execute/{gameserver}', 'Admin\GameServerCommandsController@execute');
+            Route::get('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@show');
+            Route::post('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@update');
+            Route::delete('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@destroy');
+            Route::get('/admin/games/{game}/gameservercommands/{gameServerCommand}/execute/{gameServer}', 'Admin\GameServerCommandsController@execute');
 
 
             /**
