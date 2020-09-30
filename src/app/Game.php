@@ -4,6 +4,9 @@ namespace App;
 
 use Storage;
 
+use GameServer;
+use GameServerCommand;
+
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp\Client;
