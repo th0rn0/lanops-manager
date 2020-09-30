@@ -108,7 +108,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($game->gameCommands as $gameCommand)
+							@foreach ($game->gameServerCommands as $gameServerCommand)
 								@php
 									$context = 'default';
 									if (!$game->public) {
@@ -118,13 +118,13 @@
 								<tr class="{{ $context }}">
 									
 									<td>
-										{{ $gameCommand->name }}
+										{{ $gameServerCommand->name }}
 									</td>
 									<td>
-										{{ $gameCommand->command }}
+										{{ $gameServerCommand->command }}
 									</td>
 									<td width="15%">
-										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
