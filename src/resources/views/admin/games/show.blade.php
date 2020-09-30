@@ -252,7 +252,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="list-group">
-					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gamecommands' )) }}
+					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' )) }}
 						@if ($errors->any())
 						  	<div class="alert alert-danger">
 						        <ul>
