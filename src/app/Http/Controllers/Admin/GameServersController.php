@@ -165,11 +165,11 @@ class GameServersController extends Controller
     public function destroy(Game $game, GameServer $gameServer)
     {
         if (!$gameServer->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Game!');
+            Session::flash('alert-danger', 'Cannot delete GameServer!');
             return Redirect::back();
         }
 
         Session::flash('alert-success', 'Successfully deleted GameServer!');
-        return Redirect::to('admin/games/' . $game->slug);
+        return Redirect::back();
     }
 }

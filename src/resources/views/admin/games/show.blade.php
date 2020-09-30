@@ -93,6 +93,48 @@
 				</table>
 			</div>
 		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-th-list fa-fw"></i> Game Commands
+			</div>
+			<div class="panel-body">
+				<table width="100%" class="table table-hover" id="dataTables-example">
+				<thead>
+							<tr>
+								<th>Name</th>
+								<th>Command</th>
+								<th><th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($game->gameCommands as $gameCommand)
+								@php
+									$context = 'default';
+									if (!$game->public) {
+										$context = 'danger';
+									}
+								@endphp
+								<tr class="{{ $context }}">
+									
+									<td>
+										{{ $gameCommand->name }}
+									</td>
+									<td>
+										{{ $gameCommand->command }}
+									</td>
+									<td width="15%">
+										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+											{{ Form::hidden('_method', 'DELETE') }}
+											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+										{{ Form::close() }}
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-lg-4">
@@ -196,6 +238,37 @@
 						<div class="form-group">
 							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
 							{{ Form::text('rcon_password', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div>
+											
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
+					{{ Form::close() }}					
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-add fa-fw"></i> Add Game Command
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gamecommands' )) }}
+						@if ($errors->any())
+						  	<div class="alert alert-danger">
+						        <ul>
+						          	@foreach ($errors->all() as $error)
+						            	<li>{{ $error }}</li>
+						          	@endforeach
+						        </ul>
+						  	</div>
+						@endif
+						<div class="form-group">
+							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div> 
+						<div class="form-group">
+							{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
+							{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
 						</div>
 											
 						<button type="submit" class="btn btn-success btn-block">Submit</button>

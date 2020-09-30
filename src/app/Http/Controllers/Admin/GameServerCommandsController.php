@@ -161,16 +161,12 @@ class GameServerCommandsController extends Controller
         //     return Redirect::back();
         // }
 
-        // if (!$game->delete()) {
-        //     Session::flash('alert-danger', 'Cannot delete Game!');
-        //     return Redirect::back();
-        // }
+        if (!$gameServerCommand->delete()) {
+            Session::flash('alert-danger', 'Cannot delete GameServerCommand!');
+            return Redirect::back();
+        }
 
-        // Session::flash('alert-success', 'Successfully deleted Game!');
-        // return Redirect::to('admin/games/');
-
-        
-        Session::flash('alert-danger', 'Could not delete GameServerCommand!');
+        Session::flash('alert-success', 'Successfully deleted GameServerCommand!');
         return Redirect::back();
     }
 }
