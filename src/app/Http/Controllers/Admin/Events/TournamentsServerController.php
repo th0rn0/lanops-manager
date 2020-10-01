@@ -13,6 +13,7 @@ use Helpers;
 
 use App\Event;
 use App\EventTournament;
+use App\EventTournamentServer;
 use App\Game;
 use App\GameServer;
 use App\GameServerCommand;
