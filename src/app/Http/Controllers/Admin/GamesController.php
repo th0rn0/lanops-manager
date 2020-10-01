@@ -64,6 +64,7 @@ class GamesController extends Controller
         $game->name         = $request->name;
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
+        $game->gamecommandhandler = $request->gamecommandhandler;
         $game->public       = true;
 
         if (!$game->save()) {
@@ -134,6 +135,7 @@ class GamesController extends Controller
         $game->name         = @$request->name;
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
+        $game->gamecommandhandler = $request->gamecommandhandler;
         $game->public       = @($request->public ? true : false);
 
         if (!$game->save()) {

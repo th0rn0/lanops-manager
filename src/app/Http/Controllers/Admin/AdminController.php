@@ -84,7 +84,7 @@ class AdminController extends Controller
             ->withCreditEnabled(Settings::isCreditEnabled())
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
-            ->withSupportedPaymentGateways($loginSupportedGateways)
+            ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withFacebookCallback($facebookCallback)
             ->withUserLastLoggedIn($userLastLoggedIn)
