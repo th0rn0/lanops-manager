@@ -14,7 +14,7 @@ class CreateEventTournamentServerTable extends Migration
     public function up()
     {
         Schema::create('event_tournament_server', function (Blueprint $table) {
-
+            $table->increments('id');
             $table->string('slug');
             $table->integer('challonge_match_id');
             $table->integer('game_server');
