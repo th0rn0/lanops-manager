@@ -34,6 +34,7 @@ class Game extends Model
         'version',
         'name',
         'active',
+        'gamecommandhandler',
         'image_header_path',
         'image_thumbnail_path'
     ];
