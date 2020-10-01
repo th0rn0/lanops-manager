@@ -124,7 +124,7 @@
 														<div class="modal-body">
 															<div class="form-group">
 																{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
-																{{ Form::select('gameServer', $game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
+																{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
 															</div>	
 														</div>
 														<div class="modal-footer">
