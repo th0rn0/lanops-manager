@@ -6,10 +6,9 @@ use Storage;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class GameServerCommand extends Model
+class EventTournamentServer extends Model
 {
     use Sluggable;
 
@@ -18,7 +17,7 @@ class GameServerCommand extends Model
      *
      * @var string
      */
-    protected $table = 'game_server_commands';
+    protected $table = 'event_tournament_server';
 
     /**
      * The attributes that are mass assignable.
@@ -26,11 +25,9 @@ class GameServerCommand extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
         'slug',
-        'game',
-        'command',
-        'scope'
+        'challonge_match_id',
+        'game_server'
     ];
 
     /**
@@ -46,9 +43,9 @@ class GameServerCommand extends Model
     /*
      * Relationships
      */
-    public function game()
+    public function gameServer()
     {
-        return $this->belongsTo('App\Game');
+        return $this->belongsTo('App\GameServer');
     }
 
     /**
@@ -60,7 +57,7 @@ class GameServerCommand extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'challonge_match_id'
             ]
         ];
     }
@@ -75,12 +72,5 @@ class GameServerCommand extends Model
         return 'slug';
     }
 
-    public static function getGameServerCommandScopeSelectArray()
-    {
-        $return = array(
-            0 => "GameServer",
-            1 => "Match",
-        );
-        return $return;
-    }
+
 }

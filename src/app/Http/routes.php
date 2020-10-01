@@ -250,6 +250,10 @@ Route::group(['middleware' => ['installed']], function () {
                 'Admin\Events\TournamentsController@updateMatch'
             );
             Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/match/{challongeMatchId}',
+                'Admin\Events\TournamentsServerController@store'
+            );
+            Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team',
                 'Admin\Events\TournamentsController@updateParticipantTeam'
             );

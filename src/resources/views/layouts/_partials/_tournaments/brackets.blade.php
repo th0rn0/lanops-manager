@@ -109,6 +109,33 @@
 								 				Submit Scores
 								 			</button>
 							 			@endif
+										 <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal">Select Server</button>
+										<!-- Select Command Modal -->
+										<div class="modal fade" id="selectServerModal" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title" id="selectServerModalLabel">Select Server</h4>
+													</div>
+													events/{event}/tournaments/{tournament}/match/{challongeMatchId}/{gameserver}
+
+													{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id , 'id'=>'selectServerModal')) }}
+														<div class="modal-body">
+															<div class="form-group">
+																{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
+																{{ Form::select('gameServer', $game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
+															</div>	
+														</div>
+														<div class="modal-footer">
+															<button type="submit" class="btn btn-success">Execute</button>
+															<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+														</div>
+													{{ Form::close() }}
+												</div>
+											</div>
+										</div>
+
 								 	@endif
 								</td>
 							@endif
