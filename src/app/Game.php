@@ -67,13 +67,20 @@ class Game extends Model
     {
         return $this->hasMany('App\EventTournament');
     }
+
     public function gameServers()
     {
         return $this->hasMany('App\GameServer');
     }
+
     public function gameServerCommands()
     {
         return $this->hasMany('App\GameServerCommand');
+    }
+
+    public function gameServerCommandParameters()
+    {
+        return $this->hasMany('App\GameServerCommandParameter');
     }
 
     /**

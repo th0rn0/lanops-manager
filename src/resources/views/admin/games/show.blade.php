@@ -198,6 +198,52 @@
 				</table>
 			</div>
 		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-th-list fa-fw"></i> Game Command Paramters
+			</div>
+			<div class="panel-body">
+				<table width="100%" class="table table-hover" id="dataTables-example">
+				<thead>
+							<tr>
+								<th>Name</th>
+								<th>Slug</th>
+								<th>Options</th>
+								<th><th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($game->gameServerCommandParameters as $gameServerCommandParameter)
+								@php
+									$context = 'default';
+									if (!$game->public) {
+										$context = 'danger';
+									}
+								@endphp
+								<tr class="{{ $context }}">
+									
+									<td>
+										{{ $gameServerCommandParameter->name }}
+									</td>
+									<td>
+										{{ $gameServerCommandParameter->slug }}
+									</td>
+									<td>
+										{{ $gameServerCommandParameter->options }}
+									</td>
+									<td width="15%">
+										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters/' . $gameServerCommandParameter->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+											{{ Form::hidden('_method', 'DELETE') }}
+											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+										{{ Form::close() }}
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 
 	<div class="col-lg-4">
@@ -237,7 +283,7 @@
 						</div>
 						<div class="form-group">
 						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
-						{{ Form::select('gamecommandhandler', Helper::getGameCommandHandler(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandler(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
@@ -341,6 +387,39 @@
 							<div class="form-group col-xs-12">
 								{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 								{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
+							</div>
+												
+							<button type="submit" class="btn btn-success btn-block col-xs-12">Submit</button>
+						</div>
+					{{ Form::close() }}					
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-add fa-fw"></i> Add Game Command Parameter
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' )) }}
+						@if ($errors->any())
+						  	<div class="alert alert-danger">
+						        <ul>
+						          	@foreach ($errors->all() as $error)
+						            	<li>{{ $error }}</li>
+						          	@endforeach
+						        </ul>
+						  	</div>
+						@endif
+						<div class="row"> 
+							<div class="form-group col-xs-12 col-sm-6">
+								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+								{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+							</div> 
+							<div class="form-group col-xs-12">
+								{{ Form::label('options','Parameter options',array('id'=>'','class'=>'')) }}
+								{{ Form::text('options', NULL, array('id'=>'options','class'=>'form-control')) }}
 							</div>
 												
 							<button type="submit" class="btn btn-success btn-block col-xs-12">Submit</button>
