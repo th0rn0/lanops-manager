@@ -191,7 +191,19 @@ class GameServerCommandsController extends Controller
             if($commandPart[0] != '>'){
                 $result = $result . $commandPart;
             }else{
-                $commandPartValue = ${ltrim($commandPart, '>')};
+                // $commandPartValue = ${ltrim($commandPart, '>')};
+
+                $commandPart = ltrim($commandPart, '>');
+
+                $explodedVariableParts = explode("->", $commandPart);
+                foreach ($explodedVariableParts as $key => $explodedVariablePart) {
+                    if(isset($commandPartValue)) {
+                        $commandPartValue = $commandPartValue->{$explodedVariableParts};
+                    }
+                    else{
+                        $commandPartValue = ${$explodedVariableParts};
+                    }
+                }
 
                 if(isset($commandPartValue) && !empty($commandPartValue)){
                     $result = $result . $commandPartValue;
