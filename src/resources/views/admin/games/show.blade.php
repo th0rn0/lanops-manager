@@ -91,6 +91,7 @@
 
 										</div>
 										<div>
+										<button class="btn btn-primary" data-toggle="modal" data-target="#selectCommandModal">Execute Command</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
