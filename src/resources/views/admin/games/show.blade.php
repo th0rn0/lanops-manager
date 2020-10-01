@@ -109,7 +109,7 @@
 														<div class="modal-body">
 															<div class="form-group">
 																{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
-																{{ Form::select('command', $game->getGameServerCommandSelectArray, null, array('id'=>'command','class'=>'form-control')) }}
+																{{ Form::select('command', $game->getGameServerCommandSelectArray(), null, array('id'=>'command','class'=>'form-control')) }}
 															</div>	
 														</div>
 														<div class="modal-footer">
