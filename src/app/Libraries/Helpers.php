@@ -297,6 +297,16 @@ class Helpers
         return \App\Game::getGameSelectArray($publicOnly);
     }
 
+   /**
+     * Get Games Select Array
+     * @param  $publicOnly
+     * @return Array
+     */
+    public static function getGameServerCommandScopeSelectArray($publicOnly = true)
+    {
+        return \App\GameServerCommand::getGameServerCommandScopeSelectArray($publicOnly);
+    }
+
     /**
      * Get Shop Categories Select Array
      * @param  $publicOnly

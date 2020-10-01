@@ -76,4 +76,13 @@ class GameServerCommand extends Model
     {
         return 'slug';
     }
+
+    public static function getGameServerCommandScopeSelectArray()
+    {
+        $return = array(
+            0 => "GameServer",
+            1 => "Match",
+        );
+        return $return;
+    }
 }

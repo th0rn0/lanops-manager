@@ -184,7 +184,7 @@
 									<td>
 										{{ $gameServerCommand->command }}
 									</td><td>
-										{{ $gameServerCommand->scope }}
+										{{ Helper::getGameServerCommandScopeSelectArray()[$gameServerCommand->scope] }}
 									</td>
 									<td width="15%">
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -336,7 +336,7 @@
 							</div> 
 							<div class="form-group col-xs-12 col-sm-6">
 									{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
-									{{ Form::select('scope', [0 => 'GameServer', 1 => 'Match'], null, array('id'=>'scope','class'=>'form-control')) }}
+									{{ Form::select('scope', Helper::getGameServerCommandScopeSelectArray(), null, array('id'=>'scope','class'=>'form-control')) }}
 							</div>
 							<div class="form-group col-xs-12">
 								{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
