@@ -183,7 +183,7 @@ class GameServerCommandsController extends Controller
      */
     private function resolveServerCommandParameters(GameServerCommand $gameServerCommand)
     {
-        $result;
+        $result = "";
         
         // Example Variable {>variable}
         $commandParts = preg_split("/[\{\}]+/", $gameServerCommand->command);
