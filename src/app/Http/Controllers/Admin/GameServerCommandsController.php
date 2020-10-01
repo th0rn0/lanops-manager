@@ -262,13 +262,13 @@ class GameServerCommandsController extends Controller
                 $Query->Disconnect( );
             }
 
-            if (!isset($error))
+            if (!isset($error) || $result != false)
             {
-                Session::flash('alert-success', 'Successfully executed command with! ' . $game->gamecommandhandler . ' ' . var_export($result, true));
+                Session::flash('alert-success', 'Successfully executed command with! ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Result:' . var_export($result, true));
             }
             else 
             {
-                Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler .' ' . var_export($error, true));
+                Session::flash('alert-danger', 'error while executing command!' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] .' Error:' . var_export($error, true) . ' Result:'. var_export($result, true));
             }
         }
     }
