@@ -189,8 +189,13 @@ class GameServerCommandsController extends Controller
         $result = "";
         
         // Example Variable {>variable}
-        $commandParts = preg_split("/[\{\}]+/", $gameServerCommand->command);
+        $commandParts = preg_split("/[\{\}]/", $gameServerCommand->command);
         foreach ($commandParts as $key => $commandPart) {
+            if(strlen($commandPart) <= 0)
+            {
+                continue;
+            }
+            
             if($commandPart[0] != '>'){
                 $result = $result . $commandPart;
             }else{
