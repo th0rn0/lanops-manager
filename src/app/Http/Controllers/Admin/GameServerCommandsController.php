@@ -198,10 +198,10 @@ class GameServerCommandsController extends Controller
                 $explodedVariableParts = explode("->", $commandPart);
                 foreach ($explodedVariableParts as $key => $explodedVariablePart) {
                     if(isset($commandPartValue)) {
-                        $commandPartValue = $commandPartValue->{$explodedVariableParts};
+                        $commandPartValue = $commandPartValue->{$explodedVariablePart};
                     }
                     else{
-                        $commandPartValue = ${$explodedVariableParts};
+                        $commandPartValue = ${$explodedVariablePart};
                     }
                 }
 
