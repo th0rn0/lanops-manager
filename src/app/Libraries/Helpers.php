@@ -282,6 +282,16 @@ class Helpers
      * @param  $publicOnly
      * @return Array
      */
+    public static function getGameCommandHandler($publicOnly = true)
+    {
+        return \App\Game::getGameCommandHandler($publicOnly);
+    }
+
+    /**
+     * Get Games Select Array
+     * @param  $publicOnly
+     * @return Array
+     */
     public static function getGameSelectArray($publicOnly = true)
     {
         return \App\Game::getGameSelectArray($publicOnly);
