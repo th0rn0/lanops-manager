@@ -205,24 +205,13 @@ class GameServerCommandsController extends Controller
         return $result;
     }
 
-    /**
-     * execute gameServerCommand
-     * @param  Game  $game
-     * @param  GameServerCommand  $gameServerCommand
-     * @param  GameServer  $gameServer
-     * @return Redirect
-     */
-    public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
+    private function executeCommand(GameServer $gameServer, string $command)
     {
         $Query = new SourceQuery( );
         try
         {
-            $command = $this->resolveServerCommandParameters($gameServerCommand);
-
             $Query->Connect( $gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE );
-            
             $Query->SetRconPassword( $gameServer->rcon_password );
-            
             $result = $Query->Rcon( $command );
         }
         catch( Exception $e )
@@ -242,6 +231,43 @@ class GameServerCommandsController extends Controller
         {
             Session::flash('alert-danger', 'error while executing command!' .  var_export($error, true));
         }
+    }
+
+    /**
+     * execute gameServerCommand
+     * @param  Game  $game
+     * @param  GameServerCommand  $gameServerCommand
+     * @param  GameServer  $gameServer
+     * @return Redirect
+     */
+    public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
+    {
+        $command = $this->resolveServerCommandParameters($gameServerCommand);
+        $this->executeCommand($gameServer, $command);
+        return Redirect::back();
+    }
+
+    /**
+     * execute gameServerCommand
+     * @param  Game  $game
+     * @param  GameServer  $gameServer
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function executeGameServerCommand(Game $game, GameServer $gameServer, Request $request)
+    {
+        $rules = [
+            'command'           => 'filled'
+        ];
+        $messages = [
+            'command.required' => 'Command is required'
+        ];
+        $this->validate($request, $rules, $messages);
+
+        $gameServerCommand = GameServerCommand::find($request->command);
+        $command = $this->resolveServerCommandParameters($gameServerCommand);
+
+        $this->executeCommand($gameServer, $command);
 
         return Redirect::back();
     }

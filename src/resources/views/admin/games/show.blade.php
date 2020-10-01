@@ -87,10 +87,39 @@
 										@endif
 									</td>
 									<td width="15%">
-										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
-											{{ Form::hidden('_method', 'DELETE') }}
-											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
-										{{ Form::close() }}
+										<div>
+
+										</div>
+										<div>
+											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+												{{ Form::hidden('_method', 'DELETE') }}
+												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+											{{ Form::close() }}
+										</div>
+										
+										<!-- Select Command Modal -->
+										<div class="modal fade" id="selectCommandModal" tabindex="-1" role="dialog" aria-labelledby="selectCommandModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title" id="selectCommandModalLabel">Select Command</h4>
+													</div>
+													{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
+														<div class="modal-body">
+															<div class="form-group">
+																{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
+																{{ Form::select('command', $game->getGameServerCommandSelectArray, null, array('id'=>'command','class'=>'form-control')) }}
+															</div>	
+														</div>
+														<div class="modal-footer">
+															<button type="submit" class="btn btn-success">Execute</button>
+															<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+														</div>
+													{{ Form::close() }}
+												</div>
+											</div>
+										</div>
 									</td>
 								</tr>
 							@endforeach
@@ -295,25 +324,26 @@
 						        </ul>
 						  	</div>
 						@endif
-						<div class="form-group col-xs-12 col-sm-6">
-							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
-							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
-						</div> 
-						<div class="form-group col-xs-12 col-sm-6">
-								{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
-								{{ Form::select('scope', [0 => 'GameServer', 1 => 'Match'], null, array('id'=>'scope','class'=>'form-control')) }}
+						<div class="row"> 
+							<div class="form-group col-xs-12 col-sm-6">
+								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+								{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+							</div> 
+							<div class="form-group col-xs-12 col-sm-6">
+									{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
+									{{ Form::select('scope', [0 => 'GameServer', 1 => 'Match'], null, array('id'=>'scope','class'=>'form-control')) }}
+							</div>
+							<div class="form-group col">
+								{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
+								{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
+							</div>
+												
+							<button type="submit" class="btn btn-success btn-block col">Submit</button>
 						</div>
-						<div class="form-group">
-							{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
-							{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
-						</div>
-											
-						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}					
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 @endsection

@@ -99,6 +99,15 @@ class Game extends Model
         return 'slug';
     }
 
+    public function getGameServerCommandSelectArray(){
+        $return = array();
+        foreach(GameServerCommand::where(['game_id' => $this->id, 'scope' => 0])->get() as $gameServerCommand){
+            $return[$gameServerCommand->id] = $gameServerCommand->name; 
+        }
+
+        return $return;
+    }
+
     public static function getGameSelectArray($publicOnly = true)
     {
         $return[0] = 'None';
