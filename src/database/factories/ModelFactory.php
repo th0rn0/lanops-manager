@@ -134,6 +134,13 @@ $factory->define(App\GameServerCommand::class, function (Faker\Generator $faker)
     ];
 });
 
+## GameServerCommands
+$factory->define(App\GameServerCommandParameter::class, function (Faker\Generator $faker) {
+    return [
+    ];
+});
+
+
 ## News Article
 $factory->define(App\NewsArticle::class, function (Faker\Generator $faker) {
     return [
