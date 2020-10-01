@@ -219,29 +219,38 @@ class GameServerCommandsController extends Controller
 
     private function executeCommand(GameServer $gameServer, string $command)
     {
-        $Query = new SourceQuery( );
-        try
-        {
-            $Query->Connect( $gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE );
-            $Query->SetRconPassword( $gameServer->rcon_password );
-            $result = $Query->Rcon( $command );
-        }
-        catch( Exception $e )
-        {
-            $error = $e->getMessage();
-        }
-        finally
-        {
-            $Query->Disconnect( );
-        }
+        if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1)
+            $Query = new SourceQuery( );
+            try
+            {   
+                if ($game->gamecommandhandler == 0)
+                {
+                    $Query->Connect( $gameServer->address, $gameServer->rcon_port, 1, SourceQuery::GOLDSOURCE );
+                }
+                if ($game->gamecommandhandler == 1)
+                {
+                    $Query->Connect( $gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE );
+                }
+                $Query->SetRconPassword( $gameServer->rcon_password );
+                $result = $Query->Rcon( $command );
+            }
+            catch( Exception $e )
+            {
+                $error = $e->getMessage();
+            }
+            finally
+            {
+                $Query->Disconnect( );
+            }
 
-        if (!isset($error))
-        {
-            Session::flash('alert-success', 'Successfully executed command!' . var_export($result, true));
-        }
-        else 
-        {
-            Session::flash('alert-danger', 'error while executing command!' .  var_export($error, true));
+            if (!isset($error))
+            {
+                Session::flash('alert-success', 'Successfully executed command with! ' . $game->gamecommandhandler . ' ' . var_export($result, true));
+            }
+            else 
+            {
+                Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler .' ' . var_export($error, true));
+            }
         }
     }
 
