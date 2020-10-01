@@ -219,7 +219,8 @@ class GameServerCommandsController extends Controller
 
     private function executeCommand(GameServer $gameServer, string $command)
     {
-        if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1)
+        if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) 
+        {
             $Query = new SourceQuery( );
             try
             {   
