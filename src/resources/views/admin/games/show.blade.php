@@ -237,7 +237,7 @@
 						</div>
 						<div class="form-group">
 						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
-						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandler(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+						{{ Form::select('gamecommandhandler', Helper::getGameCommandHandler(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
