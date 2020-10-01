@@ -91,7 +91,7 @@
 
 										</div>
 										<div>
-										<button class="btn btn-primary" data-toggle="modal" data-target="#selectCommandModal">Execute Command</button>
+										<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectCommandModal">Execute Command</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -334,12 +334,12 @@
 									{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
 									{{ Form::select('scope', [0 => 'GameServer', 1 => 'Match'], null, array('id'=>'scope','class'=>'form-control')) }}
 							</div>
-							<div class="form-group col">
+							<div class="form-group col-xs-12">
 								{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 								{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
 							</div>
 												
-							<button type="submit" class="btn btn-success btn-block col">Submit</button>
+							<button type="submit" class="btn btn-success btn-block col-xs-12">Submit</button>
 						</div>
 					{{ Form::close() }}					
 				</div>
