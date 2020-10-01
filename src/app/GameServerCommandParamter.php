@@ -11,7 +11,7 @@ use Lanops\Challonge\Challonge;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class GameServerCommandParamter extends Model
+class GameServerCommandParameter extends Model
 {
     use Sluggable;
 

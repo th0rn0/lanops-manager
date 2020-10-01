@@ -201,7 +201,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-th-list fa-fw"></i> Game Command Paramters
+				<i class="fa fa-th-list fa-fw"></i> Game Command Parameters
 			</div>
 			<div class="panel-body">
 				<table width="100%" class="table table-hover" id="dataTables-example">
