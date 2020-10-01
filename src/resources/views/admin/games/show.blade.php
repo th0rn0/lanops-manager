@@ -236,6 +236,10 @@
 							</div>
 						</div>
 						<div class="form-group">
+						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
+						{{ Form::select('gamecommandhandler', [0 => 'SourceQuery GoldSource', 1 => 'SourceQuery Source'], $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
 								<h5>Preview:</h5>
 								<img src="{{ $game->image_thumbnail_path }}" class="img img-responsive">
