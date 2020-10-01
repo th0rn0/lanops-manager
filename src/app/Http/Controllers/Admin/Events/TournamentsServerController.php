@@ -11,6 +11,8 @@ use Image;
 use File;
 use Helpers;
 
+use App\Event;
+use App\EventTournament;
 use App\Game;
 use App\GameServer;
 use App\GameServerCommand;
