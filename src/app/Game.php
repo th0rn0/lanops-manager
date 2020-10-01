@@ -3,7 +3,6 @@
 namespace App;
 
 use Storage;
-use GameServerCommandParameter;
 
 use Illuminate\Database\Eloquent\Model;
 
