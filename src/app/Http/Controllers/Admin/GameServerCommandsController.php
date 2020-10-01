@@ -9,13 +9,14 @@ use Storage;
 use Input;
 use Image;
 use File;
+use Helpers;
 
 use App\Game;
 use App\GameServer;
 use App\GameServerCommand;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;    
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
