@@ -108,7 +108,7 @@ class Game extends Model
 
         return $return;
     }
-
+ 
     public static function getGameSelectArray($publicOnly = true)
     {
         $return[0] = 'None';
