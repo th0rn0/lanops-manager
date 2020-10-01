@@ -118,8 +118,6 @@
 														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 														<h4 class="modal-title" id="selectServerModalLabel">Select Server</h4>
 													</div>
-													events/{event}/tournaments/{tournament}/match/{challongeMatchId}/{gameserver}
-
 													{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
 															<div class="form-group">
