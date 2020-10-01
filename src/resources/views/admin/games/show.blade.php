@@ -117,6 +117,8 @@
 					<ul>
 						<li>
 							GameServer: This Parameters are Visible per Server: Available Variable: {>gameServer}
+						</li>
+						<li>
 							Match: This Parameters are Visible for Matches and can use the variable {>match}, when GameServer is Selected {>gameServer}
 						</li>
 					</ul>	
