@@ -184,10 +184,13 @@ class GameServerCommandsController extends Controller
      * 
      * @return string The resolved command
      */
-    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand, Game $game, GameServer $gameServer)
+    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand,GameServer $gameServer)
     {
-        $result = "";
+        // Set Variables to be usable in Commands 
+        $game = $gameServerCommand->game;
         
+        $result = "";
+
         // Example Variable {>variable}
         $commandParts = preg_split("/[\{\}]/", $gameServerCommand->command);
         foreach ($commandParts as $key => $commandPart) {
@@ -233,6 +236,7 @@ class GameServerCommandsController extends Controller
 
     private function executeCommand(GameServer $gameServer, string $command)
     {
+        $game = $gameServer->game;
         if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) 
         {
             $Query = new SourceQuery( );
