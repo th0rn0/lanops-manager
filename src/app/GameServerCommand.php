@@ -31,7 +31,8 @@ class GameServerCommand extends Model
         'name',
         'slug',
         'game',
-        'command'
+        'command',
+        'scope'
     ];
 
     /**

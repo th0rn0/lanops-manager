@@ -54,10 +54,12 @@ class GameServerCommandsController extends Controller
         $rules = [
             'name'              => 'required',
             'command'           => 'required',
+            'scope'             => 'required'
         ];
         $messages = [
             'name.required'           => 'Command name is required',
             'command.required'        => 'Command is required',
+            'scope.required'          => 'Command scope is required',
         ];
 
         $this->validate($request, $rules, $messages);
@@ -66,6 +68,7 @@ class GameServerCommandsController extends Controller
         $gameServerCommand->name           = $request->name;
         $gameServerCommand->game_id = $game->id;
         $gameServerCommand->command        = $request->command;
+        $gameServerCommand->scope        = $request->scope;
 
         if (!$gameServerCommand->save()) {
             Session::flash('alert-danger', 'Could not save GameServerCommand!');
@@ -173,6 +176,36 @@ class GameServerCommandsController extends Controller
     }
 
     /**
+     * Resolve the command parameters
+     * 
+     * @param  GameServerCommand  $gameServerCommand
+     * @return string The resolved command
+     */
+    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand)
+    {
+        $result;
+        
+        // Example Variable {>variable}
+        $commandParts = preg_split("/[\{\}]+/", $gameServerCommand->command);
+        foreach ($commandParts as $key => $commandPart) {
+            if($commandPart[0] != '>'){
+                $result = $result . $commandPart;
+            }else{
+                $commandPartValue = ${ltrim($commandPart, '>')};
+
+                if(isset($commandPartValue) && !empty($commandPartValue)){
+                    $result = $result . $commandPartValue;
+                }else{
+                    Session::flash('alert-success', "Can not resolve command parameter \"$commandPart\"!");
+                }
+                
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
      * execute gameServerCommand
      * @param  Game  $game
      * @param  GameServerCommand  $gameServerCommand
@@ -181,17 +214,16 @@ class GameServerCommandsController extends Controller
      */
     public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
     {
-        var_dump($gameServerCommand);
-        var_dump($gameServer);
-        var_dump($game);
         $Query = new SourceQuery( );
         try
         {
+            $command = $this->resolveServerCommandParameters($gameServerCommand);
+
             $Query->Connect( $gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE );
             
             $Query->SetRconPassword( $gameServer->rcon_password );
             
-            $result = $Query->Rcon( $gameServerCommand->command );
+            $result = $Query->Rcon( $command );
         }
         catch( Exception $e )
         {
@@ -205,14 +237,12 @@ class GameServerCommandsController extends Controller
         if (!isset($error))
         {
             Session::flash('alert-success', 'Successfully executed command!' . var_export($result, true));
-            return Redirect::back();
         }
         else 
         {
             Session::flash('alert-danger', 'error while executing command!' .  var_export($error, true));
-            return Redirect::back();
         }
 
-        
+        return Redirect::back();
     }
 }

@@ -37,6 +37,7 @@
 				<i class="fa fa-th-list fa-fw"></i> Game Servers
 			</div>
 			<div class="panel-body">
+
 				<table width="100%" class="table table-hover" id="dataTables-example">
 				<thead>
 							<tr>
@@ -103,12 +104,32 @@
 				<i class="fa fa-th-list fa-fw"></i> Game Commands
 			</div>
 			<div class="panel-body">
+				
+				<div>
+					<h4>Variable Usage</h4>
+					Use Variables in commands: {>gameServer}
+					If the used variable contains an object the Properties can also be accessed: {>gameServer->address} or {>gameServer->rcon_port} 
+				</div>
+				<div>
+					<h4>Command Scope</h4>			
+						Command Scopes are used to define the context for the command
+					</br>
+					<ul>
+						<li>
+							GameServer: This Parameters are Visible per Server: Available Variable: {>gameServer}
+							Match: This Parameters are Visible for Matches and can use the variable {>match}, when GameServer is Selected {>gameServer}
+						</li>
+					</ul>	
+				</div>
+
+
 				<table width="100%" class="table table-hover" id="dataTables-example">
 				<thead>
 							<tr>
 								<th>Name</th>
 								<th>Slug</th>
 								<th>Command</th>
+								<th>Scope</th>
 								<th><th>
 							</tr>
 						</thead>
@@ -130,6 +151,8 @@
 									</td>
 									<td>
 										{{ $gameServerCommand->command }}
+									</td><td>
+										{{ $gameServerCommand->scope }}
 									</td>
 									<td width="15%">
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -270,10 +293,14 @@
 						        </ul>
 						  	</div>
 						@endif
-						<div class="form-group">
+						<div class="form-group col-xs-12 col-sm-6">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
 						</div> 
+						<div class="form-group col-xs-12 col-sm-6">
+								{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
+								{{ Form::select('scope', [0 => 'GameServer', 1 => 'Match'], null, array('id'=>'scope','class'=>'form-control')) }}
+						</div>
 						<div class="form-group">
 							{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}

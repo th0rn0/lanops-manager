@@ -18,6 +18,7 @@ class CreateGameServerCommandsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->longText('command');
+            $table->integer('scope');
             $table->integer('game_id')->unsigned()->index();
             $table->timestamps();
 
