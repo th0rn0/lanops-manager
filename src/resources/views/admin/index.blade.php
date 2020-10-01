@@ -201,7 +201,7 @@
 						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Login: <span class="pull-right"> @if (in_array($method, $activeLoginMethods)) Enabled @else Disabled @endif </span></strong></li>
 					@endforeach
 					<li class="list-group-item @if ($facebookCallback != null) list-group-item-success @else list-group-item-danger @endif"><strong>Facebook News Link: <span class="pull-right"> @if ($facebookCallback != null) Active @else Inactive @endif </span></strong></li>
-					@foreach ($supportedPaymentGateways as $gateway)
+					@foreach ($PaymentGateways as $gateway)
 						<li class="list-group-item @if (in_array($gateway, $activePaymentGateways)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }} Payment Gateway: <span class="pull-right"> @if (in_array($gateway, $activePaymentGateways)) Enabled @else Disabled @endif </span></strong></li>
 					@endforeach
 				</ul>
