@@ -115,6 +115,15 @@ class Game extends Model
 
         return $return;
     }
+
+    public function getGameServerSelectArray(){
+        $return = array();
+        foreach(GameServer::where(['game_id' => $this->id])->get() as $gameServer){
+            $return[$gameServer->id] = $gameServer->name; 
+        }
+
+        return $return;
+    }
  
     public static function getGameSelectArray($publicOnly = true)
     {

@@ -6,9 +6,6 @@ use Storage;
 
 use Illuminate\Database\Eloquent\Model;
 
-use GuzzleHttp\Client;
-use Lanops\Challonge\Challonge;
-
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class GameServer extends Model
