@@ -184,7 +184,7 @@ class GameServerCommandsController extends Controller
      * 
      * @return string The resolved command
      */
-    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand,GameServer $gameServer)
+    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand, GameServer $gameServer)
     {
         // Set Variables to be usable in Commands 
         $game = $gameServerCommand->game;
@@ -282,7 +282,7 @@ class GameServerCommandsController extends Controller
      */
     public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
     {
-        $command = $this->resolveServerCommandParameters($gameServerCommand, $game, $gameServer);
+        $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer);
         $this->executeCommand($gameServer, $command);
         return Redirect::back();
     }
@@ -305,7 +305,7 @@ class GameServerCommandsController extends Controller
         $this->validate($request, $rules, $messages);
 
         $gameServerCommand = GameServerCommand::find($request->command);
-        $command = $this->resolveServerCommandParameters($gameServerCommand, $game, $gameServer);
+        $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer);
 
         $this->executeCommand($gameServer, $command);
 
