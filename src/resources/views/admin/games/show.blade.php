@@ -59,7 +59,7 @@
 										$context = 'danger';
 									}
 								@endphp
-								<tr class="{{ $context }}">
+								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#row{{ $gameServer->id }}">
 									
 									<td>
 										{{ $gameServer->name }}
@@ -89,7 +89,7 @@
 									<td width="15%">
 									
 										<div>
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectCommandModal">Execute Command</button>
+											<!-- <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectCommandModal">Execute Command</button> -->
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -97,7 +97,7 @@
 										</div>
 										
 										<!-- Select Command Modal -->
-										<div class="modal fade" id="selectCommandModal" tabindex="-1" role="dialog" aria-labelledby="selectCommandModalLabel" aria-hidden="true">
+										<!-- <div class="modal fade" id="selectCommandModal" tabindex="-1" role="dialog" aria-labelledby="selectCommandModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">
 													<div class="modal-header">
@@ -126,6 +126,25 @@
 													</div>
 												</div>
 											</div>
+										</div> -->
+									</td>
+								</tr>
+								<tr>
+									<td colspan="8">
+										<div id="row{{ $gameServer->id }}" class="collapse">
+											@foreach ($game->gameServerCommands as $gameServerCommand)
+												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
+													{{ Form::hidden('command', $gameServerCommand->id) }}	
+													<h4>{{ $gameServerCommand->name }}</h4>
+													@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+														<div class="form-group col-xs-12 col-sm-6">
+															{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
+															{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
+														</div>
+													@endforeach
+													<button type="submit" class="btn btn-success">Execute</button>
+												{{ Form::close() }}
+											@endforeach
 										</div>
 									</td>
 								</tr>
