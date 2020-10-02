@@ -85,4 +85,20 @@ class GameServerCommandParameter extends Model
     public static function getParameter($name){
         return GameServerCommandParameter::where('name', $name)->first();
     }
+
+    public static function getParameters($command){
+        $result = array();
+        $matches = array();
+        preg_match('/{>[.^}]*}/', $command, $matches);
+        foreach ($matches as $key => $match) {
+            
+            $parameter = GameServerCommandParameter::getParameter($match);
+            if($parameter)
+            {
+                $result[$parameter->id] = $parameter;
+            }
+        }
+
+        return $result;
+    }
 }

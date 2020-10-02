@@ -105,10 +105,14 @@
 														<h4 class="modal-title" id="selectCommandModalLabel">Select Command</h4>
 													</div>
 													<div class="modal-body">
-														@foreach ($game->getGameServerCommandSelectArray() as $gameServerCommand)
+														@foreach ($game->gameServerCommands as $gameServerCommand)
 															{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
 																{{ Form::hidden('command', $gameServerCommand->id) }}	
 																<h4>$gameServerCommand->name</h4>
+
+																foreach(GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+																	$gameServerCommandParameter->name
+																@endforeach
 <!-- TODO Select Command Parameter Options --> 
 																<!-- <div class="form-group">
 																	{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
