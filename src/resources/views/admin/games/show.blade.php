@@ -108,30 +108,20 @@
 														@foreach ($game->gameServerCommands as $gameServerCommand)
 															{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
 																{{ Form::hidden('command', $gameServerCommand->id) }}	
+
 																<h4>{{ $gameServerCommand->name }}</h4>
 
 																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
-																	
 																	<div class="form-group col-xs-12 col-sm-6">
 																		{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
 																		{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
 																	</div>
-
-																	{{ $gameServerCommandParameter->name }}
-																
 																@endforeach
-<!-- TODO Select Command Parameter Options --> 
-																<!-- <div class="form-group">
-																	{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
-																	{{ Form::select('command', $game->getGameServerCommandSelectArray(), null, array('id'=>'command','class'=>'form-control')) }}
-																</div> -->
 																<button type="submit" class="btn btn-success">Execute</button>
-																	
 															{{ Form::close() }}
 														@endforeach
 													</div>	
 													<div class="modal-footer">
-														<button type="submit" class="btn btn-success">Execute</button>
 														<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 													</div>
 												</div>
