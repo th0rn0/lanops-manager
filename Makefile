@@ -10,7 +10,7 @@ stop:
 	docker-compose -f docker-compose.yml stop
 
 # Build from clean
-app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-key stop ssh-keygen
+app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-queue-failedtable generate-key stop ssh-keygen
 
 # Build Dependencies 
 app-build-dep: composer-install npm-install
@@ -67,6 +67,16 @@ generate-appearance:
 # Generate Images - This will erase your current settings!
 generate-images:
 	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
+
+# Generate Images - This will erase your current settings!
+generate-queue-failedtable:
+	docker exec eventula_manager_app php artisan queue:failed-table
+
+# clear views
+clear-views:
+	docker exec eventula_manager_app php artisan view:clear
+
+
 
 # Create Default Folder structure
 folder-structure:
