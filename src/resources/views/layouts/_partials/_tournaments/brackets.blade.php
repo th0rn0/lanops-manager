@@ -38,7 +38,6 @@
 			@foreach ($round as $match)
 				@php
 					$matchserver = App\EventTournamentServer::getTournamentServer($match->id);
-					var_dump($matchserver);
 				@endphp
 				<table class="table table-bordered table-condensed">
 					<tbody>
