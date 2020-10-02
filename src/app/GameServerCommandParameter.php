@@ -81,4 +81,8 @@ class GameServerCommandParameter extends Model
         $explodedVariableParts = explode(";", $options);
         return $explodedVariableParts;
     }
+
+    public static function getParameter($name){
+        return GameServerCommandParameter::where('name', $name)->first();
+    }
 }
