@@ -111,7 +111,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         if (config('app.debug') === true) {
-            // $this->app->register(\Way\Generators\GeneratorsServiceProvider::class);
+            $this->app->register(\KitLoong\MigrationsGenerator\MigrationsGeneratorServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Orangehill\Iseed\IseedServiceProvider::class);
         }
