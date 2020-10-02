@@ -142,14 +142,14 @@ npm-install:
 	docker run --rm --name js-maintainence --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp --production"
+	node:8 /bin/bash -ci "npm install && npm run production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp"
+	node:8 /bin/bash -ci "npm install && npm run dev"
 
 #list npm package - usage make npm-ls module=module
 npm-ls:
@@ -165,12 +165,12 @@ npm-outdated:
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "npm outdated"
 
-# Gulp Runner
-gulp:
+# npm mix Runner
+mix:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "node_modules/.bin/gulp"
+	node:8 /bin/bash -ci "npm run production"
 
 # Purge Containers
 purge-containers:
