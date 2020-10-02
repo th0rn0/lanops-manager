@@ -17,11 +17,11 @@ class CreateEventTournamentServerTable extends Migration
             $table->increments('id');
             $table->string('slug');
             $table->integer('challonge_match_id');
-            $table->integer('game_server');
+            $table->integer('game_server_id')->unsigned()->index();
             $table->timestamps();
 
             ## Foreign Keys
-            $table->foreign('game_server')->references('id')->on('game_servers');
+            $table->foreign('game_server_id')->references('id')->on('game_servers');
         });
     }
 
