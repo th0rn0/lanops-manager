@@ -5,6 +5,6 @@
     },
     "dependencies": {
         "bootstrap-sass": "^3.4.1",
-        "laravel-elixir": "^6.0.0-18"
+        "laravel-mix": "^5.0.5"
     }
 }
