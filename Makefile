@@ -138,6 +138,13 @@ npm-install-dev:
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "npm install && node_modules/.bin/gulp"
 
+#list npm package - usage make npm-ls module=module
+npm-ls:
+	docker run --rm --name js-maintainence-list --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:8 /bin/bash -ci "npm ls $(module)"
+
 # Gulp Runner
 gulp:
 	docker run --rm --name js-maintainence-dev --interactive \
