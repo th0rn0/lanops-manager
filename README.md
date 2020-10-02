@@ -114,6 +114,7 @@ docker run -it \
   -e FACEBOOK_APP_SECRET= \
   -e LOG_FILES=false \
   -e ENABLE_HTTPS=false \
+  -e SESSION_SECURE_COOKIE=false \
   -e DB_CONNECTION=mysql \
   -e DB_MIGRATE=true \
   -e DB_SEED=true \
@@ -165,6 +166,8 @@ services:
       - LOG_FILES=false
       # HTTPS
       - ENABLE_HTTPS=false
+      # Only Secure Cookies
+      - SESSION_SECURE_COOKIE=false
       # Migrate Database on Boot
       - DB_SEED=true
       - DB_MIGRATE=true
