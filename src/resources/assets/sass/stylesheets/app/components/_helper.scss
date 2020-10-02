@@ -104,6 +104,10 @@ fieldset[disabled] .form-control {
     max-width: unset;
 }
 
+.row-seperator:not(:last-child) {
+    border-bottom: 1px solid $color_primary_text;
+}
+
 @media (min-width: 768px) {
     .full-width {
         margin-left: calc((-100vw / 2) + (750px / 2));

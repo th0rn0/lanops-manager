@@ -59,7 +59,7 @@
 										$context = 'danger';
 									}
 								@endphp
-								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#row{{ $gameServer->id }}">
+								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#collapse_row{{ $gameServer->id }}">
 									
 									<td>
 										{{ $gameServer->name }}
@@ -130,20 +130,31 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="8">
-										<div id="row{{ $gameServer->id }}" class="collapse">
+									<td colspan="8" style="padding: 0;">
+										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
 											@foreach ($game->gameServerCommands as $gameServerCommand)
+												
 												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
 													{{ Form::hidden('command', $gameServerCommand->id) }}	
-													<h4>{{ $gameServerCommand->name }}</h4>
-													@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
-														<div class="form-group col-xs-12 col-sm-6">
-															{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
-															{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
+													<div class="row row-seperator">
+														<div class="col-xs-12 col-md-3">
+															<h4>{{ $gameServerCommand->name }}</h4>
 														</div>
-													@endforeach
-													<button type="submit" class="btn btn-success">Execute</button>
-												{{ Form::close() }}
+														<div class="col-xs-12 col-md-6">
+															<div class="row">
+																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+																	<div class="form-group col-xs-12 col-sm-6  col-md-4 col-lg-3">
+																		{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
+																		{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
+																	</div>
+																@endforeach
+															</div>
+														</div>
+														<div class="col-xs-12 col-md-3">
+															<button type="submit" class="btn btn-success">Execute</button>
+														</div>
+		 						 					</div>
+											  	{{ Form::close() }}
 											@endforeach
 										</div>
 									</td>
