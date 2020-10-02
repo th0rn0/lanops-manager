@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 use View;
 use Auth;
@@ -18,6 +19,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
+        Paginator::useBootstrap();
+
         view()->composer('layouts._partials.events-navigation', function ($view) {
             $view->with('events', Event::orderBy('display_name', 'desc')->get());
         });
