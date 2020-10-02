@@ -37,7 +37,7 @@
 			</h4>
 			@foreach ($round as $match)
 				@php
-					$matchserver = App/EventTournamentServer::getTournamentServer($match->id);
+					$matchserver = App\EventTournamentServer::getTournamentServer($match->id);
 				@endphp
 				<table class="table table-bordered table-condensed">
 					<tbody>
@@ -112,7 +112,7 @@
 								 				Submit Scores
 								 			</button>
 							 			@endif
-										 @if ( isset($matchserver) && isset($matchserver->gameServer) )
+										 @if ( !isset($matchserver) && !isset($matchserver->gameServer) )
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal">Select Server</button>
 											<!-- Select Command Modal -->
 											<div class="modal fade" id="selectServerModal" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel" aria-hidden="true">
