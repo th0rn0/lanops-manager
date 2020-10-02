@@ -111,7 +111,14 @@
 																<h4>{{ $gameServerCommand->name }}</h4>
 
 																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+																	
+																	<div class="form-group col-xs-12 col-sm-6">
+																		{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
+																		{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
+																	</div>
+
 																	{{ $gameServerCommandParameter->name }}
+																
 																@endforeach
 <!-- TODO Select Command Parameter Options --> 
 																<!-- <div class="form-group">
