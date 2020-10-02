@@ -111,7 +111,7 @@
 																<h4>$gameServerCommand->name</h4>
 
 																foreach(GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
-																	$gameServerCommandParameter->name
+																	{{ $gameServerCommandParameter->name }}
 																@endforeach
 <!-- TODO Select Command Parameter Options --> 
 																<!-- <div class="form-group">
