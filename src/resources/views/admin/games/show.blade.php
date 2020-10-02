@@ -110,7 +110,7 @@
 																{{ Form::hidden('command', $gameServerCommand->id) }}	
 																<h4>$gameServerCommand->name</h4>
 
-																foreach(GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+																@foreach(GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
 																	{{ $gameServerCommandParameter->name }}
 																@endforeach
 <!-- TODO Select Command Parameter Options --> 
