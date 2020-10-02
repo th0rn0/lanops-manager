@@ -6,7 +6,6 @@ use DB;
 use Auth;
 use Session;
 use Storage;
-use Input;
 use Image;
 use File;
 
@@ -167,7 +166,7 @@ class AppearanceController extends Controller
         ];
         $this->validate($request, $rules, $messages);
         $destinationPath = '/storage/images/main/slider/' . $request->slider . '/'; // upload path
-        $files = Input::file('images');
+        $files = Request::file('images');
         //Keep a count of uploaded files
         $fileCount = count($files);
         //Counter for uploaded files

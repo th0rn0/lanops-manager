@@ -6,7 +6,6 @@ use DB;
 use Auth;
 use Session;
 use Storage;
-use Input;
 
 use App\Event;
 use App\EventVenue;
@@ -104,8 +103,8 @@ class VenuesController extends Controller
         $venue->address_postcode    = $request->address_postcode;
         $venue->address_country     = $request->address_country;
 
-        if (Input::file('images')) {
-            foreach (Input::file('images') as $image) {
+        if (Request::file('images')) {
+            foreach (Request::file('images') as $image) {
                 $venue->images()->create([
                     'path' => str_replace(
                         'public/',
@@ -204,8 +203,8 @@ class VenuesController extends Controller
 
         }
 
-        if (Input::file('images')) {
-            foreach (Input::file('images') as $image) {
+        if (Request::file('images')) {
+            foreach (Request::file('images') as $image) {
                 $venue->images()->create([
                     'path' => str_replace(
                         'public/',

@@ -88,16 +88,16 @@ class TournamentsServerController extends Controller
 
         // $destinationPath = '/storage/images/games/' . $game->slug . '/';
         
-        // if ((Input::file('image_thumbnail') || Input::file('image_header')) &&
+        // if ((Request::file('image_thumbnail') || Request::file('image_header')) &&
         //     !File::exists(public_path() . $destinationPath)
         // ) {
         //     File::makeDirectory(public_path() . $destinationPath, 0777, true);
         // }
 
-        // if (Input::file('image_thumbnail')) {
+        // if (Request::file('image_thumbnail')) {
         //     Storage::delete($game->image_thumbnail_path);
-        //     $imageName  = 'thumbnail.' . Input::file('image_thumbnail')->getClientOriginalExtension();
-        //     Image::make(Input::file('image_thumbnail'))
+        //     $imageName  = 'thumbnail.' . Request::file('image_thumbnail')->getClientOriginalExtension();
+        //     Image::make(Request::file('image_thumbnail'))
         //         ->resize(500, 500)
         //         ->save(public_path() . $destinationPath . $imageName)
         //     ;
@@ -108,10 +108,10 @@ class TournamentsServerController extends Controller
         //     }
         // }
 
-        // if (Input::file('image_header')) {
+        // if (Request::file('image_header')) {
         //     Storage::delete($game->image_header_path);
-        //     $imageName  = 'header.' . Input::file('image_header')->getClientOriginalExtension();
-        //     Image::make(Input::file('image_header'))
+        //     $imageName  = 'header.' . Request::file('image_header')->getClientOriginalExtension();
+        //     Image::make(Request::file('image_header'))
         //         ->resize(1600, 400)
         //         ->save(public_path() . $destinationPath . $imageName)
         //     ;

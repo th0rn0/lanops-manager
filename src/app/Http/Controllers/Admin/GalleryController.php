@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Storage;
-use Input;
 use Image;
 use Validator;
 use Session;
@@ -155,13 +154,13 @@ class GalleryController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        $files = Input::file('images');
+        $files = Request::file('images');
         //Keep a count of uploaded files
         $fileCount = count($files);
         //Counter for uploaded files
         $uploadcount = 0;
         $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
-        if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
+        if (Request::file('images') && !File::exists(public_path() . $destinationPath)) {
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
         foreach ($files as $file) {

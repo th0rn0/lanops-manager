@@ -7,7 +7,6 @@ use Auth;
 use Session;
 use Redirect;
 use Settings;
-use Input;
 use FacebookPageWrapper as Facebook;
 
 use App\ApiKey;
@@ -330,12 +329,12 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (Input::file('org_logo') && !Settings::setOrgLogo(Input::file('org_logo'))) {
+        if (Request::file('org_logo') && !Settings::setOrgLogo(Request::file('org_logo'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (Input::file('org_favicon') && !Settings::setOrgFavicon(Input::file('org_favicon'))) {
+        if (Request::file('org_favicon') && !Settings::setOrgFavicon(Request::file('org_favicon'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
