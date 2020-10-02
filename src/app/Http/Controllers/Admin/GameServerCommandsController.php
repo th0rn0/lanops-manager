@@ -14,6 +14,7 @@ use Helpers;
 use App\Game;
 use App\GameServer;
 use App\GameServerCommand;
+use App\GameServerCommandParameter;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;    
