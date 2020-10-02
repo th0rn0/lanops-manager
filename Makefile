@@ -68,10 +68,6 @@ generate-appearance:
 generate-images:
 	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
 
-# Generate Images - This will erase your current settings!
-generate-queue-failedtable:
-	docker exec eventula_manager_app php artisan queue:failed-table
-
 # clear views
 clear-views:
 	docker exec eventula_manager_app php artisan view:clear
