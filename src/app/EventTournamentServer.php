@@ -72,5 +72,15 @@ class EventTournamentServer extends Model
         return 'slug';
     }
 
+    /**
+     * Get the Server for a match.
+     *
+     * @return string
+     */
+    public static function getTournamentServer(int $challongeMatchId)
+    {
+        return EventTournamentServer::where('challonge_match_id', $challongeMatchId)->first();
+    }
+
 
 }

@@ -51,6 +51,7 @@ class TournamentsServerController extends Controller
         return Redirect::back();
     }
 
+
     // /**
     //  * update TournamentsServer to Database
     //  * @param  Event            $event

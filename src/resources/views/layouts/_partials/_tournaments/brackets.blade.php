@@ -36,6 +36,9 @@
 				@endif
 			</h4>
 			@foreach ($round as $match)
+				@php
+					$matchserver = EventTournamentServer::getTournamentServer($match->id);
+				@endphp
 				<table class="table table-bordered table-condensed">
 					<tbody>
 						@php
@@ -109,31 +112,32 @@
 								 				Submit Scores
 								 			</button>
 							 			@endif
-										 <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal">Select Server</button>
-										<!-- Select Command Modal -->
-										<div class="modal fade" id="selectServerModal" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														<h4 class="modal-title" id="selectServerModalLabel">Select Server</h4>
+										 @if ( isset($matchserver) && isset($matchserver->gameServer) )
+											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal">Select Server</button>
+											<!-- Select Command Modal -->
+											<div class="modal fade" id="selectServerModal" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title" id="selectServerModalLabel">Select Server</h4>
+														</div>
+														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id , 'id'=>'selectServerModal')) }}
+															<div class="modal-body">
+																<div class="form-group">
+																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
+																	{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
+																</div>	
+															</div>
+															<div class="modal-footer">
+																<button type="submit" class="btn btn-success">Execute</button>
+																<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+															</div>
+														{{ Form::close() }}
 													</div>
-													{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id , 'id'=>'selectServerModal')) }}
-														<div class="modal-body">
-															<div class="form-group">
-																{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
-																{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
-															</div>	
-														</div>
-														<div class="modal-footer">
-															<button type="submit" class="btn btn-success">Execute</button>
-															<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-														</div>
-													{{ Form::close() }}
 												</div>
 											</div>
-										</div>
-
+										@endif
 								 	@endif
 								</td>
 							@endif
