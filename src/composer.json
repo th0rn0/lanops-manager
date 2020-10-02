@@ -9,7 +9,7 @@
     "type": "project",
     "require": {
         "php": "7.*",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravelcollective/html": "^6.2.0",
         "webonyx/graphql-php": "dev-master",
         "invisnik/laravel-steam-auth": "^4.3.0",
@@ -17,7 +17,7 @@
         "ignited/laravel-omnipay": "^3.3.0",
         "doctrine/dbal": "2.4",
         "simplesoftwareio/simple-qrcode": "~1",
-        "guzzlehttp/guzzle": "^6.5.5",
+        "guzzlehttp/guzzle": "^7.0.1",
         "lanops/challonge-php": "^1.0.9",
         "ipunkt/laravel-analytics": "^4.0.0",
         "intervention/image": "^2.5.1",
