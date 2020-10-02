@@ -89,8 +89,8 @@ class GameServerCommandParameter extends Model
     public static function getParameters($command){
         $result = array();
         $matches = array();
-        preg_match('/{>[.^}]*}/', $command, $matches);
-        foreach ($matches as $key => $match) {
+        preg_match_all('/{>(?P<parameter>[^{^}]*)}/', $command, $matches);
+        foreach ($matches['parameter'] as $key => $match) {
             
             $parameter = GameServerCommandParameter::getParameter($match);
             if($parameter)
