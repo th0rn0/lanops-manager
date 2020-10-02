@@ -37,7 +37,7 @@
 			</h4>
 			@foreach ($round as $match)
 				@php
-					$matchserver = EventTournamentServer::getTournamentServer($match->id);
+					$matchserver = App/EventTournamentServer::getTournamentServer($match->id);
 				@endphp
 				<table class="table table-bordered table-condensed">
 					<tbody>
