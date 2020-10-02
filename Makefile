@@ -145,6 +145,13 @@ npm-ls:
 	-w /usr/src/app \
 	node:8 /bin/bash -ci "npm ls $(module)"
 
+#list outdated npm packages
+npm-outdated:
+	docker run --rm --name js-maintainence-outdated --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:8 /bin/bash -ci "npm outdated"
+
 # Gulp Runner
 gulp:
 	docker run --rm --name js-maintainence-dev --interactive \
