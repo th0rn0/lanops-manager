@@ -108,7 +108,7 @@
 														@foreach ($game->gameServerCommands as $gameServerCommand)
 															{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
 																{{ Form::hidden('command', $gameServerCommand->id) }}	
-																<h4>$gameServerCommand->name</h4>
+																<h4>{{ $gameServerCommand->name }}</h4>
 
 																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
 																	{{ $gameServerCommandParameter->name }}
