@@ -43,7 +43,6 @@
         "phpunit/phpunit": "^9.4.0",
         "symfony/css-selector": "^5.1.6",
         "symfony/dom-crawler": "^5.1.6",
-        "xethron/migrations-generator": "^2.0",
         "orangehill/iseed": "^2.6.4",
         "squizlabs/php_codesniffer": "^3.5.6",
         "filp/whoops": "^2.7.3"
