@@ -78,7 +78,7 @@ class GameServerCommandParameter extends Model
 
     public function getParameterSelectArray()
     {
-        $explodedVariableParts = explode(";", $options);
+        $explodedVariableParts = explode(";", $this->options);
         return $explodedVariableParts;
     }
 
