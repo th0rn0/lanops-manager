@@ -73,6 +73,9 @@ a {
             padding-bottom: 15px;
         }
     }
+    .nav-second-level {
+        padding-left: 23px;
+    }
 }
 
 
@@ -178,7 +181,6 @@ ul.alert-dropdown {
 
 .side-nav>li>ul>li>a {
     display: block;
-    padding: 10px 15px 10px 38px;
     text-decoration: none;
     color: #999;
 }
