@@ -143,7 +143,7 @@
 														<div class="col-xs-12 col-md-6">
 															<div class="row">
 																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
-																	<div class="form-group col-xs-12 col-sm-6  col-md-4 col-lg-3">
+																	<div class="form-group col-sm-12  col-md-6">
 																		{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
 																		{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
 																	</div>
