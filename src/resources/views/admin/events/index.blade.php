@@ -107,11 +107,15 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
-							{{ Form::text('desc_short', '',array('id'=>'desc_short','class'=>'form-control')) }}
+							{{ Form::text('desc_short', '',array('id'=>'desc_short','class'=>'form-control wysiwyg-editor')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
-							{{ Form::textarea('desc_long', '',array('id'=>'desc_long','class'=>'form-control', 'rows'=>'2')) }}
+							{{ Form::textarea('desc_long', '',array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
+							{{ Form::textarea('essential_info', '',array('id'=>'essential_info','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
