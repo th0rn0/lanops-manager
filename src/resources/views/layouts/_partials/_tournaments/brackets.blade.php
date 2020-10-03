@@ -150,14 +150,14 @@
 														<div class="modal-body">
 															@foreach ($tournament->game->getMatchCommands() as $matchCommand)
 																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/' . $tournament->slug . '/' . $matchserver->slug, 'id'=>'selectCommandModal')) }}
-																	{{ Form::hidden('command', $gameServerCommand->id) }}	
+																	{{ Form::hidden('command', $matchCommand->id) }}	
 																	<div class="row row-seperator">
 																		<div class="col-xs-12 col-md-3">
-																			<h4>{{ $gameServerCommand->name }}</h4>
+																			<h4>{{ $matchCommand->name }}</h4>
 																		</div>
 																		<div class="col-xs-12 col-md-6">
 																			<div class="row">
-																				@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+																				@foreach(App\GameServerCommandParameter::getParameters($matchCommand->command) as $gameServerCommandParameter)
 																					<div class="form-group col-sm-12  col-md-6">
 																						{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
 																						{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
