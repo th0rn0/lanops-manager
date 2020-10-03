@@ -128,6 +128,7 @@ class TournamentsController extends Controller
             'status'        => 'in:DRAFT,OPEN,CLOSED,LIVE,COMPLETE',
             'description'   => 'filled',
             'rules'         => 'filled',
+            'only_signedin' => 'required|in:true,false',
         ];
         $messages = [
             'name.filled'           => 'Tournament name cannot be empty',
@@ -147,6 +148,7 @@ class TournamentsController extends Controller
         $tournament->name           = $request->name;
         $tournament->description    = $request->description;
         $tournament->rules          = $request->rules;
+        $tournament->only_signedin  = $request->only_signedin;
         $disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
         if (!in_array($tournament->status, $disallowed_array)) {
             $game_id = null;
