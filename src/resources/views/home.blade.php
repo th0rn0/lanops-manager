@@ -85,7 +85,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-9">
 				<h4>{!! $nextEvent->desc_short !!}</h4>
-				<p>{!! $nextEvent->desc_long !!}</p>
+				<p>{!! $nextEvent->essential_info !!}</p>
 			</div>
 			<div class="col-xs-12 col-sm-3">
 				<h4>@lang('home.when'):</h4>

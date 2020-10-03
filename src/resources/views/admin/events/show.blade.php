@@ -134,10 +134,11 @@
 							</div>
 							<div class="form-group">
 								{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
+								<label>Long Description <span class="text-muted"><small>This will show on the events own page</small></span></label>
 								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 							</div>
 							<div class="form-group">
-								<label>Essential Info <span class="text-muted"><small>This will show on the event home page</small></span></label>
+								<label>Essential Info <span class="text-muted"><small>This will show on the all events and the index page</small></span></label>
 								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
 							</div>
 						</div>
