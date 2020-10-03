@@ -142,35 +142,35 @@ npm-install:
 	docker run --rm --name js-maintainence --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && npm run production"
+	node:10.13 /bin/bash -ci "npm install && npm run production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm install && npm run dev"
+	node:10.13 /bin/bash -ci "npm install && npm run dev"
 
 #list npm package - usage make npm-ls module=module
 npm-ls:
 	docker run --rm --name js-maintainence-list --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm ls $(module)"
+	node:10.13 /bin/bash -ci "npm ls $(module)"
 
 #list outdated npm packages
 npm-outdated:
 	docker run --rm --name js-maintainence-outdated --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm outdated"
+	node:10.13 /bin/bash -ci "npm outdated"
 
 # npm mix Runner
 mix:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:8 /bin/bash -ci "npm run production"
+	node:10.13 /bin/bash -ci "npm run production"
 
 # Purge Containers
 purge-containers:
