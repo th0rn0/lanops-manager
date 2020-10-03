@@ -138,7 +138,7 @@
 								</a>
 							@endif
 							<div class="caption">
-								<h3>{{ $tournament->name }}</h3>
+								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
 								<span class="small">
 									@if ($tournament->status == 'COMPLETE')
 										<span class="label label-success">@lang('events.ended')</span>

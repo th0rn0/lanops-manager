@@ -519,6 +519,27 @@
 							@endif
 							<div class="caption">
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
+								@if ($tournament->only_signedin == false)
+									<span class="small">
+										@if ($tournament->status == 'COMPLETE')
+											<span class="label label-success">@lang('events.ended')</span>
+										@endif
+										@if ($tournament->status == 'LIVE')
+											<span class="label label-success">@lang('events.live')</span>
+										@endif
+										@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->active_event_participant->id))
+											<span class="label label-danger">@lang('events.notsignedup')</span>
+										@endif
+										@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->active_event_participant->id))
+											<span class="label label-success">@lang('events.signedup')</span>
+										@endif
+									</span>
+								@else
+									<span class="small">	
+										<span class="label label-info">@lang('events.signuponlywhenlive')</span>
+									</span>										
+								@endif
+
 								<hr>
 								@if ($tournament->status != 'COMPLETE')
 									<dl>
