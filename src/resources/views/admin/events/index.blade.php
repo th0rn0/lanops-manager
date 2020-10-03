@@ -42,7 +42,7 @@
 									<td>{{ $event->display_name }}</td>
 									<td>{{ date('d-m-y H:i', strtotime($event->start)) }}</td>
 									<td>{{ date('d-m-y H:i', strtotime($event->end)) }}</td>
-									<td>{{ $event->desc_short }}</td>
+									<td>{!! $event->desc_short !!}</td>
 									<td class="center">{{ $event->capacity }} <small>Seats:{{ $event->getSeatingCapacity() }}</small></td>
 									<td width="15%">
 										<a href="/admin/events/{{ $event->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
@@ -107,15 +107,15 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
-							{{ Form::text('desc_short', '',array('id'=>'desc_short','class'=>'form-control wysiwyg-editor')) }}
+							{{ Form::text('desc_short', '',array('id'=>'desc_short','class'=>'form-control wysiwyg-editor-small')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
-							{{ Form::textarea('desc_long', '',array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
+							{{ Form::textarea('desc_long', '',array('id'=>'desc_long','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
-							{{ Form::textarea('essential_info', '',array('id'=>'essential_info','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
+							{{ Form::textarea('essential_info', '',array('id'=>'essential_info','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
