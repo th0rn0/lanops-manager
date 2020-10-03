@@ -8,11 +8,11 @@
     },
     "devDependencies": {
         "gulp": "^3.9.1",
-        "bootstrap": "^3.3.6",
-        "bootstrap-sass": "^3.4.0",
         "cross-env": "^5.1",
         "laravel-mix": "^5.0.5",
         "sass-loader": "^10.0.2",
+        "node-sass": "^4.0.0",
+        "fibres": "^3.1.0",
         "sass": "^1.26.11",
         "resolve-url-loader": "^3.1.1"
     },
