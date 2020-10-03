@@ -69,6 +69,8 @@ class EventsController extends Controller
         SEOMeta::addKeyword($seoKeywords);
         OpenGraph::setDescription($event->desc_short);
         OpenGraph::addProperty('type', 'article');
-        return view('events.show')->withEvent($event);
+        return view('events.show')
+            ->withEvent($event)
+            ->withUser($user);
     }
 }
