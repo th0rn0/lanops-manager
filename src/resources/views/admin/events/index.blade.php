@@ -125,7 +125,7 @@
 						</div>
 						<div class="checkbox">
 							<label>
-								{{ Form::checkbox('allow_spec','Y',true) }} Allow Spectators
+								{{ Form::checkbox('allow_spec','Y',true, array('id'=>'allow_spec')) }} Allow Spectators
 							</label>
 						</div>
 						@if ($eventTags)

@@ -151,7 +151,7 @@
 										</div>
 										<div class="col-xs-12 col-md-6">
 											{{ Form::label('default','Default?',array('id'=>'','class'=>'')) }}
-												{{ Form::checkbox('default', 'true', $image->default, array('id'=>'default', 'name' => 'default', 'class'=>'')) }}
+												{{ Form::checkbox('default', 'true', $image->default, array('id'=>'default', 'name' => 'default')) }}
 										</div>
 										<div class="col-xs-12">
 											<br>

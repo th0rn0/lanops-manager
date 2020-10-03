@@ -172,14 +172,14 @@
 							<div class="col-lg-6 col-sm-12 form-group">
 								<div class="checkbox">
 									<label>
-										{{ Form::checkbox('allow_bronze', true, array('id'=>'allow_bronze','class'=>'form-control')) }} Match for 3rd Place?
+										{{ Form::checkbox('allow_bronze', null, true, array('id'=>'allow_bronze')) }} Match for 3rd Place?
 									</label>
 								</div>
 							</div> 
 							<div class="col-lg-6 col-sm-12 form-group">
 								<div class="checkbox">
 									<label>
-										{{ Form::checkbox('allow_player_teams', true, array('id'=>'allow_player_teams','class'=>'form-control')) }} Allow Player Teams?
+										{{ Form::checkbox('allow_player_teams', null, true, array('id'=>'allow_player_teams')) }} Allow Player Teams?
 									</label>
 								</div>
 							</div> 
@@ -188,7 +188,7 @@
 							<div class="col-lg-6 col-sm-12 form-group">
 								<div class="checkbox">
 									<label>
-										{{ Form::checkbox('only_signedin', true, array('id'=>'only_signedin','class'=>'form-control')) }} Signup only when signed in to event
+										{{ Form::checkbox('only_signedin', null, true, array('id'=>'only_signedin')) }} Signup only when signed in to event
 									</label>
 								</div>
 							</div> 

@@ -143,9 +143,9 @@
 						<div class="checkbox">
 							<label>
 								@if ($timetable->primary)
-									{{ Form::checkbox('primary', 1, true)}} Primary Timetable
+									{{ Form::checkbox('primary', 1, true, array('id'=>'primary'))}} Primary Timetable
 								@else
-									{{ Form::checkbox('primary', 1)}} Primary Timetable
+									{{ Form::checkbox('primary', 1, false, array('id'=>'primary'))}} Primary Timetable
 								@endif
 							</label>
 						</div>

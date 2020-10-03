@@ -101,14 +101,14 @@
 						<div class="col-lg-6 col-sm-12 form-group">
 							<div class="checkbox">
 								<label>
-									{{ Form::checkbox('allow_options_user', true, array('id'=>'allow_options_user','class'=>'form-control')) }} Allow users to add their own options?
+									{{ Form::checkbox('allow_options_user', null, true, array('id'=>'allow_options_user')) }} Allow users to add their own options?
 								</label>
 							</div>
 						</div> 
 						<div class="col-lg-6 col-sm-12 form-group">
 							<div class="checkbox">
 								<label>
-									{{ Form::checkbox('allow_options_multi', true, array('id'=>'allow_options_multi','class'=>'form-control')) }} Allow multiple options?
+									{{ Form::checkbox('allow_options_multi', null, true, array('id'=>'allow_options_multi')) }} Allow multiple options?
 								</label>
 							</div>
 						</div> 

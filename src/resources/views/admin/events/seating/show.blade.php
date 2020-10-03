@@ -196,9 +196,9 @@
 						<div class="checkbox"> 
 							<label> 
 								@if ($seatingPlan->locked) 
-									{{ Form::checkbox('locked', 1, true)}} Lock Seating 
+									{{ Form::checkbox('locked', 1, true, array('id'=>'locked'))}} Lock Seating 
 								@else 
-									{{ Form::checkbox('locked', 1)}} Lock Seating 
+									{{ Form::checkbox('locked', 1, false, array('id'=>'locked'))}} Lock Seating 
 								@endif 
 							</label> 
 						</div> 
