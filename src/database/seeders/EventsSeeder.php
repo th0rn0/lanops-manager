@@ -3,7 +3,11 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use App\Event;
+use App\EventVenue;
+use App\EventTicket;
+use App\EventInformation;
+use App\EventSeatingPlan;
 use Faker\Factory as Faker;
 
 class EventsSeeder extends Seeder
@@ -26,25 +30,25 @@ class EventsSeeder extends Seeder
         \DB::table('event_information')->delete();
 
         ## Venue
-        $venue = factory(App\EventVenue::class)->create();
+        $venue = factory(EventVenue::class)->create();
 
         ## Events
-        factory(App\Event::class)->create([
+        factory(Event::class)->create([
             'event_venue_id'    => $venue->id,
             'status'            => 'PUBLISHED',
             'capacity'          => 30,
         ])->each(
             function ($event) {
-                factory(App\EventTicket::class)->create([
+                factory(EventTicket::class)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(App\EventTimetable::class)->create([
+                factory(EventTimetable::class)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(App\EventInformation::class, 5)->create([
+                factory(EventInformation::class, 5)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(App\EventSeatingPlan::class)->create([
+                factory(EventSeatingPlan::class)->create([
                     'event_id' => $event->id,
                 ]);
             }

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use App\Seteting;
 use Faker\Factory as Faker;
 
 class SettingsTableSeeder extends Seeder
@@ -24,7 +24,7 @@ class SettingsTableSeeder extends Seeder
         \DB::table('settings')->truncate();
 
         ## Settings
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'org_name'],
             [
                 'value'         => env('APP_NAME', 'OrgNameHere'),
@@ -32,7 +32,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Name of the Organization'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'org_tagline'],
             [
                 'value'         => env('APP_TAGLINE', 'Tagline Here'),
@@ -40,7 +40,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Tagline of the Organization'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'seo_keywords'],
             [
                 'value'         => env('SEO_KEYWORDS', "Events,OrgNameHere,Tagline Here"),
@@ -48,7 +48,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Keywords for the Organization SEO'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'org_logo'],
             [
                 'value'         => env('APP_LOGO', '/storage/images/main/logo_main.png'),
@@ -56,7 +56,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Organization Logo'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'org_favicon'],
             [
                 'value'         => env('APP_FAVICON', '/storage/images/main/favicon.ico'),
@@ -64,7 +64,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Organization Favicon'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'purchase_terms_and_conditions'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
@@ -72,7 +72,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'T&Cs to be displayed on the checkout page'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'registration_terms_and_conditions'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
@@ -80,7 +80,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'T&Cs to be displayed on the registration page'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'steam_link'],
             [
                 'value'         => null,
@@ -88,7 +88,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Link to your Steam Group'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'teamspeak_link'],
             [
                 'value'         => null,
@@ -96,7 +96,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'IP to your Teamspeak Server'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'mumble_link'],
             [
                 'value'         => null,
@@ -104,7 +104,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'IP to your Mumble Server'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'discord_id'],
             [
                 'value'         => null,
@@ -112,7 +112,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'ID for Discord Widget'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'discord_link'],
             [
                 'value'         => null,
@@ -120,7 +120,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Link to your Discord Server'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'reddit_link'],
             [
                 'value'         => null,
@@ -128,7 +128,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Link to your Subreddit'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'facebook_link'],
             [
                 'value'         => null,
@@ -136,7 +136,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Link to your Facebook Page'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'frontpage_alot_tagline'],
             [
                 'value'         => "People we've fragged",
@@ -144,7 +144,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => "Appears on the frontpage on the banner above the footer"
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'participant_count_offset'],
             [
                 'value'         => 0,
@@ -152,7 +152,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Increment the Total Participant Count on the Home page'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'event_count_offset'],
             [
                 'value'         => 0,
@@ -160,7 +160,7 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Increment the Total Event Count on the Home page'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'currency'],
             [
                 'value'         => 'GBP',
@@ -168,175 +168,175 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Currency to use site wide. Only one can be used'
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'about_main'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'about_short'],
             [
                 'value'         => $faker->paragraph($nbSentences = 4, $variableNbSentences = true),
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'about_our_aim'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'about_who'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'legal_notice'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'privacy_policy'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'social_facebook_page_access_token'],
             [
                 'value'         => null,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_stripe'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_paypal_express'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
         );
-		App\Setting::firstOrCreate(
+		Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_free'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_enabled'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_award_tournament_participation'],
             [
                 'value'         => 0,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_award_tournament_first'],
             [
                 'value'         => 0,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_award_tournament_second'],
             [
                 'value'         => 0,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_award_tournament_third'],
             [
                 'value'         => 0,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_award_registration_event'],
             [
                 'value'         => 0,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'credit_award_registration_site'],
             [
                 'value'         => 0,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'login_standard'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'login_steam'],
             [
                 'value'         => false,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'shop_status'],
             [
                 'value'         => 'OPEN',
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'shop_welcome_message'],
             [
                 'value'         => "Welcome to the Shop!",
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'shop_closed_message'],
             [
                 'value'         => "Shop is currently closed!",
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'shop_enabled'],
             [
                 'value'         => false,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'installed'],
             [
                 'value'         => false,
                 'default'       => true,
             ]
         );
-        App\Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'site_locale'],
             [
                 'value'         => 'en',
