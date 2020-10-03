@@ -61,6 +61,8 @@ return [
     'tickets_active' => 'Your tickets are now active',
     'payment_successful_text1' => 'You may now go to the',
     'payment_successful_linktext1' => 'Events page and book a seat!',
+    'payment_successful_text2' => 'You can also take a look for which',
+    'payment_successful_linktext2' => 'tournaments you can register',
     'purchase_id' => 'Purchase ID:',
     'payment_method' => 'Payment method:',
     'tickets' => 'Tickets',

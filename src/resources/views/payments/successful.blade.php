@@ -15,6 +15,7 @@
 			<div class="col-xs-12 col-md-8">
 				<h3>@lang('payments.tickets_active')</h3>
 				<h4>@lang('payments.payment_successful_text1') <a href="/events/{{ $purchase->participants{0}->event->slug }}/#seating">@lang('payments.payment_successful_linktext1')</a></h4>
+				<h4>@lang('payments.payment_successful_text2') <a href="/events/{{ $purchase->participants{0}->event->slug }}/#tournaments">@lang('payments.payment_successful_linktext2')</a></h4>
 				<p><strong>@lang('payments.purchase_id')</strong> {{ $purchase->id }}</p>
 				<p><strong>@lang('payments.payment_method')</strong> {{ $purchase->getPurchaseType() }}</p>
 				<h3>@lang('payments.tickets')</h3>

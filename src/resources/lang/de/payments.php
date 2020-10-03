@@ -60,6 +60,8 @@ return [
     'tickets_active' => 'Deine Tickets sind nun aktiv',
     'payment_successful_text1' => 'Du kannst nun zur',
     'payment_successful_linktext1' => 'Events Seite wechseln und dir einen Sitzplazt buchen',
+    'payment_successful_text2' => 'Außerdem kannst du dir anschauen',
+    'payment_successful_linktext2' => 'bei welchen Turnieren du mitspielen kannst und dich für jene anmelden',
     'purchase_id' => 'Bestell ID:',
     'payment_method' => 'Bezahlmethode:',
     'tickets' => 'Tickets',
