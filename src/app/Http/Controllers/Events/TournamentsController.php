@@ -46,7 +46,7 @@ class TournamentsController extends Controller
         }
 
         if (!empty($user)) {
-            if ($event->only_signedin)
+            if ($tournament->only_signedin)
             {
                 $user->setActiveEventParticipantSignedIn($event->id);
             }

@@ -109,6 +109,7 @@ return [
     'signedupwithteam' => 'You are signed up with :team',
     'signedup' => 'You are signed up',
     'removesignup' => 'Remove signup',
+    'signuponlywhenlive' => 'Signup only at event',
     'brackets' => 'Brackets',
     'standings' => 'Standings',
     'participants' => 'Participants',
