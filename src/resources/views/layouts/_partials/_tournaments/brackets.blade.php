@@ -137,6 +137,59 @@
 													</div>
 												</div>
 											</div>
+										@else
+											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal">Commands</button>
+											<!-- Select Command Modal -->
+											<div class="modal fade" id="executeServerCommandModal" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title" id="executeServerCommandModalLabel">Execute Server Command</h4>
+														</div>
+														<div class="modal-body">
+															@foreach ($game->getMatchCommands() as $matchCommand)
+																{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug .'/' . $tournament->slug . '/' . $matchserver->slug, 'id'=>'selectCommandModal')) }}
+																	{{ Form::hidden('command', $gameServerCommand->id) }}	
+																	<div class="row row-seperator">
+																		<div class="col-xs-12 col-md-3">
+																			<h4>{{ $gameServerCommand->name }}</h4>
+																		</div>
+																		<div class="col-xs-12 col-md-6">
+																			<div class="row">
+																				@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
+																					<div class="form-group col-sm-12  col-md-6">
+																						{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
+																						{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
+																					</div>
+																				@endforeach
+																			</div>
+																		</div>
+																		<div class="col-xs-12 col-md-3">
+																			<button type="submit" class="btn btn-success">Execute</button>
+																		</div>
+																	</div>
+																{{ Form::close() }}
+															@endforeach
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+														</div>	
+														<!-- {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id , 'id'=>'selectServerModal')) }}
+															<div class="modal-body">
+																<div class="form-group">
+																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
+																	{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
+																</div>	
+															</div>
+															<div class="modal-footer">
+																<button type="submit" class="btn btn-success">Execute</button>
+																<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+															</div>
+														{{ Form::close() }} -->
+													</div>
+												</div>
+											</div>
 										@endif
 								 	@endif
 								</td>

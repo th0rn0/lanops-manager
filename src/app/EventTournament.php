@@ -361,6 +361,34 @@ class EventTournament extends Model
     }
 
     /**
+     * Get Matches
+     * @param int $challongeMatchId
+     * @param boolean $obj
+     * @return Array|Object
+     */
+    public function getMatch(int $challongeMatchId, $obj = false)
+    {
+        $tournamentMatches = Cache::get($this->challonge_tournament_id . "_matches", function () {
+            $challonge = new Challonge(config('challonge.api_key'));
+            $matches = $challonge->getMatches($this->challonge_tournament_id);
+            Cache::forever($this->challonge_tournament_id . "_matches", $matches);
+            return $matches;
+        });
+
+        foreach ($tournamentMatches as $match) {
+            if($match->id == $challongeMatchId)
+            {
+                if ($obj) {
+                    return json_decode(json_encode($match), false);
+                }
+                return $match;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
      * Get Standings
      * @param  string $order
      * @param  boolean $obj

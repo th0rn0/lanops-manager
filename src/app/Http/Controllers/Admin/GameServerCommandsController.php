@@ -185,7 +185,7 @@ class GameServerCommandsController extends Controller
      * 
      * @return string The resolved command
      */
-    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand, GameServer $gameServer,  Request $request)
+    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand, GameServer $gameServer, $challongeMatch,  Request $request)
     {
         // Set Variables to be usable in Commands 
         $game = $gameServerCommand->game;
@@ -288,19 +288,19 @@ class GameServerCommandsController extends Controller
         }
     }
 
-    /**
-     * execute gameServerCommand
-     * @param  Game  $game
-     * @param  GameServerCommand  $gameServerCommand
-     * @param  GameServer  $gameServer
-     * @return Redirect
-     */
-    public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
-    {
-        $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer);
-        $this->executeCommand($gameServer, $command);
-        return Redirect::back();
-    }
+    // /**
+    //  * execute gameServerCommand
+    //  * @param  Game  $game
+    //  * @param  GameServerCommand  $gameServerCommand
+    //  * @param  GameServer  $gameServer
+    //  * @return Redirect
+    //  */
+    // public function execute(Game $game, GameServerCommand $gameServerCommand, GameServer $gameServer)
+    // {
+    //     $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer);
+    //     $this->executeCommand($gameServer, $command);
+    //     return Redirect::back();
+    // }
 
     /**
      * execute gameServerCommand
@@ -320,7 +320,36 @@ class GameServerCommandsController extends Controller
         $this->validate($request, $rules, $messages);
 
         $gameServerCommand = GameServerCommand::find($request->command);
-        $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer, $request);
+        // Pass Parameters as Array
+        $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer, NULL, NULL, $request);
+
+        $this->executeCommand($gameServer, $command);
+
+        return Redirect::back();
+    }
+
+    /**
+     * execute gameServerMatchCommand
+     * @param  Game  $game
+     * @param  GameServer  $gameServer
+     * @param  EventTournamentServer $match
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function executeGameServerMatchCommand(Game $game, GameServer $gameServer, EventTournament $tournament, EventTournamentServer $match, Request $request)
+    {
+        $rules = [
+            'command'           => 'filled'
+        ];
+        $messages = [
+            'command.required' => 'Command is required'
+        ];
+        $this->validate($request, $rules, $messages);
+
+        $challongeMatch = $tournament->getMatch($match->challonge_match_id);
+
+        $gameServerCommand = GameServerCommand::find($request->command);
+        $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer, $match, $challongeMatch, $request);
 
         $this->executeCommand($gameServer, $command);
 

@@ -123,7 +123,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
             Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-            Route::get('/events/{event}/tournaments/{tournament}/{match}', 'Events\TournamentsController@matchConfig');
+            Route::get('/events/{event}/tournaments/{tournament}/{challongeMatchId}', 'Events\TournamentsController@matchConfig');
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
                 Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
                 Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
@@ -295,8 +295,9 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@show');
             Route::post('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@update');
             Route::delete('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@destroy');
-            Route::get('/admin/games/{game}/gameservercommands/{gameServerCommand}/execute/{gameServer}', 'Admin\GameServerCommandsController@execute');
+            // Route::get('/admin/games/{game}/gameservercommands/{gameServerCommand}/execute/{gameServer}', 'Admin\GameServerCommandsController@execute');
             Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}', 'Admin\GameServerCommandsController@executeGameServerCommand');
+            Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/{tournament}{match}', 'Admin\GameServerCommandsController@executeGameServerMatchCommand');
 
             /**
              * GameServerCommandParametrs 

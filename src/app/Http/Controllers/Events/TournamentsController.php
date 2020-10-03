@@ -64,65 +64,60 @@ class TournamentsController extends Controller
         ;
     }
 
-    public function matchConfig(Event $event, EventTournament $tournament, int $matchServer){
-        $nextMatches = $tournament->getNextMatches(4);
-        
-        if(count($nextMatches)<=0){
-            return "No Next Matches found!";
+    public function matchConfig(Event $event, EventTournament $tournament, int $challongeMatchId){
+        $match = $tournament->getMatch($challongeMatchId);
+        if(!$match)
+        {
+            return "No Match found for $challongeMatchId";
         }
 
-        foreach ($nextMatches as $key => $nextMatch) {
-            if(($nextMatch->id % $matchServer) == 0){
-                
-                $team1 = $tournament->getTeamByChallongeId($nextMatch->player1_id);
-                $team2 = $tournament->getTeamByChallongeId($nextMatch->player2_id);
+        $team1 = $tournament->getTeamByChallongeId($match->player1_id);
+        $team2 = $tournament->getTeamByChallongeId($match->player2_id);
 
-                $result = new \stdClass();
-                $result->matchid = "Match $matchServer";
-                $result->num_maps = 1;
-                $result->players_per_team = 1;
-                $result->min_players_to_ready= 1;
-                $result->min_spectators_to_ready= 0;
-                $result->skip_veto= false;
-                $result->veto_first= "team1";
-                $result->side_type= "standard";
-                $result->maplist = array("de_cache",
-                                        "de_dust2",
-                                        "de_inferno",
-                                        "de_mirage",
-                                        "de_nuke",
-                                        "de_overpass",
-                                        "de_train");
-                $result->team1 = new \stdClass();
-                $result->team1->name = $team1->name;
-                $result->team1->tag = $team1->name;
-                $result->team1->flag = "DE";
-                $result->team1->players = new \stdClass();
-                foreach ($team1->tournamentParticipants as $key => $team1Participant) {
-                    $eventParticipant = $team1Participant->eventParticipant;
-                    $user = $eventParticipant->user;
-                    $result->team1->players->{$user->steamid} = $user->steamname;
-                }
-
-                $result->team2 = new \stdClass();
-                $result->team2->name = $team2->name;
-                $result->team2->tag = $team2->name;
-                $result->team2->flag = "DE";
-                $result->team2->players = new \stdClass();
-                foreach ($team2->tournamentParticipants as $key => $team2Participants) {
-                    $eventParticipant = $team2Participants->eventParticipant;
-                    $user = $eventParticipant->user;
-                    $result->team2->players->{$user->steamid} = $user->steamname;
-                }
-
-                $result->cvars = new \stdClass();
-                $result->cvars->hostname = "Match server #$matchServer";
-
-                return response()->json($result);
-            }
+        $result = new \stdClass();
+        $result->matchid = "Match $challongeMatchId";
+        $result->num_maps = 1;
+        $result->players_per_team = 1;
+        $result->min_players_to_ready= 1;
+        $result->min_spectators_to_ready= 0;
+        $result->skip_veto= false;
+        $result->veto_first= "team1";
+        $result->side_type= "standard";
+        $result->maplist = array("de_cache",
+                                "de_dust2",
+                                "de_inferno",
+                                "de_mirage",
+                                "de_nuke",
+                                "de_overpass",
+                                "de_train");
+        $result->team1 = new \stdClass();
+        $result->team1->name = $team1->name;
+        $result->team1->tag = $team1->name;
+        $result->team1->flag = "DE";
+        $result->team1->players = new \stdClass();
+        foreach ($team1->tournamentParticipants as $key => $team1Participant)
+        {
+            $eventParticipant = $team1Participant->eventParticipant;
+            $user = $eventParticipant->user;
+            $result->team1->players->{$user->steamid} = $user->steamname;
         }
 
-        return response()->json($nextMatches);
+        $result->team2 = new \stdClass();
+        $result->team2->name = $team2->name;
+        $result->team2->tag = $team2->name;
+        $result->team2->flag = "DE";
+        $result->team2->players = new \stdClass();
+        foreach ($team2->tournamentParticipants as $key => $team2Participants)
+        {
+            $eventParticipant = $team2Participants->eventParticipant;
+            $user = $eventParticipant->user;
+            $result->team2->players->{$user->steamid} = $user->steamname;
+        }
+
+        $result->cvars = new \stdClass();
+        $result->cvars->hostname = "lan2play";
+
+        return response()->json($result);
     }
 
     /**

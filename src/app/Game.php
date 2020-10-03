@@ -107,10 +107,19 @@ class Game extends Model
         return 'slug';
     }
 
-    public function getGameServerCommandSelectArray(){
+    public function getGameServerCommands(){
         $return = array();
         foreach(GameServerCommand::where(['game_id' => $this->id, 'scope' => 0])->get() as $gameServerCommand){
-            $return[$gameServerCommand->id] = $gameServerCommand->name; 
+            $return[] = $gameServerCommand; 
+        }
+
+        return $return;
+    }
+
+    public function getMatchCommands(){
+        $return = array();
+        foreach(GameServerCommand::where(['game_id' => $this->id, 'scope' => 1])->get() as $gameServerCommand){
+            $return[] = $gameServerCommand; 
         }
 
         return $return;

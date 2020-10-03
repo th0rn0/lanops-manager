@@ -132,7 +132,7 @@
 								<tr>
 									<td colspan="8" style="padding: 0;">
 										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
-											@foreach ($game->gameServerCommands as $gameServerCommand)
+											@foreach ($game->getGameServerCommands() as $gameServerCommand)
 												
 												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
 													{{ Form::hidden('command', $gameServerCommand->id) }}	
@@ -185,7 +185,7 @@
 							GameServer: This Parameters are Visible per Server: Available Variable: {>gameServer}
 						</li>
 						<li>
-							Match: This Parameters are Visible for Matches and can use the variable {>match}, when GameServer is Selected {>gameServer}
+							Match: This Parameters are Visible for Matches and can use the variable {>match}, {>challongeMatch}, when GameServer is Selected {>gameServer}
 						</li>
 					</ul>	
 				</div>
