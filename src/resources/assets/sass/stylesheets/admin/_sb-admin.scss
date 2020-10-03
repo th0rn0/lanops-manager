@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+
 /* Global Styles */
 
 body {
@@ -25,6 +26,7 @@ body {
     width: 100%;
     padding: 0;
     background-color: #fff;
+    color: #333;
 }
 
 .huge {
@@ -36,11 +38,11 @@ body {
     #wrapper {
         padding-left: 225px;
     }
-
     #page-wrapper {
         padding: 10px;
     }
 }
+
 
 /* Top Navigation */
 
@@ -73,12 +75,12 @@ body {
     float: left;
     position: absolute;
     margin-top: 0;
-    border: 1px solid rgba(0,0,0,.15);
+    border: 1px solid rgba(0, 0, 0, .15);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     background-color: #fff;
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
 
 .top-nav>.open>.dropdown-menu>li>a {
@@ -94,7 +96,7 @@ ul.message-dropdown {
 
 li.message-preview {
     width: 275px;
-    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 
 li.message-preview>a {
@@ -109,6 +111,7 @@ li.message-footer {
 ul.alert-dropdown {
     width: 200px;
 }
+
 
 /* Side Navigation */
 
@@ -127,11 +130,9 @@ ul.alert-dropdown {
         overflow-x: hidden;
         padding-bottom: 40px;
     }
-
     .side-nav>li>a {
         width: 225px;
     }
-
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
@@ -154,6 +155,7 @@ ul.alert-dropdown {
     color: #fff;
 }
 
+
 /* Flot Chart Containers */
 
 .flot-chart {
@@ -166,6 +168,7 @@ ul.alert-dropdown {
     height: 100%;
 }
 
+
 /* Custom Colored Panels */
 
 .huge {
@@ -176,17 +179,17 @@ ul.alert-dropdown {
     border-color: #5cb85c;
 }
 
-.panel-green > .panel-heading {
+.panel-green>.panel-heading {
     border-color: #5cb85c;
     color: #fff;
     background-color: #5cb85c;
 }
 
-.panel-green > a {
+.panel-green>a {
     color: #5cb85c;
 }
 
-.panel-green > a:hover {
+.panel-green>a:hover {
     color: #3d8b3d;
 }
 
@@ -194,17 +197,17 @@ ul.alert-dropdown {
     border-color: #d9534f;
 }
 
-.panel-red > .panel-heading {
+.panel-red>.panel-heading {
     border-color: #d9534f;
     color: #fff;
     background-color: #d9534f;
 }
 
-.panel-red > a {
+.panel-red>a {
     color: #d9534f;
 }
 
-.panel-red > a:hover {
+.panel-red>a:hover {
     color: #b52b27;
 }
 
@@ -212,16 +215,16 @@ ul.alert-dropdown {
     border-color: #f0ad4e;
 }
 
-.panel-yellow > .panel-heading {
+.panel-yellow>.panel-heading {
     border-color: #f0ad4e;
     color: #fff;
     background-color: #f0ad4e;
 }
 
-.panel-yellow > a {
+.panel-yellow>a {
     color: #f0ad4e;
 }
 
-.panel-yellow > a:hover {
+.panel-yellow>a:hover {
     color: #df8a13;
 }
