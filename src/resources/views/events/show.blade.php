@@ -519,6 +519,7 @@
 							@endif
 							<div class="caption">
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
+								<php echo $tournament->getParticipant($user->id); ?>
 								@if ($tournament->only_signedin == false)
 									<span class="small">
 										@if ($tournament->status == 'COMPLETE')
