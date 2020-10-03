@@ -185,7 +185,7 @@ class GameServerCommandsController extends Controller
      * 
      * @return string The resolved command
      */
-    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand, $gameServer, $challongeMatch,  Request $request)
+    private function resolveServerCommandParameters(GameServerCommand $gameServerCommand, $match, $gameServer, $challongeMatch,  Request $request)
     {
         // Set Variables to be usable in Commands 
         $game = $gameServerCommand->game;
