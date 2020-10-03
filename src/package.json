@@ -12,7 +12,6 @@
         "laravel-mix": "^5.0.5",
         "sass-loader": "^7.1.0",
         "node-sass": "^4.0.0",
-        "fibers": "^3.1.0",
         "sass": "^1.26.11",
         "resolve-url-loader": "^3.1.1"
     },
