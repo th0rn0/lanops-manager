@@ -148,8 +148,8 @@
 															<h4 class="modal-title" id="executeServerCommandModalLabel">Execute Server Command</h4>
 														</div>
 														<div class="modal-body">
-															@foreach ($game->getMatchCommands() as $matchCommand)
-																{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug .'/' . $tournament->slug . '/' . $matchserver->slug, 'id'=>'selectCommandModal')) }}
+															@foreach ($tournament->game->getMatchCommands() as $matchCommand)
+																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $gameServer->slug .'/' . $tournament->slug . '/' . $matchserver->slug, 'id'=>'selectCommandModal')) }}
 																	{{ Form::hidden('command', $gameServerCommand->id) }}	
 																	<div class="row row-seperator">
 																		<div class="col-xs-12 col-md-3">
