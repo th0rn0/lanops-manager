@@ -42,7 +42,7 @@
 									<td>{{ $event->display_name }}</td>
 									<td>{{ date('d-m-y H:i', strtotime($event->start)) }}</td>
 									<td>{{ date('d-m-y H:i', strtotime($event->end)) }}</td>
-									<td>{{ $event->desc_short }}</td>
+									<td>{!! $event->desc_short !!}</td>
 									<td class="center">{{ $event->capacity }} <small>Seats:{{ $event->getSeatingCapacity() }}</small></td>
 									<td width="15%">
 										<a href="/admin/events/{{ $event->slug }}"><button type="button" class="btn btn-primary btn-sm btn-block">Edit</button></a>
