@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Setting;
+use App\Appearance;
 
 
 use Faker\Factory as Faker;
