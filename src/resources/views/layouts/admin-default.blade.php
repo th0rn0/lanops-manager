@@ -70,6 +70,9 @@
 	            $('.wysiwyg-editor').summernote({
 	              height:300,
 	            });
+	            $('.wysiwyg-editor-small').summernote({
+	              height:150,
+	            });
 	        });
 		</script>
 
