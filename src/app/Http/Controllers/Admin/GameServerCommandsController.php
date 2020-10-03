@@ -336,7 +336,7 @@ class GameServerCommandsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function executeGameServerMatchCommand(Game $game, GameServer $gameServer, EventTournament $tournament, EventTournamentServer $match, Request $request)
+    public function executeGameServerMatchCommand(Game $game, GameServer $gameServer, EventTournament $tournament, Request $request)
     {
         $rules = [
             'command'           => 'filled'
@@ -346,9 +346,9 @@ class GameServerCommandsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        $challongeMatch = $tournament->getMatch($match->challonge_match_id);
-
+        $challongeMatch = $tournament->getMatch($request->challonge_match_id);
         $gameServerCommand = GameServerCommand::find($request->command);
+        
         $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer, $match, $challongeMatch, $request);
 
         $this->executeCommand($gameServer, $command);

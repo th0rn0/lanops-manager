@@ -149,8 +149,10 @@
 														</div>
 														<div class="modal-body">
 															@foreach ($tournament->game->getMatchCommands() as $matchCommand)
-																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/' . $tournament->slug . '/' . $matchserver->slug, 'id'=>'selectCommandModal')) }}
+																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/' . $tournament->slug, 'id'=>'executeServerCommandModal')) }}
 																	{{ Form::hidden('command', $matchCommand->id) }}	
+																	{{ Form::hidden('challonge_match_id', $matchserver->challonge_match_id) }}	
+																	challonge_match_id
 																	<div class="row row-seperator">
 																		<div class="col-xs-12 col-md-3">
 																			<h4>{{ $matchCommand->name }}</h4>
