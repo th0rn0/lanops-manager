@@ -21,6 +21,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class TournamentsController extends Controller
 {
@@ -90,7 +92,7 @@ class TournamentsController extends Controller
         }
         $tournament                             = new EventTournament();
         $tournament->event_id                   = $event->id;
-        $tournament->challonge_tournament_url   = str_random(16);
+        $tournament->challonge_tournament_url   = Str::random(16);
         $tournament->name                       = $request->name;
         $tournament->game_id                    = $game_id;
         $tournament->format                     = $request->format;
