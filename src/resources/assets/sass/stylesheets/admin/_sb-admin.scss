@@ -57,11 +57,14 @@ a {
         padding: 10px 15px;
     }
     li a:hover,
-    li a:focus,
-    li a:hover,
     li a:focus {
         color: #fff;
         background-color: transparent;
+    }
+    li:hover a,
+    li:hover a,
+    li a:hover,
+    li a:focus {
         border-bottom: unset !important;
     }
     @media(min-width:768px) {
