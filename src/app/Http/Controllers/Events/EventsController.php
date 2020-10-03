@@ -56,7 +56,6 @@ class EventsController extends Controller
         if ($user) {
             $clauses = ['user_id' => $user->id, 'event_id' => $event->id];
             $user->eventParticipation = EventParticipant::where($clauses)->get();
-            $user->setActiveEventParticipantSignedIn($event->id);
         }
         if (!$event->polls->isEmpty()) {
             foreach ($event->polls as $poll) {
@@ -71,7 +70,6 @@ class EventsController extends Controller
         OpenGraph::setDescription($event->desc_short);
         OpenGraph::addProperty('type', 'article');
         return view('events.show')
-            ->withEvent($event)
-            ->withUser($user);
+            ->withEvent($event);
     }
 }
