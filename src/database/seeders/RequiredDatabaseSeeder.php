@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Setting;
 use App\Appearance;
+use App\SliderImage;
+use App\ApiKey;
 
 
 use Faker\Factory as Faker;
