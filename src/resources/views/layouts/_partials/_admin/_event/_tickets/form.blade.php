@@ -76,9 +76,9 @@
 		<div class="checkbox">
 			<label>
 				@if (@$ticket->seatable || @$empty)
-					{{ Form::checkbox('seatable', 1, true) }}
+					{{ Form::checkbox('seatable', 1, true, array('id'=>'seatable')) }}
 				@else
-					{{ Form::checkbox('seatable', 1) }}
+					{{ Form::checkbox('seatable', 1, false, array('id'=>'seatable')) }}
 				@endif
 				<strong>Seatable</strong>
 			</label>

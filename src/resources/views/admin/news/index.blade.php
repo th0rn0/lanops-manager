@@ -36,7 +36,7 @@
 					</div>
 					@if ($facebookLinked)
 						<div class="form-group">
-							{{ Form::checkbox('post_to_facebook', true, array('id'=>'post_to_facebook','class'=>'form-control')) }} Post to facebook?
+							{{ Form::checkbox('post_to_facebook', null, true, array('id'=>'post_to_facebook')) }} Post to facebook?
 						</div>
 					@endif
 					<button type="submit" class="btn btn-success btn-block">Submit</button> 

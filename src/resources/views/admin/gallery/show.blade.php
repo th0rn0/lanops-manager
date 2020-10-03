@@ -60,9 +60,9 @@
 											<div class="form-group checkbox">
 												<label>
 													@if ($album->album_cover_id == $image->id)
-														{{ Form::checkbox('album_cover', 1, true) }}
+														{{ Form::checkbox('album_cover', 1, true, array('id'=>'album_cover')) }}
 													@else
-														{{ Form::checkbox('album_cover', 1) }}
+														{{ Form::checkbox('album_cover', 1, false, array('id'=>'album_cover')) }}
 													@endif
 												</label>
 											</div>
