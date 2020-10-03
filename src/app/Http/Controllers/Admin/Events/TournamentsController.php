@@ -70,7 +70,7 @@ class TournamentsController extends Controller
             'team_size'     => 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
             'description'   => 'required',
             'rules'         => 'required',
-            'only_signedin' => 'required|in:true,false',
+            'only_signedin' => 'in:true,false',
             'image'         => 'image',
         ];
         $messages = [
@@ -128,7 +128,7 @@ class TournamentsController extends Controller
             'status'        => 'in:DRAFT,OPEN,CLOSED,LIVE,COMPLETE',
             'description'   => 'filled',
             'rules'         => 'filled',
-            'only_signedin' => 'required|in:true,false',
+            'only_signedin' => 'in:true,false',
         ];
         $messages = [
             'name.filled'           => 'Tournament name cannot be empty',
