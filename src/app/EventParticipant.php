@@ -7,6 +7,7 @@ use QrCode;
 use Settings;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class EventParticipant extends Model
 {
@@ -132,7 +133,7 @@ class EventParticipant extends Model
     {
         $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
         $qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
-        $qrCodeFileName =  $this->event->slug . '-' . str_random(32) . '.png';
+        $qrCodeFileName =  $this->event->slug . '-' . Str::random(32) . '.png';
         if (!file_exists($qrCodePath)) {
             mkdir($qrCodePath, 0775, true);
         }
