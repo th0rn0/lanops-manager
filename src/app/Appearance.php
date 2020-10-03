@@ -6,7 +6,7 @@ use Cache;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
 use Illuminate\Support\Facades\Storage;
 
 class Appearance extends Model
