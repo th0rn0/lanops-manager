@@ -105,7 +105,7 @@ return [
     'signedupwithteam' => 'Sie sind mit :team angemeldet',
     'signedup' => 'Sie sind angemeldet',
     'removesignup' => 'Abmelden',
-    'signuponlywhenlive' => 'Anmelden erst am Event möglich'
+    'signuponlywhenlive' => 'Anmelden erst am Event möglich',
     'brackets' => 'Gruppe',
     'standings' => 'Rangliste',
     'participants' => 'Teilnehmer',
