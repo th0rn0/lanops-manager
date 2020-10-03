@@ -36,7 +36,8 @@
         "artesaos/seotools": "^0.19.0",
         "weblagence/laravel-facebook-pixel": "^1.0",
         "spatie/laravel-cookie-consent": "^2.12",
-        "xpaw/php-source-query-class": "^1.0"
+        "xpaw/php-source-query-class": "^1.0",
+        "laravel/ui": "^3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
