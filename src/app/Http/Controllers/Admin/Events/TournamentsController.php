@@ -70,6 +70,7 @@ class TournamentsController extends Controller
             'team_size'     => 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
             'description'   => 'required',
             'rules'         => 'required',
+            'only_signedin' => 'required|in:true,false',
             'image'         => 'image',
         ];
         $messages = [
@@ -99,6 +100,7 @@ class TournamentsController extends Controller
         $tournament->team_size                  = $request->team_size;
         $tournament->description                = $request->description;
         $tournament->rules                      = $request->rules;
+        $tournament->only_signedin              = $request->only_signedin;
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
         $tournament->status                     = 'DRAFT';

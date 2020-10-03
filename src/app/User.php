@@ -7,6 +7,7 @@ use Auth;
 use Settings;
 
 use App\CreditLog;
+use App\EventTournament;
 
 use \Carbon\Carbon as Carbon;
 
@@ -89,10 +90,23 @@ class User extends Authenticatable implements MustVerifyEmail
      * Set Active Event Participant for current User
      * @param $eventId
      */
+    public function setActiveEventParticipantSignedIn($eventId)
+    {
+        // TODO Enable signed in again depending on tournament setting
+        $clauses = ['user_id' => $this->id, 'signed_in' => true];
+        $this->active_event_participant = EventParticipant::where($clauses)->orderBy('updated_at', 'DESC')->first();
+    }
+
+
+    // TODO - Refactor this somehow. It's a bit hacky. - Possible mutators and accessors?
+    /**
+     * Set Active Event Participant for current User
+     * @param $eventId
+     */
     public function setActiveEventParticipant($eventId)
     {
         // TODO Enable signed in again depending on tournament setting
-        $clauses = ['user_id' => $this->id/*, 'signed_in' => true*/];
+        $clauses = ['user_id' => $this->id];
         $this->active_event_participant = EventParticipant::where($clauses)->orderBy('updated_at', 'DESC')->first();
     }
 

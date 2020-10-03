@@ -138,7 +138,7 @@
 								}}
 							</div> 
 							<div class="col-lg-6 col-sm-12 form-group">
-								{{ Form::label('team_size','Format',array('id'=>'','class'=>'')) }}
+								{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
 								{{ 
 									Form::select(
 										'team_size', 
@@ -159,6 +159,7 @@
 								}}
 							</div> 
 						</div>
+
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', NULL,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
@@ -179,6 +180,15 @@
 								<div class="checkbox">
 									<label>
 										{{ Form::checkbox('allow_player_teams', true, array('id'=>'allow_player_teams','class'=>'form-control')) }} Allow Player Teams?
+									</label>
+								</div>
+							</div> 
+						</div>
+						<div class="row">
+							<div class="col-lg-6 col-sm-12 form-group">
+								<div class="checkbox">
+									<label>
+										{{ Form::checkbox('only_signedin', true, array('id'=>'only_signedin','class'=>'form-control')) }} Signup only when signed in to event
 									</label>
 								</div>
 							</div> 

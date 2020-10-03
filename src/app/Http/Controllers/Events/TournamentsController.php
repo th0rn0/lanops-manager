@@ -46,7 +46,15 @@ class TournamentsController extends Controller
         }
 
         if (!empty($user)) {
-            $user->setActiveEventParticipant($event->id);
+            if ($event->only_signedin)
+            {
+                $user->setActiveEventParticipantSignedIn($event->id);
+            }
+            else
+            {
+                $user->setActiveEventParticipant($event->id);
+            }
+            
         }
 
         return view('events.tournaments.show')

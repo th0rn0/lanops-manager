@@ -361,7 +361,7 @@
 								</div>
 								<div class="col-xs-12 col-md-4">
 									<h5>@lang('events.yourseats')</h5>
-									@if ($ticketFlag)
+									@if ($ticketFlagSignedIn)
 										@foreach ($user->eventParticipation as $participant) 
 											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id) 
 												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}

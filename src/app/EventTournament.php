@@ -43,6 +43,7 @@ class EventTournament extends Model
         'team_size',
         'description',
         'rules',
+        'only_signedin',
         'allow_player_teams',
         'status'
     ];
@@ -558,5 +559,15 @@ class EventTournament extends Model
             }
         }
         dd('DUN');
+    }
+
+     /**
+     * Get only signed in when signed up setting.
+     *
+     * @return string
+     */
+    public static function getTournamentOnlySignedIn(int $tournamendId)
+    {
+        return EventTournament::where('id', $tournamendId)->only_signedin();
     }
 }

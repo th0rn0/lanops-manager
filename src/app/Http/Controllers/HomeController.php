@@ -175,20 +175,20 @@ class HomeController extends Controller
             $user->event_participation = EventParticipant::where($clauses)->get();
         }
 
-        $ticketFlag = false;
+        $ticketFlagSignedIn = false;
         if ($user) {
-            $user->setActiveEventParticipant($event->id);
+            $user->setActiveEventParticipantSignedIn($event->id);
             if ($user->eventParticipation != null || isset($user->eventParticipation)) {
                 foreach ($user->eventParticipation as $participant) {
                     if ($participant->event_id == $event->id) {
-                        $ticketFlag = true;
+                        $ticketFlagSignedIn = true;
                     }
                 }
             }
         }
         return view("events.home")
             ->withEvent($event)
-            ->withTicketFlag($ticketFlag)
+            ->withTicketFlagSignedIn($ticketFlagSignedIn)
             ->withSignedIn($signedIn)
             ->withUser($user);
     }
