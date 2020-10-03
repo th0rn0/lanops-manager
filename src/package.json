@@ -10,7 +10,7 @@
         "gulp": "^3.9.1",
         "cross-env": "^5.1",
         "laravel-mix": "^5.0.5",
-        "sass-loader": "^7.1.0",
+        "sass-loader": "^8.0.0",
         "node-sass": "^4.14.1",
         "sass": "^1.26.11",
         "resolve-url-loader": "^3.1.1"
