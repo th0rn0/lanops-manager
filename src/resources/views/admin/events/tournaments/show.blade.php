@@ -171,6 +171,12 @@
 							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
 						</div>
+
+						<div class="form-group">
+							<label>
+									{{ Form::checkbox('only_signedin', $tournament->only_signedin, array('id'=>'only_signedin','class'=>'form-control')) }} Signup only when signed in to event
+							</label>
+						</div>
 					@endif
 					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
