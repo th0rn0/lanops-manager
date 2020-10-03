@@ -40,7 +40,7 @@ class TournamentsServerController extends Controller
     {
         $tournamentServer                 = new EventTournamentServer();
         $tournamentServer->challonge_match_id        = $challongeMatchId;
-        $tournamentServer->game_server = $request->gameServer;
+        $tournamentServer->game_server_id = $request->gameServer;
         
         if (!$tournamentServer->save()) {
             Session::flash('alert-danger', 'Could not save tournamentServer!');

@@ -67,9 +67,9 @@ class GameServerCommandsController extends Controller
 
         $gameServerCommand                 = new GameServerCommand();
         $gameServerCommand->name           = $request->name;
-        $gameServerCommand->game_id = $game->id;
+        $gameServerCommand->game_id        = $game->id;
         $gameServerCommand->command        = $request->command;
-        $gameServerCommand->scope        = $request->scope;
+        $gameServerCommand->scope          = $request->scope;
 
         if (!$gameServerCommand->save()) {
             Session::flash('alert-danger', 'Could not save GameServerCommand!');
