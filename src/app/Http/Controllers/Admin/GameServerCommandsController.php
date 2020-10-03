@@ -14,6 +14,7 @@ use App\Game;
 use App\GameServer;
 use App\GameServerCommand;
 use App\GameServerCommandParameter;
+use App\EventTournament;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;    
@@ -348,7 +349,7 @@ class GameServerCommandsController extends Controller
 
         $challongeMatch = $tournament->getMatch($request->challonge_match_id);
         $gameServerCommand = GameServerCommand::find($request->command);
-        
+
         $command = $this->resolveServerCommandParameters($gameServerCommand, $gameServer, $match, $challongeMatch, $request);
 
         $this->executeCommand($gameServer, $command);
