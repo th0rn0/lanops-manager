@@ -175,7 +175,7 @@
 						<div class="form-group">
 							<div class="checkbox">
 								<label>
-								{{ Form::checkbox('only_signedin', $tournament->only_signedin, array('id'=>'only_signedin','class'=>'form-control')) }} Signup only when signed in to event
+								{{ Form::checkbox('only_signedin', null, $tournament->only_signedin, array('id'=>'only_signedin')) }} Signup only when signed in to event
 								</label>
 							</div>
 						</div>
