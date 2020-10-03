@@ -23,11 +23,11 @@
 				<div id="navbar" class="navbar-collapse collapse" style="text-align:center;">
 					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
 						<!--<li style="font-size:15px; font-weight:bold;"><a href="#food">Food Orders</a></li>-->
-						<li style="font-size:15px; font-weight:bold;"><a href="#event">What's on</a></li>
-						<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
-						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">Attendees</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#event">@lang('events.eventinfo')</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#seating">@lang('events.seating')</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">@lang('events.attendees')</a></li>
 						@if (!$event->tournaments->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">Tournaments</a></li>
+							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#information">Essential Information</a></li>
 					</ul>
@@ -217,8 +217,6 @@
 								<strong>
 									{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
 								</strong>
-								<hr>
-								<p><a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="btn btn-primary btn-block" role="button">View</a></p>
 							</div>
 						</div>
 					</div>

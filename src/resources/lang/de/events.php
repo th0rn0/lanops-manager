@@ -28,7 +28,7 @@ return [
     'ended' => 'Beendet',
     'live' => 'Live',
     'signupsclosed' => 'Anmeldung geschlossen',
-    'signups' => 'Anmeldung',
+    'signups' => 'Anmeldungen',
     'steamname' => 'Steam Name',
     'name' => 'Name',
     'seat' => 'Sitzplatz',
