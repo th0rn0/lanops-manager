@@ -233,21 +233,24 @@
 								$availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
 							@endphp
 
-							<tr>
-								<td colspan="3"> 
-									@if($tournament->game->connect_game_url)
-										<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
-									@endif
-									@if($tournament->game->connect_game_command)
-										<div class="input-group" style="width: 100%">
-											<input class="form-control" id="connectGameCommand{{ $availableParameters->match->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
-											<span class="input-group-btn">
-											  <button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->match->id}}')"><i class="far fa-clipboard"></i></button>
+							@if (Helpers::isMatchPlayer($tournament, $availableParameters->match, $user))
+
+								<tr>
+									<td colspan="3"> 
+										@if($tournament->game->connect_game_url)
+											<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+										@endif
+										@if($tournament->game->connect_game_command)
+											<div class="input-group" style="width: 100%">
+												<input class="form-control" id="connectGameCommand{{ $availableParameters->match->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
+												<span class="input-group-btn">
+												<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->match->id}}')"><i class="far fa-clipboard"></i></button>
+												</div>
 											</div>
-										</div>
-									@endif
-								</td>
-							</tr>
+										@endif
+									</td>
+								</tr>
+							@endif
 						@endif
 					</tbody>
 				</table>
