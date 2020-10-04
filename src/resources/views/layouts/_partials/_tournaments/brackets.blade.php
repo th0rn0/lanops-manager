@@ -255,7 +255,7 @@
 						@if ( @$admin && $user->admin && $matchserver && $match->state == 'open')
 							<tr>
 								<td colspan="3"> 
-									Selected Server: { $matchserver->gameServer->name }
+									Selected Server: {{ $matchserver->gameServer->name }}
 								</td>
 							</tr>
 						@endif
