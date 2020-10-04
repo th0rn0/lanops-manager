@@ -252,7 +252,7 @@
 								</tr>
 							@endif
 						@endif
-						@if ( @$admin && $user->admin && $matchserver)
+						@if ( @$admin && $user->admin && $matchserver && $match->state == 'open')
 							<tr>
 								<td colspan="3"> 
 									Selected Server: { $matchserver->gameServer->name }
