@@ -36,7 +36,9 @@ class Game extends Model
         'active',
         'gamecommandhandler',
         'image_header_path',
-        'image_thumbnail_path'
+        'image_thumbnail_path',
+        'connect_game_url',
+        'connect_game_command'
     ];
 
     /**
@@ -48,7 +50,7 @@ class Game extends Model
         'created_at',
         'updated_at'
     );
-   
+
     public static function boot()
     {
         parent::boot();
@@ -96,7 +98,7 @@ class Game extends Model
             ]
         ];
     }
-    
+
     /**
      * Get the route key for the model.
      *
@@ -107,33 +109,36 @@ class Game extends Model
         return 'slug';
     }
 
-    public function getGameServerCommands(){
+    public function getGameServerCommands()
+    {
         $return = array();
-        foreach(GameServerCommand::where(['game_id' => $this->id, 'scope' => 0])->get() as $gameServerCommand){
-            $return[] = $gameServerCommand; 
+        foreach (GameServerCommand::where(['game_id' => $this->id, 'scope' => 0])->get() as $gameServerCommand) {
+            $return[] = $gameServerCommand;
         }
 
         return $return;
     }
 
-    public function getMatchCommands(){
+    public function getMatchCommands()
+    {
         $return = array();
-        foreach(GameServerCommand::where(['game_id' => $this->id, 'scope' => 1])->get() as $gameServerCommand){
-            $return[] = $gameServerCommand; 
+        foreach (GameServerCommand::where(['game_id' => $this->id, 'scope' => 1])->get() as $gameServerCommand) {
+            $return[] = $gameServerCommand;
         }
 
         return $return;
     }
 
-    public function getGameServerSelectArray(){
+    public function getGameServerSelectArray()
+    {
         $return = array();
-        foreach(GameServer::where(['game_id' => $this->id])->get() as $gameServer){
-            $return[$gameServer->id] = $gameServer->name; 
+        foreach (GameServer::where(['game_id' => $this->id])->get() as $gameServer) {
+            $return[$gameServer->id] = $gameServer->name;
         }
 
         return $return;
     }
- 
+
     public static function getGameSelectArray($publicOnly = true)
     {
         $return[0] = 'None';
@@ -143,12 +148,12 @@ class Game extends Model
         return $return;
     }
 
-    public static function getGameCommandHandler(){
+    public static function getGameCommandHandler()
+    {
         $return = array(
             "0" => "SourceQuery GoldSource",
             "1" => "SourceQuery Source",
         );
         return $return;
     }
-
 }

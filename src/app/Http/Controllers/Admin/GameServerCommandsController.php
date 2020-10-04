@@ -177,75 +177,6 @@ class GameServerCommandsController extends Controller
         return Redirect::back();
     }
 
-    /**
-     * Resolve the command parameters
-     * 
-     * @param  GameServerCommand  $gameServerCommand
-     * @param  Game $game
-     * @param  GameServer $gameServer
-     * 
-     * @return string The resolved command
-     */
-    private function resolveServerCommandParameters(string $command, Request $request, $availableParameters)
-    {
-        // Set Variables to be usable in Commands 
-        $result = "";
-
-        // Example Variable {>variable}
-        $commandParts = preg_split("/[\{\}]+/", $command);
-        foreach ($commandParts as $key => $commandPart) {
-            if(strlen($commandPart) <= 0)
-            {
-                continue;
-            }
-            
-            if($commandPart[0] != '>'){
-                $result = $result . $commandPart;
-            }else{
-                try
-                {  
-                    $commandPart = ltrim($commandPart, '>');
-
-
-                    if(isset($request->{$commandPart}))
-                    {
-                        $gameServerCommandParameter = GameServerCommandParameter::where('slug', $commandPart)->first();
-                        $result =  $result . $gameServerCommandParameter->getParameterSelectArray()[$request->{$commandPart}];
-                    }
-                    else
-                    {
-                        $explodedVariableParts = explode("->", $commandPart);
-                        foreach ($explodedVariableParts as $key => $explodedVariablePart) 
-                        {
-                            if(isset($commandPartValue)) 
-                            {
-                                $commandPartValue = $commandPartValue->{$explodedVariablePart};
-                            }
-                            else
-                            {
-                                $commandPartValue = $availableParameters->{$explodedVariablePart};
-                            }
-                        }
-
-                        if(isset($commandPartValue) && !empty($commandPartValue)){
-                            $result = $result . $commandPartValue;
-                        }else{
-                            Session::flash('alert-success', "Can not resolve command parameter \"$commandPart\"!");
-                        }
-
-                        unset($commandPartValue);
-                    }
-                }
-                catch( Exception $e )
-                {
-                    Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler .' ' . var_export($e->getMessage(), true));
-                }
-            }
-        }
-        
-        return $result;
-    }
-
     private function executeCommand(GameServer $gameServer, string $command)
     {
         $game = $gameServer->game;
@@ -307,7 +238,7 @@ class GameServerCommandsController extends Controller
         $availableParameters->game = $game;
         $availableParameters->gameServer = $gameServer;
 
-        $command = $this->resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
+        $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
 
         $this->executeCommand($gameServer, $command);
 
@@ -342,7 +273,7 @@ class GameServerCommandsController extends Controller
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $challongeMatch;
 
-        $command = $this->resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
+        $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
 
         $this->executeCommand($gameServer, $command);
 

@@ -65,6 +65,9 @@ class GamesController extends Controller
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
         $game->public       = true;
+        $game->connect_game_url = $request->connect_game_url;
+        $game->connect_game_command = $request->connect_game_command;
+
 
         if (!$game->save()) {
             Session::flash('alert-danger', 'Could not save Game!');
@@ -72,7 +75,7 @@ class GamesController extends Controller
         }
 
         $destinationPath = '/storage/images/games/' . $game->slug . '/';
-        
+
         // TODO - refactor into model
         if ((Request::file('image_thumbnail') || Request::file('image_header')) &&
             !File::exists(public_path() . $destinationPath)
@@ -84,8 +87,7 @@ class GamesController extends Controller
             $imageName  = 'thumbnail.' . Request::file('image_thumbnail')->getClientOriginalExtension();
             Image::make(Request::file('image_thumbnail'))
                 ->resize(500, 500)
-                ->save(public_path() . $destinationPath . $imageName)
-            ;
+                ->save(public_path() . $destinationPath . $imageName);
             $game->image_thumbnail_path = $destinationPath . $imageName;
             if (!$game->save()) {
                 Session::flash('alert-danger', 'Could not save Game thumbnail!');
@@ -97,8 +99,7 @@ class GamesController extends Controller
             $imageName  = 'header.' . Request::file('image_header')->getClientOriginalExtension();
             Image::make(Request::file('image_header'))
                 ->resize(1600, 400)
-                ->save(public_path() . $destinationPath . $imageName)
-            ;
+                ->save(public_path() . $destinationPath . $imageName);
             $game->image_header_path = $destinationPath . $imageName;
             if (!$game->save()) {
                 Session::flash('alert-danger', 'Could not save Game Header!');
@@ -136,6 +137,8 @@ class GamesController extends Controller
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
         $game->public       = @($request->public ? true : false);
+        $game->connect_game_url = @$request->connect_game_url;
+        $game->connect_game_command = @$request->connect_game_command;
 
         if (!$game->save()) {
             Session::flash('alert-danger', 'Could not save Game!');
@@ -143,7 +146,7 @@ class GamesController extends Controller
         }
 
         $destinationPath = '/storage/images/games/' . $game->slug . '/';
-        
+
         if ((Request::file('image_thumbnail') || Request::file('image_header')) &&
             !File::exists(public_path() . $destinationPath)
         ) {
@@ -155,8 +158,7 @@ class GamesController extends Controller
             $imageName  = 'thumbnail.' . Request::file('image_thumbnail')->getClientOriginalExtension();
             Image::make(Request::file('image_thumbnail'))
                 ->resize(500, 500)
-                ->save(public_path() . $destinationPath . $imageName)
-            ;
+                ->save(public_path() . $destinationPath . $imageName);
             $game->image_thumbnail_path = $destinationPath . $imageName;
             if (!$game->save()) {
                 Session::flash('alert-danger', 'Could not save Game thumbnail!');
@@ -169,8 +171,7 @@ class GamesController extends Controller
             $imageName  = 'header.' . Request::file('image_header')->getClientOriginalExtension();
             Image::make(Request::file('image_header'))
                 ->resize(1600, 400)
-                ->save(public_path() . $destinationPath . $imageName)
-            ;
+                ->save(public_path() . $destinationPath . $imageName);
             $game->image_header_path = $destinationPath . $imageName;
             if (!$game->save()) {
                 Session::flash('alert-danger', 'Could not save Game Header!');

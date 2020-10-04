@@ -694,4 +694,73 @@ class Helpers
         
         return $result;
     }
+
+     /**
+     * Resolve the command parameters
+     * 
+     * @param  string $command
+     * @param  Request $request
+     * @param  object $availableParameters
+     * 
+     * @return string The resolved command
+     */
+    public static function resolveServerCommandParameters(string $command, Request $request, $availableParameters)
+    {
+        // Set Variables to be usable in Commands 
+        $result = "";
+
+        // Example Variable {>variable}
+        $commandParts = preg_split("/[\{\}]+/", $command);
+        foreach ($commandParts as $key => $commandPart) {
+            if(strlen($commandPart) <= 0)
+            {
+                continue;
+            }
+            
+            if($commandPart[0] != '>'){
+                $result = $result . $commandPart;
+            }else{
+                try
+                {  
+                    $commandPart = ltrim($commandPart, '>');
+
+
+                    if(isset($request->{$commandPart}))
+                    {
+                        $gameServerCommandParameter = GameServerCommandParameter::where('slug', $commandPart)->first();
+                        $result =  $result . $gameServerCommandParameter->getParameterSelectArray()[$request->{$commandPart}];
+                    }
+                    else
+                    {
+                        $explodedVariableParts = explode("->", $commandPart);
+                        foreach ($explodedVariableParts as $key => $explodedVariablePart) 
+                        {
+                            if(isset($commandPartValue)) 
+                            {
+                                $commandPartValue = $commandPartValue->{$explodedVariablePart};
+                            }
+                            else
+                            {
+                                $commandPartValue = $availableParameters->{$explodedVariablePart};
+                            }
+                        }
+
+                        if(isset($commandPartValue) && !empty($commandPartValue)){
+                            $result = $result . $commandPartValue;
+                        }else{
+                            Session::flash('alert-success', "Can not resolve command parameter \"$commandPart\"!");
+                        }
+
+                        unset($commandPartValue);
+                    }
+                }
+                catch( Exception $e )
+                {
+                    Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler .' ' . var_export($e->getMessage(), true));
+                }
+            }
+        }
+        
+        return $result;
+    }
 }
