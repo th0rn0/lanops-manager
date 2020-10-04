@@ -40,10 +40,13 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user && !empty($user->eventParticipants)) {
             foreach ($user->eventParticipants as $participant) {
-                if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
+                if (((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
                     $participant->signed_in
-                ) {
+                ) || (((date('Y-m-d H:i:s') >= $participant->event->start) &&
+                (date('Y-m-d H:i:s') <= $participant->event->end) &&
+                $participant->event->live_page_without_signedin
+            )) {
                     return $this->event();
                 }
             }
