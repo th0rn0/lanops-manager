@@ -221,7 +221,9 @@
 								@endif
 							</td>
 						</tr>
-						@if($tournament->game->connect_game_url || $tournament->game->connect_game_command)
+
+						{{-- Connection is only possible if a gameServer is assigned --}}
+						@if(!isset($matchserver) && !isset($matchserver->gameServer) && $tournament->game->connect_game_url || $tournament->game->connect_game_command)
 							@php
 								$availableParameters = new \stdClass();
 								$availableParameters->game = $tournament->game;
