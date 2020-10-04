@@ -527,13 +527,15 @@
 										@if ($tournament->status == 'LIVE')
 											<span class="label label-success">@lang('events.live')</span>
 										@endif
-										@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->eventParticipation->id))
-											<span class="label label-danger">@lang('events.notsignedup')</span>
+										@if (!$user->eventParticipation->isEmpty())
+											@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->eventParticipation->id))
+												<span class="label label-danger">@lang('events.notsignedup')</span>
+											@endif
+											@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->eventParticipation->id))
+												<span class="label label-success">@lang('events.signedup')</span>
+											@endif
 										@endif
-										@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->eventParticipation->id))
-											<span class="label label-success">@lang('events.signedup')</span>
-										@endif
-									</span>
+										</span>
 								@else
 									<span class="small">	
 										<span class="label label-info">@lang('events.signuponlywhenlive')</span>
