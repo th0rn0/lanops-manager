@@ -146,15 +146,10 @@
 									@if ($tournament->status == 'LIVE')
 										<span class="label label-success">@lang('events.live')</span>
 									@endif
-									@foreach ($tournamentParticipant->eventParticipant->user->eventParticipation as $participant)
-												@if ($tournament->getParticipant($participant->id))
-													{ $istournamentparticipant = true; }						
-												@endif
-									@endforeach
-									@if ($tournament->status != 'COMPLETE' && !$istournamentparticipant)
+									@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->active_event_participant->id))
 										<span class="label label-danger">@lang('events.notsignedup')</span>
 									@endif
-									@if ($tournament->status != 'COMPLETE' && $istournamentparticipant)
+									@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->active_event_participant->id))
 										<span class="label label-success">@lang('events.signedup')</span>
 									@endif
 								</span>
