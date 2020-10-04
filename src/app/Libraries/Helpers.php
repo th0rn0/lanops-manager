@@ -3,7 +3,7 @@
 namespace App\Libraries;
 
 use Session;
-use Request;
+use Illuminate\Http\Request;
 use Exception;
 use DB;
 use App\GameServerCommandParameter;
