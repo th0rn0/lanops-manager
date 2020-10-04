@@ -48,11 +48,7 @@ class EventsController extends Controller
                     && (date('Y-m-d H:i:s') >= $participant->event->start)
                     && (date('Y-m-d H:i:s') <= $participant->event->end)
                     && $participant->signed_in
-                ) || ($event->id == $participant->event->id
-                && (date('Y-m-d H:i:s') >= $participant->event->start)
-                && (date('Y-m-d H:i:s') <= $participant->event->end)
-                && $participant->event->live_page_without_signedin
-            )) {
+                ) ) {
                     return redirect('/');
                 }
             }

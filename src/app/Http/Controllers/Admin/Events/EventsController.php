@@ -95,7 +95,7 @@ class EventsController extends Controller
         $event->event_live_info             = $request->event_live_info;
         $event->event_venue_id              = @$request->venue;
         $event->capacity                    = $request->capacity;
-        $event->live_page_without_signedin  = ($request->live_page_without_signedin ? true : false);
+        $event->online_event  = ($request->online_event ? true : false);
 
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
@@ -188,7 +188,7 @@ class EventsController extends Controller
             $event->event_live_info      = $request->event_live_info;
         }
 
-        $event->live_page_without_signedin  = ($request->live_page_without_signedin ? true : false);
+        $event->online_event  = ($request->online_event ? true : false);
        
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
