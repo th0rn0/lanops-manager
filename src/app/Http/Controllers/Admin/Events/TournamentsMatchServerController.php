@@ -63,7 +63,7 @@ class TournamentsMatchServerController extends Controller
     public function update(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
 
-        $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId]);
+        $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId])->first();
         
         if (!isset($tournamentMatchServer))
         {
@@ -94,7 +94,7 @@ class TournamentsMatchServerController extends Controller
     public function destroy(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
 
-        $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId]);
+        $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId])->first();;
         
         if (!isset($tournamentMatchServer))
         {
