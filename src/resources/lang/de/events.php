@@ -19,7 +19,7 @@ return [
     'description' => 'Beschreibung',
 
     /* Home */
-    'eventsponsoredby' => ':event wird gesponsort durch',
+'onsoredby' => ':event wird gesponsort durch',
     'essentialinfo' => 'Allgemeine Informationen',
     'announcements' => 'Ankündigungen',
     'noannouncements' => 'Keine Ankündigungen',
@@ -112,7 +112,24 @@ return [
     'rules' => 'Regeln',
     'purchaseticketosignup' => 'Kaufe ein Ticket um dich anzumelden',
 
+    /*Tournaments Controller*/
+  
+    'tournament_signups_not_permitted' => 'Anmeldungen sind im Moment nicht erlaubt.',
+    'tournament_not_signed_in' => 'Du bist bei dem zugehörigen event nicht angemeldet.',
+    'tournament_already_signed_up' => 'Du bist bereits zu diesem Turnier angemeldet.',
+    'tournament_team_full' => 'Dieses Team ist bereits voll.',
+    'tournament_cannot_add_participant' => 'Konnte Teilnahme nicht hinzufügen. Bitte versuche es erneut!',
+    'tournament_sucessfully_registered' => 'Erfolgreich angemeldet!',
+    'tournament_can_not_add_team' => 'Konnte das Team nicht hinzufügen. Bitte versuche es erneut.',
+    'tournament_team_created' => 'Team erfolgreich erstellt!',
+    'tournament_cannot_add_pug' => 'Konnte PUG nicht hinzufügen. Bitte versuch es erneut!',
+    'tournament_not_signed_up' => 'Du bist nicht angemeldet.',
+    'tournament_cannot_remove' => 'Löschvorgang konnte nicht abgeschlossen werden. Bitte versuch es erneut!',
+    'tournament_sucessfully_removed' => 'Du wurdest erfolgreich vom Turnier abgemeldet.',
+   
     /* Ticket Partial*/
     'remove_seating' => 'Sitzplatz entfernen',
+
+
 
 ];

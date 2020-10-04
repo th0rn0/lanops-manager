@@ -116,6 +116,21 @@ return [
     'rules' => 'Rules',
     'purchaseticketosignup' => 'Purchase a ticket to signup',
 
+    /*Tournaments Controller*/
+
+    'tournament_signups_not_permitted' => 'Signups not permitted at this time.',
+    'tournament_not_signed_in' => 'You are not signed in to this event.',
+    'tournament_already_signed_up' => 'You are already signed up to this tournament.',
+    'tournament_team_full' => 'This team is full.',
+    'tournament_cannot_add_participant' => 'Cannot add participant. Please try again.',
+    'tournament_sucessfully_registered' => 'Successfully Registered!',
+    'tournament_can_not_add_team' => 'Cannot add Team. Please try again.',
+    'tournament_team_created' => 'Team Successfully Created!',
+    'tournament_cannot_add_pug' => 'Cannot add PUG. Please try again.',
+    'tournament_not_signed_up' => 'You are not signed up.',
+    'tournament_cannot_remove' => 'Cannot remove. Please try again.',
+    'tournament_sucessfully_removed' => 'You have been successfully removed from the Tournament.',
+
     /* Ticket Partial*/
     'remove_seating' => 'Remove Seating',
 
