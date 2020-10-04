@@ -29,7 +29,7 @@
 						@if (!$event->tournaments->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif
-						<li style="font-size:15px; font-weight:bold;"><a href="#information">Essential Information</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#information">@lang('events.essentialinfo')</a></li>
 					</ul>
 				</div>
 			</div>
@@ -228,7 +228,7 @@
 	<!-- ATTENDEES -->
 	<div class="page-header">
 		<a name="attendees"></a>
-		<h3>Attendees</h3>
+		<h3>@lang('events.attendees')</h3>
 	</div>
 	<table class="table table-striped">
 		<thead>
@@ -275,7 +275,7 @@
 	@if (!$event->seatingPlans->isEmpty())
 		<div class="page-header">
 			<a name="seating"></a>
-			<h3>@lang('events.seatingplans') <small>- @lang('events.unseatedtickets') / @lang('events.seatableticketsremaining')</small></h3>
+			<h3>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
@@ -298,7 +298,7 @@
 											$headers = array_combine(range(1, count($headers)), $headers);
 										?>
 										@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-											<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
+											<th class="text-center"><h4><strong>@lang('events.row') {{ucwords($headers[$column])}}</strong></h4></th>
 										@endfor
 										</tr>
 									 </thead>
@@ -320,7 +320,7 @@
 														@else
 															@if ($seatingPlan->locked)
 																<button class="btn btn-primary btn-sm" disabled>
-																	{{ ucwords($headers[$column]) . $row }} - Empty
+																	{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																</button>
 															@else
 																@if (Auth::user() && $event->getEventParticipant())
@@ -333,11 +333,11 @@
 																		data-toggle="modal"
 																		data-target="#pickSeatModal"
 																	>
-																		{{ ucwords($headers[$column]) . $row }} - Empty
+																		{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																	</button>
 																@else
 																	<button class="btn btn-primary btn-sm">
-																		{{ ucwords($headers[$column]) . $row }} - Empty
+																		{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																	</button>
 																@endif
 															@endif
