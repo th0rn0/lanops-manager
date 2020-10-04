@@ -79,7 +79,7 @@ class EventTournamentMatchServer extends Model
      */
     public static function getTournamentMatchServer(int $challongeMatchId)
     {
-        return EventTournamentServer::where('challonge_match_id', $challongeMatchId)->first();
+        return EventTournamentMatchServer::where('challonge_match_id', $challongeMatchId)->first();
     }
 
 

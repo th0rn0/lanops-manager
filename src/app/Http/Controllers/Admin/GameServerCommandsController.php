@@ -249,7 +249,7 @@ class GameServerCommandsController extends Controller
      * execute gameServerMatchCommand
      * @param  Game  $game
      * @param  GameServer  $gameServer
-     * @param  EventTournamentServer $match
+     * @param  EventTournament $tournament
      * @param  Request $request
      * @return Redirect
      */
