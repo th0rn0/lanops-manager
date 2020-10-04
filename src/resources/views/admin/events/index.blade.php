@@ -136,6 +136,12 @@
 								{{ Form::checkbox('allow_spec','Y',true, array('id'=>'allow_spec')) }} Allow Spectators
 							</label>
 						</div>
+						<div class="checkbox">
+								<label>
+									{{ Form::checkbox('live_page_without_signedin', null, false, array('id'=>'live_page_without_signedin')) }} Show event Live page for participants without signing them in to the event
+								</label>
+						</div>		
+						
 						@if ($eventTags)
 							<div class="form-group">
 								<label>Eventula Tags</label>

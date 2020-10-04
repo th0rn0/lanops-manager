@@ -84,17 +84,18 @@ class EventsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        $event                      = new Event();
-        $event->display_name        = $request->event_name;
-        $event->nice_name           = strtolower(str_replace(' ', '-', $request->event_name));
-        $event->start               = date("Y-m-d H:i:s", strtotime($request->start_date . $request->start_time));
-        $event->end                 = date("Y-m-d H:i:s", strtotime($request->end_date . $request->end_time));
-        $event->desc_long           = $request->desc_long;
-        $event->desc_short          = $request->desc_short;
-        $event->essential_info      = $request->essential_info;
-        $event->event_live_info      = $request->event_live_info;
-        $event->event_venue_id      = @$request->venue;
-        $event->capacity            = $request->capacity;
+        $event                              = new Event();
+        $event->display_name                = $request->event_name;
+        $event->nice_name                   = strtolower(str_replace(' ', '-', $request->event_name));
+        $event->start                       = date("Y-m-d H:i:s", strtotime($request->start_date . $request->start_time));
+        $event->end                         = date("Y-m-d H:i:s", strtotime($request->end_date . $request->end_time));
+        $event->desc_long                   = $request->desc_long;
+        $event->desc_short                  = $request->desc_short;
+        $event->essential_info              = $request->essential_info;
+        $event->event_live_info             = $request->event_live_info;
+        $event->event_venue_id              = @$request->venue;
+        $event->capacity                    = $request->capacity;
+        $event->live_page_without_signedin  = ($request->live_page_without_signedin ? true : false);
 
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
@@ -187,7 +188,7 @@ class EventsController extends Controller
             $event->event_live_info      = $request->event_live_info;
         }
 
-
+        $event->live_page_without_signedin  = ($request->live_page_without_signedin ? true : false);
        
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
