@@ -143,9 +143,16 @@
 							</div>
 							<div class="form-group">
 								<label>Event Live Info <span class="text-muted"><small>This will show on the home page if the event is Live and the Participant is signed in to the event</small></span></label>
-								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
+								{{ Form::textarea('event_live_info',$event->event_live_info,array('id'=>'event_live_info','class'=>'form-control wysiwyg-editor')) }}
 							</div>
-
+							<div class="form-group">
+								<div class="checkbox">
+										<label>
+											{{ Form::checkbox('live_page_without_signedin', null, $event->live_page_without_signedin, array('id'=>'live_page_without_signedin')) }} Show event Live page for participants without signing them in to the event
+										</label>
+								</div>		
+							</div>
+						
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
