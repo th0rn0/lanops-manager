@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class EventTournamentServer extends Model
+class EventTournamentMatchServer extends Model
 {
     use Sluggable;
 
@@ -17,7 +17,7 @@ class EventTournamentServer extends Model
      *
      * @var string
      */
-    protected $table = 'event_tournament_server';
+    protected $table = 'event_tournament_match_server';
 
     /**
      * The attributes that are mass assignable.
@@ -77,7 +77,7 @@ class EventTournamentServer extends Model
      *
      * @return string
      */
-    public static function getTournamentServer(int $challongeMatchId)
+    public static function getTournamentMatchServer(int $challongeMatchId)
     {
         return EventTournamentServer::where('challonge_match_id', $challongeMatchId)->first();
     }

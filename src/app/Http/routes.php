@@ -251,7 +251,15 @@ Route::group(['middleware' => ['installed']], function () {
             );
             Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/match/{challongeMatchId}',
-                'Admin\Events\TournamentsServerController@store'
+                'Admin\Events\TournamentsMatchServerController@store'
+            );
+            Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/match/{challongeMatchId}/update',
+                'Admin\Events\TournamentsMatchServerController@update'
+            );
+            Route::delete(
+                '/admin/events/{event}/tournaments/{tournament}/match/{challongeMatchId}/delete',
+                'Admin\Events\TournamentsMatchServerController@destroy'
             );
             Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team',
