@@ -519,7 +519,8 @@
 							@endif
 							<div class="caption">
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
-								<php echo $tournament->getParticipant($user->id); ?>
+								{{ $tournament->getParticipant($user->id) }}
+								{{ $user->id }}
 								@if ($tournament->only_signedin == false)
 									<span class="small">
 										@if ($tournament->status == 'COMPLETE')
@@ -618,7 +619,11 @@
 											@endif
 										@endforeach
 									@endif
+									
 								@endif
+								<strong>
+									{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
+								</strong>
 							</div>
 						</div>
 					</div>
