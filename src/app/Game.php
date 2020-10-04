@@ -134,12 +134,9 @@ class Game extends Model
         $openmatchservers = array();
         foreach ($this->eventTournaments as $eventTournament )
             {
-                foreach ($eventTournament->getMatches() as $match)
+                foreach ($eventTournament->getNextMatches() as $match)
                 {
-                    if ($match->state == 'open' )
-                    {
                         $openmatchservers[$match->id] = $match->id;
-                    }
                 }
 
             }
