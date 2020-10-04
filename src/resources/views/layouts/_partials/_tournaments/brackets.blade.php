@@ -237,18 +237,18 @@
 								<td colspan="3"> 
 									<div class="form">
 										@if($tournament->game->connect_game_url)
-											<div class="form-group row">
-												<label for="connectGameUrl" class="col-sm-2 col-form-label"></label>
-												<div class="col-sm-10">
-													<a class="btn btn-primary" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
-												</div>
+											<div class="input-group mb-3">
+												<a class="btn btn-primary" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+												{{-- <div class="input-group-append">
+												  <button class="btn btn-outline-secondary" type="button">Button</button>
+												</div> --}}
 											</div>
 										@endif
 										@if($tournament->game->connect_game_command)
-											<div class="form-group row">
-												<label for="connectGameCommand" class="col-sm-2 col-form-label">Connect Command</label>
-												<div class="col-sm-10">
-													<input class="form-control" id="connectGameCommand" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
+											<div class="input-group mb-3">
+												<input class="form-control" id="connectGameCommand{{ $availableParameters->match->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}" aria-describedby="basic-addon2">
+												<div class="input-group-append">
+												  <button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->match->id}}')"><i class="far fa-clipboard"></i></button>
 												</div>
 											</div>
 										@endif
@@ -317,6 +317,21 @@
 			$('[id$=player1_verify_span]').text(player1_name);
 			$('[id$=player2_score_lbl]').text(player2_name);
 			$('[id$=player2_verify_span]').text(player2_name);
+		}
+
+		function copyToClipBoard(inputId) {
+			/* Get the text field */
+			var copyText = document.getElementById(inputId);
+
+			/* Select the text field */
+			copyText.select();
+			copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+			/* Copy the text inside the text field */
+			document.execCommand("copy");
+
+			/* Alert the copied text */
+			alert("Copied the text: " + copyText.value);
 		}
 	</script>
 @endif
