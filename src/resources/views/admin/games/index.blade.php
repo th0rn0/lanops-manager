@@ -135,14 +135,15 @@
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
-							Hint: use as in Game Commands for Matches
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', NULL, array('id'=>'connect_game_url','class'=>'form-control')) }}
+							<small>Hint: use as in Game Commands for Matches</small>
 						</div> 
 						<div class="form-group">
-							Hint: use as in Game Commands for Matches
+							
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_command', NULL, array('id'=>'connect_game_command','class'=>'form-control')) }}
+							<small>Hint: use as in Game Commands for Matches</small>
 						</div> 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}

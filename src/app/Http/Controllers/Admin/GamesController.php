@@ -77,15 +77,15 @@ class GamesController extends Controller
         $destinationPath = '/storage/images/games/' . $game->slug . '/';
 
         // TODO - refactor into model
-        if ((Request::file('image_thumbnail') || Request::file('image_header')) &&
+        if (($request->file('image_thumbnail') || $request->file('image_header')) &&
             !File::exists(public_path() . $destinationPath)
         ) {
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
 
-        if (Request::file('image_thumbnail')) {
-            $imageName  = 'thumbnail.' . Request::file('image_thumbnail')->getClientOriginalExtension();
-            Image::make(Request::file('image_thumbnail'))
+        if ($request->file('image_thumbnail')) {
+            $imageName  = 'thumbnail.' . $request->file('image_thumbnail')->getClientOriginalExtension();
+            Image::make($request->file('image_thumbnail'))
                 ->resize(500, 500)
                 ->save(public_path() . $destinationPath . $imageName);
             $game->image_thumbnail_path = $destinationPath . $imageName;
@@ -95,9 +95,9 @@ class GamesController extends Controller
             }
         }
 
-        if (Request::file('image_header')) {
-            $imageName  = 'header.' . Request::file('image_header')->getClientOriginalExtension();
-            Image::make(Request::file('image_header'))
+        if ($request->file('image_header')) {
+            $imageName  = 'header.' . $request->file('image_header')->getClientOriginalExtension();
+            Image::make($request->file('image_header'))
                 ->resize(1600, 400)
                 ->save(public_path() . $destinationPath . $imageName);
             $game->image_header_path = $destinationPath . $imageName;
@@ -147,16 +147,16 @@ class GamesController extends Controller
 
         $destinationPath = '/storage/images/games/' . $game->slug . '/';
 
-        if ((Request::file('image_thumbnail') || Request::file('image_header')) &&
+        if (($request->file('image_thumbnail') || $request->file('image_header')) &&
             !File::exists(public_path() . $destinationPath)
         ) {
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
 
-        if (Request::file('image_thumbnail')) {
+        if ($request->file('image_thumbnail')) {
             Storage::delete($game->image_thumbnail_path);
-            $imageName  = 'thumbnail.' . Request::file('image_thumbnail')->getClientOriginalExtension();
-            Image::make(Request::file('image_thumbnail'))
+            $imageName  = 'thumbnail.' . $request->file('image_thumbnail')->getClientOriginalExtension();
+            Image::make($request->file('image_thumbnail'))
                 ->resize(500, 500)
                 ->save(public_path() . $destinationPath . $imageName);
             $game->image_thumbnail_path = $destinationPath . $imageName;
@@ -166,10 +166,10 @@ class GamesController extends Controller
             }
         }
 
-        if (Request::file('image_header')) {
+        if ($request->file('image_header')) {
             Storage::delete($game->image_header_path);
-            $imageName  = 'header.' . Request::file('image_header')->getClientOriginalExtension();
-            Image::make(Request::file('image_header'))
+            $imageName  = 'header.' . $request->file('image_header')->getClientOriginalExtension();
+            Image::make($request->file('image_header'))
                 ->resize(1600, 400)
                 ->save(public_path() . $destinationPath . $imageName);
             $game->image_header_path = $destinationPath . $imageName;
