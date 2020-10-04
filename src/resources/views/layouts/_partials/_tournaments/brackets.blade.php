@@ -223,7 +223,7 @@
 						</tr>
 
 						{{-- Connection is only possible if a gameServer is assigned --}}
-						@if(isset($matchserver) && isset($matchserver->gameServer) && $tournament->game->connect_game_url || $tournament->game->connect_game_command)
+						@if($match->state == 'open' && isset($matchserver) && isset($matchserver->gameServer) && $tournament->game->connect_game_url || $tournament->game->connect_game_command)
 							@php
 								$availableParameters = new \stdClass();
 								$availableParameters->game = $tournament->game;
