@@ -146,7 +146,7 @@
 									@if ($tournament->status == 'LIVE')
 										<span class="label label-success">@lang('events.live')</span>
 									@endif
-									@foreach ($user->eventParticipation as $participant)
+									@foreach ($tournamentParticipant->eventParticipant->user->eventParticipation as $participant)
 												@if ($tournament->getParticipant($participant->id))
 													{ $istournamentparticipant = true; }						
 												@endif
