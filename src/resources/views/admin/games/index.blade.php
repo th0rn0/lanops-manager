@@ -120,7 +120,7 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('version','Version',array('id'=>'','class'=>'')) }}
-							{{ Form::text('version',NULL,array('id'=>'version','class'=>'form-control')) }}
+							{{ Form::text('version',NULL, array('id'=>'version','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
 							{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
@@ -137,12 +137,12 @@
 						<div class="form-group">
 							Hint: use as in Game Commands for Matches
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
-							{{ Form::text('connect_game_url', array('id'=>'connect_game_url','class'=>'form-control')) }}
+							{{ Form::text('connect_game_url', NULL, array('id'=>'connect_game_url','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
 							Hint: use as in Game Commands for Matches
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
-							{{ Form::text('connect_game_command', array('id'=>'connect_game_command','class'=>'form-control')) }}
+							{{ Form::text('connect_game_command', NULL, array('id'=>'connect_game_command','class'=>'form-control')) }}
 						</div> 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
