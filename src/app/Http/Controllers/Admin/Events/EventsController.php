@@ -91,6 +91,8 @@ class EventsController extends Controller
         $event->end                 = date("Y-m-d H:i:s", strtotime($request->end_date . $request->end_time));
         $event->desc_long           = $request->desc_long;
         $event->desc_short          = $request->desc_short;
+        $event->essential_info      = $request->essential_info;
+        $event->event_live_info      = $request->event_live_info;
         $event->event_venue_id      = @$request->venue;
         $event->capacity            = $request->capacity;
 
@@ -181,7 +183,12 @@ class EventsController extends Controller
             $event->essential_info  = $request->essential_info;
         }
 
-        
+        if (isset($request->event_live_info)) {
+            $event->event_live_info      = $request->event_live_info;
+        }
+
+
+       
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
         }

@@ -117,6 +117,10 @@
 							{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('essential_info', '',array('id'=>'essential_info','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
+						<div class="form-group">
+							{{ Form::label('event_live_info','Event Live Info',array('id'=>'','class'=>'')) }}
+							{{ Form::textarea('event_live_info', '',array('id'=>'event_live_info','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
+						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('capacity','Capacity',array('id'=>'','class'=>'')) }}

@@ -138,9 +138,14 @@
 								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 							</div>
 							<div class="form-group">
-								<label>Essential Info <span class="text-muted"><small>This will show on the all events and the index page</small></span></label>
+								<label>Essential Info <span class="text-muted"><small>This will show on the all events and the index page when the Event is not live / the participant is not signed in to the event</small></span></label>
 								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
 							</div>
+							<div class="form-group">
+								<label>Event Live Info <span class="text-muted"><small>This will show on the home page if the event is Live and the Participant is signed in to the event</small></span></label>
+								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
+							</div>
+
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>

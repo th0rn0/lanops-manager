@@ -60,7 +60,7 @@
 				<a name="information"></a>
 				<h3>@lang('events.essentialinfo')</h3>
 			</div>
-			{!! $event->essential_info !!}
+			{!! $event->event_live_info !!}
 		</div>
 		<div class="col-lg-6 col-md-6 col-xs-12">
 			<div class="page-header">
