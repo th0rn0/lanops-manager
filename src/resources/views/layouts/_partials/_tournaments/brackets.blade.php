@@ -223,7 +223,7 @@
 						</tr>
 
 						{{-- Connection is only possible if a gameServer is assigned --}}
-						@if($match->state == 'open' && isset($matchserver) && isset($matchserver->gameServer) && ($tournament->game->connect_game_url || $tournament->game->connect_game_command))
+						@if( !$admin && $match->state == 'open' && isset($matchserver) && isset($matchserver->gameServer) && ($tournament->game->connect_game_url || $tournament->game->connect_game_command))
 							@php
 								$availableParameters = new \stdClass();
 								$availableParameters->game = $tournament->game;
@@ -251,6 +251,13 @@
 									</td>
 								</tr>
 							@endif
+						@endif
+						@if ( @$admin && $user->admin && $matchserver)
+							<tr>
+								<td colspan="3"> 
+									Selected Server: { $matchserver->gameServer->name }
+								</td>
+							</tr>
 						@endif
 					</tbody>
 				</table>
