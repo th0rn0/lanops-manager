@@ -110,5 +110,6 @@ return [
     'standings' => 'Rangliste',
     'participants' => 'Teilnehmer',
     'rules' => 'Regeln',
+    'purchaseticketosignup' => 'Kaufe ein Ticket um dich anzumelden',
 
 ];

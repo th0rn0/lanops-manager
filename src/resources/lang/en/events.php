@@ -114,6 +114,7 @@ return [
     'standings' => 'Standings',
     'participants' => 'Participants',
     'rules' => 'Rules',
+    'purchaseticketosignup' => 'Purchase a ticket to signup',
 
 
 ];

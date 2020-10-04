@@ -519,29 +519,34 @@
 							@endif
 							<div class="caption">
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
-								@if ($tournament->only_signedin == false)
-									<span class="small">
-										@if ($tournament->status == 'COMPLETE')
-											<span class="label label-success">@lang('events.ended')</span>
-										@endif
-										@if ($tournament->status == 'LIVE')
-											<span class="label label-success">@lang('events.live')</span>
-										@endif
-										@if (!$user->eventParticipation->isEmpty())
-											@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->eventParticipation->id))
-												<span class="label label-danger">@lang('events.notsignedup')</span>
+								@if (!$user->eventParticipation->isEmpty())
+									@if ($tournament->only_signedin == false)
+										<span class="small">
+											@if ($tournament->status == 'COMPLETE')
+												<span class="label label-success">@lang('events.ended')</span>
 											@endif
-											@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->eventParticipation->id))
-												<span class="label label-success">@lang('events.signedup')</span>
+											@if ($tournament->status == 'LIVE')
+												<span class="label label-success">@lang('events.live')</span>
 											@endif
-										@endif
-										</span>
+											@foreach ($user->eventParticipation as $participant)
+												@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->eventParticipation->id))
+													<span class="label label-danger">@lang('events.notsignedup')</span>
+												@endif
+												@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->eventParticipation->id))
+													<span class="label label-success">@lang('events.signedup')</span>
+												@endif
+											@endforeach
+											</span>
+									@else
+										<span class="small">	
+											<span class="label label-info">@lang('events.signuponlywhenlive')</span>
+										</span>										
+									@endif
 								@else
-									<span class="small">	
-										<span class="label label-info">@lang('events.signuponlywhenlive')</span>
-									</span>										
+										<span class="small">	
+											<span class="label label-info">@lang('events.purchaseticketosignup')</span>
+										</span>	
 								@endif
-
 								<hr>
 								@if ($tournament->status != 'COMPLETE')
 									<dl>
