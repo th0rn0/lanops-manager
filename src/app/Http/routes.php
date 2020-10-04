@@ -297,7 +297,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::delete('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@destroy');
             // Route::get('/admin/games/{game}/gameservercommands/{gameServerCommand}/execute/{gameServer}', 'Admin\GameServerCommandsController@execute');
             Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}', 'Admin\GameServerCommandsController@executeGameServerCommand');
-            Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/{tournament}{match}', 'Admin\GameServerCommandsController@executeGameServerMatchCommand');
+            Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/{tournament}', 'Admin\GameServerCommandsController@executeGameServerMatchCommand');
 
             /**
              * GameServerCommandParametrs 
