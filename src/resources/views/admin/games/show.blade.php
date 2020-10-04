@@ -182,10 +182,10 @@
 					</br>
 					<ul>
 						<li>
-							GameServer: This Parameters are Visible per Server: Available Variable: {>gameServer}
+							GameServer: This Parameters are Visible per Server: Available Variable: {>game},{>gameServer}
 						</li>
 						<li>
-							Match: This Parameters are Visible for Matches and can use the variable {>match}, {>challongeMatch}, when GameServer is Selected {>gameServer}
+							Match: This Parameters are Visible for Matches and can use the variable {>game},{>event},{>tournament},{>match}, {>gameServer}
 						</li>
 					</ul>	
 				</div>
