@@ -122,7 +122,7 @@
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 															<h4 class="modal-title" id="selectServerModalLabel">Select Server</h4>
 														</div>
-														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . (isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'' , 'id'=>'selectServerModal')) }}
+														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . ((isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'') , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
 																<div class="form-group">
 																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
