@@ -221,7 +221,7 @@
 								@endif
 							</td>
 						</tr>
-						@if($connect_game_url || $connect_game_command)
+						@if($tournament->game->connect_game_url || $tournament->game->connect_game_command)
 							@php
 								$availableParameters = new \stdClass();
 								$availableParameters->game = $tournament->game;
@@ -232,7 +232,7 @@
 							@endphp
 
 							<tr>
-								@if($connect_game_url)
+								@if($tournament->game->connect_game_url)
 									
 									<div class="form-group row">
 										<label for="connectGameUrl" class="col-sm-2 col-form-label"></label>
@@ -241,7 +241,7 @@
 										</div>
 									</div>
 								@endif
-								@if($connect_game_command)
+								@if($tournament->game->connect_game_command)
 									<div class="form-group row">
 										<label for="connectGameCommand" class="col-sm-2 col-form-label">Connect Command</label>
 										<div class="col-sm-10">
