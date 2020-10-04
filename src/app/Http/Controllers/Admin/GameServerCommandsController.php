@@ -232,6 +232,8 @@ class GameServerCommandsController extends Controller
                         }else{
                             Session::flash('alert-success', "Can not resolve command parameter \"$commandPart\"!");
                         }
+
+                        unset($commandPartValue);
                     }
                 }
                 catch( Exception $e )
