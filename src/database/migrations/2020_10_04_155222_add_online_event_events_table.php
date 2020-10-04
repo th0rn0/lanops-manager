@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddOnlySignedinEventTournamentsTable extends Migration
+class AddOnlineEventEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddOnlySignedinEventTournamentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->boolean('only_signedin')->after('rules')->default(true);
+        Schema::table('events', function (Blueprint $table) {
+            $table->boolean('online_event')->after('event_live_info')->default(false);
+
         });
     }
 
@@ -25,8 +26,8 @@ class AddOnlySignedinEventTournamentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->dropColumn('only_signedin');
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropColumn('online_event');
         });
     }
 }

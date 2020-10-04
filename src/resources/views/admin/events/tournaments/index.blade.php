@@ -184,15 +184,7 @@
 								</div>
 							</div> 
 						</div>
-						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
-								<div class="checkbox">
-									<label>
-										{{ Form::checkbox('only_signedin', null, true, array('id'=>'only_signedin')) }} Signup only when signed in to event
-									</label>
-								</div>
-							</div> 
-						</div>
+
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				@else

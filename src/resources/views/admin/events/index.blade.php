@@ -138,7 +138,7 @@
 						</div>
 						<div class="checkbox">
 								<label>
-									{{ Form::checkbox('live_page_without_signedin', null, false, array('id'=>'live_page_without_signedin')) }} Show event Live page for participants without signing them in to the event
+									{{ Form::checkbox('online_event', null, false, array('id'=>'online_event')) }} Online Event
 								</label>
 						</div>		
 						

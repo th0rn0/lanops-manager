@@ -99,7 +99,6 @@ class TournamentsController extends Controller
         $tournament->team_size                  = $request->team_size;
         $tournament->description                = $request->description;
         $tournament->rules                      = $request->rules;
-        $tournament->only_signedin              = ($request->only_signedin ? true : false);
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
         $tournament->status                     = 'DRAFT';
@@ -146,7 +145,6 @@ class TournamentsController extends Controller
         $tournament->name           = $request->name;
         $tournament->description    = $request->description;
         $tournament->rules          = $request->rules;
-        $tournament->only_signedin  = ($request->only_signedin ? true : false);
         $disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
         if (!in_array($tournament->status, $disallowed_array)) {
             $game_id = null;

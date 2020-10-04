@@ -45,7 +45,7 @@ class HomeController extends Controller
                     $participant->signed_in
                 ) || ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                 (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                $participant->event->live_page_without_signedin
+                $participant->event->online_event
             )) {
                     return $this->event();
                 }
@@ -180,7 +180,7 @@ class HomeController extends Controller
 
         $ticketFlagSignedIn = false;
         if ($user) {
-            $user->setActiveEventParticipantSignedIn($event->id);
+            $user->setActiveEventParticipant($event);
             if ($user->eventParticipation != null || isset($user->eventParticipation)) {
                 foreach ($user->eventParticipation as $participant) {
                     if ($participant->event_id == $event->id) {
