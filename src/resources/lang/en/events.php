@@ -116,5 +116,7 @@ return [
     'rules' => 'Rules',
     'purchaseticketosignup' => 'Purchase a ticket to signup',
 
+    /* Ticket Partial*/
+    'remove_seating' => 'Remove Seating',
 
 ];

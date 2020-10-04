@@ -112,4 +112,7 @@ return [
     'rules' => 'Regeln',
     'purchaseticketosignup' => 'Kaufe ein Ticket um dich anzumelden',
 
+    /* Ticket Partial*/
+    'remove_seating' => 'Sitzplatz entfernen',
+
 ];
