@@ -90,11 +90,19 @@ class User extends Authenticatable implements MustVerifyEmail
      * Set Active Event Participant for current User
      * @param $eventId
      */
-    public function setActiveEventParticipant($eventId)
+    public function setActiveEventParticipant($event)
     {
         // TODO Enable signed in again depending on tournament setting
-        $clauses = ['user_id' => $this->id, 'signed_in' => true];
+        if ($event->online_event)
+        {
+            $clauses = ['user_id' => $this->id];
+        }
+        else
+        {
+            $clauses = ['user_id' => $this->id, 'signed_in' => true];
+        }
         $this->active_event_participant = EventParticipant::where($clauses)->orderBy('updated_at', 'DESC')->first();
+
     }
 
     /**

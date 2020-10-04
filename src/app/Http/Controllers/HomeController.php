@@ -177,7 +177,7 @@ class HomeController extends Controller
 
         $ticketFlagSignedIn = false;
         if ($user) {
-            $user->setActiveEventParticipant($event->id);
+            $user->setActiveEventParticipant($event);
             if ($user->eventParticipation != null || isset($user->eventParticipation)) {
                 foreach ($user->eventParticipation as $participant) {
                     if ($participant->event_id == $event->id) {

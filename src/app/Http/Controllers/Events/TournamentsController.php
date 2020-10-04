@@ -47,7 +47,7 @@ class TournamentsController extends Controller
 
         if (!empty($user)) {
    
-                $user->setActiveEventParticipant($event->id);
+                $user->setActiveEventParticipant($event);
             
             
         }
