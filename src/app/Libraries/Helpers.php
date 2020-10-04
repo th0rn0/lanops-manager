@@ -3,10 +3,12 @@
 namespace App\Libraries;
 
 use Session;
-use Request;
+use Illuminate\Http\Request;
 use Exception;
 use DB;
 use App\GameServerCommandParameter;
+use App\EventTournament;
+use App\User;
 use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 
@@ -751,5 +753,33 @@ class Helpers
         }
 
         return $result;
+    }
+
+    /**
+     * Return true if selected user is part of the match
+     * 
+     * @param  EventTournament $tournament
+     * @param   $match
+     * @param  User $user
+     * 
+     * @return boolean True if user is part of match
+     */
+    public static function isMatchPlayer(EventTournament $tournament, $match, User $user)
+    {
+        $team1 = $tournament->getTeamByChallongeId($match->player1_id);
+        $team2 = $tournament->getTeamByChallongeId($match->player2_id);
+
+        foreach ($team1->tournamentParticipants as $key => $team1Participant) {
+            if ($team1Participant->eventParticipant->user->id == $user->id) {
+                return true;
+            }
+        }
+        foreach ($team2->tournamentParticipants as $key => $team1Participant) {
+            if ($team1Participant->eventParticipant->user->id == $user->id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

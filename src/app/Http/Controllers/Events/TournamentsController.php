@@ -46,23 +46,20 @@ class TournamentsController extends Controller
         }
 
         if (!empty($user)) {
-   
-                $user->setActiveEventParticipant($event);
-            
-            
+
+            $user->setActiveEventParticipant($event);
         }
 
         return view('events.tournaments.show')
             ->withTournament($tournament)
             ->withEvent($event)
-            ->withUser($user)
-        ;
+            ->withUser($user);
     }
 
-    public function matchConfig(Event $event, EventTournament $tournament, int $challongeMatchId){
+    public function matchConfig(Event $event, EventTournament $tournament, int $challongeMatchId)
+    {
         $match = $tournament->getMatch($challongeMatchId);
-        if(!$match)
-        {
+        if (!$match) {
             return "No Match found for $challongeMatchId";
         }
 
@@ -73,25 +70,26 @@ class TournamentsController extends Controller
         $result->matchid = "Match $challongeMatchId";
         $result->num_maps = 1;
         $result->players_per_team = 1;
-        $result->min_players_to_ready= 1;
-        $result->min_spectators_to_ready= 0;
-        $result->skip_veto= false;
-        $result->veto_first= "team1";
-        $result->side_type= "standard";
-        $result->maplist = array("de_cache",
-                                "de_dust2",
-                                "de_inferno",
-                                "de_mirage",
-                                "de_nuke",
-                                "de_overpass",
-                                "de_train");
+        $result->min_players_to_ready = 1;
+        $result->min_spectators_to_ready = 0;
+        $result->skip_veto = false;
+        $result->veto_first = "team1";
+        $result->side_type = "standard";
+        $result->maplist = array(
+            "de_cache",
+            "de_dust2",
+            "de_inferno",
+            "de_mirage",
+            "de_nuke",
+            "de_overpass",
+            "de_train"
+        );
         $result->team1 = new \stdClass();
         $result->team1->name = $team1->name;
         $result->team1->tag = $team1->name;
         $result->team1->flag = "DE";
         $result->team1->players = new \stdClass();
-        foreach ($team1->tournamentParticipants as $key => $team1Participant)
-        {
+        foreach ($team1->tournamentParticipants as $key => $team1Participant) {
             $eventParticipant = $team1Participant->eventParticipant;
             $user = $eventParticipant->user;
             $result->team1->players->{$user->steamid} = $user->steamname;
@@ -102,15 +100,11 @@ class TournamentsController extends Controller
         $result->team2->tag = $team2->name;
         $result->team2->flag = "DE";
         $result->team2->players = new \stdClass();
-        foreach ($team2->tournamentParticipants as $key => $team2Participants)
-        {
+        foreach ($team2->tournamentParticipants as $key => $team2Participants) {
             $eventParticipant = $team2Participants->eventParticipant;
             $user = $eventParticipant->user;
             $result->team2->players->{$user->steamid} = $user->steamname;
         }
-
-        $result->cvars = new \stdClass();
-        $result->cvars->hostname = "lan2play";
 
         return response()->json($result);
     }
@@ -128,7 +122,7 @@ class TournamentsController extends Controller
             Session::flash('alert-danger', __('events.tournament_signups_not_permitted'));
             return Redirect::back();
         }
-     
+
         if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
             Session::flash('alert-danger', __('events.tournament_not_signed_in'));
             return Redirect::back();
@@ -139,7 +133,8 @@ class TournamentsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->event_tournament_team_id) &&
+        if (
+            isset($request->event_tournament_team_id) &&
             $tournamentTeam = $tournament->tournamentTeams()->where('id', $request->event_tournament_team_id)->first()
         ) {
             if ($tournamentTeam->tournamentParticipants->count() == substr($tournament->team_size, 0, 1)) {
@@ -176,7 +171,7 @@ class TournamentsController extends Controller
             Session::flash('alert-danger', __('events.tournament_signups_not_permitted'));
             return Redirect::back();
         }
-     
+
         if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
             Session::flash('alert-danger', __('events.tournament_not_signed_in'));
             return Redirect::back();
@@ -224,7 +219,7 @@ class TournamentsController extends Controller
             Session::flash('alert-danger', __('events.tournament_signups_not_permitted'));
             return Redirect::back();
         }
-     
+
         if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
             Session::flash('alert-danger', __('events.tournament_not_signed_in'));
             return Redirect::back();
