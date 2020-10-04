@@ -539,11 +539,6 @@
 									@endif
 											
 								</span>
-								
-								<span class="small">	
-											<span class="label label-info">@lang('events.signuponlywhenlive')</span>
-								</span>			
-
 								<hr>
 								@if ($tournament->status != 'COMPLETE')
 									<dl>

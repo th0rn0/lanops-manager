@@ -129,7 +129,7 @@
 					<div class="form-group">
 						<div class="checkbox">
 								<label>
-									{{ Form::checkbox('online_event', null, $event->online_event, array('id'=>'online_event')) }} Online Event
+									{{ Form::checkbox('online_event', null, $event->online_event, array('id'=>'online_event')) }} Online Event (allow tournament registration and home redirection without being signed in to the event)
 								</label>
 						</div>		
 					</div>
