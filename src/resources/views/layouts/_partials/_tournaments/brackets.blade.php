@@ -112,7 +112,7 @@
 								 				Submit Scores
 								 			</button>
 							 			@endif
-										 @if ( !isset($matchserver) && !isset($matchserver->gameServer) )
+										@if ( !isset($matchserver) && !isset($matchserver->gameServer) )
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal">Select Server</button>
 											<!-- Select Command Modal -->
 											<div class="modal fade" id="selectServerModal" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel" aria-hidden="true">
@@ -139,7 +139,7 @@
 											</div>
 										@else
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal">Commands</button>
-											<!-- Select Command Modal -->
+											<!-- execute Command Modal -->
 											<div class="modal fade" id="executeServerCommandModal" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
@@ -221,6 +221,36 @@
 								@endif
 							</td>
 						</tr>
+						@if($connect_game_url || $connect_game_command)
+							@php
+								$availableParameters = new \stdClass();
+								$availableParameters->game = $tournament->game;
+								$availableParameters->event = $tournament->event;
+								$availableParameters->tournament = $tournament;
+								$availableParameters->gameServer = $matchserver->gameServer;
+								$availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
+							@endphp
+
+							<tr>
+								@if($connect_game_url)
+									
+									<div class="form-group row">
+										<label for="connectGameUrl" class="col-sm-2 col-form-label"></label>
+										<div class="col-sm-10">
+											<a class="btn btn-primary" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+										</div>
+									</div>
+								@endif
+								@if($connect_game_command)
+									<div class="form-group row">
+										<label for="connectGameCommand" class="col-sm-2 col-form-label">Connect Command</label>
+										<div class="col-sm-10">
+											<input class="form-control" id="connectGameCommand" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
+										</div>
+									</div>
+								@endif
+							</tr>
+						@endif
 					</tbody>
 				</table>
 				@php

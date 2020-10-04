@@ -19,7 +19,7 @@ class Helpers
         $venues = \App\EventVenue::all();
         $return = array();
         foreach ($venues as $venue) {
-                $return[$venue->id] = $venue->display_name;
+            $return[$venue->id] = $venue->display_name;
         }
         if (!$obj) {
             $return[] = 'None';
@@ -112,8 +112,7 @@ class Helpers
             'end',
             '>=',
             Carbon::now()
-        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
-        ) {
+        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
             if ($event->status == 'DRAFT' || $event->status == 'PREVIEW') {
                 return $event->display_name . ' - ' . $event->status;
             }
@@ -132,8 +131,7 @@ class Helpers
             'end',
             '>=',
             Carbon::now()
-        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
-        ) {
+        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
             return $event->slug;
         }
         return '#';
@@ -150,8 +148,7 @@ class Helpers
             'end',
             '>=',
             Carbon::now()
-        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
-        ) {
+        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
             return $event->desc_long;
         }
         return 'Coming soon...';
@@ -167,8 +164,7 @@ class Helpers
             'end',
             '>=',
             Carbon::now()
-        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
-        ) {
+        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
             return date("d-m-Y H:i", strtotime($event->start));
         }
         return 'Coming soon...';
@@ -184,8 +180,7 @@ class Helpers
             'end',
             '>=',
             Carbon::now()
-        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
-        ) {
+        )->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()) {
             return date("d-m-Y H:i", strtotime($event->end));
         }
         return 'Coming soon...';
@@ -212,7 +207,8 @@ class Helpers
         $active_tournament_counter = 0;
         foreach ($user->eventParticipants as $event_participant) {
             foreach ($event_participant->tournamentParticipants as $tournament_participant) {
-                if ($tournament_participant->eventTournament->event_id == $event_id &&
+                if (
+                    $tournament_participant->eventTournament->event_id == $event_id &&
                     $tournament_participant->eventTournament->status != 'COMPLETE'
                 ) {
                     $active_tournament_counter++;
@@ -297,7 +293,7 @@ class Helpers
         return \App\Game::getGameSelectArray($publicOnly);
     }
 
-   /**
+    /**
      * Get Games Select Array
      * @param  $publicOnly
      * @return Array
@@ -359,7 +355,6 @@ class Helpers
             }
         }
         return $formattedBasket;
-
     }
 
     /**
@@ -370,7 +365,7 @@ class Helpers
     {
         return \App\Appearance::getCssVersion();
     }
-    
+
     /**
      * Get Card Expiry Month Dates
      * @return array
@@ -378,7 +373,7 @@ class Helpers
     public static function getCardExpiryMonthDates()
     {
         $return = array();
-        for ($i=1; $i<=12; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             $date = $i;
             // if ($date <= 9) {
             //     $date = '0' . $i;
@@ -395,7 +390,7 @@ class Helpers
     public static function getCardExpiryYearDates()
     {
         $return = array();
-        for ($i=(int)date('y'); $i<=99; $i++) {
+        for ($i = (int)date('y'); $i <= 99; $i++) {
             $date = $i;
             // if ($date <= 9) {
             //     $date = '0' . $i;
@@ -679,23 +674,24 @@ class Helpers
      * Get Ticket quatntity for Select
      * @return array
      */
-    public static function getTicketQuantitySelection($ticket, $remainingcapacity){
-	
+    public static function getTicketQuantitySelection($ticket, $remainingcapacity)
+    {
+
         $ticketCount = $remainingcapacity;
-        
-        if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0){
+
+        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0) {
             $ticketCount = $ticket->no_tickets_per_user;
         }
-        
+
         $result = array();
         for ($i = 1; $i <= $ticketCount; $i++) {
             $result[$i] = $i;
         }
-        
+
         return $result;
     }
 
-     /**
+    /**
      * Resolve the command parameters
      * 
      * @param  string $command
@@ -712,55 +708,44 @@ class Helpers
         // Example Variable {>variable}
         $commandParts = preg_split("/[\{\}]+/", $command);
         foreach ($commandParts as $key => $commandPart) {
-            if(strlen($commandPart) <= 0)
-            {
+            if (strlen($commandPart) <= 0) {
                 continue;
             }
-            
-            if($commandPart[0] != '>'){
+
+            if ($commandPart[0] != '>') {
                 $result = $result . $commandPart;
-            }else{
-                try
-                {  
+            } else {
+                try {
                     $commandPart = ltrim($commandPart, '>');
 
 
-                    if(isset($request->{$commandPart}))
-                    {
+                    if ($request && isset($request->{$commandPart})) {
                         $gameServerCommandParameter = GameServerCommandParameter::where('slug', $commandPart)->first();
                         $result =  $result . $gameServerCommandParameter->getParameterSelectArray()[$request->{$commandPart}];
-                    }
-                    else
-                    {
+                    } else {
                         $explodedVariableParts = explode("->", $commandPart);
-                        foreach ($explodedVariableParts as $key => $explodedVariablePart) 
-                        {
-                            if(isset($commandPartValue)) 
-                            {
+                        foreach ($explodedVariableParts as $key => $explodedVariablePart) {
+                            if (isset($commandPartValue)) {
                                 $commandPartValue = $commandPartValue->{$explodedVariablePart};
-                            }
-                            else
-                            {
+                            } else {
                                 $commandPartValue = $availableParameters->{$explodedVariablePart};
                             }
                         }
 
-                        if(isset($commandPartValue) && !empty($commandPartValue)){
+                        if (isset($commandPartValue) && !empty($commandPartValue)) {
                             $result = $result . $commandPartValue;
-                        }else{
+                        } else {
                             Session::flash('alert-success', "Can not resolve command parameter \"$commandPart\"!");
                         }
 
                         unset($commandPartValue);
                     }
-                }
-                catch( Exception $e )
-                {
-                    Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler .' ' . var_export($e->getMessage(), true));
+                } catch (Exception $e) {
+                    Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler . ' ' . var_export($e->getMessage(), true));
                 }
             }
         }
-        
+
         return $result;
     }
 }

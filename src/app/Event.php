@@ -20,7 +20,7 @@ class Event extends Model
      * @var string
      */
     protected $table = 'events';
-    
+
     protected $dates = ['deleted_at'];
 
     /**
@@ -133,7 +133,7 @@ class Event extends Model
             ]
         ];
     }
-    
+
     /**
      * Get the route key for the model.
      *
@@ -155,7 +155,7 @@ class Event extends Model
         $seatingPlan = $this->seatingPlans()->find($seatingPlanId);
         return $seatingPlan->seats()->where('seat', ucwords($seat))->first();
     }
-    
+
     /**
      * Get Event Participant
      * @param  $userId
@@ -270,7 +270,7 @@ class Event extends Model
      */
     public function addTagsById($tags)
     {
-        foreach($this->tags as $tag) {
+        foreach ($this->tags as $tag) {
             $tag->delete();
         }
         foreach ($tags as $tag) {
@@ -293,5 +293,4 @@ class Event extends Model
         }
         return true;
     }
-
 }
