@@ -17,4 +17,14 @@ return [
     'ticket_not_yet' => 'Das Ticket kann noch nicht gekauft werden.',
     'ticket_not_anymore' => 'Das Ticket kann nicht mehr gekauft werden.',
 
+    /* Ticket Partial*/
+    'has_been_gifted' => 'Dieses Ticket wurde verschenkt!',
+    'not_eligable_for_seat' => 'Mit diesem Ticket kann kein Sitzplatz gebucht werden',
+    'gift_ticket' => 'Verschenke Ticket', 
+    'gift_url' => 'Geschenk URL:',
+    'revoke_gift' => 'Geschenk zurückziehen',
+    'staff_ticket' => 'Team Ticket',
+    'free_ticket' => 'Kostenloses Ticket,'
+    
+
 ];
