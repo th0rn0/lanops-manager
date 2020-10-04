@@ -234,24 +234,26 @@
 							@endphp
 
 							<tr>
-								<div class="form">
-									@if($tournament->game->connect_game_url)
-										<div class="form-group row">
-											<label for="connectGameUrl" class="col-sm-2 col-form-label"></label>
-											<div class="col-sm-10">
-												<a class="btn btn-primary" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+								<td colspan="3"> 
+									<div class="form">
+										@if($tournament->game->connect_game_url)
+											<div class="form-group row">
+												<label for="connectGameUrl" class="col-sm-2 col-form-label"></label>
+												<div class="col-sm-10">
+													<a class="btn btn-primary" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+												</div>
 											</div>
-										</div>
-									@endif
-									@if($tournament->game->connect_game_command)
-										<div class="form-group row">
-											<label for="connectGameCommand" class="col-sm-2 col-form-label">Connect Command</label>
-											<div class="col-sm-10">
-												<input class="form-control" id="connectGameCommand" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
+										@endif
+										@if($tournament->game->connect_game_command)
+											<div class="form-group row">
+												<label for="connectGameCommand" class="col-sm-2 col-form-label">Connect Command</label>
+												<div class="col-sm-10">
+													<input class="form-control" id="connectGameCommand" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
+												</div>
 											</div>
-										</div>
-									@endif
-								</div>
+										@endif
+									</div>
+								</td>
 							</tr>
 						@endif
 					</tbody>
