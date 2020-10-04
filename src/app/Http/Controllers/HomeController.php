@@ -43,7 +43,10 @@ class HomeController extends Controller
                 if (((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
                     $participant->signed_in
-                )) {
+                ) || ((date('Y-m-d H:i:s') >= $participant->event->start) &&
+                (date('Y-m-d H:i:s') <= $participant->event->end) &&
+                $participant->event->online_event
+            )) {
                     return $this->event();
                 }
             }
