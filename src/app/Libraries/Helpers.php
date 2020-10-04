@@ -2,7 +2,11 @@
 
 namespace App\Libraries;
 
+use Session;
+use Request;
+use Exception;
 use DB;
+use App\GameServerCommandParameter;
 use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 
@@ -700,7 +704,7 @@ class Helpers
      * 
      * @return string The resolved command
      */
-    public static function resolveServerCommandParameters(string $command, Request $request, $availableParameters)
+    public static function resolveServerCommandParameters(string $command, ?Request $request, $availableParameters)
     {
         // Set Variables to be usable in Commands 
         $result = "";
@@ -741,7 +745,7 @@ class Helpers
                         unset($commandPartValue);
                     }
                 } catch (Exception $e) {
-                    Session::flash('alert-danger', 'error while executing command!' . $game->gamecommandhandler . ' ' . var_export($e->getMessage(), true));
+                    Session::flash('alert-danger', 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
                 }
             }
         }
