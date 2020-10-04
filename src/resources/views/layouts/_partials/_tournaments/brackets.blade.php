@@ -233,7 +233,7 @@
 								$availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
 							@endphp
 
-							@if (Helpers::isMatchPlayer($tournament, $availableParameters->match, $user))
+							@if ($user && Helpers::isMatchPlayer($tournament, $availableParameters->match, $user))
 
 								<tr>
 									<td colspan="3"> 
