@@ -88,7 +88,7 @@ class GameServersController extends Controller
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
 
-        if (!$game->save()) {
+        if (!$gameServer->save()) {
             Session::flash('alert-danger', 'Could not save Game Server!');
             return Redirect::back();
         }
