@@ -78,7 +78,7 @@ class GameServerCommandsController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully saved GameServerCommand!');
-        return Redirect::back();
+        return Redirect::to('admin/games/' . $game->slug . '#gameserverscommands');
     }
 
     /**
@@ -114,7 +114,7 @@ class GameServerCommandsController extends Controller
 
 
         Session::flash('alert-success', 'Successfully saved Game Server Command!');
-        return Redirect::to('admin/games/' . $game->slug);
+        return Redirect::to('admin/games/' . $game->slug . '#gameserverscommands');
     }
 
     /**
