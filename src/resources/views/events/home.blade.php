@@ -131,7 +131,7 @@
 		<div class="row">
 			@foreach ($gameServerList as $game => $gameServers)
 				
-				{{ $game->name }}
+				{{ $game }}
 
 				@foreach ($gameServers as $gameserver)
 					{{ $gameserver->name }}
