@@ -14,9 +14,9 @@ ENV DB_MIGRATE false
 
 COPY resources/docker/root /
 WORKDIR $NGINX_DOCUMENT_ROOT
-COPY src/ $NGINX_DOCUMENT_ROOT
+COPY src/ $NGINX_DOCUMENT_ROOT --chown=${UUID}:${GUID}
 
-RUN chown -R ${UUID}:${GUID} $NGINX_DOCUMENT_ROOT
+#RUN chown -R ${UUID}:${GUID} $NGINX_DOCUMENT_ROOT
 RUN chgrp -R ${GUID} $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 RUN chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
