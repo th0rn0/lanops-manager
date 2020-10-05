@@ -179,7 +179,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer Command</h4>
+												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer</h4>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer->slug )) }}
 												<div class="modal-body">
@@ -192,6 +192,10 @@
 															{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
 															{{ Form::text('address', $gameServer->address, array('id'=>'address','class'=>'form-control')) }}
 														</div>
+														<div class="form-group">
+															{{ Form::label('type','Type',array('id'=>'','class'=>'')) }}
+															{{ Form::select('type', ['Casual' => 'Casual', 'Match' => 'Match'],  $gameServer->type, array('id'=>'type','class'=>'form-control')) }}
+														</div> 
 														<div class="form-group">
 															{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
 															{{ Form::number('game_port', $gameServer->game_port, array('id'=>'game_port','class'=>'form-control')) }}
@@ -376,7 +380,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-												<h4 class="modal-title" id="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}">Edit GameServer Command</h4>
+												<h4 class="modal-title" id="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}">Edit GameServer Command Parameter</h4>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' . '/' . $gameServerCommandParameter->slug )) }}
 												<div class="modal-body">
