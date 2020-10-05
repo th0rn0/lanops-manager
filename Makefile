@@ -142,14 +142,14 @@ npm-install:
 	docker run --rm --name js-maintainence --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:14.10 /bin/bash -ci "npm install && npm run production"
+	node:14.10 /bin/bash -ci "npm install --no-audit && npm run production"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
-	node:14.10 /bin/bash -ci "npm install && npm run dev"
+	node:14.10 /bin/bash -ci "npm install --no-audit && npm run dev"
 
 #list npm package - usage make npm-ls module=module
 npm-ls:
