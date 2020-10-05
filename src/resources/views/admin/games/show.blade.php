@@ -89,7 +89,7 @@
 									<td width="15%">
 									
 										<div>
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal">Edit</button>
+											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -160,12 +160,12 @@
 									</td>
 								</tr>
 
-								<div class="modal fade" id="editGameServerModal" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel" aria-hidden="true">
+							<div class="modal fade" id="editGameServerModal{{$gameServer->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel{{$gameServer->id}}" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-												<h4 class="modal-title" id="editGameServerModalLabel">Edit GameServer Command</h4>
+												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer Command</h4>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer )) }}
 												<div class="modal-body">
