@@ -134,7 +134,15 @@
 				{{ $game }}
 
 				@foreach ($gameServers as $gameserver)
-					{{ $gameserver->name }}
+					@php
+					$availableParameters = new \stdClass();
+					$availableParameters->game = $gameserver->game;
+					// $availableParameters->event = $tournament->event;
+					// $availableParameters->tournament = $tournament;
+					$availableParameters->gameServer = $gameServer;
+					// $availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
+					@endphp
+					{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}
 				@endforeach
 			
 			@endforeach
