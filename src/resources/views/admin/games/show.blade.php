@@ -167,7 +167,7 @@
 												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer Command</h4>
 											</div>
-											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer )) }}
+											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer->slug )) }}
 												<div class="modal-body">
 													<div class="list-group">
 														@if ($errors->any())
