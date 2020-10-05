@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStreamPortGamesTable extends Migration
+class AddStreamPortGameServersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddStreamPortGamesTable extends Migration
      */
     public function up()
     {
-        Schema::table('games', function (Blueprint $table) {
+        Schema::table('game_servers', function (Blueprint $table) {
             $table->integer('stream_port');
         });
     }
@@ -25,7 +25,7 @@ class AddStreamPortGamesTable extends Migration
      */
     public function down()
     {
-        Schema::table('games', function (Blueprint $table) {
+        Schema::table('game_servers', function (Blueprint $table) {
             $table->dropColumn('stream_port');
         });
     }
