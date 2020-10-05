@@ -53,6 +53,7 @@
 							<tr>
 								<th>Name</th>
 								<th>Slug</th>
+								<th>Type</th>
 								<th>Address</th>
 								<th>Game Port</th>
 								<th>Game Password</th>
@@ -76,6 +77,9 @@
 									</td>
 									<td>
 										{{ $gameServer->slug }}
+									</td>
+									<td>
+										{{ $gameServer->type }}
 									</td>
 									<td>
 										{{ $gameServer->address }}
@@ -432,6 +436,10 @@
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
+						</div> 
+						<div class="form-group">
+							{{ Form::label('type','Type',array('id'=>'','class'=>'')) }}
+							{{ Form::select('type', ['Casual' => 'Casual', 'Match' => 'Match'], NULL, array('id'=>'type','class'=>'form-control')) }}
 						</div> 
 						<div class="form-group">
 							{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}

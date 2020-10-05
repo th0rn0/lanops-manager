@@ -30,13 +30,15 @@ class GameServersController extends Controller
         $rules = [
             'name'              => 'required',
             'address.required'     => 'required',
-            'game_port'      => 'required|integer'
+            'game_port'      => 'required|integer',
+            'type'          =>  'in:Match,Casual'
         ];
         $messages = [
             'name.required'         => 'Game name is required',
             'address.required'     => 'An Address is Required',
             'game_port.required'     => 'A Game Port is Required',
-            'game_port.integer'      => 'Game Port must be a number'
+            'game_port.integer'      => 'Game Port must be a number',
+            'type.in'                => 'Gameserver Type must be match or casual'
         ];
 
         $this->validate($request, $rules, $messages);
@@ -44,6 +46,7 @@ class GameServersController extends Controller
         $gameServer                 = new GameServer();
         $gameServer->name           = $request->name;
         $gameServer->game_id        = $game->id;
+        $gameServer->type           = $request->type;
         $gameServer->address        = $request->address;
         $gameServer->game_port      = $request->game_port;
         $gameServer->game_password  = $request->game_password;
@@ -70,18 +73,21 @@ class GameServersController extends Controller
         $rules = [
             'name'           => 'required',
             'address'        => 'required',
-            'game_port'      => 'required|integer'
+            'game_port'      => 'required|integer',
+            'type'          =>  'in:Match,Casual'
         ];
         $messages = [
             'name.required'         => 'Game name is required',
             'address.required'     => 'An Address is Required',
             'game_port.required'     => 'A Game Port is Required',
-            'game_port.integer'      => 'Game Port must be a number'
+            'game_port.integer'      => 'Game Port must be a number',
+            'type.in'                => 'Gameserver Type must be match or casual'
         ];
 
         $this->validate($request, $rules, $messages);
 
         $gameServer->name           = $request->name;
+        $gameServer->type           = $request->type;
         $gameServer->address        = $request->address;
         $gameServer->game_port      = $request->game_port;
         $gameServer->game_password  = $request->game_password;
