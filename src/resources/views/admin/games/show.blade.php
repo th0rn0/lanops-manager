@@ -569,7 +569,7 @@
 								{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
 							</div>
 												
-							<button type="submit" class="btn btn-success btn-block col-xs-12">Submit</button>
+							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
 					{{ Form::close() }}					
 				</div>
@@ -602,7 +602,7 @@
 								{{ Form::text('options', NULL, array('id'=>'options','class'=>'form-control')) }}
 							</div>
 												
-							<button type="submit" class="btn btn-success btn-block col-xs-12">Submit</button>
+							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
 					{{ Form::close() }}					
 				</div>
