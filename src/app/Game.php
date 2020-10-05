@@ -131,9 +131,35 @@ class Game extends Model
 
     public function getGameServerSelectArray()
     {
+        $openmatchservers = array();
+        foreach ($this->eventTournaments as $eventTournament )
+            {
+                foreach ($eventTournament->getNextMatches() as $match)
+                {
+                        $openmatchservers[$match->id] = $match->id;
+                }
+
+            }
+
         $return = array();
         foreach (GameServer::where(['game_id' => $this->id])->get() as $gameServer) {
-            $return[$gameServer->id] = $gameServer->name;
+            $gameserver_is_used = false;
+            foreach ($gameServer->eventTournamentMatchServer as $eventTournamentMatchServer ){
+
+                
+                if(array_key_exists($eventTournamentMatchServer->challonge_match_id, $openmatchservers)) 
+                {
+                    $gameserver_is_used = true;
+                    break; 
+                }
+
+            }
+
+            if (!$gameserver_is_used)
+            {
+                $return[$gameServer->id] = $gameServer->name;
+            }
+            
         }
 
         return $return;
