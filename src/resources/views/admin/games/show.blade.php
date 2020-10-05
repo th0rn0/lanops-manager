@@ -38,6 +38,16 @@
 			</div>
 			<div class="panel-body">
 
+				@if ($errors->any())
+					<div class="alert alert-danger">
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
+
 				<table width="100%" class="table table-hover" id="dataTables-example">
 				<thead>
 							<tr>
@@ -170,38 +180,29 @@
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer->slug )) }}
 												<div class="modal-body">
 													<div class="list-group">
-														@if ($errors->any())
-															<div class="alert alert-danger">
-																<ul>
-																	  @foreach ($errors->all() as $error)
-																		<li>{{ $error }}</li>
-																	  @endforeach
-																</ul>
-															</div>
-														@endif
 														<div class="form-group">
 															{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 															{{ Form::text('name', $gameServer->name, array('id'=>'name','class'=>'form-control')) }}
 														</div> 
 														<div class="form-group">
 															{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
-															{{ Form::text('address', $gameServer->address, array('id'=>'name','class'=>'form-control')) }}
+															{{ Form::text('address', $gameServer->address, array('id'=>'address','class'=>'form-control')) }}
 														</div>
 														<div class="form-group">
 															{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
-															{{ Form::number('game_port', $gameServer->game_port, array('id'=>'name','class'=>'form-control')) }}
+															{{ Form::number('game_port', $gameServer->game_port, array('id'=>'game_port','class'=>'form-control')) }}
 														</div>
 														<div class="form-group">
 															{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
-															{{ Form::text('game_password', $gameServer->game_password, array('id'=>'name','class'=>'form-control')) }}
+															{{ Form::text('game_password', $gameServer->game_password, array('id'=>'game_password','class'=>'form-control')) }}
 														</div>
 														<div class="form-group">
 															{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
-															{{ Form::number('rcon_port', $gameServer->rcon_port, array('id'=>'name','class'=>'form-control')) }}
+															{{ Form::number('rcon_port', $gameServer->rcon_port, array('id'=>'rcon_port','class'=>'form-control')) }}
 														</div>
 														<div class="form-group">
 															{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
-															{{ Form::text('rcon_password', $gameServer->rcon_password, array('id'=>'name','class'=>'form-control')) }}
+															{{ Form::text('rcon_password', $gameServer->rcon_password, array('id'=>'rcon_password','class'=>'form-control')) }}
 														</div>
 													</div>
 												</div>	
@@ -434,23 +435,23 @@
 						</div> 
 						<div class="form-group">
 							{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
-							{{ Form::text('address', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::text('address', NULL, array('id'=>'address','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
-							{{ Form::number('game_port', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::number('game_port', NULL, array('id'=>'game_port','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
-							{{ Form::text('game_password', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::text('game_password', NULL, array('id'=>'game_password','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
-							{{ Form::number('rcon_port', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::number('rcon_port', NULL, array('id'=>'rcon_port','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
-							{{ Form::text('rcon_password', NULL, array('id'=>'name','class'=>'form-control')) }}
+							{{ Form::text('rcon_password', NULL, array('id'=>'rcon_password','class'=>'form-control')) }}
 						</div>
 											
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
