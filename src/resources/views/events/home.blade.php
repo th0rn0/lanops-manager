@@ -123,7 +123,7 @@
 	@endif
 
 	<!-- Server -->
-	@if ( !$gameServerList->isEmpty() )
+	@if ( !isEmpty($gameServerList) )
 		<div class="page-header">
 			<a name="server"></a>
 			<h3>@lang('events.server')</h3>
