@@ -170,7 +170,7 @@
 									</td>
 								</tr>
 
-							<div class="modal fade" id="editGameServerModal{{$gameServer->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel{{$gameServer->id}}" aria-hidden="true">
+								<div class="modal fade" id="editGameServerModal{{$gameServer->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel{{$gameServer->id}}" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -278,12 +278,48 @@
 										{{ Helpers::getGameServerCommandScopeSelectArray()[$gameServerCommand->scope] }}
 									</td>
 									<td width="15%">
+										<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerCommandModal{{$gameServerCommand->id}}">Edit</button>
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
 									</td>
 								</tr>
+
+								<div class="modal fade" id="editGameServerCommandModal{{$gameServerCommand->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerCommandModalLabel{{$gameServerCommand->id}}" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 class="modal-title" id="editGameServerCommandModalLabel{{$gameServerCommand->id}}">Edit GameServer Command</h4>
+											</div>
+											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' . '/' . $gameServerCommand->slug )) }}
+												<div class="modal-body">
+													<div class="list-group">
+														<div class="row">
+															<div class="form-group col-xs-12 col-sm-6">
+																{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+																{{ Form::text('name', $gameServerCommand->name, array('id'=>'name','class'=>'form-control')) }}
+															</div> 
+															<div class="form-group col-xs-12 col-sm-6">
+																	{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
+																	{{ Form::select('scope', Helpers::getGameServerCommandScopeSelectArray(), $gameServerCommand->scope, array('id'=>'scope','class'=>'form-control')) }}
+															</div>
+															<div class="form-group col-xs-12">
+																{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
+																{{ Form::text('command', $gameServerCommand->command, array('id'=>'name','class'=>'form-control')) }}
+															</div>
+														</div>
+													</div>
+												</div>	
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-success">Submit</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+												</div>
+											{{ Form::close() }}					
+										</div>
+									</div>
+								</div> 
 							@endforeach
 						</tbody>
 				</table>
