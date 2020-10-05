@@ -30,6 +30,7 @@ class GameServer extends Model
         'game',
         'address',
         'game_port',
+        'stream_port',
         'game_password',
         'rcon_port',
         'rcon_password'
@@ -71,7 +72,7 @@ class GameServer extends Model
             ]
         ];
     }
-    
+
     /**
      * Get the route key for the model.
      *

@@ -57,6 +57,7 @@
 								<th>Address</th>
 								<th>Game Port</th>
 								<th>Game Password</th>
+								<th>Stream Port</th>
 								<th>RCON Port</th>
 								<th>RCON Password</th>
 								<th><th>
@@ -91,6 +92,9 @@
 										@if (isset($gameServer->game_password))
 											********
 										@endif
+									</td>
+									<td>
+										{{ $gameServer->stream_port }}
 									</td>
 									<td>
 										{{ $gameServer->rcon_port }}
@@ -203,6 +207,10 @@
 														<div class="form-group">
 															{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
 															{{ Form::text('game_password', $gameServer->game_password, array('id'=>'game_password','class'=>'form-control')) }}
+														</div>
+														<div class="form-group">
+															{{ Form::label('stream_port','Stream Port',array('id'=>'','class'=>'')) }}
+															{{ Form::number('stream_port', $gameServer->stream_port, array('id'=>'stream_port','class'=>'form-control')) }}
 														</div>
 														<div class="form-group">
 															{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
@@ -528,6 +536,10 @@
 						<div class="form-group">
 							{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
 							{{ Form::text('game_password', NULL, array('id'=>'game_password','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('stream_port','Stream Port',array('id'=>'','class'=>'')) }}
+							{{ Form::number('stream_port', NULL, array('id'=>'stream_port','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}

@@ -49,6 +49,7 @@ class GameServersController extends Controller
         $gameServer->type           = $request->type;
         $gameServer->address        = $request->address;
         $gameServer->game_port      = $request->game_port;
+        $gameServer->stream_port      = $request->stream_port;
         $gameServer->game_password  = $request->game_password;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
@@ -90,6 +91,7 @@ class GameServersController extends Controller
         $gameServer->type           = $request->type;
         $gameServer->address        = $request->address;
         $gameServer->game_port      = $request->game_port;
+        $gameServer->stream_port      = $request->stream_port;
         $gameServer->game_password  = $request->game_password;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
