@@ -29,7 +29,7 @@ class GameServersController extends Controller
     {
         $rules = [
             'name'              => 'required',
-            'address.required'     => 'required',
+            'address'     => 'required',
             'game_port'      => 'required|integer',
             'type'          =>  'in:Match,Casual'
         ];
