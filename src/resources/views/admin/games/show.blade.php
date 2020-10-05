@@ -383,8 +383,8 @@
 																{{ Form::text('name', $gameServerCommandParameter->name, array('id'=>'name','class'=>'form-control')) }}
 															</div> 
 															<div class="form-group col-xs-12">
-																{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
-																{{ Form::text('command', $gameServerCommandParameter->options, array('id'=>'options','class'=>'form-control')) }}
+																{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
+																{{ Form::text('options', $gameServerCommandParameter->options, array('id'=>'options','class'=>'form-control')) }}
 															</div>
 														</div>
 													</div>
