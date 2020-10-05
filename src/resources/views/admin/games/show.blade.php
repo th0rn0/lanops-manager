@@ -220,7 +220,7 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default" id="gamecommands">
+		<div class="panel panel-default" id="gameservercommands">
 			<div class="panel-heading">
 				<i class="fa fa-th-list fa-fw"></i> Game Commands
 			</div>
@@ -326,7 +326,7 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default"  id="gamecommandsparameters">
+		<div class="panel panel-default"  id="gameservercommandparameters">
 			<div class="panel-heading">
 				<i class="fa fa-th-list fa-fw"></i> Game Command Parameters
 			</div>

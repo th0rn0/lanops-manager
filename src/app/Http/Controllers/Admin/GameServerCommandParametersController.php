@@ -53,7 +53,7 @@ class GameServerCommandParametersController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully saved GameServerCommandParameter!');
-        return Redirect::to('admin/games/' . $game->slug . '#gameserverscommandparameters');
+        return Redirect::to('admin/games/' . $game->slug . '#gameservercommandparameters');
     }
 
     /**
@@ -85,7 +85,7 @@ class GameServerCommandParametersController extends Controller
 
 
         Session::flash('alert-success', 'Successfully saved Game Server Command Parameter!');
-        return Redirect::to('admin/games/' . $game->slug . '#gameserverscommandparameters');
+        return Redirect::to('admin/games/' . $game->slug . '#gameservercommandparameters');
     }
 
     /**
@@ -102,6 +102,6 @@ class GameServerCommandParametersController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully deleted GameServerCommandParameter!');
-        return Redirect::to('admin/games/' . $game->slug . '#gameserverscommandparameters');
+        return Redirect::to('admin/games/' . $game->slug . '#gameservercommandparameters');
     }
 }
