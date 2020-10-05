@@ -89,7 +89,7 @@
 									<td width="15%">
 									
 										<div>
-											<!-- <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectCommandModal">Execute Command</button> -->
+											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -159,6 +159,60 @@
 										</div>
 									</td>
 								</tr>
+
+								<div class="modal fade" id="editGameServerModal" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 class="modal-title" id="editGameServerModalLabel">Edit GameServer Command</h4>
+											</div>
+											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer )) }}
+												<div class="modal-body">
+													<div class="list-group">
+														@if ($errors->any())
+															<div class="alert alert-danger">
+																<ul>
+																	  @foreach ($errors->all() as $error)
+																		<li>{{ $error }}</li>
+																	  @endforeach
+																</ul>
+															</div>
+														@endif
+														<div class="form-group">
+															{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+															{{ Form::text('name', $gameServer->name, array('id'=>'name','class'=>'form-control')) }}
+														</div> 
+														<div class="form-group">
+															{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
+															{{ Form::text('address', $gameServer->address, array('id'=>'name','class'=>'form-control')) }}
+														</div>
+														<div class="form-group">
+															{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
+															{{ Form::number('game_port', $gameServer->game_port, array('id'=>'name','class'=>'form-control')) }}
+														</div>
+														<div class="form-group">
+															{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
+															{{ Form::text('game_password', $gameServer->game_password, array('id'=>'name','class'=>'form-control')) }}
+														</div>
+														<div class="form-group">
+															{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
+															{{ Form::number('rcon_port', $gameServer->rcon_port, array('id'=>'name','class'=>'form-control')) }}
+														</div>
+														<div class="form-group">
+															{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
+															{{ Form::text('rcon_password', $gameServer->rcon_password, array('id'=>'name','class'=>'form-control')) }}
+														</div>
+													</div>
+												</div>	
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+												</div>
+											{{ Form::close() }}					
+										</div>
+									</div>
+								</div> 
 							@endforeach
 						</tbody>
 				</table>
