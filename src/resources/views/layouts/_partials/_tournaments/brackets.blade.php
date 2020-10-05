@@ -232,11 +232,9 @@
 								$availableParameters->gameServer = $matchserver->gameServer;
 								$availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
 							@endphp
-
-							@if ($user && Helpers::isMatchPlayer($tournament, $availableParameters->match, $user))
-
-								<tr>
-									<td colspan="3"> 
+							<tr>	
+								<td colspan="3"> 
+									@if ($user && Helpers::isMatchPlayer($tournament, $availableParameters->match, $user))
 										@if($tournament->game->connect_game_url)
 											<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
 										@endif
@@ -248,9 +246,12 @@
 												</div>
 											</div>
 										@endif
-									</td>
-								</tr>
-							@endif
+									@endif
+									@if($tournament->game->connect_stream_url)
+										<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
+									@endif
+								</td>
+							</tr>
 						@endif
 						@if ( @$admin && $user->admin && $matchserver && $match->state == 'open')
 							<tr>

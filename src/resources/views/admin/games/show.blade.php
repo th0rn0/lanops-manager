@@ -468,14 +468,19 @@
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
-							Hint: use as in Game Commands for Matches
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', $game->connect_game_url, array('id'=>'connect_game_url','class'=>'form-control')) }}
+							<small>Hint: use variables like Game Commands for Matches</small>
 						</div> 
 						<div class="form-group">
-							Hint: use as in Game Commands for Matches
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_command', $game->connect_game_command, array('id'=>'connect_game_command','class'=>'form-control')) }}
+							<small>Hint: use variables like Game Commands for Matches</small>
+						</div> 
+						<div class="form-group">
+							{{ Form::label('connect_stream_url','Connect Stream URL',array('id'=>'','class'=>'')) }}
+							{{ Form::text('connect_stream_url', NULL, array('id'=>'connect_stream_url','class'=>'form-control')) }}
+							<small>Hint: use variables like Game Commands for Matches</small>
 						</div> 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}

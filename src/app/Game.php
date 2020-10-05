@@ -38,7 +38,8 @@ class Game extends Model
         'image_header_path',
         'image_thumbnail_path',
         'connect_game_url',
-        'connect_game_command'
+        'connect_game_command',
+        'connect_stream_url'
     ];
 
     /**
@@ -132,34 +133,27 @@ class Game extends Model
     public function getGameServerSelectArray()
     {
         $openmatchservers = array();
-        foreach ($this->eventTournaments as $eventTournament )
-            {
-                foreach ($eventTournament->getNextMatches() as $match)
-                {
-                        $openmatchservers[$match->id] = $match->id;
-                }
-
+        foreach ($this->eventTournaments as $eventTournament) {
+            foreach ($eventTournament->getNextMatches() as $match) {
+                $openmatchservers[$match->id] = $match->id;
             }
+        }
 
         $return = array();
         foreach (GameServer::where(['game_id' => $this->id])->get() as $gameServer) {
             $gameserver_is_used = false;
-            foreach ($gameServer->eventTournamentMatchServer as $eventTournamentMatchServer ){
+            foreach ($gameServer->eventTournamentMatchServer as $eventTournamentMatchServer) {
 
-                
-                if(array_key_exists($eventTournamentMatchServer->challonge_match_id, $openmatchservers)) 
-                {
+
+                if (array_key_exists($eventTournamentMatchServer->challonge_match_id, $openmatchservers)) {
                     $gameserver_is_used = true;
-                    break; 
+                    break;
                 }
-
             }
 
-            if (!$gameserver_is_used)
-            {
+            if (!$gameserver_is_used) {
                 $return[$gameServer->id] = $gameServer->name;
             }
-            
         }
 
         return $return;

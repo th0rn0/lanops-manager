@@ -67,6 +67,7 @@ class GamesController extends Controller
         $game->public       = true;
         $game->connect_game_url = $request->connect_game_url;
         $game->connect_game_command = $request->connect_game_command;
+        $game->connect_stream_url = $request->connect_stream_url;
 
 
         if (!$game->save()) {
@@ -139,6 +140,7 @@ class GamesController extends Controller
         $game->public       = @($request->public ? true : false);
         $game->connect_game_url = @$request->connect_game_url;
         $game->connect_game_command = @$request->connect_game_command;
+        $game->connect_stream_url = @$request->connect_stream_url;
 
         if (!$game->save()) {
             Session::flash('alert-danger', 'Could not save Game!');
