@@ -34,7 +34,7 @@
 
 		<div class="panel panel-default"  id="gameservers">
 			<div class="panel-heading">
-				<i class="fa fa-th-list fa-fw"></i> Game Servers <small>click on a Server to execute Commands</small>
+				<i class="fa fa-th-list fa-fw"></i> Game Servers <small>(click on a Server to execute Commands)</small>
 			</div>
 			<div class="panel-body">
 
