@@ -9,6 +9,7 @@ use DB;
 use App\GameServerCommandParameter;
 use App\EventTournament;
 use App\User;
+use App\GameServer;
 use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 
@@ -316,7 +317,7 @@ class Helpers
     public static function getCasualGameServers()
     {
         $returnarray = array();
-        foreach (\App\GameServer::where('type', '==', 'Casual')->orderBy('name', 'DESC')->get() as $gameserver) {
+        foreach (GameServer::where(['type' => 'Casual'])->get() as $gameserver) {
             $returnarray[$gameserver->game][] = $gameserver;
         }
 
