@@ -316,8 +316,7 @@ class Helpers
     public static function getCasualGameServers()
     {
         $returnarray = array();
-        foreach(\App\GameServer::where('type', '==', 'Casual')->orderBy('name', 'DESC') as $gameserver)
-        {
+        foreach (\App\GameServer::where('type', '==', 'Casual')->orderBy('name', 'DESC')->get() as $gameserver) {
             $returnarray[$gameserver->game][] = $gameserver;
         }
 
