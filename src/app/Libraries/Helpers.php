@@ -310,6 +310,21 @@ class Helpers
     }
 
     /**
+     * Get Games Select Array
+     * @return Array
+     */
+    public static function getCasualGameServers()
+    {
+        $returnarray = array();
+        foreach(\App\GameServer::where('type', '==', 'Casual')->orderBy('name', 'DESC') as $gameserver)
+        {
+            $returnarray[$gameserver->game][] = $gameserver;
+        }
+
+        return $returnarray;
+    }
+
+    /**
      * Get Shop Categories Select Array
      * @param  $publicOnly
      * @return Array
