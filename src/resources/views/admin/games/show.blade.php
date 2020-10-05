@@ -32,7 +32,7 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default">
+		<div class="panel panel-default"  id="gameservers">
 			<div class="panel-heading">
 				<i class="fa fa-th-list fa-fw"></i> Game Servers
 			</div>
@@ -174,7 +174,7 @@
 									</td>
 								</tr>
 
-							<div class="modal fade" id="editGameServerModal{{$gameServer->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel{{$gameServer->id}}" aria-hidden="true">
+								<div class="modal fade" id="editGameServerModal{{$gameServer->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerModalLabel{{$gameServer->id}}" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
@@ -224,7 +224,7 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default">
+		<div class="panel panel-default" id="gameservercommands">
 			<div class="panel-heading">
 				<i class="fa fa-th-list fa-fw"></i> Game Commands
 			</div>
@@ -251,50 +251,86 @@
 
 
 				<table width="100%" class="table table-hover" id="dataTables-example">
-				<thead>
-							<tr>
-								<th>Name</th>
-								<th>Slug</th>
-								<th>Command</th>
-								<th>Scope</th>
-								<th><th>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Slug</th>
+							<th>Command</th>
+							<th>Scope</th>
+							<th><th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($game->gameServerCommands as $gameServerCommand)
+							@php
+								$context = 'default';
+								if (!$game->public) {
+									$context = 'danger';
+								}
+							@endphp
+							<tr class="{{ $context }}">
+								
+								<td>
+									{{ $gameServerCommand->name }}
+								</td>
+								<td>
+									{{ $gameServerCommand->slug }}
+								</td>
+								<td>
+									{{ $gameServerCommand->command }}
+								</td><td>
+									{{ Helpers::getGameServerCommandScopeSelectArray()[$gameServerCommand->scope] }}
+								</td>
+								<td width="15%">
+									<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerCommandModal{{$gameServerCommand->id}}">Edit</button>
+									{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
+										{{ Form::hidden('_method', 'DELETE') }}
+										<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+									{{ Form::close() }}
+								</td>
 							</tr>
-						</thead>
-						<tbody>
-							@foreach ($game->gameServerCommands as $gameServerCommand)
-								@php
-									$context = 'default';
-									if (!$game->public) {
-										$context = 'danger';
-									}
-								@endphp
-								<tr class="{{ $context }}">
-									
-									<td>
-										{{ $gameServerCommand->name }}
-									</td>
-									<td>
-										{{ $gameServerCommand->slug }}
-									</td>
-									<td>
-										{{ $gameServerCommand->command }}
-									</td><td>
-										{{ Helpers::getGameServerCommandScopeSelectArray()[$gameServerCommand->scope] }}
-									</td>
-									<td width="15%">
-										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
-											{{ Form::hidden('_method', 'DELETE') }}
-											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
-										{{ Form::close() }}
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
+
+							<div class="modal fade" id="editGameServerCommandModal{{$gameServerCommand->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerCommandModalLabel{{$gameServerCommand->id}}" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											<h4 class="modal-title" id="editGameServerCommandModalLabel{{$gameServerCommand->id}}">Edit GameServer Command</h4>
+										</div>
+										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' . '/' . $gameServerCommand->slug )) }}
+											<div class="modal-body">
+												<div class="list-group">
+													<div class="row">
+														<div class="form-group col-xs-12 col-sm-6">
+															{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+															{{ Form::text('name', $gameServerCommand->name, array('id'=>'name','class'=>'form-control')) }}
+														</div> 
+														<div class="form-group col-xs-12 col-sm-6">
+																{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
+																{{ Form::select('scope', Helpers::getGameServerCommandScopeSelectArray(), $gameServerCommand->scope, array('id'=>'scope','class'=>'form-control')) }}
+														</div>
+														<div class="form-group col-xs-12">
+															{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
+															{{ Form::text('command', $gameServerCommand->command, array('id'=>'command','class'=>'form-control')) }}
+														</div>
+													</div>
+												</div>
+											</div>	
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-success">Submit</button>
+												<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+											</div>
+										{{ Form::close() }}					
+									</div>
+								</div>
+							</div> 
+						@endforeach
+					</tbody>
 				</table>
 			</div>
 		</div>
 
-		<div class="panel panel-default">
+		<div class="panel panel-default"  id="gameservercommandparameters">
 			<div class="panel-heading">
 				<i class="fa fa-th-list fa-fw"></i> Game Command Parameters
 			</div>
@@ -328,12 +364,43 @@
 										{{ $gameServerCommandParameter->options }}
 									</td>
 									<td width="15%">
+										<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerCommandParameterModal{{$gameServerCommandParameter->id}}">Edit</button>
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters/' . $gameServerCommandParameter->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
 									</td>
 								</tr>
+								<div class="modal fade" id="editGameServerCommandParameterModal{{$gameServerCommandParameter->id}}" tabindex="-1" role="dialog" aria-labelledby="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 class="modal-title" id="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}">Edit GameServer Command</h4>
+											</div>
+											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' . '/' . $gameServerCommandParameter->slug )) }}
+												<div class="modal-body">
+													<div class="list-group">
+														<div class="row">
+															<div class="form-group col-xs-12">
+																{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
+																{{ Form::text('name', $gameServerCommandParameter->name, array('id'=>'name','class'=>'form-control')) }}
+															</div> 
+															<div class="form-group col-xs-12">
+																{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
+																{{ Form::text('options', $gameServerCommandParameter->options, array('id'=>'options','class'=>'form-control')) }}
+															</div>
+														</div>
+													</div>
+												</div>	
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-success">Submit</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+												</div>
+											{{ Form::close() }}					
+										</div>
+									</div>
+								</div> 
 							@endforeach
 						</tbody>
 				</table>
