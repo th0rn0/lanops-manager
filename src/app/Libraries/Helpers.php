@@ -318,6 +318,9 @@ class Helpers
     {
         $returnarray = array();
         foreach (GameServer::where(['type' => 'Casual'])->get() as $gameserver) {
+            if (!array_key_exists($gameserver->game, $returnarray)) {
+                $returnarray[$gameserver->game] = array();
+            }
             $returnarray[$gameserver->game][] = $gameserver;
         }
 
