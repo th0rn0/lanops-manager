@@ -68,8 +68,8 @@ class GameServersController extends Controller
     public function update(Game $game, GameServer $gameServer, Request $request)
     {
         $rules = [
-            'name'              => 'required',
-            'address.required'     => 'required',
+            'name'           => 'required',
+            'address'        => 'required',
             'game_port'      => 'required|integer'
         ];
         $messages = [
