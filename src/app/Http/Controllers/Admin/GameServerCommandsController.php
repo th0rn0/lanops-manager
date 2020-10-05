@@ -26,26 +26,6 @@ use xPaw\SourceQuery\SourceQuery;
 
 class GameServerCommandsController extends Controller
 {
-    // /**
-    //  * Show Games Index Page
-    //  * @return Redirect
-    //  */
-    // public function index()
-    // {
-    //     return view('admin.games.index')
-    //         ->withGames(Game::paginate(20));
-    // }
-
-    // /**
-    //  * Show Game Page
-    //  * @return Redirect
-    //  */
-    // public function show(Game $game)
-    // {
-    //     return view('admin.games.show')
-    //         ->withGame($game);
-    // }
-
     /**
      * Store GameServer to Database
      * @param  Request $request

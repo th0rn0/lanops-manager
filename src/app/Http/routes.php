@@ -10,8 +10,7 @@ Route::group(['middleware' => ['web', 'notInstalled']], function () {
 
 Route::group(['middleware' => ['installed']], function () {
 
-    Route::group(['middleware'=>'language'],function ()
-    {
+    Route::group(['middleware' => 'language'], function () {
         /**
          * API
          */
@@ -62,7 +61,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::group(['middleware' => ['auth']], function () {
                 Route::get('/logout', 'Auth\AuthController@logout');
             });
-            
+
             /**
              * Index Page
              */
@@ -124,7 +123,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
             Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
             Route::get('/events/{event}/tournaments/{tournament}/{challongeMatchId}', 'Events\TournamentsController@matchConfig');
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
                 Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
                 Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
@@ -134,7 +133,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Payments
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::get('/payment/checkout', 'PaymentsController@showCheckout');
                 Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
                 Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
@@ -150,7 +149,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Seating
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
                 Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
             });
@@ -165,7 +164,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/polls', 'PollsController@index');
             Route::get('/polls/{poll}', 'PollsController@show');
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::post('/polls/{poll}/options', 'PollsController@storeOption');
                 Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
                 Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
@@ -174,7 +173,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Shop
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::get('/shop/orders', 'ShopController@showAllOrders');
                 Route::get('/shop/orders/{order}', 'ShopController@showOrder');
             });
@@ -183,7 +182,6 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/shop/basket', 'ShopController@updateBasket');
             Route::get('/shop/{category}', 'ShopController@showCategory');
             Route::get('/shop/{category}/{item}', 'ShopController@showItem');
-
         });
 
         /**
@@ -285,7 +283,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/games/{game}', 'Admin\GamesController@show');
             Route::post('/admin/games/{game}', 'Admin\GamesController@update');
             Route::delete('/admin/games/{game}', 'Admin\GamesController@destroy');
-            
+
             /**
              * GameServers
              */
@@ -310,6 +308,7 @@ Route::group(['middleware' => ['installed']], function () {
              * GameServerCommandParametrs 
              */
             Route::post('/admin/games/{game}/gameservercommandparameters', 'Admin\GameServerCommandParametersController@store');
+            Route::post('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@update');
             Route::delete('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@destroy');
 
             /**
@@ -370,7 +369,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::delete('/admin/venues/{venue}', 'Admin\Events\VenuesController@destroy');
             Route::post('/admin/venues/{venue}/{image}', 'Admin\Events\VenuesController@updateImage');
             Route::delete('/admin/venues/{venue}/{image}', 'Admin\Events\VenuesController@destroyImage');
-            
+
             /**
              * Galleries
              */
@@ -497,9 +496,6 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/orders/{order}/tracking', 'Admin\OrdersController@updateTrackingDetails');
             Route::post('/admin/orders/{order}/complete', 'Admin\OrdersController@setAsComplete');
             Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');
-
         });
-    
     });
-
 });
