@@ -43,6 +43,7 @@ return [
     'plspurchaseticket' => 'Please purchase a ticket',
     'plslogintopurchaseticket' => 'Please log in to purchase a ticket',
     'imageuploader' => 'Image uploader',
+    'server' => 'Server',
 
     /* Index */
     'start' => 'Start',

@@ -24,6 +24,7 @@
 					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
 						<!--<li style="font-size:15px; font-weight:bold;"><a href="#food">Food Orders</a></li>-->
 						<li style="font-size:15px; font-weight:bold;"><a href="#event">@lang('events.eventinfo')</a></li>
+						<li style="font-size:15px; font-weight:bold;"><a href="#server">@lang('events.server')</a></li>
 						<li style="font-size:15px; font-weight:bold;"><a href="#seating">@lang('events.seating')</a></li>
 						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">@lang('events.attendees')</a></li>
 						@if (!$event->tournaments->isEmpty())
@@ -119,6 +120,27 @@
 				</tbody>
 			</table>
 		@endforeach
+	@endif
+
+	<!-- Server -->
+	@if ( !empty($gameServerList) )
+		<div class="page-header">
+			<a name="server"></a>
+			<h3>@lang('events.server')</h3>
+		</div>
+		<div class="row">
+			@foreach ($gameServerList as $game => $gameServers)
+				
+				{{ $game->name }}
+
+				@foreach ($gameServers as $gameserver)
+					{{ $gameserver->name }}
+				@endforeach
+			
+			@endforeach
+			
+			
+		</div>
 	@endif
 
 	<!-- TOURNAMENTS -->

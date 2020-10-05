@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Helpers;
 
 use App\Event;
 use App\User;
@@ -162,6 +163,7 @@ class HomeController extends Controller
     public function event()
     {
         $signedIn = true;
+        $gameServerList = Helpers::getCasualGameServers();
         $event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
         $event->load('eventParticipants.user');
         $event->load('timetables');
@@ -191,6 +193,7 @@ class HomeController extends Controller
         }
         return view("events.home")
             ->withEvent($event)
+            ->withGameServerList($gameServerList)
             ->withTicketFlagSignedIn($ticketFlagSignedIn)
             ->withSignedIn($signedIn)
             ->withUser($user);
