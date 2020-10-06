@@ -1,6 +1,7 @@
 let mix = require('laravel-mix');
 
-mix.sass('resources/assets/sass/app.scss', 'public/css')
+mix.js('resources/js/app.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
     .sass('resources/assets/sass/admin.scss', 'public/css').options({
         processCssUrls: false,
         uglify: {

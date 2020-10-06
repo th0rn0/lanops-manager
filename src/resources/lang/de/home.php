@@ -32,4 +32,9 @@ return [
     'wins' => 'Siege',
     'top5winners' => 'Top 5 Sieger',
     'allaboutorg' => 'Alles über :orgName',
+    'servers_facebook' => 'Facebook',
+    'servers_discord' => 'Discord',
+    'servers_steam' => 'Steam',
+    'servers_twitter' => 'Twitter',
+    'servers_reddit' => 'Reddit',
 ];

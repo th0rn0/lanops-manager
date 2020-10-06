@@ -23,6 +23,8 @@ return [
     'default_facebook' => 'Facebook',
     'default_discord' => 'Discord',
     'default_steam' => 'Steam',
+    'default_twitter' => 'Twitter',
+    'default_reddit' => 'Reddit',
     'default_rights_reserved' => 'Alle Rechte vorbehalten.',
     'user_navi_admin' => 'Admin',
     'user_navi_profile' => 'Profil',

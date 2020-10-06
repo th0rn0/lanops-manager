@@ -135,8 +135,14 @@
 						@if (Settings::getDiscordLink() != "")
 							<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">@lang('layouts.default_discord')</a></p>
 						@endif
-						@if (Settings::getDiscordLink() != "")
+						@if (Settings::getSteamLink() != "")
 							<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">@lang('layouts.default_steam')</a></p>
+						@endif
+						@if (Settings::getTwitterLink() != "")
+							<p class=""><a target="_blank" href="{{ Settings::getTwitterLink() }}">@lang('layouts.default_twitter')</a></p>
+						@endif
+						@if (Settings::getRedditLink() != "")
+						<p class=""><a target="_blank" href="{{ Settings::getRedditLink() }}">@lang('layouts.default_reddit')</a></p>
 						@endif
 					</div>
 					<div class="col-lg-12">
