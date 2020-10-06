@@ -158,7 +158,7 @@
 					@endif
 					@if (Settings::getSteamLink() != "")
 						<div>
-							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa2x margin"></i> @lang('home.servers_steam')</a>
+							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i> @lang('home.servers_steam')</a>
 						</div>
 					@endif
 					@if (Settings::getRedditLink() != "")
@@ -181,7 +181,7 @@
 						<div class="col-xs-12 col-md-6">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded" width="10%"><strong>{{ $gameServers[0]->game->name }}</strong>
+									<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded visible-inline" width="15%"><strong>{{ $gameServers[0]->game->name }}</strong>
 								</div>
 								<div class="panel-body">										
 											@foreach ($gameServers as $gameserver)
@@ -200,6 +200,9 @@
 																<span class="input-group-btn">
 																<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
 															</div>
+														@endif
+														@if($gameserver->game->connect_stream_url && $gameserver->stream_port != 0)
+															<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
 														@endif
 											@endforeach
 								</div>		
