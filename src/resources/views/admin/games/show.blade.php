@@ -182,7 +182,7 @@
 										</div>
 										<script>
 											jQuery(function($) {
-												$('#id="serverstatus_{{ $gameServer->id }}_label"').bind('afterShow', function() {
+												$('#serverstatus_{{ $gameServer->id }}_label').bind('afterShow', function() {
 													alert('afterShow serverstatus_{{ $gameServer->id }}_label');
 
 													$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status{{ $gameServer->slug }}', function( data ) {
