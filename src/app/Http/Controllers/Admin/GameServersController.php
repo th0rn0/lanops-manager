@@ -18,6 +18,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use xPaw\SourceQuery\SourceQuery;
+
 class GameServersController extends Controller
 {
     /**
@@ -120,5 +122,43 @@ class GameServersController extends Controller
 
         Session::flash('alert-success', 'Successfully deleted GameServer!');
         return Redirect::back();
+    }
+
+    /**
+     * Delete GameSe rver from Database
+     * @param  Game  $game
+     * @param  GameServer  $gameServer
+     * @return $gameServerStatus
+     */
+    public function status(Game $game, GameServer $gameServer)
+    {
+        $result = new \stdClass();
+        if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) {
+            $Query = new SourceQuery();
+            try {
+                if ($game->gamecommandhandler == 0) {
+                    $Query->Connect($gameServer->address, $gameServer->rcon_port, 1, SourceQuery::GOLDSOURCE);
+                }
+                if ($game->gamecommandhandler == 1) {
+                    $Query->Connect($gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE);
+                }
+                // $Query->SetRconPassword($gameServer->rcon_password);
+                // $result = $Query->Rcon($command);
+                $result->info = $Query->GetInfo();
+                $result->players = $Query->GetPlayers();
+            } catch (Exception $e) {
+                $result->error = $e->getMessage();
+            } finally {
+                $Query->Disconnect();
+            }
+
+            // if (!isset($error) || $result != false) {
+            //     Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Result:' . var_export($result, true));
+            // } else {
+            //     Session::flash('alert-danger', 'error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
+            // }
+        }
+
+        return json_encode($result);
     }
 }

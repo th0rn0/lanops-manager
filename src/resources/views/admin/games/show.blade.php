@@ -146,10 +146,15 @@
 											</div>
 										</div> -->
 									</td>
-								</tr>
+								</tr>								
 								<tr>
-									<td colspan="8" style="padding: 0;">
+									<td colspan="10" style="padding: 0;">
 										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
+
+											<h4>Status</h4>
+										<div id="serverstatus_{{ $gameServer->id }}"></div>
+
+											<h4>Available Commands</h4>
 											@foreach ($game->getGameServerCommands() as $gameServerCommand)
 												
 												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
@@ -175,6 +180,14 @@
 											  	{{ Form::close() }}
 											@endforeach
 										</div>
+										<script>
+											$(window).on('load', function() {
+												$.get( '/admin/games/' . $game->slug . '/gameservers/ ' .  $gameServer->slug . '/status' . $gameServer->slug, function( data ) {
+													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
+													// alert( "Load was performed." );
+												});
+											});
+										</script>
 									</td>
 								</tr>
 
