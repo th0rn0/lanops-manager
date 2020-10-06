@@ -181,19 +181,10 @@
 											@endforeach
 										</div>
 										<script>
-											$(window).on('load', function() {
-												alert('afterShow serverstatus_{{ $gameServer->id }}_label (window)');
+											$('#serverstatus_{{ $gameServer->id }}_label').load(function(){
+												alert('afterShow serverstatus_{{ $gameServer->id }}_label element load');
 												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status{{ $gameServer->slug }}', function( data ) {
 													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
-												});
-											});
-											jQuery(function($) {
-												$('#serverstatus_{{ $gameServer->id }}_label').bind('afterShow', function() {
-													alert('afterShow serverstatus_{{ $gameServer->id }}_label');
-
-													$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status{{ $gameServer->slug }}', function( data ) {
-														$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
-													});
 												});
 											});
 										</script>
