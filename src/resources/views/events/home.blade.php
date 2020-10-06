@@ -199,7 +199,6 @@
 																<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_command, NULL, $availableParameters) }}">
 																<span class="input-group-btn">
 																<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
-																</div>
 															</div>
 														@endif
 											@endforeach
