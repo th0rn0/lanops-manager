@@ -50,18 +50,17 @@
 
 				<table width="100%" class="table table-hover" id="dataTables-example">
 				<thead>
-							<tr>
-								<th>Name</th>
-								<th>Slug</th>
-								<th>Type</th>
-								<th>Address</th>
-								<th>Game Port</th>
-								<th>Game Password</th>
-								<th>Stream Port</th>
-								<th>RCON Port</th>
-								<th>RCON Password</th>
-								<th><th>
-							</tr>
+						<tr>
+							<th>Name</th>
+							<th>Slug</th>
+							<th>Type</th>
+							<th>Address</th>
+							<th>Game Port</th>
+							<th>Stream Port</th>
+							<th>RCON Port</th>
+							<th>Status</th>
+							<th><th>
+						</tr>
 						</thead>
 						<tbody>
 							@foreach ($game->gameServers as $gameServer)
@@ -89,20 +88,28 @@
 										{{ $gameServer->game_port }}
 									</td>
 									<td>
-										@if (isset($gameServer->game_password))
-											********
-										@endif
-									</td>
-									<td>
 										{{ $gameServer->stream_port }}
 									</td>
 									<td>
 										{{ $gameServer->rcon_port }}
 									</td>
 									<td>
-										@if (isset($gameServer->rcon_password))
-											********
-										@endif
+										<script>
+											// $('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
+											$('#serverstatus_{{ $gameServer->id }}').on('load', function () {
+												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
+												});
+												var start = new Date;
+
+												setInterval(function() {
+													$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+														$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
+													});
+												}, 10000);
+											});
+										</script>
+										<div id="serverstatus_{{ $gameServer->id }}"></div>
 									</td>
 									<td width="15%">
 									
@@ -113,46 +120,11 @@
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 											{{ Form::close() }}
 										</div>
-										
-										<!-- Select Command Modal -->
-										<!-- <div class="modal fade" id="selectCommandModal" tabindex="-1" role="dialog" aria-labelledby="selectCommandModalLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														<h4 class="modal-title" id="selectCommandModalLabel">Select Command</h4>
-													</div>
-													<div class="modal-body">
-														@foreach ($game->gameServerCommands as $gameServerCommand)
-															{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
-																{{ Form::hidden('command', $gameServerCommand->id) }}	
-
-																<h4>{{ $gameServerCommand->name }}</h4>
-
-																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
-																	<div class="form-group col-xs-12 col-sm-6">
-																		{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
-																		{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
-																	</div>
-																@endforeach
-																<button type="submit" class="btn btn-success">Execute</button>
-															{{ Form::close() }}
-														@endforeach
-													</div>	
-													<div class="modal-footer">
-														<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-													</div>
-												</div>
-											</div>
-										</div> -->
 									</td>
 								</tr>								
 								<tr>
 									<td colspan="10" style="padding: 0;">
 										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
-
-											<h4 id="serverstatus_{{ $gameServer->id }}_label">Status</h4>
-											<div id="serverstatus_{{ $gameServer->id }}"></div>
 
 											<h4>Available Commands</h4>
 											@foreach ($game->getGameServerCommands() as $gameServerCommand)
@@ -179,14 +151,7 @@
 		 						 					</div>
 											  	{{ Form::close() }}
 											@endforeach
-										</div>
-										<script>
-											$('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
-												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
-													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
-												});
-											});
-										</script>
+										</div>									
 									</td>
 								</tr>
 
