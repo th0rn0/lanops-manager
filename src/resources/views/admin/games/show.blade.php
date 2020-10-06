@@ -48,8 +48,23 @@
 					</div>
 				@endif
 
+				<script>
+					function updateStatus(id ,serverStatus){
+
+						if(serverStatus.info == false)
+						{
+							$(id + "_map").html( "-" );
+							$(id + "_players").html( "-" );
+						}else
+						{
+							$(id + "_map").html( serverStatus.info.Map );
+							$(id + "_players").html( serverStatus.info.Players );
+						}
+					}
+				</script>
+
 				<table width="100%" class="table table-hover" id="dataTables-example">
-				<thead>
+					<thead>
 						<tr>
 							<th>Name</th>
 							<th>Slug</th>
@@ -95,22 +110,30 @@
 									</td>
 									<td>
 										<script>
+
+											
+
 											// $('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
 											// $('#serverstatus_{{ $gameServer->id }}').on('load', function () {
 											$( document ).ready(function(){
 												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
-													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
+													var serverStatus = JSON.parse(data);
+													updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 												});
 												var start = new Date;
 
 												setInterval(function() {
 													$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
-														$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
+														var serverStatus = JSON.parse(data);
+														updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 													});
 												}, 10000);
 											});
 										</script>
-										<div id="serverstatus_{{ $gameServer->id }}"></div>
+										<div id="serverstatus_{{ $gameServer->id }}" class="row">
+											<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+											<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+										</div>
 									</td>
 									<td width="15%">
 									
