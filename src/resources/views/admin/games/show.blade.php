@@ -151,7 +151,7 @@
 									<td colspan="10" style="padding: 0;">
 										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
 
-											<h4>Status</h4>
+											<h4 id="serverstatus_{{ $gameServer->id }}_label">Status</h4>
 										<div id="serverstatus_{{ $gameServer->id }}"></div>
 
 											<h4>Available Commands</h4>
@@ -181,10 +181,13 @@
 											@endforeach
 										</div>
 										<script>
-											$(window).on('load', function() {
-												$.get( '/admin/games/' . $game->slug . '/gameservers/ ' .  $gameServer->slug . '/status' . $gameServer->slug, function( data ) {
-													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
-													// alert( "Load was performed." );
+											jQuery(function($) {
+												$('#id="serverstatus_{{ $gameServer->id }}_label"').bind('afterShow', function() {
+													alert('afterShow serverstatus_{{ $gameServer->id }}_label');
+
+													$.get( '/admin/games/' . $game->slug . '/gameservers/ ' .  $gameServer->slug . '/status' . $gameServer->slug, function( data ) {
+														$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
+													});
 												});
 											});
 										</script>
