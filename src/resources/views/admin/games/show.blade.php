@@ -181,7 +181,7 @@
 											@endforeach
 										</div>
 										<script>
-											$('#serverstatus_{{ $gameServer->id }}_label').on('show.bs.collapse', function () {
+											$('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
 												alert('afterShow serverstatus_{{ $gameServer->id }}_label element load');
 												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status{{ $gameServer->slug }}', function( data ) {
 													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
