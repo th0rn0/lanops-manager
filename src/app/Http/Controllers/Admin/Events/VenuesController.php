@@ -103,8 +103,8 @@ class VenuesController extends Controller
         $venue->address_postcode    = $request->address_postcode;
         $venue->address_country     = $request->address_country;
 
-        if (Request::file('images')) {
-            foreach (Request::file('images') as $image) {
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $image) {
                 $venue->images()->create([
                     'path' => str_replace(
                         'public/',
@@ -203,8 +203,8 @@ class VenuesController extends Controller
 
         }
 
-        if (Request::file('images')) {
-            foreach (Request::file('images') as $image) {
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $image) {
                 $venue->images()->create([
                     'path' => str_replace(
                         'public/',

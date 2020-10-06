@@ -129,25 +129,95 @@
 			<h3>@lang('events.server')</h3>
 		</div>
 		<div class="row">
-			@foreach ($gameServerList as $game => $gameServers)
-				
-				{{ $game }}
 
-				@foreach ($gameServers as $gameserver)
-					@php
-					$availableParameters = new \stdClass();
-					$availableParameters->game = $gameserver->game;
-					// $availableParameters->event = $tournament->event;
-					// $availableParameters->tournament = $tournament;
-					$availableParameters->gameServer = $gameserver;
-					// $availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
-					@endphp
-					{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}
-				@endforeach
-			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="far fa-comments"></i><strong>@lang('home.servers_communication')</strong>
+				</div>
+				<div class="panel-body">
+					@if (Settings::getTeamspeakLink())			
+						<div>
+							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_teamspeak')TeamSpeak Server</a>
+						</div>
+					@endif
+					
+					@if (Settings::getMumbleLink())			
+						<div>
+							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')Mumble Server</a>
+						</div>
+					@endif
+					@if (Settings::getFacebookLink() != "")
+						<div>
+							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-3x margin"></i> @lang('home.servers_facebook')</a>
+						</div>
+					@endif
+					@if (Settings::getDiscordLink() != "")
+						<div>
+							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-3x margin"></i> @lang('home.servers_discord')</a>	
+						</div>
+					@endif
+					@if (Settings::getSteamLink() != "")
+						<div>
+							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-3x margin"></i> @lang('home.servers_steam')</a>
+						</div>
+					@endif
+					@if (Settings::getRedditLink() != "")
+					<div>
+						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-3x margin"></i> @lang('home.servers_reddit')</a>
+					</div>
+					@endif
+				</div>
+			</div>
+
+
+
+
+			@foreach ($gameServerList as $game => $gameServers)
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded" width="40%"><strong>{{ $gameServers[0]->game->name }}</a></strong>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<thead>
+								<th>
+									@lang('home.servers_name')
+								</th>
+								<th>
+									@lang('home.servers_join')
+								</th>
+							</thead>
+							<tbody>
+								@foreach ($gameServers as $gameserver)
+									@php
+									$availableParameters = new \stdClass();
+									$availableParameters->game = $gameserver->game;
+									$availableParameters->gameServer = $gameserver;
+									@endphp	
+									<tr>
+										<td>
+											{{ $gameserver->name }}
+										</td>
+										<td style="vertical-align: middle;">
+											@if($gameserver->game->connect_game_url)
+											<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+											@endif
+											@if($gameserver->game->connect_game_command)
+												<div class="input-group" style="width: 100%">
+													<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_command, NULL, $availableParameters) }}">
+													<span class="input-group-btn">
+													<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
+													</div>
+												</div>
+											@endif
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>		
+				</div>
 			@endforeach
-			
-			
 		</div>
 	@endif
 

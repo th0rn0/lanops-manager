@@ -154,13 +154,13 @@ class GalleryController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        $files = Request::file('images');
+        $files = $request->file('images');
         //Keep a count of uploaded files
         $fileCount = count($files);
         //Counter for uploaded files
         $uploadcount = 0;
         $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
-        if (Request::file('images') && !File::exists(public_path() . $destinationPath)) {
+        if ($request->file('images') && !File::exists(public_path() . $destinationPath)) {
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
         foreach ($files as $file) {
