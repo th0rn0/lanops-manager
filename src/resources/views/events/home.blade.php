@@ -148,7 +148,7 @@
 					@endif
 					@if (Settings::getFacebookLink() != "")
 						<div>
-							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_facebook')</a>
+							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-3x margin"></i> @lang('home.servers_facebook')</a>
 						</div>
 					@endif
 					@if (Settings::getDiscordLink() != "")
