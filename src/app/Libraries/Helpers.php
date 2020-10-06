@@ -762,7 +762,10 @@ class Helpers
                         if (isset($commandPartValue) && !empty($commandPartValue)) {
                             $result = $result . $commandPartValue;
                         } else {
-                            Session::flash('alert-success', "Can not resolve command parameter \"$commandPart\"!");
+                            if($secondChar)
+                            {
+                                Session::flash('alert-danger', "Can not resolve command parameter \"$commandPart\"!");
+                            }
                         }
 
                         unset($commandPartValue);
@@ -770,7 +773,7 @@ class Helpers
                 } catch (Exception $e) {
                     if($secondChar)
                     {
-                        Session::flash('alert-danger', $secondChar . 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
+                        Session::flash('alert-danger', 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
                     }
                         
                 }
