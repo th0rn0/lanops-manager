@@ -220,6 +220,11 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        if (isset($request->reddit_link) && !Settings::setTwitterLink($request->twitter_link)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         if (isset($request->facebook_link) && !Settings::setFacebookLink($request->facebook_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();

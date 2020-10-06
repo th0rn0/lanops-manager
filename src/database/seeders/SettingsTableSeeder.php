@@ -129,6 +129,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
+            ['setting'          => 'twitter_link'],
+            [
+                'value'         => null,
+                'default'       => true,
+                'description'   => 'Link to your Twitter Account'
+            ]
+        );
+        Setting::firstOrCreate(
             ['setting'          => 'facebook_link'],
             [
                 'value'         => null,

@@ -203,6 +203,24 @@ class Settings
     }
 
     /**
+     * Get Twitter Link
+     * @return String
+     */
+    public static function getTwitterLink()
+    {
+        return \App\Setting::getTwitterLink();
+    }
+
+    /**
+     * Set Twitter Link
+     * @param String $text
+     */
+    public static function setTwitterLink($text)
+    {
+        return \App\Setting::setTwitterLink($text);
+    }
+
+    /**
      * Get Teamspeak Link
      * @return String
      */

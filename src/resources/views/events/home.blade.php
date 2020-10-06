@@ -143,7 +143,7 @@
 					
 					@if (Settings::getMumbleLink())			
 						<div>
-							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')Mumble Server</a>
+							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><i class="fac fa-mumble fa-3x margin"><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')Mumble Server</a>
 						</div>
 					@endif
 					@if (Settings::getFacebookLink() != "")
@@ -164,6 +164,11 @@
 					@if (Settings::getRedditLink() != "")
 					<div>
 						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-3x margin"></i> @lang('home.servers_reddit')</a>
+					</div>
+					@endif
+					@if (Settings::getRedditLink() != "")
+					<div>
+						<a target="_blank" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-3x margin"></i> @lang('home.servers_twitter')</a>
 					</div>
 					@endif
 				</div>

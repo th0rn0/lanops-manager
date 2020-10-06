@@ -297,12 +297,35 @@ class Setting extends Model
     }
 
     /**
-     * Set Discord Link
+     * Set Reddit Link
      * @param String $text
      */
     public static function setRedditLink($text)
     {
         $setting = self::where('setting', 'reddit_link')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+        /**
+     * Get Twitter Link
+     * @return String
+     */
+    public static function getTwitterLink()
+    {
+        return self::where('setting', 'twitter_link')->first()->value;
+    }
+
+    /**
+     * Set Twitter Link
+     * @param String $text
+     */
+    public static function setTwitterLink($text)
+    {
+        $setting = self::where('setting', 'twitter_link')->first();
         $setting->value = $text;
         if (!$setting->save()) {
             return false;
