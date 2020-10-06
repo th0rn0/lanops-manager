@@ -129,25 +129,71 @@
 			<h3>@lang('events.server')</h3>
 		</div>
 		<div class="row">
-			@foreach ($gameServerList as $game => $gameServers)
-				
-				{{ $game }}
 
-				@foreach ($gameServers as $gameserver)
-					@php
-					$availableParameters = new \stdClass();
-					$availableParameters->game = $gameserver->game;
-					// $availableParameters->event = $tournament->event;
-					// $availableParameters->tournament = $tournament;
-					$availableParameters->gameServer = $gameserver;
-					// $availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
-					@endphp
-					{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}
-				@endforeach
-			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong><a href="/events/{{ $event->slug }}">{{ $event->display_name }}</a></strong>
+				</div>
+				<div class="panel-body">
+					<h5>{!! $event->desc_short !!}</h5>
+					<p>{!! $event->essential_info !!}</p>
+					<p class="bg-success  padding">@lang('events.start'): {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
+					<p class="bg-danger  padding">@lang('events.end'): {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
+					<p class="bg-info  padding">@lang('events.seatingcapacity'): {{ $event->getSeatingCapacity() }}</p>
+				</div>
+			</div>
+
+
+
+
+			@foreach ($gameServerList as $game => $gameServers)
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded" width="40%"><strong>{{ $gameServers[0]->game->name }}</a></strong>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<thead>
+								<th width="7%">
+								</th>
+								<th>
+									@lang('gameservers.name')
+								</th>
+								<th>
+									@lang('gameservers.join')
+								</th>
+							</thead>
+							<tbody>
+								@foreach ($gameServers as $gameserver)
+									@php
+									$availableParameters = new \stdClass();
+									$availableParameters->game = $gameserver->game;
+									$availableParameters->gameServer = $gameserver;
+									@endphp	
+									<tr>
+										<td>
+											{{ $gameserver->name }}
+										</td>
+										<td style="vertical-align: middle;">
+											@if($gameserver->game->connect_game_url)
+											<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+											@endif
+											@if($gameserver->game->connect_game_command)
+												<div class="input-group" style="width: 100%">
+													<input class="form-control" id="connectGameCommand{{ $availableParameters->match->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_command, NULL, $availableParameters) }}">
+													<span class="input-group-btn">
+													<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->match->id}}')"><i class="far fa-clipboard"></i></button>
+													</div>
+												</div>
+											@endif
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>		
+				</div>
 			@endforeach
-			
-			
 		</div>
 	@endif
 
