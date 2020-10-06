@@ -128,52 +128,44 @@
 			<a name="server"></a>
 			<h3>@lang('events.server')</h3>
 		</div>
-		
-		@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getFacebookLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "")
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<i class="far fa-comments"></i> <strong>@lang('home.servers_communication')</strong>
-				</div>
-				<div class="panel-body">
+		<div class="row">
 					@if (Settings::getTeamspeakLink() != "")			
-						<div>
+						<div class="col-xs-6 col-lg-4">
 							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-2x margin"></i> @lang('home.servers_teamspeak')</a>
 						</div>
 					@endif
 					
 					@if (Settings::getMumbleLink() != "")			
-						<div>
+						<div class="col-xs-6 col-lg-4">
 							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="32" height="32"> @lang('home.servers_mumble')</a>
 						</div>
 					@endif
 					@if (Settings::getFacebookLink() != "")
-						<div>
+						<div class="col-xs-6 col-lg-4">
 							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i> @lang('home.servers_facebook')</a>
 						</div>
 					@endif
 					@if (Settings::getDiscordLink() != "")
-						<div>
+						<div class="col-xs-6 col-lg-4">
 							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i> @lang('home.servers_discord')</a>	
 						</div>
 					@endif
 					@if (Settings::getSteamLink() != "")
-						<div>
+						<div class="col-xs-6 col-lg-4">
 							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i> @lang('home.servers_steam')</a>
 						</div>
 					@endif
 					@if (Settings::getRedditLink() != "")
-					<div>
+					<div class="col-xs-6 col-lg-4">
 						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-2x margin"></i> @lang('home.servers_reddit')</a>
 					</div>
 					@endif
 					@if (Settings::getTwitterLink() != "")
-					<div>
+					<div class="col-xs-6 col-lg-4">
 						<a target="_blank" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-2x margin"></i> @lang('home.servers_twitter')</a>
 					</div>
 					@endif
-				</div>
-			</div>
-		@endif
+		</div>
 
 			@if ( !empty($gameServerList) )	
 				<div class="row">		
