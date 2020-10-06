@@ -132,18 +132,18 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<i class="far fa-comments"></i><strong>@lang('home.servers_communication')</strong>
+					<i class="far fa-comments"></i> <strong>@lang('home.servers_communication')</strong>
 				</div>
 				<div class="panel-body">
 					@if (Settings::getTeamspeakLink())			
 						<div>
-							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_teamspeak')TeamSpeak Server</a>
+							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_teamspeak')</a>
 						</div>
 					@endif
 					
 					@if (Settings::getMumbleLink())			
 						<div>
-							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><i class="fac fa-mumble fa-3x margin"><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')Mumble Server</a>
+							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')</a>
 						</div>
 					@endif
 					@if (Settings::getFacebookLink() != "")
