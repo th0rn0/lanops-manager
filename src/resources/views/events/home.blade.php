@@ -132,14 +132,35 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<strong><a href="/events/{{ $event->slug }}">{{ $event->display_name }}</a></strong>
+					<strong>@lang('home.servers_communication')</strong>
 				</div>
 				<div class="panel-body">
-					<h5>{!! $event->desc_short !!}</h5>
-					<p>{!! $event->essential_info !!}</p>
-					<p class="bg-success  padding">@lang('events.start'): {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
-					<p class="bg-danger  padding">@lang('events.end'): {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
-					<p class="bg-info  padding">@lang('events.seatingcapacity'): {{ $event->getSeatingCapacity() }}</p>
+					@if (Settings::getTeamspeakLink())			
+						<div>
+							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_teamspeak')TeamSpeak Server</a>
+						</div>
+					@endif
+					
+					@if (Settings::getMumbleLink())			
+						<div>
+							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')Mumble Server</a>
+						</div>
+					@endif
+					@if (Settings::getFacebookLink() != "")
+						<div>
+							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_facebook')</a>
+						</div>
+					@endif
+					@if (Settings::getDiscordLink() != "")
+						<div>
+							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-3x margin"></i> @lang('home.servers_discord')</a>	
+						</div>
+					@endif
+					@if (Settings::getDiscordLink() != "")
+						<div>
+							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-3x margin"></i> @lang('home.servers_steam')</a>
+						</div>
+					@endif
 				</div>
 			</div>
 
@@ -154,13 +175,11 @@
 					<div class="panel-body">
 						<table class="table table-striped">
 							<thead>
-								<th width="7%">
+								<th>
+									@lang('home.servers_name')
 								</th>
 								<th>
-									@lang('gameservers.name')
-								</th>
-								<th>
-									@lang('gameservers.join')
+									@lang('home.servers_join')
 								</th>
 							</thead>
 							<tbody>
