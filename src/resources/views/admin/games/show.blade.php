@@ -152,7 +152,7 @@
 										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
 
 											<h4 id="serverstatus_{{ $gameServer->id }}_label">Status</h4>
-										<div id="serverstatus_{{ $gameServer->id }}"></div>
+											<div id="serverstatus_{{ $gameServer->id }}"></div>
 
 											<h4>Available Commands</h4>
 											@foreach ($game->getGameServerCommands() as $gameServerCommand)
@@ -181,7 +181,7 @@
 											@endforeach
 										</div>
 										<script>
-											$('#serverstatus_{{ $gameServer->id }}_label').on('load', function(){
+											$('#serverstatus_{{ $gameServer->id }}_label').on('show.bs.collapse', function () {
 												alert('afterShow serverstatus_{{ $gameServer->id }}_label element load');
 												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status{{ $gameServer->slug }}', function( data ) {
 													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
