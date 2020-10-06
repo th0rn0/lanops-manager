@@ -123,25 +123,25 @@
 	@endif
 
 	<!-- Server -->
-	@if ( !empty($gameServerList) )
+	@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getFacebookLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "" || !empty($gameServerList))	
 		<div class="page-header">
 			<a name="server"></a>
 			<h3>@lang('events.server')</h3>
 		</div>
-		<div class="row">
-
+		
+		@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getFacebookLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "")
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<i class="far fa-comments"></i> <strong>@lang('home.servers_communication')</strong>
 				</div>
 				<div class="panel-body">
-					@if (Settings::getTeamspeakLink())			
+					@if (Settings::getTeamspeakLink() != "")			
 						<div>
 							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-3x margin"></i> @lang('home.servers_teamspeak')</a>
 						</div>
 					@endif
 					
-					@if (Settings::getMumbleLink())			
+					@if (Settings::getMumbleLink() != "")			
 						<div>
 							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="48" height="48"> @lang('home.servers_mumble')</a>
 						</div>
@@ -166,65 +166,50 @@
 						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-3x margin"></i> @lang('home.servers_reddit')</a>
 					</div>
 					@endif
-					@if (Settings::getRedditLink() != "")
+					@if (Settings::getTwitterLink() != "")
 					<div>
 						<a target="_blank" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-3x margin"></i> @lang('home.servers_twitter')</a>
 					</div>
 					@endif
 				</div>
 			</div>
+		@endif
 
-
-
-
-			@foreach ($gameServerList as $game => $gameServers)
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded" width="40%"><strong>{{ $gameServers[0]->game->name }}</a></strong>
-					</div>
-					<div class="panel-body">
-						<table class="table table-striped">
-							<thead>
-								<th>
-									@lang('home.servers_name')
-								</th>
-								<th>
-									@lang('home.servers_join')
-								</th>
-							</thead>
-							<tbody>
-								@foreach ($gameServers as $gameserver)
-									@php
-									$availableParameters = new \stdClass();
-									$availableParameters->game = $gameserver->game;
-									$availableParameters->gameServer = $gameserver;
-									@endphp	
-									<tr>
-										<td>
-											{{ $gameserver->name }}
-										</td>
-										<td style="vertical-align: middle;">
-											@if($gameserver->game->connect_game_url)
-											<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
-											@endif
-											@if($gameserver->game->connect_game_command)
-												<div class="input-group" style="width: 100%">
-													<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_command, NULL, $availableParameters) }}">
-													<span class="input-group-btn">
-													<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
-													</div>
-												</div>
-											@endif
-										</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>		
+			@if ( !empty($gameServerList) )	
+				<div class="row">		
+					@foreach ($gameServerList as $game => $gameServers)
+						<div class="col-xs-12 col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<img src="{{ $gameServers[0]->game->im	age_thumbnail_path }}" class="img img-responsive img-rounded" width="10%"><strong>{{ $gameServers[0]->game->name }}</strong>
+								</div>
+								<div class="panel-body">										
+											@foreach ($gameServers as $gameserver)
+												@php
+												$availableParameters = new \stdClass();
+												$availableParameters->game = $gameserver->game;
+												$availableParameters->gameServer = $gameserver;
+												@endphp	
+														<h4>{{ $gameserver->name }}</h4>
+														@if($gameserver->game->connect_game_url)
+														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+														@endif
+														@if($gameserver->game->connect_game_command)
+															<div class="input-group" style="width: 100%">
+																<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_command, NULL, $availableParameters) }}">
+																<span class="input-group-btn">
+																<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
+																</div>
+															</div>
+														@endif
+											@endforeach
+								</div>		
+							</div>
+						</div>
+					@endforeach
 				</div>
-			@endforeach
-		</div>
-	@endif
+			@endif
+	@endif				
 
 	<!-- TOURNAMENTS -->
 	@if (!$event->tournaments->isEmpty())
