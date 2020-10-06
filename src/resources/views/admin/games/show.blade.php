@@ -464,7 +464,7 @@
 						</div> 
 						<div class="form-group">
 							{{ Form::label('connect_stream_url','Connect Stream URL',array('id'=>'','class'=>'')) }}
-							{{ Form::text('connect_stream_url', NULL, array('id'=>'connect_stream_url','class'=>'form-control')) }}
+							{{ Form::text('connect_stream_url', $game->connect_stream_url, array('id'=>'connect_stream_url','class'=>'form-control')) }}
 							<small>Hint: use variables like Game Commands for Matches</small>
 						</div> 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
