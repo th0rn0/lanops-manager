@@ -96,7 +96,8 @@
 									<td>
 										<script>
 											// $('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
-											$('#serverstatus_{{ $gameServer->id }}').on('load', function () {
+											// $('#serverstatus_{{ $gameServer->id }}').on('load', function () {
+											$( document ).ready(function(){
 												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 													$( '#serverstatus_{{ $gameServer->id }}' ).html( data );
 												});
