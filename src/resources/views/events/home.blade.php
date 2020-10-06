@@ -181,7 +181,7 @@
 						<div class="col-xs-12 col-md-6">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<img src="{{ $gameServers[0]->game->im	age_thumbnail_path }}" class="img img-responsive img-rounded" width="10%"><strong>{{ $gameServers[0]->game->name }}</strong>
+									<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded" width="10%"><strong>{{ $gameServers[0]->game->name }}</strong>
 								</div>
 								<div class="panel-body">										
 											@foreach ($gameServers as $gameserver)
