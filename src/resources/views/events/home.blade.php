@@ -132,7 +132,7 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<strong>@lang('home.servers_communication')</strong>
+					<i class="far fa-comments"></i><strong>@lang('home.servers_communication')</strong>
 				</div>
 				<div class="panel-body">
 					@if (Settings::getTeamspeakLink())			
@@ -156,10 +156,15 @@
 							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-3x margin"></i> @lang('home.servers_discord')</a>	
 						</div>
 					@endif
-					@if (Settings::getDiscordLink() != "")
+					@if (Settings::getSteamLink() != "")
 						<div>
 							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-3x margin"></i> @lang('home.servers_steam')</a>
 						</div>
+					@endif
+					@if (Settings::getRedditLink() != "")
+					<div>
+						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-3x margin"></i> @lang('home.servers_reddit')</a>
+					</div>
 					@endif
 				</div>
 			</div>

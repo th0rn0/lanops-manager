@@ -297,7 +297,7 @@ class ShopController extends Controller
         $this->validate($request, $rules, $messages);
         $destinationPath = '/storage/images/shop/' . $category->slug; // upload path
         Storage::disk('public')->makeDirectory('/images/shop/' . $category->slug . '/', 0777, true, true);
-        $files = Request::file('images');
+        $files = $request->file('images');
         //Keep a count of uploaded files
         $fileCount = count($files);
         //Counter for uploaded files

@@ -329,12 +329,12 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (Request::file('org_logo') && !Settings::setOrgLogo(Request::file('org_logo'))) {
+        if ($request->file('org_logo') && !Settings::setOrgLogo($request->file('org_logo'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (Request::file('org_favicon') && !Settings::setOrgFavicon(Request::file('org_favicon'))) {
+        if ($request->file('org_favicon') && !Settings::setOrgFavicon($request->file('org_favicon'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }

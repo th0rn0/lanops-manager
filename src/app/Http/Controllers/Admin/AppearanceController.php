@@ -166,7 +166,7 @@ class AppearanceController extends Controller
         ];
         $this->validate($request, $rules, $messages);
         $destinationPath = '/storage/images/main/slider/' . $request->slider . '/'; // upload path
-        $files = Request::file('images');
+        $files = $request->file('images');
         //Keep a count of uploaded files
         $fileCount = count($files);
         //Counter for uploaded files
