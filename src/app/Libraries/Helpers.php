@@ -741,6 +741,9 @@ class Helpers
             } else {
                 try {
                     $commandPart = ltrim($commandPart, '>');
+                    $secondChar = strpos($commandPart, "§");
+                    $commandPart = ltrim($commandPart, '§');
+                    
 
 
                     if ($request && isset($request->{$commandPart})) {
@@ -765,7 +768,11 @@ class Helpers
                         unset($commandPartValue);
                     }
                 } catch (Exception $e) {
-                    Session::flash('alert-danger', 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
+                    if($secondChar)
+                    {
+                        Session::flash('alert-danger', 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
+                    }
+                        
                 }
             }
         }

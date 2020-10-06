@@ -247,7 +247,7 @@
 											</div>
 										@endif
 									@endif
-									@if($tournament->game->connect_stream_url)
+									@if($tournament->game->connect_stream_url && $matchserver->gameserver->stream_port != 0)
 										<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
 									@endif
 								</td>
