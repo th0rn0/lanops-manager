@@ -158,7 +158,7 @@ class GameServersController extends Controller
             // ManiaPlanet dedicated server SDK
             if ($game->gamecommandhandler == 2) {
                 try {
-                    $maniaConnection = Connection::factory($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password);
+                    $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password);
                     $result->info = $maniaConnection->getGameInfos();
                     $result->players = $maniaConnection->getPlayerList();
                 } catch (Exception $e) {
