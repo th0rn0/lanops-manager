@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use xPaw\SourceQuery\SourceQuery;
+use Maniaplanet\DedicatedServer\Connection;
 
 class GameServerCommandsController extends Controller
 {
@@ -138,12 +139,24 @@ class GameServerCommandsController extends Controller
             } finally {
                 $Query->Disconnect();
             }
-
-            if (!isset($error) || $result != false) {
-                Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Result:' . var_export($result, true));
+        } else {
+            // ManiaPlanet dedicated server SDK
+            if ($game->gamecommandhandler == 2) {
+                try {
+                    $maniaConnection = Connection::factory($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password);
+                    $result = $maniaConnection->execute($command);
+                } catch (Exception $e) {
+                    $result->error = $e->getMessage();
+                }
             } else {
-                Session::flash('alert-danger', 'error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
+                $error = "$game->gamecommandhandler is not defined";
             }
+        }
+
+        if (!isset($error) || $result != false) {
+            Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Result:' . var_export($result, true));
+        } else {
+            Session::flash('alert-danger', 'error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
         }
     }
 

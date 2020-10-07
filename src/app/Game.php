@@ -173,6 +173,7 @@ class Game extends Model
         $return = array(
             "0" => "SourceQuery GoldSource",
             "1" => "SourceQuery Source",
+            "2" => "Maniaplanet XRPC",
         );
         return $return;
     }

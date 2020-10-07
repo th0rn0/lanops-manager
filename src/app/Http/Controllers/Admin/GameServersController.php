@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use xPaw\SourceQuery\SourceQuery;
+use Maniaplanet\DedicatedServer\Connection;
 
 class GameServersController extends Controller
 {
@@ -133,6 +134,8 @@ class GameServersController extends Controller
     public function status(Game $game, GameServer $gameServer)
     {
         $result = new \stdClass();
+
+        // GoLDSOURCE OR SOURCE
         if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) {
             $Query = new SourceQuery();
             try {
@@ -151,12 +154,17 @@ class GameServersController extends Controller
             } finally {
                 $Query->Disconnect();
             }
-
-            // if (!isset($error) || $result != false) {
-            //     Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Result:' . var_export($result, true));
-            // } else {
-            //     Session::flash('alert-danger', 'error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
-            // }
+        } else {
+            // ManiaPlanet dedicated server SDK
+            if ($game->gamecommandhandler == 2) {
+                try {
+                    $maniaConnection = Connection::factory($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password);
+                    $result->info = $maniaConnection->getGameInfos();
+                    $result->players = $maniaConnection->getPlayerList();
+                } catch (Exception $e) {
+                    $result->error = $e->getMessage();
+                }
+            }
         }
 
         return json_encode($result);
