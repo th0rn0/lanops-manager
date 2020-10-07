@@ -168,7 +168,7 @@
 		</div>
 
 			@if ( !empty($gameServerList) )	
-				<div class="row top15">		
+				<div class="row top30">		
 					@foreach ($gameServerList as $game => $gameServers)
 						<div class="col-xs-12 col-md-6">
 							<div class="panel panel-default">
