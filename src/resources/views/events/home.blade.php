@@ -183,6 +183,26 @@
 												$availableParameters->gameServer = $gameserver;
 												@endphp	
 														<h4>{{ $gameserver->name }}</h4>
+														<script>
+															$( document ).ready(function(){
+																$.get( '/admin/games/{{ $gameserver->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																	var serverStatus = JSON.parse(data);
+																	updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
+																});
+																var start = new Date;
+				
+																setInterval(function() {
+																	$.get( '/admin/games/{{ $gameserver->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																		var serverStatus = JSON.parse(data);
+																		updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
+																	});
+																}, 10000);
+															});
+														</script>
+														<div id="serverstatus_{{ $gameServer->id }}" class="row">
+															<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+															<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+														</div>
 														@if($gameserver->game->connect_game_url)
 														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
 														@endif
