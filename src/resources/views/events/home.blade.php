@@ -184,7 +184,9 @@
 												@endphp	
 														<h4>{{ $gameServer->name }}</h4>
 														<script>
-															if (document.readyState === 'complete') {
+
+															document.addEventListener("DOMContentLoaded", function(event) { 
+
 																$.get( '/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																	var serverStatus = JSON.parse(data);
 																	updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
@@ -197,7 +199,7 @@
 																		updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																	});
 																}, 10000);
-															}
+															});
 														</script>
 														<div id="serverstatus_{{ $gameServer->id }}" class="row">
 															<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
