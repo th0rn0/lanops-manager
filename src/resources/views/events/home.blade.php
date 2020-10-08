@@ -179,7 +179,7 @@
 											@foreach ($gameServers as $gameServer)
 												@php
 												$availableParameters = new \stdClass();
-												$availableParameters->game = $gameserver->game;
+												$availableParameters->game = $gameServer->game;
 												$availableParameters->gameServer = $gameServer;
 												@endphp	
 														<h4>{{ $gameServer->name }}</h4>
