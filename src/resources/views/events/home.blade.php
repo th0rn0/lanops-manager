@@ -176,23 +176,23 @@
 									<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded visible-inline" width="15%"><strong>{{ $gameServers[0]->game->name }}</strong>
 								</div>
 								<div class="panel-body">										
-											@foreach ($gameServers as $gameserver)
+											@foreach ($gameServers as $gameServer)
 												@php
 												$availableParameters = new \stdClass();
 												$availableParameters->game = $gameserver->game;
-												$availableParameters->gameServer = $gameserver;
+												$availableParameters->gameServer = $gameServer;
 												@endphp	
-														<h4>{{ $gameserver->name }}</h4>
+														<h4>{{ $gameServer->name }}</h4>
 														<script>
 															$( document ).ready(function(){
-																$.get( '/admin/games/{{ $gameserver->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																$.get( '/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																	var serverStatus = JSON.parse(data);
 																	updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																});
 																var start = new Date;
 				
 																setInterval(function() {
-																	$.get( '/admin/games/{{ $gameserver->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																	$.get( '/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																		var serverStatus = JSON.parse(data);
 																		updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																	});
@@ -203,18 +203,18 @@
 															<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
 															<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
 														</div>
-														@if($gameserver->game->connect_game_url)
-														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+														@if($gameServer->game->connect_game_url)
+														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
 														@endif
-														@if($gameserver->game->connect_game_command)
+														@if($gameServer->game->connect_game_command)
 															<div class="input-group" style="width: 100%">
-																<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_game_command, NULL, $availableParameters) }}">
+																<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_command, NULL, $availableParameters) }}">
 																<span class="input-group-btn">
 																<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
 															</div>
 														@endif
-														@if($gameserver->game->connect_stream_url && $gameserver->stream_port != 0)
-															<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($gameserver->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
+														@if($gameServer->game->connect_stream_url && $gameServer->stream_port != 0)
+															<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
 														@endif
 											@endforeach
 								</div>		
