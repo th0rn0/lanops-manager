@@ -168,6 +168,20 @@
 		</div>
 
 			@if ( !empty($gameServerList) )	
+				<script>
+					function updateStatus(id ,serverStatus){
+
+						if(serverStatus.info == false)
+						{
+							$(id + "_map").html( "-" );
+							$(id + "_players").html( "-" );
+						}else
+						{
+							$(id + "_map").html( serverStatus.info.Map );
+							$(id + "_players").html( serverStatus.info.Players );
+						}
+					}
+				</script>
 				<div class="row top30">		
 					@foreach ($gameServerList as $game => $gameServers)
 						<div class="col-xs-12 col-md-6">
