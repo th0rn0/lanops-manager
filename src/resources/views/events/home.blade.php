@@ -196,7 +196,6 @@
 											@php
 												$counter = 0;	
 											@endphp
-											@endphp
 											@foreach ($gameServers as $gameServer)
 												@php
 												$availableParameters = new \stdClass();
