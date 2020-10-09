@@ -201,21 +201,21 @@
 
 															document.addEventListener("DOMContentLoaded", function(event) { 
 
-																$.get( '/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																	var serverStatus = JSON.parse(data);
 																	updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																});
 																var start = new Date;
 				
 																setInterval(function() {
-																	$.get( '/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																	$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																		var serverStatus = JSON.parse(data);
 																		updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																	});
 																}, 10000);
 															});
 														</script>
-														<div id="serverstatus_{{ $gameServer->id }}" class="row">
+														<div id="serverstatus_{{ $gameServer->id }}">
 															<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
 															<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
 														</div>

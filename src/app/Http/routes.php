@@ -130,6 +130,11 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
             });
 
+             /**
+             * GameServers
+             */
+            Route::get('/games/{game}/gameservers/{gameServer}/status', 'Admin\GameServersController@status');
+
             /**
              * Payments
              */
