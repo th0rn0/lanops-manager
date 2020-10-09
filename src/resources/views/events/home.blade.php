@@ -184,10 +184,13 @@
 				</script>
 				<div class="row top30">		
 					@foreach ($gameServerList as $game => $gameServers)
-						<div class="col-xs-12 col-md-6">
+						<div class="col-xs-12 col-sm-6 col-md-4">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded visible-inline" width="15%"><strong>{{ $gameServers[0]->game->name }}</strong>
+									<div class="row">
+										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded visible-md-inline margin" width="15%">
+										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
+									</div>
 								</div>
 								<div class="panel-body">										
 											@foreach ($gameServers as $gameServer)
