@@ -5,6 +5,10 @@
         "framework",
         "laravel"
     ],
+    "repositories": [{
+        "type": "vcs",
+        "url": "https://github.com/4ipalino/dedicated-server-api"
+    }],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -37,7 +41,7 @@
         "weblagence/laravel-facebook-pixel": "^1.0",
         "spatie/laravel-cookie-consent": "^2.12",
         "xpaw/php-source-query-class": "^1.0",
-        "maniaplanet/dedicated-server-api": "6.0.x-dev",
+        "maniaplanet/dedicated-server-api": "dev-master",
         "laravel/ui": "^3.0"
     },
     "require-dev": {

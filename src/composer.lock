@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2a2f7a93c7b1fbcb44bd87ec5815cd93",
+    "content-hash": "4d6f585b06cf3173dc60070011f2b183",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -2668,16 +2668,16 @@
         },
         {
             "name": "maniaplanet/dedicated-server-api",
-            "version": "6.0.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/maniaplanet/dedicated-server-api.git",
-                "reference": "71568ff3c81cc60a309ee23384923452974e6f17"
+                "url": "https://github.com/4ipalino/dedicated-server-api.git",
+                "reference": "008f68d24e9a6399d46691fc6f11648480b25759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maniaplanet/dedicated-server-api/zipball/71568ff3c81cc60a309ee23384923452974e6f17",
-                "reference": "71568ff3c81cc60a309ee23384923452974e6f17",
+                "url": "https://api.github.com/repos/4ipalino/dedicated-server-api/zipball/008f68d24e9a6399d46691fc6f11648480b25759",
+                "reference": "008f68d24e9a6399d46691fc6f11648480b25759",
                 "shasum": ""
             },
             "require": {
@@ -2694,7 +2694,6 @@
                     "Maniaplanet\\": "src/Maniaplanet"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
@@ -2708,11 +2707,16 @@
             "description": "XML-RPC library to connect to Maniaplanet server",
             "homepage": "https://github.com/maniaplanet/dedicated-server-api",
             "keywords": [
-                "ManiaPlanet",
-                "ShootMania",
-                "TrackMania"
+                "Maniaplanet",
+                "Shootmania",
+                "Trackmania"
             ],
-            "time": "2019-01-21T10:39:10+00:00"
+            "support": {
+                "forum": "http://forum.maniaplanet.com/viewforum.php?f=40",
+                "source": "https://github.com/4ipalino/dedicated-server-api/tree/master",
+                "issues": "https://github.com/4ipalino/dedicated-server-api/issues"
+            },
+            "time": "2020-10-09T19:42:06+00:00"
         },
         {
             "name": "maximebf/debugbar",
