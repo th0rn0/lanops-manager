@@ -59,13 +59,15 @@ class GameServersController extends Controller
             if ($game->gamecommandhandler == 2) {
                 try {
                     $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
-                    $challengeInfo = $maniaConnection->execute("GetCurrentChallengeInfo", array());
+
+                    // Argument 1 => Trackmania * Forever
+                    $challengeInfo = $maniaConnection->execute("GetCurrentChallengeInfo", array(1));
                     $players = $maniaConnection->getPlayerList();
 
-                    // $result->info = new \stdClass();
-                    // $result->info->map =  $challengeInfo->Name;
-                    // $result->info->players =  count($players);
-                    $result = $challengeInfo;
+                    $result->info = new \stdClass();
+                    $result->info->map =  @$challengeInfo->Name;
+                    $result->info->challengeInfo = $challengeInfo;
+                    $result->info->players =  count($players);
                 } catch (Exception $e) {
                     $result->error = $e->getMessage();
                 }
