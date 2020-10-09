@@ -237,7 +237,7 @@
 															<div class="input-group" style="width: 100%">
 																<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_command, NULL, $availableParameters) }}">
 																<span class="input-group-btn">
-																<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
+																<button class="btn btn-primary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="far fa-clipboard"></i></button>
 															</div>
 														@endif
 														@if($gameServer->game->connect_stream_url && $gameServer->stream_port != 0)
