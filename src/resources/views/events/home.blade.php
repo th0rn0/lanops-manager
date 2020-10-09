@@ -188,7 +188,7 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row">
-										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded visible-md-inline margin" width="15%">
+										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded visible-xs-block visible-sm-block visible-md-block visible-lg-inline margin" width="100em">
 										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
 									</div>
 								</div>
