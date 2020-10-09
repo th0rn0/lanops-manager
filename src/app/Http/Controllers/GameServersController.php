@@ -59,8 +59,12 @@ class GameServersController extends Controller
             if ($game->gamecommandhandler == 2) {
                 try {
                     $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
-                    $result->info = $maniaConnection->execute("GetCurrentChallengeInfo", array());
-                    $result->players = $maniaConnection->getPlayerList();
+                    $challengeInfo = $maniaConnection->execute("GetCurrentChallengeInfo", array());
+                    $players = $maniaConnection->getPlayerList();
+
+                    $result->info = new \stdClass();
+                    $result->info->map =  $challengeInfo->name;
+                    $result->info->players =  count($players);
                 } catch (Exception $e) {
                     $result->error = $e->getMessage();
                 }
