@@ -204,7 +204,11 @@
 												$availableParameters->gameServer = $gameServer;
 												$counter++;
 												@endphp	
-														<h4>#{{$counter}} - {{ $gameServer->name }}</h4>
+														@if ($counter > 1)
+															<hr>
+														@endif
+
+														<h3>#{{$counter}} - {{ $gameServer->name }}</h3>
 														<script>
 
 															document.addEventListener("DOMContentLoaded", function(event) { 
