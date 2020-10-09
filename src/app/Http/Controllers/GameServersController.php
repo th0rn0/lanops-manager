@@ -23,7 +23,7 @@ use Maniaplanet\DedicatedServer\Connection;
 
 class GameServersController extends Controller
 {
- 
+
 
     /**
      * Get status for casual gameservers 
@@ -58,7 +58,7 @@ class GameServersController extends Controller
             // ManiaPlanet dedicated server SDK
             if ($game->gamecommandhandler == 2) {
                 try {
-                    $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password);
+                    $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
                     $result->info = $maniaConnection->getGameInfos();
                     $result->players = $maniaConnection->getPlayerList();
                 } catch (Exception $e) {

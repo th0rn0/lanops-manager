@@ -130,7 +130,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
             });
 
-             /**
+            /**
              * GameServers
              */
             Route::get('/games/{game}/gameservers/{gameServer}/status', 'GameServersController@status');
@@ -295,7 +295,6 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/games/{game}/gameservers', 'Admin\GameServersController@index');
             Route::post('/admin/games/{game}/gameservers', 'Admin\GameServersController@store');
             Route::get('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@show');
-            Route::get('/admin/games/{game}/gameservers/{gameServer}/status', 'Admin\GameServersController@status');
             Route::post('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@update');
             Route::delete('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@destroy');
 

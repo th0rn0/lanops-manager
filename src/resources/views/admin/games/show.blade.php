@@ -116,14 +116,14 @@
 											// $('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
 											// $('#serverstatus_{{ $gameServer->id }}').on('load', function () {
 											$( document ).ready(function(){
-												$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+												$.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 													var serverStatus = JSON.parse(data);
 													updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 												});
 												var start = new Date;
 
 												setInterval(function() {
-													$.get( '/admin/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+													$.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 														var serverStatus = JSON.parse(data);
 														updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 													});
