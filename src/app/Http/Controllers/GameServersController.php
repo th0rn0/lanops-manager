@@ -66,8 +66,7 @@ class GameServersController extends Controller
 
                     $result->info = new \stdClass();
                     $result->info->map =  @$challengeInfo->Name;
-                    $result->info->challengeInfo = $challengeInfo;
-                    $result->info->players =  count($players);
+                    $result->info->players =  @count($players);
                 } catch (Exception $e) {
                     $result->error = $e->getMessage();
                 }
