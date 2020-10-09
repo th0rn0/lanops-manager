@@ -2,19 +2,24 @@
  * Misc
  */
 
-.table > tbody > tr > td {
-     vertical-align: middle;
+.table>tbody>tr>td {
+    vertical-align: middle;
 }
 
-
-.btn-orange {
-  @include button-variant(#333333, $color_primary, #333333);
+.btn-orange,
+.btn-primary {
+    @include button-variant(#333333, $color_primary, #333333);
 }
 
 .footer {
-	// height: 200px;
-	background-color: $color_secondary;
-	p, h1, h2, h3, h4, h5 {
-		color: $color_secondary_text;
-	}
+    // height: 200px;
+    background-color: $color_secondary;
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        color: $color_secondary_text;
+    }
 }

@@ -93,6 +93,7 @@
 .form-control[readonly],
 fieldset[disabled] .form-control {
     background-color: #4e4e4eab;
+    color: $color_primary_text;
 }
 
 .panel-default>.panel-heading {
@@ -126,8 +127,22 @@ fieldset[disabled] .form-control {
     }
 }
 
-.top7 { margin-top:7px; }
-.top10 { margin-top:10px; }
-.top15 { margin-top:15px; }
-.top17 { margin-top:17px; }
-.top30 { margin-top:30px; }
+.top7 {
+    margin-top: 7px;
+}
+
+.top10 {
+    margin-top: 10px;
+}
+
+.top15 {
+    margin-top: 15px;
+}
+
+.top17 {
+    margin-top: 17px;
+}
+
+.top30 {
+    margin-top: 30px;
+}
