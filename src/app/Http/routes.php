@@ -133,7 +133,7 @@ Route::group(['middleware' => ['installed']], function () {
              /**
              * GameServers
              */
-            Route::get('/games/{game}/gameservers/{gameServer}/status', 'Admin\GameServersController@status');
+            Route::get('/games/{game}/gameservers/{gameServer}/status', 'GameServersController@status');
 
             /**
              * Payments
