@@ -154,3 +154,8 @@ fieldset[disabled] .form-control {
 .top30 {
     margin-top: 30px;
 }
+
+.block-center>*[display="block"] {
+    margin-left: auto;
+    margin-right: auto;
+}

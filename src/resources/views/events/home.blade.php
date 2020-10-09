@@ -187,7 +187,7 @@
 						<div class="col-xs-12 col-sm-6 col-md-4">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<div class="row center-text">
+									<div class="row text-center block-center">
 										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded margin-top margin-bottom" width="100em">
 										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
 									</div>
