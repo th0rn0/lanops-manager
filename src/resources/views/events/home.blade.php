@@ -216,8 +216,8 @@
 															});
 														</script>
 														<div id="serverstatus_{{ $gameServer->id }}">
-															<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
-															<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+															<div><i class="fas fa-map-marked-alt margin"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+															<div><i class="fas fa-users margin"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
 														</div>
 														@if($gameServer->game->connect_game_url)
 														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
