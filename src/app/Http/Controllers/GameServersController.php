@@ -62,9 +62,10 @@ class GameServersController extends Controller
                     $challengeInfo = $maniaConnection->execute("GetCurrentChallengeInfo", array());
                     $players = $maniaConnection->getPlayerList();
 
-                    $result->info = new \stdClass();
-                    $result->info->map =  $challengeInfo->Name;
-                    $result->info->players =  count($players);
+                    // $result->info = new \stdClass();
+                    // $result->info->map =  $challengeInfo->Name;
+                    // $result->info->players =  count($players);
+                    $result = $challengeInfo;
                 } catch (Exception $e) {
                     $result->error = $e->getMessage();
                 }
