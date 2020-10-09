@@ -245,8 +245,9 @@
 				
 				<div>
 					<h4>Variable Usage</h4>
-					Use Variables in commands: {>gameServer}
-					If the used variable contains an object the Properties can also be accessed: {>gameServer->address} or {>gameServer->rcon_port} 
+					Use Variables in commands like this: {>gameServer} <br>
+					If the used variable contains an object the Properties can also be accessed: {>gameServer->address} or {>gameServer->rcon_port} <br>
+					If you need the parameter as an optional parameter (for example the password for the connect url/command: {>§gameserver->password}
 				</div>
 				<div>
 					<h4>Command Scope</h4>			
@@ -479,17 +480,17 @@
 						<div class="form-group">
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', $game->connect_game_url, array('id'=>'connect_game_url','class'=>'form-control')) }}
-							<small>Hint: use variables like Game Commands for Matches</small>
+							<small>Hint: use variables like in the  Game Commands for the Match Scope</small>
 						</div> 
 						<div class="form-group">
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_command', $game->connect_game_command, array('id'=>'connect_game_command','class'=>'form-control')) }}
-							<small>Hint: use variables like Game Commands for Matches</small>
+							<small>Hint: use variables like in the Game Commands the Match Scope</small>
 						</div> 
 						<div class="form-group">
 							{{ Form::label('connect_stream_url','Connect Stream URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_stream_url', $game->connect_stream_url, array('id'=>'connect_stream_url','class'=>'form-control')) }}
-							<small>Hint: use variables like Game Commands for Matches</small>
+							<small>Hint: use variables like in the Game Commands the Match Scope</small>
 						</div> 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
