@@ -2672,12 +2672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/4ipalino/dedicated-server-api.git",
-                "reference": "008f68d24e9a6399d46691fc6f11648480b25759"
+                "reference": "480a67d36ac293ee25f1db6f36469bd72104af30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/4ipalino/dedicated-server-api/zipball/008f68d24e9a6399d46691fc6f11648480b25759",
-                "reference": "008f68d24e9a6399d46691fc6f11648480b25759",
+                "url": "https://api.github.com/repos/4ipalino/dedicated-server-api/zipball/480a67d36ac293ee25f1db6f36469bd72104af30",
+                "reference": "480a67d36ac293ee25f1db6f36469bd72104af30",
                 "shasum": ""
             },
             "require": {
@@ -2716,7 +2716,7 @@
                 "source": "https://github.com/4ipalino/dedicated-server-api/tree/master",
                 "issues": "https://github.com/4ipalino/dedicated-server-api/issues"
             },
-            "time": "2020-10-09T19:42:06+00:00"
+            "time": "2020-10-09T20:03:55+00:00"
         },
         {
             "name": "maximebf/debugbar",
