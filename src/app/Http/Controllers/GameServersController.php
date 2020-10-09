@@ -61,7 +61,7 @@ class GameServersController extends Controller
                     $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
 
                     // Argument 1 => Trackmania * Forever
-                    $challengeInfo = $maniaConnection->execute("GetCurrentChallengeInfo", array(1));
+                    $challengeInfo = json_decode(json_encode($maniaConnection->execute("GetCurrentChallengeInfo", array(1))));
                     $players = $maniaConnection->getPlayerList();
 
                     $result->info = new \stdClass();
