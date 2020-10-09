@@ -188,18 +188,23 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row text-center block-center">
-										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded margin-top margin-bottom" width="100em">
+										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded img-contain margin-top margin-bottom" width="100em" height="100em">
 										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
 									</div>
 								</div>
-								<div class="panel-body">										
+								<div class="panel-body">
+											@php
+												$counter = 0;	
+											@endphp
+											@endphp
 											@foreach ($gameServers as $gameServer)
 												@php
 												$availableParameters = new \stdClass();
 												$availableParameters->game = $gameServer->game;
 												$availableParameters->gameServer = $gameServer;
+												$counter++;
 												@endphp	
-														<h4>{{ $gameServer->name }}</h4>
+														<h4>#{{$counter}} - {{ $gameServer->name }}</h4>
 														<script>
 
 															document.addEventListener("DOMContentLoaded", function(event) { 
