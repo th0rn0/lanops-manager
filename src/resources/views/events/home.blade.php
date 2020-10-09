@@ -212,7 +212,7 @@
 																		var serverStatus = JSON.parse(data);
 																		updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																	});
-																}, 10000);
+																}, 30000);
 															});
 														</script>
 														<div id="serverstatus_{{ $gameServer->id }}">
