@@ -118,6 +118,12 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/gallery/{album}', 'GalleryController@show');
 
             /**
+             * Help
+             */
+            Route::get('/help', 'HelpController@index');
+            Route::get('/help/{helpCategory}', 'HelpController@show');
+
+            /**
              * Tournaments
              */
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
@@ -386,6 +392,18 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/gallery/{album}/upload', 'Admin\GalleryController@uploadImage');
             Route::post('/admin/gallery/{album}/{image}', 'Admin\GalleryController@updateImage');
             Route::delete('/admin/gallery/{album}/{image}', 'Admin\GalleryController@destroyImage');
+
+            /**
+             * Help
+             */
+            Route::get('/admin/help', 'Admin\HelpController@index');
+            Route::post('/admin/help', 'Admin\HelpController@store');
+            Route::get('/admin/help/{helpCategory}', 'Admin\HelpController@show');
+            Route::post('/admin/help/{helpCategory}', 'Admin\HelpController@update');
+            Route::delete('/admin/help/{helpCategory}', 'Admin\HelpController@destroy');
+            Route::post('/admin/help/{helpCategory}/add', 'Admin\HelpController@uploadHelpEntry');
+            Route::post('/admin/help/{helpCategory}/{entry}', 'Admin\HelpController@updateHelpEntry');
+            Route::delete('/admin/help/{helpCategory}/{entry}', 'Admin\HelpController@destroyHelpEntry');
 
             /**
              * Users

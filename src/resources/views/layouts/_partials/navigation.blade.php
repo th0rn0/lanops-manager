@@ -19,6 +19,7 @@
 				@include ('layouts._partials.events-navigation')
 
 				<li><a href="/gallery">@lang('layouts.navi_gallery')</a></li>
+				<li><a href="/help">@lang('layouts.navi_help')</a></li>
 				@if (Settings::isShopEnabled())
 					<li><a href="/shop">@lang('layouts.navi_shop')</a></li>
 				@endif

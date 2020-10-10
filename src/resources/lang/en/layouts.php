@@ -33,6 +33,7 @@ return [
     'user_navi_logout' => 'Logout',
     'navi_toggle' => 'Toggle navigation',
     'navi_gallery' => 'Gallery',
+    'navi_help' => 'Help',
     'navi_shop' => 'Shop',
     'navi_login' => 'Login', 
     'events_navi_information' => 'Information',
