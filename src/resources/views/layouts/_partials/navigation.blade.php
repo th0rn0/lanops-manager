@@ -23,7 +23,7 @@
 				@if (Settings::isShopEnabled())
 					<li><a href="/shop">@lang('layouts.navi_shop')</a></li>
 				@endif
-				@if (Settings::isGalleryEnabled())
+				@if (Settings::isHelpEnabled())
 				<li><a href="/help">@lang('layouts.navi_help')</a></li>
 				@endif
 				@if (Auth::check())
