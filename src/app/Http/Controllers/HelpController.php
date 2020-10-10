@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 class HelpController extends Controller
 {
     /**
-     * Show Gallery Index Page
+     * Show Help Index Page
      * @return View
      */
     public function index()
@@ -30,8 +30,8 @@ class HelpController extends Controller
     }
 
     /**
-     * Show Gallery Page
-     * @param  GalleryAlbum $album
+     * Show Help Category Page
+     * @param  HelpCategory $helpCategory
      * @return View
      */
     public function show(HelpCategory $helpCategory)
@@ -39,4 +39,6 @@ class HelpController extends Controller
         return view('help.show')
             ->withHelpCategory($helpCategory);
     }
+
+
 }

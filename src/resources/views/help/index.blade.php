@@ -16,7 +16,7 @@
 				@if ($helpCategory->event)
 					<h5>@lang('help.event') {{ $helpCategory->event->display_name }}</h5>
 				@endif
-				<p>{{ $helpCategory->description }}</p>							
+				<p>{!! $helpCategory->description !!}</p>							
 			</div>
 		@endforeach
 	</div>
