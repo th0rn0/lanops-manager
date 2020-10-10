@@ -23,7 +23,7 @@
 						</a>
 					</h4>
 				</div>
-				<div id="collapse_{{ $entry->nice_name }}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="{{ $entry->nice_name }}">
+				<div id="collapse_{{ $entry->nice_name }}" class="panel-collapse collapse{{ $helpCategory->entrys[0] == $entry ? ' in' : '' }}" role="tabpanel" aria-labelledby="{{ $entry->nice_name }}">
 					<div class="panel-body">
 						{!! $entry->content !!}
 					</div>
