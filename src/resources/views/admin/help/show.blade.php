@@ -43,7 +43,7 @@
 									{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id, 'files' => true )) }}
 										<td>
 											<div class="form-group">
-												{{ Form::text('name', $entry->nice_name,array('id'=>'name','class'=>'form-control')) }}
+												{{ Form::text('name', $entry->display_name,array('id'=>'name','class'=>'form-control')) }}
 											</div>
 										</td>
 										<td>

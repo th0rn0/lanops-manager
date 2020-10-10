@@ -18,7 +18,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" >
 					<h4 class="panel-title">
-						{{ $entry->name }}
+						{{ $entry->display_name }}
 					</h4>
 				</div>
 				<div class="panel-body">
@@ -29,7 +29,7 @@
 				<div class="panel-heading" >
 					<h4 class="panel-title">
 						<a class="collapsed clickable"  data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $entry->id }}">
-							{{ $entry->name }}
+							{{ $entry->display_name }}
 						</a>
 					</h4>
 				</div>
