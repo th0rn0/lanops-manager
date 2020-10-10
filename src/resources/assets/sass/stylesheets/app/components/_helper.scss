@@ -165,23 +165,10 @@ fieldset[disabled] .form-control {
 }
 
 
-/* plus glyph for showing collapsible panels */
-
-.panel-heading .accordion-plus-toggle:before {
-    font-family: FontAwesome;
-    content: "\f068";
-    float: right;
-}
-
-.panel-heading .accordion-plus-toggle.collapsed:before {
-    content: "\f067";
-}
-
-
 /* arrow glyph for showing collapsible panels */
 
 .panel-heading .accordion-arrow-toggle:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f078";
     float: right;
 }
