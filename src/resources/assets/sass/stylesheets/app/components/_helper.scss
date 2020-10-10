@@ -163,3 +163,36 @@ fieldset[disabled] .form-control {
 .img-contain {
     object-fit: contain;
 }
+
+
+/* plus glyph for showing collapsible panels */
+
+.panel-heading .accordion-plus-toggle:before {
+    font-family: FontAwesome;
+    content: "\f068";
+    float: right;
+}
+
+.panel-heading .accordion-plus-toggle.collapsed:before {
+    content: "\f067";
+}
+
+
+/* arrow glyph for showing collapsible panels */
+
+.panel-heading .accordion-arrow-toggle:before {
+    font-family: FontAwesome;
+    content: "\f078";
+    float: right;
+}
+
+.panel-heading .accordion-arrow-toggle.collapsed:before {
+    content: "\f054";
+}
+
+
+/* sets the link to the width of the entire panel title */
+
+.panel-title>a {
+    display: block;
+}
