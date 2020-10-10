@@ -147,7 +147,7 @@ class HelpController extends Controller
      * @param  Request      $request
      * @return Redirect
      */
-    public function createHelpEntry(HelpCategory $helpCategory, Request $request)
+    public function addHelpEntry(HelpCategory $helpCategory, Request $request)
     {
         $rules = [
             'name'          => 'filled',
