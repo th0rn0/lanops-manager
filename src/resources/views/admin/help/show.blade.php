@@ -90,7 +90,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('content','Entry Content',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('content', $entry->content,array('id'=>'content','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
+						{{ Form::textarea('content', NULL ,array('id'=>'content','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
 					</div>
 					<button type="submit" class="btn btn-primary btn-block">Add</button>
 				{{ Form::close() }}
