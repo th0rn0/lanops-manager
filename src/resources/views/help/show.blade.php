@@ -18,6 +18,16 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" >
 					<h4 class="panel-title">
+						{{ $entry->name }}
+					</h4>
+				</div>
+				<div class="panel-body">
+					{!! $entry->content !!}
+				</div>		
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading" >
+					<h4 class="panel-title">
 						<a class="collapsed clickable"  data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $entry->id }}">
 							{{ $entry->name }}
 						</a>
@@ -28,6 +38,7 @@
 						{!! $entry->content !!}
 					</div>
 				</div>
+			
 			</div>
 		@endforeach
 	</div>
