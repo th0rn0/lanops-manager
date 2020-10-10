@@ -744,6 +744,60 @@ class Settings
     }
 
     /**
+     * Is Gallery Enabled
+     * @return Boolean
+     */
+    public static function isGalleryEnabled()
+    {
+        return \App\Setting::isGalleryEnabled();
+    }
+
+    /**
+     * Enable Gallery System
+     * @return Boolean
+     */
+    public static function enableGallerySystem()
+    {
+        return \App\Setting::enableGallerySystem();
+    }
+
+    /**
+     * Disable Gallery System
+     * @return Boolean
+     */
+    public static function disableGallerySystem()
+    {
+        return \App\Setting::disableGallerySystem();
+    }
+
+    /**
+     * Is Help Enabled
+     * @return Boolean
+     */
+    public static function isHelpEnabled()
+    {
+        return \App\Setting::isHelpEnabled();
+    }
+
+    /**
+     * Enable Help System
+     * @return Boolean
+     */
+    public static function enableHelpSystem()
+    {
+        return \App\Setting::enableHelpSystem();
+    }
+
+    /**
+     * Disable Help System
+     * @return Boolean
+     */
+    public static function disableHelpSystem()
+    {
+        return \App\Setting::disableHelpSystem();
+    }
+
+    /**
      * Get Active Login Methods
      * @return Array
      */

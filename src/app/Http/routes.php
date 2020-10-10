@@ -401,7 +401,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/help/{helpCategory}', 'Admin\HelpController@show');
             Route::post('/admin/help/{helpCategory}', 'Admin\HelpController@update');
             Route::delete('/admin/help/{helpCategory}', 'Admin\HelpController@destroy');
-            Route::post('/admin/help/{helpCategory}/add', 'Admin\HelpController@uploadHelpEntry');
+            Route::post('/admin/help/{helpCategory}/add', 'Admin\HelpController@addHelpEntry');
             Route::post('/admin/help/{helpCategory}/{entry}', 'Admin\HelpController@updateHelpEntry');
             Route::delete('/admin/help/{helpCategory}/{entry}', 'Admin\HelpController@destroyHelpEntry');
 
@@ -437,6 +437,10 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
             Route::post('/admin/settings/shop/enable', 'Admin\SettingsController@enableShopSystem');
             Route::post('/admin/settings/shop/disable', 'Admin\SettingsController@disableShopSystem');
+            Route::post('/admin/settings/gallery/enable', 'Admin\SettingsController@enableGallerySystem');
+            Route::post('/admin/settings/gallery/disable', 'Admin\SettingsController@disableGallerySystem');
+            Route::post('/admin/settings/help/enable', 'Admin\SettingsController@enableHelpSystem');
+            Route::post('/admin/settings/help/disable', 'Admin\SettingsController@disableHeloSystem');
             Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
             /**

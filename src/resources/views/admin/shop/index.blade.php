@@ -24,15 +24,9 @@
 				</div>
 				<div class="panel-body">
 					<p>The Shop can be used for buying merch, consumables etc. It is not recommended you do event ticket sales through this system.</p>
-					@if ($isShopEnabled)
-						{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
-							<button type="submit" class="btn btn-block btn-danger">Disable</button>
-						{{ Form::close() }}
-					@else
 						{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
 							<button type="submit" class="btn btn-block btn-success">Enable</button>
 						{{ Form::close() }}
-					@endif
 				</div>
 			</div>
 		</div>
@@ -227,15 +221,9 @@
 				</div>
 				<div class="panel-body">
 					<p>The Shop can be used for buying merch, consumables etc. It is not recommended you do event ticket sales through this system.</p>
-					@if ($isShopEnabled)
 						{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
 							<button type="submit" class="btn btn-block btn-danger">Disable</button>
 						{{ Form::close() }}
-					@else
-						{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
-							<button type="submit" class="btn btn-block btn-success">Enable</button>
-						{{ Form::close() }}
-					@endif
 				</div>
 			</div>
 		</div>

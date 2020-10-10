@@ -17,11 +17,14 @@
 				@include ('layouts._partials._tournaments.navigation')
 
 				@include ('layouts._partials.events-navigation')
-
+				@if (Settings::isGalleryEnabled())
 				<li><a href="/gallery">@lang('layouts.navi_gallery')</a></li>
-				<li><a href="/help">@lang('layouts.navi_help')</a></li>
+				@endif
 				@if (Settings::isShopEnabled())
 					<li><a href="/shop">@lang('layouts.navi_shop')</a></li>
+				@endif
+				@if (Settings::isGalleryEnabled())
+				<li><a href="/help">@lang('layouts.navi_help')</a></li>
 				@endif
 				@if (Auth::check())
 					@include ('layouts._partials.user-navigation')

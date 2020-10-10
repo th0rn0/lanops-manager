@@ -81,6 +81,8 @@ class AdminController extends Controller
             ->withTickets($tickets)
             ->withActivePolls($activePolls)
             ->withShopEnabled(Settings::isShopEnabled())
+            ->withGalleryEnabled(Settings::isGalleryEnabled())
+            ->withHelpEnabled(Settings::isHelpEnabled())
             ->withCreditEnabled(Settings::isCreditEnabled())
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())

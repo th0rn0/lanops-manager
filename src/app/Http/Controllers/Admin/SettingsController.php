@@ -39,6 +39,8 @@ class SettingsController extends Controller
         return view('admin.settings.index')
             ->withSettings(Setting::all())
             ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withGalleryEnabled(Settings::isGalleryEnabled())
+            ->withHelpEnabled(Settings::isHelpEnabled())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withFacebookCallback($facebookCallback)
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())

@@ -962,6 +962,7 @@ class Setting extends Model
         return true;
     }
 
+
     /**
      * Get Shop Status
      * @return Boolean
@@ -1031,6 +1032,88 @@ class Setting extends Model
         $setting = self::where('setting', 'shop_closed_message')->first();
         $setting->value = $text;
         if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Is Gallery System Enabled
+     * @return Boolean
+     */
+    public static function isGalleryEnabled()
+    {
+        return self::where('setting', 'gallery_enabled')->first()->value;
+    }
+
+    /**
+     * Enable Gallery System
+     * @return Boolean
+     */
+    public static function enableGallerySystem()
+    {
+        if (!$gallerySystemEnabled = self::where('setting', 'gallery_enabled')->first()) {
+            return false;
+        }
+        $gallerySystemEnabled->value = true;
+        if (!$gallerySystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Gallery System
+     * @return Boolean
+     */
+    public static function disableGallerySystem()
+    {
+        if (!$gallerySystemEnabled = self::where('setting', 'gallery_enabled')->first()) {
+            return false;
+        }
+        $gallerySystemEnabled->value = false;
+        if (!$gallerySystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Is Help System Enabled
+     * @return Boolean
+     */
+    public static function isHelpEnabled()
+    {
+        return self::where('setting', 'help_enabled')->first()->value;
+    }
+
+    /**
+     * Enable Help System
+     * @return Boolean
+     */
+    public static function enableHelpSystem()
+    {
+        if (!$helpSystemEnabled = self::where('setting', 'help_enabled')->first()) {
+            return false;
+        }
+        $helpSystemEnabled->value = true;
+        if (!$helpSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable Help System
+     * @return Boolean
+     */
+    public static function disableHelpSystem()
+    {
+        if (!$helpSystemEnabled = self::where('setting', 'help_enabled')->first()) {
+            return false;
+        }
+        $helpSystemEnabled->value = false;
+        if (!$helpSystemEnabled->save()) {
             return false;
         }
         return true;

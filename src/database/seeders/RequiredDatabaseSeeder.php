@@ -343,6 +343,20 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
+            ['setting'          => 'gallery_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'help_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
+        Setting::firstOrCreate(
             ['setting'          => 'installed'],
             [
                 'value'         => false,

@@ -122,6 +122,44 @@
 			</div>
 		</div>
 
+		<!-- Gallery System -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Gallery System
+			</div>
+			<div class="panel-body">
+				<p>The Gallery can be used for uploading pictures.</p>
+				@if ($isGalleryEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/gallery/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/gallery/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
+			</div>
+		</div>
+
+		<!-- Help System -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Help System
+			</div>
+			<div class="panel-body">
+				<p>The Help System can be used to populate help articles.</p>
+				@if ($isHelpEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/help/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/help/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
+			</div>
+		</div>
+
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">

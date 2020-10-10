@@ -16,6 +16,21 @@
 </div>
 
 <div class="row">
+	@if (!$isGalleryEnabled)
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-info-circle fa-fw"></i> Gallery is Currently Disabled...
+				</div>
+				<div class="panel-body">
+					<p>The Gallery can be used for uploading pictures.</p>
+						{{ Form::open(array('url'=>'/admin/settings/gallery/enable')) }}
+							<button type="submit" class="btn btn-block btn-success">Enable</button>
+						{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	@else
 	<div class="col-lg-8">
 
 		<div class="panel panel-default">
@@ -94,7 +109,19 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Enable/Disable
+			</div>
+			<div class="panel-body">
+				<p>The Gallery can be used for uploading pictures.</p>
+					{{ Form::open(array('url'=>'/admin/settings/gallery/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+			</div>
+		</div>
 	</div>
+	@endif
 </div>
 
 <script type="text/javascript">

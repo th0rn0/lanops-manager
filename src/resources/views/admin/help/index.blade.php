@@ -16,6 +16,21 @@
 </div>
 
 <div class="row">
+	@if (!$isHelpEnabled)
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-info-circle fa-fw"></i> Help is Currently Disabled...
+				</div>
+				<div class="panel-body">
+					<p>The Help System can be used to populate help articles.</p>
+						{{ Form::open(array('url'=>'/admin/settings/help/enable')) }}
+							<button type="submit" class="btn btn-block btn-success">Enable</button>
+						{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	@else
 	<div class="col-lg-8">
 
 		<div class="panel panel-default">
@@ -94,7 +109,19 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-info-circle fa-fw"></i> Enable/Disable
+			</div>
+			<div class="panel-body">
+				<p>The Help System can be used to populate help articles.</p>
+					{{ Form::open(array('url'=>'/admin/settings/help/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+			</div>
+		</div>
 	</div>
+	@endif
 </div>
 
 <script type="text/javascript">
