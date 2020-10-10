@@ -8,6 +8,7 @@ use Storage;
 use Image;
 use Validator;
 use Session;
+use Settings;
 use File;
 
 use App\User;
@@ -31,6 +32,7 @@ class HelpController extends Controller
     {
         return view('admin.help.index')
             ->withHelpCategorys(HelpCategory::paginate(20))
+            ->withHelpEnabled(Settings::isHelpEnabled())
         ;
     }
     
@@ -43,6 +45,7 @@ class HelpController extends Controller
         return view('admin.help.show')
             ->withHelpCategory($helpCategory)
             ->withEntrys($helpCategory->entrys()->paginate(10))
+            ->withHelpEnabled(Settings::isHelpEnabled())
         ;
     }
     
