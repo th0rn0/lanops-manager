@@ -26,7 +26,7 @@ class HelpCategoryEntry extends Model
     /*
     * Relationships
     */
-    public function album()
+    public function helpCategory()
     {
         return $this->belongsTo('App\HelpCategory');
     }
