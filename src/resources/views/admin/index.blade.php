@@ -197,6 +197,8 @@
 				<ul class="list-group">
 					<li class="list-group-item @if($shopEnabled) list-group-item-success @else list-group-item-danger @endif"><strong>Shop: <span class="pull-right">@if($shopEnabled) Enabled @else Disabled @endif </span></strong></li>
 					<li class="list-group-item @if($creditEnabled) list-group-item-success @else list-group-item-danger @endif"><strong>Credit: <span class="pull-right"> @if($creditEnabled) Enabled @else Disabled @endif </span></strong></li>
+					<li class="list-group-item @if($helpEnabled) list-group-item-success @else list-group-item-danger @endif"><strong>Help: <span class="pull-right">@if($helpEnabled) Enabled @else Disabled @endif </span></strong></li>
+					<li class="list-group-item @if($galleryEnabled) list-group-item-success @else list-group-item-danger @endif"><strong>Gallery: <span class="pull-right">@if($galleryEnabled) Enabled @else Disabled @endif </span></strong></li>
 					@foreach ($supportedLoginMethods as $method)
 						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Login: <span class="pull-right"> @if (in_array($method, $activeLoginMethods)) Enabled @else Disabled @endif </span></strong></li>
 					@endforeach

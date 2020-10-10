@@ -503,6 +503,62 @@ class SettingsController extends Controller
     }
 
     /**
+     * Enable Gallery System
+     * @return Redirect
+     */
+    public function enableGallerySystem()
+    {
+        if (!Settings::enableGallerySystem()) {
+            Session::flash('alert-danger', "Could not Enable the Gallery System!");
+            return Redirect::back();
+        }
+        Session::flash('alert-success', "Successfully Enabled the Gallery System!");
+        return Redirect::back();
+    }
+
+    /**
+     * Disable Gallery System
+     * @return Redirect
+     */
+    public function disableGallerySystem()
+    {
+        if (!Settings::disableGallerySystem()) {
+            Session::flash('alert-danger', "Could not Disable the Gallery System!");
+            return Redirect::back();
+        }
+        Session::flash('alert-success', "Successfully Disabled the Gallery System!");
+        return Redirect::back();
+    }
+
+    /**
+     * Enable Help System
+     * @return Redirect
+     */
+    public function enableHelpSystem()
+    {
+        if (!Settings::enableHelpSystem()) {
+            Session::flash('alert-danger', "Could not Enable the Help System!");
+            return Redirect::back();
+        }
+        Session::flash('alert-success', "Successfully Enabled the Help System!");
+        return Redirect::back();
+    }
+
+    /**
+     * Disable Help System
+     * @return Redirect
+     */
+    public function disableHelpSystem()
+    {
+        if (!Settings::disableHelpSystem()) {
+            Session::flash('alert-danger', "Could not Disable the Help System!");
+            return Redirect::back();
+        }
+        Session::flash('alert-success', "Successfully Disabled the Help System!");
+        return Redirect::back();
+    }
+
+    /**
      * Enable Login Method
      * @param  String $gateway
      * @return Redirect
