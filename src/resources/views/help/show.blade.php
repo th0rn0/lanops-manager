@@ -16,7 +16,7 @@
 	<div class="panel-group" >
 		@foreach ($helpCategory->entrys as $entry)
 			<div class="panel panel-default">
-				<div class="panel-heading clickable" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $entry->nice_name }}" >
+				<div id="{{ $entry->nice_name }}" class="panel-heading clickable" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $entry->nice_name }}" >
 					<h4 class="panel-title">
 						{{ $entry->display_name }}
 					</h4>
