@@ -32,7 +32,7 @@ class GalleryController extends Controller
     {
         return view('admin.gallery.index')
             ->withAlbums(GalleryAlbum::paginate(20))
-            ->withGalleryEnabled(Settings::isGalleryEnabled())
+            ->withisGalleryEnabled(Settings::isGalleryEnabled())
         ;
     }
     
@@ -45,7 +45,7 @@ class GalleryController extends Controller
         return view('admin.gallery.show')
             ->withAlbum($album)
             ->withImages($album->images()->paginate(10))
-            ->withGalleryEnabled(Settings::isGalleryEnabled())
+            ->withisGalleryEnabled(Settings::isGalleryEnabled())
         ;
     }
     

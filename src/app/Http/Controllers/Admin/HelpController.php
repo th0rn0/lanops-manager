@@ -32,7 +32,7 @@ class HelpController extends Controller
     {
         return view('admin.help.index')
             ->withHelpCategorys(HelpCategory::paginate(20))
-            ->withHelpEnabled(Settings::isHelpEnabled())
+            ->withisHelpEnabled(Settings::isHelpEnabled())
         ;
     }
     
@@ -45,7 +45,7 @@ class HelpController extends Controller
         return view('admin.help.show')
             ->withHelpCategory($helpCategory)
             ->withEntrys($helpCategory->entrys()->paginate(10))
-            ->withHelpEnabled(Settings::isHelpEnabled())
+            ->withisHelpEnabled(Settings::isHelpEnabled())
         ;
     }
     
