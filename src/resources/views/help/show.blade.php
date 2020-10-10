@@ -26,14 +26,12 @@
 				</div>		
 			</div>
 			<div class="panel panel-default">
-				<div class="panel-heading" >
+				<div class="panel-heading clickable" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $entry->nice_name }}" >
 					<h4 class="panel-title">
-						<a class="collapsed clickable"  data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $entry->id }}">
-							{{ $entry->display_name }}
-						</a>
+						{{ $entry->display_name }}
 					</h4>
 				</div>
-				<div id="collapse_{{ $entry->id }}" class="panel-collapse collapse">
+				<div id="collapse_{{ $entry->nice_name }}" class="panel-collapse collapse">
 					<div class="panel-body">
 						{!! $entry->content !!}
 					</div>
