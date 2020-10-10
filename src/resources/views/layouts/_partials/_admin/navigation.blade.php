@@ -63,7 +63,7 @@
 				<a href="/admin/gallery"><i class="fa fa-camera fa-fw"></i> Gallery</a>
 			</li>
 			<li>
-				<a href="/admin/help"><i class="fa fa-camera fa-fw"></i> Help</a>
+				<a href="/admin/help"><i class="fa fa-question fa-fw"></i> Help</a>
 			</li>
 			<li>
 				<a href="/admin/games"><i class="fa fa-gamepad fa-fw"></i> Games</a>
