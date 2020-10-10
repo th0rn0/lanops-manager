@@ -48,7 +48,7 @@
 										</td>
 										<td>
 											<div class="form-group">
-												{{ Form::textarea('content', $entry->content,array('id'=>'content','class'=>'form-control', 'rows'=>'2')) }}
+												{{ Form::textarea('content', $entry->content,array('id'=>'content','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 											</div>
 										</td>
 										<td>
@@ -84,6 +84,14 @@
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/add',)) }}
 					{{ csrf_field() }}
+					<div class="form-group">
+						{{ Form::label('name','Entry Name',array('id'=>'','class'=>'')) }}
+						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
+					</div>
+					<div class="form-group">
+						{{ Form::label('content','Entry Content',array('id'=>'','class'=>'')) }}
+						{{ Form::textarea('content', $entry->content,array('id'=>'content','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
+					</div>
 					<button type="submit" class="btn btn-primary btn-block">Add</button>
 				{{ Form::close() }}
 			</div>
