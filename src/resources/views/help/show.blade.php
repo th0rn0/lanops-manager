@@ -15,6 +15,8 @@
 	
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		@foreach ($helpCategory->entrys as $entry)
+
+		{{ $entry->name }}
 					<div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingOne">
 							<h4 class="panel-title">
