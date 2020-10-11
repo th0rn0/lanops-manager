@@ -72,6 +72,9 @@ generate-images:
 clear-views:
 	docker exec eventula_manager_app php artisan view:clear
 
+# clear cache
+clear-cache:
+	docker exec eventula_manager_app php artisan cache:clear
 
 
 # Create Default Folder structure
