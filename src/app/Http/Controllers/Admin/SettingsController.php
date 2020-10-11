@@ -31,7 +31,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        
+
         $facebookCallback = null;
         if (Facebook::isEnabled() && !Facebook::isLinked()) {
             $facebookCallback = Facebook::getLoginUrl();
@@ -44,8 +44,7 @@ class SettingsController extends Controller
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withFacebookCallback($facebookCallback)
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
-            ->withActiveLoginMethods(Settings::getLoginMethods())
-        ;
+            ->withActiveLoginMethods(Settings::getLoginMethods());
     }
 
     /**
@@ -55,8 +54,7 @@ class SettingsController extends Controller
     public function showOrg()
     {
         return view('admin.settings.org')
-            ->withSettings(Setting::all())
-        ;
+            ->withSettings(Setting::all());
     }
 
     /**
@@ -65,13 +63,12 @@ class SettingsController extends Controller
      */
     public function showPayments()
     {
-        
+
         return view('admin.settings.payments')
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
-            ->withIsShopEnabled(Settings::isShopEnabled())
-        ;
+            ->withIsShopEnabled(Settings::isShopEnabled());
     }
 
     /**
@@ -80,11 +77,10 @@ class SettingsController extends Controller
      */
     public function showAuth()
     {
-        
+
         return view('admin.settings.auth')
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
-            ->withActiveLoginMethods(Settings::getLoginMethods())
-        ;
+            ->withActiveLoginMethods(Settings::getLoginMethods());
     }
 
     /**
@@ -104,11 +100,10 @@ class SettingsController extends Controller
             ->withFacebookAppSecret(ApiKey::where('key', 'facebook_app_secret')->first()->value)
             ->withChallongeApiKey(ApiKey::where('key', 'challonge_api_key')->first()->value)
             ->withGoogleAnalyticsTrackingId(ApiKey::where('key', 'google_analytics_tracking_id')->first()->value)
-            ->withSteamApiKey(ApiKey::where('key', 'steam_api_key')->first()->value)
-        ;
+            ->withSteamApiKey(ApiKey::where('key', 'steam_api_key')->first()->value);
     }
-    
-     /**
+
+    /**
      * Update API
      * @param  Request $request
      * @return Redirect
@@ -222,7 +217,7 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->reddit_link) && !Settings::setTwitterLink($request->twitter_link)) {
+        if (isset($request->twitter_link) && !Settings::setTwitterLink($request->twitter_link)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
@@ -231,8 +226,9 @@ class SettingsController extends Controller
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
-        
-        if (isset($request->participant_count_offset) &&
+
+        if (
+            isset($request->participant_count_offset) &&
             !Settings::setParticipantCountOffset($request->participant_count_offset)
         ) {
             Session::flash('alert-danger', 'Could not update!');
@@ -268,25 +264,27 @@ class SettingsController extends Controller
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
-        
+
         if (isset($request->legal_notice) && !Settings::setLegalNotice($request->legal_notice)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
-        
+
         if (isset($request->privacy_policy) && !Settings::setPrivacyPolicy($request->privacy_policy)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (isset($request->purchase_terms_and_conditions) &&
+        if (
+            isset($request->purchase_terms_and_conditions) &&
             !Settings::setPurchaseTermsAndConditions($request->purchase_terms_and_conditions)
         ) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
 
-        if (isset($request->registration_terms_and_conditions) &&
+        if (
+            isset($request->registration_terms_and_conditions) &&
             !Settings::setRegistrationTermsAndConditions($request->registration_terms_and_conditions)
         ) {
             Session::flash('alert-danger', 'Could not update!');
@@ -445,7 +443,7 @@ class SettingsController extends Controller
         Session::flash('alert-success', "Successfully Disabled {$gateway}!");
         return Redirect::back();
     }
-    
+
     /**
      * Enable Credit System
      * @return Redirect
@@ -473,7 +471,7 @@ class SettingsController extends Controller
         Session::flash('alert-success', "Successfully Disabled the Credit System!");
         return Redirect::back();
     }
-    
+
     /**
      * Enable Shop System
      * @return Redirect
