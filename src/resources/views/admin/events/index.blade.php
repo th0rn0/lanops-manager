@@ -107,7 +107,7 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
-							{{ Form::text('desc_short', '',array('id'=>'desc_short','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
+							{{ Form::textarea('desc_short', '',array('id'=>'desc_short','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
