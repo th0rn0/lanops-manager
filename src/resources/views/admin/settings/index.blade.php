@@ -49,6 +49,7 @@
 									strpos($setting->setting, 'gallery') === false &&
 									strpos($setting->setting, 'help') === false &&
 									strpos($setting->setting, 'seo') === false &&
+									strpos($setting->setting, 'privacy_policy') === false &&
 									strpos($setting->setting, 'legal_notice') === false &&
 									$setting->setting != 'currency' &&
 									$setting->setting != 'social_facebook_page_access_token' &&
