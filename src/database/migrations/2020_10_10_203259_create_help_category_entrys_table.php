@@ -17,7 +17,7 @@ class CreateHelpCategoryEntrysTable extends Migration {
 			$table->increments('id');
 			$table->string('display_name');
 			$table->string('nice_name');
-			$table->string('content')->nullable()->default(null);
+			$table->string('content', 4294967295)->nullable()->default(null);
 			$table->integer('help_category_id')->unsigned()->nullable()->index();
 			$table->timestamps();
 
