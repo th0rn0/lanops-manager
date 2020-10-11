@@ -18,12 +18,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="{{ $entry->nice_name }}">
 					<h4 class="panel-title">
-						<a role="button" data-toggle="collapse" class="accordion-toggle accordion-arrow-toggle" data-parent="#helpcategory_{{ $helpCategory->slug }}" href="#collapse_{{ $entry->nice_name }}" aria-expanded="{{ $helpCategory->entrys[0] == $entry ? 'true' : 'false' }}" aria-controls="collapse_{{ $entry->nice_name }}">
+						<a role="button" data-toggle="collapse" class="accordion-toggle accordion-arrow-toggle" data-parent="#helpcategory_{{ $helpCategory->slug }}" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false" aria-controls="collapse_{{ $entry->nice_name }}">
 							{{ $entry->display_name }}
 						</a>
 					</h4>
 				</div>
-				<div id="collapse_{{ $entry->nice_name }}" class="panel-collapse collapse{{ $helpCategory->entrys[0] == $entry ? ' in' : '' }}" role="tabpanel" aria-labelledby="{{ $entry->nice_name }}">
+				<div id="collapse_{{ $entry->nice_name }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{ $entry->nice_name }}">
 					<div class="panel-body">
 						{!! $entry->content !!}
 					</div>
