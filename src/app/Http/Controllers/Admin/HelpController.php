@@ -21,6 +21,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HelpController extends Controller
 {
@@ -161,7 +162,7 @@ class HelpController extends Controller
             $entry                          = new HelpCategoryEntry();
             $entry->display_name            = $request->name;
             $entry->content                 = $request->content;
-            $entry->nice_name               = strtolower(str_replace(' ', '-', $request->name));
+            $entry->nice_name               = Str::slug(strtolower(str_replace(' ', '-', $request->name)));
             $entry->help_category_id        = $helpCategory->id;
             
         if (!$entry->save()) {
@@ -201,7 +202,7 @@ class HelpController extends Controller
     {
         //DEBUG - Refactor - replace iamge name as well!
         $entry->display_name  = $request->name;
-        $entry->nice_name     = strtolower(str_replace(' ', '-', $request->name));
+        $entry->nice_name     = Str::slug(strtolower(str_replace(' ', '-', $request->name)));
         $entry->content          = $request->content;
 
         if (!$entry->save()) {
