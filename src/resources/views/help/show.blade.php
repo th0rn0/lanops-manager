@@ -17,7 +17,7 @@
 		@foreach ($helpCategory->entrys as $entry)
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="{{ $entry->nice_name }}">
-					<h4 class="panel-title">
+					<h4 class="panel-title" style="display: flex">
 						<a class="btn btn-link" type="button" onclick="copyTextToClipBoard('{{url()->full()}}#{{ $entry->nice_name }}')"><i class="far fa-clipboard"></i></a>
 						<a class="btn btn-link" role="button" data-toggle="collapse" class="accordion-toggle accordion-arrow-toggle" data-parent="#helpcategory_{{ $helpCategory->slug }}" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false" aria-controls="collapse_{{ $entry->nice_name }}">
 							{{ $entry->display_name }}
