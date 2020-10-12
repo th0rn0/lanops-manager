@@ -18,10 +18,10 @@
 			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="{{ $entry->nice_name }}">
 					<h4 class="panel-title">
-						<a role="button" data-toggle="collapse" class="accordion-toggle accordion-arrow-toggle" data-parent="#helpcategory_{{ $helpCategory->slug }}" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false" aria-controls="collapse_{{ $entry->nice_name }}">
+						<a class="btn btn-link" type="button" onclick="copyTextToClipBoard('{{url()->full()}}#{{ $entry->nice_name }}')"><i class="far fa-clipboard"></i></a>
+						<a class="btn btn-link" role="button" data-toggle="collapse" class="accordion-toggle accordion-arrow-toggle" data-parent="#helpcategory_{{ $helpCategory->slug }}" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false" aria-controls="collapse_{{ $entry->nice_name }}">
 							{{ $entry->display_name }}
 						</a>
-						<a class="btn btn-primary" type="button" onclick="copyTextToClipBoard('{{url()->full()}}#{{ $entry->nice_name }}')"><i class="far fa-clipboard"></i></a>
 					</h4>
 				</div>
 				<div id="collapse_{{ $entry->nice_name }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{ $entry->nice_name }}">
