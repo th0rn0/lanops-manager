@@ -56,7 +56,7 @@ class TournamentsController extends Controller
             ->withUser($user);
     }
 
-    public function matchConfig(Event $event, EventTournament $tournament, int $challongeMatchId)
+    public function matchConfig(Event $event, EventTournament $tournament, int $challongeMatchId, $nummaps)
     {
         $match = $tournament->getMatch($challongeMatchId);
         if (!$match) {
@@ -68,7 +68,7 @@ class TournamentsController extends Controller
 
         $result = new \stdClass();
         $result->matchid = "Match $challongeMatchId";
-        $result->num_maps = 1;
+        $result->num_maps = $nummaps;
         $result->players_per_team = 1;
         $result->min_players_to_ready = 1;
         $result->min_spectators_to_ready = 0;
