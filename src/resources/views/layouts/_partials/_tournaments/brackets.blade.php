@@ -83,7 +83,7 @@
 								@endif
 							</td>
 							@if ( @$admin && $user->admin )
-								<td rowspan="2" class="text-center" width="10%">
+								<td rowspan="3" class="text-center" width="10%">
 									@if ($match->state == 'open' && ($match->player2_id != null && $match->player1_id != null))
 										@if ($tournament->team_size != '1v1')
 											<button 
