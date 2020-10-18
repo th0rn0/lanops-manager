@@ -471,7 +471,7 @@
 																	{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																</button>
 															@else
-																@if (Auth::user() && $event->getEventParticipant())
+																@if (Auth::user() && $event->getEventParticipant() && $participant->ticket->seatable)
 																	<button 
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
