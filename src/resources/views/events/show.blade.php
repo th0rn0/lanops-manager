@@ -227,7 +227,7 @@
 																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
 																	</button>
 																@else
-																	<button class="btn btn-success btn-sm">
+																	<button class="btn btn-success btn-sm" disabled>
 																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
 																	</button>
 																@endif
@@ -250,7 +250,7 @@
 																			{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																		</button>
 																	@else
-																		<button class="btn btn-primary btn-sm">
+																		<button class="btn btn-primary btn-sm" disabled>
 																			{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																		</button>
 																	@endif
@@ -272,8 +272,8 @@
 										<img class="img-responsive" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
 									</div>
 									<div class="col-xs-12 col-md-4">
-										<h5>@lang('events.yourseats')</h5>
 										@if ($user && !$user->eventParticipation->isEmpty())
+											<h5>@lang('events.yourseats')</h5>
 											@foreach ($user->eventParticipation as $participant) 
 												@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id) 
 													{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
