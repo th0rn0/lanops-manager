@@ -86,48 +86,48 @@
 								<td rowspan="3" class="text-center" width="10%">
 									@if ($match->state == 'open' && ($match->player2_id != null && $match->player1_id != null))
 										@if ($tournament->team_size != '1v1')
-											<button 
-										 		class="btn btn-sm btn-primary" 
+											<button
+										 		class="btn btn-sm btn-primary"
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
 										 			'{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}',
 										 			'{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}'
-									 			)" 
+									 			)"
 									 			data-toggle="modal"
 									 			data-target="#submitScoresModal"
 								 			>
 								 				Submit Scores
 								 			</button>
 										@else
-										 	<button 
-										 		class="btn btn-sm btn-primary" 
+										 	<button
+										 		class="btn btn-sm btn-primary"
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
 										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}',
 										 			'{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}'
-									 			)" 
+									 			)"
 									 			data-toggle="modal"
 									 			data-target="#submitScoresModal"
 								 			>
 								 				Submit Scores
 								 			</button>
 							 			@endif
-										
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal">Select Server</button>
+
+											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
 											<!-- Select Command Modal -->
-											<div class="modal fade" id="selectServerModal" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel" aria-hidden="true">
+											<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title" id="selectServerModalLabel">Select Server</h4>
+															<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match {{ $matchCounter }}</h4>
 														</div>
 														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . ((isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'') , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
 																<div class="form-group">
 																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 																	{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
-																</div>	
+																</div>
 															</div>
 															<div class="modal-footer">
 																<button type="submit" class="btn btn-success">Execute</button>
@@ -138,20 +138,20 @@
 												</div>
 											</div>
 										@if ( isset($matchserver) && isset($matchserver->gameServer) )
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal">Commands</button>
+											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Commands</button>
 											<!-- execute Command Modal -->
-											<div class="modal fade" id="executeServerCommandModal" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel" aria-hidden="true">
+											<div class="modal fade" id="executeServerCommandModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title" id="executeServerCommandModalLabel">Execute Server Command</h4>
+															<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match {{ $matchCounter }}</h4>
 														</div>
 														<div class="modal-body">
 															@foreach ($tournament->game->getMatchCommands() as $matchCommand)
 																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/' . $tournament->slug, 'id'=>'executeServerCommandModal')) }}
-																	{{ Form::hidden('command', $matchCommand->id) }}	
-																	{{ Form::hidden('challonge_match_id', $matchserver->challonge_match_id) }}	
+																	{{ Form::hidden('command', $matchCommand->id) }}
+																	{{ Form::hidden('challonge_match_id', $matchserver->challonge_match_id) }}
 																	challonge_match_id
 																	<div class="row row-seperator">
 																		<div class="col-xs-12 col-md-3">
@@ -176,19 +176,7 @@
 														</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-														</div>	
-														<!-- {{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id , 'id'=>'selectServerModal')) }}
-															<div class="modal-body">
-																<div class="form-group">
-																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
-																	{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
-																</div>	
-															</div>
-															<div class="modal-footer">
-																<button type="submit" class="btn btn-success">Execute</button>
-																<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-															</div>
-														{{ Form::close() }} -->
+														</div>
 													</div>
 												</div>
 											</div>
@@ -232,8 +220,8 @@
 								$availableParameters->gameServer = $matchserver->gameServer;
 								$availableParameters->match = $tournament->getMatch($matchserver->challonge_match_id);
 							@endphp
-							<tr>	
-								<td colspan="3"> 
+							<tr>
+								<td colspan="3">
 									@if ($user && Helpers::isMatchPlayer($tournament, $availableParameters->match, $user))
 										@if($tournament->game->connect_game_url)
 											<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($tournament->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
@@ -255,7 +243,7 @@
 						@endif
 						@if ( @$admin && $user->admin && $matchserver && $match->state == 'open')
 							<tr>
-								<td colspan="3"> 
+								<td colspan="3">
 									Selected Server: {{ $matchserver->gameServer->name }}
 								</td>
 							</tr>
@@ -322,7 +310,7 @@
 			$('[id$=player2_score_lbl]').text(player2_name);
 			$('[id$=player2_verify_span]').text(player2_name);
 		}
-		
+
 	</script>
 @endif
 
