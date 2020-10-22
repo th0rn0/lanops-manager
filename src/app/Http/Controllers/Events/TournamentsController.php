@@ -68,7 +68,7 @@ class TournamentsController extends Controller
 
         $result = new \stdClass();
         $result->matchid = "Match $challongeMatchId";
-        $result->num_maps = $nummaps;
+        $result->num_maps = intval ($nummaps);
         $result->players_per_team = 1;
         $result->min_players_to_ready = 1;
         $result->min_spectators_to_ready = 0;
