@@ -106,7 +106,7 @@ class TournamentsController extends Controller
             $result->team2->players->{$user->steamid} = $user->steamname;
         }
 
-        return response()->json($result);
+        return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 
     /**
