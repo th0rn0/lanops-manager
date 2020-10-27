@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Seteting;
+use App\Setting;
 use Faker\Factory as Faker;
 
 class SettingsTableSeeder extends Seeder
