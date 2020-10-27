@@ -23,7 +23,7 @@ return [
     'price' => "Preis",
     'ticketsstartfrom' => 'Tickets starten ab',
     'wantgetinaction' => 'Du willst mitmachen?',
-    'eventscomingsoon' => 'Veranstaltungen kommen demnächst',
+    'eventscomingsoon' => 'weitere Veranstaltungen kommen demnächst',
     'latestnews' => 'Neuigkeiten',
     'nothingtosee' => 'Hier gibts nichts zu sehen',
     'thefam' => 'Die :orgName Familie',
