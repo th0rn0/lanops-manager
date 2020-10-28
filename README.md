@@ -104,6 +104,7 @@ docker run -it \
   -e DB_PORT=3306 \
   -e DB_USERNAME=eventula_manager \
   -e DB_PASSWORD=password \
+  -e TIMEZONE=UTC \
   -e ANALYTICS_TRACKING_ID= \
   -e PAYPAL_USERNAME= \
   -e PAYPAL_PASSWORD= \
@@ -149,6 +150,8 @@ services:
       - DB_DATABASE=eventula_manager
       - DB_USERNAME=eventula_manager
       - DB_PASSWORD=password
+      # Timezone
+      - TIMEZONE=UTC
       # Google Analytics
       - ANALYTICS_TRACKING_ID=
       # Paypal
@@ -310,6 +313,7 @@ If we add the volume; ```resources/secrets/:/run/secrets``` and store our ```DB_
   - MYSQL_DATABASE
   - MYSQL_USER
   - MYSQL_PASSWORD
+  - TIMEZONE
   - ANALYTICS_TRACKING_ID
   - PAYPAL_USERNAME
   - PAYPAL_PASSWORD
@@ -341,3 +345,4 @@ You can also change base variables and ad your own in the appearance page.
 - LanOps - https://lanops.co.uk
 - TheLanProject - https://thelanproject.co.uk
 - IronLan - https://ironlan.co.uk
+- Lan2Play - https://lan2play.de
