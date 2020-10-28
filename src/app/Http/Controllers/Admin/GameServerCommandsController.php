@@ -19,7 +19,7 @@ use App\EventTournament;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -146,7 +146,7 @@ class GameServerCommandsController extends Controller
                 }
                 $Query->SetRconPassword($gameServer->rcon_password);
                 $result = $Query->Rcon($command);
-            } catch (Throwable $e) {
+            } catch (Exception | Throwable | TimeoutException $e) {
                 $error = $e->getMessage();
             } finally {
                 $Query->Disconnect();
@@ -157,7 +157,7 @@ class GameServerCommandsController extends Controller
                 try {
                     $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
                     $result = $maniaConnection->execute($command);
-                } catch (Throwable $e) {
+                } catch (Exception | Throwable | TimeoutException $e) {
                     $result->error = $e->getMessage();
                 }
             } else {
