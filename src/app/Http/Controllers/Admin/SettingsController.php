@@ -43,6 +43,7 @@ class SettingsController extends Controller
             ->withisHelpEnabled(Settings::isHelpEnabled())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withFacebookCallback($facebookCallback)
+            ->withFacebookIsLinked(Facebook::isLinked())
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods());
     }

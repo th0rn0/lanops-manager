@@ -11,7 +11,7 @@
 			<li class="active">
 				Settings
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
@@ -38,7 +38,7 @@
 						<tbody>
 							@foreach ($settings as $setting)
 								@if (
-									strpos($setting->setting, 'about') === false && 
+									strpos($setting->setting, 'about') === false &&
 									strpos($setting->setting, 'terms_and_conditions') === false &&
 									strpos($setting->setting, 'org_') === false &&
 									strpos($setting->setting, 'slider_') === false &&
@@ -173,14 +173,14 @@
 				<div class="row">
 					<div class="col-xs-12 col-md-6">
 						<h4>Facebook</h4>
-						@if ($facebookCallback != null)
+						@if (!$facebookIsLinked)
 							<a href="{{ $facebookCallback }}">
-								<button type="button" class="btn btn-block btn-success">Link Account</button>
+								<button type="button" class="btn btn-block btn-success" @if($facebookCallback == null) disabled @endif>Link Account</button>
 							</a>
 						@else
 							{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
 								{{ Form::hidden('_method', 'DELETE') }}
-								<button type="submit" class="btn btn-block btn-danger">Unlink Account</button>
+								<button type="submit" class="btn btn-block btn-danger" >Unlink Account</button>
 							{{ Form::close() }}
 						@endif
 					</div>
@@ -205,7 +205,7 @@
 				@foreach (config() as $config)
 					{{ dd($config) }}
 				@endforeach
-			</div>  
+			</div>
 		</div>
 	</div>
 	<div class="col-xs-12">
@@ -237,5 +237,5 @@
 		</div>
 	</div>
 </div>
- 
+
 @endsection
