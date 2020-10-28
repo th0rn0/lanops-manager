@@ -14,5 +14,5 @@ else
 	echo "---------------"
 	echo 'SSL DISABLED'
 	echo "---------------"
-	nginx -c /etc/nginx/nginx.conf -g 'daemon off;' 
+	nginx -c /etc/nginx/nginx.conf -g 'daemon off;'
 fi

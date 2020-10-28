@@ -26,7 +26,7 @@ file_env() {
 # Required Env Variables
 echo 'Required Env Variable Check:'
 file_env 'APP_URL'
-if [ -z "$APP_URL" ]; 
+if [ -z "$APP_URL" ];
 then
 	echo >&2 'ERROR'
 	echo >&2 'Event Manager App is uninitialized because APP_URL is not specified '
@@ -36,7 +36,7 @@ else
 	echo 'OK'
 fi
 file_env 'APP_EMAIL'
-if [ -z "$APP_EMAIL" ]; 
+if [ -z "$APP_EMAIL" ];
 then
 	echo >&2 'ERROR'
 	echo >&2 'Event Manager App is uninitialized because APP_EMAIL is not specified '
@@ -46,7 +46,7 @@ else
 	echo 'OK'
 fi
 file_env 'DB_PORT'
-if [ -z "$DB_PORT" ]; 
+if [ -z "$DB_PORT" ];
 then
 	echo >&2 'ERROR'
 	echo >&2 'Event Manager App is uninitialized because DB_PORT is not specified '
@@ -57,7 +57,7 @@ else
 fi
 
 file_env 'DB_HOST'
-if [ -z "$DB_HOST" ]; 
+if [ -z "$DB_HOST" ];
 then
 	echo >&2 'ERROR'
 	echo >&2 'Event Manager App is uninitialized because DB_HOST is not specified '
@@ -68,7 +68,7 @@ else
 fi
 
 file_env 'DB_PASSWORD'
-if [ -z "$DB_PASSWORD" ]; 
+if [ -z "$DB_PASSWORD" ];
 then
 	echo >&2 'ERROR'
 	echo >&2 'Event Manager App is uninitialized because DB_PASSWORD is not specified '
@@ -82,28 +82,28 @@ fi
 # Optional Env Variables
 echo 'Option Env Variable Check:'
 file_env 'MAIL_HOST'
-if [ -z "$MAIL_HOST" ]; 
+if [ -z "$MAIL_HOST" ];
 then
 	echo 'NOT SET'
 else
 	echo 'OK'
 fi
 file_env 'MAIL_USERNAME'
-if [ -z "$MAIL_USERNAME" ]; 
+if [ -z "$MAIL_USERNAME" ];
 then
 	echo 'NOT SET'
 else
 	echo 'OK'
 fi
 file_env 'MAIL_PASSWORD'
-if [ -z "$MAIL_PASSWORD" ]; 
+if [ -z "$MAIL_PASSWORD" ];
 then
 	echo 'NOT SET'
 else
 	echo 'OK'
 fi
 file_env 'STEAM_API_KEY'
-if [ -z "$STEAM_API_KEY" ]; 
+if [ -z "$STEAM_API_KEY" ];
 then
 	echo 'NOT SET'
 else
@@ -111,7 +111,7 @@ else
 fi
 
 file_env 'CHALLONGE_API_KEY'
-if [ -z "$CHALLONGE_API_KEY" ]; 
+if [ -z "$CHALLONGE_API_KEY" ];
 then
 	echo 'NOT SET'
 else
@@ -127,7 +127,7 @@ else
 fi
 
 file_env 'CHALLONGE_API_KEY'
-if [ -z "$CHALLONGE_API_KEY" ]; 
+if [ -z "$CHALLONGE_API_KEY" ];
 then
 	echo 'NOT SET'
 else
@@ -166,7 +166,7 @@ else
 fi
 
 file_env 'PAYPAL_USERNAME'
-if [ -z "$PAYPAL_USERNAME" ]; 
+if [ -z "$PAYPAL_USERNAME" ];
 then
 	echo 'NOT SET'
 else
@@ -174,7 +174,7 @@ else
 fi
 
 file_env 'PAYPAL_PASSWORD'
-if [ -z "$PAYPAL_PASSWORD" ]; 
+if [ -z "$PAYPAL_PASSWORD" ];
 then
 	echo 'NOT SET'
 else
@@ -182,7 +182,7 @@ else
 fi
 
 file_env 'PAYPAL_SIGNATURE'
-if [ -z "$PAYPAL_SIGNATURE" ]; 
+if [ -z "$PAYPAL_SIGNATURE" ];
 then
 	echo 'NOT SET'
 else

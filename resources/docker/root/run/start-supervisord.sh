@@ -30,7 +30,7 @@ then
 		ln -sf $NGINX_DOCUMENT_ROOT/storage/logs/error.log /var/log/nginx/error.log
 		echo "YOUR LOGS CAN BE FOUND IN $NGINX_DOCUMENT_ROOT/storage/logs/ WITHIN THE CONTAINER"
 		echo "---------------"
-		export APP_LOG="single" 
+		export APP_LOG="single"
 	fi
 fi
 
