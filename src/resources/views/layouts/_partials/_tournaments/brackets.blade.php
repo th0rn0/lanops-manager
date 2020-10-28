@@ -148,6 +148,17 @@
 															<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match {{ $matchCounter }}</h4>
 														</div>
 														<div class="modal-body">
+															<div class="row row-seperator">
+																<div class="col-xs-12 col-md-3">
+																	{{ Form::label("Command", NULL, array('id'=>'','class'=>'')) }}
+																</div>
+																<div class="col-xs-12 col-md-6">
+																	{{ Form::label("parameter", NULL, array('id'=>'','class'=>'')) }}
+																</div>
+																<div class="col-xs-12 col-md-3">
+																	{{ Form::label("execute", NULL, array('id'=>'','class'=>'')) }}
+																</div>
+															</div>
 															@foreach ($tournament->game->getMatchCommands() as $matchCommand)
 																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/' . $tournament->slug, 'id'=>'executeServerCommandModal')) }}
 																	{{ Form::hidden('command', $matchCommand->id) }}
