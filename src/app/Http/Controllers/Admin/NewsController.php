@@ -133,12 +133,13 @@ class NewsController extends Controller
         $newsArticle->title     = $request->title;
         $newsArticle->article   = $request->article;
 
-        if (!$newsArticle->storeTags(explode(',', $request->tags)) && !$newsArticle->save()) {
+        if (!$newsArticle->storeTags(explode(',', $request->tags)) || !$newsArticle->save()) {
             Session::flash('alert-danger', 'Cannot Update News Article!');
             return Redirect::to('admin/news/' . $newsArticle->slug);
         }
 
         Session::flash('alert-success', 'Successfully Updated News Article!');
+        Session::flash('alert-success', $newsArticle->article);
         return Redirect::to('admin/news/' . $newsArticle->slug);
     }
 
