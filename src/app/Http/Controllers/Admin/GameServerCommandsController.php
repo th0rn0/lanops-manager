@@ -9,6 +9,7 @@ use Storage;
 use Image;
 use File;
 use Helpers;
+use Validator;
 
 use App\Game;
 use App\GameServer;
@@ -122,6 +123,17 @@ class GameServerCommandsController extends Controller
 
     private function executeCommand(GameServer $gameServer, string $command)
     {
+        $validator = Validator::make(['gameServer' => $gameServer, 'command' => $command], [
+            'gameServer'              => 'required',
+            'command'           => 'required',
+        ],
+        ['gameServer.required'           => 'gameServer is required',
+        'command.required'        => 'Command is required',
+        ]);
+        if ($validator->fails())
+            print_r($validator);
+
+
         $game = $gameServer->game;
         if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) {
             $Query = new SourceQuery();
@@ -134,7 +146,7 @@ class GameServerCommandsController extends Controller
                 }
                 $Query->SetRconPassword($gameServer->rcon_password);
                 $result = $Query->Rcon($command);
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $error = $e->getMessage();
             } finally {
                 $Query->Disconnect();
@@ -145,7 +157,7 @@ class GameServerCommandsController extends Controller
                 try {
                     $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
                     $result = $maniaConnection->execute($command);
-                } catch (Exception $e) {
+                } catch (Throwable $e) {
                     $result->error = $e->getMessage();
                 }
             } else {
