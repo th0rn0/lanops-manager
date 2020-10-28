@@ -27,6 +27,7 @@
 			</div>
 		</div>
 	@endforeach
+	{{ $activePolls->links() }}
 	<hr>
 	<div class="page-header">
 		<h3>

@@ -23,10 +23,10 @@ class PollsController extends Controller
      */
     public function index()
     {
-        $activePolls = Poll::where('end', '==', null)
-            ->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")]);
+        $activePolls = Poll::whereNull('end')->whereNull('event_id')->paginate(10, ['*'], 'page');
         $endedPolls = Poll::where('end', '!=', null)
             ->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")])
+            ->whereNull('event_id')
             ->paginate(10, ['*'], 'page');
         return view("polls.index")
             ->withActivePolls($activePolls)
