@@ -133,9 +133,9 @@ class EventTournament extends Model
                                     break;
                                 case '3':
                                     $creditAmount += Settings::getCreditTournamentThird();
-                                    break;                                
+                                    break;
                             }
-                            $tournamentParticipant->user->editCredit($creditAmount, false, 'Tournament ' . $model->name . ' 1st Place');
+                            $tournamentParticipant->eventParticipant->user->editCredit($creditAmount, false, 'Tournament ' . $model->name . ' 1st Place');
                         }
                         $tournamentParticipant->credit_applied = true;
                         $tournamentParticipant->save();
@@ -173,9 +173,9 @@ class EventTournament extends Model
                                             break;
                                         case '3':
                                             $creditAmount += Settings::getCreditTournamentThird();
-                                            break;                                
+                                            break;
                                     }
-                                    $tournamentParticipant->user->editCredit($creditAmount, false, 'Tournament ' . $model->name . ' 1st Place');
+                                    $tournamentParticipant->eventParticipant->user->editCredit($creditAmount, false, 'Tournament ' . $model->name . ' 1st Place');
                                 }
                                 $tournamentParticipant->credit_applied = true;
                                 $tournamentParticipant->save();
@@ -244,7 +244,7 @@ class EventTournament extends Model
     {
         return 'slug';
     }
-    
+
     /**
      * Set Status
      * @param Boolean
@@ -383,7 +383,7 @@ class EventTournament extends Model
                 return $match;
             }
         }
-        
+
         return false;
     }
 
