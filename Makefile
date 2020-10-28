@@ -198,6 +198,10 @@ purge-cache:
 	sudo rm -rf src/bootstrap/cache/*
 	sudo rm -rf src/storage/debugbar/*
 
+# execute mysql command usage make database-command command=sqlcommandhere
+database-command:
+	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+
 # Wait for containers to initialize
 wait:
 	sleep 30
