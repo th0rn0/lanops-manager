@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Event;
 use App\EventVenue;
 use App\EventTicket;
+use App\EventTimetable;
 use App\EventInformation;
 use App\EventSeatingPlan;
 use Faker\Factory as Faker;
