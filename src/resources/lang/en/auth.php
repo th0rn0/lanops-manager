@@ -18,7 +18,7 @@ return [
     'login_to_continue' => 'Login to continue',
     'login_methods' => 'Use one of the login methods below to continue',
     'or' => 'or',
-    'register' => 'register now',
+    'register_now' => 'register now',
     'please_login' => 'Please login',
     'email_short' => 'Email',
     'password' => 'Password',
