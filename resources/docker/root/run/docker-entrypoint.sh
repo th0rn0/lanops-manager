@@ -250,6 +250,12 @@ if [ ! -L "$NGINX_DOCUMENT_ROOT/public/storage" ]; then
 	php artisan storage:link
 fi
 
+# Set Timezone
+if [ "$TIMEZONE" != "UTC" ]; then
+	cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+	echo "$TIMEZONE" >  /etc/timezone
+fi
+
 # Database Wait check
 echo "---------------"
 echo "WAITING FOR $DB_HOST:$DB_PORT..."
