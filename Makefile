@@ -1,5 +1,5 @@
 dev:
-	docker-compose -f docker-compose.yml up -d --build 
+	docker-compose -f docker-compose.yml up -d --build
 
 # Debug
 interactive:
@@ -12,11 +12,11 @@ stop:
 # Build from clean
 app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-queue-failedtable generate-key stop ssh-keygen
 
-# Build Dependencies 
-app-build-dep: composer-install npm-install
+# Build Dependencies
+app-build-dep: composer-install npm-rebuild-sass npm-install
 
 # Build Dev App & Dependencies
-app-build-dep-dev: composer-install-dev npm-install-dev
+app-build-dep-dev: composer-install-dev npm-rebuild-sass npm-install-dev
 
 ###########
 # HELPERS #
@@ -26,7 +26,7 @@ app-build-dep-dev: composer-install-dev npm-install-dev
 env-file:
 	cp .env.example src/.env
 
-# Make blank .env 
+# Make blank .env
 env-file-blank:
 	touch src/.env
 	# echo "APP_KEY=" >> src/.env
@@ -168,6 +168,13 @@ npm-outdated:
 	-w /usr/src/app \
 	node:14.10 /bin/bash -ci "npm outdated"
 
+#rebuild node sass
+npm-rebuild-sass:
+	docker run --rm --name js-maintainence-outdated --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:14.10 /bin/bash -ci "npm rebuild node-sass"
+
 # npm mix Runner
 mix:
 	docker run --rm --name js-maintainence-dev --interactive \
@@ -203,7 +210,7 @@ purge-all: stop purge-containers purge-cache
 	echo 'This is dangerous!'
 	echo 'This will totally remove all data and information stored in your app!'
 	echo 'do you want to continue? (Y/N)'
-	
+
 	sudo rm -rf src/vendor/
 	sudo rm -rf src/node_modules/
 	sudo rm -rf src/public/css/*
