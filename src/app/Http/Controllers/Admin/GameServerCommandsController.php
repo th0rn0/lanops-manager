@@ -135,6 +135,7 @@ class GameServerCommandsController extends Controller
 
 
         $game = $gameServer->game;
+        $result = false;
         if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) {
             $Query = new SourceQuery();
             try {
@@ -158,7 +159,7 @@ class GameServerCommandsController extends Controller
                     $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
                     $result = $maniaConnection->execute($command);
                 } catch (Exception | Throwable | TimeoutException $e) {
-                    $result->error = $e->getMessage();
+                    $error = $e->getMessage();
                 }
             } else {
                 $error = "$game->gamecommandhandler is not defined";
