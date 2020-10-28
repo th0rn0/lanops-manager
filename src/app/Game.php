@@ -134,8 +134,12 @@ class Game extends Model
     {
         $openmatchservers = array();
         foreach ($this->eventTournaments as $eventTournament) {
-            foreach ($eventTournament->getNextMatches() as $match) {
-                $openmatchservers[$match->id] = $match->id;
+            if($eventTournament->format != 'list')
+            {
+                foreach ($eventTournament->getNextMatches() as $match)
+                {
+                    $openmatchservers[$match->id] = $match->id;
+                }
             }
         }
 
