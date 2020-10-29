@@ -18,7 +18,27 @@
 	</div>
 	<div class="center-align fotorama" data-nav="thumbs" data-allowfullscreen="full">
 		@foreach ($album->images as $image)
-			<img src="{{ $image->path }}">
+			@if ($image->filetype == 0)
+				<img src="{{ $image->path }}">
+			@endif
+		@endforeach
+	</div>
+	<div class="center-align margin" >
+		@foreach ($album->images as $image)
+			@if ($image->filetype != 0)
+				<div class="row margin">
+					<div class="col-sm-3">
+						<a href ="{{ $image->path }}"><i class="fas fa-file-download fa-7x"></i></a>
+					</div>	
+					<div class="col-sm-3" style="display: flex; align-items: center;">
+						{{ $image->display_name }}
+					</div>					
+					<div class="col-sm-6" style="display: flex; align-items: center;">
+						{{ $image->desc }}
+					</div>
+				</div>
+				
+			@endif
 		@endforeach
 	</div>
 </div>
