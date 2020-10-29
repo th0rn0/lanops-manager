@@ -30,4 +30,5 @@ class GalleryAlbumImage extends Model
     {
         return $this->belongsTo('App\GalleryAlbum');
     }
+
 }

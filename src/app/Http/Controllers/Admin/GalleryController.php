@@ -147,13 +147,16 @@ class GalleryController extends Controller
      * @param  Request      $request
      * @return Redirect
      */
-    public function uploadImage(GalleryAlbum $album, Request $request)
+    public function uploadFile(GalleryAlbum $album, Request $request)
     {
+        
         $rules = [
-            'image.*'   => 'image',
+            'images.*'   => 'required|max:20000',
+
         ];
         $messages = [
-            'image.*.image' => 'Venue Image must be of Image type',
+            'images.*.required' => 'Please upload an image',
+            'images.*.max' => 'Sorry! Maximum allowed size for an image is 20MB',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -162,7 +165,8 @@ class GalleryController extends Controller
         $fileCount = count($files);
         //Counter for uploaded files
         $uploadcount = 0;
-        $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
+        $destinationPathFiles = '/images/gallery/' . $album->slug . '/';
+        $destinationPath = '/storage'. $destinationPathFiles;
         if ($request->file('images') && !File::exists(public_path() . $destinationPath)) {
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
@@ -173,13 +177,27 @@ class GalleryController extends Controller
             $image->display_name            = $imageName;
             $image->nice_name               = $image->url = strtolower(str_replace(' ', '-', $imageName));
             $image->gallery_album_id        = $album->id;
-            Image::make($file)
+            $ext = preg_replace('/^.*\.([^.]+)$/D', '$1', $imageName);
+
+            if ($ext == "jpg" || $ext == "JPG" || $ext == "jpeg" || $ext == "JPEG" || $ext == "png" || $ext == "PNG" || $ext == "bmp" || $ext == "BMP") {
+                $image->filetype            = 0; 
+                Image::make($file)
                 ->resize(null, 1080, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
                 ->save(public_path() . $destinationPath . $imageName)
-            ;
+                ;
+            }
+            else
+            { 
+                    $image->filetype            = 1; 
+                    Storage::disk('public')->putFileAs(
+                    $destinationPathFiles,
+                    $file,
+                    $imageName
+                    );
+            }
             $image->path = $destinationPath . $imageName;
             $image->save();
             
@@ -200,7 +218,7 @@ class GalleryController extends Controller
      * @param  GalleryAlbumImage $image
      * @return Redirect
      */
-    public function destroyImage(GalleryAlbum $album, GalleryAlbumImage $image)
+    public function destroyFile(GalleryAlbum $album, GalleryAlbumImage $image)
     {
         if (!$image->delete()) {
             Session::flash('alert-danger', 'Cannot delete Image!');
@@ -218,7 +236,7 @@ class GalleryController extends Controller
      * @param  Request           $request
      * @return Redirect
      */
-    public function updateImage(GalleryAlbum $album, GalleryAlbumImage $image, Request $request)
+    public function updateFile(GalleryAlbum $album, GalleryAlbumImage $image, Request $request)
     {
         //DEBUG - Refactor - replace iamge name as well!
         $image->display_name  = $request->name;

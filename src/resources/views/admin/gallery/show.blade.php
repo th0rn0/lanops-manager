@@ -30,7 +30,7 @@
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 						<thead>
 							<tr>
-								<th>Image</th>
+								<th>Image/File</th>
 								<th>Name</th>
 								<th>Description</th>
 								<th>Album Cover</th>
@@ -44,7 +44,11 @@
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class=" col-xs-3">
-											<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
+											@if ($image->filetype == 0)
+												<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
+											@else
+												<i class="fas fa-file-download fa-7x"></i>
+											@endif
 										</td>
 										<td>
 											<div class="form-group">
@@ -58,13 +62,16 @@
 										</td>
 										<td>
 											<div class="form-group checkbox">
-												<label>
-													@if ($album->album_cover_id == $image->id)
-														{{ Form::checkbox('album_cover', 1, true, array('id'=>'album_cover')) }}
-													@else
-														{{ Form::checkbox('album_cover', 1, false, array('id'=>'album_cover')) }}
-													@endif
-												</label>
+												@if ($image->filetype == 0)
+													<label>
+														@if ($album->album_cover_id == $image->id)
+															{{ Form::checkbox('album_cover', 1, true, array('id'=>'album_cover')) }}
+														@else
+															{{ Form::checkbox('album_cover', 1, false, array('id'=>'album_cover')) }}
+														@endif
+													</label>
+												@endif
+
 											</div>
 										</td> 
 										<td>

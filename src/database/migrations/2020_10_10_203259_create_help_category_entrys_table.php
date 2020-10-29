@@ -34,7 +34,7 @@ class CreateHelpCategoryEntrysTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('help_category_entry_gallery_help_category_id_foreign');
+		$table->dropForeign('help_category_entrys_help_category_id_foreign');
 		Schema::drop('help_category_entrys');
 	}
 
