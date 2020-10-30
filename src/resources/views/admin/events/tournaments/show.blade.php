@@ -50,7 +50,7 @@
 				<i class="fa fa-users fa-fw"></i> Participants
 			</div>
 			<div class="panel-body">
-				@if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && $tournament->format != 'list')
+				@if (($tournament->status == 'LIVE' && !$tournament->enable_live_editing )|| $tournament->status == 'COMPLETE' && $tournament->format != 'list')
 					@include ('layouts._partials._tournaments.standings', ['admin' => true])
 				@else
 					@include ('layouts._partials._tournaments.participants', ['admin' => true, 'all' => true])
@@ -190,6 +190,16 @@
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/finalize')) }}
 							<button type="submit" class="btn btn-default btn-block">Finalize Tournament</button>
 						{{ Form::close() }}
+						<hr>
+						@if ($tournament->enable_live_editing)
+							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/disableliveediting')) }}
+							<button type="submit" class="btn btn-warning btn-block ">Disable Editing</button>
+							{{ Form::close() }}
+						@else
+							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/enableliveediting')) }}
+							<button type="submit" class="btn btn-warning btn-block ">Enable Editing</button>
+							{{ Form::close() }}
+						@endif
 					@endif
 				</div>
 				@if ($tournament->status != 'COMPLETE')

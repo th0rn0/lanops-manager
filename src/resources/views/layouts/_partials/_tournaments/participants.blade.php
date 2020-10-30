@@ -65,7 +65,7 @@
 										@endif
 									</div>
 									<div class="form-group col-xs-12 col-sm-4">
-										@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
+										@if (($tournament->status == 'LIVE' && !$tournament->enable_live_editing)|| $tournament->status == 'COMPLETE')
 											<button type="submit" class="btn btn-default btn-sm btn-block" disabled>Update</button>  
 										@else
 											<button type="submit" class="btn btn-default btn-sm btn-block">Update</button>  
@@ -77,8 +77,7 @@
 						@if (@$admin && $user->admin)
 							<td>
 								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournamentParticipant->id  . '/remove')) }}
-									<input type="hidden" name="event_participant_id" value="{{ $tournamentParticipant->event_participant_id }}">
-									<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
+										<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
 								{{ Form::close() }}
 							</td>
 						@endif

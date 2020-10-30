@@ -255,6 +255,14 @@ Route::group(['middleware' => ['installed']], function () {
                 'Admin\Events\TournamentsController@finalize'
             );
             Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/enableliveediting',
+                'Admin\Events\TournamentsController@enableliveediting'
+            ); 
+           Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/disableliveediting',
+                'Admin\Events\TournamentsController@disableliveediting'
+            );
+            Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/match',
                 'Admin\Events\TournamentsController@updateMatch'
             );

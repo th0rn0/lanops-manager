@@ -236,6 +236,47 @@ class TournamentsController extends Controller
         return Redirect::back();
     }
 
+       
+    /**
+     * Enable live Editing
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @return Redirect
+     */
+    public function enableliveediting(Event $event, EventTournament $tournament)
+    {
+ 
+        $tournament->enable_live_editing  = true;
+
+        if (!$tournament->save()) {
+            session::flash('alert-danger', 'Cannot enable liveediting!');
+            return Redirect::back();
+        }
+
+        session::flash('alert-success', 'Successfully enabled liveediting!');
+        return Redirect::back();
+    }
+        
+    /**
+     * Disable live Editing
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @return Redirect
+     */
+    public function disableliveediting(Event $event, EventTournament $tournament)
+    {
+ 
+        $tournament->enable_live_editing  = false;
+
+        if (!$tournament->save()) {
+            session::flash('alert-danger', 'Cannot disable liveediting!');
+            return Redirect::back();
+        }
+
+        session::flash('alert-success', 'Successfully disabled liveediting!');
+        return Redirect::back();
+    }
+
     /**
      * Update Participant Team
      * @param  Event                      $event
