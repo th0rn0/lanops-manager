@@ -190,15 +190,17 @@
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/finalize')) }}
 							<button type="submit" class="btn btn-default btn-block">Finalize Tournament</button>
 						{{ Form::close() }}
+						@if ($tournament->team_size != '1v1')
 						<hr>
-						@if ($tournament->enable_live_editing)
-							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/disableliveediting')) }}
-							<button type="submit" class="btn btn-warning btn-block ">Disable Editing</button>
-							{{ Form::close() }}
-						@else
-							{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/enableliveediting')) }}
-							<button type="submit" class="btn btn-warning btn-block ">Enable Editing</button>
-							{{ Form::close() }}
+							@if ($tournament->enable_live_editing)
+								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/disableliveediting')) }}
+								<button type="submit" class="btn btn-warning btn-block ">Disable Editing</button>
+								{{ Form::close() }}
+							@else
+								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/enableliveediting')) }}
+								<button type="submit" class="btn btn-warning btn-block ">Enable Editing</button>
+								{{ Form::close() }}
+							@endif
 						@endif
 					@endif
 				</div>

@@ -286,6 +286,14 @@ Route::group(['middleware' => ['installed']], function () {
                 '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/remove',
                 'Admin\Events\TournamentsController@unregisterParticipant'
             );
+            Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/addpug',
+                'Admin\Events\TournamentsController@addPug'
+            );
+            Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/addsingle',
+                'Admin\Events\TournamentsController@addSingle'
+            );
 
             // TODO - REMOVE THIS AND ALL LIKE IT
             /**

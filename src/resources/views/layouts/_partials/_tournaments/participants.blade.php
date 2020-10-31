@@ -59,7 +59,11 @@
 								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournamentParticipant->id  . '/team')) }}
 									<div class="form-group col-xs-12 col-sm-8">
 										@if ($tournament->status != 'LIVE' || $tournament->status != 'COMPLETE' && (@$admin && $user->admin))
+											@if ($tournamentParticipant->event_tournament_team_id == 0)
 											{{ Form::select('event_tournament_team_id', [0 => 'None'] + $tournament->getTeams(), $tournamentParticipant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
+											@else
+											{{ Form::select('event_tournament_team_id', $tournament->getTeams(), $tournamentParticipant->event_tournament_team_id, array('id'=>'name','class'=>'form-control')) }}
+											@endif
 										@else
 											{{ $tournamentParticipant->tournamentTeam->name }}
 										@endif
@@ -76,7 +80,7 @@
 						@endif
 						@if (@$admin && $user->admin)
 							<td>
-								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournamentParticipant->id  . '/remove')) }}
+								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $tournamentParticipant->event_participant_id  . '/remove')) }}
 										<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
 								{{ Form::close() }}
 							</td>
@@ -170,4 +174,69 @@
 			</tbody>
 		</table>
 	</div>
+
 @endif
+<h3>Add Event participants</h3>
+<div class="table-responsive">
+	<table class="table">
+		 <thead>
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Add
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach ($event->eventParticipants as $participant)
+				@php
+					$istournamentpartitipant = false;
+				@endphp
+					@foreach ($tournament->tournamentParticipants as $tournamentParticipant)
+						@if ($tournamentParticipant->eventParticipant->user->username == $participant->user->username)
+							@php 
+								$istournamentpartitipant = true; 
+							@endphp
+						@endif 
+					@endforeach
+					@if (!$istournamentpartitipant)
+						<tr>
+							<td>
+								<p>
+									<img alt="{{ $participant->user->username }}'s Avatar" class="img-rounded" style="max-width: 6%;" src="{{ $participant->user->avatar }}">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->user->username }}
+								</p>
+							</td>
+							<td>
+								<p>
+									@if ($tournament->team_size != '1v1')
+										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addpug')) }}
+										<button type="submit" class="btn btn-default btn-block">Add as PUG</button>
+										{{ Form::close() }}
+
+										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addsingle')) }}
+										<div class="form-group col-xs-12 col-sm-8">
+												{{ Form::select('event_tournament_team_id', $tournament->getTeams(), NULL, array('id'=>'name','class'=>'form-control')) }}
+										</div>
+										<div class="form-group col-xs-12 col-sm-4">
+												<button type="submit" class="btn btn-default btn-sm btn-block">Add to Team</button>  
+										</div>
+										{{ Form::close() }}
+									@else
+										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addsingle')) }}
+												<button type="submit" class="btn btn-default btn-sm btn-block">Add to 1vs1</button>  
+										{{ Form::close() }}
+									@endif
+								</p>
+							</td>
+						</tr>
+					@endif
+			@endforeach
+
+
+		</tbody>
+	</table>
+</div>
