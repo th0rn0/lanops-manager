@@ -30,6 +30,7 @@ return [
     'top5attendees' => 'Top 5 attendees',
     'eventsattended' => 'Events attended',
     'wins' => 'Wins',
+    'publicserver' => 'Public Server',
     'top5winners' => 'Top 5 winners',
     'allaboutorg' => 'All about :orgName',
     'servers_facebook' => 'Facebook',

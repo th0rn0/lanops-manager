@@ -69,6 +69,74 @@
 			@else
 				<div>@lang('home.comingsoon')...</div>
 			@endif
+
+			@if (count($gameServerList) > 0)
+				<script>
+					function updateStatus(id ,serverStatus){
+
+						if(serverStatus.info == false)
+						{
+							$(id + "_map").html( "-" );
+							$(id + "_players").html( "-" );
+						}else
+						{
+							$(id + "_map").html( serverStatus.info.Map );
+							$(id + "_players").html( serverStatus.info.Players );
+						}
+					}
+				</script>
+				<div class="page-header">
+					<h3>@lang('home.publicserver')</h3>
+				</div>
+				<div class="panel-body">
+					@foreach ($gameServerList as $game => $gameServers)
+						@php
+							$counter = 0;	
+						@endphp
+						@foreach ($gameServers as $gameServer)
+							@php
+							$availableParameters = new \stdClass();
+							$availableParameters->game = $gameServer->game;
+							$availableParameters->gameServer = $gameServer;
+							$counter++;
+							@endphp	
+									@if ($counter > 1)
+										<hr>
+									@endif
+									@if($gameServer->game->connect_game_url)
+									<a id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button"><strong>#{{$counter}} - {{ $gameServer->name }}</strong></a>
+									@else
+									<strong>#{{$counter}} - {{ $gameServer->name }}</strong>
+									@endif
+									<script>
+
+										document.addEventListener("DOMContentLoaded", function(event) { 
+
+											$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+												var serverStatus = JSON.parse(data);
+												updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
+											});
+											var start = new Date;
+
+											setInterval(function() {
+												$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+													var serverStatus = JSON.parse(data);
+													updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
+												});
+											}, 30000);
+										});
+									</script>
+									<div id="serverstatus_{{ $gameServer->id }}">
+										<div><i class="fas fa-map-marked-alt"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+										<div><i class="fas fa-users"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+									</div>									
+						@endforeach
+						@endforeach
+				</div>	
+			@endif
+
+
+
 		</div>
 		@if ($nextEvent)
 			<div class="col-xs-12">

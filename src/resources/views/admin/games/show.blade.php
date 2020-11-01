@@ -221,6 +221,13 @@
 															{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
 															{{ Form::text('rcon_password', $gameServer->rcon_password, array('id'=>'rcon_password','class'=>'form-control')) }}
 														</div>
+														<div class="form-group">
+															<div class="checkbox">
+																	<label>
+																		{{ Form::checkbox('ispublic', null, $gameServer->ispublic, array('id'=>'ispublic')) }}Server is Public
+																	</label>
+															</div>		
+														</div>
 													</div>
 												</div>	
 												<div class="modal-footer">
@@ -551,7 +558,13 @@
 							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
 							{{ Form::text('rcon_password', NULL, array('id'=>'rcon_password','class'=>'form-control')) }}
 						</div>
-											
+						<div class="form-group">
+							<div class="checkbox">
+									<label>
+										{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }}Server is Public
+									</label>
+							</div>		
+						</div>				
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}					
 				</div>

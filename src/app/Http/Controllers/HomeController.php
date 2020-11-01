@@ -107,6 +107,9 @@ class HomeController extends Controller
         usort($topWinners, function ($a, $b) {
             return $b['win_count'] <=> $a['win_count'];
         });
+
+        $gameServerList = Helpers::getPublicGameServers();    
+
         return view("home")
             ->withNextEvent(
                 Event::where('end', '>=', \Carbon\Carbon::now())
@@ -114,6 +117,7 @@ class HomeController extends Controller
             )
             ->withTopAttendees(array_slice($topAttendees, 0, 5))
             ->withTopWinners(array_slice($topWinners, 0, 5))
+            ->withGameServerList($gameServerList)
             ->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
             ->withEvents(Event::all())
             ->withSliderImages(SliderImage::getImages('frontpage'))

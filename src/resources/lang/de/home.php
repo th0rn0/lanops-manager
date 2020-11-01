@@ -32,6 +32,7 @@ return [
     'wins' => 'Siege',
     'top5winners' => 'Top 5 Sieger',
     'allaboutorg' => 'Alles über :orgName',
+    'publicserver' => 'Public Server',
     'servers_facebook' => 'Facebook',
     'servers_discord' => 'Discord',
     'servers_steam' => 'Steam',

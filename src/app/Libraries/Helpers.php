@@ -328,6 +328,23 @@ class Helpers
     }
 
     /**
+     * get public casual server
+     * @return Array
+     */
+    public static function getPublicGameServers()
+    {
+        $returnarray = array();
+        foreach (GameServer::where(['ispublic' => true])->get() as $gameserver) {
+            if (!array_key_exists($gameserver->game->slug, $returnarray)) {
+                $returnarray[$gameserver->game->slug] = array();
+            }
+            $returnarray[$gameserver->game->slug][] = $gameserver;
+        }
+
+        return $returnarray;
+    }
+
+    /**
      * Get Shop Categories Select Array
      * @param  $publicOnly
      * @return Array
