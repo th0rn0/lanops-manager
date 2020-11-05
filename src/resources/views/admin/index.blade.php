@@ -17,7 +17,7 @@
 
 <div class="row">
 	<div class="col-lg-3 col-md-6">
-		<div class="card bg-primary mb-3">
+		<div class="card panel-blue mb-3">
 			<div class="card-header">
 				<div class="row">
 					<div class="col-3">
