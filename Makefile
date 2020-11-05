@@ -95,7 +95,7 @@ permissions:
 
 # Permissions custom - usage make permissions-custom user=username
 permissions-custom:
-	chown -R $(USER):101 src/
+	chown -R $(user):101 src/
 	find src -type f -exec chmod 664 {} \;
 	find src -type d -exec chmod 775 {} \;
 	chgrp -R 101 src/storage src/bootstrap/cache
