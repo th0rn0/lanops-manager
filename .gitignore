@@ -14,4 +14,5 @@ src/public/css/admin\.css
 src/public/css/app\.css
 src/public/css/admin\.css\.map
 src/public/css/app\.css\.map
+src/public/css/font/*
 src/public/uploads/gallery/*
