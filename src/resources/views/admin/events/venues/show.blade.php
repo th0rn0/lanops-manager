@@ -6,12 +6,12 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Venues</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Venues</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/venues">Venues</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $venue->display_name }}
 			</li>
 		</ol>
@@ -21,11 +21,11 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'files' => 'true')) }}
 					@if ($errors->any())
 					  	<div class="alert alert-danger">
@@ -69,8 +69,8 @@
 							{{ Form::label('address_country','Address Country',array('id'=>'','class'=>'')) }}
                             <select class="form-control @error('address_country') is-invalid @enderror" name="address_country" id="address_country" aria-describedby="address_country" value="{{ old('address_country', 'GB') }}">
                                 @foreach (Helpers::getSelectCountries() as $country)
-                                    <option value="{{ $country }}" {{ ( $country == $venue->address_country) ? 'selected' : '' }}> 
-                                        {{ $country }} 
+                                    <option value="{{ $country }}" {{ ( $country == $venue->address_country) ? 'selected' : '' }}>
+                                        {{ $country }}
                                     </option>
                                 @endforeach
                             </select>
@@ -83,17 +83,17 @@
 					{{ Form::hidden('_method', 'DELETE') }}
 					<button type="submit" class="btn btn-danger btn-block">Delete</button>
 				{{ Form::close() }}
-			</div>  
+			</div>
 		</div>
 
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add Images
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('images','Venue Images',array('id'=>'','class'=>'')) }}
@@ -104,15 +104,15 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-image fa-fw"></i> Images
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@foreach ($venue->images as $image)
 					<div class="row">
 						<div class="col-lg-12 col-sm-12">
-							<img class="img img-responsive" src="{{ $image->path }}" />
+							<img class="img img-fluid" src="{{ $image->path }}" />
 						</div>
 						<div class="col-lg-12 col-sm-12">
 							<br>
@@ -121,7 +121,7 @@
 									{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 									{{ Form::textarea('description', $image->description,array('id'=>'description','class'=>'form-control', 'rows'=>'1')) }}
 								</div>
-								<button type="submit" class="btn btn-default">Submit</button>
+								<button type="submit" class="btn btn-secondary">Submit</button>
 							{{ Form::close() }}
 							<hr>
 							{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug . '/' . $image->id, 'onsubmit' => 'return ConfirmDelete()')) }}

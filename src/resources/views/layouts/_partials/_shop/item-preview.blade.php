@@ -1,27 +1,27 @@
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">
+<div class="card mb-3">
+	<div class="card-header">
+		<h3 class="card-title">
 			<a href="/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				{{ $item->name }} @if (@$admin) <small> - Preview</small> @endif @if ($item->featured) <small> - Featured</small> @endif
 			</a>
 		</h3>
 	</div>
-	<div class="panel-body">
+	<div class="card-body">
 		@if (@$admin)
 			<a href="/admin/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				<center>
-					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img img-rounded img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img rounded img-fluid" src="{{ $item->getDefaultImageUrl() }}">
 				</center>
 			</a>
 		@else
 			<a href="/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				<center>
-					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img img-rounded img-responsive" src="{{ $item->getDefaultImageUrl() }}">
+					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img rounded img-fluid" src="{{ $item->getDefaultImageUrl() }}">
 				</center>
 			</a>
 		@endif
 	</div>
-	<div class="panel-footer">
+	<div class="card-footer">
 		<p>
 			@if ($item->price != null && $item->price != 0)
 				{{ Settings::getCurrencySymbol() }}{{ $item->price }}

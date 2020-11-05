@@ -3,34 +3,31 @@
 @section ('page_title', Settings::getOrgName() . ' - ' . $event->display_name)
 
 @section ('content')
-			
+
 <div class="container">
 
-	<div class="page-header">
-		<h1>Welcome to {{ $event->display_name }}!</h1> 
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<h1>Welcome to {{ $event->display_name }}!</h1>
 	</div>
 	<div class="text-center">
-		<nav class="navbar navbar-events" style="z-index: 1;">
+		<nav class="navbar navbar-dark bg-dark navbar-expand-md navbar-events" style="z-index: 1;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+					<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="navbar-toggler-icon"></span>
 					</button>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse" style="text-align:center;">
-					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
+					<ul class="navbar-nav" style="display: inline-block; float: none;">
 						<!--<li style="font-size:15px; font-weight:bold;"><a href="#food">Food Orders</a></li>-->
-						<li style="font-size:15px; font-weight:bold;"><a href="#event">@lang('events.eventinfo')</a></li>
-						<li style="font-size:15px; font-weight:bold;"><a href="#server">@lang('events.server')</a></li>
-						<li style="font-size:15px; font-weight:bold;"><a href="#seating">@lang('events.seating')</a></li>
-						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">@lang('events.attendees')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#event">@lang('events.eventinfo')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#server">@lang('events.server')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#seating">@lang('events.seating')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#attendees">@lang('events.attendees')</a></li>
 						@if (!$event->tournaments->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">@lang('events.tournaments')</a></li>
+							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif
-						<li style="font-size:15px; font-weight:bold;"><a href="#information">@lang('events.essentialinfo')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#information">@lang('events.essentialinfo')</a></li>
 					</ul>
 				</div>
 			</div>
@@ -43,28 +40,28 @@
 
 	<!-- EVENT SPONSORS -->
 	@if (!$event->sponsors->isEmpty())
-		<div class="page-header">
+		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="sponsors"></a>
 			<h3>@lang('events.eventsponsoredby', ['event', $event->display_name])</h3>
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
-				<img alt="{{ $sponsor->website}}" class="img-responsive img-rounded" src="{{ $sponsor->image_path }}"/>
+				<img alt="{{ $sponsor->website}}" class="img-fluid rounded" src=""{{ $sponsor->image_path }}"/>
 			</a>
 		@endforeach
 	@endif
 
 	<!-- ESSENTIAL INFORMATION -->
 	<div class="row">
-		<div class="col-lg-6 col-md-6 col-xs-12">
-			<div class="page-header">
+		<div class="col-lg-6 col-md-6 col-12">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<a name="information"></a>
 				<h3>@lang('events.essentialinfo')</h3>
 			</div>
 			{!! $event->event_live_info !!}
 		</div>
-		<div class="col-lg-6 col-md-6 col-xs-12">
-			<div class="page-header">
+		<div class="col-lg-6 col-md-6 col-12">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<a name="announcements"></a>
 				<h3>@lang('events.announcements')</h3>
 			</div>
@@ -77,10 +74,10 @@
 			@endif
 		</div>
 	</div>
-	
+
 	<!-- TIMETABLE -->
 	@if (!$event->timetables->isEmpty())
-		<div class="page-header">
+		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="timetable"></a>
 			<h3>@lang('events.timetable')</h3>
 		</div>
@@ -125,78 +122,78 @@
 	@endif
 
 	<!-- Server -->
-	@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getFacebookLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "" || !empty($gameServerList))	
-		<div class="page-header">
+	@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getFacebookLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "" || !empty($gameServerList))
+		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="server"></a>
 			<h3>@lang('events.server')</h3>
 		</div>
 		<div class="row">
-					@if (Settings::getTeamspeakLink() != "")			
-						<div class="col-xs-6 col-lg-4">
+					@if (Settings::getTeamspeakLink() != "")
+						<div class="col-6 col-lg-4">
 							<a href="ts3server://{{ Settings::getTeamspeakLink() }}?nickname={{ $user->username }}" ><i class="fab fa-teamspeak fa-2x margin"></i>@lang('home.servers_teamspeak')</a>
 						</div>
 					@endif
-					
-					@if (Settings::getMumbleLink() != "")			
-						<div class="col-xs-6 col-lg-4">
+
+					@if (Settings::getMumbleLink() != "")
+						<div class="col-6 col-lg-4">
 							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="28" height="28">@lang('home.servers_mumble')</a>
 						</div>
 					@endif
 					@if (Settings::getFacebookLink() != "")
-						<div class="col-xs-6 col-lg-4">
+						<div class="col-6 col-lg-4">
 							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i>@lang('home.servers_facebook')</a>
 						</div>
 					@endif
 					@if (Settings::getDiscordLink() != "")
-						<div class="col-xs-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i>@lang('home.servers_discord')</a>	
+						<div class="col-6 col-lg-4">
+							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i>@lang('home.servers_discord')</a>
 						</div>
 					@endif
 					@if (Settings::getSteamLink() != "")
-						<div class="col-xs-6 col-lg-4">
+						<div class="col-6 col-lg-4">
 							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i>@lang('home.servers_steam')</a>
 						</div>
 					@endif
 					@if (Settings::getRedditLink() != "")
-					<div class="col-xs-6 col-lg-4">
+					<div class="col-6 col-lg-4">
 						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-2x margin"></i>@lang('home.servers_reddit')</a>
 					</div>
 					@endif
 					@if (Settings::getTwitterLink() != "")
-					<div class="col-xs-6 col-lg-4">
+					<div class="col-6 col-lg-4">
 						<a target="_blank" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-2x margin"></i>@lang('home.servers_twitter')</a>
 					</div>
 					@endif
 		</div>
 
-			@if ( !empty($gameServerList) )	
+			@if ( !empty($gameServerList) )
 				<script>
 					function updateStatus(id ,serverStatus){
 
 						if(serverStatus.info == false)
 						{
-							$(id + "_map").html( "-" );
-							$(id + "_players").html( "-" );
+							jQuery(id + "_map").html( "-" );
+							jQuery(id + "_players").html( "-" );
 						}else
 						{
-							$(id + "_map").html( serverStatus.info.Map );
-							$(id + "_players").html( serverStatus.info.Players );
+							jQuery(id + "_map").html( serverStatus.info.Map );
+							jQuery(id + "_players").html( serverStatus.info.Players );
 						}
 					}
 				</script>
-				<div class="row top30">		
+				<div class="row top30">
 					@foreach ($gameServerList as $game => $gameServers)
-						<div class="col-xs-12 col-sm-6 col-md-4">
-							<div class="panel panel-default">
-								<div class="panel-heading">
+						<div class="col-12 col-sm-6 col-md-4">
+							<div class="card mb-3">
+								<div class="card-header">
 									<div class="row text-center block-center">
-										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-responsive img-rounded img-contain margin-top margin-bottom" width="100em" height="100em">
+										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-fluid rounded img-contain margin-top margin-bottom width=100em" height="100em">
 										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
 									</div>
 								</div>
-								<div class="panel-body">
+								<div class="card-body">
 											@php
-												$counter = 0;	
+												$counter = 0;
 											@endphp
 											@foreach ($gameServers as $gameServer)
 												@php
@@ -204,7 +201,7 @@
 												$availableParameters->game = $gameServer->game;
 												$availableParameters->gameServer = $gameServer;
 												$counter++;
-												@endphp	
+												@endphp
 														@if ($counter > 1)
 															<hr>
 														@endif
@@ -212,14 +209,14 @@
 														<h3>#{{$counter}} - {{ $gameServer->name }}</h3>
 														<script>
 
-															document.addEventListener("DOMContentLoaded", function(event) { 
+															document.addEventListener("DOMContentLoaded", function(event) {
 
 																$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																	var serverStatus = JSON.parse(data);
 																	updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 																});
 																var start = new Date;
-				
+
 																setInterval(function() {
 																	$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 																		var serverStatus = JSON.parse(data);
@@ -246,7 +243,7 @@
 															<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
 														@endif
 											@endforeach
-								</div>		
+								</div>
 							</div>
 						</div>
 					@endforeach
@@ -256,49 +253,49 @@
 					function copyToClipBoard(inputId) {
 						/* Get the text field */
 						var copyText = document.getElementById(inputId);
-				
+
 						/* Select the text field */
 						copyText.select();
 						copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-				
+
 						/* Copy the text inside the text field */
 						document.execCommand("copy");
 					}
 				</script>
-				
+
 			@endif
-	@endif				
+	@endif
 
 	<!-- TOURNAMENTS -->
 	@if (!$event->tournaments->isEmpty())
-		<div class="page-header">
+		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="tournaments"></a>
 			<h3>@lang('events.tournaments')</h3>
 		</div>
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
-					<div class="col-xs-12 col-sm-6 col-md-3">
+					<div class="col-12 col-sm-6 col-md-3">
 						<div class="thumbnail">
 							@if ($tournament->game && $tournament->game->image_thumbnail_path)
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
-									<img class="img img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+									<img class="img img-fluid rounded" src=""{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
 								</a>
 							@endif
 							<div class="caption">
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
 								<span class="small">
 									@if ($tournament->status == 'COMPLETE')
-										<span class="label label-success">@lang('events.ended')</span>
+										<span class="badge badge-success">@lang('events.ended')</span>
 									@endif
 									@if ($tournament->status == 'LIVE')
-										<span class="label label-success">@lang('events.live')</span>
+										<span class="badge badge-success">@lang('events.live')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->active_event_participant->id))
-										<span class="label label-danger">@lang('events.notsignedup')</span>
+										<span class="badge badge-danger">@lang('events.notsignedup')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->active_event_participant->id))
-										<span class="label label-success">@lang('events.signedup')</span>
+										<span class="badge badge-success">@lang('events.signedup')</span>
 									@endif
 								</span>
 								<hr>
@@ -374,7 +371,7 @@
 	@endif
 
 	<!-- ATTENDEES -->
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<a name="attendees"></a>
 		<h3>@lang('events.attendees')</h3>
 	</div>
@@ -396,7 +393,7 @@
 			@foreach ($event->eventParticipants as $participant)
 			<tr>
 				<td>
-					<img class="img-responsive img-rounded" style="max-width: 70%;" alt="{{ $participant->user->username }}'s Avatar" src="{{ $participant->user->avatar }}">
+					<img class="img-fluid rounded" style="max-width: 70%;" alt="{{ $participant->user->username }}'s Avatar" src="{{ $participant->user->avatar }}">
 				</td>
 				<td style="vertical-align: middle;">
 					{{ $participant->user->username }}
@@ -412,33 +409,33 @@
 						{{ $participant->seat->seat }}
 					@else
 						@lang('events.notseated')
-					@endif 
+					@endif
 				</td>
 			</tr>
 			@endforeach
 		</tbody>
 	</table>
-	
+
 	<!-- SEATING -->
 	@if (!$event->seatingPlans->isEmpty())
-		<div class="page-header">
+		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="seating"></a>
 			<h3>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
 		</div>
-		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingOne">
-						<h4 class="panel-title">
+				<div class="card mb-3">
+					<div class="card-header" role="tab" id="headingOne">
+						<h4 class="card-title">
 							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
 								{{ $seatingPlan->name }} <small>- @lang('events.numofseatedseats')</small>
 							</a>
 						</h4>
 					</div>
-					<div id="collapse_{{ $seatingPlan->slug }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
-						<div class="panel-body">
-							<div class="table-responsive text-center">
-								<table class="table">
+					<div id="collapse_{{ $seatingPlan->slug }}" class="collapse" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
+						<div class="card-body">
+							<div class="text-center ">
+								<table class="table table-responsive">
 									<thead>
 										<tr>
 										<?php
@@ -472,7 +469,7 @@
 																</button>
 															@else
 																@if (Auth::user() && $event->getEventParticipant() && $event->getEventParticipant()->ticket->seatable)
-																	<button 
+																	<button
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
 																			'{{ $seatingPlan->id }}',
@@ -502,25 +499,25 @@
 							</div>
 							<hr>
 							<div class="row" style="display: flex; align-items: center;">
-								<div class="col-xs-12 col-md-8">
-									<img class="img-responsive" src="{{$seatingPlan->image_path}}"/>
+								<div class="col-12 col-md-8">
+									<img class="img-fluid" src="{{$seatingPlan->image_path}}"/>
 								</div>
-								<div class="col-xs-12 col-md-4">
+								<div class="col-12 col-md-4">
 									@if ($ticketFlagSignedIn)
 										<h5>@lang('events.yourseats')</h5>
-										@foreach ($user->eventParticipation as $participant) 
-											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id) 
+										@foreach ($user->eventParticipation as $participant)
+											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
 												{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
 													{{ Form::hidden('_method', 'DELETE') }}
-													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
-													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 
-													{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }} 
+													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+													{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
+													{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
 													<h5>
-														<button class="btn btn-success btn-block"> 
+														<button class="btn btn-success btn-block">
 														{{ $participant->seat->seat }} - @lang('events.remove')
 														</button>
 													</h5>
-												{{ Form::close() }} 
+												{{ Form::close() }}
 											@endif
 										@endforeach
 									@elseif(Auth::user())
@@ -542,13 +539,13 @@
 	@endif
 
 	<!-- Image Uploader -->
-	<div class="page-header" hidden>
+	<div class="pb-2 mt-4 mb-4 border-bottom d-none">
 		<a name="image_uploader"></a>
 		<h3>@lang('events.imageuploader')</h3>
 	</div>
-	<div class="row" hidden>
+	<div class="row d-none">
 	</div>
-	
+
 </div>
 
 @endsection

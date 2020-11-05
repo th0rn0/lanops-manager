@@ -5,25 +5,25 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Purchases</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Purchases</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/purchases/">Purchases</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $purchase->id }}
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-8">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-8">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-credit-card fa-fw"></i> Items
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -50,9 +50,9 @@
 											@endif
 										@endif
 										@if ($item->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit }} Credits 
+											{{ $item->price_credit }} Credits
 										@endif
-										Each | 
+										Each |
 										@if ($item->price != null)
 											{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
 											@if ($item->price_credit != null && Settings::isCreditEnabled())
@@ -60,7 +60,7 @@
 											@endif
 										@endif
 										@if ($item->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit * $item->quantity }} Credits 
+											{{ $item->price_credit * $item->quantity }} Credits
 										@endif
 										Total
 									</td>
@@ -83,7 +83,7 @@
 											@endif
 										@endif
 										@if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit }} Credits 
+											{{ $item->price_credit }} Credits
 										@endif
 									</td>
 								</tr>
@@ -91,24 +91,24 @@
 						@endif
 					</tbody>
 				</table>
-			</div>  
+			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-4">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-credit-card fa-fw"></i> Details
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<ul class="list-group">
 
 
 
-					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="pull-right">{{ $purchase->id }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-right">{{ $purchase->id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info">
 						<strong>
-							User: 
-							<span class="pull-right">
+							User:
+							<span class="float-right">
 								{{ $purchase->user->username }}
 								@if ($purchase->user->steamid)
 									- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
@@ -116,16 +116,16 @@
 							</span>
 						</strong>
 					</li>
-					<li class="list-group-item list-group-item-info"><strong>Name: <span class="pull-right">{{ $purchase->user->firstname }} {{ $purchase->user->surname }}</span></strong></li>
-					<li class="list-group-item @if (strtolower($purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Status: <span class="pull-right">{{ $purchase->status }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>Type: <span class="pull-right">{{ $purchase->type }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-right">{{ $purchase->user->firstname }} {{ $purchase->user->surname }}</span></strong></li>
+					<li class="list-group-item @if (strtolower($purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Status: <span class="float-right">{{ $purchase->status }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Type: <span class="float-right">{{ $purchase->type }}</span></strong></li>
 					@if ($purchase->paypal_email != null)
 						<li class="list-group-item list-group-item-info">
-							<strong>Paypal Email: <span class="pull-right">{{ $purchase->paypal_email }}</span></strong>
+							<strong>Paypal Email: <span class="float-right">{{ $purchase->paypal_email }}</span></strong>
 						</li>
 					@endif
-					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="pull-right">{{ $purchase->transaction_id }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>Timestamp: <span class="pull-right">{{ $purchase->created_at }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-right">{{ $purchase->transaction_id }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Timestamp: <span class="float-right">{{ $purchase->created_at }}</span></strong></li>
 				</ul>
 				@if ($purchase->order)
 					<a href="/admin/orders/{{ $purchase->order->id }}"><button class="btn btn-block btn-success">View Order</button></a>
@@ -135,7 +135,7 @@
 						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}"><button class="btn btn-block btn-success">View Participant - {{ $participant->user->username }}</button></a>
 					@endforeach
 				@endif
-			</div>  
+			</div>
 		</div>
 	</div>
 </div>

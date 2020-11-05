@@ -3,19 +3,19 @@
 @section ('page_title', Settings::getOrgName() . ' - Events')
 
 @section ('content')
-			
+
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			Events
-		</h1> 
+		</h1>
 	</div>
 	@foreach ($events as $event)
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<strong><a href="/events/{{ $event->slug }}">{{ $event->display_name }}</a></strong>
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<h5>{!! $event->desc_short !!}</h5>
 				<p>{!! $event->essential_info !!}</p>
 				<p class="bg-success  padding">@lang('events.start'): {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>

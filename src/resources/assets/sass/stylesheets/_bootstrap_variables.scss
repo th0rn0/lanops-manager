@@ -1,0 +1,24 @@
+// Colors
+
+$bootstrap-sass-asset-helper: true;
+
+$brand-primary: $color_primary;
+$primary: $color_primary;
+$secondary: $color_secondary;
+
+$body-bg: $color_body_background;
+$body-color: $color_body_text;
+
+$success-light: #dff0d8;
+$info-light: #d9edf7;
+// $warning:       $yellow !default;
+$danger-light: #f2dede;
+
+// Font
+
+$font-family-sans-serif: "Roboto", "Helvetica Neue", Helvetica, Arial,
+  sans-serif !default;
+//** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace !default;
+$font-size-base: 0.875rem;
+$font-weight-normal: 300;

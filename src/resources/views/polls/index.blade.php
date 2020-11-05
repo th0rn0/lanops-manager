@@ -3,22 +3,22 @@
 @section ('page_title', Settings::getOrgName() . ' Polls')
 
 @section ('content')
-			
+
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			Polls
-		</h1> 
+		</h1>
 	</div>
 	@foreach ($activePolls as $poll)
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<strong><a href="/polls/{{ $poll->slug }}">{{ $poll->name }}</a></strong>
 				@if ($poll->status != 'PUBLISHED')
 					<small> - {{ $poll->status }}</small>
 				@endif
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if (!empty($poll->description))
 					<p class="bg-info  padding">{{ $poll->description }}</p>
 				@endif
@@ -29,20 +29,20 @@
 	@endforeach
 	{{ $activePolls->links() }}
 	<hr>
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>
 			Previous Polls
-		</h3> 
+		</h3>
 	</div>
 	@foreach ($endedPolls as $poll)
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<strong><a href="/polls/{{ $poll->slug }}">{{ $poll->name }}</a></strong>
 				@if ($poll->status != 'PUBLISHED')
 					<small> - {{ $poll->status }}</small>
 				@endif
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if (!empty($poll->description))
 					<p class="bg-info  padding">{{ $poll->description }}</p>
 				@endif

@@ -6,18 +6,18 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Timetables - {{ $timetable->name }}</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Timetables - {{ $timetable->name }}</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li>
-				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
+			<li class="breadcrumb-item">
+				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
 			</li>
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/{{ $event->slug }}/timetables">Timetables</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $timetable->name }}
 			</li>
 		</ol>
@@ -29,11 +29,11 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Timeslots
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover" id="timetable_table">
 					<thead>
 						<tr>
@@ -64,15 +64,15 @@
 			</div>
 		</div>
 
-	
+
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add New Slot
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data')) }}
 					@if ($errors->any())
 					  	<div class="alert alert-danger">
@@ -87,7 +87,7 @@
 						<div class="form-group col-lg-6">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
-						</div> 
+						</div>
 						 <div class="form-group col-lg-6">
 							{{ Form::label('start_time','Start',array('id'=>'','class'=>'')) }}
 							{{ Form::select('start_time', $timetable->getAvailableTimes(), null, array('id'=>'start_time','class'=>'form-control')) }}
@@ -95,17 +95,17 @@
 						<div class="form-group col-lg-12">
 							{{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::text('desc', NULL ,array('id'=>'desc','class'=>'form-control')) }}
-						</div> 
+						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug)) }}
 					@if ($errors->any())
 					  	<div class="alert alert-danger">
@@ -123,7 +123,7 @@
 						</div>
 						<div class="form-group col-lg-6">
 							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
-							{{ 
+							{{
 								Form::select(
 									'status',
 									array(
@@ -140,8 +140,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="checkbox">
-							<label>
+						<div class="form-check">
+							<label class="form-check-label">
 								@if ($timetable->primary)
 									{{ Form::checkbox('primary', 1, true, array('id'=>'primary'))}} Primary Timetable
 								@else
@@ -149,7 +149,7 @@
 								@endif
 							</label>
 						</div>
-					</div>  
+					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 				<hr>
@@ -159,7 +159,7 @@
 				{{ Form::close() }}
 			</div>
 		</div>
-	
+
 	</div>
 </div>
 
@@ -169,8 +169,8 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="editTimeSlotModal">Edit Time Slot</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data', 'id'=>'editTimeSlotForm')) }}
@@ -178,7 +178,7 @@
 						<div class="form-group col-lg-6">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL ,array('id'=>'editTimetableGame','class'=>'form-control')) }}
-						</div> 
+						</div>
 						 <div class="form-group col-lg-6">
 							{{ Form::label('start_time','Start',array('id'=>'','class'=>'')) }}
 							{{ Form::select('start_time', $timetable->getAvailableTimes(), null, array('id'=>'editTimetableStart','class'=>'form-control')) }}
@@ -186,9 +186,9 @@
 						<div class="form-group col-lg-12">
 							{{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::text('desc', NULL ,array('id'=>'editTimetableDesc','class'=>'form-control')) }}
-						</div> 
+						</div>
 					</div>
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-secondary">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -197,10 +197,10 @@
 <script>
 	function editTimeSlot(id, timestamp, name, desc)
 	{
-		$("#editTimeSlotForm").prop('action', '/admin/events/{{ $event->slug }}/timetables/{{ $timetable->slug }}/data/' + id);
-		$('#editTimetableStart').val(timestamp);
-		$('#editTimetableGame').val(name);
-		$('#editTimetableDesc').val(desc);
+		jQuery("#editTimeSlotForm").prop('action', '/admin/events/{{ $event->slug }}/timetables/{{ $timetable->slug }}/data/' + id);
+		jQuery('#editTimetableStart').val(timestamp);
+		jQuery('#editTimetableGame').val(name);
+		jQuery('#editTimetableDesc').val(desc);
 	}
 </script>
 

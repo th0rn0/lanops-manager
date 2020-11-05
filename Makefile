@@ -100,7 +100,7 @@ permissions-custom:
 	find src -type d -exec chmod 775 {} \;
 	chgrp -R 101 src/storage src/bootstrap/cache
 	chmod -R ug+rwx src/storage src/bootstrap/cache
-	
+
 # Permissions - Docker
 permissions-docker:
 	chown -R 100:101 src/
@@ -182,6 +182,13 @@ npm-rebuild-sass:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:14.10 /bin/bash -ci "npm rebuild node-sass"
+
+#rebuild node
+npm-rebuild:
+	docker run --rm --name js-maintainence-outdated --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:14.10 /bin/bash -ci "npm rebuild"
 
 # npm mix Runner
 mix:

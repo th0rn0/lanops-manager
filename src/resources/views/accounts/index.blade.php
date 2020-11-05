@@ -6,36 +6,36 @@
 
 	<div class="container">
 
-		<div class="page-header">
+		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h1>
 			@lang('accounts.my_account')
 			</h1>
 		</div>
 		<div class="row">
 			<!-- ACCOUNT DETAILS -->
-			<div class="col-xs-12  col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts.account_details')</h3>
+			<div class="col-12  col-lg-12 mt-3 mb-3">
+				<div class="card mb-3">
+					<div class="card-header">
+						<h3 class="card-title">@lang('accounts.account_details')</h3>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						{{ Form::open(array('url'=>'/account/' )) }}
 							<div class="row" style="display: flex; align-items: center;">
 								<div class="col-md-2 col-sm-12">
 									@if ($user->avatar != NULL)
-										<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-responsive img-thumbnail"/>
+										<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-fluid" img-thumbnail/>
 									@endif
-								</div> 
+								</div>
 								<div class="col-md-10 col-sm-12">
 					                <div class="row">
-					                    <div class="col-xs-12 col-md-6">
-					                        <div class="form-group @error('firstname') has-error @enderror">
+					                    <div class="col-12 col-md-6">
+					                        <div class="form-group @error('firstname') is-invalid @enderror">
 					                            {{ Form::label('firstname',__('accounts.firstname'),array('id'=>'','class'=>'')) }}
 					                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
 					                        </div>
 					                    </div>
-					                    <div class="col-xs-12 col-md-6">
-					                        <div class="form-group  @error('surname') has-error @enderror">
+					                    <div class="col-12 col-md-6">
+					                        <div class="form-group  @error('surname') is-invalid @enderror">
 					                            {{ Form::label('surname',__('accounts.surname'),array('id'=>'','class'=>'')) }}
 					                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ $user->surname }}" required autocomplete="surname">
 					                        </div>
@@ -44,7 +44,7 @@
 									<div class="form-group">
 										{{ Form::label('Username',__('accounts.username'),array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
-									</div> 
+									</div>
 									@if ($user->steamid && $user->steamname)
 										<div class="form-group">
 											{{ Form::label('steamname',__('accounts.steamname'),array('id'=>'','class'=>'')) }}
@@ -89,11 +89,11 @@
 					</div>
 				</div>
 				@if ($creditLogs)
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Credit - {{ $user->credit_total }}</h3>
+					<div class="card mb-3">
+						<div class="card-header">
+							<h3 class="card-title">Credit - {{ $user->credit_total }}</h3>
 						</div>
-						<div class="panel-body">
+						<div class="card-body">
 							<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 								<thead>
 									<tr>
@@ -122,7 +122,7 @@
 													@foreach ($creditLog->purchase->order->items as $item)
 														@if ($item->item)
 															{{ $item->item->name }}
-														@endif 
+														@endif
 														 - x {{ $item->quantity }}
 														 <br>
 													 	@if ($item->price != null)
@@ -156,12 +156,12 @@
 			</div>
 
 			<!-- TICKETS -->
-			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-7">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts.tickets')</h3>
+			<div class="col-sm-12 col-12 col-md-6 col-lg-7 mt-3 mb-3">
+				<div class="card mb-3">
+					<div class="card-header">
+						<h3 class="card-title">@lang('accounts.tickets')</h3>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						@if (count($eventParticipants))
 							@foreach ($eventParticipants as $participant)
 								@include ('layouts._partials._tickets.index')
@@ -174,12 +174,12 @@
 			</div>
 
 			<!-- PURCHASES -->
-			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-5">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts.purchases')</h3>
+			<div class="col-sm-12 col-12 col-md-6 col-lg-5 mt-3 mb-3">
+				<div class="card mb-3">
+					<div class="card-header">
+						<h3 class="card-title">@lang('accounts.purchases')</h3>
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						@if (count($user->purchases))
 							<table class="table table-striped">
 								<thead>
@@ -222,7 +222,7 @@
 													@foreach ($purchase->order->items as $item)
 														@if ($item->item)
 															{{ $item->item->name }}
-														@endif 
+														@endif
 														 - x {{ $item->quantity }}
 														 <br>
 													 	@if ($item->price != null)
@@ -258,16 +258,16 @@
 			</div>
 
 			<!-- DANGER ZONE -->
-			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">@lang('accounts.danger_zone')</h3>
+			<div class="col-sm-12 col-12 col-md-12 col-lg-12 mt-3 mb-3">
+				<div class="card mb-3">
+					<div class="card-header">
+						<h3 class="card-title">@lang('accounts.danger_zone')</h3>
 					</div>
-					<div class="panel-body">
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.remove_steam_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.add_second_steam_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.add_twitch_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">@lang('accounts.remove_twitch_account')</button>
+					<div class="card-body">
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.remove_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_second_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_twitch_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.remove_twitch_account')</button>
 						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">@lang('accounts.remove_account')</button>
 					</div>
 				</div>
@@ -281,8 +281,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="confirmDeleteModalLabel">@lang('accounts.confirm_remove_account')</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				{{ Form::open(array('url'=>'/account/delete/', 'id'=>'confirmDeleteFormModal')) }}
 					<div class="modal-body">
@@ -290,7 +290,7 @@
 							<p>@lang('accounts.remove_account_line1')</p>
 							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line2')</p>
 							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line3')</p>
-							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line4')</p> 
+							<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line4')</p>
 							<p>@lang('accounts.remove_account_line5_1') <strong>@lang('accounts.remove_account_not')</strong> @lang('accounts.remove_account_line5_1')</p>
 							<p>@lang('accounts.remove_account_line6_1') <strong>@lang('accounts.remove_account_not')</strong> @lang('accounts.remove_account_line6_2')</p>
 							<p><strong>@lang('accounts.remove_account_line7')</strong></p>
@@ -304,5 +304,5 @@
 			</div>
 		</div>
 	</div>
-	
+
 @endsection

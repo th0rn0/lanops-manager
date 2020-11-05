@@ -6,15 +6,15 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Tournaments</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Tournaments</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li>
-				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
+			<li class="breadcrumb-item">
+				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Tournaments
 			</li>
 		</ol>
@@ -26,12 +26,12 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-list-ol fa-fw"></i> Tournaments
 			</div>
-			<div class="panel-body">
-				<div class="panel-group" id="accordion">
+			<div class="card-body">
+				<div class="card-group" id="accordion">
 					@if (config('challonge.api_key') != null)
 						<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 							<thead>
@@ -76,18 +76,18 @@
 					@else
 						No Challonge Key Found. Tournaments are disabled.
 					@endif
-				</div>            
+				</div>
 			</div>
 		</div>
 
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add Tournament
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if (config('challonge.api_key') != null)
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments', 'files' => 'true')) }}
 						@if ($errors->any())
@@ -102,46 +102,46 @@
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
-							{{ 
+							{{
 								Form::select(
-									'game_id', 
-									Helpers::getGameSelectArray(), 
-									null, 
+									'game_id',
+									Helpers::getGameSelectArray(),
+									null,
 									array(
 										'id'    => 'game_id',
 										'class' => 'form-control'
 									)
-								) 
+								)
 							}}
-						</div> 
+						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('format','Format',array('id'=>'','class'=>'')) }}
-								{{ 
+								{{
 									Form::select(
-										'format', 
+										'format',
 										array(
-											'single elimination'	=> 'Single Elimination', 
-											'double elimination'  	=> 'Double Elimination', 
+											'single elimination'	=> 'Single Elimination',
+											'double elimination'  	=> 'Double Elimination',
 											'round robin'         	=> 'Round Robin',
 											'list'					=> 'List'
-										), 
-										null, 
+										),
+										null,
 										array(
 											'id'    => 'format',
 											'class' => 'form-control'
 										)
-									) 
+									)
 								}}
-							</div> 
+							</div>
 							<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
-								{{ 
+								{{
 									Form::select(
-										'team_size', 
+										'team_size',
 										array(
 											'1v1' => '1v1',
 											'2v2' => '2v2',
@@ -155,9 +155,9 @@
 											'id'    => 'team_size',
 											'class' => 'form-control'
 										)
-									) 
+									)
 								}}
-							</div> 
+							</div>
 						</div>
 
 						<div class="form-group">
@@ -170,19 +170,19 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
-								<div class="checkbox">
-									<label>
+								<div class="form-check">
+									<label class="form-check-label">
 										{{ Form::checkbox('allow_bronze', null, true, array('id'=>'allow_bronze')) }} Match for 3rd Place?
 									</label>
 								</div>
-							</div> 
+							</div>
 							<div class="col-lg-6 col-sm-12 form-group">
-								<div class="checkbox">
-									<label>
+								<div class="form-check">
+									<label class="form-check-label">
 										{{ Form::checkbox('allow_player_teams', null, true, array('id'=>'allow_player_teams')) }} Allow Player Teams?
 									</label>
 								</div>
-							</div> 
+							</div>
 						</div>
 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
@@ -192,7 +192,7 @@
 				@endif
 			</div>
 		</div>
-		
+
 	</div>
 </div>
 

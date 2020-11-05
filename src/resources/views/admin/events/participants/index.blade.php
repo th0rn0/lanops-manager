@@ -6,15 +6,15 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Participants</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Participants</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li>
-				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
+			<li class="breadcrumb-item">
+				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Participants
 			</li>
 		</ol>
@@ -26,12 +26,12 @@
 <div class="row">
 	<div class="col-lg-12">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> All Participants
-				<a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-xs pull-right">Freebies</a>
+				<a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-sm float-right">Freebies</a>
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="seating_table">
 						<thead>

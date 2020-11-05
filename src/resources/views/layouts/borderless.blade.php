@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<title>
 			@hasSection ('page_title')
 				@yield('page_title') | {{ Settings::getOrgName() }}
@@ -18,8 +18,8 @@
 	<body class="full-height">
 		<div class="container">
 			<div class="row">
-				<div class="col-xs-12">
-					<img class="img-responsive" style="margin-top:-211px; margin-bottom:-259px;" src="{{ Settings::getOrgLogo() }}"/>
+				<div class="col-12">
+					<img class="img-fluid" style="margin-top:-211px; margin-bottom:-259px;" src="{{ Settings::getOrgLogo() }}"/>
 				</div>
 			</div>
 		</div>

@@ -5,22 +5,22 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Polls</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Polls</h3>
 		<ol class="breadcrumb">
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Polls
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-8">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-8">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> Polls
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -63,15 +63,15 @@
 					</tbody>
 				</table>
 				{{ $polls->links() }}
-			</div>  
+			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-4">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Create Poll
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/polls/', 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
@@ -83,7 +83,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('event_id','Link to Event',array('id'=>'','class'=>'')) }}
-						{{ 
+						{{
 							Form::select(
 								'event_id',
 								Helpers::getEventNames('DESC', 0, true),
@@ -99,21 +99,21 @@
 					@include ('layouts._partials._polls.add-options')
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
-							<div class="checkbox">
-								<label>
+							<div class="form-check">
+								<label class="form-check-label">
 									{{ Form::checkbox('allow_options_user', null, true, array('id'=>'allow_options_user')) }} Allow users to add their own options?
 								</label>
 							</div>
-						</div> 
+						</div>
 						<div class="col-lg-6 col-sm-12 form-group">
-							<div class="checkbox">
-								<label>
+							<div class="form-check">
+								<label class="form-check-label">
 									{{ Form::checkbox('allow_options_multi', null, true, array('id'=>'allow_options_multi')) }} Allow multiple options?
 								</label>
 							</div>
-						</div> 
+						</div>
 					</div>
-					<button type="submit" class="btn btn-success btn-block">Submit</button> 
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
 			</div>
 		</div>

@@ -1,6 +1,7 @@
 @import 'stylesheets/app/modules/user-variables';
-$bootstrap-sass-asset-helper: true;
-@import "stylesheets/app/vendor/bootstrap";
+@import "stylesheets/bootstrap_variables";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "stylesheets/bootstrap_custom";
 @import 'stylesheets/app/modules/variables',
 'stylesheets/app/components/helper',
 'stylesheets/app/components/hero',

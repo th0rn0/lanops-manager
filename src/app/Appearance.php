@@ -17,7 +17,7 @@ class Appearance extends Model
      * @var string
      */
     protected $table = 'appearance';
-    
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -37,6 +37,8 @@ class Appearance extends Model
         @Cache::forget("css_version");
         $scss = new Compiler();
         $scss->setImportPaths('/web/html/resources/assets/sass/');
+        // required for node_moudles imports
+        $scss->addImportPath('/web/html/');
         $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
         $cssTemplates = ['app', 'admin'];
         foreach ($cssTemplates as $cssTemplate) {

@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="col-xs-2">
-		<img class="img-responsive img-rounded img-small news-post-comment-image" alt="{{ $comment->user->username }}'s Avatar" src="{{ $comment->user->avatar }}"/>
+	<div class="col-2">
+		<img class="img-fluid rounded img-small news-post-comment-image" alt="{{ $comment->user->username }}'s Avatar" src="{{ $comment->user->avatar }}"/>
 		<p class="news-post-comment-image-text">{{ $comment->user->username }}</p>
 	</div>
-	<div class="col-xs-10">
+	<div class="col-10">
 		<p>{{ $comment->comment }}</p>
 		<span class="text-muted"><small>@lang('layouts.posted_on') {{ $comment->created_at }}</small></span>
-		@if (Auth::user() && Auth::id() == $comment->user_id) 
+		@if (Auth::user() && Auth::id() == $comment->user_id)
 			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-toggle="modal" data-target="#editCommentModal">@lang('layouts.edit_comment')</a> /
 		@endif
 		@if (Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id()))
@@ -24,7 +24,7 @@
 		@endif
 		@if ($comment->approved && $comment->reviewed)
 			@if (Auth::user() && !$comment->reports->pluck('user_id')->contains(Auth::id()) && $comment->user_id != Auth::id())
-				@if ((Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id())) || (Auth::user() && Auth::id() == $comment->user_id)) 
+				@if ((Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id())) || (Auth::user() && Auth::id() == $comment->user_id))
 					/
 				@endif
 				<a href="/news/{{ $newsArticle->slug }}/comments/{{ $comment->id }}/report">
@@ -41,8 +41,8 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="editCommentModalLabel">@lang('layouts.edit_comment')</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments', 'id'=>'edit_comment_modal_form')) }}
@@ -68,7 +68,7 @@
 	function editComment(comment, comment_id)
 	{
 		console.log(comment_id);
-		$("#comment_modal").val(comment);
-		$("#edit_comment_modal_form").prop('action', '/news/{{ $newsArticle->slug }}/comments/' + comment_id);
+		jQuery("#comment_modal").val(comment);
+		jQuery("#edit_comment_modal_form").prop('action', '/news/{{ $newsArticle->slug }}/comments/' + comment_id);
 	}
 </script>

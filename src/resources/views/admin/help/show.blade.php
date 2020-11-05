@@ -6,26 +6,26 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Help - {{ $helpCategory->name }}</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Help - {{ $helpCategory->name }}</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/help">Help</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $helpCategory->name }}
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-entry fa-fw"></i> Entrys
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 						<thead>
@@ -77,11 +77,11 @@
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-upload fa-fw"></i> Add Entry
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/add',)) }}
 					{{ csrf_field() }}
 					<div class="form-group">
@@ -96,11 +96,11 @@
 				{{ Form::close() }}
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug)) }}
 						@if ($errors->any())
@@ -115,7 +115,7 @@
 						<div class="form-group">
 							{{ Form::label('name','Album Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',$helpCategory->name,array('id'=>'name','class'=>'form-control')) }}
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('description','Content',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $helpCategory->description,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
@@ -123,7 +123,7 @@
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
-								{{ 
+								{{
 									Form::select(
 										'status',
 										array(
@@ -140,7 +140,7 @@
 							</div>
 							 <div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('event_id','Event',array('id'=>'','class'=>'')) }}
-								{{ 
+								{{
 									Form::select(
 										'event_id',
 										Helpers::getEventNames('DESC', 0),
@@ -168,9 +168,9 @@
 </div>
 
 <script type="text/javascript">
-	$( function() {
-		$( "#start_date" ).datepicker();
-		$( "#end_date" ).datepicker();
+	jQuery( function() {
+		jQuery( "#start_date" ).datepicker();
+		jQuery( "#end_date" ).datepicker();
 	});
 </script>
 

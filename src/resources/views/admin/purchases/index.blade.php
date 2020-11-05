@@ -5,51 +5,51 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Purchases</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Purchases</h3>
 		<ol class="breadcrumb">
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Purchases
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-12">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-credit-card fa-fw"></i> Purchases
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="row">
-					<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
+					<div class="col-12 col-md-4">
+						<div class="card bg-primary">
 							<a href="/admin/purchases">
-								<div class="panel-footer">
-									<span class="pull-left">All Purchases</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="card-footer">
+									<span class="float-left">All Purchases</span>
+									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>
 							</a>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
+					<div class="col-12 col-md-4">
+						<div class="card bg-primary">
 							<a href="/admin/purchases/shop">
-								<div class="panel-footer">
-									<span class="pull-left">Shop Purchases</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="card-footer">
+									<span class="float-left">Shop Purchases</span>
+									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>
 							</a>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
+					<div class="col-12 col-md-4">
+						<div class="card bg-primary">
 							<a href="/admin/purchases/event">
-								<div class="panel-footer">
-									<span class="pull-left">Event Purchases</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="card-footer">
+									<span class="float-left">Event Purchases</span>
+									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>
 							</a>
@@ -80,7 +80,7 @@
 									$statusColor = 'danger';
 								}
 							@endphp
-							<tr class="{{ $statusColor }}">
+							<tr class="table-{{ $statusColor }} text-{{ $statusColor }}">
 								<td>{{ $purchase->id }}</td>
 								<td>
 									{{ $purchase->user->username }}
@@ -106,7 +106,7 @@
 					</tbody>
 				</table>
 				{{ $purchases->links() }}
-			</div>  
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,7 +1,7 @@
-<div class="panel panel-success">
-	<div class="panel-heading">
+<div class="card mb-3">
+	<div class="card-header bg-success-light text-success">
 		@if ($participant->ticket)
-			<strong>{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else @lang('events.notseated') @endif @endif</strong>
+			<strong >{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else @lang('events.notseated') @endif @endif</strong>
 		@else
 			@if ($participant->staff)
 				<strong>@lang('tickets.staff_ticket') @if ($participant->seat) - @lang('events.seat'): {{$participant->seat->seat}} @endif</strong>
@@ -10,15 +10,15 @@
 			@endif
 		@endif
 		@if ($participant->gift == 1 && $participant->gift_accepted != 1)
-			<span class="label label-info label-block pull-right" style="margin-left: 3px; margin-top:2px;">@lang('tickets.has_been_gifted')</span>
+			<span class="badge badge-info float-right" style="margin-left: 3px; margin-top:2px;">@lang('tickets.has_been_gifted')</span>
 		@endif
 		@if ($participant->ticket && !$participant->ticket->seatable)
-			<span class="label label-info label-block pull-right" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
+			<span class="badge badge-info float-right" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
 		@endif
 	</div>
-	<div class="panel-body">
+	<div class="card-body">
 		<div class="row" style="display: flex; align-items: center;">
-			<div class="col-md-8 col-sm-8 col-xs-12">
+			<div class="col-md-8 col-sm-8 col-12">
 				@if ($participant->gift != 1 && $participant->gift_accepted != 1 && !$participant->event->online_event)
 					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{ $participant->id }}')" data-toggle="modal" data-target="#giftTicketModal">
 						@lang('tickets.gift_ticket')
@@ -39,19 +39,19 @@
 					<hr>
 				 	{{ Form::open(array('url'=>'/events/' . $participant->event->slug . '/seating/' . $participant->seat->seatingPlan->slug)) }}
 						{{ Form::hidden('_method', 'DELETE') }}
-						{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }} 
-						{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }} 
-						{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }} 
+						{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+						{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
+						{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
 						<h5>
-							<button class="btn btn-danger btn-block"> 
+							<button class="btn btn-danger btn-block">
 								@lang('events.remove_seating')
 							</button>
 						</h5>
 					{{ Form::close() }}
 				@endif
 			</div>
-			<div class="col-md-offset-2 col-md-2 col-sm-offset-2 col-sm-4 col-xs-12">
-				<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
+			<div class="offset-md-2 col-md-2 offset-sm-2 col-sm-4 col-12">
+				<img class="img img-fluid" src="/{{ $participant->qrcode }}"/>
 			</div>
 		</div>
 	</div>

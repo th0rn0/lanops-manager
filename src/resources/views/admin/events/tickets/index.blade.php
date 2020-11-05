@@ -6,15 +6,15 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Tickets</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Tickets</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Tickets
 			</li>
 		</ol>
@@ -26,16 +26,16 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-bar-chart-o fa-fw"></i> Ticket Breakdown
 			</div>
-			<div class="panel-body">
-				<div class="col-sm-6 col-xs-12">
+			<div class="card-body">
+				<div class="col-sm-6 col-12">
 					<h4>Purchase Breakdown</h4>
 					<div id="ticket-purchase-breakdown"></div>
 				</div>
-				<div class="col-sm-6 col-xs-12">
+				<div class="col-sm-6 col-12">
 					<h4>Income Breakdown</h4>
 					<div id="ticket-income-breakdown"></div>
 				</div>
@@ -63,11 +63,11 @@
 				labels: ['Pounds']
 			});
 		</script>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-ticket fa-fw"></i> Tickets
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 					<thead>
 						<tr>
@@ -107,7 +107,7 @@
 								<td>
 									Start:
 									@if ($ticket->sale_start)
-										{{ date('H:i d-m-Y', strtotime($ticket->sale_start)) }} 
+										{{ date('H:i d-m-Y', strtotime($ticket->sale_start)) }}
 									@else
 										N/A
 									@endif
@@ -144,12 +144,12 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-gift fa-fw"></i> Freebies
 				<a name="freebies"></a>
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 					<thead>
 						<tr>
@@ -198,11 +198,11 @@
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add Tickets
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets')) }}
 					@include('layouts._partials._admin._event._tickets.form', ['empty' => true])
 				{{ Form::close() }}

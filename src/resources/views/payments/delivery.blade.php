@@ -5,13 +5,13 @@
 @section ('content')
 
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			@lang('payments.delivery_details')
-		</h1> 
+		</h1>
 	</div>
 	<div class="row">
-		<div class="col-xs-12 col-md-8">
+		<div class="col-12 col-md-8">
 
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				<div class="form-group">
@@ -21,16 +21,16 @@
 						<option value="shipping">@lang('payments.delivery_to_me')</option>
 					</select>
 				</div>
-				<div id="event" class="hidden">
+				<div id="event" class="d-none">
 					<h4>@lang('payments.delivery_will_deliver_to_event')</h4>
 				</div>
-				<div id="shipping" class="hidden">
+				<div id="shipping" class="d-none">
 					<div class="row">
-						<div class="form-group col-sm-6 col-xs-12">
+						<div class="form-group col-sm-6 col-12">
 							{{ Form::label('shipping_first_name', __('payments.firstname'), array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_first_name', '', array('id'=>'shipping_first_name','class'=>'form-control')) }}
-						</div> 
-						<div class="form-group col-sm-6 col-xs-12">
+						</div>
+						<div class="form-group col-sm-6 col-12">
 							{{ Form::label('shipping_last_name', __('payments.lastname'), array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_last_name', '', array('id'=>'shipping_last_name','class'=>'form-control')) }}
 						</div>
@@ -48,11 +48,11 @@
 						{{ Form::text('shipping_country', '', array('id'=>'shipping_country','class'=>'form-control')) }}
 					</div>
 					<div class="row">
-						<div class="form-group col-sm-6 col-xs-12">
+						<div class="form-group col-sm-6 col-12">
 							{{ Form::label('shipping_postcode', __('payments.shipping_postcode'), array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_postcode', '', array('id'=>'shipping_postcode','class'=>'form-control')) }}
 						</div>
-						<div class="form-group col-sm-6 col-xs-12">
+						<div class="form-group col-sm-6 col-12">
 							{{ Form::label('shipping_state', __('payments.shipping_state'), array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_state', '', array('id'=>'shipping_state','class'=>'form-control')) }}
 						</div>
@@ -60,15 +60,15 @@
 					<p><small>@lang('payments.delivery_required_fields)</small></p>
 				</div>
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button id="continue" class="btn btn-primary btn-block hidden">@lang('payments.delivery_continue)</button>
+				<button id="continue" class="btn btn-primary btn-block d-none">@lang('payments.delivery_continue)</button>
 			{{ Form::close() }}
 		</div>
-		<div class="col-xs-12 col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">@lang('payments.order_details)</h3>
+		<div class="col-12 col-md-4">
+			<div class="card mb-3">
+				<div class="card-header">
+					<h3 class="card-title">@lang('payments.order_details)</h3>
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					@include ('layouts._partials._shop.basket-preview')
 				</div>
 			</div>
@@ -78,15 +78,15 @@
 <script>
 	function showOptions() {
 	    value = document.getElementById("delivery_type").value;
-    	$("#shipping").addClass("hidden");
-    	$("#event").addClass("hidden");
-    	$("#continue").addClass("hidden");
+    	jQuery("#shipping").addClass("d-none");
+    	jQuery("#event").addClass("d-none");
+    	jQuery("#continue").addClass("d-none");
 	    if (value == 'event') {
-			$("#event").removeClass("hidden");
-			$("#continue").removeClass("hidden");
+			jQuery("#event").removeClass("d-none");
+			jQuery("#continue").removeClass("d-none");
 	    } else if (value == 'shipping') {
-	    	$("#shipping").removeClass("hidden");
-			$("#continue").removeClass("hidden");
+	    	jQuery("#shipping").removeClass("d-none");
+			jQuery("#continue").removeClass("d-none");
 	    }
 	}
 </script>

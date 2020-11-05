@@ -4,12 +4,12 @@
 
 @section ('content')
 <div class="container">
-    <div class="page-header">
+    <div class="pb-2 mt-4 mb-4 border-bottom">
         <h1>@lang('auth.verify_email')</h1>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">

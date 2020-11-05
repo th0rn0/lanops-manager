@@ -3,9 +3,9 @@
 @section ('page_title', Settings::getOrgName() . ' Shop | Orders')
 
 @section ('content')
-			
+
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			Shop - Orders
 		</h1>
@@ -38,7 +38,7 @@
 						$statusColor = 'success';
 					}
 				@endphp
-				<tr class="{{ $statusColor }}">
+				<tr @if($statusColor != '') class="table-{{ $statusColor }} text-{{ $statusColor }}" @endif>
 					<td>{{ $order->id }}</td>
 					<td>{{ $order->purchase->user->username }}</td>
 					<td>{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</td>
@@ -50,7 +50,7 @@
 							@foreach ($order->purchase->order->items as $item)
 								@if ($item->item)
 									{{ $item->item->name }}
-								@endif 
+								@endif
 								 - x {{ $item->quantity }}
 								 <br>
 							 	@if ($item->price != null)

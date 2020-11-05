@@ -6,12 +6,12 @@
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		@foreach ($sliderImages as $image)
-			<div class="item @if ($loop->first) active @endif">
+			<div class="carousel-item @if ($loop->first) active @endif">
 				<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}">
 			</div>
 		@endforeach
 	</div>
-	<div class="hero-overlay hidden-xs">
+	<div class="hero-overlay d-none d-sm-block">
 			@if ($nextEvent)
 				<div>
 					<h3>@lang('messages.next_event')</h3>
@@ -27,19 +27,19 @@
 			@endif
 		</div>
 	</div>
-	
+
 </div>
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
-			<div class="page-header">
+		<div class="col-12 col-sm-12 col-md-12 col-lg-8">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<h3>@lang('home.about') {{ Settings::getOrgName() }}</h3>
 			</div>
 			<p>{!! Settings::getAboutShort() !!}</p>
 		</div>
-		<div class="hidden-xs hidden-sm hidden-md col-lg-4">
-			<div class="page-header">
+		<div class="d-none d-xl-block col-lg-4">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<h3>@lang('home.eventcalendar')</h3>
 			</div>
 			@if ( count($events) > 0 )
@@ -57,7 +57,7 @@
 										</a>
 									</td>
 									<td>
-										<span class="pull-right">
+										<span class="float-right">
 											{{ date('dS', strtotime($event->start)) }} - {{ date('dS', strtotime($event->end)) }} {{ date('F', strtotime($event->end)) }} {{ date('Y', strtotime($event->end)) }}
 										</span>
 									</td>
@@ -139,23 +139,23 @@
 
 		</div>
 		@if ($nextEvent)
-			<div class="col-xs-12">
-				<div class="page-header">
+			<div class="col-12">
+				<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h3>
 						{{ $nextEvent->display_name }}
 						@if (count($nextEvent->seatingPlans) > 0)
 							<small>{{ max($nextEvent->getSeatingCapacity() - $nextEvent->eventParticipants->count(), 0) }} / {{ $nextEvent->getSeatingCapacity() }} @lang('home.seatsremaining')</small>
-						@else 
+						@else
 							<small>{{ max($nextEvent->capacity - $nextEvent->eventParticipants->count(), 0) }} / {{ $nextEvent->capacity }} @lang('home.ticketsremaining')</small>
 						@endif
 					</h3>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-9">
+			<div class="col-12 col-sm-9">
 				<h4>{!! $nextEvent->desc_short !!}</h4>
 				<p>{!! $nextEvent->essential_info !!}</p>
 			</div>
-			<div class="col-xs-12 col-sm-3">
+			<div class="col-12 col-sm-3">
 				<h4>@lang('home.when'):</h4>
 				<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
 				<h4>@lang('home.where'):</h4>
@@ -168,10 +168,10 @@
 		@endif
 	</div>
 </div>
-<div class="book-now  text-center hidden-xs">
+<div class="book-now  text-center d-none d-sm-block">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12">
+			<div class="col-12">
 				@if ($nextEvent)
 					<h3>@lang('home.wantgetinaction') <a href="/events/{{ $nextEvent->slug }}" class="text-info">@lang('messages.book_now')</a></h3>
 				@else
@@ -183,8 +183,8 @@
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-sm-9">
-			<div class="page-header">
+		<div class="col-12 col-sm-9">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<h3>@lang('home.latestnews')</h3>
 			</div>
 			@if (!$newsArticles->isEmpty())
@@ -195,23 +195,23 @@
 				<p>@lang('home.nothingtosee')...</p>
 			@endif
 		</div>
-		<div class="col-xs-12 col-sm-3">
-			<div class="page-header">
+		<div class="col-12 col-sm-3">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<h3>@lang('home.thefam', ['orgName' => Settings::getOrgName()])</h3>
 			</div>
-			@if (Settings::getDiscordId())			
-				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ Settings::getDiscordId() }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
+			@if (Settings::getDiscordId())
+				<iframe class="d-md-none d-lg-block" src="https://discordapp.com/widget?id={{ Settings::getDiscordId() }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
 			@endif
 			@if (count($topAttendees) > 0)
-				<div class="page-header">
+				<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h5>@lang('home.top5attendees')</h5>
 				</div>
 				@foreach ($topAttendees as $attendee)
 					<div class="row">
-						<div class="col-xs-12 col-sm-3">
-							<img class="img-rounded img-responsive" alt="{{ $attendee->username }}'s Avatar" src="{{ $attendee->avatar }}">
+						<div class="col-12 col-sm-3">
+							<img class="rounded img-fluid" alt={{ $attendee->username }}'s Avatar" src="{{ $attendee->avatar }}">
 						</div>
-						<div class="col-xs-12 col-sm-9">
+						<div class="col-12 col-sm-9">
 							<p>
 								{{ $attendee->username }}<br>
 								<small> {{ $attendee->event_count }} @lang('home.eventsattended')</small>
@@ -221,15 +221,15 @@
 				@endforeach
 			@endif
 			@if (count($topWinners) > 0)
-				<div class="page-header">
+				<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h5>@lang('home.top5winners')</h5>
 				</div>
 				@foreach ($topWinners as $winner)
 					<div class="row">
-						<div class="col-xs-12 col-sm-3">
-							<img class="img-rounded img-responsive" alt="{{ $winner->username }}'s Avatar" src="{{ $winner->avatar }}">
+						<div class="col-12 col-sm-3">
+							<img class="rounded img-fluid" alt={{ $winner->username }}'s Avatar" src="{{ $winner->avatar }}">
 						</div>
-						<div class="col-xs-12 col-sm-9">
+						<div class="col-12 col-sm-9">
 							<p>
 								{{ $winner->username }}<br>
 								<small> {{ $winner->win_count }} @lang('home.wins')</small>
@@ -242,10 +242,10 @@
 	</div>
 </div>
 
-<div class="about  section-padding  section-margin hidden">
+<div class="about  section-padding  section-margin d-none">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8  col-md-offset-2 text-center">
+			<div class="col-md-8  offset-md-2 text-center">
 				<div class="text-center">
 					<h2 class="section-heading  text-center">@lang('home.allaboutorg', ['orgName' => Settings::getOrgName() ])</h2>
 				</div>

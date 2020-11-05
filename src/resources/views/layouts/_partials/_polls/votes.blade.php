@@ -1,5 +1,5 @@
 <div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9">
+		<div class="col-12 col-sm-9 col-md-9">
 			<table width="100%" class="table table-striped table-hover">
 				@foreach ($poll->options->reverse() as $option)
 					<tr class="table-row odd gradeX">
@@ -26,7 +26,7 @@
 				@endforeach
 			</table>
 		</div>
-		<div class="col-xs-12 col-sm-3 col-md-3">
+		<div class="col-12 col-sm-3 col-md-3">
 			@if (Auth::user())
 				{{ Form::label('name','You have voted for...',array('id'=>'','class'=>'')) }}
 				@foreach ($poll->options as $option)
@@ -45,7 +45,7 @@
 							{{ Form::label('name','Add Options',array('id'=>'','class'=>'')) }}
 							@include ('layouts._partials._polls.add-options')
 						</div>
-						<button type="submit" class="btn btn-default btn-block">Submit</button> 
+						<button type="submit" class="btn btn-secondary btn-block">Submit</button>
 					{{ Form::close() }}
 				@endif
 			@else

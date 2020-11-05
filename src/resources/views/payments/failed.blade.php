@@ -5,13 +5,13 @@
 @section ('content')
 
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 		@lang('payments.payment_failed')
-		</h1> 
-	</div>  
+		</h1>
+	</div>
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-12">
 			<p>@lang('payments.payment_failed_text1')</p>
 			<p>@lang('payments.payment_failed_text2')</p>
 			<p>@lang('payments.payment_failed_text3')</p>

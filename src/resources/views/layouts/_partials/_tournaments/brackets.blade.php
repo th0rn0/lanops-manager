@@ -11,8 +11,8 @@
 		$matches = $tournament->getMatches();
 	@endphp
 	@foreach ($matches as $roundNumber => $round)
-		<div class="col-xs-12 col-sm-6 col-md-3">
-			<h4 class="page-header">
+		<div class="col-12 col-sm-6 col-md-3">
+			<h4 class="pb-2 mt-4 mb-4 border-bottom">
 				@if (
 					(
 						(
@@ -39,7 +39,7 @@
 				@php
 					$matchserver = App\EventTournamentMatchServer::getTournamentMatchServer($match->id);
 				@endphp
-				<table class="table table-bordered table-condensed">
+				<table class="table table-bordered table-sm">
 					<tbody>
 						@php
 							$scores[0] = 0;
@@ -69,14 +69,14 @@
 							<td class="text-center " width="10%">
 								1
 							</td>
-							<td class="{{ $context[0] }}">
+							<td class="table-{{ $context[0] }} text-{{ $context[0] }}">
 								@if ($match->player1_id)
 									@if ($tournament->team_size != '1v1')
 										{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}
 									@else
 										{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}
 									@endif
-									<span class="badge pull-right">{{ $scores[0] }}</span>
+									<span class="badge badge-pill float-right">{{ $scores[0] }}</span>
 								@endif
 								@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
 									<small><i>Loser of {{ ($matchCounter - 1) }}</i></small>
@@ -119,8 +119,8 @@
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 															<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match {{ $matchCounter }}</h4>
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 														</div>
 														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . ((isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'') , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
@@ -144,18 +144,18 @@
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 															<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match {{ $matchCounter }}</h4>
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 														</div>
 														<div class="modal-body">
 															<div class="row row-seperator">
-																<div class="col-xs-12 col-md-3">
+																<div class="col-12 col-md-3">
 																	{{ Form::label("Command", NULL, array('id'=>'','class'=>'')) }}
 																</div>
-																<div class="col-xs-12 col-md-6">
+																<div class="col-12 col-md-6">
 																	{{ Form::label("parameter", NULL, array('id'=>'','class'=>'')) }}
 																</div>
-																<div class="col-xs-12 col-md-3">
+																<div class="col-12 col-md-3">
 																	{{ Form::label("execute", NULL, array('id'=>'','class'=>'')) }}
 																</div>
 															</div>
@@ -165,10 +165,10 @@
 																	{{ Form::hidden('challonge_match_id', $matchserver->challonge_match_id) }}
 																	challonge_match_id
 																	<div class="row row-seperator">
-																		<div class="col-xs-12 col-md-3">
+																		<div class="col-12 col-md-3">
 																			<h4>{{ $matchCommand->name }}</h4>
 																		</div>
-																		<div class="col-xs-12 col-md-6">
+																		<div class="col-12 col-md-6">
 																			<div class="row">
 																				@foreach(App\GameServerCommandParameter::getParameters($matchCommand->command) as $gameServerCommandParameter)
 																					<div class="form-group col-sm-12  col-md-6">
@@ -178,7 +178,7 @@
 																				@endforeach
 																			</div>
 																		</div>
-																		<div class="col-xs-12 col-md-3">
+																		<div class="col-12 col-md-3">
 																			<button type="submit" class="btn btn-success">Execute</button>
 																		</div>
 																	</div>
@@ -200,14 +200,14 @@
 							<td class="text-center " width="10%">
 								2
 							</td>
-							<td class="{{ $context[1] }}">
+							<td class="table-{{ $context[1] }} text-{{ $context[1] }}">
 								@if ($match->player2_id)
 									@if ($tournament->team_size != '1v1')
 										{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}
 									@else
 										{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}
 									@endif
-									<span class="badge pull-right">{{ $scores[1] }}</span>
+									<span class="badge badge-pill float-right">{{ $scores[1] }}</span>
 								@endif
 								@if ($roundNumber != count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
 									<small><i>Loser of {{ ($matchCounter - 2) }}</i></small>
@@ -275,37 +275,37 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="submitScoresModalLabel">Submit Scores</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/match', 'class'=>'form-horizontal')) }}
 						<div class="form-group">
-							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-xs-6 col-sm-9 text-left')) }}
-							<div class="col-xs-6 col-sm-3 text-left">
+							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}
+							<div class="col-6 col-sm-3 text-left">
 								{{ Form::number('player1_score', 0, array('id'=>'player1_score','class'=>'form-control')) }}
 							</div>
 						</div>
 						<hr>
 						<div class="form-group">
-							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-xs-6 col-sm-9 text-left')) }}
-							<div class="col-xs-6 col-sm-3 text-left">
+							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}
+							<div class="col-6 col-sm-3 text-left">
 								{{ Form::number('player2_score', 0, array('id'=>'player2_score','class'=>'form-control')) }}
 							</div>
 						</div>
 						<hr>
 						<h4>Verify Winner</h4>
-						<div class='radio center-text'>
-							<label class="radio-inline" id="player1_verify_lbl">
-								<input type="radio" name="player_winner_verify" id="player1_verify" value="player1"><span id="player1_verify_span"></span>
+						<div class='form-check form-check-inline center-text'>
+							<label class="form-check-label" id="player1_verify_lbl">
+								<input class="form-check-input" type="radio" name="player_winner_verify" id="player1_verify" value="player1"><span id="player1_verify_span"></span>
 							</label>
-							<label class="radio-inline" id="player2_verify_lbl">
-								<input type="radio" name="player_winner_verify" id="player2_verify" value="player2"><span id="player2_verify_span"></span>
+							<label class="form-check-label" id="player2_verify_lbl">
+								<input class="form-check-input" type="radio" name="player_winner_verify" id="player2_verify" value="player2"><span id="player2_verify_span"></span>
 							</label>
 						</div>
 						{{ Form::hidden('tournament_match_id', null, array('id'=>'tournament_match_id','class'=>'form-control')) }}
 						<br>
-						<button type="submit" class="btn btn-default">Submit</button>
+						<button type="submit" class="btn btn-secondary">Submit</button>
 					{{ Form::close() }}
 				</div>
 			</div>
@@ -315,11 +315,11 @@
 	<script>
 		function submitScores(match_id, player1_name, player2_name)
 		{
-			$("#tournament_match_id").val(match_id);
-			$('[id$=player1_score_lbl]').text(player1_name);
-			$('[id$=player1_verify_span]').text(player1_name);
-			$('[id$=player2_score_lbl]').text(player2_name);
-			$('[id$=player2_verify_span]').text(player2_name);
+			jQuery("#tournament_match_id").val(match_id);
+			jQuery('[id$=player1_score_lbl]').text(player1_name);
+			jQuery('[id$=player1_verify_span]').text(player1_name);
+			jQuery('[id$=player2_score_lbl]').text(player2_name);
+			jQuery('[id$=player2_verify_span]').text(player2_name);
 		}
 
 	</script>

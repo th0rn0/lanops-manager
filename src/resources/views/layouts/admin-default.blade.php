@@ -16,7 +16,7 @@
 		</title>
 
 		<link rel="icon" type="image/png" sizes="32x32" href="{{ Settings::getOrgFavicon() }}">
-		
+
 		<!-- Admin CSS -->
 		<link href="/css/admin.css" rel="stylesheet">
 
@@ -32,9 +32,7 @@
 		<![endif]-->
 
 		<!-- Jquery Core JavaScript -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script src="/js/vendor.js"></script>
 
 		<!-- Bootstrap Core JavaScript -->
 		<script src="/js/bootstrap-admin.min.js"></script>
@@ -43,11 +41,6 @@
 		<script src="/js/morris/raphael.min.js"></script>
 		<script src="/js/morris/morris.min.js"></script>
 		<script src="/js/morris/morris-data.js"></script>
-
-
-		<!-- include summernote css/js -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.css" rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.js"></script>
 
 		<script>
 			function ConfirmDelete()
@@ -66,11 +59,11 @@
 				else
 					return false;
 			}
-	        $(document).ready(function() {
-	            $('.wysiwyg-editor').summernote({
+	        jQuery(document).ready(function() {
+	            jQuery('.wysiwyg-editor').summernote({
 	              height:300,
 	            });
-	            $('.wysiwyg-editor-small').summernote({
+	            jQuery('.wysiwyg-editor-small').summernote({
 	              height:150,
 	            });
 	        });
@@ -102,7 +95,7 @@
 					</div>
 					@yield('content')
 				</div>
-			</div>    
+			</div>
 		</div>
 	</body>
 </html>

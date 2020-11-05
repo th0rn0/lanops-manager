@@ -6,23 +6,23 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Events</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Events</h3>
 		<ol class="breadcrumb">
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Events
 			</li>
-		</ol>  
+		</ol>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Events
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 						<thead>
@@ -65,11 +65,11 @@
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add Event
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if ($errors->any())
 					<div class="alert alert-danger">
 						<ul>
@@ -131,24 +131,24 @@
 								{{ Form::select('venue', Helpers::getVenues(), null, array('id'=>'venue','class'=>'form-control')) }}
 							</div>
 						</div>
-						<div class="checkbox">
-							<label>
+						<div class="form-check">
+							<label class="form-check-label">
 								{{ Form::checkbox('allow_spec','Y',true, array('id'=>'allow_spec')) }} Allow Spectators
 							</label>
 						</div>
-						<div class="checkbox">
-								<label>
+						<div class="form-check">
+								<label class="form-check-label">
 									{{ Form::checkbox('online_event', null, false, array('id'=>'online_event')) }} Online Event (allow tournament registration and home redirection without being signed in to the event)
 								</label>
-						</div>		
-						
+						</div>
+
 						@if ($eventTags)
 							<div class="form-group">
 								<label>Eventula Tags</label>
 								<p><small>These are used and edited on the Eventula Hub site</small></p>
 								<div class="row">
 								 	@foreach ($eventTags as $eventTag)
-								 		<div class="col-xs-12 col-sm-6">
+								 		<div class="col-12 col-sm-6">
 			                                <div class="form-check form-check-inline">
 			                                    <input class="form-check-input" type="checkbox" value="{{ $eventTag->id }}" name="event_tags[{{ $eventTag->id }}]" id="event_tags[{{ $eventTag->id }}]">
 			                                    <label class="form-check-label" for="event_tags[{{ $eventTag->id }}]">
@@ -171,9 +171,9 @@
 
 <!-- JavaScript-->
 <script type="text/javascript">
-	$( function() {
-		$( "#start_date" ).datepicker();
-		$( "#end_date" ).datepicker();
+	jQuery( function() {
+		jQuery( "#start_date" ).datepicker();
+		jQuery( "#end_date" ).datepicker();
 	});
 </script>
 

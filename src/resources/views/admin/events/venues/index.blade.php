@@ -6,9 +6,9 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Venues</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Venues</h3>
 		<ol class="breadcrumb">
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Venues
 			</li>
 		</ol>
@@ -18,11 +18,11 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Venues
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 						<thead>
@@ -61,17 +61,17 @@
 						</tbody>
 					</table>
 				</div>
-			</div>  
+			</div>
 		</div>
 
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add Venue
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/venues', 'files' => 'true')) }}
 					@if ($errors->any())
 					  	<div class="alert alert-danger">
@@ -113,8 +113,8 @@
 							{{ Form::label('address_country','Address Country',array('id'=>'','class'=>'')) }}
                             <select class="form-control @error('address_country') is-invalid @enderror" name="address_country" id="address_country" aria-describedby="address_country" value="{{ old('address_country', 'GB') }}">
                                 @foreach (Helpers::getSelectCountries() as $country)
-                                    <option value="{{ $country }}" {{ ( $country == old('address_country', 'United Kingdom')) ? 'selected' : '' }}> 
-                                        {{ $country }} 
+                                    <option value="{{ $country }}" {{ ( $country == old('address_country', 'United Kingdom')) ? 'selected' : '' }}>
+                                        {{ $country }}
                                     </option>
                                 @endforeach
                             </select>

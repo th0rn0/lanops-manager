@@ -5,22 +5,22 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Orders</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Orders</h3>
 		<ol class="breadcrumb">
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Orders
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-xs-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-reorder fa-fw"></i> Orders
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -49,7 +49,7 @@
 									$statusColor = 'info';
 								}
 							@endphp
-							<tr class="{{ $statusColor }}">
+							<tr class="table-{{ $statusColor }} text-{{ $statusColor }}">
 								<td>{{ $order->id }}</td>
 								<td>{{ $order->purchase->user->username }}</td>
 								<td>{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</td>
@@ -66,7 +66,7 @@
 					</tbody>
 				</table>
 				{{ $orders->links() }}
-			</div>  
+			</div>
 		</div>
 	</div>
 </div>

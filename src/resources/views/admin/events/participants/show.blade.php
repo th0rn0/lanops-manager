@@ -4,18 +4,18 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Events - {{ $event->display_name }} - Participant - {{ $participant->user->username }}</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Events - {{ $event->display_name }} - Participant - {{ $participant->user->username }}</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li>
-				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
+			<li class="breadcrumb-item">
+				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
 			</li>
 			<li>
 				<a href="/admin/events/{{ $event->slug }}/participants">Participants</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $participant->user->username }}
 			</li>
 		</ol>
@@ -27,11 +27,11 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				Edit Participant
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if (!empty($_POST))
 					Successfully Posted
 				@endif
@@ -83,11 +83,11 @@
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				More Editing
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if ($participant->signed_in)
 					<h4>User is signed in at present at the event</h4>
 				@endif
@@ -108,7 +108,7 @@
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/transfer')) }}
 						<div class="form-group">
 							{{ Form::label('event_id','Transfer to event',array('id'=>'','class'=>'')) }}
-							{{ 
+							{{
 								Form::select(
 									'event_id',
 									Helpers::getEventNames('DESC', 0, true),

@@ -3,8 +3,8 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="giftTicketLabel">Are you sure you want to set this ticket as a gift?</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			{{ Form::open(array('url'=>'/gift/', 'id'=>'giftTicketForm')) }}
 				<div class="modal-body">
@@ -45,6 +45,6 @@
 <script>
 	function giftTicket(participant_id)
 	{
-		$("#giftTicketForm").prop('action', '/gift/' + participant_id);
+		jQuery("#giftTicketForm").prop('action', '/gift/' + participant_id);
 	}
 </script>

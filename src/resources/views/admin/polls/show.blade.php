@@ -6,30 +6,30 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">
 			Polls - {{ $poll->name }}
 			@if ($poll->hasEnded())
 				<small> - Ended</small>
 			@endif
 		</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/polls/">Polls</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $poll->name }}
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-sm-8">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-8">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> Options
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 					<thead>
 						<tr>
@@ -64,16 +64,16 @@
 						@endif
 					</tbody>
 				</table>
-			</div>  
+			</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-4">
-		
-		<div class="panel panel-default">
-			<div class="panel-heading">
+	<div class="col-12 col-sm-4">
+
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-pencil fa-fw"></i> Edit {{ $poll->name }}
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 					{{ Form::label('name','Poll Link:',array('id'=>'','class'=>'')) }}
 				<a href="{{ $_SERVER['REQUEST_SCHEME'] }}://{{ $_SERVER['HTTP_HOST'] }}/polls/{{ $poll->slug }}">
 					{{ $_SERVER['REQUEST_SCHEME'] }}://{{ $_SERVER['HTTP_HOST'] }}/polls/{{ $poll->slug }}
@@ -89,7 +89,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
-						{{ 
+						{{
 							Form::select(
 								'status',
 								array(
@@ -107,7 +107,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('event_id','Link to Event',array('id'=>'','class'=>'')) }}
-						{{ 
+						{{
 							Form::select(
 								'event_id',
 								Helpers::getEventNames('DESC', 0, true),
@@ -125,7 +125,7 @@
 						{{ Form::label('allow_options_multi','Allow User to Select Multiple Options',array('id'=>'','class'=>'')) }} @if ($poll->allow_options_multi) True @else False @endif
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-success btn-block">Submit</button> 
+						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					</div>
 				{{ Form::close() }}
 				@if (!$poll->hasEnded())
@@ -143,21 +143,21 @@
 			</div>
 		</div>
 		@if (!$poll->hasEnded())
-			<div class="panel panel-default">
-				<div class="panel-heading">
+			<div class="card mb-3">
+				<div class="card-header">
 					<i class="fa fa-plus fa-fw"></i> Add Options
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options', 'files' => 'true')) }}
 						<div class="form-group">
 							@include ('layouts._partials._polls.add-options')
 						</div>
-						<button type="submit" class="btn btn-default btn-block">Submit</button> 
+						<button type="submit" class="btn btn-secondary btn-block">Submit</button>
 					{{ Form::close() }}
 				</div>
 			</div>
 		@endif
 	</div>
 </div>
- 
+
 @endsection

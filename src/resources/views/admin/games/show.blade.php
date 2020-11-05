@@ -6,12 +6,12 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Games</h3>		
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Games</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/games/">Games</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $game->name }}
 			</li>
 		</ol>
@@ -21,22 +21,22 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Tournaments - TBC
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-hover" id="dataTables-example">
-					
+
 				</table>
 			</div>
 		</div>
 
-		<div class="panel panel-default"  id="gameservers">
-			<div class="panel-heading">
+		<div class="card mb-3"  id="gameservers">
+			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Game Servers <small>(click on a Server to execute Commands)</small>
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 
 				@if ($errors->any())
 					<div class="alert alert-danger">
@@ -53,12 +53,12 @@
 
 						if(serverStatus.info == false)
 						{
-							$(id + "_map").html( "-" );
-							$(id + "_players").html( "-" );
+							jQuery(id + "_map").html( "-" );
+							jQuery(id + "_players").html( "-" );
 						}else
 						{
-							$(id + "_map").html( serverStatus.info.Map );
-							$(id + "_players").html( serverStatus.info.Players );
+							jQuery(id + "_map").html( serverStatus.info.Map );
+							jQuery(id + "_players").html( serverStatus.info.Players );
 						}
 					}
 				</script>
@@ -86,7 +86,7 @@
 									}
 								@endphp
 								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#collapse_row{{ $gameServer->id }}">
-									
+
 									<td>
 										{{ $gameServer->name }}
 									</td>
@@ -110,20 +110,15 @@
 									</td>
 									<td>
 										<script>
-
-											
-
-											// $('#collapse_row{{ $gameServer->id }}').on('show.bs.collapse', function () {
-											// $('#serverstatus_{{ $gameServer->id }}').on('load', function () {
-											$( document ).ready(function(){
-												$.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+											jQuery( document ).ready(function(){
+												jQuery.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 													var serverStatus = JSON.parse(data);
 													updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 												});
 												var start = new Date;
 
 												setInterval(function() {
-													$.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+													jQuery.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 														var serverStatus = JSON.parse(data);
 														updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 													});
@@ -136,7 +131,7 @@
 										</div>
 									</td>
 									<td width="15%">
-									
+
 										<div>
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -145,21 +140,21 @@
 											{{ Form::close() }}
 										</div>
 									</td>
-								</tr>								
+								</tr>
 								<tr>
 									<td colspan="10" style="padding: 0;">
 										<div id="collapse_row{{ $gameServer->id }}" class="collapse" style="padding: 8px;">
 
 											<h4>Available Commands</h4>
 											@foreach ($game->getGameServerCommands() as $gameServerCommand)
-												
+
 												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/execute/' . $gameServer->slug, 'id'=>'selectCommandModal')) }}
-													{{ Form::hidden('command', $gameServerCommand->id) }}	
+													{{ Form::hidden('command', $gameServerCommand->id) }}
 													<div class="row row-seperator">
-														<div class="col-xs-12 col-md-3">
+														<div class="col-12 col-md-3">
 															<h4>{{ $gameServerCommand->name }}</h4>
 														</div>
-														<div class="col-xs-12 col-md-6">
+														<div class="col-12 col-md-6">
 															<div class="row">
 																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
 																	<div class="form-group col-sm-12  col-md-6">
@@ -169,13 +164,13 @@
 																@endforeach
 															</div>
 														</div>
-														<div class="col-xs-12 col-md-3">
+														<div class="col-12 col-md-3">
 															<button type="submit" class="btn btn-success">Execute</button>
 														</div>
 		 						 					</div>
 											  	{{ Form::close() }}
 											@endforeach
-										</div>									
+										</div>
 									</td>
 								</tr>
 
@@ -183,8 +178,8 @@
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer->slug )) }}
 												<div class="modal-body">
@@ -192,7 +187,7 @@
 														<div class="form-group">
 															{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 															{{ Form::text('name', $gameServer->name, array('id'=>'name','class'=>'form-control')) }}
-														</div> 
+														</div>
 														<div class="form-group">
 															{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
 															{{ Form::text('address', $gameServer->address, array('id'=>'address','class'=>'form-control')) }}
@@ -200,7 +195,7 @@
 														<div class="form-group">
 															{{ Form::label('type','Type',array('id'=>'','class'=>'')) }}
 															{{ Form::select('type', ['Casual' => 'Casual', 'Match' => 'Match'],  $gameServer->type, array('id'=>'type','class'=>'form-control')) }}
-														</div> 
+														</div>
 														<div class="form-group">
 															{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
 															{{ Form::number('game_port', $gameServer->game_port, array('id'=>'game_port','class'=>'form-control')) }}
@@ -226,30 +221,30 @@
 																	<label>
 																		{{ Form::checkbox('ispublic', null, $gameServer->ispublic, array('id'=>'ispublic')) }}Server is Public
 																	</label>
-															</div>		
+															</div>
 														</div>
 													</div>
-												</div>	
+												</div>
 												<div class="modal-footer">
 													<button type="submit" class="btn btn-success">Submit</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 												</div>
-											{{ Form::close() }}					
+											{{ Form::close() }}
 										</div>
 									</div>
-								</div> 
+								</div>
 							@endforeach
 						</tbody>
 				</table>
 			</div>
 		</div>
 
-		<div class="panel panel-default" id="gameservercommands">
-			<div class="panel-heading">
+		<div class="card mb-3" id="gameservercommands">
+			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Game Commands
 			</div>
-			<div class="panel-body">
-				
+			<div class="card-body">
+
 				<div>
 					<h4>Variable Usage</h4>
 					Use Variables in commands like this: {>gameServer} <br>
@@ -257,7 +252,7 @@
 					If you need the parameter as an optional parameter (for example the password for the connect url/command: {>§gameserver->password}
 				</div>
 				<div>
-					<h4>Command Scope</h4>			
+					<h4>Command Scope</h4>
 						Command Scopes are used to define the context for the command
 					</br>
 					<ul>
@@ -267,7 +262,7 @@
 						<li>
 							Match: This Parameters are Visible for Matches and can use the variable {>game},{>event},{>tournament},{>match}, {>gameServer}
 						</li>
-					</ul>	
+					</ul>
 				</div>
 
 
@@ -290,7 +285,7 @@
 								}
 							@endphp
 							<tr class="{{ $context }}">
-								
+
 								<td>
 									{{ $gameServerCommand->name }}
 								</td>
@@ -315,47 +310,47 @@
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 											<h4 class="modal-title" id="editGameServerCommandModalLabel{{$gameServerCommand->id}}">Edit GameServer Command</h4>
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' . '/' . $gameServerCommand->slug )) }}
 											<div class="modal-body">
 												<div class="list-group">
 													<div class="row">
-														<div class="form-group col-xs-12 col-sm-6">
+														<div class="form-group col-12 col-sm-6">
 															{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 															{{ Form::text('name', $gameServerCommand->name, array('id'=>'name','class'=>'form-control')) }}
-														</div> 
-														<div class="form-group col-xs-12 col-sm-6">
+														</div>
+														<div class="form-group col-12 col-sm-6">
 																{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
 																{{ Form::select('scope', Helpers::getGameServerCommandScopeSelectArray(), $gameServerCommand->scope, array('id'=>'scope','class'=>'form-control')) }}
 														</div>
-														<div class="form-group col-xs-12">
+														<div class="form-group col-12">
 															{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 															{{ Form::text('command', $gameServerCommand->command, array('id'=>'command','class'=>'form-control')) }}
 														</div>
 													</div>
 												</div>
-											</div>	
+											</div>
 											<div class="modal-footer">
 												<button type="submit" class="btn btn-success">Submit</button>
 												<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 											</div>
-										{{ Form::close() }}					
+										{{ Form::close() }}
 									</div>
 								</div>
-							</div> 
+							</div>
 						@endforeach
 					</tbody>
 				</table>
 			</div>
 		</div>
 
-		<div class="panel panel-default"  id="gameservercommandparameters">
-			<div class="panel-heading">
+		<div class="card mb-3"  id="gameservercommandparameters">
+			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Game Command Parameters
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<table width="100%" class="table table-hover" id="dataTables-example">
 				<thead>
 							<tr>
@@ -374,7 +369,7 @@
 									}
 								@endphp
 								<tr class="{{ $context }}">
-									
+
 									<td>
 										{{ $gameServerCommandParameter->name }}
 									</td>
@@ -396,32 +391,32 @@
 									<div class="modal-dialog">
 										<div class="modal-content">
 											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 												<h4 class="modal-title" id="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}">Edit GameServer Command Parameter</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' . '/' . $gameServerCommandParameter->slug )) }}
 												<div class="modal-body">
 													<div class="list-group">
 														<div class="row">
-															<div class="form-group col-xs-12">
+															<div class="form-group col-12">
 																{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 																{{ Form::text('name', $gameServerCommandParameter->name, array('id'=>'name','class'=>'form-control')) }}
-															</div> 
-															<div class="form-group col-xs-12">
+															</div>
+															<div class="form-group col-12">
 																{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
 																{{ Form::text('options', $gameServerCommandParameter->options, array('id'=>'options','class'=>'form-control')) }}
 															</div>
 														</div>
 													</div>
-												</div>	
+												</div>
 												<div class="modal-footer">
 													<button type="submit" class="btn btn-success">Submit</button>
 													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 												</div>
-											{{ Form::close() }}					
+											{{ Form::close() }}
 										</div>
 									</div>
-								</div> 
+								</div>
 							@endforeach
 						</tbody>
 				</table>
@@ -430,11 +425,11 @@
 	</div>
 
 	<div class="col-lg-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-pencil fa-fw"></i> Edit Game
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug, 'files' => true )) }}
 						@if ($errors->any())
@@ -449,17 +444,17 @@
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $game->name, array('id'=>'name','class'=>'form-control')) }}
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $game->description, array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
-							<div class="form-group col-xs-12 col-sm-6">
+							<div class="form-group col-12 col-sm-6">
 								{{ Form::label('version','Version',array('id'=>'','class'=>'')) }}
 								{{ Form::text('version', $game->version, array('id'=>'version','class'=>'form-control')) }}
-							</div> 
-							<div class="form-group col-xs-12 col-sm-6">
+							</div>
+							<div class="form-group col-12 col-sm-6">
 								{{ Form::label('public','Show Publicly',array('id'=>'','class'=>'')) }}
 								{{ Form::select('public', [0 => 'No', 1 => 'Yes'], $game->public, array('id'=>'public','class'=>'form-control')) }}
 							</div>
@@ -471,7 +466,7 @@
 						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
 								<h5>Preview:</h5>
-								<img src="{{ $game->image_thumbnail_path }}" class="img img-responsive">
+								<img src="{{ $game->image_thumbnail_path }}" class="img img-fluid">
 							@endif
 							{{ Form::label('image_thumbnail','Thumbnail Image - 300x400',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
@@ -479,7 +474,7 @@
 						<div class="form-group">
 							@if ($game->image_header_path != '')
 								<h5>Preview:</h5>
-								<img src="{{ $game->image_header_path }}" class="img img-responsive">
+								<img src="{{ $game->image_header_path }}" class="img img-fluid">
 							@endif
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
@@ -488,17 +483,17 @@
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', $game->connect_game_url, array('id'=>'connect_game_url','class'=>'form-control')) }}
 							<small>Hint: use variables like in the  Game Commands for the Match Scope</small>
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_command', $game->connect_game_command, array('id'=>'connect_game_command','class'=>'form-control')) }}
 							<small>Hint: use variables like in the Game Commands the Match Scope</small>
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('connect_stream_url','Connect Stream URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_stream_url', $game->connect_stream_url, array('id'=>'connect_stream_url','class'=>'form-control')) }}
 							<small>Hint: use variables like in the Game Commands the Match Scope</small>
-						</div> 
+						</div>
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 					<hr>
@@ -510,11 +505,11 @@
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-add fa-fw"></i> Add Game Server
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' )) }}
 						@if ($errors->any())
@@ -529,11 +524,11 @@
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('type','Type',array('id'=>'','class'=>'')) }}
 							{{ Form::select('type', ['Casual' => 'Casual', 'Match' => 'Match'], NULL, array('id'=>'type','class'=>'form-control')) }}
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address', NULL, array('id'=>'address','class'=>'form-control')) }}
@@ -558,24 +553,22 @@
 							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
 							{{ Form::text('rcon_password', NULL, array('id'=>'rcon_password','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
-							<div class="checkbox">
-									<label>
-										{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }}Server is Public
-									</label>
-							</div>		
-						</div>				
+						<div class="form-check">
+							<label class="form-check-label">
+								{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }}Server is Public
+							</label>
+						</div>
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
-					{{ Form::close() }}					
+					{{ Form::close() }}
 				</div>
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-add fa-fw"></i> Add Game Command
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' )) }}
 						@if ($errors->any())
@@ -587,32 +580,32 @@
 						        </ul>
 						  	</div>
 						@endif
-						<div class="row"> 
-							<div class="form-group col-xs-12 col-sm-6">
+						<div class="row">
+							<div class="form-group col-12 col-sm-6">
 								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 								{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
-							</div> 
-							<div class="form-group col-xs-12 col-sm-6">
+							</div>
+							<div class="form-group col-12 col-sm-6">
 									{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
 									{{ Form::select('scope', Helpers::getGameServerCommandScopeSelectArray(), null, array('id'=>'scope','class'=>'form-control')) }}
 							</div>
-							<div class="form-group col-xs-12">
+							<div class="form-group col-12">
 								{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 								{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
 							</div>
-												
+
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
-					{{ Form::close() }}					
+					{{ Form::close() }}
 				</div>
 			</div>
 		</div>
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-add fa-fw"></i> Add Game Command Parameter
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' )) }}
 						@if ($errors->any())
@@ -624,19 +617,19 @@
 						        </ul>
 						  	</div>
 						@endif
-						<div class="row"> 
-							<div class="form-group col-xs-12 col-sm-6">
+						<div class="row">
+							<div class="form-group col-12 col-sm-6">
 								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 								{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
-							</div> 
-							<div class="form-group col-xs-12">
+							</div>
+							<div class="form-group col-12">
 								{{ Form::label('options','Parameter options',array('id'=>'','class'=>'')) }}
 								{{ Form::text('options', NULL, array('id'=>'options','class'=>'form-control')) }}
 							</div>
-												
+
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
-					{{ Form::close() }}					
+					{{ Form::close() }}
 				</div>
 			</div>
 		</div>

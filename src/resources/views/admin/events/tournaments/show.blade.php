@@ -6,18 +6,18 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Tournaments - {{ $tournament->name }}</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Tournaments - {{ $tournament->name }}</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li>
-				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a> 
+			<li class="breadcrumb-item">
+				<a href="/admin/events/{{ $event->slug }}">{{ $event->display_name }}</a>
 			</li>
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/events/{{ $event->slug }}/tournaments">Tournaments</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $tournament->name }}
 			</li>
 		</ol>
@@ -30,11 +30,11 @@
 @if (($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE') && $tournament->format != 'list')
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
+			<div class="card mb-3">
+				<div class="card-header">
 					<i class="fa fa-users fa-fw"></i> Brackets
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					@include ('layouts._partials._tournaments.brackets', ['admin' => true])
 				</div>
 			</div>
@@ -45,11 +45,11 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> Participants
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if (($tournament->status == 'LIVE' && !$tournament->enable_live_editing )|| $tournament->status == 'COMPLETE' && $tournament->format != 'list')
 					@include ('layouts._partials._tournaments.standings', ['admin' => true])
 				@else
@@ -61,11 +61,11 @@
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug )) }}
 					@if ($errors->any())
 					  	<div class="alert alert-danger">
@@ -83,13 +83,13 @@
 						@else
 							{{ Form::text('name', $tournament->name ,array('id'=>'name','class'=>'form-control')) }}
 						@endif
-					</div> 
+					</div>
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 							<!-- // TODO - Refactor -->
 							@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-								{{ 
+								{{
 									Form::select(
 										'status',
 										array(
@@ -108,7 +108,7 @@
 									)
 								}}
 							@else
-								{{ 
+								{{
 									Form::select(
 										'status',
 										array(
@@ -126,38 +126,38 @@
 									)
 								}}
 							@endif
-						</div> 
+						</div>
 						<div class="col-lg-6 col-sm-12 form-group">
 							{{ Form::label('format','Format',array('id'=>'','class'=>'')) }}
 							{{ Form::text('format', ucfirst($tournament->format) .  ' - ' . $tournament->team_size ,array('id'=>'format','class'=>'form-control', 'disabled'=>'true')) }}
-						</div> 
+						</div>
 					</div>
 					<div class="form-group">
 						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 						@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
-							{{ 
+							{{
 								Form::select(
-									'game_id', 
-									Helpers::getGameSelectArray(), 
-									$tournament->game_id, 
+									'game_id',
+									Helpers::getGameSelectArray(),
+									$tournament->game_id,
 									array(
 										'id'    	=> 'game_id',
 										'class' 	=> 'form-control',
 										'disabled'	=> 'true'
 									)
-								) 
+								)
 							}}
 						@else
-							{{ 
+							{{
 								Form::select(
-									'game_id', 
-									Helpers::getGameSelectArray(), 
-									$tournament->game_id, 
+									'game_id',
+									Helpers::getGameSelectArray(),
+									$tournament->game_id,
 									array(
 										'id'    => 'game_id',
 										'class' => 'form-control'
 									)
-								) 
+								)
 							}}
 						@endif
 					</div>
@@ -176,19 +176,19 @@
 					@endif
 					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
-							<button type="submit" class="btn btn-default btn-block">Submit</button>
+							<button type="submit" class="btn btn-secondary btn-block">Submit</button>
 						</div>
 					@endif
 				{{ Form::close() }}
 				<div class="form-group">
 					@if (count($tournament->tournamentParticipants) >= 2 && $tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/start')) }}
-							<button type="submit" name="action" value="start" class="btn btn-default btn-block">Start Tournament</button>
+							<button type="submit" name="action" value="start" class="btn btn-secondary btn-block">Start Tournament</button>
 						{{ Form::close() }}
 					@endif
 					@if ($tournament->status == 'LIVE')
 						{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/finalize')) }}
-							<button type="submit" class="btn btn-default btn-block">Finalize Tournament</button>
+							<button type="submit" class="btn btn-secondary btn-block">Finalize Tournament</button>
 						{{ Form::close() }}
 						@if ($tournament->team_size != '1v1')
 						<hr>

@@ -3,9 +3,9 @@
 @section ('page_title', Settings::getOrgName() . ' Shop | Order #' . $order->id)
 
 @section ('content')
-			
+
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			Shop - Order # {{ $order->id }}
 		</h1>
@@ -35,7 +35,7 @@
 						$statusColor = 'success';
 					}
 				@endphp
-				<tr class="{{ $statusColor }}">
+				<tr @if($statusColor != '') class="table-{{ $statusColor }} text-{{ $statusColor }}" @endif>
 					<td>{{ $order->id }}</td>
 					<td>{{ $order->purchase->user->username }}</td>
 					<td>{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</td>
@@ -59,17 +59,17 @@
 		</div>
 	@endif
 	<div class="row">
-		<div class="col-xs-12 col-sm-6">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Basket</h3>
+		<div class="col-12 col-sm-6">
+			<div class="card mb-3">
+				<div class="card-header">
+					<h3 class="card-title">Basket</h3>
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					@if ($order->purchase->order != null)
 						@foreach ($order->purchase->order->items as $item)
 							@if ($item->item)
 								{{ $item->item->name }}
-							@endif 
+							@endif
 							 - x {{ $item->quantity }}
 							 <br>
 						 	@if ($item->price != null)
@@ -89,12 +89,12 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-6">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Order Details</h3>
+		<div class="col-12 col-sm-6">
+			<div class="card mb-3">
+				<div class="card-header">
+					<h3 class="card-title">Order Details</h3>
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					@if ($order->hasShipping())
 						<h4>Shipping Details</h4>
 						<address>
@@ -125,18 +125,18 @@
 								$statusColor = 'success';
 							}
 						@endphp
-						<li class="list-group-item list-group-item-{{ $statusColor }}"><strong>Order Status: <span class="pull-right">{{ $order->status }}</span></strong></li>
-						<li class="list-group-item @if (strtolower($order->purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Payment Status: <span class="pull-right">{{ $order->purchase->status }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Order ID: <span class="pull-right">{{ $order->id }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="pull-right">{{ $order->purchase->transaction_id }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="pull-right">{{ $order->purchase->id }}</span></strong></li>
+						<li class="list-group-item list-group-item-{{ $statusColor }}"><strong>Order Status: <span class="float-right">{{ $order->status }}</span></strong></li>
+						<li class="list-group-item @if (strtolower($order->purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Payment Status: <span class="float-right">{{ $order->purchase->status }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Order ID: <span class="float-right">{{ $order->id }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-right">{{ $order->purchase->transaction_id }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-right">{{ $order->purchase->id }}</span></strong></li>
 						@if ($order->purchase->paypal_email != null)
 							<li class="list-group-item list-group-item-info">
-								<strong>Paypal Email: <span class="pull-right">{{ $order->purchase->paypal_email }}</span></strong>
+								<strong>Paypal Email: <span class="float-right">{{ $order->purchase->paypal_email }}</span></strong>
 							</li>
 						@endif
-						<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="pull-right">{{ $order->purchase->type }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="pull-right">{{ $order->created_at }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="float-right">{{ $order->purchase->type }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="float-right">{{ $order->created_at }}</span></strong></li>
 					</ul>
 				</div>
 			</div>

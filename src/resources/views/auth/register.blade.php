@@ -5,7 +5,7 @@
 @section ('content')
 
 <div class="container">
-    <div class="page-header">
+    <div class="pb-2 mt-4 mb-4 border-bottom">
         <h1>@lang('auth.register_details')</h1>
     </div>
     <div class="row">
@@ -17,35 +17,35 @@
                 {{ Form::hidden('steamid', $steamid, array('id'=>'steamid','class'=>'form-control')) }}
                 {{ Form::hidden('steamname', $steamname, array('id'=>'steamname','class'=>'form-control')) }}
             @endif
-            <div class="col-xs-12 col-md-6">
+            <div class="col-12 col-md-6">
                 <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-group @error('firstname') has-error @enderror">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group @error('firstname') is-invalid @enderror">
                             {{ Form::label('firstname',__('auth.firstname'),array('id'=>'','class'=>'')) }}
                             <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-6">
-                        <div class="form-group  @error('surname') has-error @enderror">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group  @error('surname') is-invalid @enderror">
                             {{ Form::label('surname',__('auth.surname'),array('id'=>'','class'=>'')) }}
                             <input id="surname" type="surname" class="form-control" name="surname" value="{{ old('surname') }}" required autocomplete="surname">
                         </div>
                     </div>
                 </div>
-                <div class="form-group @error('username') has-error @enderror">
+                <div class="form-group @error('username') is-invalid @enderror">
                     {{ Form::label('username',__('auth.username'),array('id'=>'','class'=>'')) }}
                     <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username">
                 </div>
                 @if ($loginMethod == "standard")
-                    <div class="form-group @error('email') has-error @enderror">
+                    <div class="form-group @error('email') is-invalid @enderror">
                         {{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'')) }}
                         <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
                     </div>
-                    <div class="form-group @error('password1') has-error @enderror">
+                    <div class="form-group @error('password1') is-invalid @enderror">
                         {{ Form::label('password1',__('auth.password'),array('id'=>'','class'=>'')) }}
                          <input id="password1" type="password" class="form-control" name="password1" required autocomplete="new-password">
                     </div>
-                    <div class="form-group @error('password2') has-error @enderror">
+                    <div class="form-group @error('password2') is-invalid @enderror">
                         {{ Form::label('password2',__('auth.confirm_password'),array('id'=>'','class'=>'')) }}
                         <input id="password2" type="password" class="form-control" name="password2" required autocomplete="new-password">
                     </div>
@@ -59,7 +59,7 @@
                     </div>
                 @endif
             </div>
-            <div class="col-xs-12 col-md-6">
+            <div class="col-12 col-md-6">
                 {!! Settings::getRegistrationTermsAndConditions() !!}
                 <h5>@lang('auth.register_confirmtext') {!! Settings::getOrgName() !!}</h5>
                 <button type="submit" class="btn btn-block btn-primary">@lang('auth.register')</button>

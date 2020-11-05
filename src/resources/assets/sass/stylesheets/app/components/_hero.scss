@@ -3,61 +3,60 @@
  */
 
 .hero-overlay {
-    position: absolute;
-    top: 15%;
-    text-align: center;
-    color: #FFF;
-    left: calc(50% - 150px);
-    z-index: 3;
-    width: 300px;
-    background-color: #4e4e4ecc;
-    border-radius: 4px;
-    padding: 1em;
-    h1,
-    h3,
-    h5 {
-        color: $color_primary;
-    }
-    h1 {
-        margin-bottom: 15px;
-        padding-bottom: 15px;
-        border-bottom: 5px solid $color_primary;
-        display: inline-block;
-    }
-    h3 {
-        margin-bottom: 0px;
-    }
-    h5 {
-        margin-bottom: 20px;
-    }
+  position: absolute;
+  top: 15%;
+  text-align: center;
+  color: #fff;
+  left: calc(50% - 150px);
+  z-index: 3;
+  background-color: #4e4e4ecc;
+  border-radius: 4px;
+  padding: 1em;
+  h1,
+  h3,
+  h5 {
+    color: $color_primary;
+  }
+  h1 {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 5px solid $color_primary;
+    display: inline-block;
+  }
+  h3 {
+    margin-bottom: 0px;
+  }
+  h5 {
+    margin-bottom: 20px;
+  }
 }
 
 .hero-image {
-    min-width: 100%;
+  min-width: 100%;
 }
 
 .carousel.fade {
-    opacity: 1;
+  opacity: 1;
 }
 
 .carousel.fade .item {
-    transition: opacity ease-out 1s;
-    left: 0;
-    opacity: 0;
-    /* hide all slides */
-    top: 0;
-    position: absolute;
-    width: 100%;
-    display: block;
+  transition: opacity ease-out 1s;
+  left: 0;
+  opacity: 0;
+  /* hide all slides */
+  top: 0;
+  position: absolute;
+  width: 100%;
+  display: block;
 }
 
 .carousel.fade .item:first-child {
-    top: auto;
-    opacity: 1;
-    /* show first slide */
-    position: relative;
+  top: auto;
+  opacity: 1;
+  /* show first slide */
+  position: relative;
 }
 
 .carousel.fade .item.active {
-    opacity: 1;
+  opacity: 1;
 }

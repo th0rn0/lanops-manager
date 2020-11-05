@@ -1,0 +1,51 @@
+.navbar-brand {
+  float: left;
+  height: 50px;
+  padding: 15px 0px;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.navbar-nav {
+  > .nav-item {
+    &:hover > .nav-link {
+      border-bottom: 4px solid $color_primary !important;
+      padding-bottom: 11px;
+      color: $color_secondary_text;
+      background-color: transparent;
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.card {
+  background-color: rgba(128, 128, 128, 0.3);
+}
+
+.bg-success-light {
+  background-color: #dff0d8;
+}
+.bg-info-light {
+  background-color: #d9edf7;
+}
+.bg-danger-light {
+  background-color: #f2dede;
+}
+
+.progress {
+  height: 20px;
+}

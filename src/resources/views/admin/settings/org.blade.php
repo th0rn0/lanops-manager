@@ -6,31 +6,31 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Organization</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Organization</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/settings">Settings</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				Organization
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 @include ('layouts._partials._admin._settings.dashMini', ['active' => 'org'])
 
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-12">
 		<!-- Name & Logo -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Name & Logo
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="row">
 					{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-						<div class="col-xs-12 col-md-6">
+						<div class="col-12 col-md-6">
 
 							<div class="form-group">
 								{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
@@ -50,15 +50,15 @@
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
-						<div class="col-xs-12 col-md-6">
+						<div class="col-12 col-md-6">
 							<div class="form-group">
 								@if (trim(Settings::getOrgFavicon()) != '')
-									<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
+									<img class="img img-fluid" src="{{ Settings::getOrgFavicon() }}" />
 								@else
 									No Favicon uploaded
 								@endif
 								@if (trim(Settings::getOrgLogo()) != '')
-									<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
+									<img class="img img-fluid" src="{{ Settings::getOrgLogo() }}" />
 								@else
 									No Logo uploaded
 								@endif
@@ -69,13 +69,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-xs-12">
+	<div class="col-12">
 		<!-- About -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-info-circle fa-fw"></i> About
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('about_main','Main',array('id'=>'','class'=>'')) }}
@@ -107,5 +107,5 @@
 		</div>
 	</div>
 </div>
- 
+
 @endsection

@@ -3,10 +3,10 @@
 @section ('page_title', Settings::getOrgName() . ' ' . $poll->name)
 
 @section ('content')
-			
+
 <div class="container">
 
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			{{ $poll->name }}
 			@if ($poll->status != 'PUBLISHED')

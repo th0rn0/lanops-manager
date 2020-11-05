@@ -5,25 +5,25 @@
 @section ('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">{{ $userShow->username }}</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">{{ $userShow->username }}</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/users/">Users</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $userShow->username }}
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-sm-12 col-lg-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> User
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				@if ($userShow->banned)
 					<div class="alert alert-danger">This User has been banned!</div>
 				@endif
@@ -45,13 +45,13 @@
 						</ul>
   					</div>
   				</div>
-			</div>  
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Purchases</h3>
 			</div>
-			<div class="panel-body">
+		</div>
+		<div class="card mb-3">
+			<div class="card-header">
+				<h3 class="card-title">Purchases</h3>
+			</div>
+			<div class="card-body">
 				@if (count($userShow->purchases))
 					<table class="table table-striped">
 						<thead>
@@ -96,7 +96,7 @@
 											@foreach ($purchase->order->items as $item)
 												@if ($item->item)
 													{{ $item->item->name }}
-												@endif 
+												@endif
 												 - x {{ $item->quantity }}
 												 <br>
 											 	@if ($item->price != null)
@@ -131,13 +131,13 @@
 		</div>
 	</div>
 	<div class="col-sm-12 col-lg-6">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> Options
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="row">
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-12 col-sm-6">
 						@if ($userShow->admin)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/admin')) }}
 								{{ Form::hidden('_method', 'DELETE') }}
@@ -151,7 +151,7 @@
 						<small>This will add or remove access to this admin panel. This means they can access everything! BE CAREFUL!</small>
 					</div>
 					@if ($userShow->email != null && $userShow->password != null)
-						<div class="col-xs-12 col-sm-6">
+						<div class="col-12 col-sm-6">
 							{{ Form::open(array('url'=>'/login/forgot')) }}
 	                            @csrf
 								<input type="hidden" name="email" value="{{ $userShow->email }}">
@@ -165,7 +165,7 @@
 				<h4>Danger Zone</h4>
 				<hr>
 				<div class="row">
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-12 col-sm-6">
 						@if (!$userShow->banned)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/ban')) }}
 								<button type="submit" class="btn btn-block btn-danger">Ban</button>
@@ -176,7 +176,7 @@
 							{{ Form::close() }}
 						@endif
 					</div>
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-12 col-sm-6">
 						@if ($userShow->banned)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id, 'onsubmit' => 'return ConfirmDelete()')) }}
 								{{ Form::hidden('_method', 'DELETE') }}
@@ -188,13 +188,13 @@
 					</div>
 				</div>
 			</div>
-		</div>			
+		</div>
 		@if ($creditLogs)
-			<div class="panel panel-default">
-				<div class="panel-heading">
+			<div class="card mb-3">
+				<div class="card-header">
 					<i class="fa fa-users fa-fw"></i> Add Credit
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
 						<div class="form-group">
 							{{ Form::hidden('user_id', $userShow->id) }}
@@ -205,11 +205,11 @@
 					{{ Form::close() }}
 				</div>
 			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Credit - {{ $userShow->credit_total }}</h3>
+			<div class="card mb-3">
+				<div class="card-header">
+					<h3 class="card-title">Credit - {{ $userShow->credit_total }}</h3>
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 						<thead>
 							<tr>
@@ -238,7 +238,7 @@
 											@foreach ($creditLog->purchase->order->items as $item)
 												@if ($item->item)
 													{{ $item->item->name }}
-												@endif 
+												@endif
 												 - x {{ $item->quantity }}
 												 <br>
 											 	@if ($item->price != null)
@@ -271,5 +271,5 @@
 		@endif
 	</div>
 </div>
- 
+
 @endsection

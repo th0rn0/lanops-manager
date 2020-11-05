@@ -1,0 +1,28 @@
+.card {
+  background-color: #fff;
+}
+
+.icon-large {
+  font-size: 1.5rem;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .icon-large {
+    font-size: 1.5rem;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .icon-large {
+    font-size: 0.75rem;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .icon-large {
+    font-size: 0.8rem;
+  }
+}

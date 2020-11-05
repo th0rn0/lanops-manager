@@ -6,26 +6,26 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">Gallery - {{ $album->name }}</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Gallery - {{ $album->name }}</h3>
 		<ol class="breadcrumb">
-			<li>
+			<li class="breadcrumb-item">
 				<a href="/admin/gallery">Gallery</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $album->name }}
 			</li>
-		</ol> 
+		</ol>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-image fa-fw"></i> Images
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 						<thead>
@@ -43,7 +43,7 @@
 							@foreach ($images as $image)
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
-										<td class=" col-xs-3">
+										<td class="col-3">
 											@if ($image->filetype == 0)
 												<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
 											@else
@@ -61,9 +61,9 @@
 											</div>
 										</td>
 										<td>
-											<div class="form-group checkbox">
+											<div class="form-check">
 												@if ($image->filetype == 0)
-													<label>
+													<label class="form-check-label">
 														@if ($album->album_cover_id == $image->id)
 															{{ Form::checkbox('album_cover', 1, true, array('id'=>'album_cover')) }}
 														@else
@@ -73,7 +73,7 @@
 												@endif
 
 											</div>
-										</td> 
+										</td>
 										<td>
 											{{ $image->created_at }}
 										</td>
@@ -100,11 +100,11 @@
 	</div>
 	<div class="col-lg-4">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-upload fa-fw"></i> Add Images
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/upload', 'files' => 'true')) }}
 					{{ csrf_field() }}
 					<div class="form-group">
@@ -115,11 +115,11 @@
 				{{ Form::close() }}
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
-			<div class="panel-body">
+			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug)) }}
 						@if ($errors->any())
@@ -134,7 +134,7 @@
 						<div class="form-group">
 							{{ Form::label('name','Album Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',$album->name,array('id'=>'name','class'=>'form-control')) }}
-						</div> 
+						</div>
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $album->description,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
@@ -142,7 +142,7 @@
 						<div class="row">
 							<div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
-								{{ 
+								{{
 									Form::select(
 										'status',
 										array(
@@ -159,7 +159,7 @@
 							</div>
 							 <div class="col-lg-6 col-sm-12 form-group">
 								{{ Form::label('event_id','Event',array('id'=>'','class'=>'')) }}
-								{{ 
+								{{
 									Form::select(
 										'event_id',
 										Helpers::getEventNames('DESC', 0),
@@ -187,9 +187,9 @@
 </div>
 
 <script type="text/javascript">
-	$( function() {
-		$( "#start_date" ).datepicker();
-		$( "#end_date" ).datepicker();
+	jQuery( function() {
+		jQuery( "#start_date" ).datepicker();
+		jQuery( "#end_date" ).datepicker();
 	});
 </script>
 

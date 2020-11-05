@@ -3,22 +3,22 @@
 @section ('page_title', Settings::getOrgName() . ' ' . $newsArticle->title)
 
 @section ('content')
-			
+
 <div class="container">
 
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			{{ $newsArticle->title }}
-		</h1> 
+		</h1>
 	</div>
 	@include ('layouts._partials._news.long')
 
 	<div class="row">
-		<div class="col-xs-12 col-sm-6 col-md-8">
-			<div class="page-header">
+		<div class="col-12 col-sm-6 col-md-8">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<h3>
 				@lang('news.comments')
-				</h3> 
+				</h3>
 			</div>
 			@foreach ($newsArticle->comments->reverse() as $comment)
 				@if ($comment->approved || (Auth::user() && Auth::user()->getAdmin()) || (Auth::user() && Auth::id() == $comment->user_id))
@@ -34,18 +34,18 @@
 				@endif
 			@endforeach
 		</div>
-		<div class="col-xs-12 col-sm-6 col-md-4">
-			<div class="page-header">
+		<div class="col-12 col-sm-6 col-md-4">
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<h3>
 				@lang('news.post_comment')
-				</h3> 
+				</h3>
 			</div>
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments')) }}
 					<div class="form-group">
 						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>__('news.post_comment'))) }}
 					</div>
-					<button type="submit" class="btn btn-default">@lang('news.submit')</button>
+					<button type="submit" class="btn btn-secondary">@lang('news.submit')</button>
 				{{ Form::close() }}
 			@else
 				<p>@lang('news.login_to_post_comment')</p>

@@ -5,84 +5,82 @@
 @section ('content')
 
 <div class="container">
-	<div class="page-header">
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			@lang('payments.checkout')
-		</h1> 
+		</h1>
 	</div>
 	<div class="row">
-		<div class="col-xs-12 col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">@lang('payments.order_details')</h3>
+		<div class="col-12 col-md-12">
+			<div class="card mb-3">
+				<div class="card-header">
+					<h3 class="card-title">@lang('payments.order_details')</h3>
 				</div>
-				<div class="panel-body">
-					<div class="table-responsive">
-						<table class="table table-striped">
-							<tbody>
-								@foreach ($basket as $item)
-									<tr>
-										<td>
-											<strong>{{ $item->name }}</strong>
-										</td>
-										<td class="text-right">
-											x {{ $item->quantity }}
-										</td>
-										<td class="text-right">
-											@if ($item->price != null && $item->price != 0)
-												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
-												@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-													/
-												@endif
-											@endif
-											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-												{{ number_format($item->price_credit, 2) }} @lang('payments.credits')
-											@endif
-											Each
-										</td>
-										<td class="text-right">
-											@if ($item->price != null && $item->price != 0)
-												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price * $item->quantity, 2) }}
-												@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-													/
-												@endif
-											@endif
-											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-												{{ number_format($item->price_credit * $item->quantity, 2) }} @lang('payments.credits')
-											@endif
-										</td>
-									</tr>
-								@endforeach
+				<div class="card-body">
+					<table class="table table-striped table-responsive">
+						<tbody>
+							@foreach ($basket as $item)
 								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td>
+										<strong>{{ $item->name }}</strong>
+									</td>
 									<td class="text-right">
-										<strong>@lang('payments.total')</strong>
-										@if ($basket->total != null)
-											{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
-											@if ($basket->total_credit != null && Settings::isCreditEnabled())
+										x {{ $item->quantity }}
+									</td>
+									<td class="text-right">
+										@if ($item->price != null && $item->price != 0)
+											{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
+											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
 												/
 											@endif
 										@endif
-										@if ($basket->total_credit != null && Settings::isCreditEnabled())
-											{{ number_format($basket->total_credit, 2) }} @lang('payments.credits')
+										@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+											{{ number_format($item->price_credit, 2) }} @lang('payments.credits')
+										@endif
+										Each
+									</td>
+									<td class="text-right">
+										@if ($item->price != null && $item->price != 0)
+											{{ Settings::getCurrencySymbol() }}{{ number_format($item->price * $item->quantity, 2) }}
+											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+												/
+											@endif
+										@endif
+										@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
+											{{ number_format($item->price_credit * $item->quantity, 2) }} @lang('payments.credits')
 										@endif
 									</td>
 								</tr>
-							</tbody>
-						</table>
-					</div>
+							@endforeach
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td class="text-right">
+									<strong>@lang('payments.total')</strong>
+									@if ($basket->total != null)
+										{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
+										@if ($basket->total_credit != null && Settings::isCreditEnabled())
+											/
+										@endif
+									@endif
+									@if ($basket->total_credit != null && Settings::isCreditEnabled())
+										{{ number_format($basket->total_credit, 2) }} @lang('payments.credits')
+									@endif
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">@lang('payments.payment')</h3>
+			<div class="card mb-3">
+				<div class="card-header">
+					<h3 class="card-title">@lang('payments.payment')</h3>
 				</div>
-				<div class="panel-body">
+				<div class="card-body">
 					<div class="row">
 						@foreach ($activePaymentGateways as $gateway)
-							<div class="col-xs-12 col-md-6">
+							<div class="col-12 col-md-6">
 								<div class="section-header">
 									<h4>
 										{{ Settings::getPaymentGatewayDisplayName($gateway) }}
@@ -98,7 +96,7 @@
 							</div>
 						@endforeach
 						@if (Settings::isCreditEnabled())
-							<div class="col-xs-12 col-md-6">
+							<div class="col-12 col-md-6">
 								<div class="section-header">
 									<h4>
 									@lang('payments.credit')
