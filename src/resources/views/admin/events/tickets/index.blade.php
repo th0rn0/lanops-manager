@@ -69,7 +69,7 @@
 			<div class="card-header">
 				<i class="fa fa-ticket fa-fw"></i> Tickets
 			</div>
-			<div class="card-body">
+			<div class="card-body table-responsive">
 				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 					<thead>
 						<tr>
@@ -151,7 +151,7 @@
 				<i class="fa fa-gift fa-fw"></i> Freebies
 				<a name="freebies"></a>
 			</div>
-			<div class="card-body">
+			<div class="card-body table-responsive">
 				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 					<thead>
 						<tr>
