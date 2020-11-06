@@ -30,7 +30,7 @@
 			<div class="card-body">
 				<div class="row">
 					@foreach ($supportedPaymentGateways as $gateway)
-						<div class="col-sm-6 col-12">
+						<div class="col-6">
 							<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }}</h4>
 							@if (in_array($gateway, $activePaymentGateways))
 								{{ Form::open(array('url'=>'/admin/settings/payments/' . $gateway . '/disable')) }}

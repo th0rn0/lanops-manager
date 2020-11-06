@@ -28,20 +28,22 @@
 				<i class="fa fa-wrench fa-fw"></i> Login Methods
 			</div>
 			<div class="card-body">
-				@foreach ($supportedLoginMethods as $method)
-					<div class="col-sm-6 col-12">
-						<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }}</h4>
-						@if (in_array($method, $activeLoginMethods))
-							{{ Form::open(array('url'=>'/admin/settings/login/' . $method . '/disable')) }}
-								<button type="submit" class="btn btn-block btn-danger">Disable</button>
-							{{ Form::close() }}
-						@else
-							{{ Form::open(array('url'=>'/admin/settings/login/' . $method . '/enable')) }}
-								<button type="submit" class="btn btn-block btn-success">Enable</button>
-							{{ Form::close() }}
-						@endif
-					</div>
-				@endforeach
+				<div class="row">
+					@foreach ($supportedLoginMethods as $method)
+						<div class="col">
+							<h4>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }}</h4>
+							@if (in_array($method, $activeLoginMethods))
+								{{ Form::open(array('url'=>'/admin/settings/login/' . $method . '/disable')) }}
+									<button type="submit" class="btn btn-block btn-danger">Disable</button>
+								{{ Form::close() }}
+							@else
+								{{ Form::open(array('url'=>'/admin/settings/login/' . $method . '/enable')) }}
+									<button type="submit" class="btn btn-block btn-success">Enable</button>
+								{{ Form::close() }}
+							@endif
+						</div>
+					@endforeach
+				</div>
 			</div>
 		</div>
 		<!-- Terms & Conditions -->

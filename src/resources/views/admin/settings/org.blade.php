@@ -28,8 +28,8 @@
 				<i class="fa fa-wrench fa-fw"></i> Name & Logo
 			</div>
 			<div class="card-body">
-				<div class="row">
-					{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+					<div class="row">
 						<div class="col-12 col-md-6">
 
 							<div class="form-group">
@@ -64,8 +64,8 @@
 								@endif
 							</div>
 						</div>
-					{{ Form::close() }}
-				</div>
+					</div>
+				{{ Form::close() }}
 			</div>
 		</div>
 	</div>

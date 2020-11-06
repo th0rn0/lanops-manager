@@ -33,9 +33,9 @@
 				<i class="fa fa-wrench fa-fw"></i> Challonge
 			</div>
 			<div class="card-body">
-				<div class="row">
-					{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-					 {{ csrf_field() }}
+				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+				{{ csrf_field() }}
+					<div class="row">
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('challonge_api_key','API Key',array('id'=>'','class'=>'')) }}
@@ -48,8 +48,8 @@
 							<p>Without this key Tournaments will be disabled</p>
 							<p>https://challonge.com/settings/developer</p>
 						</div>
-					{{ Form::close() }}
-				</div>
+					</div>
+				{{ Form::close() }}
 			</div>
 		</div>
 		<!-- Steam API Key -->
@@ -58,8 +58,8 @@
 				<i class="fa fa-wrench fa-fw"></i> Steam API Key
 			</div>
 			<div class="card-body">
-				<div class="row">
-					{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+					<div class="row">
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('steam_api_key','API Key',array('id'=>'','class'=>'')) }}
@@ -72,8 +72,8 @@
 							<p>Without this key Steam Login will be disabled</p>
 							<p>https://steamcommunity.com/dev/apikey</p>
 						</div>
-					{{ Form::close() }}
-				</div>
+					</div>
+				{{ Form::close() }}
 			</div>
 		</div>
 		<!-- Facebook -->
@@ -82,8 +82,8 @@
 				<i class="fa fa-wrench fa-fw"></i> Facebook
 			</div>
 			<div class="card-body">
-				<div class="row">
-					{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+					<div class="row">
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('facebook_app_id','App Id',array('id'=>'','class'=>'')) }}
@@ -99,8 +99,8 @@
 							<p>Facebook API Documentation</p>
 							<p>Without this key Facebook Posting will be disabled</p>
 						</div>
-					{{ Form::close() }}
-				</div>
+					</div>
+				{{ Form::close() }}
 			</div>
 		</div>
 	</div>
@@ -111,8 +111,8 @@
 				<i class="fa fa-wrench fa-fw"></i> Paypal
 			</div>
 			<div class="card-body">
-				<div class="row">
-					{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+					<div class="row">
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('paypal_username','Username',array('id'=>'','class'=>'')) }}
@@ -132,8 +132,8 @@
 							<p>Paypal API Documentation</p>
 							<p>Without this key Paypal Payments will be disabled</p>
 						</div>
-					{{ Form::close() }}
-				</div>
+					</div>
+				{{ Form::close() }}
 			</div>
 		</div>
 		<!-- Stripe -->
@@ -142,8 +142,8 @@
 				<i class="fa fa-wrench fa-fw"></i> Stripe
 			</div>
 			<div class="card-body">
-				<div class="row">
-					{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
+					<div class="row">
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('stripe_public_key','Public Key',array('id'=>'','class'=>'')) }}
@@ -159,8 +159,8 @@
 							<p>Stripe API Documentation</p>
 							<p>Without this key Card Payments will be disabled</p>
 						</div>
-					{{ Form::close() }}
-				</div>
+					</div>
+				{{ Form::close() }}
 			</div>
 		</div>
 	</div>
