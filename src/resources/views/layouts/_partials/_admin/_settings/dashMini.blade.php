@@ -1,6 +1,6 @@
 <div class="row justify-content-md-center">
 	<div class="col-lg-2 col-md-6">
-		<div class="card bg-primary">
+		<div class="card border-primary mb-3">
 			<a href="/admin/settings">
 				<div class="card-footer">
 					<span class="float-left">Main</span>
@@ -11,7 +11,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-6">
-		<div class="card bg-primary">
+		<div class="card border-primary mb-3">
 			<a href="/admin/settings/org">
 				<div class="card-footer">
 					<span class="float-left">Organization</span>
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-6">
-		<div class="card bg-primary">
+		<div class="card border-primary mb-3">
 			<a href="/admin/settings/auth">
 				<div class="card-footer">
 					<span class="float-left">Authentication</span>
@@ -33,7 +33,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-6">
-		<div class="card bg-primary">
+		<div class="card border-primary mb-3">
 			<a href="/admin/settings/payments">
 				<div class="card-footer">
 					<span class="float-left">Payments</span>
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-6">
-		<div class="card bg-primary">
+		<div class="card border-primary mb-3">
 			<a href="/admin/settings/appearance">
 				<div class="card-footer">
 					<span class="float-left">Appearance</span>
@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2 col-md-6">
-		<div class="card bg-primary">
+		<div class="card border-primary mb-3">
 			<a href="/admin/settings/api">
 				<div class="card-footer">
 					<span class="float-left">API Keys</span>
