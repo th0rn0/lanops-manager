@@ -4,13 +4,13 @@
 		<button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-ex1-collapse">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="/">{{ Settings::getOrgName() }} Admin</a>
+		<a class="navbar-brand ml-3" href="/">{{ Settings::getOrgName() }} Admin</a>
 	<!-- </div> -->
 	<!-- Top Menu Items -->
 
 	<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
-		<ul class="navbar-nav side-nav">
+		<ul class="navbar-nav side-nav pl-2">
 			<li class="nav-item {{ Request::is('admin') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 			</li>
