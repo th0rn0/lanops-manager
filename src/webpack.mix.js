@@ -12,6 +12,10 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
         }
     }).scripts([
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/jquery-ui-dist/jquery-ui.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/summernote/dist/summernote-bs4.js',
-    ], 'public/js/vendor.js').copyDirectory('./node_modules/summernote/dist/font','public/css/font');
+    ], 'public/js/vendor.js')
+    .copy('./node_modules/jquery-ui-dist/jquery-ui.min.css', 'public/css')
+    .copyDirectory('./node_modules/jquery-ui-dist/images','public/css/images')
+    .copyDirectory('./node_modules/summernote/dist/font','public/css/font');

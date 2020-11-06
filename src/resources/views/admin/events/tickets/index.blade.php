@@ -31,13 +31,15 @@
 				<i class="fa fa-bar-chart-o fa-fw"></i> Ticket Breakdown
 			</div>
 			<div class="card-body">
-				<div class="col-sm-6 col-12">
-					<h4>Purchase Breakdown</h4>
-					<div id="ticket-purchase-breakdown"></div>
-				</div>
-				<div class="col-sm-6 col-12">
-					<h4>Income Breakdown</h4>
-					<div id="ticket-income-breakdown"></div>
+				<div class="row">
+					<div class="col-sm-6 col-12">
+						<h4>Purchase Breakdown</h4>
+						<div id="ticket-purchase-breakdown"></div>
+					</div>
+					<div class="col-sm-6 col-12">
+						<h4>Income Breakdown</h4>
+						<div id="ticket-income-breakdown"></div>
+					</div>
 				</div>
 			</div>
 		</div>

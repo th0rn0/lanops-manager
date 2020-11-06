@@ -19,6 +19,7 @@
 
 		<!-- Admin CSS -->
 		<link href="/css/admin.css" rel="stylesheet">
+		<link href="/css/jquery-ui.min.css" rel="stylesheet">
 
 		<!-- Custom Fonts -->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">

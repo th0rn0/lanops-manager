@@ -339,7 +339,7 @@ class PaymentsController extends Controller
                 return Redirect::back();
             }
             $responseStripe = $response->getData();
-          
+
             $purchaseParams = [
                 'user_id'           => Auth::id(),
                 'type'              => 'Stripe',
@@ -581,11 +581,11 @@ class PaymentsController extends Controller
         if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
             Session::flash('alert-danger', __('payments.payment_credit_not_allowed'));
             return false;
-        }	
+        }
 		if($paymentGateway == 'free' && (Helpers::formatBasket($basket)->total > 0 || Helpers::formatBasket($basket)->total_credit > 0)) {
 			Session::flash('alert-danger', __('payments.payment_method_not_allowed'));
 			return false;
-		}	
+		}
         if ($paymentGateway != 'credit' && $paymentGateway != 'free' && !Helpers::formatBasket($basket)->allow_payment) {
             Session::flash('alert-danger', __('payments.payment_method_not_allowed'));
             return false;

@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
         Paginator::useBootstrap();
 
         view()->composer('layouts._partials.events-navigation', function ($view) {
@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
             // Steam
             @\Config::set('steam-auth.api_key', \App\ApiKey::where('key', 'steam_api_key')->first()->value);
         }
-       
+
         // Google Analytics Cannot accept 'null' fix
         if (config('analytics.configurations.GoogleAnalytics.tracking_id') == null) {
             @\Config::set('analytics.configurations.GoogleAnalytics.tracking_id', '');
@@ -100,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
         }
         @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
         @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
-        
+
         // Foce HTTPS if required
         if (env('ENABLE_HTTPS') || env('FORCE_APP_HTTPS')) {
             URL::forceScheme('https');
