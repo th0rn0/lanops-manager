@@ -1,11 +1,11 @@
+@import "stylesheets/fontawesome";
 @import "stylesheets/app/modules/user-variables";
 @import "stylesheets/bootstrap_variables";
 @import "stylesheets/bootstrap_variables_admin";
-
 @import "node_modules/bootstrap/scss/bootstrap";
-@import "node_modules/summernote/src/styles/summernote-bs4";
 @import "stylesheets/bootstrap_custom";
 @import "stylesheets/bootstrap_custom_admin";
+@import "node_modules/summernote/src/styles/summernote-bs4";
 
 // @import "stylesheets/app/vendor/bootstrap";
 @import "stylesheets/admin/sb-admin", "stylesheets/admin/modules/morris";
