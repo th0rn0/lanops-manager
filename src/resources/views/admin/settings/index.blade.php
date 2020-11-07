@@ -35,7 +35,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($settings as $setting)
+						@foreach ($settings as $key=>$setting)
 							@if (
 								strpos($setting->setting, 'about') === false &&
 								strpos($setting->setting, 'terms_and_conditions') === false &&
@@ -63,7 +63,7 @@
 											@endif
 										</td>
 										<td>
-											{{ Form::text($setting->setting, $setting->value ,array('id'=>'setting','class'=>'form-control')) }}
+											{{ Form::text($setting->setting, $setting->value ,array('id'=>'setting' . $key,'class'=>'form-control')) }}
 										</td>
 										<td>
 											<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
@@ -217,16 +217,16 @@
 					<div class="row">
 						<div class="form-group col-12">
 							{{ Form::label('seo_keywords', "SEO Keywords" ,array('id'=>'','class'=>'')) }}
-							{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting','class'=>'form-control')) }}
+							{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting_seo_keywords','class'=>'form-control')) }}
 							<small>Separate each keyword with a Comma.</small>
 						</div>
 						<div class="form-group col-12 col-md-6">
 							{{ Form::label('analytics_google_id', "Google Analyics ID" ,array('id'=>'','class'=>'')) }}
-							{{ Form::text("analytics_google_id", config('analytics.configurations.GoogleAnalytics.tracking_id') ,array('id'=>'setting','class'=>'form-control')) }}
+							{{ Form::text("analytics_google_id", config('analytics.configurations.GoogleAnalytics.tracking_id') ,array('id'=>'setting_analytics_google_id','class'=>'form-control')) }}
 						</div>
 						<div class="form-group col-12 col-md-6">
 							{{ Form::label('analytics_facebook_pixel', "Facebook Pixel ID" ,array('id'=>'','class'=>'')) }}
-							{{ Form::text("analytics_facebook_pixel", config('facebook-pixel.facebook_pixel_id') ,array('id'=>'setting','class'=>'form-control')) }}
+							{{ Form::text("analytics_facebook_pixel", config('facebook-pixel.facebook_pixel_id') ,array('id'=>'setting_analytics_facebook_pixel','class'=>'form-control')) }}
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>

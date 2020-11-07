@@ -39,7 +39,7 @@
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('challonge_api_key','API Key',array('id'=>'','class'=>'')) }}
-								{{ Form::text('challonge_api_key', $challongeApiKey, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('challonge_api_key', $challongeApiKey, array('id'=>'challonge_api_key','class'=>'form-control')) }}
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
@@ -63,7 +63,7 @@
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('steam_api_key','API Key',array('id'=>'','class'=>'')) }}
-								{{ Form::text('steam_api_key', $steamApiKey, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('steam_api_key', $steamApiKey, array('id'=>'steam_api_key','class'=>'form-control')) }}
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
@@ -87,7 +87,7 @@
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('facebook_app_id','App Id',array('id'=>'','class'=>'')) }}
-								{{ Form::text('facebook_app_id', $facebookAppId, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('facebook_app_id', $facebookAppId, array('id'=>'facebook_app_id','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('facebook_app_secret','App Secret',array('id'=>'','class'=>'')) }}
@@ -116,15 +116,15 @@
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('paypal_username','Username',array('id'=>'','class'=>'')) }}
-								{{ Form::text('paypal_username', $paypalUsername, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('paypal_username', $paypalUsername, array('id'=>'paypal_username','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('paypal_password','Password',array('id'=>'','class'=>'')) }}
-								{{ Form::text('paypal_password', $paypalPassword, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('paypal_password', $paypalPassword, array('id'=>'paypal_password','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('paypal_signature','Signature',array('id'=>'','class'=>'')) }}
-								{{ Form::text('paypal_signature', $paypalSignature, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('paypal_signature', $paypalSignature, array('id'=>'paypal_signature','class'=>'form-control')) }}
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
@@ -147,11 +147,11 @@
 						<div class="col-12 col-md-6">
 							<div class="form-group">
 								{{ Form::label('stripe_public_key','Public Key',array('id'=>'','class'=>'')) }}
-								{{ Form::text('stripe_public_key', $stripePublicKey, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('stripe_public_key', $stripePublicKey, array('id'=>'stripe_public_key','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('stripe_secret_key','Secret Key',array('id'=>'','class'=>'')) }}
-								{{ Form::text('stripe_secret_key', $stripeSecretKey, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('stripe_secret_key', $stripeSecretKey, array('id'=>'stripe_secret_key','class'=>'form-control')) }}
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>

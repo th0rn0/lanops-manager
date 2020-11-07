@@ -36,7 +36,7 @@
 						<div class="row">
 							<div class="form-group col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
-								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[]','class'=>'form-control')) }}
+								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
 							<div class="col-2 col-sm-4">
 								{{ Form::label('css_variables_preview[' . $cssVariable->key . ']', 'Preview', array('id'=>'','class'=>'')) }}
@@ -49,7 +49,7 @@
 						<div class="row">
 							<div class="form-group col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
-								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[]','class'=>'form-control')) }}
+								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
 							<div class="col-2 col-sm-4">
 								{{ Form::label('css_variables_preview[' . $cssVariable->key . ']', 'Preview', array('id'=>'','class'=>'')) }}
@@ -62,7 +62,7 @@
 						<div class="row">
 							<div class="form-group col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
-								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[]','class'=>'form-control')) }}
+								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
 							<div class="col-2 col-sm-4">
 								{{ Form::label('css_variables_preview[' . $cssVariable->key . ']', 'Preview', array('id'=>'','class'=>'')) }}
@@ -75,7 +75,7 @@
 						<div class="row">
 							<div class="form-group col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
-								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[]','class'=>'form-control')) }}
+								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
 							<div class="col-2 col-sm-4">
 								{{ Form::label('css_variables_preview[' . $cssVariable->key . ']', 'Preview', array('id'=>'','class'=>'')) }}
@@ -120,7 +120,7 @@
 					<button type="submit" class="btn btn-block btn-success">Upload</button>
 				{{ Form::close() }}
 				<hr>
-				@foreach ($sliderImages as $image)
+				@foreach ($sliderImages as $key => $image)
 					<img class="img img-fluid mb-3" src="{{ $image->path }}" />
 
 						<!-- <br> -->
@@ -130,7 +130,7 @@
 								<div class="col">
 									<div class="form-group">
 										{{ Form::label('order','Order',array('id'=>'')) }}
-										{{ Form::number('order', $image->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
+										{{ Form::number('order', $image->order, array('id'=>'order' . $key, 'name' => 'order', 'class'=>'form-control')) }}
 									</div>
 								</div>
 								<div class="col mt-auto">
