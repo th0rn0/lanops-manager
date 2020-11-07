@@ -38,7 +38,7 @@
 					</thead>
 					<tbody>
 						@foreach ($users as $user)
-							<tr class="">
+							<tr>
 								<td width="3%">
 									<img class="img-fluid rounded" src="{{ $user->avatar }}">
 								</td>
