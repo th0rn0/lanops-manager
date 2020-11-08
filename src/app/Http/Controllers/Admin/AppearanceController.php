@@ -44,10 +44,10 @@ class AppearanceController extends Controller
         return view('admin.settings.appearance')
             ->withSliderImages(SliderImage::getImages('frontpage'))
             ->withUserOverrideCss(Appearance::getCssOverride())
-            ->withCssVariables($sortedCssVariables);
-        ;
+            ->withCssVariables($sortedCssVariables)
+            ->withIsDarkModeEnabled(Setting::getIsDarkModeEnabled());
     }
-    
+
     /**
      * Recompile CSS from SCSS
      * @return Redirect
@@ -140,7 +140,7 @@ class AppearanceController extends Controller
     public function sliderDelete(Request $request, SliderImage $image)
     {
         if (
-            !Storage::disk('public')->delete(str_replace('/storage', '', $image->path)) || 
+            !Storage::disk('public')->delete(str_replace('/storage', '', $image->path)) ||
             !$image->delete()
         ) {
             Session::flash('alert-danger', 'Cannot delete Image!');

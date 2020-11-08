@@ -366,7 +366,13 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Locale that is used for all the Site Default Texts'
             ]
         );
+        Setting::firstOrCreate(
+            ['setting'          => 'theme_dark_mode'],
+            [
+                'value'         => false,
+                'default'       => false,
+                'description'   => 'If enabled site will be in dark mode'
+            ]
+        );
     }
 }
-
-

@@ -66,7 +66,7 @@ class Settings
     {
         return \App\Setting::getOrgFavicon();
     }
-    
+
     /**
      * Set Organization Favicon
      * @param Image $favicon
@@ -886,5 +886,24 @@ class Settings
     public static function setSiteLocale($text)
     {
         return \App\Setting::setSiteLocale($text);
+    }
+
+
+    /**
+     * Is DarkMode Enabled
+     * @return Boolean
+     */
+    public static function getIsDarkModeEnabled()
+    {
+        return \App\Setting::getIsDarkModeEnabled();
+    }
+
+    /**
+     * Enable Dark Mode
+     * @return Boolean
+     */
+    public static function setIsDarkModeEnabled($isDarkModeEnabled)
+    {
+        return \App\Setting::setIsDarkModeEnabled($isDarkModeEnabled);
     }
 }
