@@ -11,7 +11,7 @@
 	</div>
 	<div class="row">
 		@foreach ($albums as $album)
-			<div class="card col-sm-3 col-6">
+			<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif col-sm-3 col-6">
 				<h4>{{ $album->name }}</h4>
 				@if ($album->event)
 					<h5>@lang('gallery.event') {{ $album->event->display_name }}</h5>

@@ -1,5 +1,5 @@
-<div class="card mb-3">
-	<div class="card-header">
+<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+	<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 		<h3 class="card-title">
 			<a href="/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				{{ $item->name }} @if (@$admin) <small> - Preview</small> @endif @if ($item->featured) <small> - Featured</small> @endif

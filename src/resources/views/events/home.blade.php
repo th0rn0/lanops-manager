@@ -184,8 +184,8 @@
 				<div class="row top30">
 					@foreach ($gameServerList as $game => $gameServers)
 						<div class="col-12 col-sm-6 col-md-4">
-							<div class="card mb-3">
-								<div class="card-header">
+							<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+								<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 									<div class="row text-center block-center">
 										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-fluid rounded img-contain margin-top margin-bottom width=100em" height="100em">
 										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
@@ -424,8 +424,8 @@
 		</div>
 		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
-				<div class="card mb-3">
-					<div class="card-header" role="tab" id="headingOne">
+				<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+					<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif " role="tab" id="headingOne">
 						<h4 class="card-title">
 							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
 								{{ $seatingPlan->name }} <small>- @lang('events.numofseatedseats')</small>

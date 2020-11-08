@@ -15,7 +15,7 @@ class Setting extends Model
      * @var string
      */
     protected $table = 'settings';
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -249,7 +249,7 @@ class Setting extends Model
     {
         return self::where('setting', 'facebook_link')->first()->value;
     }
-    
+
     /**
      * Set Discord Link
      * @param String $text
@@ -1263,7 +1263,7 @@ class Setting extends Model
      */
     public static function setSeoKeywords($keywords)
     {
-        
+
         $setting = self::where('setting', 'seo_keywords')->first();
         $setting->value = implode(',', array_map('trim', explode(',', $keywords)));
         if (!$setting->save()) {
@@ -1294,5 +1294,35 @@ class Setting extends Model
     public static function getSiteLocale()
     {
         return self::where('setting', 'site_locale')->first()->value;
+    }
+
+    /**
+     * Get Shop Status
+     * @return Boolean
+     */
+    public static function isDarkModeEnabled()
+    {
+        if (!$setting = self::where('setting', 'theme_dark_mode')->first()) {
+            return false;
+        }
+
+        return $setting->value;
+    }
+
+    /**
+     * Set Shop Status
+     * @param String $text
+     * @return Boolean
+     */
+    public static function setIsDarkModeEnabled($isDarkModeEnabled)
+    {
+        if (!$setting = self::where('setting', 'theme_dark_mode')->first()) {
+            return false;
+        }
+        $setting->value = $isDarkModeEnabled;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
     }
 }

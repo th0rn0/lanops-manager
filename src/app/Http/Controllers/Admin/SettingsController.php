@@ -351,6 +351,12 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        $theme_dark_mode = ($request->theme_dark_mode ? true : false);
+        if (isset($theme_dark_mode) && !Settings::setIsDarkModeEnabled($theme_dark_mode)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }

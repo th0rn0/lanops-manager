@@ -60,8 +60,8 @@
 	@endif
 	<div class="row">
 		<div class="col-12 col-sm-6">
-			<div class="card mb-3">
-				<div class="card-header">
+			<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+				<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 					<h3 class="card-title">Basket</h3>
 				</div>
 				<div class="card-body">
@@ -90,8 +90,8 @@
 			</div>
 		</div>
 		<div class="col-12 col-sm-6">
-			<div class="card mb-3">
-				<div class="card-header">
+			<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+				<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 					<h3 class="card-title">Order Details</h3>
 				</div>
 				<div class="card-body">

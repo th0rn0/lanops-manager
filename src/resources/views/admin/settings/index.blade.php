@@ -51,6 +51,7 @@
 								strpos($setting->setting, 'seo') === false &&
 								strpos($setting->setting, 'privacy_policy') === false &&
 								strpos($setting->setting, 'legal_notice') === false &&
+								strpos($setting->setting, 'theme') === false &&
 								$setting->setting != 'currency' &&
 								$setting->setting != 'social_facebook_page_access_token' &&
 								$setting->setting != 'installed'

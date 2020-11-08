@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top custom-header">
+<nav class="navbar navbar-expand-md @if(Settings::isDarkModeEnabled()) navbar-dark @else navbar-light @endif fixed-top custom-header">
 	<div class="container">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<!-- <div class="navbar-header"> -->
