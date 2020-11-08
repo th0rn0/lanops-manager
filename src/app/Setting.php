@@ -1258,7 +1258,7 @@ class Setting extends Model
      * Get Shop Status
      * @return Boolean
      */
-    public static function getIsDarkModeEnabled()
+    public static function isDarkModeEnabled()
     {
         if (!$setting = self::where('setting', 'theme_dark_mode')->first()) {
             return false;

@@ -11,8 +11,8 @@
 		</h1>
 	</div>
 	@foreach ($activePolls as $poll)
-		<div class="card mb-3">
-			<div class="card-header">
+		<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+			<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 				<strong><a href="/polls/{{ $poll->slug }}">{{ $poll->name }}</a></strong>
 				@if ($poll->status != 'PUBLISHED')
 					<small> - {{ $poll->status }}</small>
@@ -35,8 +35,8 @@
 		</h3>
 	</div>
 	@foreach ($endedPolls as $poll)
-		<div class="card mb-3">
-			<div class="card-header">
+		<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+			<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 				<strong><a href="/polls/{{ $poll->slug }}">{{ $poll->name }}</a></strong>
 				@if ($poll->status != 'PUBLISHED')
 					<small> - {{ $poll->status }}</small>

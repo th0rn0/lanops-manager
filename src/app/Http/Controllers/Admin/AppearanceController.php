@@ -45,7 +45,7 @@ class AppearanceController extends Controller
             ->withSliderImages(SliderImage::getImages('frontpage'))
             ->withUserOverrideCss(Appearance::getCssOverride())
             ->withCssVariables($sortedCssVariables)
-            ->withIsDarkModeEnabled(Setting::getIsDarkModeEnabled());
+            ->withIsDarkModeEnabled(Setting::isDarkModeEnabled());
     }
 
     /**

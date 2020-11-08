@@ -13,7 +13,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card mb-3">
+                <div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
                      <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">

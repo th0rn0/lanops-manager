@@ -14,8 +14,8 @@
 		<div class="row">
 			<!-- ACCOUNT DETAILS -->
 			<div class="col-12  col-lg-12 mt-3 mb-3">
-				<div class="card mb-3">
-					<div class="card-header">
+				<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+					<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 						<h3 class="card-title">@lang('accounts.account_details')</h3>
 					</div>
 					<div class="card-body">
@@ -89,8 +89,8 @@
 					</div>
 				</div>
 				@if ($creditLogs)
-					<div class="card mb-3">
-						<div class="card-header">
+					<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+						<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 							<h3 class="card-title">Credit - {{ $user->credit_total }}</h3>
 						</div>
 						<div class="card-body">
@@ -157,8 +157,8 @@
 
 			<!-- TICKETS -->
 			<div class="col-sm-12 col-12 col-md-6 col-lg-7 mt-3 mb-3">
-				<div class="card mb-3">
-					<div class="card-header">
+				<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+					<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 						<h3 class="card-title">@lang('accounts.tickets')</h3>
 					</div>
 					<div class="card-body">
@@ -175,8 +175,8 @@
 
 			<!-- PURCHASES -->
 			<div class="col-sm-12 col-12 col-md-6 col-lg-5 mt-3 mb-3">
-				<div class="card mb-3">
-					<div class="card-header">
+				<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+					<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 						<h3 class="card-title">@lang('accounts.purchases')</h3>
 					</div>
 					<div class="card-body">
@@ -259,8 +259,8 @@
 
 			<!-- DANGER ZONE -->
 			<div class="col-sm-12 col-12 col-md-12 col-lg-12 mt-3 mb-3">
-				<div class="card mb-3">
-					<div class="card-header">
+				<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+					<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
 						<h3 class="card-title">@lang('accounts.danger_zone')</h3>
 					</div>
 					<div class="card-body">

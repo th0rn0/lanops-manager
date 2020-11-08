@@ -893,9 +893,9 @@ class Settings
      * Is DarkMode Enabled
      * @return Boolean
      */
-    public static function getIsDarkModeEnabled()
+    public static function isDarkModeEnabled()
     {
-        return \App\Setting::getIsDarkModeEnabled();
+        return \App\Setting::isDarkModeEnabled();
     }
 
     /**
