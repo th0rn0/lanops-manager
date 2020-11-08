@@ -141,6 +141,23 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/games/{game}/gameservers/{gameServer}/status', 'GameServersController@status');
 
+
+            /**
+             * MatchMaking
+             */
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+                Route::get('/matchmaking', 'MatchMakingController@index');
+                Route::get('/matchmaking/{match}', 'MatchMakingController@show');
+                Route::post('/matchmaking', 'MatchMakingController@store');
+                Route::post('/matchmaking/{match}/teamplayer/add', 'MatchMakingController@addusertomatch');
+                Route::post('/matchmaking/{match}/team/add', 'MatchMakingController@addsecondteam');
+                Route::delete('/matchmaking/{match}/teamplayer/remove/{teamplayer}', 'MatchMakingController@deleteuserfrommatch');
+                Route::post('/matchmaking/{match}/start', 'MatchMakingController@start');
+                Route::post('/matchmaking/{match}/open', 'MatchMakingController@open');
+                Route::post('/matchmaking/{match}/finalize', 'MatchMakingController@finalize');
+                Route::delete('/matchmaking/{match}', 'UsersController@destroy');
+            });
+
             /**
              * Payments
              */
@@ -431,6 +448,24 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');
             Route::post('/admin/users/{user}/unban', 'Admin\UsersController@unban');
 
+            /**
+             * MatchMaking
+             */
+            Route::get('/admin/matchmaking', 'Admin\MatchMakingController@index');
+            Route::get('/admin/matchmaking/{match}', 'Admin\MatchMakingController@show');
+            Route::post('/admin/matchmaking', 'Admin\MatchMakingController@store');
+            Route::post('/admin/matchmaking/{match}/teamplayer', 'Admin\MatchMakingController@addusertomatch');
+            Route::delete('/admin/matchmaking/{match}/teamplayer', 'Admin\MatchMakingController@deleteuserfrommatch');
+            Route::post('/admin/matchmaking/{match}/team/add', 'Admin\MatchMakingController@addsecondteam');
+            Route::post('/admin/matchmaking/{match}/team/{team}/update', 'Admin\MatchMakingController@updateteam');
+            Route::post('/admin/matchmaking/{match}/update', 'Admin\MatchMakingController@update');
+            Route::post('/admin/matchmaking/{match}/start', 'Admin\MatchMakingController@start');
+            Route::post('/admin/matchmaking/{match}/open', 'Admin\MatchMakingController@open');
+            Route::post('/admin/matchmaking/{match}/finalize', 'Admin\MatchMakingController@finalize');
+            Route::delete('/admin/matchmaking/{match}', 'Admin\MatchMakingController@destroy');
+
+
+
 
 
             /**
@@ -456,7 +491,9 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings/gallery/enable', 'Admin\SettingsController@enableGallerySystem');
             Route::post('/admin/settings/gallery/disable', 'Admin\SettingsController@disableGallerySystem');
             Route::post('/admin/settings/help/enable', 'Admin\SettingsController@enableHelpSystem');
-            Route::post('/admin/settings/help/disable', 'Admin\SettingsController@disableHeloSystem');
+            Route::post('/admin/settings/help/disable', 'Admin\SettingsController@disableHelpSystem');            
+            Route::post('/admin/settings/matchmaking/enable', 'Admin\SettingsController@enableMatchMakingSystem');
+            Route::post('/admin/settings/matchmaking/disable', 'Admin\SettingsController@disableMatchMakingSystem');
             Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
             /**

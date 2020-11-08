@@ -798,6 +798,33 @@ class Settings
     }
 
     /**
+     * Is MatchMaking Enabled
+     * @return Boolean
+     */
+    public static function isMatchMakingEnabled()
+    {
+        return \App\Setting::isMatchMakingEnabled();
+    }
+
+    /**
+     * Enable MatchMaking System
+     * @return Boolean
+     */
+    public static function enableMatchMakingSystem()
+    {
+        return \App\Setting::enableMatchMakingSystem();
+    }
+
+    /**
+     * Disable MatchMaking System
+     * @return Boolean
+     */
+    public static function disableMatchMakingSystem()
+    {
+        return \App\Setting::disableMatchMakingSystem();
+    }
+
+    /**
      * Get Active Login Methods
      * @return Array
      */

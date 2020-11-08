@@ -1119,6 +1119,48 @@ class Setting extends Model
         return true;
     }
 
+
+    /**
+     * Is MatchMaking System Enabled
+     * @return Boolean
+     */
+    public static function isMatchMakingEnabled()
+    {
+        return self::where('setting', 'matchmaking_enabled')->first()->value;
+    }
+
+    /**
+     * Enable MatchMaking System
+     * @return Boolean
+     */
+    public static function enableMatchMakingSystem()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'matchmaking_enabled')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = true;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable MatchMaking System
+     * @return Boolean
+     */
+    public static function disableMatchMakingSystem()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'matchmaking_enabled')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = false;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Get Active Login Methods
      * @return Array
