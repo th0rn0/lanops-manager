@@ -81,7 +81,10 @@ class SettingsController extends Controller
     {
 
         return view('admin.settings.systems')
-            ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled());
+            ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled())
+            ->withIsMatchMakingEnabled(Settings::isMatchMakingEnabled())
+            ->withIsCreditEnabled(Settings::isCreditEnabled())
+            ;
     }
 
     /**
