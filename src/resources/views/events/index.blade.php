@@ -11,8 +11,8 @@
 		</h1>
 	</div>
 	@foreach ($events as $event)
-		<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
-			<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
+		<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+			<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
 				<strong><a href="/events/{{ $event->slug }}">{{ $event->display_name }}</a></strong>
 			</div>
 			<div class="card-body">

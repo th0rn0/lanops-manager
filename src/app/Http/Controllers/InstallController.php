@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 use Session;
 use Artisan;
 
@@ -114,7 +115,7 @@ class InstallController extends Controller
         // Clear Cache
         Artisan::call('config:clear');
 
-        // Set Installed 
+        // Set Installed
         Settings::setInstalled();
 
         Session::flash('alert-info', 'Installation Complete. Have a look around the Settings to make sure everything is Hunky Dory and you are good to go!');

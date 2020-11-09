@@ -114,6 +114,7 @@ return [
         'QrCode'                => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Analytics'             => Ipunkt\LaravelAnalytics\AnalyticsFacade::class,
         'Settings'              => App\Libraries\Settings::class,
+        'Colors'                => App\Libraries\Colors::class,
         'Helpers'               => App\Libraries\Helpers::class,
         'FacebookPageWrapper'   => App\Libraries\Facebook\FacebookPageWrapper::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
@@ -122,6 +123,7 @@ return [
         'Twitter'               => Artesaos\SEOTools\Facades\TwitterCard::class,
         'JsonLd'                => Artesaos\SEOTools\Facades\JsonLd::class,
         'LaravelFacebookPixel'  => WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelFacade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

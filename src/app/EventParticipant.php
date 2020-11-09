@@ -5,6 +5,7 @@ namespace App;
 use Auth;
 use QrCode;
 use Settings;
+use Colors;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class EventParticipant extends Model
      * @var string
      */
     protected $table = 'event_participants';
-    
+
     /**
      * The attributes excluded from the model's JSON form.
      *

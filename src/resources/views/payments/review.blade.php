@@ -28,8 +28,8 @@
 			{{ Form::close() }}
 		</div>
 		<div class="col-12 col-md-4">
-			<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
-				<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif ">
+			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+				<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
 					<h3 class="card-title">@lang('payments.order_details')</h3>
 				</div>
 				<div class="card-body">

@@ -44,8 +44,7 @@ class AppearanceController extends Controller
         return view('admin.settings.appearance')
             ->withSliderImages(SliderImage::getImages('frontpage'))
             ->withUserOverrideCss(Appearance::getCssOverride())
-            ->withCssVariables($sortedCssVariables)
-            ->withIsDarkModeEnabled(Setting::isDarkModeEnabled());
+            ->withCssVariables($sortedCssVariables);
     }
 
     /**

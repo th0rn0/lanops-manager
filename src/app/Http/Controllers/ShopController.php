@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 use Helpers;
 
 use App\ShopItem;
@@ -85,7 +86,7 @@ class ShopController extends Controller
         switch ($request->action) {
             case 'add':
                 if (
-                    Session::has(Settings::getOrgName() . '-basket') && 
+                    Session::has(Settings::getOrgName() . '-basket') &&
                     !array_key_exists('tickets', Session::get(Settings::getOrgName() . '-basket'))
                 ) {
                     $params = Session::get(Settings::getOrgName() . '-basket');

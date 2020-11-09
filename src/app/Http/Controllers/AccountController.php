@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 
 use App\Http\Requests;
 

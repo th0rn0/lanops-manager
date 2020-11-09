@@ -5,6 +5,7 @@ namespace App;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 
 use App\CreditLog;
 use App\EventTournament;
@@ -59,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return true;
         });
     }
-    
+
     /*
      * Relationships
      */
@@ -267,7 +268,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 if ($nextEvent->end >= $eventParticipant->event->end) {
                     $nextEvent = $eventParticipant->event;
                 }
-            } 
+            }
         }
         return $nextEvent;
     }

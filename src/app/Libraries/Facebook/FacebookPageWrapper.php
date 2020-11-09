@@ -3,6 +3,7 @@
 namespace App\Libraries\Facebook;
 
 use Settings;
+use Colors;
 use Facebook\Facebook;
 use \App\Libraries\Facebook\FacebookPersistentDataHandler;
 

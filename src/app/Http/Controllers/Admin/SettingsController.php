@@ -7,6 +7,7 @@ use Auth;
 use Session;
 use Redirect;
 use Settings;
+use Colors;
 use FacebookPageWrapper as Facebook;
 
 use App\ApiKey;
@@ -346,12 +347,6 @@ class SettingsController extends Controller
         }
 
         if (isset($request->site_locale) && !Settings::setSiteLocale($request->site_locale)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        $theme_dark_mode = ($request->theme_dark_mode ? true : false);
-        if (isset($theme_dark_mode) && !Settings::setIsDarkModeEnabled($theme_dark_mode)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }

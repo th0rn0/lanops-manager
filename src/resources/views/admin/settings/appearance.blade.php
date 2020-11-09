@@ -31,18 +31,7 @@
 					Theme editing is not supported for the admin interface.
 				</div>
 
-					{{ Form::open(array('url'=>'/admin/settings/')) }}
-						<h3>General</h3>
-						<div class="form-group form-check">
-							<label class="form-check-label">
-								{{ Form::checkbox('theme_dark_mode', null, $isDarkModeEnabled, array('id'=>'theme_dark_mode')) }} Dark Mode
-							</label>
-						</div>
-
-						<button type="submit" class="btn btn-success btn-block">Submit</button>
-					{{ Form::close() }}
-
-					{{ Form::open(array('url'=>'/admin/settings/appearance/css/variables', 'onsubmit' => 'return ConfirmSubmit()')) }}
+				{{ Form::open(array('url'=>'/admin/settings/appearance/css/variables', 'onsubmit' => 'return ConfirmSubmit()')) }}
 
 					<h3>Primary Colors</h3>
 					@foreach ($cssVariables['primary'] as $cssVariable)

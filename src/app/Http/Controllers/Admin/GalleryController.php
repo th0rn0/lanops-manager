@@ -10,6 +10,7 @@ use Validator;
 use Session;
 use File;
 use Settings;
+use Colors;
 
 use App\User;
 use App\Event;
@@ -35,7 +36,7 @@ class GalleryController extends Controller
             ->withisGalleryEnabled(Settings::isGalleryEnabled())
         ;
     }
-    
+
     /**
      * Show Gallery Page
      * @return view
@@ -48,7 +49,7 @@ class GalleryController extends Controller
             ->withisGalleryEnabled(Settings::isGalleryEnabled())
         ;
     }
-    
+
     /**
      * Store Gallery to DB
      * @param  Request $request
@@ -78,7 +79,7 @@ class GalleryController extends Controller
         Session::flash('alert-success', 'Successfully saved Gallery!');
         return Redirect::to('admin/gallery/' . $album->slug);
     }
-    
+
     /**
      * Update Gallery
      * @param  GalleryAlbum           $album
@@ -149,7 +150,7 @@ class GalleryController extends Controller
      */
     public function uploadFile(GalleryAlbum $album, Request $request)
     {
-        
+
         $rules = [
             'images.*'   => 'required|max:20000',
 
@@ -180,7 +181,7 @@ class GalleryController extends Controller
             $ext = preg_replace('/^.*\.([^.]+)$/D', '$1', $imageName);
 
             if ($ext == "jpg" || $ext == "JPG" || $ext == "jpeg" || $ext == "JPEG" || $ext == "png" || $ext == "PNG" || $ext == "bmp" || $ext == "BMP") {
-                $image->filetype            = 0; 
+                $image->filetype            = 0;
                 Image::make($file)
                 ->resize(null, 1080, function ($constraint) {
                     $constraint->aspectRatio();
@@ -190,8 +191,8 @@ class GalleryController extends Controller
                 ;
             }
             else
-            { 
-                    $image->filetype            = 1; 
+            {
+                    $image->filetype            = 1;
                     Storage::disk('public')->putFileAs(
                     $destinationPathFiles,
                     $file,
@@ -200,7 +201,7 @@ class GalleryController extends Controller
             }
             $image->path = $destinationPath . $imageName;
             $image->save();
-            
+
             $uploadcount++;
         }
         if ($uploadcount != $fileCount) {

@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use Session;
 use Settings;
+use Colors;
 
 use App\User;
 use App\Event;
@@ -70,7 +71,7 @@ class TicketsController extends Controller
         if (!$event || !$ticket) {
             abort(404);
         }
-        
+
         $return = [
             'name' => $ticket->name,
             'type' => $ticket->type,

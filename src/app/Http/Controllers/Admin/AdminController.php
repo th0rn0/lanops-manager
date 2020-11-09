@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 use Helpers;
 use FacebookPageWrapper as Facebook;
 use \Carbon\Carbon as Carbon;

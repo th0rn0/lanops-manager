@@ -102,7 +102,7 @@
 				<div class="row">
 					@foreach ($event->tickets as $ticket)
 						<div class="col-12 col-sm-4">
-							<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3" disabled>
+							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3" disabled>
 								<div class="card-body">
 									<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
 									@if ($ticket->quantity != 0)
@@ -189,8 +189,8 @@
 		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
 				@if ($seatingPlan->status != 'DRAFT')
-					<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
-						<div class="card-header @if(Settings::isDarkModeEnabled()) border-light @endif  bg-success-light" role="tab" id="headingOne">
+					<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+						<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif  bg-success-light" role="tab" id="headingOne">
 							<h4 class="card-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
 									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} @lang('events.available')</small>

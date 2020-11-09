@@ -5,6 +5,7 @@ namespace App;
 use DB;
 use Cache;
 use Settings;
+use Colors;
 
 use App\EventParticipant;
 use App\EventTournamentParticipant;

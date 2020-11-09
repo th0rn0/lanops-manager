@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Settings;
+use Colors;
 
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;

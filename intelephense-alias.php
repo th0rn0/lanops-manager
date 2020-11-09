@@ -126,6 +126,9 @@ class Analytics extends Ipunkt\LaravelAnalytics\AnalyticsFacade
 class Settings extends App\Libraries\Settings
 {
 }
+class Colors extends App\Libraries\Colors
+{
+}
 class Helpers extends App\Libraries\Helpers
 {
 }

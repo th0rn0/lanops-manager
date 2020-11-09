@@ -734,16 +734,16 @@ class Helpers
 
     /**
      * Resolve the command parameters
-     * 
+     *
      * @param  string $command
      * @param  Request $request
      * @param  object $availableParameters
-     * 
+     *
      * @return string The resolved command
      */
     public static function resolveServerCommandParameters(string $command, ?Request $request, $availableParameters)
     {
-        // Set Variables to be usable in Commands 
+        // Set Variables to be usable in Commands
         $result = "";
 
         // Example Variable {>variable}
@@ -760,7 +760,7 @@ class Helpers
                     $commandPart = ltrim($commandPart, '>');
                     $secondChar = strpos($commandPart, "§");
                     $commandPart = ltrim($commandPart, '§');
-                    
+
 
 
                     if ($request && isset($request->{$commandPart})) {
@@ -792,7 +792,7 @@ class Helpers
                     {
                         Session::flash('alert-danger', 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
                     }
-                        
+
                 }
             }
         }
@@ -802,11 +802,11 @@ class Helpers
 
     /**
      * Return true if selected user is part of the match
-     * 
+     *
      * @param  EventTournament $tournament
      * @param   $match
      * @param  User $user
-     * 
+     *
      * @return boolean True if user is part of match
      */
     public static function isMatchPlayer(EventTournament $tournament, $match, User $user)

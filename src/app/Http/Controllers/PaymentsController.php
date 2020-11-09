@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use QrCode;
 use Storage;
 use Settings;
+use Colors;
 use Helpers;
 use Auth;
 

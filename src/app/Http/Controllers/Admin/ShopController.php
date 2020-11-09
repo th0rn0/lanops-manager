@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use Session;
 use Settings;
+use Colors;
 use Storage;
 use Image;
 

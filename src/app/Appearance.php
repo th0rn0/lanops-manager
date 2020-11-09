@@ -102,6 +102,16 @@ class Appearance extends Model
      * Get CSS Variable
      * @return Var
      */
+    public static function getCssVariable($name)
+    {
+        $clauses = ['type' => 'CSS_VAR', 'key' => $name];
+        return self::where($clauses)->first();
+    }
+
+    /**
+     * Get CSS Variable
+     * @return Var
+     */
     public static function getCssVersion()
     {
         return Cache::get("css_version", function () {
