@@ -824,6 +824,33 @@ class Settings
         return \App\Setting::disableMatchMakingSystem();
     }
 
+        /**
+     * Is MatchMaking Publicuse Enabled
+     * @return Boolean
+     */
+    public static function isSystemsMatchMakingPublicuseEnabled()
+    {
+        return \App\Setting::isSystemsMatchMakingPublicuseEnabled();
+    }
+
+    /**
+     * Enable MatchMaking System Publicuse
+     * @return Boolean
+     */
+    public static function enableSystemsMatchMakingPublicuse()
+    {
+        return \App\Setting::enableSystemsMatchMakingPublicuse();
+    }
+
+    /**
+     * Disable MatchMaking System Publicuse
+     * @return Boolean
+     */
+    public static function disableSystemsMatchMakingPublicuse()
+    {
+        return \App\Setting::disableSystemsMatchMakingPublicuse();
+    }
+
     /**
      * Get Active Login Methods
      * @return Array

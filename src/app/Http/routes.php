@@ -475,6 +475,8 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings', 'Admin\SettingsController@update');
             Route::get('/admin/settings/org', 'Admin\SettingsController@showOrg');
             Route::get('/admin/settings/payments', 'Admin\SettingsController@showPayments');
+            Route::get('/admin/settings/systems', 'Admin\SettingsController@showSystems');
+            Route::post('/admin/settings/systems', 'Admin\SettingsController@updateSystems');
             Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
             Route::get('/admin/settings/api', 'Admin\SettingsController@showApi');
             Route::post('/admin/settings/api', 'Admin\SettingsController@updateApi');

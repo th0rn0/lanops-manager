@@ -40,6 +40,7 @@
 								strpos($setting->setting, 'about') === false &&
 								strpos($setting->setting, 'terms_and_conditions') === false &&
 								strpos($setting->setting, 'org_') === false &&
+								strpos($setting->setting, 'systems_') === false &&
 								strpos($setting->setting, 'slider_') === false &&
 								strpos($setting->setting, 'payment') === false &&
 								strpos($setting->setting, 'credit') === false &&

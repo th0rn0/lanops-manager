@@ -378,6 +378,14 @@ class RequiredDatabaseSeeder extends Seeder
                 'description'   => 'Locale that is used for all the Site Default Texts'
             ]
         );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_publicuse'],
+            [
+                'value'         => true,
+                'default'       => true,
+                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
+            ]
+        );
 
         ## Apperance
         Appearance::firstOrCreate(

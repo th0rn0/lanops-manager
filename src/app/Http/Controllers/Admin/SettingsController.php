@@ -74,6 +74,17 @@ class SettingsController extends Controller
     }
 
     /**
+     * Show Settings Opt Systems Page
+     * @return Redirect
+     */
+    public function showSystems()
+    {
+
+        return view('admin.settings.systems')
+            ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled());
+    }
+
+    /**
      * Show Settings Index Page
      * @return Redirect
      */
@@ -143,6 +154,36 @@ class SettingsController extends Controller
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }
+
+    /**
+     * Update Systems
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function updateSystems(Request $request)
+    {
+
+        if (($request->publicuse ? true : false))
+        {
+            if (!Settings::enableSystemsMatchMakingPublicuse()) {
+                Session::flash('alert-danger', "Could not Enable the MatchMaking System Publicuse!");
+                return Redirect::back();
+            }
+        }
+        else
+        {
+            if (!Settings::disableSystemsMatchMakingPublicuse()) {
+                Session::flash('alert-danger', "Could not Disable the MatchMaking System Publicuse!");
+                return Redirect::back();
+            }
+
+        }
+
+        Session::flash('alert-success', "Successfully Saved OptSystems Serttings!");
+        return Redirect::back();
+
+    }
+
 
     /**
      * Update Settings
@@ -591,6 +632,7 @@ class SettingsController extends Controller
         Session::flash('alert-success', "Successfully Disabled the MatchMaking System!");
         return Redirect::back();
     }
+
 
     /**
      * Enable Login Method

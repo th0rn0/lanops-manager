@@ -381,5 +381,13 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'If enabled site will be in dark mode'
             ]
         );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_publicuse'],
+            [
+                'value'         => true,
+                'default'       => true,
+                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
+            ]
+        );
     }
 }
