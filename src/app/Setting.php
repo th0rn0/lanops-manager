@@ -1119,6 +1119,90 @@ class Setting extends Model
         return true;
     }
 
+
+    /**
+     * Is MatchMaking System Enabled
+     * @return Boolean
+     */
+    public static function isMatchMakingEnabled()
+    {
+        return self::where('setting', 'matchmaking_enabled')->first()->value;
+    }
+
+    /**
+     * Enable MatchMaking System
+     * @return Boolean
+     */
+    public static function enableMatchMakingSystem()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'matchmaking_enabled')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = true;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable MatchMaking System
+     * @return Boolean
+     */
+    public static function disableMatchMakingSystem()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'matchmaking_enabled')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = false;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Is MatchMaking System Publicuse Enabled
+     * @return Boolean
+     */
+    public static function isSystemsMatchMakingPublicuseEnabled()
+    {
+        return self::where('setting', 'systems_matchmaking_publicuse')->first()->value;
+    }
+
+    /**
+     * Enable MatchMaking System Publicuse
+     * @return Boolean
+     */
+    public static function enableSystemsMatchMakingPublicuse()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'systems_matchmaking_publicuse')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = true;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable MatchMaking System Publicuse
+     * @return Boolean
+     */
+    public static function disableSystemsMatchMakingPublicuse()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'systems_matchmaking_publicuse')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = false;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Get Active Login Methods
      * @return Array

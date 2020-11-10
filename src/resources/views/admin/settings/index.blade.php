@@ -40,6 +40,7 @@
 								strpos($setting->setting, 'about') === false &&
 								strpos($setting->setting, 'terms_and_conditions') === false &&
 								strpos($setting->setting, 'org_') === false &&
+								strpos($setting->setting, 'systems_') === false &&
 								strpos($setting->setting, 'slider_') === false &&
 								strpos($setting->setting, 'payment') === false &&
 								strpos($setting->setting, 'credit') === false &&
@@ -47,6 +48,7 @@
 								strpos($setting->setting, 'shop') === false &&
 								strpos($setting->setting, 'gallery') === false &&
 								strpos($setting->setting, 'help') === false &&
+								strpos($setting->setting, 'matchmaking_enabled') === false &&
 								strpos($setting->setting, 'seo') === false &&
 								strpos($setting->setting, 'privacy_policy') === false &&
 								strpos($setting->setting, 'legal_notice') === false &&
@@ -156,6 +158,25 @@
 					{{ Form::close() }}
 				@else
 					{{ Form::open(array('url'=>'/admin/settings/help/enable')) }}
+						<button type="submit" class="btn btn-block btn-success">Enable</button>
+					{{ Form::close() }}
+				@endif
+			</div>
+		</div>
+
+		<!-- Matchmaking System -->
+		<div class="card mb-3">
+			<div class="card-header">
+				<i class="fa fa-info-circle fa-fw"></i> Matchmaking System
+			</div>
+			<div class="card-body">
+				<p>The Matchmaking feature can be used to make matches by admins or users without the need of an event tournament.</p>
+				@if ($isMatchMakingEnabled)
+					{{ Form::open(array('url'=>'/admin/settings/matchmaking/disable')) }}
+						<button type="submit" class="btn btn-block btn-danger">Disable</button>
+					{{ Form::close() }}
+				@else
+					{{ Form::open(array('url'=>'/admin/settings/matchmaking/enable')) }}
 						<button type="submit" class="btn btn-block btn-success">Enable</button>
 					{{ Form::close() }}
 				@endif

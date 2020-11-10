@@ -52,6 +52,9 @@
 			<li class="nav-item {{ Request::is('admin/games') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/games"><i class="fa fa-gamepad fa-fw"></i> Games</a>
 			</li>
+			<li class="nav-item {{ Request::is('admin/matchmaking') ? 'active' : '' }}">
+				<a class="nav-link" href="/admin/matchmaking"><i class="fa fa-list-ol fa-fw"></i> Matchmaking</a>
+			</li>
 			<li class="nav-item {{ Request::is('admin/purchases') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>

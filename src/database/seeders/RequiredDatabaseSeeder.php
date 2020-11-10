@@ -355,6 +355,13 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => false,
                 'default'       => true,
             ]
+        );        
+        Setting::firstOrCreate(
+            ['setting'          => 'matchmaking_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
         );
         Setting::firstOrCreate(
             ['setting'          => 'installed'],
@@ -369,6 +376,14 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => 'en',
                 'default'       => true,
                 'description'   => 'Locale that is used for all the Site Default Texts'
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_publicuse'],
+            [
+                'value'         => true,
+                'default'       => true,
+                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
             ]
         );
 

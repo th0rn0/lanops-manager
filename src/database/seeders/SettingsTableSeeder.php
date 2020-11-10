@@ -352,6 +352,13 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
+            ['setting'          => 'matchmaking_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
+        Setting::firstOrCreate(
             ['setting'          => 'installed'],
             [
                 'value'         => false,
