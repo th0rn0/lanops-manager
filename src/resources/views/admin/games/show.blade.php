@@ -37,17 +37,6 @@
 				<i class="fa fa-th-list fa-fw"></i> Game Servers <small>(click on a Server to execute Commands)</small>
 			</div>
 			<div class="card-body">
-
-				@if ($errors->any())
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
-
 				<script>
 					function updateStatus(id ,serverStatus){
 
@@ -432,15 +421,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug, 'files' => true )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $game->name, array('id'=>'name','class'=>'form-control')) }}
@@ -512,15 +492,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
@@ -571,15 +542,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="row">
 							<div class="form-group col-12 col-sm-6">
 								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
@@ -608,15 +570,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="row">
 							<div class="form-group col-12 col-sm-6">
 								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}

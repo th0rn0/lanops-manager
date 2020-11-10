@@ -96,15 +96,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/matchmaking/' )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="form-group">
 							{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 							{{
@@ -122,7 +113,7 @@
 						<div class="form-group">
 							{{ Form::label('team1name','Team 1 Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
-						</div>	
+						</div>
 						<div class="form-group">
 							{{ Form::label('team1owner','Team 1 Owner',array('id'=>'','class'=>'')) }}
 							{{

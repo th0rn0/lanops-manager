@@ -67,15 +67,6 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug )) }}
-					@if ($errors->any())
-					  	<div class="alert alert-danger">
-					        <ul>
-					          	@foreach ($errors->all() as $error)
-					            	<li>{{ $error }}</li>
-					          	@endforeach
-					        </ul>
-					  	</div>
-					@endif
 					<div class="form-group">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')

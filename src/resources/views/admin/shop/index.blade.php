@@ -44,15 +44,6 @@
 						<div class="card-body">
 							<div class="list-group">
 								{{ Form::open(array('url'=>'/admin/shop/item' )) }}
-									@if ($errors->any())
-									  	<div class="alert alert-danger">
-									        <ul>
-									          	@foreach ($errors->all() as $error)
-									            	<li>{{ $error }}</li>
-									          	@endforeach
-									        </ul>
-									  	</div>
-									@endif
 										<div class="form-group">
 											{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 											{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}
@@ -197,15 +188,6 @@
 				<div class="card-body">
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/shop/category' )) }}
-							@if ($errors->any())
-							  	<div class="alert alert-danger">
-							        <ul>
-							          	@foreach ($errors->all() as $error)
-							            	<li>{{ $error }}</li>
-							          	@endforeach
-							        </ul>
-							  	</div>
-							@endif
 							<div class="form-group">
 								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 								{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}

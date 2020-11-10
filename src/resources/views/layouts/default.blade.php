@@ -55,14 +55,16 @@
 					@endif
 				@endforeach
 				@if (isset($errors) && $errors->any())
-					<div class="col-12" style="margin-top:30px; margin-bottom:-40px;">
-						<div class="alert alert-danger">
-							<ul class="list-unstyled">
-								@foreach ($errors->all() as $error)
-									<li><strong>{{ $error }}</strong></li>
-								@endforeach
-							</ul>
-						</div>
+					<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
+						<h4 mt-0>Errors occured</h4>
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
 					</div>
 				@endif
 			</div>
@@ -71,7 +73,8 @@
 		<script src="/js/vendor.js"></script>
 		<script>
 			jQuery(function () {
-				jQuery('[data-toggle="tooltip"]').tooltip()
+				jQuery('[data-toggle="tooltip"]').tooltip();
+				// jQuery('.alert').alert();
 			});
 		</script>
 		<br>

@@ -49,3 +49,11 @@ h6 {
 .progress {
   height: 20px;
 }
+
+.alert-fixed {
+  position: fixed;
+  bottom: 1rem;
+  left: 1em;
+  right: 1em;
+  z-index: 10000;
+}

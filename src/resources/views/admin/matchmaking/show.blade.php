@@ -28,7 +28,7 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm">
-							<h4>Team: {{ $match->firstteam->name }}</h4> 	
+							<h4>Team: {{ $match->firstteam->name }}</h4>
 						</div>
 						<div class="col-sm mt-3">
 							@if($match->status != "LIVE" &&  $match->status != "COMPLETE")
@@ -37,7 +37,7 @@
 						</div>
 					</div>
 					<div class="row">
-					
+
 						<div class="col-sm">
 							<p class="mb-0 mt-2">Invite Url </p>
 						</div>
@@ -67,12 +67,12 @@
 											@if ($teamplayer->user->steamid)
 												- <span class="text-muted"><small>Steam: {{ $teamplayer->user->steamname }}</small></span>
 											@endif
-										</td>	
+										</td>
 										<td>
 											{{ $teamplayer->user->firstname }} {{ $teamplayer->user->surname }}
-											
+
 										</td>
-										
+
 										<td width="15%">
 											@if ($teamplayer->user->id != $match->firstteam->team_owner_id)
 												{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/teamplayer', 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -92,12 +92,12 @@
 					</div>
 				</div>
 			@endif
-			
+
 			@if (isset($match->secondteam->name) && $match->secondteam->name != "")
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm">
-							<h4>Team: {{ $match->secondteam->name }}</h4> 		
+							<h4>Team: {{ $match->secondteam->name }}</h4>
 						</div>
 						<div class="col-sm mt-3">
 							@if($match->status != "LIVE" &&  $match->status != "COMPLETE")
@@ -106,7 +106,7 @@
 						</div>
 					</div>
 					<div class="row">
-					
+
 						<div class="col-sm">
 							<p class="mb-0 mt-2">Invite Url </p>
 						</div>
@@ -136,12 +136,12 @@
 											@if ($teamplayer->user->steamid)
 												- <span class="text-muted"><small>Steam: {{ $teamplayer->user->steamname }}</small></span>
 											@endif
-										</td>	
+										</td>
 										<td>
 											{{ $teamplayer->user->firstname }} {{ $teamplayer->user->surname }}
-											
+
 										</td>
-										
+
 										<td width="15%">
 											@if ($teamplayer->user->id != $match->secondteam->team_owner_id)
 												{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/teamplayer', 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -163,7 +163,7 @@
 
 		</div>
 	</div>
-	
+
 
 	<div class="col-lg-4">
 		<div class="card mb-3">
@@ -186,7 +186,7 @@
 							<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
 							<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
 						</div>
-						
+
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/start' )) }}
 							<button type="submit" class="btn btn-success btn-block">Start Match</button>
@@ -212,7 +212,7 @@
 					@endif
 
 
-					
+
 
 				</div>
 			</div>
@@ -225,15 +225,6 @@
 				<div class="card-body">
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/update' )) }}
-							@if ($errors->any())
-								<div class="alert alert-danger">
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
-							@endif
 							<div class="form-group">
 								{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 								{{
@@ -296,7 +287,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 
 
 			@if (!isset($match->secondteam) || !isset($match->firstteam))
@@ -307,19 +298,10 @@
 					<div class="card-body">
 						<div class="list-group">
 							{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/add' )) }}
-								@if ($errors->any())
-									<div class="alert alert-danger">
-										<ul>
-											@foreach ($errors->all() as $error)
-												<li>{{ $error }}</li>
-											@endforeach
-										</ul>
-									</div>
-								@endif
 								<div class="form-group">
 									{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
 									{{ Form::text('teamname',NULL,array('id'=>'teamname','class'=>'form-control')) }}
-								</div>	
+								</div>
 								<div class="form-group">
 									{{ Form::label('teamowner','Team Owner',array('id'=>'','class'=>'')) }}
 									{{
@@ -334,7 +316,7 @@
 										)
 									}}
 								</div>
-								
+
 
 								<button type="submit" class="btn btn-success btn-block">Add</button>
 							{{ Form::close() }}
@@ -350,16 +332,6 @@
 				<div class="card-body">
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/teamplayer' )) }}
-
-							@if ($errors->any())
-								<div class="alert alert-danger">
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
-							@endif
 							<div class="form-group">
 								{{ Form::label('userid','User',array('id'=>'','class'=>'')) }}
 								{{
@@ -388,8 +360,8 @@
 									)
 								}}
 							</div>
-				
-							
+
+
 
 							<button type="submit" class="btn btn-success btn-block">Add</button>
 						{{ Form::close() }}
@@ -416,7 +388,7 @@
 				<div class="form-group">
 					{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
 					{{ Form::text('teamname',$match->firstteam->name,array('id'=>'teamname','class'=>'form-control')) }}
-				</div>	
+				</div>
 				<div class="form-group">
 					{{ Form::label('teamowner','Team Owner',array('id'=>'','class'=>'')) }}
 					{{
@@ -451,7 +423,7 @@
 					<div class="form-group">
 						{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('teamname',$match->secondteam->name,array('id'=>'teamname','class'=>'form-control')) }}
-					</div>	
+					</div>
 					<div class="form-group">
 						{{ Form::label('teamowner','Team Owner',array('id'=>'','class'=>'')) }}
 						{{
