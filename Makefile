@@ -50,7 +50,7 @@ database-seed:
 
 # Rollback last Database Migration
 database-rollback:
-	docker exec eventula_manager_app php artisan db:rollback
+	docker exec eventula_manager_app php artisan migrate:rollback
 
 # Generate Application key
 generate-key:
