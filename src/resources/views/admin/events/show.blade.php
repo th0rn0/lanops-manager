@@ -11,7 +11,7 @@
 			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $event->display_name }}
 			</li>
 		</ol>
