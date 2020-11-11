@@ -15,7 +15,7 @@
   > .nav-item {
     &:hover > .nav-link {
       border-bottom: 4px solid $color_primary !important;
-      padding-bottom: 11px;
+      padding-bottom: 4px;
       color: $color_secondary_text;
       background-color: transparent;
     }
