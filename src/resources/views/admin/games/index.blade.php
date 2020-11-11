@@ -113,7 +113,7 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
-							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandler(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('image_thumbnail','Thumbnail Image - 500x500',array('id'=>'','class'=>'')) }}

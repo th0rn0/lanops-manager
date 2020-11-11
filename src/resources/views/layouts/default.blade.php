@@ -43,38 +43,35 @@
 	</head>
 	<body class="full-height">
 		@include ('layouts._partials.navigation')
-		<div class="container" style="margin-top:30px;">
-			<div class='row'>
-				@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-					@if (Session::has('alert-' . $msg))
-						<div class="col-12" style="margin-top:30px; margin-bottom:-40px;">
-							<p class="alert alert-{{ $msg }}">
-								<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							</p>
-						</div>
-					@endif
-				@endforeach
-				@if (isset($errors) && $errors->any())
-					<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
-						<h4 mt-0>Errors occured</h4>
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-				@endif
-			</div>
-		</div>
+
 		@yield ('content')
+		<div class="alert-fixed">
+			@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+				@if (Session::has('alert-' . $msg))
+					<p class="alert  alert-{{ $msg }} alert-dismissible fade show">
+						<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					</p>
+				@endif
+			@endforeach
+		</div>
+
+		@if ($errors->any())
+			<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
+				<h4 mt-0>Errors occured</h4>
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		@endif
 		<script src="/js/vendor.js"></script>
 		<script>
 			jQuery(function () {
 				jQuery('[data-toggle="tooltip"]').tooltip();
-				// jQuery('.alert').alert();
 			});
 		</script>
 		<br>
