@@ -13,6 +13,20 @@ return [
     |
     */
 
+    'ended' => 'has ended',
+    'live' => 'is live',
+    'match' => 'Match',
     'matchmaking' => 'Matchmaking',
+    'matchowner' => 'Match owner',
+    'notsignedup' => 'not signed up',
+    'ownedmatches' => 'Your owned matches',
+    'ownedteams' => 'Your matches with owned teams',
+    'publicmatches' => 'Open public matches',
+    'signedup' => 'signed up',
+    'signupsclosed' => 'signeups closed',
+    'teamcount' => 'Team count:',
+    'teamowner' => 'Team owner',
+    'teamsizes' => 'Team size',
+
     
 ];

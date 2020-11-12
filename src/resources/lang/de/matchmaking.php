@@ -13,6 +13,19 @@ return [
     |
     */
 
+    'ended' => 'beendet',
+    'live' => 'live',
+    'match' => 'Match',
     'matchmaking' => 'Matchmaking',
+    'matchowner' => 'Matcheigentümer',
+    'notsignedup' => 'nicht angemeldet',
+    'ownedmatches' => 'meine Matches',
+    'ownedteams' => 'Matches mit meinen Teams',
+    'publicmatches' => 'Öffentliche Matches',
+    'signedup' => 'angemeldet',
+    'signupsclosed' => 'anmeldung geschlossen',
+    'teamcount' => 'Teamanzahl:',
+    'teamowner' => 'Teameigentümer',
+    'teamsizes' => 'Teamgröße',
     
 ];
