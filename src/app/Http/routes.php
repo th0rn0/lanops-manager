@@ -147,15 +147,19 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::get('/matchmaking', 'MatchMakingController@index');
+                Route::get('/matchmaking', 'MatchMakingController@index');
                 Route::get('/matchmaking/{match}', 'MatchMakingController@show');
                 Route::post('/matchmaking', 'MatchMakingController@store');
-                Route::post('/matchmaking/{match}/teamplayer/add', 'MatchMakingController@addusertomatch');
+                Route::post('/matchmaking/{match}/team/{team}/teamplayer/add', 'MatchMakingController@addusertomatch');
+                Route::delete('/matchmaking/{match}/team/{team}/teamplayer/{teamplayer}/delete', 'MatchMakingController@deleteuserfrommatch');
                 Route::post('/matchmaking/{match}/team/add', 'MatchMakingController@addteam');
-                Route::delete('/matchmaking/{match}/teamplayer/remove/{teamplayer}', 'MatchMakingController@deleteuserfrommatch');
+                Route::post('/matchmaking/{match}/team/{team}/update', 'MatchMakingController@updateteam');
+                Route::delete('/matchmaking/{match}/team/{team}/delete', 'MatchMakingController@deleteteam');
+                Route::post('/matchmaking/{match}/update', 'MatchMakingController@update');
                 Route::post('/matchmaking/{match}/start', 'MatchMakingController@start');
                 Route::post('/matchmaking/{match}/open', 'MatchMakingController@open');
                 Route::post('/matchmaking/{match}/finalize', 'MatchMakingController@finalize');
-                Route::delete('/matchmaking/{match}', 'UsersController@destroy');
+                Route::delete('/matchmaking/{match}', 'MatchMakingController@destroy');
             });
 
             /**

@@ -13,7 +13,7 @@
 			<ul class="navbar-nav ml-auto">
 				@include ('layouts._partials._tournaments.navigation')
 				@include ('layouts._partials.events-navigation')
-				@if (Settings::isMatchMakingEnabled() && Settings::isSystemsMatchMakingPublicuseEnabled())
+				@if (Settings::isMatchMakingEnabled() && Settings::isSystemsMatchMakingPublicuseEnabled() && Auth::check())
 				<li class="nav-item"><a class="nav-link" href="/matchmaking">@lang('layouts.navi_matchmaking')</a></li>
 				@endif
 				@if (Settings::isGalleryEnabled())

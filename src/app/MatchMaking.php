@@ -42,6 +42,10 @@ class MatchMaking extends Model
     }
 
 
+    public function players()
+    {
+        return $this->hasManyThrough('App\MatchMakingTeamPlayer', 'App\MatchMakingTeam', 'match_id', 'matchmaking_team_id', 'id', 'id');
+    }
 
 
     public function game()
@@ -63,6 +67,29 @@ class MatchMaking extends Model
     {
         return $this->hasOne('App\MatchMakingTeam', 'match_id')->oldest();
     }
+
+
+    /**
+     * check MatchTeamPlayer
+     * @param  $MatchTeamPlayerId
+     * @return EventTournamentParticipant
+     */
+    public function getMatchTeamPlayer($matchTeamPlayerId)
+    {
+        return $this->players()->where('user_id', $matchTeamPlayerId)->first();
+    }
+
+
+    /**
+     * check MatchTeamOwner
+     * @param  $MatchTeamOwnerId
+     * @return EventTournamentParticipant
+     */
+    public function getMatchTeamOwner($matchTeamOwnerId)
+    {
+        return $this->teams()->where('team_owner_id', $matchTeamOwnerId)->first();
+    }
+
 
     /**
      * Get the route key for the model.
