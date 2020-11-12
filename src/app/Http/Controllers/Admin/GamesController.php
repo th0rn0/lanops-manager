@@ -59,12 +59,20 @@ class GamesController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
+        if ($request->min_team_count > $request->max_team_count)
+        {
+            Session::flash('alert-danger', 'minimal team count cannot be bigger than maximal team count');
+            return Redirect::back();
+        }
+
         $game               = new Game();
         $game->name         = $request->name;
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
         $game->public       = true;
+        $game->min_team_count = $request->min_team_count;
+        $game->max_team_count = $request->max_team_count;
         $game->connect_game_url = $request->connect_game_url;
         $game->connect_game_command = $request->connect_game_command;
         $game->connect_stream_url = $request->connect_stream_url;
@@ -133,6 +141,12 @@ class GamesController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
+        if ($request->min_team_count > $request->max_team_count)
+        {
+            Session::flash('alert-danger', 'minimal team count cannot be bigger than maximal team count');
+            return Redirect::back();
+        }
+
         $game->name         = @$request->name;
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
@@ -141,6 +155,8 @@ class GamesController extends Controller
         $game->connect_game_url = @$request->connect_game_url;
         $game->connect_game_command = @$request->connect_game_command;
         $game->connect_stream_url = @$request->connect_stream_url;
+        $game->min_team_count = $request->min_team_count;
+        $game->max_team_count = $request->max_team_count;
 
         if (!$game->save()) {
             Session::flash('alert-danger', 'Could not save Game!');

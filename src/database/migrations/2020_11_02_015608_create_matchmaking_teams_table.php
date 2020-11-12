@@ -15,13 +15,14 @@ class CreateMatchMakingTeamsTable extends Migration
     {
         Schema::create('matchmaking_teams', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('match_id')->unsigned()->index()->default(null)->nullable();
             $table->string('name');
             $table->integer('team_owner_id')->unsigned()->nullable();
             $table->integer('team_score')->unsigned()->default(0);
             $table->string('team_invite_tag');
             $table->timestamps();
 
-
+            $table->foreign('match_id')->references('id')->on('matchmaking');
             $table->foreign('team_owner_id')->references('id')->on('users');
 
 

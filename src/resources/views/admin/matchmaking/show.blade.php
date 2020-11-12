@@ -23,100 +23,42 @@
 			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Teams:
 			</div>
-			@if (isset($match->firstteam->name) && $match->firstteam->name != "")
-
-				<div class="card-body">
-					<div class="row">
-						<div class="col-sm">
-							<h4>Team: {{ $match->firstteam->name }}</h4> 	
-						</div>
-						<div class="col-sm mt-3">
-							@if($match->status != "LIVE" &&  $match->status != "COMPLETE")
-							<a href="#" class="btn btn-warning btn-sm btn-block float-right" data-toggle="modal" data-target="#editFirstTeamModal">Edit Team</a>
-							@endif
-						</div>
-					</div>
-					<div class="row">
-					
-						<div class="col-sm">
-							<p class="mb-0 mt-2">Invite Url </p>
-						</div>
-						<div class="col-sm">
-							<div class="input-group mb-3 mt-0" style="width: 100%">
-								<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->firstteam->team_invite_tag }}">
-								<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
-							</div>
-						</div>
-					</div>
-					<div class="dataTable_wrapper">
-						<table width="100%" class="table table-striped table-hover" id="dataTables-example">
-							<thead>
-								<tr>
-									<th></th>
-									<th>User</th>
-									<th>Name</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach ($match->firstteam->players as $teamplayer)
-									<tr>
-										<td>	<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}"></td>
-										<td>
-											{{ $teamplayer->user->username }}
-											@if ($teamplayer->user->steamid)
-												- <span class="text-muted"><small>Steam: {{ $teamplayer->user->steamname }}</small></span>
-											@endif
-										</td>	
-										<td>
-											{{ $teamplayer->user->firstname }} {{ $teamplayer->user->surname }}
-											
-										</td>
-										
-										<td width="15%">
-											@if ($teamplayer->user->id != $match->firstteam->team_owner_id)
-												{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/teamplayer', 'onsubmit' => 'return ConfirmDelete()')) }}
-													{{ Form::hidden('_method', 'DELETE') }}
-													{{ Form::hidden('userid', $teamplayer->user->id )}}
-													<button type="submit" class="btn btn-danger btn-sm btn-block">Remove from Match</button>
-												{{ Form::close() }}
-											@else
-												Teamowner
-											@endif
-										</td>
-									</tr>
-								@endforeach
-
-							</tbody>
-						</table>
-					</div>
-				</div>
-			@endif
 			
-			@if (isset($match->secondteam->name) && $match->secondteam->name != "")
+			@foreach ($match->teams as $team)
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm">
-							<h4>Team: {{ $match->secondteam->name }}</h4> 		
+							<h4>Team #{{ $team->id }}: {{ $team->name }} </h4> 	
 						</div>
 						<div class="col-sm mt-3">
-							@if($match->status != "LIVE" &&  $match->status != "COMPLETE")
-							<a href="#" class="btn btn-warning btn-sm btn-block float-right" data-toggle="modal" data-target="#editSecondTeamModal">Edit Team</a>
+							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE")
+								<a href="#" class="btn btn-warning btn-sm btn-block float-right" data-toggle="modal" data-target="#editTeamModal_{{ $team->id }}">Edit Team</a>
+
+								@if($team->id != $team->match->oldestTeam->id)
+									{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/team/'. $team->id . '/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
+									{{ Form::hidden('_method', 'DELETE') }}
+									<button type="submit" class="btn btn-danger btn-sm btn-block float-right">Delete Team</button>
+									{{ Form::close() }}
+								@endif
+
+
 							@endif
 						</div>
 					</div>
-					<div class="row">
-					
-						<div class="col-sm">
-							<p class="mb-0 mt-2">Invite Url </p>
-						</div>
-						<div class="col-sm">
-							<div class="input-group mb-3 mt-0" style="width: 100%">
-								<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->secondteam->team_invite_tag }}">
-								<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
+					@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE")
+						<div class="row">
+						
+							<div class="col-sm">
+								<p class="mb-0 mt-2">Invite Url </p>
+							</div>
+							<div class="col-sm">
+								<div class="input-group mb-3 mt-0" style="width: 100%">
+									<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
+									<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
+								</div>
 							</div>
 						</div>
-					</div>
+					@endif
 					<div class="dataTable_wrapper">
 						<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 							<thead>
@@ -128,7 +70,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($match->secondteam->players as $teamplayer)
+								@foreach ($team->players as $teamplayer)
 									<tr>
 										<td>	<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}"></td>
 										<td>
@@ -143,11 +85,14 @@
 										</td>
 										
 										<td width="15%">
-											@if ($teamplayer->user->id != $match->secondteam->team_owner_id)
-												{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/teamplayer', 'onsubmit' => 'return ConfirmDelete()')) }}
-													{{ Form::hidden('_method', 'DELETE') }}
-													<button type="submit" class="btn btn-danger btn-sm btn-block">Remove from Match</button>
-												{{ Form::close() }}
+											@if ($teamplayer->user->id != $team->team_owner_id)
+												@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE")
+													{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
+														{{ Form::hidden('_method', 'DELETE') }}
+														{{ Form::hidden('userid', $teamplayer->user->id )}}
+														<button type="submit" class="btn btn-danger btn-sm btn-block">Remove from Match</button>
+													{{ Form::close() }}
+												@endif
 											@else
 												Teamowner
 											@endif
@@ -158,8 +103,34 @@
 							</tbody>
 						</table>
 					</div>
+					@if(($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE") && $team->players->count() < $match->team_size)
+					{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/'. $team->id .'/teamplayer/add' )) }}
+					<div class="row">
+						<div class="col-sm">
+							{{ Form::label('userid','Add User',array('id'=>'','class'=>'')) }}
+								{{
+									Form::select(
+										'userid',
+										$availableUsers,
+										NULL ,
+										array(
+											'id'    => 'userid',
+											'class' => 'form-control'
+										)
+									)
+								}}	
+						</div>
+						<div class="col-sm mt-4">
+							<button type="submit" class="btn btn-success btn-block">Add</button>
+						
+						</div>
+
+					</div>
+					{{ Form::close() }}
+					@endif
 				</div>
-			@endif
+			@endforeach
+			
 
 		</div>
 	</div>
@@ -196,19 +167,21 @@
 					@if($match->status == "LIVE")
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/finalize' )) }}
-						{{ Form::label('team1score', 'Score of '.$match->firstteam->name ,array('id'=>'','class'=>'')) }}
-						{{ Form::number('team1score', '', array('id'=>'team1score','class'=>'form-control mb-3')) }}
+						@foreach ($match->teams as $team)
 
-						{{ Form::label('team2score', 'Score of '.$match->secondteam->name ,array('id'=>'','class'=>'')) }}
-						{{ Form::number('team2score', '', array('id'=>'team2score','class'=>'form-control mb-3')) }}
+							{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
+							{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+
+						@endforeach
 						<button type="submit" class="btn btn-success btn-block ">Finalize Match</button>
 						{{ Form::close() }}
 						</div>
 					@endif
 
 					@if($match->status == "COMPLETE")
-					<p>{{$match->firstteam->name}} Score: {{$match->firstteam->team_score}}</p>
-					<p>{{$match->secondteam->name}} Score: {{$match->secondteam->team_score}}</p>
+					@foreach ($match->teams as $team)
+						<p>{{$team->name}} Score: {{$team->team_score}}</p>
+					@endforeach
 					@endif
 
 
@@ -225,15 +198,6 @@
 				<div class="card-body">
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/update' )) }}
-							@if ($errors->any())
-								<div class="alert alert-danger">
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
-							@endif
 							<div class="form-group">
 								{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 								{{
@@ -270,6 +234,17 @@
 								}}
 							</div>
 							<div class="form-group">
+								{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+								{{
+									Form::number('team_count',
+										$match->team_count,
+										array(
+											'id'    => 'team_size',
+											'class' => 'form-control'
+										))
+								}}
+							</div>
+							<div class="form-group">
 								{{ Form::label('ownerid','Match Owner',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -299,23 +274,14 @@
 		
 
 
-			@if (!isset($match->secondteam) || !isset($match->firstteam))
+			@if ( $match->team_count == 0 || $match->team_count != $match->teams->count() )
 				<div class="card mb-3">
 					<div class="card-header">
-						<i class="fa fa-plus fa-fw"></i> Add second Team
+						<i class="fa fa-plus fa-fw"></i> Add Team
 					</div>
 					<div class="card-body">
 						<div class="list-group">
 							{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/add' )) }}
-								@if ($errors->any())
-									<div class="alert alert-danger">
-										<ul>
-											@foreach ($errors->all() as $error)
-												<li>{{ $error }}</li>
-											@endforeach
-										</ul>
-									</div>
-								@endif
 								<div class="form-group">
 									{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
 									{{ Form::text('teamname',NULL,array('id'=>'teamname','class'=>'form-control')) }}
@@ -325,7 +291,7 @@
 									{{
 										Form::select(
 											'teamowner',
-											$users,
+											$availableUsers,
 											NULL ,
 											array(
 												'id'    => 'teamowner',
@@ -343,59 +309,6 @@
 				</div>
 			@endif
 
-			<div class="card mb-3">
-				<div class="card-header">
-					<i class="fa fa-plus fa-fw"></i> Add user to Team
-				</div>
-				<div class="card-body">
-					<div class="list-group">
-						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/teamplayer' )) }}
-
-							@if ($errors->any())
-								<div class="alert alert-danger">
-									<ul>
-										@foreach ($errors->all() as $error)
-											<li>{{ $error }}</li>
-										@endforeach
-									</ul>
-								</div>
-							@endif
-							<div class="form-group">
-								{{ Form::label('userid','User',array('id'=>'','class'=>'')) }}
-								{{
-									Form::select(
-										'userid',
-										$availableUsers,
-										NULL ,
-										array(
-											'id'    => 'userid',
-											'class' => 'form-control'
-										)
-									)
-								}}
-							</div>
-							<div class="form-group">
-								{{ Form::label('teamid','Team',array('id'=>'','class'=>'')) }}
-								{{
-									Form::select(
-										'teamid',
-										$availableTeams,
-										NULL,
-										array(
-											'id'    => 'teamid',
-											'class' => 'form-control'
-										)
-									)
-								}}
-							</div>
-				
-							
-
-							<button type="submit" class="btn btn-success btn-block">Add</button>
-						{{ Form::close() }}
-					</div>
-				</div>
-			</div>
 		@endif
 
 
@@ -403,54 +316,20 @@
 </div>
 
 <!-- Modals -->
-@if (isset($match->firstteam->name) && $match->firstteam->name != "")
-<div class="modal fade" id="editFirstTeamModal" tabindex="-1" role="dialog" aria-labelledby="editFirstTeamModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="editFirstTeamModalLabel">Edit Team</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">
-				{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/'.$match->firstteam->id.'/update' )) }}
-				<div class="form-group">
-					{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
-					{{ Form::text('teamname',$match->firstteam->name,array('id'=>'teamname','class'=>'form-control')) }}
-				</div>	
-				<div class="form-group">
-					{{ Form::label('teamowner','Team Owner',array('id'=>'','class'=>'')) }}
-					{{
-						Form::select(
-							'teamowner',
-							$users,
-							$match->firstteam->team_owner_id ,
-							array(
-								'id'    => 'teamowner',
-								'class' => 'form-control'
-							)
-						)
-					}}
-				</div>
-				<button type="submit" class="btn btn-success btn-block">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-	</div>
-</div>
-@endif
-@if (isset($match->secondteam->name) && $match->secondteam->name != "")
-	<div class="modal fade" id="editSecondTeamModal" tabindex="-1" role="dialog" aria-labelledby="editSecondTeamModalLabel" aria-hidden="true">
+@foreach ($match->teams as $team)
+	
+	<div class="modal fade" id="editTeamModal_{{ $team->id }}" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel_{{ $team->id }}" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="editSecondTeamModalLabel">Edit Team</h4>
+					<h4 class="modal-title" id="editTeamModalLabel_{{ $team->id }}">Edit Team</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-					{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/'.$match->secondteam->id.'/update' )) }}
+					{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/'.$team->id.'/update' )) }}
 					<div class="form-group">
 						{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('teamname',$match->secondteam->name,array('id'=>'teamname','class'=>'form-control')) }}
+						{{ Form::text('teamname',$team->name,array('id'=>'teamname','class'=>'form-control')) }}
 					</div>	
 					<div class="form-group">
 						{{ Form::label('teamowner','Team Owner',array('id'=>'','class'=>'')) }}
@@ -458,7 +337,7 @@
 							Form::select(
 								'teamowner',
 								$users,
-								$match->secondteam->team_owner_id ,
+								$team->team_owner_id ,
 								array(
 									'id'    => 'teamowner',
 									'class' => 'form-control'
@@ -472,7 +351,9 @@
 			</div>
 		</div>
 	</div>
-@endif
+@endforeach
+
+
 <script>
 	function copyToClipBoard(inputId) {
 		/* Get the text field */

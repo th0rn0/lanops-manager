@@ -28,7 +28,7 @@ class MatchMakingTeam extends Model
     */
     public function match()
     {
-        return $this->belongsTo('App\MatchMaking');
+        return $this->belongsTo('App\MatchMaking', 'match_id', 'id');
     }
 
     public function players()

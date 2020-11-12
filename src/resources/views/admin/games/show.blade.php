@@ -494,6 +494,16 @@
 							{{ Form::text('connect_stream_url', $game->connect_stream_url, array('id'=>'connect_stream_url','class'=>'form-control')) }}
 							<small>Hint: use variables like in the Game Commands the Match Scope</small>
 						</div>
+						<div class="form-group">
+							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
+							{{ Form::number('min_team_count', $game->min_team_count, array('id'=>'min_team_count','class'=>'form-control')) }}
+							<small>This is used for the Matchmaking feature (0 for no limit)</small>
+						</div>
+						<div class="form-group">
+							{{ Form::label('max_team_count','Max Team Count',array('id'=>'','class'=>'')) }}
+							{{ Form::number('max_team_count', $game->max_team_count, array('id'=>'max_team_count','class'=>'form-control')) }}
+							<small>This is used for the Matchmaking feature (0 for no limit)</small>
+						</div>
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 					<hr>

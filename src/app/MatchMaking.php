@@ -35,22 +35,34 @@ class MatchMaking extends Model
     /*
     * Relationships
     */
-    public function firstteam()
+
+    public function teams()
     {
-        return $this->belongsTo('App\MatchMakingTeam', 'first_team_id');
+        return $this->hasMany('App\MatchMakingTeam', 'match_id');
     }
 
-    public function secondteam()
-    {
-        return $this->belongsTo('App\MatchMakingTeam', 'second_team_id');
-    }
+
 
 
     public function game()
     {
-        return $this->belongsTo('App\Game');
+        return $this->belongsTo('App\Game', 'game_id');
     }
 
+    public function owner()
+    {
+        return $this->belongsTo('App\User', 'owner_id');
+    }
+
+
+    /*
+    * oldest team
+    */
+
+    public function oldestTeam()
+    {
+        return $this->hasOne('App\MatchMakingTeam', 'match_id')->oldest();
+    }
 
     /**
      * Get the route key for the model.

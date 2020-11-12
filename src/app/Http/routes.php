@@ -150,7 +150,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::get('/matchmaking/{match}', 'MatchMakingController@show');
                 Route::post('/matchmaking', 'MatchMakingController@store');
                 Route::post('/matchmaking/{match}/teamplayer/add', 'MatchMakingController@addusertomatch');
-                Route::post('/matchmaking/{match}/team/add', 'MatchMakingController@addsecondteam');
+                Route::post('/matchmaking/{match}/team/add', 'MatchMakingController@addteam');
                 Route::delete('/matchmaking/{match}/teamplayer/remove/{teamplayer}', 'MatchMakingController@deleteuserfrommatch');
                 Route::post('/matchmaking/{match}/start', 'MatchMakingController@start');
                 Route::post('/matchmaking/{match}/open', 'MatchMakingController@open');
@@ -454,10 +454,11 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/matchmaking', 'Admin\MatchMakingController@index');
             Route::get('/admin/matchmaking/{match}', 'Admin\MatchMakingController@show');
             Route::post('/admin/matchmaking', 'Admin\MatchMakingController@store');
-            Route::post('/admin/matchmaking/{match}/teamplayer', 'Admin\MatchMakingController@addusertomatch');
-            Route::delete('/admin/matchmaking/{match}/teamplayer', 'Admin\MatchMakingController@deleteuserfrommatch');
-            Route::post('/admin/matchmaking/{match}/team/add', 'Admin\MatchMakingController@addsecondteam');
+            Route::post('/admin/matchmaking/{match}/team/{team}/teamplayer/add', 'Admin\MatchMakingController@addusertomatch');
+            Route::delete('/admin/matchmaking/{match}/team/{team}/teamplayer/{teamplayer}/delete', 'Admin\MatchMakingController@deleteuserfrommatch');
+            Route::post('/admin/matchmaking/{match}/team/add', 'Admin\MatchMakingController@addteam');
             Route::post('/admin/matchmaking/{match}/team/{team}/update', 'Admin\MatchMakingController@updateteam');
+            Route::delete('/admin/matchmaking/{match}/team/{team}/delete', 'Admin\MatchMakingController@deleteteam');
             Route::post('/admin/matchmaking/{match}/update', 'Admin\MatchMakingController@update');
             Route::post('/admin/matchmaking/{match}/start', 'Admin\MatchMakingController@start');
             Route::post('/admin/matchmaking/{match}/open', 'Admin\MatchMakingController@open');

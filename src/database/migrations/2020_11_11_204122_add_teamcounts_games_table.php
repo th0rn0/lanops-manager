@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStreamUrlGamesTable extends Migration
+class AddTeamCountsGamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddStreamUrlGamesTable extends Migration
     public function up()
     {
         Schema::table('games', function (Blueprint $table) {
-            $table->string('connect_stream_url', 1024);
+            $table->integer('min_team_count')->default(0);
+            $table->integer('max_team_count')->default(0);
         });
     }
 
@@ -26,7 +27,8 @@ class AddStreamUrlGamesTable extends Migration
     public function down()
     {
         Schema::table('games', function (Blueprint $table) {
-            $table->dropColumn('connect_stream_url');
+            $table->dropColumn('min_team_count');
+            $table->dropColumn('max_team_count');
         });
     }
 }

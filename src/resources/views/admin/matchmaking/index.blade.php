@@ -44,8 +44,10 @@
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>Team1</th>
-								<th>Team2</th>
+								<th>Team1 Name</th>
+								<th>Team1 Owner</th>
+								<th>Match Owner</th>
+								<th>Teamcount</th>
 								<th>Teamsize</th>
 								<th>Status</th>
 								<th></th>
@@ -57,13 +59,18 @@
 								<tr>
 									<td>{{ $match->id }}</td>
 									<td>
-										@if(isset($match->firstteam->name))
-											{{ $match->firstteam->name }}
-										@endif
+										{{ $match->oldestTeam->name }}
+									</td>
+									<td>				
+										{{ $match->oldestTeam->owner->username }}
 									</td>
 									<td>
-										@if(isset($match->secondteam->name))
-											{{ $match->secondteam->name }}
+										{{ $match->owner->username }}
+									</td>
+									<td>
+										{{ $match->teams->count() }}
+										@if(isset($match->team_count) && $match->team_count > 0)
+										/ {{ $match->team_count }}
 										@endif
 									</td>
 									<td>{{ $match->team_size }}v{{ $match->team_size }}</td>
@@ -96,15 +103,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/matchmaking/' )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="form-group">
 							{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 							{{
@@ -138,24 +136,6 @@
 							}}
 						</div>
 						<div class="form-group">
-							{{ Form::label('team2name','Team 2 Name',array('id'=>'','class'=>'')) }}
-							{{ Form::text('team2name',NULL,array('id'=>'team2name','class'=>'form-control')) }}
-						</div>
-						<div class="form-group">
-							{{ Form::label('team2owner','Team 2 Owner',array('id'=>'','class'=>'')) }}
-							{{
-								Form::select(
-									'team2owner',
-									$users,
-									null,
-									array(
-										'id'    => 'team2downer',
-										'class' => 'form-control'
-									)
-								)
-							}}
-						</div>
-						<div class="form-group">
 							{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -174,6 +154,17 @@
 										'class' => 'form-control'
 									)
 								)
+							}}
+						</div>
+						<div class="form-group">
+							{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+							{{
+								Form::number('team_count',
+									0,
+									array(
+										'id'    => 'team_size',
+										'class' => 'form-control'
+									))
 							}}
 						</div>
 						<div class="form-group">

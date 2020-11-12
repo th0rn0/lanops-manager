@@ -15,9 +15,8 @@ class CreateMatchMakingTable extends Migration
     {
         Schema::create('matchmaking', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('first_team_id')->unsigned()->nullable();
-            $table->integer('second_team_id')->unsigned()->nullable();
             $table->integer('team_size')->nullable();
+            $table->integer('team_count')->nullable();
             $table->enum('status', array('DRAFT','OPEN','CLOSED','LIVE','COMPLETE'));
             $table->integer('owner_id')->unsigned()->index();
             $table->string('invite_tag');
@@ -29,8 +28,6 @@ class CreateMatchMakingTable extends Migration
             ## Foreign Keys
             $table->foreign('game_id')->references('id')->on('games');
             $table->foreign('game_server_id')->references('id')->on('game_servers');
-            $table->foreign('first_team_id')->references('id')->on('matchmaking_teams');
-            $table->foreign('second_team_id')->references('id')->on('matchmaking_teams');
             $table->foreign('owner_id')->references('id')->on('users');
         });
     }
