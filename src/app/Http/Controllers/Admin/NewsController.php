@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use Session;
 use Settings;
+use Colors;
 
 use App\User;
 use App\Event;
@@ -80,7 +81,7 @@ class NewsController extends Controller
         $newsArticle->title = $request->title;
         $newsArticle->article = $request->article;
         $newsArticle->user_id = Auth::id();
-        
+
         if (!$newsArticle->save()) {
             Session::flash('alert-danger', 'Cannot Save News Article!');
             return Redirect::to('/admin/events/');

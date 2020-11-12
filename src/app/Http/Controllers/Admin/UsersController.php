@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 use Session;
 
 use App\User;

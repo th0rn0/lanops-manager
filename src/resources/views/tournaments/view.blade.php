@@ -5,7 +5,7 @@
 @section ('content')
 	<div class="container">
 		<div class="row">
-			<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif mb-3">
+			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
 				<div class="row">
 					<div class="col-sm-2 col-12" style="">
 						<img src="{{$tournament->game->image_thumbnail_path}}" class="img-fluid img-rounded img-thumbnail">

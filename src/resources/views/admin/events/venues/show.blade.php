@@ -27,15 +27,6 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'files' => 'true')) }}
-					@if ($errors->any())
-					  	<div class="alert alert-danger">
-					        <ul>
-					          	@foreach ($errors->all() as $error)
-					            	<li>{{ $error }}</li>
-					          	@endforeach
-					        </ul>
-					  	</div>
-					@endif
 					<div class="form-group">
 						{{ Form::label('name','Venue Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', $venue->display_name,array('id'=>'name','class'=>'form-control')) }}

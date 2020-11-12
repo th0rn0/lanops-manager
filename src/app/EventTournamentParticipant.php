@@ -3,6 +3,7 @@
 namespace App;
 
 use Settings;
+use Colors;
 
 use Illuminate\Database\Eloquent\Model;
 

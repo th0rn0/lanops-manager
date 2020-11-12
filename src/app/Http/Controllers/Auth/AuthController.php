@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Validator;
 use Settings;
+use Colors;
 
 use App\User;
 use App\Http\Controllers\Controller;
@@ -98,7 +99,7 @@ class AuthController extends Controller
                 }
 
                 $user = Session::get('user');
-                
+
                 if (is_null($user['steamid']) ||
                     is_null($user['avatar']) ||
                     is_null($user['steamname'])
@@ -144,7 +145,7 @@ class AuthController extends Controller
                 // No email Verification needed - just add the email_verified_at
                 $user->email_verified_at    = new \DateTime('NOW');
                 break;
-            
+
             default:
                 $rules = [
                     'email'         => 'required|filled|email|unique:users,email',
@@ -169,7 +170,7 @@ class AuthController extends Controller
                 $user->password       = Hash::make($request->password1);
                 break;
         }
-       
+
         $user->firstname        = $request->firstname;
         $user->surname          = $request->surname;
         $user->username         = $request->username;
@@ -185,26 +186,26 @@ class AuthController extends Controller
             $user->sendEmailVerificationNotification();
         }
         return Redirect('/account');
-      
+
     }
 
     public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();
     }
-    
+
     public function handleProviderCallback($provider)
     {
      //notice we are not doing any validation, you should do it
 
         $user = Socialite::driver($provider)->user();
-         
+
         // stroing data to our use table and logging them in
         $data = [
            'name' => $user->getName(),
            'email' => $user->getEmail()
         ];
-     
+
         Auth::login(User::firstOrCreate($data));
 
         //after login redirecting to home page

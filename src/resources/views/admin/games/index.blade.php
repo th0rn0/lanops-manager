@@ -99,15 +99,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/', 'files' => true )) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}
@@ -122,7 +113,7 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
-							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandler(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('image_thumbnail','Thumbnail Image - 500x500',array('id'=>'','class'=>'')) }}

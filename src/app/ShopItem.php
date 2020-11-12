@@ -5,6 +5,7 @@ namespace App;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 
 use App\ShopOrderItem;
 
@@ -99,7 +100,7 @@ class ShopItem extends Model
             ]
         ];
     }
-    
+
     /**
      * Get the route key for the model.
      *
@@ -116,14 +117,14 @@ class ShopItem extends Model
      */
     public function getDefaultImageUrl()
     {
-        if ($imagePath = 
+        if ($imagePath =
             ShopItemImage::where('shop_item_id', $this->id)
                 ->where('default', true)
                 ->first()
             ) {
             return $imagePath->path;
         }
-        if ($imagePath = 
+        if ($imagePath =
             ShopItemImage::where('shop_item_id', $this->id)
                 ->first()
             ) {

@@ -171,14 +171,4 @@ class Game extends Model
         }
         return $return;
     }
-
-    public static function getGameCommandHandler()
-    {
-        $return = array(
-            "0" => "SourceQuery GoldSource",
-            "1" => "SourceQuery Source",
-            "2" => "Maniaplanet XRPC",
-        );
-        return $return;
-    }
 }

@@ -9,6 +9,7 @@ use Image;
 use Validator;
 use Session;
 use Settings;
+use Colors;
 use File;
 
 use App\User;
@@ -36,7 +37,7 @@ class HelpController extends Controller
             ->withisHelpEnabled(Settings::isHelpEnabled())
         ;
     }
-    
+
     /**
      * Show Help Page
      * @return view
@@ -49,7 +50,7 @@ class HelpController extends Controller
             ->withisHelpEnabled(Settings::isHelpEnabled())
         ;
     }
-    
+
     /**
      * Store Helpcategory to DB
      * @param  Request $request
@@ -79,7 +80,7 @@ class HelpController extends Controller
         Session::flash('alert-success', 'Successfully saved HelpCategory!');
         return Redirect::to('admin/help/' . $helpCategory->slug);
     }
-    
+
     /**
      * Update Helpcategory
      * @param  HelpCategory           $helpCategory
@@ -164,7 +165,7 @@ class HelpController extends Controller
             $entry->content                 = $request->content;
             $entry->nice_name               = Str::slug(strtolower(str_replace(' ', '-', $request->name)));
             $entry->help_category_id        = $helpCategory->id;
-            
+
         if (!$entry->save()) {
             Session::flash('alert-danger', 'creation of entry unsuccessful!');
             return Redirect::to('admin/help/' . $helpCategory->slug);

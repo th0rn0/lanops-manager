@@ -12,6 +12,7 @@ use Helpers;
 use Validator;
 
 use App\Game;
+use App\GameCommandHandler;
 use App\GameServer;
 use App\GameServerCommand;
 use App\GameServerCommandParameter;
@@ -22,9 +23,6 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
-use xPaw\SourceQuery\SourceQuery;
-use Maniaplanet\DedicatedServer\Connection;
 
 class GameServerCommandsController extends Controller
 {
@@ -121,6 +119,11 @@ class GameServerCommandsController extends Controller
         return Redirect::back();
     }
 
+    private function initCommandHandler()
+    {
+
+    }
+
     private function executeCommand(GameServer $gameServer, string $command)
     {
         $validator = Validator::make(['gameServer' => $gameServer, 'command' => $command], [
@@ -133,43 +136,45 @@ class GameServerCommandsController extends Controller
         if ($validator->fails())
             print_r($validator);
 
-
-        $game = $gameServer->game;
         $result = false;
-        if ($game->gamecommandhandler == 0 || $game->gamecommandhandler == 1) {
-            $Query = new SourceQuery();
-            try {
-                if ($game->gamecommandhandler == 0) {
-                    $Query->Connect($gameServer->address, $gameServer->rcon_port, 1, SourceQuery::GOLDSOURCE);
-                }
-                if ($game->gamecommandhandler == 1) {
-                    $Query->Connect($gameServer->address, $gameServer->rcon_port, 1, SourceQuery::SOURCE);
-                }
-                $Query->SetRconPassword($gameServer->rcon_password);
-                $result = $Query->Rcon($command);
-            } catch (Exception | Throwable | TimeoutException $e) {
-                $error = $e->getMessage();
-            } finally {
-                $Query->Disconnect();
+
+        try
+        {
+            $commandHandler = (new GameCommandHandler())->getGameCommandHandler($gameServer->game->gamecommandhandler);
+            $commandHandler->init($gameServer->address, $gameServer->rcon_port, $gameServer->rcon_password);
+            $result = $commandHandler->execute($command);
+            if($result == false)
+            {
+                $error ="Unexpected Error occured.";
             }
-        } else {
-            // ManiaPlanet dedicated server SDK
-            if ($game->gamecommandhandler == 2) {
-                try {
-                    $maniaConnection = new Connection($gameServer->address, $gameServer->rcon_port, 5, "SuperAdmin", $gameServer->rcon_password, Connection::API_2011_02_21);
-                    $result = $maniaConnection->execute($command);
-                } catch (Exception | Throwable | TimeoutException $e) {
-                    $error = $e->getMessage();
-                }
-            } else {
-                $error = "$game->gamecommandhandler is not defined";
+        }
+        catch(Exception $e)
+        {
+            $error = $e->getMessage();
+        }
+        catch(Throwable $e)
+        {
+            $error = $e->getMessage();
+        }
+        catch (TimeoutException $e)
+        {
+            $error = $e->getMessage();
+        }
+        finally
+        {
+            if(isset($commandHandler))
+            {
+                $commandHandler->dispose();
             }
         }
 
-        if (!isset($error) || $result != false) {
-            Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Result:' . var_export($result, true));
-        } else {
-            Session::flash('alert-danger', 'error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandler()[$game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
+        if (isset($error) || $result == false)
+        {
+            Session::flash('alert-danger', 'Error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandlerSelectArray()[$gameServer->game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
+        }
+         else
+        {
+            Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandlerSelectArray()[$gameServer->game->gamecommandhandler] . ' Result:' . var_export($result, true));
         }
     }
 

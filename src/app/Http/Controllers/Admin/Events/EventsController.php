@@ -107,7 +107,7 @@ class EventsController extends Controller
         Session::flash('alert-success', 'Successfully saved Event!');
         return Redirect::to('admin/events/' . $event->slug);
     }
-    
+
     /**
      * Update Event
      * @param  Event   $event
@@ -132,7 +132,7 @@ class EventsController extends Controller
             'end_date.date_format'      => 'A End Date must be m/d/Y format',
             'end_time.filled'           => 'A End Time cannot be empty',
             'end_time.date_format'      => 'A End Time must be H:i formate',
-            'start_date.filled'         => 'A Start Date cannut be empty',
+            'start_date.filled'         => 'A Start Date cannot be empty',
             'end_date.date_format'      => 'A Start Date must be m/d/Y format',
             'start_time.filled'         => 'A Start Time cannot be empty',
             'end_time.date_format'      => 'A Start Time must be H:i format',
@@ -189,7 +189,7 @@ class EventsController extends Controller
         }
 
         $event->online_event  = ($request->online_event ? true : false);
-       
+
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
         }
@@ -263,7 +263,7 @@ class EventsController extends Controller
         $participant->staff                  = 1;
         $participant->staff_free_assigned_by = Auth::id();
         $participant->generateQRCode();
-     
+
         if (!$participant->save()) {
             Session::flash('alert-danger', 'Could not add Admin!');
             return Redirect::to('admin/events/' . $event->slug . '/tickets');

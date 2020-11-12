@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Settings;
+use Colors;
 
 use App\User;
 use App\CreditLog;
@@ -109,22 +110,22 @@ class CreditController extends Controller
         $fail = false;
         if (
         	(
-        		isset($request->tournament_participation) && 
+        		isset($request->tournament_participation) &&
         		!Settings::setCreditTournamentParticipation($request->tournament_participation)
         	) || (
-        		isset($request->tournament_first) && 
+        		isset($request->tournament_first) &&
 	        	!Settings::setCreditTournamentFirst($request->tournament_first)
 	        ) || (
-        		isset($request->tournament_second) && 
+        		isset($request->tournament_second) &&
 	        	!Settings::setCreditTournamentSecond($request->tournament_second)
 	        ) || (
-        		isset($request->tournament_third) && 
+        		isset($request->tournament_third) &&
         		!Settings::setCreditTournamentThird($request->tournament_third)
         	) || (
-        		isset($request->registration_event) && 
+        		isset($request->registration_event) &&
         		!Settings::setCreditRegistrationEvent($request->registration_event)
         	) || (
-        		isset($request->registration_site) && 
+        		isset($request->registration_site) &&
         		!Settings::setCreditRegistrationSite($request->registration_site)
     		)
         ) {

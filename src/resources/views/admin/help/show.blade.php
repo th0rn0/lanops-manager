@@ -103,15 +103,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug)) }}
-						@if ($errors->any())
-						  	<div class="alert alert-danger">
-						        <ul>
-						          	@foreach ($errors->all() as $error)
-						            	<li>{{ $error }}</li>
-						          	@endforeach
-						        </ul>
-						  	</div>
-						@endif
 						<div class="form-group">
 							{{ Form::label('name','Album Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',$helpCategory->name,array('id'=>'name','class'=>'form-control')) }}

@@ -120,7 +120,7 @@
 						<div class="form-group">
 							{{ Form::label('team1name','Team 1 Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
-						</div>	
+						</div>
 						<div class="form-group">
 							{{ Form::label('team1owner','Team 1 Owner',array('id'=>'','class'=>'')) }}
 							{{

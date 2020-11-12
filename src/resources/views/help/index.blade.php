@@ -11,7 +11,7 @@
 	</div>
 	<div class="row">
 		@foreach ($helpCategorys as $helpCategory)
-			<div class="card @if(Settings::isDarkModeEnabled()) border-light @endif col-sm-3 col-6">
+			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif col-sm-3 col-6">
 				<h4><a href="/help/{{ $helpCategory->slug }}">{{ $helpCategory->name }}</a></h4>
 				@if ($helpCategory->event)
 					<h5>@lang('help.event') {{ $helpCategory->event->display_name }}</h5>

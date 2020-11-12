@@ -72,25 +72,31 @@
 			@include ('layouts._partials._admin.navigation')
 			<div id="page-wrapper">
 				<div class="container-fluid">
-					<div class='row'>
+
+					@yield('content')
+
+					<div class="alert-fixed">
 						@foreach (['danger', 'warning', 'success', 'info'] as $msg)
 							@if (Session::has('alert-' . $msg))
-								<p class="alert alert-{{ $msg }}">
+								<p class="alert  alert-{{ $msg }} alert-dismissible fade show">
 									<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 								</p>
 							@endif
 						@endforeach
-						@if ($errors->any())
-							<div class="alert alert-danger">
-								<ul>
-									@foreach ($errors->all() as $error)
-										<li>{{ $error }}</li>
-									@endforeach
-								</ul>
-							</div>
-						@endif
 					</div>
-					@yield('content')
+					@if ($errors->any())
+						<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
+							<h4 mt-0>Errors occured</h4>
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					@endif
 				</div>
 			</div>
 		</div>

@@ -508,28 +508,28 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => env('PAYPAL_USERNAME', null),
             ]
         );
-        
+
         ApiKey::firstOrCreate(
             ['key'          => 'paypal_password'],
             [
                 'value'         => env('PAYPAL_PASSWORD', null),
             ]
         );
-        
+
         ApiKey::firstOrCreate(
             ['key'          => 'paypal_signature'],
             [
                 'value'         => env('PAYPAL_SIGNATURE', null),
             ]
         );
-        
+
         ApiKey::firstOrCreate(
             ['key'          => 'stripe_public_key'],
             [
                 'value'         => env('STRIPE_PUBLIC_KEY', null),
             ]
         );
-        
+
         ApiKey::firstOrCreate(
             ['key'          => 'stripe_secret_key'],
             [
@@ -574,5 +574,3 @@ class RequiredDatabaseSeeder extends Seeder
         );
     }
 }
-
-

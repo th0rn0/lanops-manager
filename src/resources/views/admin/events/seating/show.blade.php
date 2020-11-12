@@ -135,15 +135,6 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug, 'files' => 'true')) }}
-					@if ($errors->any())
-					  	<div class="alert alert-danger">
-					        <ul>
-					          	@foreach ($errors->all() as $error)
-					            	<li>{{ $error }}</li>
-					          	@endforeach
-					        </ul>
-					  	</div>
-					@endif
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 form-group">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}

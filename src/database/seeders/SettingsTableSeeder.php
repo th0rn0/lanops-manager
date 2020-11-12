@@ -350,7 +350,7 @@ class SettingsTableSeeder extends Seeder
                 'value'         => false,
                 'default'       => true,
             ]
-        );        
+        );
         Setting::firstOrCreate(
             ['setting'          => 'matchmaking_enabled'],
             [
@@ -371,22 +371,6 @@ class SettingsTableSeeder extends Seeder
                 'value'         => 'en',
                 'default'       => true,
                 'description'   => 'Locale that is used for all the Site Default Texts'
-            ]
-        );
-        Setting::firstOrCreate(
-            ['setting'          => 'theme_dark_mode'],
-            [
-                'value'         => false,
-                'default'       => false,
-                'description'   => 'If enabled site will be in dark mode'
-            ]
-        );
-        Setting::firstOrCreate(
-            ['setting'          => 'systems_matchmaking_publicuse'],
-            [
-                'value'         => true,
-                'default'       => true,
-                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
             ]
         );
     }

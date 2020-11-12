@@ -11,7 +11,7 @@
 			<li class="breadcrumb-item">
 				<a href="/admin/events/">Events</a>
 			</li>
-			<li class="active">
+			<li class="breadcrumb-item active">
 				{{ $event->display_name }}
 			</li>
 		</ol>
@@ -28,15 +28,6 @@
 				<i class="fa fa-wrench fa-fw"></i> Settings
 			</div>
 			<div class="card-body">
-				@if ($errors->any())
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
@@ -390,15 +381,6 @@
 			</div>
 			{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/sponsors', 'files' => 'true')) }}
 				<div class="modal-body">
-					@if ($errors->any())
-					  	<div class="alert alert-danger">
-					        <ul>
-					          	@foreach ($errors->all() as $error)
-					            	<li>{{ $error }}</li>
-					          	@endforeach
-					        </ul>
-					  	</div>
-					@endif
 					<div class="form-group">
 						{{ Form::label('sponsor_name','Sponsor Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('sponsor_name',NULL,array('id'=>'sponsor_name','class'=>'form-control')) }}
@@ -426,15 +408,6 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				@if ($errors->any())
-				  	<div class="alert alert-danger">
-				        <ul>
-				          	@foreach ($errors->all() as $error)
-				            	<li>{{ $error }}</li>
-				          	@endforeach
-				        </ul>
-				  	</div>
-				@endif
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true')) }}
 					<div class="form-group">
 						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
@@ -455,15 +428,6 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				@if ($errors->any())
-				  	<div class="alert alert-danger">
-				        <ul>
-				          	@foreach ($errors->all() as $error)
-				            	<li>{{ $error }}</li>
-				          	@endforeach
-				        </ul>
-				  	</div>
-				@endif
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true', 'id' => 'editAnnouncementForm')) }}
 					<div class="form-group">
 						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}

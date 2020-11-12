@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use Session;
 use Settings;
+use Colors;
 
 use App\User;
 use App\Event;
@@ -58,7 +59,7 @@ class TicketsController extends Controller
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
-        
+
         $user_event_tickets = $user->getAllTickets( $ticket->event->id);
         if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0 && count($user_event_tickets) + $request->quantity > $ticket->no_tickets_per_user) {
             Session::flash('alert-danger', __('tickets.max_ticket_count_reached',['maxticketcount' =>  $ticket->no_tickets_per_user]));

@@ -37,6 +37,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         // Check for Event
         $user = Auth::user();
         if ($user && !empty($user->eventParticipants)) {
@@ -108,7 +109,7 @@ class HomeController extends Controller
             return $b['win_count'] <=> $a['win_count'];
         });
 
-        $gameServerList = Helpers::getPublicGameServers();    
+        $gameServerList = Helpers::getPublicGameServers();
 
         return view("home")
             ->withNextEvent(
@@ -123,7 +124,7 @@ class HomeController extends Controller
             ->withSliderImages(SliderImage::getImages('frontpage'))
         ;
     }
-    
+
     /**
      * Show About us Page
      * @return View
@@ -132,7 +133,7 @@ class HomeController extends Controller
     {
         return view("about");
     }
-    
+
     /**
      * Show Terms and Conditions Page
      * @return View
@@ -159,7 +160,7 @@ class HomeController extends Controller
     {
         return view("contact");
     }
-    
+
     /**
      * Show Event Page
      * @return View

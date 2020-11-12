@@ -70,15 +70,6 @@
 				<i class="fa fa-plus fa-fw"></i> Add Event
 			</div>
 			<div class="card-body">
-				@if ($errors->any())
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/events/')) }}
 						<div class="form-group">
