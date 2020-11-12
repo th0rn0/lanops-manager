@@ -19,7 +19,7 @@ use App\GameServer;
 use App\GameServerCommand;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;    
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class TournamentsMatchServerController extends Controller
 {
- 
+
     /**
      * Store TournamentsMatchServer to Database
      * @param  Event            $event
@@ -41,7 +41,7 @@ class TournamentsMatchServerController extends Controller
         $tournamentMatchServer                 = new EventTournamentMatchServer();
         $tournamentMatchServer->challonge_match_id        = $challongeMatchId;
         $tournamentMatchServer->game_server_id = $request->gameServer;
-        
+
         if (!$tournamentMatchServer->save()) {
             Session::flash('alert-danger', 'Could not save tournamentMatchServer!');
             return Redirect::back();
@@ -64,7 +64,7 @@ class TournamentsMatchServerController extends Controller
     {
 
         $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId])->first();
-        
+
         if (!isset($tournamentMatchServer))
         {
             Session::flash('alert-danger', 'could not find the corresponding server entry!');
@@ -77,7 +77,7 @@ class TournamentsMatchServerController extends Controller
             Session::flash('alert-danger', 'Could not save tournamentMatchserver!');
             return Redirect::back();
         }
-       
+
         Session::flash('alert-success', 'Successfully saved tournamentMatchserver!');
         return Redirect::back();
 
@@ -93,9 +93,8 @@ class TournamentsMatchServerController extends Controller
      */
     public function destroy(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
+        $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId])->first();
 
-        $tournamentMatchServer = EventTournamentMatchServer::where(['challonge_match_id' => $challongeMatchId])->first();;
-        
         if (!isset($tournamentMatchServer))
         {
             Session::flash('alert-danger', 'could not find the corresponding tournamentMatchserver entry!');
@@ -110,6 +109,4 @@ class TournamentsMatchServerController extends Controller
         Session::flash('alert-success', 'Successfully deleted tournamentMatchserver!');
         return Redirect::back();
     }
-
-   
 }
