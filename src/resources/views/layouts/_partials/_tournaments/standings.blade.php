@@ -23,7 +23,7 @@
 			@foreach ($tournament->getStandings('desc', true)->final as $standings)
 				<tr>
 					<td>
-						<img class="rounded style="max-width: 6%;" src="{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->avatar }}">
+						<img class="rounded" style="max-width: 6%;" src="{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->avatar }}">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ ($tournament->getParticipantByChallongeId($standings->id))->eventParticipant->user->username }}
 					</td>
 					<td>
@@ -96,7 +96,7 @@
 					<td>
 						@if (($tournament->getTeamByChallongeId($standings->id)->tournamentParticipants))
 							@foreach (($tournament->getTeamByChallongeId($standings->id)->tournamentParticipants) as $participant)
-								<img class="rounded style="max-width: 6%;" src="{{ $participant->eventParticipant->user->avatar }}">
+								<img class="rounded" style="max-width: 6%;" src="{{ $participant->eventParticipant->user->avatar }}">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}<br>
 							@endforeach
 						@endif
