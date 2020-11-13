@@ -529,15 +529,6 @@ class MatchMakingController extends Controller
      */
     public function deleteuserfrommatch(MatchMaking $match, MatchMakingTeam $team, MatchMakingTeamPlayer $teamplayer, Request $request)
     {
-        $rules = [
-            'userid'               => 'required|exists:matchmaking_team_players,user_id',
-        ];
-        $messages = [
-            'userid.required'    => 'userid is required',
-            'userid.exists'          => 'userid must be a valid user id and registered for the match',
-            
-        ];
-        $this->validate($request, $rules, $messages);
 
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
@@ -571,6 +562,15 @@ class MatchMakingController extends Controller
      */
     public function destroy(MatchMaking $match)
     {
+
+        if (!$match->players()->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Players!');
+            return Redirect::back();
+        }        
+        if (!$match->teams()->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Teams!');
+            return Redirect::back();
+        }       
         if (!$match->delete()) {
             Session::flash('alert-danger', 'Cannot delete Match!');
             return Redirect::to('admin/matchmaking/');

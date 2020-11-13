@@ -53,8 +53,8 @@
 							</div>
 							<div class="col-sm">
 								<div class="input-group mb-3 mt-0" style="width: 100%">
-									<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
-									<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
+									<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
+									<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
 								</div>
 							</div>
 						</div>
@@ -89,7 +89,6 @@
 												@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE")
 													{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 														{{ Form::hidden('_method', 'DELETE') }}
-														{{ Form::hidden('userid', $teamplayer->user->id )}}
 														<button type="submit" class="btn btn-danger btn-sm btn-block">Remove from Match</button>
 													{{ Form::close() }}
 												@endif

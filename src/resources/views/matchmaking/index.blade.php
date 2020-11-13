@@ -274,6 +274,7 @@
 								@endif
 							</div>
 						</div>
+					</a>
 					</div>				
 			@endforeach
 		</div>
@@ -283,5 +284,83 @@
 	<hr>
 
 </div>
+
+
+<!-- Modals -->
+	
+	<div class="modal fade" id="addMatchModal" tabindex="-1" role="dialog" aria-labelledby="addMatchModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="addMatchModal">Add Match</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					{{ Form::open(array('url'=>'/matchmaking/' )) }}
+					<div class="form-group">
+						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+						{{
+							Form::select(
+								'game_id',
+								Helpers::getGameSelectArray(),
+								null,
+								array(
+									'id'    => 'game_id',
+									'class' => 'form-control'
+								)
+							)
+						}}
+					</div>
+					<div class="form-group">
+						{{ Form::label('team1name','Team 1 Name',array('id'=>'','class'=>'')) }}
+						{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
+						<small>@lang('matchmaking.thisisyourteam')</small>
+					</div>
+					<div class="form-group">
+						{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
+						{{
+							Form::select(
+								'team_size',
+								array(
+									'1v1' => '1v1',
+									'2v2' => '2v2',
+									'3v3' => '3v3',
+									'4v4' => '4v4',
+									'5v5' => '5v5',
+									'6v6' => '6v6'
+								),
+								null,
+								array(
+									'id'    => 'team_size',
+									'class' => 'form-control'
+								)
+							)
+						}}
+					</div>
+					<div class="form-group">
+						{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+						{{
+							Form::number('team_count',
+								0,
+								array(
+									'id'    => 'team_size',
+									'class' => 'form-control'
+								))
+						}}
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} is public (show match publicly for signup)
+								</label>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
+				{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 @endsection
