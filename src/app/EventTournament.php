@@ -193,6 +193,17 @@ class EventTournament extends Model
         self::deleting(function ($model) {
             if ($model->format != 'list') {
                 $challonge = new Challonge(config('challonge.api_key'));
+                $matches = $challonge->getMatches();
+                $matchServers = EventTournamentMatchServer::all();
+                foreach ($matchServers as $key => $matchServer) {
+                    foreach ($matches as $key => $match) {
+                        if($match->id == $matchServer->challonge_match_id)
+                        {
+                            $matchServer->delete();
+                            break;
+                        }
+                    }
+                }
                 $response = $challonge->getTournament($model->challonge_tournament_id);
                 if (!$response->delete()) {
                     return false;
