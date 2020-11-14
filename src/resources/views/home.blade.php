@@ -2,7 +2,7 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel fade" data-ride="carousel" data-interval="8000">
+<div id="hero-carousel" class="carousel fade" style="margin-top: -20px;" data-ride="carousel" data-interval="8000">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		@foreach ($sliderImages as $image)
@@ -91,7 +91,7 @@
 				<div class="panel-body">
 					@foreach ($gameServerList as $game => $gameServers)
 						@php
-							$counter = 0;	
+							$counter = 0;
 						@endphp
 						@foreach ($gameServers as $gameServer)
 							@php
@@ -99,7 +99,7 @@
 							$availableParameters->game = $gameServer->game;
 							$availableParameters->gameServer = $gameServer;
 							$counter++;
-							@endphp	
+							@endphp
 									@if ($counter > 1)
 										<hr>
 									@endif
@@ -110,7 +110,7 @@
 									@endif
 									<script>
 
-										document.addEventListener("DOMContentLoaded", function(event) { 
+										document.addEventListener("DOMContentLoaded", function(event) {
 
 											$.get( '/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 												var serverStatus = JSON.parse(data);
@@ -129,10 +129,10 @@
 									<div id="serverstatus_{{ $gameServer->id }}">
 										<div><i class="fas fa-map-marked-alt"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
 										<div><i class="fas fa-users"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
-									</div>									
+									</div>
 						@endforeach
 						@endforeach
-				</div>	
+				</div>
 			@endif
 
 
