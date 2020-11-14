@@ -44,6 +44,8 @@
 	<body class="full-height">
 		@include ('layouts._partials.navigation')
 
+		<div class="container" style="margin-top:50px;"></div>
+
 		@yield ('content')
 		<div class="alert-fixed">
 			@foreach (['danger', 'warning', 'success', 'info'] as $msg)

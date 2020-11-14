@@ -8,6 +8,7 @@
 
 .custom-header {
   background-color: $color_header_background;
+  border-bottom: 1px invert($color_body_text) solid;
   a {
     &:hover {
       color: $color_header_text;
