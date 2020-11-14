@@ -217,9 +217,16 @@ purge-cache:
 database-command:
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
 
+# get @lang from blade usage make get-blade-lang blade=pathtoblade prefix=langprefix
+get-lang-blade:
+	cat $(blade) | grep -o "'$(prefix)\..*'" | sed "s|'||g" | sort | uniq | sed "s|.*\.|'|g" | sed -e "s/$$/' => '',/"
+
+
 # Wait for containers to initialize
 wait:
 	sleep 30
+
+
 
 ###############
 # DANGER ZONE #
