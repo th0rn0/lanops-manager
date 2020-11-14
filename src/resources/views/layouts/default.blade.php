@@ -11,7 +11,6 @@
     	    {!! SEOMeta::generate() !!}
 		    {!! OpenGraph::generate() !!}
 
-		{!! Analytics::render() !!}
 
 		@if(config('facebook-pixel.enabled'))
 		    <!-- Facebook Pixel Code -->
@@ -42,6 +41,8 @@
 		</title>
 	</head>
 	<body class="full-height">
+		{!! Analytics::render() !!}
+
 		@include ('layouts._partials.navigation')
 
 		<div class="container" style="margin-top:50px;"></div>
