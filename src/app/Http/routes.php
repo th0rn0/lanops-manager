@@ -147,7 +147,6 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::get('/matchmaking', 'MatchMakingController@index');
-                Route::get('/matchmaking', 'MatchMakingController@index');
                 Route::get('/matchmaking/{match}', 'MatchMakingController@show');
                 Route::post('/matchmaking', 'MatchMakingController@store');
                 Route::post('/matchmaking/{match}/team/{team}/teamplayer/add', 'MatchMakingController@addusertomatch');

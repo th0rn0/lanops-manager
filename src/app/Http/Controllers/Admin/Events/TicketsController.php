@@ -187,6 +187,7 @@ class TicketsController extends Controller
 
         $ticket->sale_start = @$saleStart;
         $ticket->sale_end   = @$saleEnd;
+        $ticket->price = $request->price;
 
         if (isset($request->quantity)) {
             $ticket->quantity   = $request->quantity;

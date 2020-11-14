@@ -26,6 +26,9 @@ return [
     'signupsclosed' => 'anmeldung geschlossen',
     'teamcount' => 'Teamanzahl:',
     'teamowner' => 'Teameigentümer',
-    'teamsizes' => 'Teamgröße',
+    'teamsizes' => 'Teamgröße:',
+    'game' => 'Spiel:',
+
+
     
 ];

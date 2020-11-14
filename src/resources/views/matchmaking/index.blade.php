@@ -7,9 +7,16 @@
 <div class="container">
 
 	<div class="pb-2 mt-4 mb-4 border-bottom">
-		<h1>
-		@lang('matchmaking.matchmaking')
-		</h1>
+		<div class="row">
+			<div class="col-sm">
+				<h1>
+				@lang('matchmaking.matchmaking')
+				</h1>
+			</div>
+			<div class="col-sm mt-4">
+				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">Add Match</a>
+			</div>
+		</div>
 	</div>
 
 	<!-- owned matches -->
@@ -21,87 +28,80 @@
 		<div class="row">
 			@foreach ($ownedMatches as $match)				
 					<div class="col-12 col-sm-6 col-md-3">
-						<div class="thumbnail">
-							@if ($match->game && $match->game->image_thumbnail_path)
-								<a href="/matchmaking/{{ $match->id }}">
-									<img class="img img-fluid rounded" src=""{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
-								</a>
-							@endif
-							<div class="caption">
-								<a href="/matchmaking/{{ $match->id }}"><h3>@lang('matchmaking.match'){{ $match->id }}</h3></a>
-								<span class="small">
-									@if ($match->status == 'COMPLETE')
-										<span class="badge badge-success">@lang('matchmaking.ended')</span>
-									@endif
-									@if ($match->status == 'LIVE')
-										<span class="badge badge-success">@lang('matchmaking.live')</span>
-									@endif
-									@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
-										<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
-									@endif
-									@if ($match->status != 'COMPLETE' && $match->getMatchTeamPlayer(Auth::id()))
-										<span class="badge badge-success">@lang('matchmaking.signedup')</span>
-									@endif
-									@if ( $match->owner_id == Auth::id())
-									<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
-									@endif
-									@if ( $match->getMatchTeamOwner(Auth::id()))
-									<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
-									@endif
-								</span>
-								<hr>
-								@if ($match->status != 'COMPLETE')
-									<dl>
-										<dt>
-											@lang('matchmaking.teamsizes'):
-										</dt>
-										<dd>
-											{{ $match->team_size }}
-										</dd>
-										@if ($match->game)
-											 <dt>
-												@lang('matchmaking.teamsizes'):
-											</dt>
-											<dd>
-												{{ $match->game->name }}
-											</dd>
+						<a href="/matchmaking/{{ $match->id }}" class="link-unstyled">
+							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3"">
+								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
+								@if ($match->game && $match->game->image_thumbnail_path)
+									
+										<img class="img img-fluid rounded" src=""{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
+									
+								@endif
+								
+									<h3>@lang('matchmaking.match'){{ $match->id }}</h3>
+									<span class="small">
+										@if ($match->status == 'COMPLETE')
+											<span class="badge badge-success">@lang('matchmaking.ended')</span>
 										@endif
-										<dt>
-											@lang('matchmaking.teamcount'):
-										</dt>
-										<dd>
-											{{ $match->teams->count() }}
-										</dd>
-									</dl>
-								@endif
-								<!-- // TODO - refactor-->
-								@if ($match->status == 'COMPLETE' )
-									@php
+										@if ($match->status == 'LIVE')
+											<span class="badge badge-success">@lang('matchmaking.live')</span>
+										@endif
+										@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
+											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
+										@endif
+										@if ($match->status != 'COMPLETE' && $match->getMatchTeamPlayer(Auth::id()))
+											<span class="badge badge-success">@lang('matchmaking.signedup')</span>
+										@endif
+										@if ( $match->owner_id == Auth::id())
+										<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
+										@endif
+										@if ( $match->getMatchTeamOwner(Auth::id()))
+										<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
+										@endif
+									</span>
+								</div>
+								<div class="card-body">									
+									@if ($match->status != 'COMPLETE')
+											<div>
+												<strong>@lang('matchmaking.teamsizes') {{ $match->team_size }}</strong>
+											</div>
+											@if ($match->game)
+												<div>
+													<strong>@lang('matchmaking.game') {{ $match->game->name }}</strong>
+												</div>
+											@endif
+											<div>
+												<strong>@lang('matchmaking.teamcount') {{ $match->teams->count() }}</strong>
+											</div>
+									@endif
+									<!-- // TODO - refactor-->
+									@if ($match->status == 'COMPLETE' )
+										@php
 
-										$teams = $match->teams;
-						
-										if ($teams->count() < 3 )
-										{
-											$teams = $teams->sortByDesc('team_score')->take($teams->count());
-										}
-										else {
-										$teams = $teams->sortByDesc('team_score')->take(3);
-										}
-									@endphp
-									@foreach ($teams as $teamsentry)
+											$teams = $match->teams;
+							
+											if ($teams->count() < 3 )
+											{
+												$teams = $teams->sortByDesc('team_score')->take($teams->count());
+											}
+											else {
+											$teams = $teams->sortByDesc('team_score')->take(3);
+											}
+										@endphp
+										@foreach ($teams as $teamsentry)
 
-												<h4>{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h4>
+													<h5 class="m-0">{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h5>
 
-									@endforeach
-									<h4>@lang('matchmaking.signupsclosed')</h4>
-								@endif
-								@if ($match->status == 'COMPLETE')
-									<strong>
-										@lang('matchmaking.teamcount') {{ $match->teams->count() }}
-									</strong>
-								@endif
+										@endforeach
+										<strong class="m-0 mt-1">
+											@lang('matchmaking.teamcount') {{ $match->teams->count() }}
+										</strong>
+										<h5 class="m-0 mt-1">@lang('matchmaking.signupsclosed')</h5>
+									
+										
+									@endif
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>				
 			@endforeach
 		</div>
@@ -116,87 +116,79 @@
 		<div class="row">
 			@foreach ($ownedTeams as $team)				
 					<div class="col-12 col-sm-6 col-md-3">
-						<div class="thumbnail">
-							@if ($team->match->game && $team->match->game->image_thumbnail_path)
-								<a href="/matchmaking/{{ $team->match->id }}">
-									<img class="img img-fluid rounded" src=""{{ $team->match->game->image_thumbnail_path }}" alt="{{ $team->match->game->name }}">
-								</a>
-							@endif
-							<div class="caption">
-								<a href="/matchmaking/{{ $team->match->id }}"><h3>@lang('matchmaking.match'){{ $team->match->id }}</h3></a>
-								<span class="small">
-									@if ($team->match->status == 'COMPLETE')
-										<span class="badge badge-success">@lang('matchmaking.ended')</span>
-									@endif
-									@if ($team->match->status == 'LIVE')
-										<span class="badge badge-success">@lang('matchmaking.live')</span>
-									@endif
-									@if ($team->match->status != 'COMPLETE' && !$team->match->getMatchTeamPlayer(Auth::id()))
-										<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
-									@endif
-									@if ($team->match->status != 'COMPLETE' && $team->match->getMatchTeamPlayer(Auth::id()))
-										<span class="badge badge-success">@lang('matchmaking.signedup')</span>
-									@endif
-									@if ( $team->match->owner_id == Auth::id())
-									<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
-									@endif
-									@if ( $team->match->getMatchTeamOwner(Auth::id()))
-									<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
-									@endif
-								</span>
-								<hr>
-								@if ($team->match->status != 'COMPLETE')
-									<dl>
-										<dt>
-											@lang('matchmaking.teamsizes'):
-										</dt>
-										<dd>
-											{{ $team->match->team_size }}
-										</dd>
-										@if ($team->match->game)
-											 <dt>
-												@lang('matchmaking.teamsizes'):
-											</dt>
-											<dd>
-												{{ $team->match->game->name }}
-											</dd>
+						<a href="/matchmaking/{{ $team->match->id }}" class="link-unstyled">
+
+							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
+								@if ($team->match->game && $team->match->game->image_thumbnail_path)
+										<img class="img img-fluid rounded" src=""{{ $team->match->game->image_thumbnail_path }}" alt="{{ $team->match->game->name }}">
+								@endif
+								
+									<h3>@lang('matchmaking.match'){{ $team->match->id }}</h3>
+									<span class="small">
+										@if ($team->match->status == 'COMPLETE')
+											<span class="badge badge-success">@lang('matchmaking.ended')</span>
 										@endif
-										<dt>
-											@lang('matchmaking.teamcount'):
-										</dt>
-										<dd>
-											{{ $team->match->teams->count() }}
-										</dd>
-									</dl>
-								@endif
-								<!-- // TODO - refactor-->
-								@if ($team->match->status == 'COMPLETE' )
-									@php
+										@if ($team->match->status == 'LIVE')
+											<span class="badge badge-success">@lang('matchmaking.live')</span>
+										@endif
+										@if ($team->match->status != 'COMPLETE' && !$team->match->getMatchTeamPlayer(Auth::id()))
+											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
+										@endif
+										@if ($team->match->status != 'COMPLETE' && $team->match->getMatchTeamPlayer(Auth::id()))
+											<span class="badge badge-success">@lang('matchmaking.signedup')</span>
+										@endif
+										@if ( $team->match->owner_id == Auth::id())
+										<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
+										@endif
+										@if ( $team->match->getMatchTeamOwner(Auth::id()))
+										<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
+										@endif
+									</span>
+								</div>
+								<div class="card-body">	
+									@if ($team->match->status != 'COMPLETE')
+											<div>
+												<strong>@lang('matchmaking.teamsizes') {{ $team->match->team_size }}</strong>
+											</div>
+											@if ($team->match->game)
+												<div>
+													<strong>@lang('matchmaking.game') {{ $team->match->game->name }}</strong>
+												</div>
+											@endif
+											<div>
+												<strong>@lang('matchmaking.teamcount'){{ $team->match->teams->count() }}</strong>
+											</div>
+									@endif
+									<!-- // TODO - refactor-->
+									@if ($team->match->status == 'COMPLETE' )
+										@php
 
-										$teams = $team->match->teams;
-						
-										if ($teams->count() < 3 )
-										{
-											$teams = $teams->sortByDesc('team_score')->take($teams->count());
-										}
-										else {
-										$teams = $teams->sortByDesc('team_score')->take(3);
-										}
-									@endphp
-									@foreach ($teams as $teamsentry)
+											$teams = $team->match->teams;
+							
+											if ($teams->count() < 3 )
+											{
+												$teams = $teams->sortByDesc('team_score')->take($teams->count());
+											}
+											else {
+											$teams = $teams->sortByDesc('team_score')->take(3);
+											}
+										@endphp
+										@foreach ($teams as $teamsentry)
 
-												<h4>{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h4>
+													<h5 class="m-0">{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h5>
 
-									@endforeach
-									<h4>@lang('matchmaking.signupsclosed')</h4>
-								@endif
-								@if ($team->match->status == 'COMPLETE')
-									<strong>
-										@lang('matchmaking.teamcount') {{ $team->match->teams->count() }}
-									</strong>
-								@endif
+										@endforeach
+										<strong class="m-0 mt-1">
+											@lang('matchmaking.teamcount') {{ $team->match->teams->count() }}
+										</strong>
+										<h5 class="m-0 mt-1">@lang('matchmaking.signupsclosed')</h5>
+									
+									
+									@endif
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>				
 			@endforeach
 		</div>
@@ -211,14 +203,14 @@
 		<div class="row">
 			@foreach ($openPublicMatches as $match)				
 					<div class="col-12 col-sm-6 col-md-3">
-						<div class="thumbnail">
+						<a href="/matchmaking/{{ $match->id }}" class="link-unstyled">
+
+							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
 							@if ($match->game && $match->game->image_thumbnail_path)
-								<a href="/matchmaking/{{ $match->id }}">
 									<img class="img img-fluid rounded" src=""{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
-								</a>
 							@endif
-							<div class="caption">
-								<a href="/matchmaking/{{ $match->id }}"><h3>@lang('matchmaking.match'){{ $match->id }}</h3></a>
+								<h3>@lang('matchmaking.match'){{ $match->id }}</h3>
 								<span class="small">
 									@if ($match->status == 'COMPLETE')
 										<span class="badge badge-success">@lang('matchmaking.ended')</span>
@@ -239,30 +231,20 @@
 									<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
 									@endif
 								</span>
-								<hr>
+								</div>
+								<div class="card-body">
 								@if ($match->status != 'COMPLETE')
-									<dl>
-										<dt>
-											@lang('matchmaking.teamsizes'):
-										</dt>
-										<dd>
-											{{ $match->team_size }}
-										</dd>
+										<div>
+											<strong>@lang('matchmaking.teamsizes') {{ $match->team_size }}</strong>
+										</div>
 										@if ($match->game)
-											 <dt>
-												@lang('matchmaking.teamsizes'):
-											</dt>
-											<dd>
-												{{ $match->game->name }}
-											</dd>
+											 <div>
+												<strong>@lang('matchmaking.game') {{ $match->game->name }}</strong>
+											</div>
 										@endif
-										<dt>
-											@lang('matchmaking.teamcount'):
-										</dt>
-										<dd>
-											{{ $match->teams->count() }}
-										</dd>
-									</dl>
+										<div>
+											<strong>@lang('matchmaking.teamcount') {{ $match->teams->count() }}</strong>
+										</div>
 								@endif
 								<!-- // TODO - refactor-->
 								@if ($match->status == 'COMPLETE' )
@@ -280,18 +262,19 @@
 									@endphp
 									@foreach ($teams as $teamsentry)
 
-												<h4>{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h4>
+												<h5 class="m-0">{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h5>
 
 									@endforeach
-									<h4>@lang('matchmaking.signupsclosed')</h4>
-								@endif
-								@if ($match->status == 'COMPLETE')
-									<strong>
+									<strong class="m-0 mt-1">
 										@lang('matchmaking.teamcount') {{ $match->teams->count() }}
 									</strong>
+									<h5 class="m-0 mt-1">@lang('matchmaking.signupsclosed')</h5>
+
+
 								@endif
 							</div>
 						</div>
+					</a>
 					</div>				
 			@endforeach
 		</div>
@@ -301,5 +284,83 @@
 	<hr>
 
 </div>
+
+
+<!-- Modals -->
+	
+	<div class="modal fade" id="addMatchModal" tabindex="-1" role="dialog" aria-labelledby="addMatchModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="addMatchModal">Add Match</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					{{ Form::open(array('url'=>'/matchmaking/' )) }}
+					<div class="form-group">
+						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+						{{
+							Form::select(
+								'game_id',
+								Helpers::getGameSelectArray(),
+								null,
+								array(
+									'id'    => 'game_id',
+									'class' => 'form-control'
+								)
+							)
+						}}
+					</div>
+					<div class="form-group">
+						{{ Form::label('team1name','Team 1 Name',array('id'=>'','class'=>'')) }}
+						{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
+						<small>@lang('matchmaking.thisisyourteam')</small>
+					</div>
+					<div class="form-group">
+						{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
+						{{
+							Form::select(
+								'team_size',
+								array(
+									'1v1' => '1v1',
+									'2v2' => '2v2',
+									'3v3' => '3v3',
+									'4v4' => '4v4',
+									'5v5' => '5v5',
+									'6v6' => '6v6'
+								),
+								null,
+								array(
+									'id'    => 'team_size',
+									'class' => 'form-control'
+								)
+							)
+						}}
+					</div>
+					<div class="form-group">
+						{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+						{{
+							Form::number('team_count',
+								0,
+								array(
+									'id'    => 'team_size',
+									'class' => 'form-control'
+								))
+						}}
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} is public (show match publicly for signup)
+								</label>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
+				{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 @endsection

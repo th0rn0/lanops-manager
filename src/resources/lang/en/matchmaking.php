@@ -26,7 +26,8 @@ return [
     'signupsclosed' => 'signeups closed',
     'teamcount' => 'Team count:',
     'teamowner' => 'Team owner',
-    'teamsizes' => 'Team size',
+    'teamsizes' => 'Team size:',
+    'game' => 'Game:',
 
     
 ];
