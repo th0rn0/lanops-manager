@@ -52,7 +52,7 @@
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/finalize' )) }}
 						@foreach ($match->teams as $team)
 
-							{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
+							{{ Form::label('teamscore_'. $team->id, __('matchmaking.scoreof').' '.$team->name ,array('id'=>'','class'=>'')) }}
 							{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
 
 						@endforeach
@@ -98,7 +98,7 @@
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/add' )) }}
 						<div class="form-group">
-							{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
+							{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
 							{{ Form::text('teamname',NULL,array('id'=>'teamname','class'=>'form-control')) }}
 						</div>
 
@@ -216,7 +216,7 @@
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'.$team->id.'/update' )) }}
 					<div class="form-group">
-						{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
+						{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('teamname',$team->name,array('id'=>'teamname','class'=>'form-control')) }}
 					</div>	
 					<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.submit')</button>
@@ -237,7 +237,7 @@
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/update' )) }}
 							<div class="form-group">
-								{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+								{{ Form::label('game_id',__('matchmaking.games'),array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
 										'game_id',
@@ -251,7 +251,7 @@
 								}}
 							</div>
 							<div class="form-group">
-								{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
+								{{ Form::label('team_size',__('matchmaking.teamsize'),array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
 										'team_size',
@@ -272,7 +272,7 @@
 								}}
 							</div>
 							<div class="form-group">
-								{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+								{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 								{{
 									Form::number('team_count',
 										$match->team_count,

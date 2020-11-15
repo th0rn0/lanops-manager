@@ -298,7 +298,7 @@
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/' )) }}
 					<div class="form-group">
-						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+						{{ Form::label('game_id',__('matchmaking.game'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
 								'game_id',
@@ -312,12 +312,12 @@
 						}}
 					</div>
 					<div class="form-group">
-						{{ Form::label('team1name','Team 1 Name',array('id'=>'','class'=>'')) }}
+						{{ Form::label('team1name',__('matchmaking.firstteamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
 						<small>@lang('matchmaking.thisisyourteam')</small>
 					</div>
 					<div class="form-group">
-						{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
+						{{ Form::label('team_size',__('matchmaking.teamsize'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
 								'team_size',
@@ -338,7 +338,7 @@
 						}}
 					</div>
 					<div class="form-group">
-						{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+						{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::number('team_count',
 								0,

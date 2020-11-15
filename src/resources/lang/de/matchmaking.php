@@ -49,6 +49,13 @@ return [
     'team' => 'Team',
     'user' => 'Benutzer',
     'editmatch' => 'Match bearbeiten',
+    'firstteamname' => 'Team 1 Name',
+    'teamsize' => 'Team Größe',
+    'teamcounts' => 'Anzahl der Teams',
+    'teamname' => 'Team Name',
+    'games' => 'Spiel',
+    'scoreof' =>'Punktezahl von',
+    'thisisyourteam' => 'Das ist dein Team!',
 
     'team_size_required'    => 'Teamgröße darf nicht leer sein',
     'team_size_mustbeoneof'    => 'Teamgröße muss eine der folgenden sein: 1v1,2v2,3v3,4v4,5v5,6v6',

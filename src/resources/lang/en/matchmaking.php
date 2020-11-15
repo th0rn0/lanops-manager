@@ -49,7 +49,15 @@ return [
     'team' => 'Team',
     'user' => 'User',
     'editmatch' => 'Edit Match',
+    'firstteamname' => 'Team 1 Name',
+    'teamsize' => 'Team size',
+    'teamcounts' => 'Team count',
+    'teamname' => 'Team Name',
+    'games' => 'Game',
+    'scoreof' =>'Score of',
+    'thisisyourteam' => 'This is your team!',
 
+    
     'team_size_required'    => 'Team size is required',
     'team_size_mustbeoneof'    => 'Team size must be one of: 1v1,2v2,3v3,4v4,5v5,6v6',
     'team_count_required'    => 'Team Count is required',
