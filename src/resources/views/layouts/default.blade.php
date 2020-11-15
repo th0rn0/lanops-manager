@@ -39,6 +39,9 @@
 				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
 			@endif
 		</title>
+
+
+		@yield ('prefetch')
 	</head>
 	<body class="full-height">
 		{!! Analytics::render() !!}
@@ -163,5 +166,8 @@
 				</div>
 			</div>
 		</footer>
+
+
+		@yield ('scripts')
 	</body>
 </html>
