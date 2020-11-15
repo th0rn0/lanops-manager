@@ -59,10 +59,6 @@ a {
 /* Navbar*/
 
 .navbar-nav {
-  li a {
-    margin: 0;
-    padding: 10px 15px;
-  }
   li a:hover,
   li a:focus {
     color: #fff;
@@ -74,12 +70,7 @@ a {
   li a:focus {
     border-bottom: unset !important;
   }
-  @include media-breakpoint-up(md) {
-    li a {
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-  }
+
   .nav-second-level {
     padding-left: 23px;
   }
@@ -93,7 +84,6 @@ a {
 
 .top-nav > li {
   display: inline-block;
-  float: left;
 }
 
 .top-nav > li > a {
