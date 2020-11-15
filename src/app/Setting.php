@@ -1204,6 +1204,47 @@ class Setting extends Model
     }
 
     /**
+     * Is MatchMaking System Autostart Enabled
+     * @return Boolean
+     */
+    public static function isSystemsMatchMakingAutostartEnabled()
+    {
+        return self::where('setting', 'systems_matchmaking_autostart')->first()->value;
+    }
+
+    /**
+     * Enable MatchMaking System Autostart
+     * @return Boolean
+     */
+    public static function enableSystemsMatchMakingAutostart()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'systems_matchmaking_autostart')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = true;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable MatchMaking System Autostart
+     * @return Boolean
+     */
+    public static function disableSystemsMatchMakingAutostart()
+    {
+        if (!$matchmakingSystemEnabled = self::where('setting', 'systems_matchmaking_autostart')->first()) {
+            return false;
+        }
+        $matchmakingSystemEnabled->value = false;
+        if (!$matchmakingSystemEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get Active Login Methods
      * @return Array
      */

@@ -83,6 +83,7 @@ class SettingsController extends Controller
 
         return view('admin.settings.systems')
             ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled())
+            ->withIsSystemsMatchMakingAutostartEnabled(Settings::isSystemsMatchMakingAutostartEnabled())
             ->withIsMatchMakingEnabled(Settings::isMatchMakingEnabled())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ;
@@ -182,8 +183,23 @@ class SettingsController extends Controller
             }
 
         }
+        if (($request->autostart ? true : false))
+        {
+            if (!Settings::enableSystemsMatchMakingAutostart()) {
+                Session::flash('alert-danger', "Could not Enable the MatchMaking System Autostart!");
+                return Redirect::back();
+            }
+        }
+        else
+        {
+            if (!Settings::disableSystemsMatchMakingAutostart()) {
+                Session::flash('alert-danger', "Could not Disable the MatchMaking System Autostart!");
+                return Redirect::back();
+            }
 
-        Session::flash('alert-success', "Successfully Saved OptSystems Serttings!");
+        }
+
+        Session::flash('alert-success', "Successfully Saved OptSystems Settings!");
         return Redirect::back();
 
     }

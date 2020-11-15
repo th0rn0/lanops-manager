@@ -386,6 +386,14 @@ class RequiredDatabaseSeeder extends Seeder
                 'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
             ]
         );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_autostart'],
+            [
+                'value'         => false,
+                'default'       => false,
+                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
+            ]
+        );
 
         ## Apperance
         Appearance::firstOrCreate(
