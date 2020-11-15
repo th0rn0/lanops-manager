@@ -64,6 +64,18 @@ class MatchMakingController extends Controller
             }
         }
 
+        $invite = null;
+        if (isset($request))
+        {
+            if (isset($request->invite))
+            {
+                if(MatchMaking::where("invite_tag", $request->invite)->count() > 0)
+                {
+                    $invite = MatchMaking::where("invite_tag", $request->invite)->first();
+                }
+            }
+        }
+
         $allusers = User::all();
         $selectallusers = array();
         $availableusers = array();
@@ -104,7 +116,8 @@ class MatchMakingController extends Controller
             ->withMatch($match)
             ->withAvailableUsers($availableusers)
             ->withUsers($selectallusers)
-            ->withTeamJoin($teamjoin);
+            ->withTeamJoin($teamjoin)
+            ->withInvite($invite);
             
     }
    
@@ -719,7 +732,7 @@ class MatchMakingController extends Controller
             }
             if (isset ($matchinvite) && $matchinvite->count() > 0)
             {
-                return Redirect::to('/matchmaking/'. $matchinvite->id);
+                return Redirect::to('/matchmaking/'. $matchinvite->id . "/?invite=" . $matchinvite->invite_tag);
             }
             if (!isset ($matchinvite) || isset ($teaminvite) || ($teaminvite->count() == 0 && $matchinvite->count() == 0) )
             {

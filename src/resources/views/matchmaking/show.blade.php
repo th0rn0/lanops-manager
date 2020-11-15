@@ -18,7 +18,7 @@
 	</div>
 
 	
-
+	@if($match->ispublic == 1 || $invite != null || $teamJoin != null || $match->owner_id == Auth::id() || $match->getMatchTeamPlayer(Auth::id()))
 		<div class="row">
 			<div class="col-sm">
 			
@@ -88,27 +88,27 @@
 
 
 
-	@if ( !$match->getMatchTeamPlayer(Auth::id()) && $match->teams()->count() < $match->team_count )
+		@if ( !$match->getMatchTeamPlayer(Auth::id()) && $match->teams()->count() < $match->team_count )
 
-		<div class="card mb-3">
-			<div class="card-header">
-				<i class="fa fa-plus fa-fw"></i> @lang('matchmaking.addteam')
-			</div>
-			<div class="card-body">
-				<div class="list-group">
-					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/add' )) }}
-						<div class="form-group">
-							{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
-							{{ Form::text('teamname',NULL,array('id'=>'teamname','class'=>'form-control')) }}
-						</div>
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-plus fa-fw"></i> @lang('matchmaking.addteam')
+				</div>
+				<div class="card-body">
+					<div class="list-group">
+						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/add' )) }}
+							<div class="form-group">
+								{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
+								{{ Form::text('teamname',NULL,array('id'=>'teamname','class'=>'form-control')) }}
+							</div>
 
-						<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.add')</button>
-					{{ Form::close() }}
+							<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.add')</button>
+						{{ Form::close() }}
+					</div>
 				</div>
 			</div>
-		</div>
 
-	@endif
+		@endif
 			
 			@foreach ($match->teams as $team)
 					<div class="row">
@@ -196,8 +196,15 @@
 					</div>
 
 			@endforeach
-			
+	
+	@else
+		<script>
+			window.addEventListener("load", function(){
+			$("#showMatchErrorModal").modal()
+		});
+		</script>
 
+	@endif
 
 
 </div>
@@ -333,6 +340,26 @@
 	});
 	</script>
 @endif
+
+
+<div class="modal fade" id="showMatchErrorModal" tabindex="-1" role="dialog" aria-labelledby="showMatchErrorModallabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="showMatchErrorModallabel">@lang('matchmaking.error')</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+					@lang('matchmaking.nopermissions')
+
+					<a href="/matchmaking/">@lang('matchmaking.matchmakinghome')</a>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
 
 <script>
 	function copyToClipBoard(inputId) {

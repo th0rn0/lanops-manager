@@ -56,6 +56,9 @@ return [
     'games' => 'Game',
     'scoreof' =>'Score of',
     'thisisyourteam' => 'This is your team!',
+    'nopermissions' => 'You have no access to this Match! You need either an invite link from a match owner or a team owner or the match owner must set the match to public!',
+    'matchmakinghome' => 'Click here to find other matches.',
+    'error' => 'Error',
 
     
     'team_size_required'    => 'Team size is required',

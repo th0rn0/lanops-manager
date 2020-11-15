@@ -56,7 +56,9 @@ return [
     'games' => 'Spiel',
     'scoreof' =>'Punktezahl von',
     'thisisyourteam' => 'Das ist dein Team!',
-
+    'nopermissions' => 'Du hast keine Berechtigungen dieses Match anzuzeigen! Du benötigst entweder einen Einladungslink des Matcheigentümers oder eines Teameigentümers oder das Match muss vom Eigentümer als öffentlich markiert werden!',
+    'matchmakinghome' => 'Klicke hier um andere Matches finden.',
+    'error' => 'Fehler',
     'team_size_required'    => 'Teamgröße darf nicht leer sein',
     'team_size_mustbeoneof'    => 'Teamgröße muss eine der folgenden sein: 1v1,2v2,3v3,4v4,5v5,6v6',
     'team_count_required'    => 'Teamanzahl darf nicht leer sein',
