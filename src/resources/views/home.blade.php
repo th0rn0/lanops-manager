@@ -8,11 +8,11 @@
 		@foreach ($sliderImages as $image)
 			@if ($loop->first)
 				<div class="carousel-item active">
-					<img class="hero-image" class="d-block w-100" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}">
+					<img class="hero-image" style="object-fit=cover" class="d-block w-100" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}" width="100%" height="500">
 				</div>
 			@else
 				<div class="carousel-item">
-					<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" data-lazy-load-src="{{ $image->path }}">
+					<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" data-lazy-load-src="{{ $image->path }}" width="100%"  height="500">
 				</div>
 			@endif
 		@endforeach

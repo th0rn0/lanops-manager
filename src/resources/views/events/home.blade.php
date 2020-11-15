@@ -141,27 +141,27 @@
 					@endif
 					@if (Settings::getFacebookLink() != "")
 						<div class="col-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i>@lang('home.servers_facebook')</a>
+							<a target="_blank" rel="noreferrer" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i>@lang('home.servers_facebook')</a>
 						</div>
 					@endif
 					@if (Settings::getDiscordLink() != "")
 						<div class="col-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i>@lang('home.servers_discord')</a>
+							<a target="_blank" rel="noreferrer" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i>@lang('home.servers_discord')</a>
 						</div>
 					@endif
 					@if (Settings::getSteamLink() != "")
 						<div class="col-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i>@lang('home.servers_steam')</a>
+							<a target="_blank" rel="noreferrer" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i>@lang('home.servers_steam')</a>
 						</div>
 					@endif
 					@if (Settings::getRedditLink() != "")
 					<div class="col-6 col-lg-4">
-						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-2x margin"></i>@lang('home.servers_reddit')</a>
+						<a target="_blank" rel="noreferrer" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-2x margin"></i>@lang('home.servers_reddit')</a>
 					</div>
 					@endif
 					@if (Settings::getTwitterLink() != "")
 					<div class="col-6 col-lg-4">
-						<a target="_blank" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-2x margin"></i>@lang('home.servers_twitter')</a>
+						<a target="_blank" rel="noreferrer" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-2x margin"></i>@lang('home.servers_twitter')</a>
 					</div>
 					@endif
 		</div>
