@@ -26,12 +26,7 @@
 			</div>
 			<div class="col-sm mt-0">
 				@if ($match->owner_id == Auth::id())
-					@if ($match->status != "LIVE" && $match->status != "COMPLETE")
-						{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
-						{{ Form::hidden('_method', 'DELETE') }}
-						<button type="submit" class="btn btn-danger btn-sm btn-block float-right mb-1">@lang('matchmaking.deletematch')</button>
-						{{ Form::close() }}
-					@endif
+
 					@if($match->status == "DRAFT")
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
@@ -65,6 +60,14 @@
 						{{ Form::close() }}
 						</div>
 					@endif
+					@if ($match->status != "LIVE" && $match->status != "COMPLETE")
+						<a href="#" class="btn btn-warning btn-block mb-3" data-toggle="modal" data-target="#editMatchModal">@lang('matchmaking.editmatch')</a>
+
+						{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger btn-block">@lang('matchmaking.deletematch')</button>
+						{{ Form::close() }}
+					@endif
 
 					@if($match->status == "COMPLETE")
 					@foreach ($match->teams as $team)
@@ -75,7 +78,7 @@
 				@if ( $match->getMatchTeamPlayer(Auth::id()) && !$match->getMatchTeamOwner(Auth::id()) && Auth::id() != $match->owner_id )
 				{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $match->getMatchTeamPlayer(Auth::id())->team->id . '/teamplayer/'. $match->getMatchTeamPlayer(Auth::id())->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 				{{ Form::hidden('_method', 'DELETE') }}
-				<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.removefrommatch')</button>
+				<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.leavematch')</button>
 				{{ Form::close() }}
 			
 				@endif
@@ -198,6 +201,138 @@
 
 
 </div>
+
+
+<!-- Modals -->
+@foreach ($match->teams as $team)
+	
+	<div class="modal fade" id="editTeamModal_{{ $team->id }}" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel_{{ $team->id }}" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="editTeamModalLabel_{{ $team->id }}">@lang('matchmaking.editteam')</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'.$team->id.'/update' )) }}
+					<div class="form-group">
+						{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
+						{{ Form::text('teamname',$team->name,array('id'=>'teamname','class'=>'form-control')) }}
+					</div>	
+					<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.submit')</button>
+					{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	</div>
+@endforeach
+
+<div class="modal fade" id="editMatchModal" tabindex="-1" role="dialog" aria-labelledby="editMatchModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="editMatchModalLabel">@lang('matchmaking.editmatch')</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/update' )) }}
+							<div class="form-group">
+								{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
+								{{
+									Form::select(
+										'game_id',
+										Helpers::getGameSelectArray(),
+										$match->game_id,
+										array(
+											'id'    => 'game_id',
+											'class' => 'form-control'
+										)
+									)
+								}}
+							</div>
+							<div class="form-group">
+								{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
+								{{
+									Form::select(
+										'team_size',
+										array(
+											'1v1' => '1v1',
+											'2v2' => '2v2',
+											'3v3' => '3v3',
+											'4v4' => '4v4',
+											'5v5' => '5v5',
+											'6v6' => '6v6'
+										),
+										$match->team_size . "v" . $match->team_size ,
+										array(
+											'id'    => 'team_size',
+											'class' => 'form-control'
+										)
+									)
+								}}
+							</div>
+							<div class="form-group">
+								{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
+								{{
+									Form::number('team_count',
+										$match->team_count,
+										array(
+											'id'    => 'team_size',
+											'class' => 'form-control'
+										))
+								}}
+							</div>
+							<div class="form-group">
+								<div class="form-check">
+										<label class="form-check-label">
+											{{ Form::checkbox('ispublic', null, $match->ispublic, array('id'=>'ispublic')) }} is public (show match publicly for signup)
+										</label>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-success btn-block">Submit</button>
+						{{ Form::close() }}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+@if($teamJoin != null)
+	<div class="modal fade" id="jointeamModal" tabindex="-1" role="dialog" aria-labelledby="jointeamModallabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="jointeamModallabel">@lang('matchmaking.jointeam')</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					@if(!$match->getMatchTeamPlayer(Auth::Id()))
+						@lang('matchmaking.doyouwanttojointeam') <strong>{{ $teamJoin->name}} </strong>
+
+
+						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'. $teamJoin->id .'/teamplayer/add' )) }}
+						<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.jointeam')</button>
+						{{ Form::close() }}
+					@else
+						@lang('matchmaking.cannotjoinyoualreadyareinateam')
+					@endif
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
+
+	<script>
+		window.addEventListener("load", function(){
+		$("#jointeamModal").modal()
+	});
+	</script>
+@endif
 
 <script>
 	function copyToClipBoard(inputId) {
