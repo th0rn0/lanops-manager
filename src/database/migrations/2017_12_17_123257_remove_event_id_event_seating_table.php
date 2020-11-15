@@ -27,7 +27,10 @@ class RemoveEventIdEventSeatingTable extends Migration
     public function down()
     {
         Schema::table('event_seating', function (Blueprint $table) {
-            //
+            Schema::table('event_seating', function (Blueprint $table) {
+			    $table->integer('event_id')->unsigned()->index()->after('seat');
+                $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            });
         });
     }
 }

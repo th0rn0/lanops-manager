@@ -33,8 +33,10 @@ class CreateNewsCommentsTable extends Migration
      */
     public function down()
     {
-        $table->dropForeign('news_feed_comments_news_feed_id_foreign');
-        $table->dropForeign('news_feed_comments_user_id_foreign');
-        Schema::dropIfExists('news_comments');
+        Schema::table('news_feed_comments', function (Blueprint $table) {
+            $table->dropForeign('news_feed_comments_news_feed_id_foreign');
+            $table->dropForeign('news_feed_comments_user_id_foreign');
+        });
+        Schema::dropIfExists('news_feed_comments');
     }
 }

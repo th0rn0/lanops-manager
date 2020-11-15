@@ -37,9 +37,11 @@ class CreateEventSeatingTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('event_seating_event_id_foreign');
-		$table->dropForeign('event_seating_event_participant_id_foreign');
-
+		Schema::table('event_seating', function(Blueprint $table)
+		{
+			$table->dropForeign('event_seating_event_id_foreign');
+			$table->dropForeign('event_seating_event_participant_id_foreign');
+		});
 		Schema::drop('event_seating');
 	}
 

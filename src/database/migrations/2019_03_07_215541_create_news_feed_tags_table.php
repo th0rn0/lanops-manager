@@ -31,7 +31,9 @@ class CreateNewsFeedTagsTable extends Migration
      */
     public function down()
     {
-        $table->dropForeign('news_feed_tags_news_feed_id_foreign');
+        Schema::table('news_feed_tags', function (Blueprint $table) {
+            $table->dropForeign('news_feed_tags_news_feed_id_foreign');
+        });
         Schema::dropIfExists('news_feed_tags');
     }
 }

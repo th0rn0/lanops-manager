@@ -29,7 +29,7 @@ class AddEventIdPollTable extends Migration
     public function down()
     {
         Schema::table('polls', function (Blueprint $table) {
-            $table->dropForeign('event_id_events_foreign');
+            $table->dropForeign('polls_event_id_foreign');
             $table->dropColumn('event_id');
         });
     }

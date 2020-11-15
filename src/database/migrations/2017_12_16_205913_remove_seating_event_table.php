@@ -30,7 +30,12 @@ class RemoveSeatingEventTable extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            //
+			$table->integer('seating_columns')->after('allow_spectators');
+			$table->integer('seating_rows')->after('seating_columns');
+			$table->string('seating_headers')->after('seating_rows');
+			$table->string('seating_image')->after('seating_headers');
+            $table->boolean('seating_locked')->default(false)->after('seating_image');
+            
         });
     }
 }

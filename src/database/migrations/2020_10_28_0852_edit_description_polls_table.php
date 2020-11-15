@@ -26,7 +26,6 @@ class EditDescriptionPollsTable extends Migration
     public function down()
     {
         Schema::table('polls', function (Blueprint $table) {
-            $table->dropColumn('description');
         });
     }
 }

@@ -29,7 +29,12 @@ class RemoveItemIdTicketIdPurchases extends Migration
     public function down()
     {
         Schema::table('purchases', function (Blueprint $table) {
-            //
+            $table->integer('ticket_id')->unsigned()->nullable()->index()->after('user_id');
+            $table->integer('item_id')->unsigned()->nullable()->index()->after('ticket_id');
+            
+			$table->foreign('ticket_id')->references('id')->on('event_tickets');
+			$table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 }

@@ -33,8 +33,10 @@ class CreatePollOptionsTable extends Migration
      */
     public function down()
     {
-        $table->dropForeign('poll_options_poll_id_foreign');
-        $table->dropForeign('poll_options_user_id_foreign');
+        Schema::table('poll_options', function (Blueprint $table) {
+            $table->dropForeign('poll_options_poll_id_foreign');
+            $table->dropForeign('poll_options_user_id_foreign');
+        });  
         Schema::dropIfExists('poll_options');
     }
 }

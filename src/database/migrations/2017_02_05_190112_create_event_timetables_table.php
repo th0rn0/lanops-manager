@@ -34,7 +34,10 @@ class CreateEventTimetablesTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('event_timetables_event_id_foreign');
+		Schema::table('event_timetables', function(Blueprint $table)
+		{
+			$table->dropForeign('event_timetables_event_id_foreign');
+		});
 		Schema::drop('event_timetables');
 	}
 

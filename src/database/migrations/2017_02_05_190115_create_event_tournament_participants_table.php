@@ -37,10 +37,12 @@ class CreateEventTournamentParticipantsTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('event_tournament_participants_event_participant_id_foreign');
-		$table->dropForeign('event_tournament_participants_event_tournament_team_id_foreign');
-		$table->dropForeign('event_tournament_participants_event_tournament_id_foreign');
-
+		Schema::table('event_tournament_participants', function(Blueprint $table)
+		{
+			$table->dropForeign('event_tournament_participants_event_participant_id_foreign');
+			$table->dropForeign('event_tournament_participants_event_tournament_team_id_foreign');
+			$table->dropForeign('event_tournament_participants_event_tournament_id_foreign');	
+		});		
 		Schema::drop('event_tournament_participants');
 	}
 

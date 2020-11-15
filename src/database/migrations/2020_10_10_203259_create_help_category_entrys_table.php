@@ -34,8 +34,11 @@ class CreateHelpCategoryEntrysTable extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('help_category_entrys', function (Blueprint $table) {
 		$table->dropForeign('help_category_entrys_help_category_id_foreign');
+	});
 		Schema::drop('help_category_entrys');
+		
 	}
 
 }
