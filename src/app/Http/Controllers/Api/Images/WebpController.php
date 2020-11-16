@@ -27,13 +27,13 @@ class WebpController extends Controller
             if(!imagewebp($imgData, $image, 90))
             {
                 imagedestroy($imgData);
-                return Image::make($orgImageName)->response();
+                return redirect($orgImageName);
             }
 
             imagedestroy($imgData);
         }
 
-        return Image::make($image)->encode('webp')->response();
+        return redirect($image);
     }
 
     private function imagecreatefromfile( $filename ) {
