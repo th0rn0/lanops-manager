@@ -8,11 +8,19 @@
 		@foreach ($sliderImages as $image)
 			@if ($loop->first)
 				<div class="carousel-item active">
-					<img class="hero-image" style="object-fit=cover" class="d-block w-100" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}" width="100%" height="500">
+					<picture>
+						<source srcset="{{ $image->path }}.webp" type="image/webp">
+						<source srcset="{{ $image->path }}" type="image/jpeg">
+						<img class="hero-image" style="object-fit=cover" class="d-block w-100" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}" width="100%" height="500">
+					</picture>
 				</div>
 			@else
 				<div class="carousel-item">
-					<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" data-lazy-load-src="{{ $image->path }}" width="100%"  height="500">
+					<picture>
+						<source data-lazy-load-srcset="{{ $image->path }}.webp" type="image/webp">
+						<source data-lazy-load-srcset="{{ $image->path }}" type="image/jpeg">
+						<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" data-lazy-load-src="{{ $image->path }}" width="100%"  height="500">
+					</picture>
 				</div>
 			@endif
 		@endforeach
@@ -270,10 +278,13 @@
 	{
 		jQuery('#hero-carousel').on('slide.bs.carousel', function(e)
 		{
-			var lazy;
-			lazy = jQuery(e.relatedTarget).find("img[data-lazy-load-src]");
+			var lazy = jQuery(e.relatedTarget).find("img[data-lazy-load-src]");
 			lazy.attr("src", lazy.data('lazy-load-src'));
 			lazy.removeAttr("data-lazy-load-src");
+
+			var lazySources = jQuery(e.relatedTarget).find("source[data-lazy-load-srcset]");
+			lazySources.attr("srcset", lazySources.data('lazy-load-srcset'));
+			lazySources.removeAttr("data-lazy-load-srcset");
 		});
 	});
 </script>

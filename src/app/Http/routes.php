@@ -11,6 +11,12 @@ Route::group(['middleware' => ['web', 'notInstalled']], function () {
 Route::group(['middleware' => ['installed']], function () {
 
     Route::group(['middleware' => 'language'], function () {
+
+        /**
+         * Image Converter
+         */
+        Route::get('{image}', 'Api\Images\WebpController@convert')->where('image', '.*\.webp');
+
         /**
          * API
          */
@@ -277,7 +283,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/enableliveediting',
                 'Admin\Events\TournamentsController@enableliveediting'
-            ); 
+            );
            Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/disableliveediting',
                 'Admin\Events\TournamentsController@disableliveediting'
@@ -352,7 +358,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/{tournament}', 'Admin\GameServerCommandsController@executeGameServerMatchCommand');
 
             /**
-             * GameServerCommandParametrs 
+             * GameServerCommandParametrs
              */
             Route::post('/admin/games/{game}/gameservercommandparameters', 'Admin\GameServerCommandParametersController@store');
             Route::post('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@update');
@@ -497,7 +503,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings/gallery/enable', 'Admin\SettingsController@enableGallerySystem');
             Route::post('/admin/settings/gallery/disable', 'Admin\SettingsController@disableGallerySystem');
             Route::post('/admin/settings/help/enable', 'Admin\SettingsController@enableHelpSystem');
-            Route::post('/admin/settings/help/disable', 'Admin\SettingsController@disableHelpSystem');            
+            Route::post('/admin/settings/help/disable', 'Admin\SettingsController@disableHelpSystem');
             Route::post('/admin/settings/matchmaking/enable', 'Admin\SettingsController@enableMatchMakingSystem');
             Route::post('/admin/settings/matchmaking/disable', 'Admin\SettingsController@disableMatchMakingSystem');
             Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
