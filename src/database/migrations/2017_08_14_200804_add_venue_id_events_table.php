@@ -28,7 +28,7 @@ class AddVenueIdEventsTable extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropForeign('events_venue_id_foreign');
+            $table->dropForeign('events_event_venue_id_foreign');
         });
     }
 }

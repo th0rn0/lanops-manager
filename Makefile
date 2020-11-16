@@ -43,6 +43,10 @@ symlink:
 # Create & Update the Database
 database-migrate:
 	docker exec eventula_manager_app php artisan migrate
+	
+# recreate & update the Database
+database-migrate-refresh:
+	docker exec eventula_manager_app php artisan migrate:refresh
 
 # Seed the Database
 database-seed:
@@ -67,6 +71,10 @@ generate-appearance:
 # Generate Images - This will erase your current settings!
 generate-images:
 	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
+
+# Generate requireddatabase - This will erase your current settings!
+generate-requireddatabase:
+	docker exec eventula_manager_app php artisan db:seed --class=RequiredDatabaseSeeder --force
 
 # clear views
 clear-views:
@@ -216,6 +224,21 @@ purge-cache:
 # execute mysql command usage make database-command command=sqlcommandhere
 database-command:
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+
+# drops the database
+database-drop:
+	echo "DROP DATABASE eventula_manager_database;" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+
+# creates the database
+database-create:
+	echo "CREATE DATABASE eventula_manager_database;" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+
+# creates the database
+database-renew:	database-drop database-create database-migrate database-seed generate-requireddatabase
+
+#show foreign keys usage make database-show-foreign table=tablename
+database-show-foreign:
+	echo "SELECT TABLE_NAME,COLUMN_NAME,CONSTRAINT_NAME, REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE REFERENCED_TABLE_SCHEMA = 'eventula_manager_database' AND REFERENCED_TABLE_NAME = '$(table)';" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
 
 # get @lang from blade usage make get-blade-lang blade=pathtoblade prefix=langprefix
 get-lang-blade:

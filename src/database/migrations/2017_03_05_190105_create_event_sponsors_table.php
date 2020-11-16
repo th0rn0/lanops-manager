@@ -35,7 +35,10 @@ class CreateEventSponsorsTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('event_sponsors_event_id_foreign');
+		Schema::table('event_sponsors', function(Blueprint $table)
+		{
+			$table->dropForeign('event_sponsors_event_id_foreign');
+		});
 		Schema::drop('event_sponsors');
 	}
 

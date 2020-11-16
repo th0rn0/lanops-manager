@@ -36,7 +36,10 @@ class CreateGalleryAlbumImagesTable extends Migration {
 	 */
 	public function down()
 	{
-		$table->dropForeign('gallery_album_images_gallery_album_id_foreign');
+		Schema::table('gallery_album_images', function(Blueprint $table)
+		{
+			$table->dropForeign('gallery_album_images_gallery_album_id_foreign');
+		});
 		Schema::drop('gallery_album_images');
 	}
 

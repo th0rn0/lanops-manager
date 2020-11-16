@@ -47,10 +47,35 @@ class MatchMakingController extends Controller
     /**
      * Show Matchmaking
      * @param MatchMaking $match
+     * @param Request $request
      * @return View
      */
-    public function show(MatchMaking $match)
+    public function show(MatchMaking $match, Request $request)
     {     
+        $teamjoin = null;
+        if (isset($request))
+        {
+            if (isset($request->teamjoin))
+            {
+                if($match->teams->where("id",$request->teamjoin)->count() > 0)
+                {
+                $teamjoin = $match->teams->where("id",$request->teamjoin)->first();
+                }
+            }
+        }
+
+        $invite = null;
+        if (isset($request))
+        {
+            if (isset($request->invite))
+            {
+                if(MatchMaking::where("invite_tag", $request->invite)->count() > 0)
+                {
+                    $invite = MatchMaking::where("invite_tag", $request->invite)->first();
+                }
+            }
+        }
+
         $allusers = User::all();
         $selectallusers = array();
         $availableusers = array();
@@ -90,7 +115,9 @@ class MatchMakingController extends Controller
         return view('matchmaking.show')
             ->withMatch($match)
             ->withAvailableUsers($availableusers)
-            ->withUsers($selectallusers);
+            ->withUsers($selectallusers)
+            ->withTeamJoin($teamjoin)
+            ->withInvite($invite);
             
     }
    
@@ -108,10 +135,10 @@ class MatchMakingController extends Controller
         ];
         $messages = [
           
-            'team_size.required'    => 'Team size is required',
-            'team_size.in'    => 'Team size must be one of: 1v1,2v2,3v3,4v4,5v5,6v6',
-            'team_count.required'    => 'Team Count is required',
-            'team_count.integer'    => 'Team size must be an integer',
+            'team_size.required'    => __('matchmaking.team_size_required'),
+            'team_size.in'    => __('matchmaking.team_size_mustbeoneof'),
+            'team_count.required'    => __('matchmaking.team_count_required'),
+            'team_count.integer'    => __('matchmaking.team_count_integer'),
         ];
         $this->validate($request, $rules, $messages);
 
@@ -130,13 +157,13 @@ class MatchMakingController extends Controller
 
                     if ($request->team_count < $tempgame->min_team_count)
                     {
-                        Session::flash('alert-danger', 'teamcount smaller than selected games minimal teamcount');
+                        Session::flash('alert-danger', __('matchmaking.teamcount_smallerthangamesmin').$tempgame->min_team_count);
                         return Redirect::back();
                     }
 
                     if ($request->team_count > $tempgame->max_team_count)
                     {
-                        Session::flash('alert-danger', 'teamcount bigger than selected games maximal teamcount');
+                        Session::flash('alert-danger', __('matchmaking.teamcount_biggerthangamesmax').$tempgame->max_team_count);
                         return Redirect::back();
                     }
 
@@ -156,7 +183,7 @@ class MatchMakingController extends Controller
         $match->invite_tag                 = base_convert(microtime(false), 10, 36);
 
         if (!$match->save()) {
-            Session::flash('alert-danger', 'Cannot create Match!');
+            Session::flash('alert-danger', __('matchmaking.cannotcreatematch'));
             return Redirect::back();
         }
 
@@ -168,11 +195,11 @@ class MatchMakingController extends Controller
         if (!$team1->save()) {
             
             if (!$match->delete()) {
-                Session::flash('alert-danger', 'Cannot create Team 1 but cannot delete Match! broken Database entry!');
+                Session::flash('alert-danger', __('matchmaking.cannotcreatteambutcannotdeletematch'));
                 return Redirect::back();
             }
             else {
-                Session::flash('alert-danger', 'Cannot create Team 1! Match not created!');
+                Session::flash('alert-danger', __('matchmaking.cannotcreateteam1'));
                 return Redirect::back();
             }
 
@@ -187,23 +214,23 @@ class MatchMakingController extends Controller
 
 
             if (!$team1->delete()) {
-                Session::flash('alert-danger', 'Cannot create teamplayer 1 but cannot delete team! broken Database entry!');
+                Session::flash('alert-danger', __('matchmaking.cannotcreateteamplayer1butcannotdeleteteam'));
                 return Redirect::back();
             }
             else {
 
                 if (!$match->delete()) {
-                    Session::flash('alert-danger', 'Cannot create teamplayer 1 but cannot delete Match! broken Database entry!');
+                    Session::flash('alert-danger',__('matchmaking.cannotcreateteamplayer1butcannotdeletematch'));
                     return Redirect::back();
                 }
                 else {
-                    Session::flash('alert-danger', 'Cannot create teamplayer 1! Match and team not created!');
+                    Session::flash('alert-danger', __('matchmaking.cannotcreateteamplayer1'));
                     return Redirect::back();
                 }
             }
         }
         
-        Session::flash('alert-success', 'Successfully created Match!');
+        Session::flash('alert-success', __('matchmaking.successfullycreatedmatch'));
         return Redirect::back();
     }
 
@@ -220,22 +247,19 @@ class MatchMakingController extends Controller
 
         if ($match->owner_id != $currentuser)
         {
-            Session::flash('alert-danger', 'Cannot update Match because you are not the owner!');
+            Session::flash('alert-danger', __('matchmaking.cannotupdatematchnotowner'));
             return Redirect::back();
         }
 
         $rules = [
             'team_size'     => 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
-            'ownerid'               => 'required|exists:users,id',
             'team_count'     => 'required|integer',
         ];
         $messages = [
           
-            'team_size.required'    => 'Team size is required',
-            'ownerid.required'    => 'ownerid is required',
-            'ownerid.exists'          => 'ownerid must be a valid user id',
-            'team_count.required'    => 'Team Count is required',
-            'team_count.integer'    => 'Team size must be an integer',
+            'team_size.required'    => __('matchmaking.team_size_required'),
+            'team_count.required'    => __('matchmaking.team_count_required'),
+            'team_count.integer'    => __('matchmaking.team_count_integer'),
             
         ];
      
@@ -243,7 +267,7 @@ class MatchMakingController extends Controller
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
-            Session::flash('alert-danger', "you cannot update a match while it is live or complete!");
+            Session::flash('alert-danger', __('matchmaking.cannotupdatematchstatus'));
             return Redirect::back();
         }
 
@@ -257,13 +281,14 @@ class MatchMakingController extends Controller
 
                     if ($request->team_count < $tempgame->min_team_count)
                     {
-                        Session::flash('alert-danger', 'teamcount smaller than selected games minimal teamcount');
+                        Session::flash('alert-danger', __('matchmaking.teamcount_smallerthangamesmin').$tempgame->min_team_count);
+
                         return Redirect::back();
                     }
 
                     if ($request->team_count > $tempgame->max_team_count)
                     {
-                        Session::flash('alert-danger', 'teamcount bigger than selected games maximal teamcount');
+                        Session::flash('alert-danger', __('matchmaking.teamcount_biggerthangamesmax').$tempgame->max_team_count);
                         return Redirect::back();
                     }
 
@@ -276,7 +301,7 @@ class MatchMakingController extends Controller
         {
             if ($team->players->count() > $request->team_size[0])
             {
-                Session::flash('alert-danger', 'at least one team has to many players for this team size!');
+                Session::flash('alert-danger', __('matchmaking.tomanyplayersforteamsize'));
                 return Redirect::back();
             }
         }
@@ -285,15 +310,14 @@ class MatchMakingController extends Controller
         $match->ispublic                   = ($request->ispublic ? true : false);
         $match->team_size                  = $request->team_size[0];
         $match->team_count                 = $request->team_count;
-        $match->owner_id                   = $request->ownerid;
 
         if (!$match->save()) {
-            Session::flash('alert-danger', 'Cannot update Match!');
+            Session::flash('alert-danger', __('matchmaking.cannotupdatematch'));
             return Redirect::back();
         }
         
 
-        Session::flash('alert-success', 'Successfully updated Match!');
+        Session::flash('alert-success', __('matchmaking.successfullyupdatedmatch'));
         return Redirect::back();
 
     }
@@ -310,21 +334,21 @@ class MatchMakingController extends Controller
             'teamname'          => 'required',
         ];
         $messages = [
-            'teamname.required'    => 'Team name is required',
+            'teamname.required'    => __('matchmaking.teamname_required'),
             
         ];
         $this->validate($request, $rules, $messages);
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
-            Session::flash('alert-danger', "you cannot add a team while the match is live or complete!");
+            Session::flash('alert-danger', __('matchmaking.cannotaddteamstatus'));
             return Redirect::back();
         }
 
 
         if ($match->team_count != 0 && $match->team_count == $match->teams->count())
         {
-            Session::flash('alert-danger', "no more teams could be added because of the team count limit!");
+            Session::flash('alert-danger', __('matchmaking.cannotaddteamcount'));
             return Redirect::back();
         }
 
@@ -333,7 +357,7 @@ class MatchMakingController extends Controller
         {
             if (Arr::first($team->players, function($value, $key)use($request){return $value->user_id == Auth::id();},false))
             {
-                Session::flash('alert-danger', "specifyed owner is already in a team!");
+                Session::flash('alert-danger', __('matchmaking.youalreadyareinateam'));
                 return Redirect::back();
             }
         }
@@ -347,7 +371,7 @@ class MatchMakingController extends Controller
         $team->team_invite_tag             = base_convert(microtime(false), 10, 36);
 
         if (!$team->save()) {
-            Session::flash('alert-danger', 'Cannot create Team !');
+            Session::flash('alert-danger', __('matchmaking.cannotcreateteam'));
             return Redirect::back();
         }
 
@@ -355,11 +379,11 @@ class MatchMakingController extends Controller
         $teamplayertwo->matchmaking_team_id      = $team->id;
         $teamplayertwo->user_id                  = Auth::id();
         if (!$teamplayertwo->save()) {
-            Session::flash('alert-danger', 'Cannot create Teamplayer for Team 2 Owner!');
+            Session::flash('alert-danger', __('matchmaking.cannotcreateteamplayerforowner'));
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Successfully added team!');
+        Session::flash('alert-success', __('matchmaking.successfullyaddedteam'));
         return Redirect::back();
     }
 
@@ -374,64 +398,37 @@ class MatchMakingController extends Controller
     {
          $rules = [
             'teamname'          => 'required',
-            'teamowner'               => 'required|exists:users,id',
         ];
         $messages = [
-            'teamname.required'    => 'Team name is required',
-            'teamowner.required'    => 'userid is required',
-            'teamowner.exists'          => 'userid must be a valid user id',
+            'teamname.required'    => __('matchmaking.teamname_required'),
             
         ];
         $this->validate($request, $rules, $messages);
 
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($team->team_owner_id != Auth::id() && $match->owner_id != Auth::id())
         {
-            Session::flash('alert-danger', "you cannot update a team while the match is live or complete!");
+            Session::flash('alert-danger', __('matchmaking.cannotupdateteamnotowner'));
             return Redirect::back();
         }
 
-        if ($team->team_owner_id != $request->teamowner)
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
+            Session::flash('alert-danger', __('matchmaking.cannotupdateteamstatus'));
+            return Redirect::back();
+        }
 
-            foreach($match->teams as $team)
-            {
-                if (Arr::first($team->players, function($value, $key)use($request){return $value->user_id == $request->teamowner;},false))
-                {
-                    Session::flash('alert-danger', "specifyed owner is already in a team!");
-                    return Redirect::back();
-                }
-            }
-
-                
-                if (!MatchMakingTeamPlayer::where(['user_id' => $team->team_owner_id, 'matchmaking_team_id' => $team->id])->delete()) {
-                    Session::flash('alert-danger', 'Cannot delete old owner from team!');
-                    return Redirect::back();
-                }
-
-                $teamplayertwo                           = new MatchMakingTeamPlayer();
-                $teamplayertwo->matchmaking_team_id      = $team->id;
-                $teamplayertwo->user_id                  = $request->teamowner;
-                if (!$teamplayertwo->save()) {
-                    Session::flash('alert-danger', 'Cannot create Teamplayer for Team Owner!');
-                    return Redirect::back();
-                }
-            
-            $team->team_owner_id                 = $request->teamowner;
-
-            }
-        
-
+     
 
         $team->name                       = $request->teamname;
         if (!$team->save()) {
-            Session::flash('alert-danger', 'Cannot save Team !');
+            Session::flash('alert-danger', __('matchmaking.cannotsaveteam'));
             return Redirect::back();
         }
 
 
 
 
-        Session::flash('alert-success', 'Successfully updated Team!');
+        Session::flash('alert-success', __('matchmaking.successfullyupdatedteam'));
         return Redirect::back();
     }
 
@@ -446,25 +443,25 @@ class MatchMakingController extends Controller
     {
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
-            Session::flash('alert-danger', "you cannot delete a team while the match is live or complete!");
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteteamstatus'));
             return Redirect::back();
         }
         if ($team-> id == $match->oldestTeam->id)
         {
-            Session::flash('alert-danger', 'you cannot delete the initial team!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteinitialteam'));
             return Redirect::back();
         }
         if (!$team->players()->delete()) {
-            Session::flash('alert-danger', 'Cannot delete teamplayers!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteteamplayers'));
             return Redirect::back();
         }
         if (!$team->delete()) {
-            Session::flash('alert-danger', 'Cannot delete team!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteteam'));
             return Redirect::back();
             
         }
 
-        Session::flash('alert-success', 'deleted team!');
+        Session::flash('alert-success', __('matchmaking.deletedteam'));
         return Redirect::back();
         
     }
@@ -480,14 +477,14 @@ class MatchMakingController extends Controller
     {
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
-            Session::flash('alert-danger', "you cannot add a user to the team while the match is live or complete!");
+            Session::flash('alert-danger', __('matchmaking.cannnotjoinstatus'));
             return Redirect::back();
         }
 
 
         if ($team->players->count() >= $match->team_size)
         {
-            Session::flash('alert-danger', 'Team is already full!');
+            Session::flash('alert-danger', __('matchmaking.cannotjoinalreadyfull'));
             return Redirect::back();
         }
 
@@ -496,12 +493,12 @@ class MatchMakingController extends Controller
         $teamplayer->matchmaking_team_id                       = $team->id;
         $teamplayer->user_id                  = Auth::id();
         if (!$teamplayer->save()) {
-            Session::flash('alert-danger', 'Cannot create Teamplayer!');
+            Session::flash('alert-danger', __('matchmaking.cannotcreateteamplayer'));
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Successfully added Teamplayer!');
-        return Redirect::back();
+        Session::flash('alert-success', __('matchmaking.successfiullyaddedteamplayer'));
+        return Redirect::to('/matchmaking/'. $match->id);
     }
 
     /**
@@ -515,20 +512,20 @@ class MatchMakingController extends Controller
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
-            Session::flash('alert-danger', "you cannot delete a user from the team while the match is live or complete!");
+            Session::flash('alert-danger', __('matchmaking.cannotleavestatus'));
             return Redirect::back();
         }
 
     
      
         if (!$teamplayer->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Teamplayer!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteteamplayer'));
             return Redirect::back();
         }
             
        
 
-            Session::flash('alert-success', 'Successfully deleted Teamplayer!');
+            Session::flash('alert-success', __('matchmaking.successfullydeletedteamplayer'));
             return Redirect::back();
       
 
@@ -548,26 +545,26 @@ class MatchMakingController extends Controller
 
         if ($match->owner_id != $currentuser)
         {
-            Session::flash('alert-danger', 'Cannot delete Match because you are not the owner!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeletematchnotowner'));
             return Redirect::back();
         }
 
 
 
         if (!$match->players()->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Players!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteplayers'));
             return Redirect::back();
         }        
         if (!$match->teams()->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Teams!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteteams'));
             return Redirect::back();
         }       
         if (!$match->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Match!');
+            Session::flash('alert-danger', __('matchmaking.cannotdeletematch'));
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Successfully deleted Match!');
+        Session::flash('alert-success', __('matchmaking.successfullydeletedmatch'));
         return Redirect::to('/matchmaking');
     }
 
@@ -582,18 +579,18 @@ class MatchMakingController extends Controller
 
         if ($match->owner_id != $currentuser)
         {
-            Session::flash('alert-danger', 'Cannot start Match because you are not the owner!');
+            Session::flash('alert-danger', __('matchmaking.cannotstartmatchnotowner'));
             return Redirect::back();
         }
 
         if ($match->status == 'LIVE' || $match->status == 'COMPLETED') {
-            Session::flash('alert-danger', 'Match is already live or completed');
+            Session::flash('alert-danger', __('matchmaking.matchalreadystartedorcompleted'));
             return Redirect::back();
         }
 
         if ($match->teams->count() < $match->team_count) 
         {
-            Session::flash('alert-danger', 'Not all required teams are there');
+            Session::flash('alert-danger', __('matchmaking.notallrequiredteamsarethere'));
             return Redirect::back();
         }
 
@@ -601,18 +598,18 @@ class MatchMakingController extends Controller
         {
             if ($team->players->count() != $match->team_size)
             {
-                Session::flash('alert-danger', 'at least one team has not enough players to start the match !');
+                Session::flash('alert-danger', __('matchmaking.notenoughplayerstostart'));
                 return Redirect::back();
             }
         }
 
 
         if (!$match->setStatus('LIVE')) {
-            Session::flash('alert-danger', 'Cannot start Match!');
+            Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Match Started!');
+        Session::flash('alert-success', __('matchmaking.matchstarted'));
         return Redirect::back();
     }
 
@@ -627,22 +624,22 @@ class MatchMakingController extends Controller
 
         if ($match->owner_id != $currentuser)
         {
-            Session::flash('alert-danger', 'Cannot open Match because you are not the owner!');
+            Session::flash('alert-danger', __('matchmaking.cannotopenmatchnotowner'));
             return Redirect::back();
         }
 
         if ($match->status == 'OPEN' || $match->status == 'LIVE' || $match->status == 'COMPLETED') {
-            Session::flash('alert-danger', 'Match is already open/ live or completed');
+            Session::flash('alert-danger', __('matchmaking.matchalreadyopenliveorcompleted'));
             return Redirect::back();
         }
 
 
         if (!$match->setStatus('OPEN')) {
-            Session::flash('alert-danger', 'Cannot open Match!');
+            Session::flash('alert-danger', __('matchmaking.cannotopenmatch'));
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Match Opened!');
+        Session::flash('alert-success', __('matchmaking.matchopened'));
         return Redirect::back();
     }
 
@@ -658,7 +655,7 @@ class MatchMakingController extends Controller
 
         if ($match->owner_id != $currentuser)
         {
-            Session::flash('alert-danger', 'Cannot finalize Match because you are not the owner!');
+            Session::flash('alert-danger', __('matchmaking.cannotfinalizenotowner'));
             return Redirect::back();
         }
         foreach ($match->teams as $team)
@@ -680,7 +677,7 @@ class MatchMakingController extends Controller
 
             if ($teamvalue == null)
             {
-                Session::flash('alert-danger', 'for at least one team no score was specified');
+                Session::flash('alert-danger', __('matchmaking.missingscoreforteam'));
                 return Redirect::back();
             }
         }
@@ -694,7 +691,7 @@ class MatchMakingController extends Controller
 
                     $team->team_score = $value;
                     if (!$team->save()) {
-                        Session::flash('alert-danger', 'Score for at least one team could not be setted!');
+                        Session::flash('alert-danger', __('matchmaking.scorecouldnotbesetted'));
                         return Redirect::back();
                     }
 
@@ -708,14 +705,48 @@ class MatchMakingController extends Controller
      
 
         if (!$match->setStatus('COMPLETE')) {
-            Session::flash('alert-danger', 'Cannot finalize. Match is still live!');
+            Session::flash('alert-danger', __('matchmaking.cannotfinalize'));
             return Redirect::back();
         }
-        Session::flash('alert-success', 'Match Finalized!');
+        Session::flash('alert-success', __('matchmaking.matchfinalized'));
         return Redirect::back();
     }
 
        
+    /**
+     * Matchmaking invite
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function showInvite(Request $request)
+    {
+        $user = Auth::user();
+        if ($user) {
+            
+            $teaminvite = MatchMakingTeam::where("team_invite_tag", $request->url)->first();
+            $matchinvite = MatchMaking::where("invite_tag", $request->url)->first();
+
+            if (isset ($teaminvite) && $teaminvite->count() > 0)
+            {
+                return Redirect::to('/matchmaking/'. $teaminvite->match->id . "/?teamjoin=" . $teaminvite->id);
+            }
+            if (isset ($matchinvite) && $matchinvite->count() > 0)
+            {
+                return Redirect::to('/matchmaking/'. $matchinvite->id . "/?invite=" . $matchinvite->invite_tag);
+            }
+            if (!isset ($matchinvite) || isset ($teaminvite) || ($teaminvite->count() == 0 && $matchinvite->count() == 0) )
+            {
+                $request->session()->flash('alert-danger', __('matchmaking.invitationnotfound'));
+                return Redirect::to('/');
+            }
+
+
+            
+        }
+        $request->session()->flash('alert-danger', __('matchmaking.pleaselogin'));
+        return Redirect::to('login');
+    }
+
 
     
 }

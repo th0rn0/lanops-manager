@@ -451,6 +451,11 @@
 						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
+							{{ Form::label('matchstartgameservercommand','Match start command',array('id'=>'','class'=>'')) }}
+							{{ Form::select('matchstartgameservercommand', $allCommands, $game->matchStartgameServerCommand, array('id'=>'matchstartgameservercommand','class'=>'form-control')) }}
+						<small>if match autostarting is enabled in either the Tournament or the Matchmaking settings this gameservercommand would be executed on match start</small>
+						</div>
+						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
 								<h5>Preview:</h5>
 								<img src="{{ $game->image_thumbnail_path }}" class="img img-fluid">

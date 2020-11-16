@@ -35,8 +35,10 @@ class CreateNewsFeedCommentReportsTable extends Migration
      */
     public function down()
     {
-        $table->dropForeign('news_feed_comment_reports_news_feed_comment_id_foreign');
-        $table->dropForeign('news_feed_comment_reports_user_id_foreign');
+        Schema::table('news_feed_comment_reports', function (Blueprint $table) {
+            $table->dropForeign('news_feed_comment_reports_news_feed_comment_id_foreign');
+            $table->dropForeign('news_feed_comment_reports_user_id_foreign');
+        });
         Schema::dropIfExists('news_feed_comment_reports');
     }
 }

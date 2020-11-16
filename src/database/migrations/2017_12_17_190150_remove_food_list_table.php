@@ -25,8 +25,30 @@ class RemoveFoodListTable extends Migration
      */
     public function down()
     {
-        Schema::table('food_list', function (Blueprint $table) {
-            //
+		Schema::create('food_list', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name');
+			$table->float('price', 10, 0);
+			$table->integer('size');
+			$table->timestamps();
         });
+        Schema::create('food_orders', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('user_id');
+			$table->boolean('paid');
+			$table->float('debt', 10, 0);
+			$table->integer('event_id');
+			$table->timestamps();
+        });
+        Schema::create('food_order_items', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('food_id');
+			$table->integer('order_id;');
+			$table->timestamps();
+		});        
+        
     }
 }

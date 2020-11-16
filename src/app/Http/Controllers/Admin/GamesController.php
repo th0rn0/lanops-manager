@@ -35,7 +35,14 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
+        $allcommands= array();
+        $allcommands[0] = 'None';
+        foreach($game->gameServerMatchCommands as $gameservercommand) {
+            $allcommands[$gameservercommand->id] = $gameservercommand->name;
+        }
+
         return view('admin.games.show')
+            ->withAllCommands($allcommands)
             ->withGame($game);
     }
 
@@ -147,10 +154,20 @@ class GamesController extends Controller
             return Redirect::back();
         }
 
+        if ($request->matchstartgameservercommand == 0)
+        {
+            $matchstartgameservercommand = null;
+        }
+        else
+        {
+            $matchstartgameservercommand = $request->matchstartgameservercommand;
+        }
+
         $game->name         = @$request->name;
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
+        $game->matchstartgameservercommand = $matchstartgameservercommand;
         $game->public       = @($request->public ? true : false);
         $game->connect_game_url = @$request->connect_game_url;
         $game->connect_game_command = @$request->connect_game_command;

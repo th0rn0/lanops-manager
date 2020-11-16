@@ -44,6 +44,13 @@
 												{{ Form::checkbox('publicuse', null, $isSystemsMatchMakingPublicuseEnabled, array('id'=>'publicuse')) }} Public use enabled (show Matchmaking in main Navigation)
 											</label>
 									</div>
+								</div>								
+								<div class="form-group">
+									<div class="form-check">
+											<label class="form-check-label">
+												{{ Form::checkbox('autostart', null, $isSystemsMatchMakingAutostartEnabled, array('id'=>'autostart')) }} Match autostart enabled (Command must be setted in the corresponding game)
+											</label>
+									</div>
 								</div>
 								<button type="submit" class="btn btn-success btn-block">Submit</button>
 							</div>

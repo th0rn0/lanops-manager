@@ -86,6 +86,16 @@ class Game extends Model
         return $this->hasMany('App\GameServerCommandParameter');
     }
 
+    public function matchStartGameServerCommand()
+    {
+        return $this->hasOne('App\GameServerCommand','id', 'matchStartgameServerCommand');
+    }
+
+    public function gameServerMatchCommands()
+    {
+        return $this->hasMany('App\GameServerCommand')->where("scope", 1);
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *
