@@ -123,7 +123,11 @@
 						<br><br>
 					</div>
 					<div class="col-lg-4 d-none d-lg-block">
-						<img class="img-fluid" src="{{ Settings::getOrgLogo() }}">
+						<picture>
+							<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
+							<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
+							<img class="img-fluid" src="{{ Settings::getOrgLogo() }}">
+						</picture>
 					</div>
 					<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 						<div class="row">

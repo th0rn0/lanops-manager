@@ -19,11 +19,19 @@
 		<div class="col-12 col-sm-4">
 			<div class="fotorama" data-nav="thumbs" data-allowfullscreen="full">
 				@if ($item->getDefaultImageUrl())
-					<img alt="{{ $item->name }}" src="{{ $item->getDefaultImageUrl() }}">
+					<picture>
+						<source srcset="{{ $item->getDefaultImageUrl() }}.webp" type="image/webp">
+						<source srcset="{{ $item->getDefaultImageUrl() }}" type="image/jpeg">
+						<img alt="{{ $item->name }}" src="{{ $item->getDefaultImageUrl() }}">
+					</picture>
 				@endif
 				@foreach ($item->images as $image)
 					@if (!$image->default)
-						<img alt="{{ $item->name }}" src="{{ $image->path }}">
+						<picture>
+							<source srcset="{{ $image->path }}.webp" type="image/webp">
+							<source srcset="{{ $image->path }}" type="image/jpeg">
+							<img alt="{{ $item->name }}" src="{{ $image->path }}">
+						</picture>
 					@endif
 				@endforeach
 			</div>

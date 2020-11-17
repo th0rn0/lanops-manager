@@ -1,12 +1,15 @@
 <nav class="navbar navbar-expand-md @if(Colors::isNavbarDark()) navbar-dark @else navbar-light @endif fixed-top custom-header">
 	<div class="container">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<!-- <div class="navbar-header"> -->
-			<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#topbar-navigation" aria-expanded="false">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<a class="navbar-brand" href="/"><img class="img-fluid" style="width:200px; height: auto; margin-top:-46px;" src="{{ Settings::getOrgLogo() }}"/></a>
-		<!-- </div> -->
+		<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#topbar-navigation" aria-expanded="false">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<a class="navbar-brand" href="/">
+			<picture>
+				<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
+				<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
+				<img class="img-fluid" style="width:200px; height: auto; margin-top:-46px;" src="{{ Settings::getOrgLogo() }}"/>
+			</picture>
+		</a>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="topbar-navigation">

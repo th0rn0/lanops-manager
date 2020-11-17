@@ -19,7 +19,11 @@
 				<p>{{ $album->description }}</p>
 				<a href="/gallery/{{ $album->slug }}">
 					@if (isset($album->album_cover_id) && trim($album->album_cover_id) != '')
-						<img src="{{ $album->getAlbumCoverPath() }}" class="img img-fluid img-thumbnail"/>
+						<picture>
+							<source srcset="{{ $album->getAlbumCoverPath() }}.webp" type="image/webp">
+							<source srcset="{{ $album->getAlbumCoverPath() }}" type="image/jpeg">
+							<img src="{{ $album->getAlbumCoverPath() }}" class="img img-fluid img-thumbnail"/>
+						</picture>
 					@else
 						<img src="http://placehold.it/600x300" class="img img-fluid img-thumbnail"/>
 					@endif

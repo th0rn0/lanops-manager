@@ -90,7 +90,11 @@
 									{{ $item->price_credit * $item->quantity }} @lang('payments.credits')
 								@endif
 							</h5>
-							<img class="img img-fluid rounded" src="{{ $item->getDefaultImageUrl() }}"/>
+							<picture>
+								<source srcset="{{ $item->getDefaultImageUrl() }}.webp" type="image/webp">
+								<source srcset="{{ $item->getDefaultImageUrl() }}" type="image/jpeg">
+								<img class="img img-fluid rounded" src="{{ $item->getDefaultImageUrl() }}"/>
+							</picture>
 						</div>
 					@endforeach
 				</div>

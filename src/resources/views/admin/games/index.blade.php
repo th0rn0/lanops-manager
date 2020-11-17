@@ -47,7 +47,11 @@
 							@endphp
 							<tr class="{{ $context }}">
 								<td class=col->
-									<img src="{{ $game->image_thumbnail_path }}" class="img img-fluid rounded" width="40%">
+									<picture>
+										<source srcset="{{  $game->image_thumbnail_path }}.webp" type="image/webp">
+										<source srcset="{{  $game->image_thumbnail_path }}" type="image/jpeg">
+										<img src="{{ $game->image_thumbnail_path }}" class="img img-fluid rounded" width="40%">
+									</picture>
 								</td>
 								<td>
 									{{ $game->name }}
@@ -69,7 +73,11 @@
 									TBC
 								</td>
 								<td>
-									<img src="{{ $game->image_header_path }}" class="img img-fluid" width="40%">
+									<picture>
+										<source srcset="{{  $game->image_header_path }}.webp" type="image/webp">
+										<source srcset="{{  $game->image_header_path }}" type="image/jpeg">
+										<img src="{{ $game->image_header_path }}" class="img img-fluid" width="40%">
+									</picture>
 								</td>
 								<td width="15%">
 									<a href="/admin/games/{{ $game->slug }}">

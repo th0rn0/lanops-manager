@@ -19,7 +19,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<img class="img-fluid" style="margin-top:-211px; margin-bottom:-259px;" src="{{ Settings::getOrgLogo() }}"/>
+					<picture>
+						<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
+						<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
+						<img class="img-fluid" style="margin-top:-211px; margin-bottom:-259px;" src="{{ Settings::getOrgLogo() }}"/>
+					</picture>
 				</div>
 			</div>
 		</div>

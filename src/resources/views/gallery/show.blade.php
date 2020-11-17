@@ -19,7 +19,11 @@
 	<div class="center-align fotorama" data-nav="thumbs" data-allowfullscreen="full">
 		@foreach ($album->images as $image)
 			@if ($image->filetype == 0)
-				<img src="{{ $image->path }}">
+				<picture>
+					<source srcset="{{ $image->path  }}.webp" type="image/webp">
+					<source srcset="{{ $image->path  }}" type="image/jpeg">
+					<img src="{{ $image->path }}">
+				</picture>
 			@endif
 		@endforeach
 	</div>
@@ -29,15 +33,15 @@
 				<div class="row margin">
 					<div class="col-sm-3">
 						<a href ="{{ $image->path }}"><i class="fas fa-file-download fa-7x"></i></a>
-					</div>	
+					</div>
 					<div class="col-sm-3" style="display: flex; align-items: center;">
 						{{ $image->display_name }}
-					</div>					
+					</div>
 					<div class="col-sm-6" style="display: flex; align-items: center;">
 						{{ $image->desc }}
 					</div>
 				</div>
-				
+
 			@endif
 		@endforeach
 	</div>

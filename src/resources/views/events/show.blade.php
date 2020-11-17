@@ -268,7 +268,11 @@
 								<hr>
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-12 col-md-8">
-										<img class="img-fluid" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
+										<picture>
+											<source srcset="{{ $seatingPlan->name }}.webp" type="image/webp">
+											<source srcset="{{ $seatingPlan->name }}" type="image/jpeg">
+											<img class="img-fluid" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
+										</picture>
 									</div>
 									<div class="col-12 col-md-4">
 										@if ($user && !$user->eventParticipation->isEmpty())
@@ -326,7 +330,11 @@
 		</div>
 		<div class="col-lg-5">
 			@foreach ($event->venue->images as $image)
-				<img class="img-fluid rounded" alt="{{ $event->venue->display_name }}" src="{{$image->path}}"/>
+				<picture>
+					<source srcset="{{ $image->path }}.webp" type="image/webp">
+					<source srcset="{{ $image->path }}" type="image/jpeg">
+					<img class="img-fluid rounded" alt="{{ $event->venue->display_name }}" src="{{ $image->path }}"/>
+				</picture>
 			@endforeach
 		</div>
 	</div>
@@ -339,7 +347,11 @@
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{ $sponsor->website }}">
-				<img class="img-fluid rounded" src="{{ $sponsor->image_path }}" alt="{{ $sponsor->website}}" />
+				<picture>
+					<source srcset="{{ $sponsor->image_path }}.webp" type="image/webp">
+					<source srcset="{{ $sponsor->image_path }}" type="image/jpeg">
+					<img class="img-fluid rounded" src="{{ $sponsor->image_path }}" alt="{{ $sponsor->website}}" />
+				</picture>
 			</a>
 		@endforeach
 	@endif
@@ -357,7 +369,11 @@
 						<div class="col-sm-4 d-block d-sm-none">
 							<h4>{{$section->title}}</h4>
 							<center>
-								<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+								<picture>
+									<source srcset="{{ $section->image_path }}.webp" type="image/webp">
+									<source srcset="{{ $section->image_path }}" type="image/jpeg">
+									<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+								</picture>
 							</center>
 						</div>
 						<div class="col-sm-8">
@@ -367,7 +383,11 @@
 						<div class="col-sm-4 d-none d-sm-block">
 							@if (isset($section->image_path))
 								<center>
-									<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+									<picture>
+										<source srcset="{{ $section->image_path }}.webp" type="image/webp">
+										<source srcset="{{ $section->image_path }}" type="image/jpeg">
+										<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+									</picture>
 								</center>
 							@endif
 						</div>
@@ -382,7 +402,11 @@
 						<div class="col-sm-4">
 							<h4 class="d-block d-sm-none">{{$section->title}}</h4>
 							<center>
-								<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+								<picture>
+									<source srcset="{{ $section->image_path }}.webp" type="image/webp">
+									<source srcset="{{ $section->image_path }}" type="image/jpeg">
+									<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+								</picture>
 							</center>
 						</div>
 						<div class="col-sm-8">
@@ -500,7 +524,11 @@
 							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif card-hover mb-3">
 								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
 									@if ($tournament->game && $tournament->game->image_thumbnail_path)
-										<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+										<picture>
+											<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
+											<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
+											<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+										</picture>
 									@endif
 									<h3 class="text-primary">{{ $tournament->name }}</h3>
 								</div>

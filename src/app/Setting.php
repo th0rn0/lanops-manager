@@ -89,7 +89,7 @@ class Setting extends Model
      */
     public static function getOrgLogo()
     {
-        return (self::where('setting', 'org_logo')->first()->value) . '?cb=' . mt_rand(10, 9999);
+        return (self::where('setting', 'org_logo')->first()->value);
     }
 
     /**
@@ -105,7 +105,7 @@ class Setting extends Model
             Storage::putFileAs(
                 'public/images/main',
                 $logo,
-                'logo_main.png'
+                'logo_main' . mt_rand(10, 9999) . '.png'
             )
         );
         $setting = self::where('setting', 'org_logo')->first();

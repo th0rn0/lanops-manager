@@ -23,12 +23,12 @@
 			<div class="card-header">
 				<i class="fa fa-th-list fa-fw"></i> Teams:
 			</div>
-			
+
 			@foreach ($match->teams as $team)
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm">
-							<h4>Team #{{ $team->id }}: {{ $team->name }} </h4> 	
+							<h4>Team #{{ $team->id }}: {{ $team->name }} </h4>
 						</div>
 						<div class="col-sm mt-3">
 							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE")
@@ -47,7 +47,7 @@
 					</div>
 					@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE")
 						<div class="row">
-						
+
 							<div class="col-sm">
 								<p class="mb-0 mt-2">Invite Url </p>
 							</div>
@@ -72,7 +72,9 @@
 							<tbody>
 								@foreach ($team->players as $teamplayer)
 									<tr>
-										<td>	<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}"></td>
+										<td>
+											<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}">
+										</td>
 										<td>
 											{{ $teamplayer->user->username }}
 											@if ($teamplayer->user->steamid)
@@ -117,11 +119,11 @@
 											'class' => 'form-control'
 										)
 									)
-								}}	
+								}}
 						</div>
 						<div class="col-sm mt-4">
 							<button type="submit" class="btn btn-success btn-block">Add</button>
-						
+
 						</div>
 
 					</div>
@@ -129,7 +131,7 @@
 					@endif
 				</div>
 			@endforeach
-			
+
 
 		</div>
 	</div>
@@ -316,7 +318,7 @@
 
 <!-- Modals -->
 @foreach ($match->teams as $team)
-	
+
 	<div class="modal fade" id="editTeamModal_{{ $team->id }}" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel_{{ $team->id }}" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -329,7 +331,7 @@
 					<div class="form-group">
 						{{ Form::label('teamname','Team Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('teamname',$team->name,array('id'=>'teamname','class'=>'form-control')) }}
-					</div>	
+					</div>
 					<div class="form-group">
 						{{ Form::label('teamowner','Team Owner',array('id'=>'','class'=>'')) }}
 						{{

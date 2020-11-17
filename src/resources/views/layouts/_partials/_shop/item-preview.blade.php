@@ -10,13 +10,21 @@
 		@if (@$admin)
 			<a href="/admin/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				<center>
-					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img rounded img-fluid" src="{{ $item->getDefaultImageUrl() }}">
+					<picture>
+						<source srcset="{{  $item->getDefaultImageUrl() }}.webp" type="image/webp">
+						<source srcset="{{  $item->getDefaultImageUrl() }}" type="image/jpeg">
+						<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img rounded img-fluid" src="{{ $item->getDefaultImageUrl() }}">
+					</picture>
 				</center>
 			</a>
 		@else
 			<a href="/shop/{{ $item->category->slug }}/{{ $item->slug }}">
 				<center>
-					<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img rounded img-fluid" src="{{ $item->getDefaultImageUrl() }}">
+					<picture>
+						<source srcset="{{  $item->getDefaultImageUrl() }}.webp" type="image/webp">
+						<source srcset="{{  $item->getDefaultImageUrl() }}" type="image/jpeg">
+						<img alt="{{ $item->name }}" style="max-height:230px !important;" class="img rounded img-fluid" src="{{ $item->getDefaultImageUrl() }}">
+					</picture>
 				</center>
 			</a>
 		@endif
