@@ -216,6 +216,7 @@
 	</div>
 
 @endif
+@if (Request::is('admin/*'))
 <h3>Add Event participants</h3>
 <div class="table-responsive">
 	<table class="table">
@@ -280,3 +281,4 @@
 		</tbody>
 	</table>
 </div>
+@endif
