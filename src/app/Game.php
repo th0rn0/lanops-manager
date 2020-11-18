@@ -71,6 +71,11 @@ class Game extends Model
         return $this->hasMany('App\EventTournament');
     }
 
+    public function matchMakings()
+    {
+        return $this->hasMany('App\MatchMaking', 'game_id', 'id');
+    }
+
     public function gameServers()
     {
         return $this->hasMany('App\GameServer');
@@ -153,13 +158,27 @@ class Game extends Model
             }
         }
 
+        $openmatchmakings = array();
+        foreach ($this->matchMakings as $match)
+        {
+            if ($match->status == "LIVE")
+            {
+                $openmatchmakings[$match->id] = $match->id;
+            }
+        }
+
+
         $return = array();
         foreach (GameServer::where(['game_id' => $this->id, 'type' => 'Match'])->get() as $gameServer) {
             $gameserver_is_used = false;
             foreach ($gameServer->eventTournamentMatchServer as $eventTournamentMatchServer) {
-
-
                 if (array_key_exists($eventTournamentMatchServer->challonge_match_id, $openmatchservers)) {
+                    $gameserver_is_used = true;
+                    break;
+                }
+            }
+            foreach ($gameServer->matchMakingServers as $matchMakingServers) {
+                if (array_key_exists($matchMakingServers->match_id, $openmatchmakings)) {
                     $gameserver_is_used = true;
                     break;
                 }

@@ -47,6 +47,22 @@ class MatchMakingController extends Controller
     }
 
     /**
+     * Show pending MatchMaking Index Page
+     * @return View
+     */
+    public function indexpending()
+    {
+        $matches = MatchMaking::where("status","PENDING")->get()->append(['sort' => 'updated_at']);
+        $livematches = MatchMaking::where("status","LIVE")->get()->append(['sort' => 'updated_at']);
+
+        
+        return view('admin.matchmaking.pendingindex')
+            ->withMatches($matches)
+            ->withLiveMatches($livematches)
+            ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled());
+    }
+
+    /**
      * Show Matchmaking
      * @param MatchMaking $match
      * @return View

@@ -13,12 +13,14 @@ use Arr;
 use App\User;
 use App\Event;
 use App\Game;
+use App\Http\Controllers\Admin\GameServerCommandsController;
 use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\MatchMakingServer;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -44,7 +46,7 @@ class MatchMakingController extends Controller
             ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled());
     }
 
-    /**
+     /**
      * Show Matchmaking
      * @param MatchMaking $match
      * @param Request $request
@@ -587,7 +589,7 @@ class MatchMakingController extends Controller
             Session::flash('alert-danger', __('matchmaking.matchalreadystartedorcompleted'));
             return Redirect::back();
         }
-
+        
         if ($match->teams->count() < $match->team_count) 
         {
             Session::flash('alert-danger', __('matchmaking.notallrequiredteamsarethere'));
@@ -603,14 +605,67 @@ class MatchMakingController extends Controller
             }
         }
 
+        if(Settings::isSystemsMatchMakingAutostartEnabled())
+        {
+            $availableservers = $match->game->getGameServerSelectArray();
 
-        if (!$match->setStatus('LIVE')) {
-            Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
+            if (count($availableservers) == 0)
+            {
+                Session::flash('alert-danger', 'Currently no free Servers are available!');
+                return Redirect::back();
+            }
+
+            $matchMakingServer                 = new MatchMakingServer();
+            $matchMakingServer->match_id        = $match->id;
+            $matchMakingServer->game_server_id = array_key_first($availableservers);
+    
+            if (!$matchMakingServer->save()) {
+                Session::flash('alert-danger', 'Could not save matchMakingServer!');
+                return Redirect::back();
+            }
+            }
+            if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != NULL)
+            {
+                $request = new Request([
+                    'command'   => $match->game->matchStartGameServerCommand->id,
+                ]);
+
+                $gccontroller = new GameServerCommandsController();
+                $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);    
+            
+                
+                $availableParameters = new \stdClass();
+                $availableParameters->game = $match->game;
+                $availableParameters->gameServer = $match->gameServer;
+                $availableParameters->match = $match;
+        
+                $command = Helpers::resolveServerCommandParameters($match->game->matchStartGameServerCommand->command, $request, $availableParameters);
+        
+                $gccontroller->executeCommand($match->gameServer, $command);
+            
+            }
+            
+
+            if (!$match->setStatus('LIVE')) {
+                Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
+                return Redirect::back();
+            }
+            Session::flash('alert-success', __('matchmaking.matchstarted'));
+            return Redirect::back();
+        }
+        else
+        {
+            if (!$match->setStatus('PENDING')) {
+                Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
+                return Redirect::back();
+            } 
+            Session::flash('alert-success', __('matchmaking.matchpending'));
             return Redirect::back();
         }
 
-        Session::flash('alert-success', __('matchmaking.matchstarted'));
-        return Redirect::back();
+
+
+   
     }
 
            /**

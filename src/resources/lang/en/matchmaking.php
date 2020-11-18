@@ -15,6 +15,7 @@ return [
 
     'ended' => 'has ended',
     'live' => 'is live',
+    'pending' => 'is pending',
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
     'matchowner' => 'Match owner',
@@ -113,6 +114,7 @@ return [
     'notenoughplayerstostart' => 'at least one team has not enough players to start the match !',
     'cannotstartmatch' => 'Cannot start Match!',
     'matchstarted' => 'Match Started!',
+    'matchpending' => 'Match start was requested, an administrator has to approve it!',
     'cannotopenmatchnotowner' => 'Cannot open Match because you are not the owner!',
     'matchalreadyopenliveorcompleted' => 'Match is already open/ live or completed',
     'cannotopenmatch' => 'Cannot open Match!',
