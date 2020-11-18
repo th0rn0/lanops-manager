@@ -26,17 +26,19 @@
 			<h3>@lang('matchmaking.ownedmatches')</h3>
 		</div>
 		<div class="row">
-			@foreach ($ownedMatches as $match)				
+			@foreach ($ownedMatches as $match)
 					<div class="col-12 col-sm-6 col-md-3">
 						<a href="/matchmaking/{{ $match->id }}" class="link-unstyled">
-							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3"">
+							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
 								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
 								@if ($match->game && $match->game->image_thumbnail_path)
-									
-										<img class="img img-fluid rounded" src=""{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
-									
+									<picture>
+										<source srcset="{{ $match->game->image_thumbnail_path }}.webp" type="image/webp">
+										<source srcset="{{ $match->game->image_thumbnail_path }}" type="image/jpeg">
+										<img class="img img-fluid rounded" src="{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
+									</picture>
 								@endif
-								
+
 									<h3>@lang('matchmaking.match'){{ $match->id }}</h3>
 									<span class="small">
 										@if ($match->status == 'COMPLETE')
@@ -62,7 +64,7 @@
 										@endif
 									</span>
 								</div>
-								<div class="card-body">									
+								<div class="card-body">
 									@if ($match->status != 'COMPLETE')
 											<div>
 												<strong>@lang('matchmaking.teamsizes') {{ $match->team_size }}</strong>
@@ -81,7 +83,7 @@
 										@php
 
 											$teams = $match->teams;
-							
+
 											if ($teams->count() < 3 )
 											{
 												$teams = $teams->sortByDesc('team_score')->take($teams->count());
@@ -99,13 +101,13 @@
 											@lang('matchmaking.teamcount') {{ $match->teams->count() }}
 										</strong>
 										<h5 class="m-0 mt-1">@lang('matchmaking.signupsclosed')</h5>
-									
-										
+
+
 									@endif
 								</div>
 							</div>
 						</a>
-					</div>				
+					</div>
 			@endforeach
 		</div>
 	@endif
@@ -117,16 +119,20 @@
 			<h3>@lang('matchmaking.ownedteams')</h3>
 		</div>
 		<div class="row">
-			@foreach ($ownedTeams as $team)				
+			@foreach ($ownedTeams as $team)
 					<div class="col-12 col-sm-6 col-md-3">
 						<a href="/matchmaking/{{ $team->match->id }}" class="link-unstyled">
 
 							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
 								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
 								@if ($team->match->game && $team->match->game->image_thumbnail_path)
-										<img class="img img-fluid rounded" src=""{{ $team->match->game->image_thumbnail_path }}" alt="{{ $team->match->game->name }}">
+									<picture>
+										<source srcset="{{ $match->game->image_thumbnail_path }}.webp" type="image/webp">
+										<source srcset="{{ $match->game->image_thumbnail_path }}" type="image/jpeg">
+										<img class="img img-fluid rounded" src="{{ $team->match->game->image_thumbnail_path }}" alt="{{ $team->match->game->name }}">
+									</picture>
 								@endif
-								
+
 									<h3>@lang('matchmaking.match'){{ $team->match->id }}</h3>
 									<span class="small">
 										@if ($team->match->status == 'COMPLETE')
@@ -152,7 +158,7 @@
 										@endif
 									</span>
 								</div>
-								<div class="card-body">	
+								<div class="card-body">
 									@if ($team->match->status != 'COMPLETE')
 											<div>
 												<strong>@lang('matchmaking.teamsizes') {{ $team->match->team_size }}</strong>
@@ -171,7 +177,7 @@
 										@php
 
 											$teams = $team->match->teams;
-							
+
 											if ($teams->count() < 3 )
 											{
 												$teams = $teams->sortByDesc('team_score')->take($teams->count());
@@ -189,13 +195,13 @@
 											@lang('matchmaking.teamcount') {{ $team->match->teams->count() }}
 										</strong>
 										<h5 class="m-0 mt-1">@lang('matchmaking.signupsclosed')</h5>
-									
-									
+
+
 									@endif
 								</div>
 							</div>
 						</a>
-					</div>				
+					</div>
 			@endforeach
 		</div>
 	@endif
@@ -207,14 +213,18 @@
 			<h3>@lang('matchmaking.publicmatches')</h3>
 		</div>
 		<div class="row">
-			@foreach ($openPublicMatches as $match)				
+			@foreach ($openPublicMatches as $match)
 					<div class="col-12 col-sm-6 col-md-3">
 						<a href="/matchmaking/{{ $match->id }}" class="link-unstyled">
 
 							<div class="card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
 								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
 							@if ($match->game && $match->game->image_thumbnail_path)
-									<img class="img img-fluid rounded" src=""{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
+								<picture>
+									<source srcset="{{ $match->game->image_thumbnail_path }}.webp" type="image/webp">
+									<source srcset="{{ $match->game->image_thumbnail_path }}" type="image/jpeg">
+									<img class="img img-fluid rounded" src="{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
+								</picture>
 							@endif
 								<h3>@lang('matchmaking.match'){{ $match->id }}</h3>
 								<span class="small">
@@ -260,7 +270,7 @@
 									@php
 
 										$teams = $match->teams;
-						
+
 										if ($teams->count() < 3 )
 										{
 											$teams = $teams->sortByDesc('team_score')->take($teams->count());
@@ -284,7 +294,7 @@
 							</div>
 						</div>
 					</a>
-					</div>				
+					</div>
 			@endforeach
 		</div>
 	@endif
@@ -296,7 +306,7 @@
 
 
 <!-- Modals -->
-	
+
 	<div class="modal fade" id="addMatchModal" tabindex="-1" role="dialog" aria-labelledby="addMatchModal" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">

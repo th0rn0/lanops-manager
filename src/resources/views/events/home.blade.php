@@ -46,7 +46,11 @@
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
-				<img alt="{{ $sponsor->website}}" class="img-fluid rounded" src=""{{ $sponsor->image_path }}"/>
+				<picture>
+					<source srcset="{{ $sponsor->image_path }}.webp" type="image/webp">
+					<source srcset="{{ $sponsor->image_path }}" type="image/jpeg">
+					<img alt="{{ $sponsor->website}}" class="img-fluid rounded" src="{{ $sponsor->image_path }}"/>
+				</picture>
 			</a>
 		@endforeach
 	@endif
@@ -136,32 +140,34 @@
 
 					@if (Settings::getMumbleLink() != "")
 						<div class="col-6 col-lg-4">
-							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" ><img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="28" height="28">@lang('home.servers_mumble')</a>
+							<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%" >
+								<img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="28" height="28">@lang('home.servers_mumble')
+							</a>
 						</div>
 					@endif
 					@if (Settings::getFacebookLink() != "")
 						<div class="col-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i>@lang('home.servers_facebook')</a>
+							<a target="_blank" rel="noreferrer" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i>@lang('home.servers_facebook')</a>
 						</div>
 					@endif
 					@if (Settings::getDiscordLink() != "")
 						<div class="col-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i>@lang('home.servers_discord')</a>
+							<a target="_blank" rel="noreferrer" href="{{ Settings::getDiscordLink() }}"><i class="fab fa-discord fa-2x margin"></i>@lang('home.servers_discord')</a>
 						</div>
 					@endif
 					@if (Settings::getSteamLink() != "")
 						<div class="col-6 col-lg-4">
-							<a target="_blank" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i>@lang('home.servers_steam')</a>
+							<a target="_blank" rel="noreferrer" href="{{ Settings::getSteamLink() }}"><i class="fab fa-steam fa-2x margin"></i>@lang('home.servers_steam')</a>
 						</div>
 					@endif
 					@if (Settings::getRedditLink() != "")
 					<div class="col-6 col-lg-4">
-						<a target="_blank" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-2x margin"></i>@lang('home.servers_reddit')</a>
+						<a target="_blank" rel="noreferrer" href="{{ Settings::getRedditLink() }}"><i class="fab fa-reddit fa-2x margin"></i>@lang('home.servers_reddit')</a>
 					</div>
 					@endif
 					@if (Settings::getTwitterLink() != "")
 					<div class="col-6 col-lg-4">
-						<a target="_blank" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-2x margin"></i>@lang('home.servers_twitter')</a>
+						<a target="_blank" rel="noreferrer" href="{{ Settings::getTwitterLink() }}"><i class="fab fa-twitter fa-2x margin"></i>@lang('home.servers_twitter')</a>
 					</div>
 					@endif
 		</div>
@@ -187,7 +193,11 @@
 							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
 								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
 									<div class="row text-center block-center">
-										<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-fluid rounded img-contain margin-top margin-bottom width=100em" height="100em">
+										<picture>
+											<source srcset="{{ $gameServers[0]->game->image_thumbnail_path }}.webp" type="image/webp">
+											<source srcset="{{ $gameServers[0]->game->image_thumbnail_path }}" type="image/jpeg">
+											<img src="{{ $gameServers[0]->game->image_thumbnail_path }}" class="img img-fluid rounded img-contain margin-top margin-bottom width=100em" height="100em">
+										</picture>
 										<strong class="margin">{{ $gameServers[0]->game->name }}</strong>
 									</div>
 								</div>
@@ -279,7 +289,11 @@
 						<div class="thumbnail">
 							@if ($tournament->game && $tournament->game->image_thumbnail_path)
 								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
-									<img class="img img-fluid rounded" src=""{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+									<picture>
+										<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
+										<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
+										<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+									</picture>
 								</a>
 							@endif
 							<div class="caption">
@@ -500,7 +514,11 @@
 							<hr>
 							<div class="row" style="display: flex; align-items: center;">
 								<div class="col-12 col-md-8">
-									<img class="img-fluid" src="{{$seatingPlan->image_path}}"/>
+									<picture>
+										<source srcset="{{ $seatingPlan->image_path }}.webp" type="image/webp">
+										<source srcset="{{ $seatingPlan->image_path }}" type="image/jpeg">
+										<img class="img-fluid" src="{{ $seatingPlan->image_path }}"/>
+									</picture>
 								</div>
 								<div class="col-12 col-md-4">
 									@if ($ticketFlagSignedIn)

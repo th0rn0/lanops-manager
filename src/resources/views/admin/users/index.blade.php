@@ -40,7 +40,11 @@
 						@foreach ($users as $user)
 							<tr>
 								<td width="3%">
-									<img class="img-fluid rounded" src="{{ $user->avatar }}">
+									<picture>
+										<source srcset="{{ $user->avatar }}.webp" type="image/webp">
+										<source srcset="{{ $user->avatar }}" type="image/jpeg">
+										<img class="img-fluid rounded" src="{{ $user->avatar }}">
+									</picture>
 								</td>
 								<td>
 									{{ $user->username }}

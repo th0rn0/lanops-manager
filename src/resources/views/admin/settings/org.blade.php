@@ -58,7 +58,11 @@
 									No Favicon uploaded
 								@endif
 								@if (trim(Settings::getOrgLogo()) != '')
-									<img class="img img-fluid" src="{{ Settings::getOrgLogo() }}" />
+									<picture>
+										<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
+										<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
+										<img class="img img-fluid" src="{{ Settings::getOrgLogo() }}" />
+									</picture>
 								@else
 									No Logo uploaded
 								@endif

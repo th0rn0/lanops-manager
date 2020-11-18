@@ -133,7 +133,12 @@
 					<div class="row">
 						@foreach ($item->images as $image)
 							<div class="col-12 col-md-3">
-								<img class="img img-fluid rounded" src="{{ $image->path }}">
+								<picture>
+									<source srcset="{{ $image->path }}.webp" type="image/webp">
+									<source srcset="{{ $image->path }}" type="image/jpeg">
+									<img class="img img-fluid rounded" src="{{ $image->path }}">
+								</picture>
+
 								<br>
 								<div class="row">
 									{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images/' . $image->id, 'files' => 'true')) }}
@@ -178,7 +183,11 @@
 							<li class="list-group-item">Added By: {{ $item->user->username }}</li>
 						</ul>
 						<p>Default Image:</p>
-						<img class="img img-fluid rounded" src="{{ $item->getDefaultImageUrl() }}">
+						<picture>
+							<source srcset="{{ $item->getDefaultImageUrl() }}.webp" type="image/webp">
+							<source srcset="{{ $item->getDefaultImageUrl() }}" type="image/jpeg">
+							<img class="img img-fluid rounded" src="{{ $item->getDefaultImageUrl() }}">
+						</picture>
 					</div>
 				</div>
 			</div>

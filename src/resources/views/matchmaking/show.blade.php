@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - ' . __('matchmaking.match') . " " . $match->id)  
+@section ('page_title', Settings::getOrgName() . ' - ' . __('matchmaking.match') . " " . $match->id)
 
 @section ('content')
 
@@ -17,11 +17,11 @@
 		</div>
 	</div>
 
-	
+
 	@if($match->ispublic == 1 || $invite != null || $teamJoin != null || $match->owner_id == Auth::id() || $match->getMatchTeamPlayer(Auth::id()))
 		<div class="row">
 			<div class="col-sm">
-			
+
 				<p>@lang('matchmaking.currentstatus') {{$match->status}}</p>
 			</div>
 			<div class="col-sm mt-0">
@@ -80,11 +80,11 @@
 				{{ Form::hidden('_method', 'DELETE') }}
 				<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.leavematch')</button>
 				{{ Form::close() }}
-			
+
 				@endif
 			</div>
 		</div>
-	
+
 
 
 
@@ -109,11 +109,11 @@
 			</div>
 
 		@endif
-			
+
 			@foreach ($match->teams as $team)
 					<div class="row">
 						<div class="col-sm">
-							<h4>@lang('matchmaking.team') #{{ $team->id }}: {{ $team->name }} </h4> 	
+							<h4>@lang('matchmaking.team') #{{ $team->id }}: {{ $team->name }} </h4>
 						</div>
 						<div class="col-sm mt-3">
 							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
@@ -139,7 +139,7 @@
 					</div>
 					@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" &&  $team->match->status != "DRAFT")
 						<div class="row">
-						
+
 							<div class="col-sm">
 								<p class="mb-0 mt-2">@lang('matchmaking.inviteurl')</p>
 							</div>
@@ -164,7 +164,9 @@
 							<tbody>
 								@foreach ($team->players as $teamplayer)
 									<tr>
-										<td>	<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}"></td>
+										<td>
+											<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}">
+										</td>
 										<td>
 											{{ $teamplayer->user->username }}
 											@if ($teamplayer->user->steamid)
@@ -196,7 +198,7 @@
 					</div>
 
 			@endforeach
-	
+
 	@else
 		<script>
 			window.addEventListener("load", function(){
@@ -212,7 +214,7 @@
 
 <!-- Modals -->
 @foreach ($match->teams as $team)
-	
+
 	<div class="modal fade" id="editTeamModal_{{ $team->id }}" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel_{{ $team->id }}" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -225,7 +227,7 @@
 					<div class="form-group">
 						{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('teamname',$team->name,array('id'=>'teamname','class'=>'form-control')) }}
-					</div>	
+					</div>
 					<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.submit')</button>
 					{{ Form::close() }}
 				</div>
@@ -330,7 +332,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 
 
 

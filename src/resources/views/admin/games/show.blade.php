@@ -461,7 +461,11 @@
 						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
 								<h5>Preview:</h5>
-								<img src="{{ $game->image_thumbnail_path }}" class="img img-fluid">
+								<picture>
+									<source srcset="{{  $game->image_thumbnail_path }}.webp" type="image/webp">
+									<source srcset="{{  $game->image_thumbnail_path }}" type="image/jpeg">
+									<img src="{{ $game->image_thumbnail_path }}" class="img img-fluid">
+								</picture>
 							@endif
 							{{ Form::label('image_thumbnail','Thumbnail Image - 300x400',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
@@ -469,7 +473,11 @@
 						<div class="form-group">
 							@if ($game->image_header_path != '')
 								<h5>Preview:</h5>
-								<img src="{{ $game->image_header_path }}" class="img img-fluid">
+								<picture>
+									<source srcset="{{  $game->image_header_path }}.webp" type="image/webp">
+									<source srcset="{{  $game->image_header_path }}" type="image/jpeg">
+									<img src="{{ $game->image_header_path }}" class="img img-fluid">
+								</picture>
 							@endif
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}

@@ -45,7 +45,11 @@
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class="col-3">
 											@if ($image->filetype == 0)
-												<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
+												<picture>
+													<source srcset="{{ $image->path }}.webp" type="image/webp">
+													<source srcset="{{ $image->path }}" type="image/jpeg">
+													<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
+												</picture>
 											@else
 												<i class="fas fa-file-download fa-7x"></i>
 											@endif

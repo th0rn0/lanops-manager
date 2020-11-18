@@ -2,13 +2,27 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel fade" style="margin-top: -20px;" data-ride="carousel" data-interval="8000">
+<div id="hero-carousel" class="carousel slide carousel-fade" style="margin-top: -20px;" data-ride="carousel" data-interval="8000">
 	<!-- Wrapper for slides -->
-	<div class="carousel-inner" role="listbox">
+	<div class="carousel-inner">
 		@foreach ($sliderImages as $image)
-			<div class="carousel-item @if ($loop->first) active @endif">
-				<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}">
-			</div>
+			@if ($loop->first)
+				<div class="carousel-item active">
+					<picture>
+						<source srcset="{{ $image->path }}.webp" type="image/webp">
+						<source srcset="{{ $image->path }}" type="image/jpeg">
+						<img class="hero-image" style="object-fit=cover" class="d-block w-100" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}" width="100%" height="500">
+					</picture>
+				</div>
+			@else
+				<div class="carousel-item">
+					<picture>
+						<source data-lazy-load-srcset="{{ $image->path }}.webp" type="image/webp">
+						<source data-lazy-load-srcset="{{ $image->path }}" type="image/jpeg">
+						<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" data-lazy-load-src="{{ $image->path }}" width="100%"  height="500">
+					</picture>
+				</div>
+			@endif
 		@endforeach
 	</div>
 	<div class="hero-overlay d-none d-sm-block">
@@ -27,7 +41,6 @@
 			@endif
 		</div>
 	</div>
-
 </div>
 
 <div class="container">
@@ -254,5 +267,26 @@
 		</div>
 	</div>
 </div>
+
+@endsection
+
+
+@section ('scripts')
+
+<script language="javascript" type="text/javascript">
+	jQuery( function()
+	{
+		jQuery('#hero-carousel').on('slide.bs.carousel', function(e)
+		{
+			var lazy = jQuery(e.relatedTarget).find("img[data-lazy-load-src]");
+			lazy.attr("src", lazy.data('lazy-load-src'));
+			lazy.removeAttr("data-lazy-load-src");
+
+			var lazySources = jQuery(e.relatedTarget).find("source[data-lazy-load-srcset]");
+			lazySources.attr("srcset", lazySources.data('lazy-load-srcset'));
+			lazySources.removeAttr("data-lazy-load-srcset");
+		});
+	});
+</script>
 
 @endsection

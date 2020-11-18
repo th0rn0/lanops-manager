@@ -7,8 +7,12 @@
 		<div class="row">
 			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
 				<div class="row">
-					<div class="col-sm-2 col-12" style="">
-						<img src="{{$tournament->game->image_thumbnail_path}}" class="img-fluid img-rounded img-thumbnail">
+					<div class="col-sm-2 col-12">
+						<picture>
+							<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
+							<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
+							<img src="{{ $tournament->game->image_thumbnail_path }}" class="img-fluid img-rounded img-thumbnail">
+						</picture>
 					</div>
 					<div class="col-sm-10 col-12" >
 						<div class="block">

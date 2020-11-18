@@ -6,7 +6,11 @@
 	<div class="container">
 		@if (isset($tournament->game) && $tournament->game->image_header_path != null)
 			<div class="row">
-				<img class="img-fluid rounded mx-auto full-width" width="100%" src="{{ $tournament->game->image_header_path }}">
+				<picture>
+					<source srcset="{{ $tournament->game->image_header_path }}.webp" type="image/webp">
+					<source srcset="{{ $tournament->game->image_header_path }}" type="image/jpeg">
+					<img class="img-fluid rounded mx-auto full-width" width="100%" src="{{ $tournament->game->image_header_path }}">
+				</picture>
 			</div>
 		@endif
 		<!-- HEADER -->

@@ -39,6 +39,9 @@
 				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
 			@endif
 		</title>
+
+
+		@yield ('prefetch')
 	</head>
 	<body class="full-height">
 		{!! Analytics::render() !!}
@@ -120,7 +123,11 @@
 						<br><br>
 					</div>
 					<div class="col-lg-4 d-none d-lg-block">
-						<img class="img-fluid" src="{{ Settings::getOrgLogo() }}">
+						<picture>
+							<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
+							<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
+							<img class="img-fluid" src="{{ Settings::getOrgLogo() }}">
+						</picture>
 					</div>
 					<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 						<div class="row">
@@ -137,19 +144,19 @@
 							<div class="col-lg-6 col-md-6">
 								<h2>Connect</h2>
 								@if (Settings::getFacebookLink() != "")
-									<p><a target="_blank" href="{{ Settings::getFacebookLink() }}">@lang('layouts.default_facebook')</a></p>
+									<p><a target="_blank" rel="noreferrer" href="{{ Settings::getFacebookLink() }}">@lang('layouts.default_facebook')</a></p>
 								@endif
 								@if (Settings::getDiscordLink() != "")
-									<p><a target="_blank" href="{{ Settings::getDiscordLink() }}">@lang('layouts.default_discord')</a></p>
+									<p><a target="_blank" rel="noreferrer" href="{{ Settings::getDiscordLink() }}">@lang('layouts.default_discord')</a></p>
 								@endif
 								@if (Settings::getSteamLink() != "")
-									<p><a target="_blank" href="{{ Settings::getSteamLink() }}">@lang('layouts.default_steam')</a></p>
+									<p><a target="_blank" rel="noreferrer" href="{{ Settings::getSteamLink() }}">@lang('layouts.default_steam')</a></p>
 								@endif
 								@if (Settings::getTwitterLink() != "")
-									<p><a target="_blank" href="{{ Settings::getTwitterLink() }}">@lang('layouts.default_twitter')</a></p>
+									<p><a target="_blank" rel="noreferrer" href="{{ Settings::getTwitterLink() }}">@lang('layouts.default_twitter')</a></p>
 								@endif
 								@if (Settings::getRedditLink() != "")
-								<p><a target="_blank" href="{{ Settings::getRedditLink() }}">@lang('layouts.default_reddit')</a></p>
+								<p><a target="_blank" rel="noreferrer" href="{{ Settings::getRedditLink() }}">@lang('layouts.default_reddit')</a></p>
 								@endif
 							</div>
 							<div class="col-lg-12">
@@ -163,5 +170,8 @@
 				</div>
 			</div>
 		</footer>
+
+
+		@yield ('scripts')
 	</body>
 </html>

@@ -196,7 +196,11 @@
 					@if ($seatingPlan->image_path)
 						<hr>
 						<h4>Image Preview</h4>
-						<img src="{{ $seatingPlan->image_path }}" alt="{{ $seatingPlan->name }} Layout" class="img img-fluid" />
+						<picture>
+							<source dsrcset="{{ $seatingPlan->image_path }}.webp" type="image/webp">
+							<source srcset="{{ $seatingPlan->image_path }}" type="image/jpeg">
+							<img alt="{{ $seatingPlan->name }} Layout" class="img img-fluid"  src="{{ $seatingPlan->image_path }}">
+						</picture>
 					@endif
 				{{ Form::close() }}
 			</div>

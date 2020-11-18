@@ -123,23 +123,28 @@
 				{{ Form::close() }}
 				<hr>
 				@foreach ($sliderImages as $key => $image)
-					<img class="img img-fluid mb-3" src="{{ $image->path }}" />
 
-						<!-- <br> -->
-						{{ Form::open(array('url'=>'/admin/settings/appearance/slider/images/' . $image->id, 'files' => 'true', 'class' => "form-inline")) }}
-							<!-- <input type="hidden" name="slider" value="frontpage"> -->
-							<div class="row">
-								<div class="col">
-									<div class="form-group">
-										{{ Form::label('order','Order',array('id'=>'')) }}
-										{{ Form::number('order', $image->order, array('id'=>'order' . $key, 'name' => 'order', 'class'=>'form-control')) }}
-									</div>
-								</div>
-								<div class="col mt-auto">
-									<button type="submit" class="btn btn-success btn-block">Submit</button>
+					<picture>
+						<source srcset="{{  $image->path  }}.webp" type="image/webp">
+						<source srcset="{{  $image->path  }}" type="image/jpeg">
+						<img class="img img-fluid mb-3" src="{{ $image->path }}" />
+					</picture>
+
+					<!-- <br> -->
+					{{ Form::open(array('url'=>'/admin/settings/appearance/slider/images/' . $image->id, 'files' => 'true', 'class' => "form-inline")) }}
+						<!-- <input type="hidden" name="slider" value="frontpage"> -->
+						<div class="row">
+							<div class="col">
+								<div class="form-group">
+									{{ Form::label('order','Order',array('id'=>'')) }}
+									{{ Form::number('order', $image->order, array('id'=>'order' . $key, 'name' => 'order', 'class'=>'form-control')) }}
 								</div>
 							</div>
-						{{ Form::close() }}
+							<div class="col mt-auto">
+								<button type="submit" class="btn btn-success btn-block">Submit</button>
+							</div>
+						</div>
+					{{ Form::close() }}
 					<br>
 					<div class="row">
 						<div class="col-12">
