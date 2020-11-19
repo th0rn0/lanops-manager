@@ -717,11 +717,11 @@ class Helpers
      */
     public static function getTicketQuantitySelection($ticket, $remainingcapacity)
     {
+        $ticketCount = min($remainingcapacity > 0 ? $remainingcapacity : 10, $ticket->quantity > 0 ? $ticket->quantity : 10);
 
-        $ticketCount = $remainingcapacity;
-
-        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0) {
-            $ticketCount = $ticket->no_tickets_per_user;
+        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0)
+        {
+            $ticketCount = min($ticket->no_tickets_per_user, $ticketCount);
         }
 
         $result = array();
