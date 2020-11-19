@@ -51,7 +51,16 @@
 												{{ Form::checkbox('autostart', null, $isSystemsMatchMakingAutostartEnabled, array('id'=>'autostart')) }} Match autostart enabled (Command must be setted in the corresponding game)
 											</label>
 									</div>
+								</div>								
+								<div class="form-group">
+									<div class="form-check">
+											<label class="form-check-label">
+												{{ Form::label('maxopenperuser','Maximal Open matches per user (0 unlimited)',array('id'=>'','class'=>'')) }}
+												{{ Form::number('maxopenperuser', $maxOpenPerUser, array('id'=>'maxopenperuser')) }}
+											</label>
+									</div>
 								</div>
+
 								<button type="submit" class="btn btn-success btn-block">Submit</button>
 							</div>
 

@@ -14,7 +14,9 @@
 				</h1>
 			</div>
 			<div class="col-sm mt-4">
+				@if(Settings::getSystemsMatchMakingMaxopenperuser() == 0 || count($currentUserOpenLivePendingDraftMatches) < Settings::getSystemsMatchMakingMaxopenperuser())
 				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">Add Match</a>
+				@endif
 			</div>
 		</div>
 	</div>

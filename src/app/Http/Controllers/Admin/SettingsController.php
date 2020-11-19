@@ -84,6 +84,7 @@ class SettingsController extends Controller
         return view('admin.settings.systems')
             ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled())
             ->withIsSystemsMatchMakingAutostartEnabled(Settings::isSystemsMatchMakingAutostartEnabled())
+            ->withMaxOpenPerUser(Settings::getSystemsMatchMakingMaxopenperuser())
             ->withIsMatchMakingEnabled(Settings::isMatchMakingEnabled())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ;
@@ -167,6 +168,20 @@ class SettingsController extends Controller
      */
     public function updateSystems(Request $request)
     {
+        
+        $rules = [
+            'publicuse'               => 'in:on,off',
+            'autostart'               => 'in:on,off',
+            'maxopenperuser'  => 'numeric',
+
+        ];
+        $messages = [
+            'publicuse.in'                    => 'Publicuse must be true or false',
+            'autostart.in'                    => 'autostart must be true or false',
+            'maxopenperuser.numeric'  => 'maxopenperuser must be a number',
+
+        ];
+        $this->validate($request, $rules, $messages);
 
         if (($request->publicuse ? true : false))
         {
@@ -197,6 +212,12 @@ class SettingsController extends Controller
                 return Redirect::back();
             }
 
+        }
+
+        if (isset($request->maxopenperuser) && !Settings::setSystemsMatchMakingMaxopenperuser($request->maxopenperuser)
+        ) {
+            Session::flash('alert-danger', 'Could not update maxopenperuser!');
+            return Redirect::back();
         }
 
         Session::flash('alert-success', "Successfully Saved OptSystems Settings!");

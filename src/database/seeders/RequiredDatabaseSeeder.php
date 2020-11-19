@@ -390,8 +390,16 @@ class RequiredDatabaseSeeder extends Seeder
             ['setting'          => 'systems_matchmaking_autostart'],
             [
                 'value'         => false,
-                'default'       => false,
-                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
+                'default'       => true,
+                'description'   => 'matchmaking match autostart'
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_maxopenperuser'],
+            [
+                'value'         => 0,
+                'default'       => true,
+                'description'   => 'Maximal open matchmaking matches per user'
             ]
         );
 

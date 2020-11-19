@@ -373,5 +373,29 @@ class SettingsTableSeeder extends Seeder
                 'description'   => 'Locale that is used for all the Site Default Texts'
             ]
         );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_publicuse'],
+            [
+                'value'         => true,
+                'default'       => true,
+                'description'   => 'matchmaking is globally usable for all registered users or only inside Events'
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_autostart'],
+            [
+                'value'         => false,
+                'default'       => true,
+                'description'   => 'matchmaking match autostart'
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_maxopenperuser'],
+            [
+                'value'         => 0,
+                'default'       => true,
+                'description'   => 'Maximal open matchmaking matches per user'
+            ]
+        );
     }
 }

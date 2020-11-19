@@ -39,10 +39,21 @@ class MatchMakingController extends Controller
         $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->get()->append(['sort' => 'created_at']);
         $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->get()->append(['sort' => 'created_at']);
         $ownedteams = MatchMakingTeam::where(['team_owner_id' => $currentuser])->get()->append(['sort' => 'created_at']);
+        $currentuseropenlivependingdraftmatches = array();
+        
+        foreach (MatchMaking::where(['status' => 'OPEN'])->orWhere(['status' => 'LIVE'])->orWhere(['status' => 'DRAFT'])->orWhere(['status' => 'PENDING'])->get() as $match)
+        {
+            if ($match->getMatchTeamPlayer(Auth::id()))
+            {
+                $currentuseropenlivependingdraftmatches[$match->id] = $match->id;
+            }
+        }
+        
         return view('matchmaking.index')
             ->withOpenPublicMatches($openpublicmatches)
             ->withOwnedTeams($ownedteams)
             ->withOwnedMatches($ownedmatches)
+            ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)
             ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled());
     }
 
@@ -145,7 +156,21 @@ class MatchMakingController extends Controller
         $this->validate($request, $rules, $messages);
 
 
+        $currentuseropenlivependingdraftmatches = array();
         
+        foreach (MatchMaking::where(['status' => 'OPEN'])->orWhere(['status' => 'LIVE'])->orWhere(['status' => 'DRAFT'])->orWhere(['status' => 'PENDING'])->get() as $match)
+        {
+            if ($match->getMatchTeamPlayer(Auth::id()))
+            {
+                $currentuseropenlivependingdraftmatches[$match->id] = $match->id;
+            }
+        }
+
+        if (Settings::getSystemsMatchMakingMaxopenperuser() != 0 && count($currentuseropenlivependingdraftmatches) >= Settings::getSystemsMatchMakingMaxopenperuser())
+        {
+            Session::flash('alert-danger', __('matchmaking.maxopened'));
+            return Redirect::back();
+        }
 
         $match                             = new MatchMaking();
 

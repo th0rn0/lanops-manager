@@ -59,6 +59,7 @@ return [
     'thisisyourteam' => 'This is your team!',
     'nopermissions' => 'You have no access to this Match! You need either an invite link from a match owner or a team owner or the match owner must set the match to public!',
     'matchmakinghome' => 'Click here to find other matches.',
+    'maxopened' => 'You have already more opened matches than allowed. Please finalize your matches first!',
     'error' => 'Error',
 
     

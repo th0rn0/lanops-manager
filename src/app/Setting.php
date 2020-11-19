@@ -1245,6 +1245,31 @@ class Setting extends Model
     }
 
     /**
+     * Get MatchMaking System Maxopenperuser
+     * @return Integer
+     */
+    public static function getSystemsMatchMakingMaxopenperuser()
+    {
+        return self::where('setting', 'systems_matchmaking_maxopenperuser')->first()->value;
+    }
+
+    /**
+     * Set MatchMaking System Maxopenperuser
+     * @param Integer $number
+     */
+    public static function setSystemsMatchMakingMaxopenperuser($number)
+    {
+        $setting = self::where('setting', 'systems_matchmaking_maxopenperuser')->first();
+        $setting->value = $number;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    
+
+    /**
      * Get Active Login Methods
      * @return Array
      */

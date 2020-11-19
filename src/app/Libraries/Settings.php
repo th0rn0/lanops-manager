@@ -878,6 +878,24 @@ class Settings
         return \App\Setting::disableSystemsMatchMakingAutostart();
     }
 
+    /**
+     * Get MatchMaking System Maxopenperuser
+     * @return String
+     */
+    public static function getSystemsMatchMakingMaxopenperuser()
+    {
+        return \App\Setting::getSystemsMatchMakingMaxopenperuser();
+    }
+
+    /**
+     * Set MatchMaking System Maxopenperuser
+     * @param Integer $number
+     */
+    public static function setSystemsMatchMakingMaxopenperuser($number)
+    {
+        return \App\Setting::setSystemsMatchMakingMaxopenperuser($number);
+    }
+
 
     /**
      * Get Active Login Methods
