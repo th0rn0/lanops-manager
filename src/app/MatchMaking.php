@@ -58,6 +58,13 @@ class MatchMaking extends Model
         return $this->belongsTo('App\User', 'owner_id');
     }
 
+    public function matchMakingServer()
+    {
+        return $this->hasOne('App\MatchMakingServer', 'match_id', 'id');
+    }
+
+
+
 
     /*
     * oldest team
@@ -89,6 +96,8 @@ class MatchMaking extends Model
     {
         return $this->teams()->where('team_owner_id', $matchTeamOwnerId)->first();
     }
+
+    
 
 
     /**

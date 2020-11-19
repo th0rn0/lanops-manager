@@ -160,7 +160,7 @@
 																</div>
 															</div>
 															@foreach ($tournament->game->getMatchCommands() as $matchCommand)
-																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/' . $tournament->slug, 'id'=>'executeServerCommandModal')) }}
+																{{ Form::open(array('url'=>'/admin/games/' . $tournament->game->slug . '/gameservercommands/execute/' . $matchserver->gameServer->slug .'/tournament/' . $tournament->slug, 'id'=>'executeServerCommandModal')) }}
 																	{{ Form::hidden('command', $matchCommand->id) }}
 																	{{ Form::hidden('challonge_match_id', $matchserver->challonge_match_id) }}
 																	challonge_match_id

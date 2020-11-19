@@ -59,6 +59,11 @@ class GameServer extends Model
         return $this->hasMany('App\EventTournamentMatchServer');
     }
 
+    public function MatchMakingServers()
+    {
+        return $this->hasMany('App\MatchMakingServer', 'game_server_id', 'id');
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *

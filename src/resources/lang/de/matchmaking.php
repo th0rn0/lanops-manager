@@ -15,6 +15,7 @@ return [
 
     'ended' => 'beendet',
     'live' => 'live',
+    'pending' => 'wartend',
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
     'matchowner' => 'Matcheigentümer',
@@ -111,6 +112,7 @@ return [
     'notenoughplayerstostart' => 'Mindestens ein Team hat nicht genug Spieler für die eingestellte Teamgröße!',
     'cannotstartmatch' => 'Match konnte nicht gestartet werden!',
     'matchstarted' => 'Match wurde gestartet!',
+    'matchpending' => 'Match start wurde angefordert, es muss von einem Administrator freigeschalten werden!',
     'cannotopenmatchnotowner' => 'Du kannst das Match nicht öffnen da du nicht der Eigentümer bist!',
     'matchalreadyopenliveorcompleted' => 'Das Match ist bereits open / live oder completed',
     'cannotopenmatch' => 'Match konnte nicht geöffnet werden!',

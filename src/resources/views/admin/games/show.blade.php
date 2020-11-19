@@ -255,7 +255,10 @@
 								GameServer: This Parameters are Visible per Server: Available Variable: {>game},{>gameServer}
 							</li>
 							<li>
-								Match: This Parameters are Visible for Matches and can use the variable {>game},{>event},{>tournament},{>match}, {>gameServer}
+								Match (used in Tournaments): This Parameters are Visible for Matches and can use the variable {>game},{>event},{>tournament},{>match}, {>gameServer}
+							</li>
+							<li>
+								Match (used in Matchmaking): This Parameters are Visible for Matches and can use the variable {>game},{>match}, {>gameServer}
 							</li>
 						</ul>
 					</div>

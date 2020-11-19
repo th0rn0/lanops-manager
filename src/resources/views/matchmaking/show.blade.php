@@ -60,7 +60,7 @@
 						{{ Form::close() }}
 						</div>
 					@endif
-					@if ($match->status != "LIVE" && $match->status != "COMPLETE")
+					@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING")
 						<a href="#" class="btn btn-warning btn-block mb-3" data-toggle="modal" data-target="#editMatchModal">@lang('matchmaking.editmatch')</a>
 
 						{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -116,7 +116,7 @@
 							<h4>@lang('matchmaking.team') #{{ $team->id }}: {{ $team->name }} </h4>
 						</div>
 						<div class="col-sm mt-3">
-							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
+							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
 								<a href="#" class="btn btn-warning btn-sm btn-block float-right" data-toggle="modal" data-target="#editTeamModal_{{ $team->id }}">@lang('matchmaking.editteam')</a>
 
 								@if($team->id != $team->match->oldestTeam->id )
@@ -137,7 +137,7 @@
 							@endif
 						</div>
 					</div>
-					@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "DRAFT")
+					@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" &&  $team->match->status != "DRAFT")
 						<div class="row">
 
 							<div class="col-sm">
@@ -180,7 +180,7 @@
 
 										<td width="15%">
 											@if ($teamplayer->user->id != $team->team_owner_id)
-												@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
+												@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE"&&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
 													{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 														{{ Form::hidden('_method', 'DELETE') }}
 														<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.removefrommatch')</button>

@@ -47,6 +47,9 @@
 										@if ($match->status == 'LIVE')
 											<span class="badge badge-success">@lang('matchmaking.live')</span>
 										@endif
+										@if ($match->status == 'PENDING')
+											<span class="badge badge-success">@lang('matchmaking.pending')</span>
+										@endif
 										@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
 											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
 										@endif
@@ -138,6 +141,9 @@
 										@if ($team->match->status == 'LIVE')
 											<span class="badge badge-success">@lang('matchmaking.live')</span>
 										@endif
+										@if ($match->status == 'PENDING')
+										<span class="badge badge-success">@lang('matchmaking.pending')</span>
+										@endif	
 										@if ($team->match->status != 'COMPLETE' && !$team->match->getMatchTeamPlayer(Auth::id()))
 											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
 										@endif
@@ -227,6 +233,9 @@
 									@endif
 									@if ($match->status == 'LIVE')
 										<span class="badge badge-success">@lang('matchmaking.live')</span>
+									@endif
+									@if ($match->status == 'PENDING')
+										<span class="badge badge-success">@lang('matchmaking.pending')</span>
 									@endif
 									@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
 										<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>

@@ -17,6 +17,7 @@ use App\GameServer;
 use App\GameServerCommand;
 use App\GameServerCommandParameter;
 use App\EventTournament;
+use App\MatchMaking;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -215,7 +216,7 @@ class GameServerCommandsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function executeGameServerMatchCommand(Game $game, GameServer $gameServer, EventTournament $tournament, Request $request)
+    public function executeGameServerTournamentMatchCommand(Game $game, GameServer $gameServer, EventTournament $tournament, Request $request)
     {
         $rules = [
             'command'           => 'filled'
@@ -241,4 +242,37 @@ class GameServerCommandsController extends Controller
 
         return Redirect::back();
     }
+ 
+
+    /**
+     * execute executeGameServerTournamentMatchMakingCommand
+     * @param  Game  $game
+     * @param  GameServer  $gameServer
+     * @param  MatchMaking $match
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function executeGameServerMatchMakingCommand(Game $game, GameServer $gameServer, MatchMaking $match, Request $request)
+    {
+        $rules = [
+            'command'           => 'filled'
+        ];
+        $messages = [
+            'command.required' => 'Command is required'
+        ];
+        $this->validate($request, $rules, $messages);
+
+        $gameServerCommand = GameServerCommand::find($request->command);
+        $availableParameters = new \stdClass();
+        $availableParameters->game = $game;
+        $availableParameters->gameServer = $gameServer;
+        $availableParameters->match = $match;
+
+        $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
+
+        $this->executeCommand($gameServer, $command);
+
+        return Redirect::back();
+    }
+
 }

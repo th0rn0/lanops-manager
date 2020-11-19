@@ -356,7 +356,8 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@update');
             Route::delete('/admin/games/{game}/gameservercommands/{gameServerCommand}', 'Admin\GameServerCommandsController@destroy');
             Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}', 'Admin\GameServerCommandsController@executeGameServerCommand');
-            Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/{tournament}', 'Admin\GameServerCommandsController@executeGameServerMatchCommand');
+            Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/tournament/{tournament}', 'Admin\GameServerCommandsController@executeGameServerTournamentMatchCommand');
+            Route::post('/admin/games/{game}/gameservercommands/execute/{gameServer}/matchmaking/{match}', 'Admin\GameServerCommandsController@executeGameServerMatchMakingCommand');
 
             /**
              * GameServerCommandParametrs
@@ -462,6 +463,10 @@ Route::group(['middleware' => ['installed']], function () {
              * MatchMaking
              */
             Route::get('/admin/matchmaking', 'Admin\MatchMakingController@index');
+            Route::get('/admin/matchmaking/pending', 'Admin\MatchMakingController@indexpending');
+            Route::post('/admin/matchmaking/{match}/serverstore','Admin\MatchMakingServerController@store');
+            Route::post('/admin/matchmaking/{match}/serverupdate', 'Admin\MatchMakingServerController@update');
+            Route::delete('/admin/matchmaking/{match}/serverdelete', 'Admin\MatchMakingServerController@destroy');
             Route::get('/admin/matchmaking/{match}', 'Admin\MatchMakingController@show');
             Route::post('/admin/matchmaking', 'Admin\MatchMakingController@store');
             Route::post('/admin/matchmaking/{match}/team/{team}/teamplayer/add', 'Admin\MatchMakingController@addusertomatch');
@@ -474,6 +479,8 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/matchmaking/{match}/open', 'Admin\MatchMakingController@open');
             Route::post('/admin/matchmaking/{match}/finalize', 'Admin\MatchMakingController@finalize');
             Route::delete('/admin/matchmaking/{match}', 'Admin\MatchMakingController@destroy');
+
+ 
 
 
 
