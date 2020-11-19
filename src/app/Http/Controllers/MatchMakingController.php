@@ -623,7 +623,7 @@ class MatchMakingController extends Controller
                 Session::flash('alert-danger', 'Could not save matchMakingServer!');
                 return Redirect::back();
             }
-            }
+            
             if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != NULL)
             {
                 $request = new Request([
