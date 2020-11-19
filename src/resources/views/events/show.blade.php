@@ -269,8 +269,8 @@
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-12 col-md-8">
 										<picture>
-											<source srcset="{{ $seatingPlan->name }}.webp" type="image/webp">
-											<source srcset="{{ $seatingPlan->name }}" type="image/jpeg">
+											<source srcset="{{ $seatingPlan->image_path }}.webp" type="image/webp">
+											<source srcset="{{ $seatingPlan->image_path }}" type="image/jpeg">
 											<img class="img-fluid" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
 										</picture>
 									</div>
