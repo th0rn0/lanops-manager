@@ -77,6 +77,7 @@ class GamesController extends Controller
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
+        $game->gamematchapihandler = $request->gamematchapihandler;
         $game->public       = true;
         $game->min_team_count = $request->min_team_count;
         $game->max_team_count = $request->max_team_count;
@@ -167,6 +168,7 @@ class GamesController extends Controller
         $game->description  = @(trim($request->description) == '' ? null : $request->description);
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
+        $game->gamematchapihandler = $request->gamematchapihandler;
         $game->matchstartgameservercommand = $matchstartgameservercommand;
         $game->public       = @($request->public ? true : false);
         $game->connect_game_url = @$request->connect_game_url;

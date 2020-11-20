@@ -632,44 +632,35 @@ class MatchMakingController extends Controller
 
         if(Settings::isSystemsMatchMakingAutostartEnabled())
         {
-            $availableservers = $match->game->getGameServerSelectArray();
-
-            if (count($availableservers) == 0)
+            if (isset($match->game))
             {
-                Session::flash('alert-danger', 'Currently no free Servers are available!');
-                return Redirect::back();
-            }
 
-            $matchMakingServer                 = new MatchMakingServer();
-            $matchMakingServer->match_id        = $match->id;
-            $matchMakingServer->game_server_id = array_key_first($availableservers);
-    
-            if (!$matchMakingServer->save()) {
-                Session::flash('alert-danger', 'Could not save matchMakingServer!');
-                return Redirect::back();
-            }
-            
-            if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != NULL)
-            {
+                $availableservers = $match->game->getGameServerSelectArray();
+
+                if (count($availableservers) == 0)
+                {
+                    Session::flash('alert-danger', 'Currently no free Servers are available!');
+                    return Redirect::back();
+                }
+
                 $request = new Request([
-                    'command'   => $match->game->matchStartGameServerCommand->id,
+                    'gameServer'   => array_key_first($availableservers),
                 ]);
-
-                $gccontroller = new GameServerCommandsController();
-                $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);    
-            
+                $matchMakingServer                 = new MatchMakingServer();
+                $matchMakingServer->store($match, $request);
                 
-                $availableParameters = new \stdClass();
-                $availableParameters->game = $match->game;
-                $availableParameters->gameServer = $match->gameServer;
-                $availableParameters->match = $match;
-        
-                $command = Helpers::resolveServerCommandParameters($match->game->matchStartGameServerCommand->command, $request, $availableParameters);
-        
-                $gccontroller->executeCommand($match->gameServer, $command);
-            
-            }
-            
+                if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != NULL)
+                {
+                    $request = new Request([
+                        'command'   => $match->game->matchStartGameServerCommand->id,
+                    ]);
+
+                    $gccontroller = new GameServerCommandsController();
+                    $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);    
+                    
+                }
+            } 
+                
 
             if (!$match->setStatus('LIVE')) {
                 Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));

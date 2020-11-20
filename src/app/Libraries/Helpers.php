@@ -281,13 +281,23 @@ class Helpers
     }
 
     /**
-     * Get Games Select Array
+     * Get GameCommandHandler Select Array
      * @param  $publicOnly
      * @return Array
      */
     public static function getGameCommandHandlerSelectArray($publicOnly = true)
     {
         return \App\GameCommandHandler::getGameCommandHandlerSelectArray($publicOnly);
+    }
+
+    /**
+     * Get GameMatchApiHandler Select Array
+     * @param  $publicOnly
+     * @return Array
+     */
+    public static function getGameMatchApiHandlerSelectArray()
+    {
+        return \App\GameMatchApiHandler::getGameMatchApiHandlerSelectArray();
     }
 
     /**

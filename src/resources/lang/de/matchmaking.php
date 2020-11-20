@@ -16,6 +16,7 @@ return [
     'ended' => 'beendet',
     'live' => 'live',
     'pending' => 'wartend',
+    'draft' => 'Entwurf',
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
     'matchowner' => 'Matcheigentümer',

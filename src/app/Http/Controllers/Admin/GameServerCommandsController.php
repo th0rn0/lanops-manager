@@ -272,7 +272,7 @@ class GameServerCommandsController extends Controller
 
         $this->executeCommand($gameServer, $command);
 
-        return Redirect::back();
+        // return Redirect::back();
     }
 
 }

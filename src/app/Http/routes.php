@@ -29,6 +29,10 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
             Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
             Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
+            Route::get('/api/matchmaking/{match}/finalize', 'GameMatchApi\GameMatchApiController@matchMakingMatchFinalize');
+            Route::get('/api/matchmaking/{match}/{nummaps}', 'GameMatchApi\GameMatchApiController@matchMakingMatchConfig');
+            Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize', 'GameMatchApi\GameMatchApiController@tournamentMatchFinalize');
+            Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/{nummaps}', 'GameMatchApi\GameMatchApiController@tournamentMatchConfig');
         });
 
         /**
@@ -134,7 +138,6 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
             Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-            Route::get('/events/{event}/tournaments/{tournament}/{challongeMatchId}/{nummaps}', 'Events\TournamentsController@matchConfig');
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
                 Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');

@@ -124,6 +124,10 @@
 							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
+							{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
+							{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), null, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
 							{{ Form::label('image_thumbnail','Thumbnail Image - 500x500',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
 						</div>
@@ -148,12 +152,12 @@
 						</div>
 						<div class="form-group">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
-							{{ Form::number('min_team_count', 0, array('id'=>'min_team_count','class'=>'form-control')) }}
+							{{ Form::number('min_team_count', 2, array('id'=>'min_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>
 						</div>
 						<div class="form-group">
 							{{ Form::label('max_team_count','Max Team Count',array('id'=>'','class'=>'')) }}
-							{{ Form::number('max_team_count', 0, array('id'=>'max_team_count','class'=>'form-control')) }}
+							{{ Form::number('max_team_count', 2, array('id'=>'max_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>
 						</div>
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
