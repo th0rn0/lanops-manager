@@ -57,6 +57,7 @@ class GameServersController extends Controller
         $gameServer->game_password  = $request->game_password;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
+        $gameServer->gameserver_secret = base_convert(microtime(false), 10, 36);
 
         if (!$gameServer->save()) {
             Session::flash('alert-danger', 'Could not save GameServer!');
