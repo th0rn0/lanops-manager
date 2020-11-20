@@ -643,14 +643,11 @@ class MatchMakingController extends Controller
                     return Redirect::back();
                 }
 
+                $request = new Request([
+                    'gameServer'   => array_key_first($availableservers),
+                ]);
                 $matchMakingServer                 = new MatchMakingServer();
-                $matchMakingServer->match_id        = $match->id;
-                $matchMakingServer->game_server_id = array_key_first($availableservers);
-        
-                if (!$matchMakingServer->save()) {
-                    Session::flash('alert-danger', 'Could not save matchMakingServer!');
-                    return Redirect::back();
-                }
+                $matchMakingServer->store($match, $request);
                 
                 if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != NULL)
                 {
