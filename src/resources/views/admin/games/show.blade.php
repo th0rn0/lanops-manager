@@ -452,6 +452,10 @@
 						<div class="form-group">
 						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
 						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+						</div>						
+						<div class="form-group">
+						{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
+						{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), $game->gamematchapihandler, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('matchstartgameservercommand','Match start command',array('id'=>'','class'=>'')) }}

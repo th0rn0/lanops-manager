@@ -35,6 +35,7 @@ class Game extends Model
         'name',
         'active',
         'gamecommandhandler',
+        'gamematchapihandler',
         'image_header_path',
         'image_thumbnail_path',
         'connect_game_url',
