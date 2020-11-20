@@ -145,7 +145,7 @@
 										@endif
 										@if ($match->status == 'PENDING')
 										<span class="badge badge-success">@lang('matchmaking.pending')</span>
-										@endif	
+										@endif
 										@if ($team->match->status != 'COMPLETE' && !$team->match->getMatchTeamPlayer(Auth::id()))
 											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
 										@endif
@@ -209,7 +209,7 @@
 	@endif
 
 		<!-- owned matches -->
-		@if (!$ownedMatches->isEmpty())
+		@if (!$openPublicMatches->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="ownedmatches"></a>
 			<h3>@lang('matchmaking.publicmatches')</h3>
