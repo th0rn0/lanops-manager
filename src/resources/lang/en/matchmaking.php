@@ -15,6 +15,7 @@ return [
 
     'ended' => 'has ended',
     'live' => 'is live',
+    'draft' => 'draft',
     'pending' => 'is pending',
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',

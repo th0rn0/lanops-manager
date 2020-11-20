@@ -52,6 +52,9 @@
 										@if ($match->status == 'PENDING')
 											<span class="badge badge-success">@lang('matchmaking.pending')</span>
 										@endif
+										@if ($match->status == 'DRAFT')
+											<span class="badge badge-success">@lang('matchmaking.draft')</span>
+										@endif
 										@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
 											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
 										@endif
@@ -144,8 +147,11 @@
 											<span class="badge badge-success">@lang('matchmaking.live')</span>
 										@endif
 										@if ($match->status == 'PENDING')
-										<span class="badge badge-success">@lang('matchmaking.pending')</span>
+											<span class="badge badge-success">@lang('matchmaking.pending')</span>
 										@endif	
+										@if ($match->status == 'DRAFT')
+											<span class="badge badge-success">@lang('matchmaking.draft')</span>
+										@endif
 										@if ($team->match->status != 'COMPLETE' && !$team->match->getMatchTeamPlayer(Auth::id()))
 											<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
 										@endif
@@ -208,8 +214,8 @@
 		</div>
 	@endif
 
-		<!-- owned matches -->
-		@if (!$ownedMatches->isEmpty())
+		<!-- open public matches -->
+		@if (!$openPublicMatches->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="ownedmatches"></a>
 			<h3>@lang('matchmaking.publicmatches')</h3>
@@ -238,6 +244,9 @@
 									@endif
 									@if ($match->status == 'PENDING')
 										<span class="badge badge-success">@lang('matchmaking.pending')</span>
+									@endif
+									@if ($match->status == 'DRAFT')
+										<span class="badge badge-success">@lang('matchmaking.draft')</span>
 									@endif
 									@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
 										<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
