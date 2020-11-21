@@ -27,6 +27,7 @@ class GameMatchApiController extends Controller
      */
     public function tournamentMatchConfig(Event $event, EventTournament $tournament, $challongeMatchId, $nummaps)
     {
+        return $challongeMatchId;
         if (!is_numeric($challongeMatchId))
         {
             return "challongeMatchId must be an Integer!";
