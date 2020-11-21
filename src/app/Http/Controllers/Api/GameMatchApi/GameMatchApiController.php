@@ -15,14 +15,14 @@ use App\GameMatchApiHandler;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\MatchMaking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class GameMatchApiController extends Controller
 {
     /**
-     * Show Events
+     * tournamentMatchConfig
      * @return View
      */
     public function tournamentMatchConfig(Event $event, EventTournament $tournament, int $challongeMatchId, int $nummaps)
@@ -51,9 +51,34 @@ class GameMatchApiController extends Controller
             $gamematchapihandler->addplayer($team2->name, $user->steamid, $user->steamname);
         }
 
-        $result = $gamematchapihandler->start(intval($challongeMatchId),$nummaps, $tournament->team_size[0]);
+        $result = $gamematchapihandler->start($challongeMatchId,$nummaps, $tournament->team_size[0]);
 
         return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-    }
+    } 
+    
+    /**
+    * matchMakingMatchConfig
+    * @return View
+    */
+   public function matchMakingMatchConfig(MatchMaking $match, int $nummaps)
+   {
+       
+       $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+       
+       foreach( $match->teams as $team)
+       {
+        $gamematchapihandler->addteam($team->name);
+
+        foreach ($team->players as $player) {
+    
+            $gamematchapihandler->addplayer($team->name, $player->user->steamid, $player->user->steamname);
+        }
+
+       }
+
+       $result = $gamematchapihandler->start($match->id,$nummaps, $match->team_size[0]);
+
+       return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+   }
 
 }
