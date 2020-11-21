@@ -27,10 +27,10 @@
 					<span class="badge badge-success">@lang('matchmaking.signedup')</span>
 				@endif
 				@if ( $match->owner_id == Auth::id())
-				<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
+					<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
 				@endif
 				@if ( $match->getMatchTeamOwner(Auth::id()))
-				<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
+					<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
 				@endif
 			</span>
 		</span>
@@ -184,8 +184,8 @@
 
 									@endif
 									@if($match->status == "COMPLETE")
-										<div class="text-right float-right">
-											<h4 class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light @else  border-danger bg-danger-light @endif">{{ $team->team_score }}</h4>
+										<div class="text-center float-right">
+											<h4 style="width:50px;" class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light @else  border-danger bg-danger-light @endif">{{ $team->team_score }}</h4>
 										</div>
 									@endif
 								</div>

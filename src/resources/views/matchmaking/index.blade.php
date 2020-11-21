@@ -62,10 +62,10 @@
 											<span class="badge badge-success">@lang('matchmaking.signedup')</span>
 										@endif
 										@if ( $match->owner_id == Auth::id())
-										<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
+										<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
 										@endif
 										@if ( $match->getMatchTeamOwner(Auth::id()))
-										<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
+										<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
 										@endif
 									</span>
 								</div>
@@ -159,10 +159,10 @@
 											<span class="badge badge-success">@lang('matchmaking.signedup')</span>
 										@endif
 										@if ( $team->match->owner_id == Auth::id())
-										<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
+										<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
 										@endif
 										@if ( $team->match->getMatchTeamOwner(Auth::id()))
-										<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
+										<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
 										@endif
 									</span>
 								</div>
@@ -255,10 +255,10 @@
 										<span class="badge badge-success">@lang('matchmaking.signedup')</span>
 									@endif
 									@if ( $match->owner_id == Auth::id())
-									<span class="badge badge-success">@lang('matchmaking.matchowner')</span>
+									<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
 									@endif
 									@if ( $match->getMatchTeamOwner(Auth::id()))
-									<span class="badge badge-success">@lang('matchmaking.teamowner')</span>
+									<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
 									@endif
 								</span>
 								</div>
