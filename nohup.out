@@ -1,0 +1,14 @@
+Set Windows Application User Model ID (AUMID) { appUserModelId: 'org.whispersystems.signal-desktop-beta' }
+NODE_ENV production
+NODE_CONFIG_DIR /opt/Signal Beta/resources/app.asar/config
+NODE_CONFIG {}
+ALLOW_CONFIG_MUTATIONS undefined
+HOSTNAME undefined
+NODE_APP_INSTANCE undefined
+SUPPRESS_NO_CONFIG_WARNING undefined
+SIGNAL_ENABLE_HTTP undefined
+userData: /home/volza/.config/Signal Beta
+config/get: Successfully read user config file
+x-attr dependncy did not load successfully
+config/get: Successfully read ephemeral config file
+(node:20312) Electron: Loading non-context-aware native module in renderer: '/opt/Signal Beta/resources/app.asar.unpacked/node_modules/ringrtc/build/linux/libringrtc.node'. This is deprecated, see https://github.com/electron/electron/issues/18397.
