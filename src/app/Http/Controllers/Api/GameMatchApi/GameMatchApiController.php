@@ -25,9 +25,13 @@ class GameMatchApiController extends Controller
      * Show Events
      * @return View
      */
-    public function tournamentMatchConfig(Event $event, EventTournament $tournament, int $challongeMatchId, $nummaps)
+    public function tournamentMatchConfig(Event $event, EventTournament $tournament, $challongeMatchId, $nummaps)
     {
-        $match = $tournament->getMatch($challongeMatchId);
+        if (!is_numeric($challongeMatchId))
+        {
+            return "challongeMatchId must be an Integer!";
+        }
+        $match = $tournament->getMatch(intval($challongeMatchId));
         if (!$match) {
             return "No Match found for $challongeMatchId";
         }
@@ -51,7 +55,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler->addplayer($team2->name, $user->steamid, $user->steamname);
         }
 
-        $result = $gamematchapihandler->start($challongeMatchId,$nummaps, $tournament->team_size[0]);
+        $result = $gamematchapihandler->start(intval($challongeMatchId),$nummaps, $tournament->team_size[0]);
 
         return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
