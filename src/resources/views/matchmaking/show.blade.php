@@ -53,59 +53,49 @@
 					</div>
 				@endif
 				{{-- Open, Start, Finalize --}}
-					@if($match->status == "DRAFT")
-						<div class="form-group">
-						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
-							<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.openmatch')</button>
-						{{ Form::close() }}
-						</div>
-					@endif
-					@if($match->status == "OPEN")
-						<div class="form-group">
-						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/start' )) }}
-							<button type="submit" class="btn btn-success btn-block"><i class="fas fa-play"></i> @lang('matchmaking.startmatch')</button>
-						{{ Form::close() }}
-						</div>
-					@endif
-					@if($match->status == "LIVE")
-						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/finalize' )) }}
-							<div class="row">
-								@foreach ($match->teams as $team)
-									<div class="col">
-										<div class="form-group">
-											{{ Form::label('teamscore_'. $team->id, __('matchmaking.scoreof').' '.$team->name ,array('id'=>'','class'=>'')) }}
-											{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
-										</div>
-									</div>
-								@endforeach
-							</div>
-							<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
-						{{ Form::close() }}
-					@endif
-				{{-- Edit, Delete --}}
-					@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING")
-						<div class="row">
-
-							<div class="col">
-								<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-toggle="modal" data-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
-							</div>
-							<div class="col">
-								{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
-								{{ Form::hidden('_method', 'DELETE') }}
-								<button type="submit" class="btn btn-danger btn-block  mb-3 text-nowrap"><i class="fas fa-trash"></i> @lang('matchmaking.deletematch')</button>
-								{{ Form::close() }}
-							</div>
-						</div>
-
-					@endif
-				{{-- Result --}}
-				{{-- @if($match->status == "COMPLETE")
-					<div class="col-12">
-						@foreach ($match->teams as $team)
-							<p>{{$team->name}} @lang('matchmaking.score') {{$team->team_score}}</p>
-						@endforeach
+				@if($match->status == "DRAFT")
+					<div class="form-group">
+					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
+						<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.openmatch')</button>
+					{{ Form::close() }}
 					</div>
-				@endif --}}
+				@endif
+				@if($match->status == "OPEN")
+					<div class="form-group">
+					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/start' )) }}
+						<button type="submit" class="btn btn-success btn-block"><i class="fas fa-play"></i> @lang('matchmaking.startmatch')</button>
+					{{ Form::close() }}
+					</div>
+				@endif
+				@if($match->status == "LIVE")
+					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/finalize' )) }}
+						<div class="row">
+							@foreach ($match->teams as $team)
+								<div class="col">
+									<div class="form-group">
+										{{ Form::label('teamscore_'. $team->id, __('matchmaking.scoreof').' '.$team->name ,array('id'=>'','class'=>'')) }}
+										{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+									</div>
+								</div>
+							@endforeach
+						</div>
+						<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
+					{{ Form::close() }}
+				@endif
+				{{-- Edit, Delete --}}
+				@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING")
+					<div class="row">
+						<div class="col">
+							<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-toggle="modal" data-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
+						</div>
+						<div class="col">
+							{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+							{{ Form::hidden('_method', 'DELETE') }}
+							<button type="submit" class="btn btn-danger btn-block  mb-3 text-nowrap"><i class="fas fa-trash"></i> @lang('matchmaking.deletematch')</button>
+							{{ Form::close() }}
+						</div>
+					</div>
+				@endif
 			<hr>
 		@endif
 
@@ -142,10 +132,29 @@
 
 		<div class="row">
 
+			@php
+
+				$winnerTeam;
+				foreach ($match->teams as $team)
+				{
+					if(isset($winnerTeam))
+					{
+						if($winnerTeam->team_score < $team->team_score)
+						{
+							$winnerTeam = $team;
+						}
+					}
+					else
+					{
+						$winnerTeam = $team;
+					}
+				}
+			@endphp
+
 			@foreach ($match->teams as $team)
 				<div class="col">
 					<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-						<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
+						<div class="card-header @if(Colors::isBodyDarkMode()) border-light  @endif">
 							<div class="row">
 								<div class="col">
 									<h4>@lang('matchmaking.team') #{{ $loop->iteration }}: {{ $team->name }}</h4>
@@ -176,7 +185,7 @@
 									@endif
 									@if($match->status == "COMPLETE")
 										<div class="text-right float-right">
-											<h4 class="border border-success p-2 bg-success-light">{{ $team->team_score }}</h4>
+											<h4 class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light @else  border-danger bg-danger-light @endif">{{ $team->team_score }}</h4>
 										</div>
 									@endif
 								</div>

@@ -11,9 +11,13 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
                 compress: false, // The slow bit
             }
         }
-    })
-    // .purgeCss() // remove unused css rules
-    .scripts([
+    });
+
+if (mix.inProduction()) {
+    mix.purgeCss() // remove unused css rules
+}
+
+mix.scripts([
         './node_modules/jquery/dist/jquery.js',
         './node_modules/jquery-ui-dist/jquery-ui.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
