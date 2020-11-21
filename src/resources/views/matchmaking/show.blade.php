@@ -40,7 +40,6 @@
 
 	@if($match->ispublic == 1 || $invite != null || $teamJoin != null || $match->owner_id == Auth::id() || $match->getMatchTeamPlayer(Auth::id()))
 		@if ($match->owner_id == Auth::id())
-			<div class="row">
 				@if($match->status == "OPEN")
 					{{-- Invite URL --}}
 					<div class="col-12">
@@ -54,7 +53,6 @@
 					</div>
 				@endif
 				{{-- Open, Start, Finalize --}}
-				<div class="col-sm-6">
 					@if($match->status == "DRAFT")
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
@@ -70,21 +68,21 @@
 						</div>
 					@endif
 					@if($match->status == "LIVE")
-						<div class="form-group">
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/finalize' )) }}
-						@foreach ($match->teams as $team)
-
-							{{ Form::label('teamscore_'. $team->id, __('matchmaking.scoreof').' '.$team->name ,array('id'=>'','class'=>'')) }}
-							{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
-
-						@endforeach
-						<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
+							<div class="row">
+								@foreach ($match->teams as $team)
+									<div class="col">
+										<div class="form-group">
+											{{ Form::label('teamscore_'. $team->id, __('matchmaking.scoreof').' '.$team->name ,array('id'=>'','class'=>'')) }}
+											{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+										</div>
+									</div>
+								@endforeach
+							</div>
+							<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
 						{{ Form::close() }}
-						</div>
 					@endif
-				</div>
 				{{-- Edit, Delete --}}
-				<div class="col-sm-6">
 					@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING")
 						<div class="row">
 
@@ -100,16 +98,14 @@
 						</div>
 
 					@endif
-				</div>
 				{{-- Result --}}
-				@if($match->status == "COMPLETE")
+				{{-- @if($match->status == "COMPLETE")
 					<div class="col-12">
 						@foreach ($match->teams as $team)
 							<p>{{$team->name}} @lang('matchmaking.score') {{$team->team_score}}</p>
 						@endforeach
 					</div>
-				@endif
-			</div>
+				@endif --}}
 			<hr>
 		@endif
 
@@ -152,10 +148,10 @@
 						<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
 							<div class="row">
 								<div class="col">
-									<h4>@lang('matchmaking.team') #{{ $loop->iteration }}: {{ $team->name }} </h4>
+									<h4>@lang('matchmaking.team') #{{ $loop->iteration }}: {{ $team->name }}</h4>
 								</div>
-								<div class="col-sm mt-3">
-									@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
+								<div class="col">
+									@if($team->match->status != "LIVE" && $team->match->status != "COMPLETE" && $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
 										<div class="row">
 											<div class="col">
 												<button class="btn btn-warning btn-sm btn-block float-right text-nowrap" data-toggle="modal" data-target="#editTeamModal_{{ $team->id }}"><i class="fas fa-user-edit"></i> @lang('matchmaking.editteam')</button>
@@ -177,6 +173,11 @@
 										<button type="submit" class="btn btn-success btn-sm btn-block float-right"><i class="fas fa-user-plus"></i> @lang('matchmaking.jointeam')</button>
 										{{ Form::close() }}
 
+									@endif
+									@if($match->status == "COMPLETE")
+										<div class="text-right float-right">
+											<h4 class="border border-success p-2 bg-success-light">{{ $team->team_score }}</h4>
+										</div>
 									@endif
 								</div>
 							</div>
