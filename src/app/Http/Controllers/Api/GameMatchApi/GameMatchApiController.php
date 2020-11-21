@@ -25,17 +25,9 @@ class GameMatchApiController extends Controller
      * Show Events
      * @return View
      */
-    public function tournamentMatchConfig(Event $event, EventTournament $tournament, $challongeMatchId, $nummaps)
+    public function tournamentMatchConfig(Event $event, EventTournament $tournament, int $challongeMatchId, int $nummaps)
     {
-        print_r($event);
-        print_r($tournament);
-        print($challongeMatchId);
-        return $nummaps;
-        if (!is_numeric($challongeMatchId))
-        {
-            return "challongeMatchId must be an Integer!";
-        }
-        $match = $tournament->getMatch(intval($challongeMatchId));
+        $match = $tournament->getMatch($challongeMatchId);
         if (!$match) {
             return "No Match found for $challongeMatchId";
         }
