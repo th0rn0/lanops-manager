@@ -32,7 +32,6 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/api/matchmaking/{match}/finalize', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalize');
             Route::get('/api/matchmaking/{match}/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchConfig');
             Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalize');
-            Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchConfig');
         });
 
         /**
@@ -138,6 +137,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
             Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
+            Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchConfig');
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
                 Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
