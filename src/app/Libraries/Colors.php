@@ -249,13 +249,13 @@ class Colors
     public static function isDark($color){
         $rgb = Colors::HTMLToRGB($color);
         $hsl = Colors::RGBToHSL($rgb);
-        Debugbar::addMessage("BodyDarkMode: $color" . "(Color: " . $hsl->lightness.  ")", 'Colors');
+
         return $hsl->lightness < 200;
     }
 
     public static function isBodyDarkMode(){
         $bodyColor = Appearance::getCssVariable("color_body_background");
-
+        Debugbar::addMessage("BodyDarkMode: $bodyColor", 'Colors');
         $result =  Colors::isDark($bodyColor->value);
 
         return $result;
@@ -263,6 +263,7 @@ class Colors
 
     public static function isNavbarDark(){
         $bodyColor = Appearance::getCssVariable("color_header_background");
+        Debugbar::addMessage("NavBarDarkMode: $bodyColor", 'Colors');
         return Colors::isDark($bodyColor->value);
     }
 

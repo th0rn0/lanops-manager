@@ -1,25 +1,25 @@
 .navbar-brand {
-  float: left;
-  height: 50px;
-  padding: 15px 0px;
-  font-size: 18px;
-  line-height: 20px;
+    float: left;
+    height: 50px;
+    padding: 15px 0px;
+    font-size: 18px;
+    line-height: 20px;
 }
 
 .navbar {
-  margin-bottom: 20px;
-  padding: 0;
+    margin-bottom: 20px;
+    padding: 0;
 }
 
 .navbar-nav {
-  > .nav-item {
-    &:hover > .nav-link {
-      border-bottom: 4px solid $color_primary !important;
-      padding-bottom: 4px;
-      color: $color_secondary_text;
-      background-color: transparent;
+    >.nav-item {
+        &:hover>.nav-link {
+            border-bottom: 4px solid $color_primary !important;
+            padding-bottom: 4px;
+            color: $color_secondary_text;
+            background-color: transparent;
+        }
     }
-  }
 }
 
 h1,
@@ -28,45 +28,46 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 20px;
-  margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-.card {
-  background-color: rgba(128, 128, 128, 0.3);
-}
-
+// .card {
+//   background-color: rgba(128, 128, 128, 0.3);
+// }
 .bg-success-light {
-  background-color: #dff0d8;
+    background-color: #dff0d8;
 }
+
 .bg-info-light {
-  background-color: #d9edf7;
+    background-color: #d9edf7;
 }
+
 .bg-danger-light {
-  background-color: #f2dede;
+    background-color: #f2dede;
 }
 
 .progress {
-  height: 20px;
+    height: 20px;
 }
 
 .alert-fixed {
-  position: fixed;
-  bottom: 1rem;
-  left: 1em;
-  right: 1em;
-  z-index: 10000;
+    position: fixed;
+    bottom: 1rem;
+    left: 1em;
+    right: 1em;
+    z-index: 10000;
 }
 
 .link-unstyled,
 .link-unstyled:link,
 .link-unstyled:hover {
-  color: inherit;
-  text-decoration: inherit;
+    color: inherit;
+    text-decoration: inherit;
 }
 
 .card-hover:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
-  transform: opacity(0.8);
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    transform: opacity(0.8);
 }

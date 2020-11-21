@@ -148,7 +148,7 @@
 										@endif
 										@if ($match->status == 'PENDING')
 											<span class="badge badge-success">@lang('matchmaking.pending')</span>
-										@endif	
+										@endif
 										@if ($match->status == 'DRAFT')
 											<span class="badge badge-success">@lang('matchmaking.draft')</span>
 										@endif
