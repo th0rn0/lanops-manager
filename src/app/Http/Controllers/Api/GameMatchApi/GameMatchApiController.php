@@ -27,7 +27,6 @@ class GameMatchApiController extends Controller
      */
     public function tournamentMatchConfig(Request $request, Event $event, EventTournament $tournament, $challongeMatchId, $nummaps)
     {
-        print_r($request);
         print_r($event);
         print_r($tournament);
         print($challongeMatchId);
