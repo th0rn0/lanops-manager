@@ -54,13 +54,6 @@
 			</li>
 			<li class="nav-item {{ Request::is('admin/matchmaking') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/matchmaking"><i class="fa fa-list-ol fa-fw"></i> Matchmaking</a>
-				@if (Settings::isMatchMakingEnabled() && (Request::is('admin/matchmaking') || Request::is('admin/matchmaking/pending')))
-				<ul class="navbar-nav nav-second-level">
-						<li class="nav-item">
-							<a class="nav-link" href="/admin/matchmaking/pending">Pending Matches</a>
-						</li>
-				</ul>
-				@endif
 			</li>
 			<li class="nav-item {{ Request::is('admin/purchases') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>

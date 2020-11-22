@@ -466,7 +466,6 @@ Route::group(['middleware' => ['installed']], function () {
              * MatchMaking
              */
             Route::get('/admin/matchmaking', 'Admin\MatchMakingController@index');
-            Route::get('/admin/matchmaking/pending', 'Admin\MatchMakingController@indexpending');
             Route::post('/admin/matchmaking/{match}/serverstore','Admin\MatchMakingServerController@store');
             Route::post('/admin/matchmaking/{match}/serverupdate', 'Admin\MatchMakingServerController@update');
             Route::delete('/admin/matchmaking/{match}/serverdelete', 'Admin\MatchMakingServerController@destroy');

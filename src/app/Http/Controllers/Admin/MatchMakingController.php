@@ -35,6 +35,9 @@ class MatchMakingController extends Controller
     {
         $allusers = User::all();
         $matches = MatchMaking::all()->append(['sort' => 'created_at']);
+        $pendingmatches = MatchMaking::where("status","PENDING")->get()->append(['sort' => 'updated_at']);
+        $livematches = MatchMaking::where("status","LIVE")->get()->append(['sort' => 'updated_at']);
+
         $selectallusers = array();
 
         foreach($allusers as $user) {
@@ -42,25 +45,12 @@ class MatchMakingController extends Controller
         }
         return view('admin.matchmaking.index')
             ->withMatches($matches)
+            ->withPendingMatches($pendingmatches)
+            ->withLiveMatches($livematches)
             ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled())
             ->withUsers($selectallusers);
     }
 
-    /**
-     * Show pending MatchMaking Index Page
-     * @return View
-     */
-    public function indexpending()
-    {
-        $matches = MatchMaking::where("status","PENDING")->get()->append(['sort' => 'updated_at']);
-        $livematches = MatchMaking::where("status","LIVE")->get()->append(['sort' => 'updated_at']);
-
-        
-        return view('admin.matchmaking.pendingindex')
-            ->withMatches($matches)
-            ->withLiveMatches($livematches)
-            ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled());
-    }
 
     /**
      * Show Matchmaking
