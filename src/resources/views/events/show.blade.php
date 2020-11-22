@@ -190,16 +190,16 @@
 			@foreach ($event->seatingPlans as $seatingPlan)
 				@if ($seatingPlan->status != 'DRAFT')
 					<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-						<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif  bg-success-light" role="tab" id="headingOne">
-							<h4 class="card-title">
-								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
+							<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif  bg-success-light" role="tab" id="headingOne">
+								<h4 class="card-title m-0">
 									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} @lang('events.available')</small>
 									@if ($seatingPlan->status != 'PUBLISHED')
 										<small> - {{ $seatingPlan->status }}</small>
 									@endif
-								</a>
-							</h4>
-						</div>
+								</h4>
+							</div>
+						</a>
 						<div id="collapse_{{ $seatingPlan->slug }}" class="collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
 							<div class="card-body">
 								<div class="table-responsive text-center">
@@ -265,7 +265,8 @@
 										<p class="text-center"><strong> @lang('events.seatingplanlocked')</strong></p>
 									@endif
 								</div>
-								<hr>
+							</div>
+							<div class="card-footer">
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-12 col-md-8">
 										<picture>
@@ -286,7 +287,7 @@
 														{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
 														<h5>
 															<button class="btn btn-success btn-block">
-															{{ $participant->seat->seat }} - @lang('events.remove')
+																{{ $participant->seat->seat }} - @lang('events.remove')
 															</button>
 														</h5>
 													{{ Form::close() }}
