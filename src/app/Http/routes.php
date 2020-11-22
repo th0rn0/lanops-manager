@@ -29,9 +29,9 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
             Route::get('/api/events/{event}/tickets', 'Api\Events\TicketsController@index');
             Route::get('/api/events/{event}/tickets/{ticket}', 'Api\Events\TicketsController@show');
-            Route::get('/api/matchmaking/{match}/finalize', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalize');
+            Route::post('/api/matchmaking/{match}/finalize', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalize');
             Route::get('/api/matchmaking/{match}/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchConfig');
-            Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalize');
+            Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalize');
             Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchConfig');
         });
 

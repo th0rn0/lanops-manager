@@ -11,6 +11,7 @@ use App\EventTimetable;
 use App\EventTimetableData;
 use App\EventParticipant;
 use App\EventParticipantType;
+use App\EventTournamentMatchServer;
 use App\GameMatchApiHandler;
 
 use App\Http\Requests;
@@ -53,6 +54,18 @@ class GameMatchApiController extends Controller
             }
 
             $result = $gamematchapihandler->start($challongeMatchId, $nummaps, $tournament->team_size[0]);
+            $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+
+            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->game->matchmaking_autofinalize)
+            {
+                $finalizeurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/finalize";
+                $result = $gamematchapihandler->start($challongeMatchId, $nummaps, $tournament->team_size[0],$finalizeurl, $matchserver->gameServer->gameserver_secret);
+            }
+            else
+            {
+                $result = $gamematchapihandler->start($challongeMatchId, $nummaps, $tournament->team_size[0], null, null);
+            }
+
         }
         else
         {
@@ -86,8 +99,15 @@ class GameMatchApiController extends Controller
             }
 
         }
-
-        $result = $gamematchapihandler->start($match->id,$nummaps, $match->team_size);
+            if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autofinalize)
+            {
+                $finalizeurl = config('app.url')."/api/matchmaking/".$match->id."/finalize";
+                $result = $gamematchapihandler->start($match->id,$nummaps, $match->team_size, $finalizeurl, $match->matchMakingServer->gameServer->gameserver_secret);
+            }
+            else
+            {
+                $result = $gamematchapihandler->start($match->id,$nummaps, $match->team_size, null, null);
+            }
        }
        else
        {
