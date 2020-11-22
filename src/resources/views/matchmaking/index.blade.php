@@ -371,7 +371,7 @@
 						{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::number('team_count',
-								0,
+								2,
 								array(
 									'id'    => 'team_size',
 									'class' => 'form-control'

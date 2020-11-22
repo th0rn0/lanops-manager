@@ -160,7 +160,7 @@
 							{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
 							{{
 								Form::number('team_count',
-									0,
+									2,
 									array(
 										'id'    => 'team_size',
 										'class' => 'form-control'
