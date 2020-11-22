@@ -83,7 +83,6 @@ class SettingsController extends Controller
 
         return view('admin.settings.systems')
             ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled())
-            ->withIsSystemsMatchMakingAutostartEnabled(Settings::isSystemsMatchMakingAutostartEnabled())
             ->withMaxOpenPerUser(Settings::getSystemsMatchMakingMaxopenperuser())
             ->withIsMatchMakingEnabled(Settings::isMatchMakingEnabled())
             ->withIsCreditEnabled(Settings::isCreditEnabled())
@@ -171,7 +170,6 @@ class SettingsController extends Controller
         
         $rules = [
             'publicuse'               => 'in:on,off',
-            'autostart'               => 'in:on,off',
             'maxopenperuser'  => 'numeric',
 
         ];
@@ -194,21 +192,6 @@ class SettingsController extends Controller
         {
             if (!Settings::disableSystemsMatchMakingPublicuse()) {
                 Session::flash('alert-danger', "Could not Disable the MatchMaking System Publicuse!");
-                return Redirect::back();
-            }
-
-        }
-        if (($request->autostart ? true : false))
-        {
-            if (!Settings::enableSystemsMatchMakingAutostart()) {
-                Session::flash('alert-danger', "Could not Enable the MatchMaking System Autostart!");
-                return Redirect::back();
-            }
-        }
-        else
-        {
-            if (!Settings::disableSystemsMatchMakingAutostart()) {
-                Session::flash('alert-danger', "Could not Disable the MatchMaking System Autostart!");
                 return Redirect::back();
             }
 

@@ -851,32 +851,6 @@ class Settings
         return \App\Setting::disableSystemsMatchMakingPublicuse();
     }
 
-    /**
-     * Is MatchMaking Autostart Enabled
-     * @return Boolean
-     */
-    public static function isSystemsMatchMakingAutostartEnabled()
-    {
-        return \App\Setting::isSystemsMatchMakingAutostartEnabled();
-    }
-
-    /**
-     * Enable MatchMaking System Autostart
-     * @return Boolean
-     */
-    public static function enableSystemsMatchMakingAutostart()
-    {
-        return \App\Setting::enableSystemsMatchMakingAutostart();
-    }
-
-    /**
-     * Disable MatchMaking System Autostart
-     * @return Boolean
-     */
-    public static function disableSystemsMatchMakingAutostart()
-    {
-        return \App\Setting::disableSystemsMatchMakingAutostart();
-    }
 
     /**
      * Get MatchMaking System Maxopenperuser

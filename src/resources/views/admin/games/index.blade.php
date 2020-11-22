@@ -156,6 +156,16 @@
 							</label>
 						</div>
 						<div class="form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('matchmaking_autostart', null, null, array('id'=>'matchmaking_autostart')) }} Enable Match Autostart for Matchmaking
+							</label>
+						</div>
+						<div class="form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('matchmaking_autofinalize', null, null, array('id'=>'matchmaking_autofinalize')) }} Enable Match Autofinalizing for Matchmaking
+							</label>
+						</div>
+						<div class="form-group">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
 							{{ Form::number('min_team_count', 2, array('id'=>'min_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>
