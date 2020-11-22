@@ -73,7 +73,7 @@
 								@foreach ($team->players as $teamplayer)
 									<tr>
 										<td>
-											<img class="img-fluid rounded" src="{{ $teamplayer->user->avatar }}">
+											<img class="img-fluid rounded" style="max-width: 20%;" src="{{ $teamplayer->user->avatar }}">
 										</td>
 										<td>
 											{{ $teamplayer->user->username }}
