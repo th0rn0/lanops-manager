@@ -32,7 +32,7 @@ interface IGameMatchApiHandler
     public function start($matchid, $nummaps, $players_per_team);
     public function finalize($command);
     public function addteam($name);
-    public function addplayer ($teamName, $id, $name);
+    public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
 }
 
 class Get5MatchApiHandler implements IGameMatchApiHandler
@@ -80,7 +80,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         }
     }
 
-    public function addplayer ($teamName, $id, $name)
+    public function addplayer ($teamName, $steamid, $steamname, $userid, $username)
     {
         $team = null;
 
@@ -98,7 +98,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             $team->players = new \stdClass();
         }
 
-        $team->players->{$id} = $name;
+        $team->players->{$steamid} = $steamname;
     }
 
     public function start($matchid, $nummaps, $players_per_team)

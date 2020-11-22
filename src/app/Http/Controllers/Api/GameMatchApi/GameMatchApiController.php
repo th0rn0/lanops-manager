@@ -44,12 +44,12 @@ class GameMatchApiController extends Controller
             foreach ($team1->tournamentParticipants as $key => $team1Participant) {
                 $eventParticipant = $team1Participant->eventParticipant;
                 $user = $eventParticipant->user;
-                $gamematchapihandler->addplayer($team1->name, $user->steamid, $user->steamname);
+                $gamematchapihandler->addplayer($team1->name, $user->steamid, $user->steamname, $user->id, $user->username);
             }
             foreach ($team2->tournamentParticipants as $key => $team2Participant) {
                 $eventParticipant = $team2Participant->eventParticipant;
                 $user = $eventParticipant->user;
-                $gamematchapihandler->addplayer($team2->name, $user->steamid, $user->steamname);
+                $gamematchapihandler->addplayer($team2->name, $user->steamid, $user->steamname, $user->id, $user->username);
             }
 
             $result = $gamematchapihandler->start($challongeMatchId, $nummaps, $tournament->team_size[0]);
@@ -81,7 +81,7 @@ class GameMatchApiController extends Controller
             foreach ($team->players as $player) {
                 if (isset($player->user->steamid) && isset($player->user->steamname)) 
                 {
-                    $gamematchapihandler->addplayer($team->name, $player->user->steamid, $player->user->steamname);
+                    $gamematchapihandler->addplayer($team->name, $player->user->steamid, $player->user->steamname, $player->user->id, $player->user->username);
                 }
             }
 
