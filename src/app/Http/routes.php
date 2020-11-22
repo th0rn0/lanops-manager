@@ -131,7 +131,6 @@ Route::group(['middleware' => ['installed']], function () {
              * Help
              */
             Route::get('/help', 'HelpController@index');
-            Route::get('/help/{helpCategory}', 'HelpController@show');
 
             /**
              * Tournaments
@@ -482,7 +481,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/matchmaking/{match}/finalize', 'Admin\MatchMakingController@finalize');
             Route::delete('/admin/matchmaking/{match}', 'Admin\MatchMakingController@destroy');
 
- 
+
 
 
 

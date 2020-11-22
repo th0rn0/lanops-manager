@@ -28,17 +28,4 @@ class HelpController extends Controller
             ->withHelpCategorys($helpCategorys)
             ->withEvent($event);
     }
-
-    /**
-     * Show Help Category Page
-     * @param  HelpCategory $helpCategory
-     * @return View
-     */
-    public function show(HelpCategory $helpCategory)
-    {
-        return view('help.show')
-            ->withHelpCategory($helpCategory);
-    }
-
-
 }
