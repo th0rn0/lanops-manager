@@ -85,8 +85,8 @@ class GamesController extends Controller
         $game->gamecommandhandler = $request->gamecommandhandler;
         $game->gamematchapihandler = $request->gamematchapihandler;
         $game->matchmaking_enabled = ($request->matchmaking_enabled ? true : false);
-        $game->matchmaking_autostart = ($request->matchmaking_enabled ? true : false);
-        $game->matchmaking_autofinalize = ($request->matchmaking_enabled ? true : false);
+        $game->matchmaking_autostart = ($request->matchmaking_autostart ? true : false);
+        $game->matchmaking_autofinalize = ($request->matchmaking_autofinalize ? true : false);
         $game->public       = true;
         $game->min_team_count = $request->min_team_count;
         $game->max_team_count = $request->max_team_count;
@@ -186,8 +186,8 @@ class GamesController extends Controller
         $game->gamematchapihandler = $request->gamematchapihandler;
         $game->matchstartgameservercommand = $matchstartgameservercommand;
         $game->matchmaking_enabled = ($request->matchmaking_enabled ? true : false);
-        $game->matchmaking_autostart = ($request->matchmaking_enabled ? true : false);
-        $game->matchmaking_autofinalize = ($request->matchmaking_enabled ? true : false);
+        $game->matchmaking_autostart = ($request->matchmaking_autostart ? true : false);
+        $game->matchmaking_autofinalize = ($request->matchmaking_autofinalize ? true : false);
         $game->public       = @($request->public ? true : false);
         $game->connect_game_url = @$request->connect_game_url;
         $game->connect_game_command = @$request->connect_game_command;
