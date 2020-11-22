@@ -109,6 +109,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         $this->result->min_players_to_ready = $players_per_team;
         if ($finalizeurl != null && $finalizekey != null)
         {
+            $this->result->cvars = new \stdClass();
             $this->result->cvars->get5_eventula_apistats_url = $finalizeurl;
             $this->result->cvars->get5_eventula_apistats_key = $finalizekey;
         }
