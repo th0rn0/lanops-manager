@@ -193,7 +193,7 @@
 							</div>
 						</div>
 						<div class="card-body">
-							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" &&  $team->match->status != "DRAFT" && ($team->match->owner_id == Auth::id())
+							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" &&  $team->match->status != "DRAFT" && ($team->match->owner_id == Auth::id()))
 								<div>
 									<p class="mb-0 mt-2">@lang('matchmaking.inviteurl')</p>
 									<div class="input-group mb-3 mt-0" style="width: 100%">
