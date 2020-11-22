@@ -29,7 +29,7 @@ class GameMatchApiHandler
 
 interface IGameMatchApiHandler
 {
-    public function start($matchid, $nummaps, $players_per_team);
+    public function start($matchid, $nummaps, $players_per_team, $finalizeurl, $finalizekey);
     public function finalize($command);
     public function addteam($name);
     public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
@@ -101,12 +101,19 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         $team->players->{$steamid} = $steamname;
     }
 
-    public function start($matchid, $nummaps, $players_per_team)
+    public function start($matchid, $nummaps, $players_per_team, $finalizeurl, $finalizekey)
     {
         $this->result->matchid = "Match $matchid";
         $this->result->num_maps = intval ($nummaps);
         $this->result->players_per_team = $players_per_team;
         $this->result->min_players_to_ready = $players_per_team;
+        if ($finalizeurl != null && $finalizekey != null)
+        {
+            $this->result->cvars = new \stdClass();
+            $this->result->cvars->get5_eventula_apistats_url = $finalizeurl;
+            $this->result->cvars->get5_eventula_apistats_key = $finalizekey;
+        }
+
  
         return $this->result;
 

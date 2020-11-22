@@ -630,11 +630,8 @@ class MatchMakingController extends Controller
             }
         }
 
-        if(Settings::isSystemsMatchMakingAutostartEnabled())
+        if(isset($match->game) && $match->game->matchmaking_autostart)
         {
-            if (isset($match->game))
-            {
-
                 $availableservers = $match->game->getGameServerSelectArray();
 
                 if (count($availableservers) == 0)
@@ -659,7 +656,7 @@ class MatchMakingController extends Controller
                     $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);    
                     
                 }
-            } 
+             
                 
 
             if (!$match->setStatus('LIVE')) {

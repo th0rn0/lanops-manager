@@ -387,14 +387,6 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
-            ['setting'          => 'systems_matchmaking_autostart'],
-            [
-                'value'         => false,
-                'default'       => true,
-                'description'   => 'matchmaking match autostart'
-            ]
-        );
-        Setting::firstOrCreate(
             ['setting'          => 'systems_matchmaking_maxopenperuser'],
             [
                 'value'         => 0,
