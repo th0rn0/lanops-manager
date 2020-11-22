@@ -14,6 +14,9 @@
 				@if ($match->status == 'COMPLETE')
 					<span class="badge badge-success">@lang('matchmaking.ended')</span>
 				@endif
+				@if ($match->status == 'OPEN')
+					<span class="badge badge-success"><i class="fas fa-wifi"></i></span>
+				@endif
 				@if ($match->status == 'LIVE')
 					<span class="badge badge-success">@lang('matchmaking.live')</span>
 				@endif
@@ -42,13 +45,11 @@
 		@if ($match->owner_id == Auth::id())
 				@if($match->status == "OPEN")
 					{{-- Invite URL --}}
-					<div class="col-12">
-						<p class="mb-0">@lang('matchmaking.matchinviteurl')</p>
-						<div class="input-group mb-3 mt-0" style="width: 100%">
-							<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
-							</div>
+					<p class="mb-0">@lang('matchmaking.matchinviteurl')</p>
+					<div class="input-group mb-3 mt-0" style="width: 100%">
+						<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
 						</div>
 					</div>
 				@endif
@@ -56,7 +57,7 @@
 				@if($match->status == "DRAFT")
 					<div class="form-group">
 					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
-						<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.openmatch')</button>
+						<button type="submit" class="btn btn-success btn-block"><i class="fas fa-wifi"></i> @lang('matchmaking.openmatch')</button>
 					{{ Form::close() }}
 					</div>
 				@endif
@@ -198,7 +199,7 @@
 									<div class="input-group mb-3 mt-0" style="width: 100%">
 										<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
 										<div class="input-group-append">
-											<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
+											<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
 										</div>
 									</div>
 								</div>

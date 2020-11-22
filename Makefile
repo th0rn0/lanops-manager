@@ -43,7 +43,7 @@ symlink:
 # Create & Update the Database
 database-migrate:
 	docker exec eventula_manager_app php artisan migrate
-	
+
 # recreate & update the Database
 database-migrate-refresh:
 	docker exec eventula_manager_app php artisan migrate:refresh
@@ -204,6 +204,11 @@ mix:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:14.10 /bin/bash -ci "npm run production"
+mix-dev:
+	docker run --rm --name js-maintainence-dev --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:14.10 /bin/bash -ci "npm run development"
 
 # Purge Containers
 purge-containers:

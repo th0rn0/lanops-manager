@@ -6,11 +6,6 @@
     vertical-align: middle;
 }
 
-.btn-orange,
-.btn-primary {
-    @include button-variant(#333333, $color_primary, #333333);
-}
-
 .footer {
     // height: 200px;
     background-color: $color_secondary;
