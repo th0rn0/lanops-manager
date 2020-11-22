@@ -200,5 +200,14 @@ class Game extends Model
             $return[$game->id] = $game->name;
         }
         return $return;
+    } 
+    public static function getMatchmakingGameSelectArray($publicOnly = true)
+    {
+        $return[0] = 'None';
+        foreach (Game::where(['public' => $publicOnly, 'matchmaking_enabled' => true])->orderBy('name', 'ASC')->get() as $game) {
+            $return[$game->id] = $game->name;
+        }
+        return $return;
     }
+    
 }

@@ -393,7 +393,7 @@
 							{{
 								Form::select(
 									'game_id',
-									Helpers::getGameSelectArray(),
+									Helpers::getMatchmakingGameSelectArray(),
 									null,
 									array(
 										'id'    => 'game_id',

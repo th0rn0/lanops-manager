@@ -204,7 +204,7 @@
 								{{
 									Form::select(
 										'game_id',
-										Helpers::getGameSelectArray(),
+										Helpers::getMatchmakingGameSelectArray(),
 										$match->game_id,
 										array(
 											'id'    => 'game_id',

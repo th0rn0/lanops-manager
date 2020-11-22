@@ -151,6 +151,11 @@
 							<small>Hint: use variables like Game Commands for Matches</small>
 						</div>
 						<div class="form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('matchmaking_enabled', null, null, array('id'=>'matchmaking_enabled')) }} Enabled for Matchmaking
+							</label>
+						</div>
+						<div class="form-group">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
 							{{ Form::number('min_team_count', 2, array('id'=>'min_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>

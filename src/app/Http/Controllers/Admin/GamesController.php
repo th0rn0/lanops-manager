@@ -58,11 +58,13 @@ class GamesController extends Controller
             'name'              => 'required',
             'image_header'      => 'image',
             'image_thumbnail'   => 'image',
+            'matchmaking_enabled'   => 'in:on,off',
         ];
         $messages = [
             'name.required'         => 'Game name is required',
             'image_header.image'    => 'Header image must be a Image',
-            'image_thumbnail.image' => 'Thumbnail image must be a Image'
+            'image_thumbnail.image' => 'Thumbnail image must be a Image',
+            'matchmaking_enabled.in' => 'matchmaking_enabled must be true or false',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -78,6 +80,7 @@ class GamesController extends Controller
         $game->version      = @(trim($request->version) == '' ? null : $request->version);
         $game->gamecommandhandler = $request->gamecommandhandler;
         $game->gamematchapihandler = $request->gamematchapihandler;
+        $game->matchmaking_enabled = ($request->matchmaking_enabled ? true : false);
         $game->public       = true;
         $game->min_team_count = $request->min_team_count;
         $game->max_team_count = $request->max_team_count;
@@ -140,12 +143,14 @@ class GamesController extends Controller
             'active'            => 'in:true,false',
             'image_header'      => 'image',
             'image_thumbnail'   => 'image',
+            'matchmaking_enabled'   => 'in:on,off',
         ];
         $messages = [
             'name.required'         => 'Game name is required',
             'active.filled'         => 'Active must be true or false',
             'image_header.image'    => 'Header image must be a Image',
-            'image_thumbnail.image' => 'Thumbnail image must be a Image'
+            'image_thumbnail.image' => 'Thumbnail image must be a Image',
+            'matchmaking_enabled.in' => 'matchmaking_enabled must be true or false',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -170,6 +175,7 @@ class GamesController extends Controller
         $game->gamecommandhandler = $request->gamecommandhandler;
         $game->gamematchapihandler = $request->gamematchapihandler;
         $game->matchstartgameservercommand = $matchstartgameservercommand;
+        $game->matchmaking_enabled = ($request->matchmaking_enabled ? true : false);
         $game->public       = @($request->public ? true : false);
         $game->connect_game_url = @$request->connect_game_url;
         $game->connect_game_command = @$request->connect_game_command;

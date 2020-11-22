@@ -311,6 +311,16 @@ class Helpers
     }
 
     /**
+     * Get Matchmaking Games Select Array
+     * @param  $publicOnly
+     * @return Array
+     */
+    public static function getMatchmakingGameSelectArray($publicOnly = true)
+    {
+        return \App\Game::getMatchmakingGameSelectArray($publicOnly);
+    }
+
+    /**
      * Get Games Select Array
      * @param  $publicOnly
      * @return Array
