@@ -1,36 +1,40 @@
 .card {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 .icon-large {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-  .icon-large {
-    font-size: 1.5rem;
-  }
+    .icon-large {
+        font-size: 1.5rem;
+    }
 }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-  .icon-large {
-    font-size: 0.75rem;
-  }
+    .icon-large {
+        font-size: 0.75rem;
+    }
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-  .icon-large {
-    font-size: 0.8rem;
-  }
+    .icon-large {
+        font-size: 0.8rem;
+    }
 }
 
 .alert-fixed {
-  position: fixed;
-  bottom: 1rem;
-  left: 1em;
-  right: 1em;
-  z-index: 10000;
+    position: fixed;
+    bottom: 1rem;
+    left: 1em;
+    right: 1em;
+    z-index: 10000;
+}
+
+.event-card {
+    min-width: 10rem;
 }
