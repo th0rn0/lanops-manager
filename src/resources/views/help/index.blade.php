@@ -13,7 +13,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="search-addon"><i class="fas fa-search"></i></span>
 			</div>
-			<input id="searchtext" type="text" class="form-control" placeholder="Search.." aria-label="searchtext" aria-describedby="search-addon">
+			<input id="searchtext" type="text" class="form-control" placeholder="@lang('help.search')" aria-label="searchtext" aria-describedby="search-addon">
 		</div>
 
 		<div class="card-group flex-column" id="helpentries" role="tablist" aria-multiselectable="false">

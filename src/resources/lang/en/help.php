@@ -13,5 +13,6 @@ return [
     'help' => 'Help',
     'event' => 'Event:',
     'copylink' => 'Copy Link:',
-    
+    'search' => 'Search..',
+
 ];
