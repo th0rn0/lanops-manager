@@ -7,11 +7,6 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h3 class="pb-2 mt-4 mb-4 border-bottom">Matchmaking</h3>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item active">
-				Matchmaking
-			</li>
-		</ol>
 	</div>
 </div>
 
@@ -41,7 +36,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($pendingmatches as $match)
+								@foreach ($pendingMatches as $match)
 									<tr>
 										<td>{{ $match->id }}</td>
 										<td>
@@ -157,7 +152,7 @@
 			</div>
 		</div>
 	</div>
-		@foreach ($pendingmatches as $match)
+		@foreach ($pendingMatches as $match)
 		@if(isset($match->game))
 			<!-- Select Server Modal -->
 			<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
@@ -325,7 +320,7 @@
 
 		<div class="card mb-3">
 			<div class="card-header">
-				<i class="fa fa-th-list fa-fw"></i> Matches
+				<i class="fa fa-th-list fa-fw"></i> All Matches
 			</div>
 			<div class="card-body">
 				<div class="dataTable_wrapper">
