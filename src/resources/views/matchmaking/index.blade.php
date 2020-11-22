@@ -51,7 +51,7 @@
 	@endif
 
 		<!-- open public matches -->
-		@if (!$openPublicMatches->isEmpty())
+	@if (!$openPublicMatches->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="ownedmatches"></a>
 			<h3>@lang('matchmaking.publicmatches')</h3>

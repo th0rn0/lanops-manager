@@ -99,18 +99,18 @@
 					<a name="purchaseTickets"></a>
 					<h3>@lang('events.purchasetickets')</h3>
 				</div>
-				<div class="row">
+				<div class="card-deck">
 					@foreach ($event->tickets as $ticket)
-						<div class="col-12 col-sm-4">
+						{{-- <div class="col-12 col-sm-4"> --}}
 							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3" disabled>
-								<div class="card-body">
+								<div class="card-body d-flex flex-column">
 									<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
 									@if ($ticket->quantity != 0)
 										<small>
 											@lang('events.limitedavailability')
 										</small>
 									@endif
-									<div class="row" style="display: flex; align-items: center;">
+									<div class="row mt-auto" >
 										<div class="col-sm-12 col-12">
 											<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
 												@if ($ticket->quantity != 0)
@@ -153,7 +153,7 @@
 															</div>
 															<div class="form-group col-sm-6 col-12 d-flex">
 																{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-																<button class="btn btn-md btn-primary btn-block mt-auto">@lang('events.buy')</button>
+																<button class="btn btn-md btn-primary btn-block mt-auto"><i class="fas fa-shopping-cart"></i> @lang('events.buy')</button>
 															</div>
 														</div>
 													@endif
@@ -167,7 +167,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						{{-- </div> --}}
 					@endforeach
 				</div>
 			@endif
