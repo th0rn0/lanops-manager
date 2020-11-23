@@ -111,7 +111,7 @@
 		{{-- TODO --}}
 		@if ( !$match->getMatchTeamPlayer(Auth::id()) && $match->teams()->count() < $match->team_count )
 
-			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+			<div class="card mb-3">
 				<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
 					<i class="fa fa-plus fa-fw"></i> @lang('matchmaking.addteam')
 				</div>
@@ -154,7 +154,7 @@
 
 			@foreach ($match->teams as $team)
 				<div class="col">
-					<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+					<div class="card mb-3">
 						<div class="card-header @if(Colors::isBodyDarkMode()) border-light  @endif">
 							<div class="row">
 								<div class="col">

@@ -190,8 +190,8 @@
 				<div class="row top30">
 					@foreach ($gameServerList as $game => $gameServers)
 						<div class="col-12 col-sm-6 col-md-4">
-							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
+							<div class="card mb-3">
+								<div class="card-header ">
 									<div class="row text-center block-center">
 										<picture>
 											<source srcset="{{ $gameServers[0]->game->image_thumbnail_path }}.webp" type="image/webp">
@@ -438,8 +438,8 @@
 		</div>
 		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
-				<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-					<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif " role="tab" id="headingOne">
+				<div class="card mb-3">
+					<div class="card-header " role="tab" id="headingOne">
 						<h4 class="card-title">
 							<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
 								{{ $seatingPlan->name }} <small>- @lang('events.numofseatedseats')</small>

@@ -1,5 +1,5 @@
-<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-	<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif  bg-success-light text-success">
+<div class="card mb-3">
+	<div class="card-header  bg-success-light text-success">
 		@if ($participant->ticket)
 			<strong >{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else @lang('events.notseated') @endif @endif</strong>
 		@else

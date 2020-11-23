@@ -5,7 +5,7 @@
 @section ('content')
 	<div class="container">
 		<div class="row">
-			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+			<div class="card mb-3">
 				<div class="row">
 					<div class="col-sm-2 col-12">
 						<picture>

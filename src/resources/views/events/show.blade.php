@@ -102,7 +102,7 @@
 				<div class="card-deck">
 					@foreach ($event->tickets as $ticket)
 						{{-- <div class="col-12 col-sm-4"> --}}
-							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3" disabled>
+							<div class="card mb-3" disabled>
 								<div class="card-body d-flex flex-column">
 									<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
 									@if ($ticket->quantity != 0)
@@ -189,9 +189,9 @@
 		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
 				@if ($seatingPlan->status != 'DRAFT')
-					<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+					<div class="card mb-3">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-							<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif  bg-success-light" role="tab" id="headingOne">
+							<div class="card-header  bg-success-light" role="tab" id="headingOne">
 								<h4 class="card-title m-0">
 									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} @lang('events.available')</small>
 									@if ($seatingPlan->status != 'PUBLISHED')
@@ -522,8 +522,8 @@
 				@if ($tournament->status != 'DRAFT')
 					<div class="col-12 col-sm-6 col-md-3">
 						<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="link-unstyled">
-							<div class="card @if(Colors::isBodyDarkMode()) border-light @endif card-hover mb-3">
-								<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
+							<div class="card card-hover mb-3">
+								<div class="card-header ">
 									@if ($tournament->game && $tournament->game->image_thumbnail_path)
 										<picture>
 											<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">

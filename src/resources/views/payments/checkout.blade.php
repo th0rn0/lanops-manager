@@ -12,8 +12,8 @@
 	</div>
 	<div class="row">
 		<div class="col-12 col-md-12">
-			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-				<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
+			<div class="card mb-3">
+				<div class="card-header ">
 					<h3 class="card-title">@lang('payments.order_details')</h3>
 				</div>
 				<div class="card-body">
@@ -73,8 +73,8 @@
 					</table>
 				</div>
 			</div>
-			<div class="card @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
-				<div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif ">
+			<div class="card mb-3">
+				<div class="card-header ">
 					<h3 class="card-title">@lang('payments.payment')</h3>
 				</div>
 				<div class="card-body">
