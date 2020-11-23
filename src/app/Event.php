@@ -63,7 +63,8 @@ class Event extends Model
                 $builder->where('status', '!=', 'DRAFT');
             });
             static::addGlobalScope('statusPublished', function (Builder $builder) {
-                $builder->where('status', 'PUBLISHED');
+                $builder->where('status', 'PUBLISHED')
+                        ->orWhere('status', 'PRIVATE');
             });
         }
     }

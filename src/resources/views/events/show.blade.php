@@ -175,7 +175,7 @@
 	</div>
 
 	<!-- SEATING -->
-	@if (
+	@if (!$event->online_event &&
 		!$event->seatingPlans->isEmpty() &&
 		(
 			in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) ||

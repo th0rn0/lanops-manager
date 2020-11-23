@@ -28,6 +28,7 @@ use Artesaos\SEOTools\Facades\TwitterCard;
 use Artesaos\SEOTools\Facades\JsonLd;
 
 use Facebook\Facebook;
+use Debugbar;
 
 class HomeController extends Controller
 {
@@ -42,13 +43,11 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user && !empty($user->eventParticipants)) {
             foreach ($user->eventParticipants as $participant) {
-                if (((date('Y-m-d H:i:s') >= $participant->event->start) &&
+                Debugbar::addMessage("Participant: " . json_encode($participant), 'Event');
+                if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                    $participant->signed_in
-                ) || ((date('Y-m-d H:i:s') >= $participant->event->start) &&
-                (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                $participant->event->online_event
-            )) {
+                    ($participant->signed_in || $participant->event->online_event))
+                {
                     return $this->event();
                 }
             }

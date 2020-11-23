@@ -286,98 +286,123 @@
 			@foreach ($event->tournaments as $tournament)
 				@if ($tournament->status != 'DRAFT')
 					<div class="col-12 col-sm-6 col-md-3">
-						<div class="thumbnail">
-							@if ($tournament->game && $tournament->game->image_thumbnail_path)
-								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}">
-									<picture>
-										<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
-										<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
-										<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
-									</picture>
-								</a>
-							@endif
-							<div class="caption">
-								<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}"><h3>{{ $tournament->name }}</h3></a>
-								<span class="small">
-									@if ($tournament->status == 'COMPLETE')
-										<span class="badge badge-success">@lang('events.ended')</span>
+						<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="link-unstyled">
+							<div class="card card-hover mb-3">
+								<div class="card-header ">
+									@if ($tournament->game && $tournament->game->image_thumbnail_path)
+										<picture>
+											<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
+											<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
+											<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+										</picture>
 									@endif
-									@if ($tournament->status == 'LIVE')
-										<span class="badge badge-success">@lang('events.live')</span>
-									@endif
-									@if ($tournament->status != 'COMPLETE' && !$tournament->getParticipant($user->active_event_participant->id))
-										<span class="badge badge-danger">@lang('events.notsignedup')</span>
-									@endif
-									@if ($tournament->status != 'COMPLETE' && $tournament->getParticipant($user->active_event_participant->id))
-										<span class="badge badge-success">@lang('events.signedup')</span>
-									@endif
-								</span>
-								<hr>
-								@if ($tournament->status != 'COMPLETE')
-									<dl>
-										<dt>
-											@lang('events.teamsizes'):
-										</dt>
-										<dd>
-											{{ $tournament->team_size }}
-										</dd>
-										@if ($tournament->game)
-											 <dt>
-												@lang('events.teamsizes'):
-											</dt>
-											<dd>
-												{{ $tournament->game->name }}
-											</dd>
-										@endif
-										<dt>
-											@lang('events.format'):
-										</dt>
-										<dd>
-											{{ $tournament->format }}
-										</dd>
-									</dl>
-								@endif
-								<!-- // TODO - refactor-->
-								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
-									@php
-										if ($tournament->team_size != '1v1') {
-											$tournamentParticipants = $tournament->tournamentTeams;
-										}
-										if ($tournament->team_size == '1v1') {
-											$tournamentParticipants = $tournament->tournamentParticipants;
-										}
-										$tournamentParticipants = $tournamentParticipants->sortBy('final_rank');
-									@endphp
-									@foreach ($tournamentParticipants as $tournamentParticipant)
-										@if ($tournamentParticipant->final_rank == 1)
-											@if ($tournament->team_size == '1v1')
-												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
-											@else
-												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
+									<h3 class="text-primary">{{ $tournament->name }}</h3>
+								</div>
+								<div class="card-body">
+									<div class="thumbnail">
+										<div class="caption">
+											<span class="small">
+												@if ($tournament->status == 'COMPLETE')
+													<span class="badge badge-success">@lang('events.ended')</span>
+												@endif
+												@if ($tournament->status == 'LIVE')
+													<span class="badge badge-success">@lang('events.live')</span>
+												@endif
+												@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && !$tournament->getParticipant($user->active_event_participant->id))
+													<span class="badge badge-danger">@lang('events.notsignedup')</span>
+												@endif
+												@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
+													<span class="badge badge-success">@lang('events.signedup')</span>
+												@endif
+												@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
+													<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
+												@endif
+											</span>
+											@if ($tournament->status != 'COMPLETE')
+												<dl>
+													<dt>
+														@lang('events.teamsizes'):
+													</dt>
+													<dd>
+														{{ $tournament->team_size }}
+													</dd>
+													@if ($tournament->game)
+														<dt>
+															@lang('events.game'):
+														</dt>
+														<dd>
+															{{ $tournament->game->name }}
+														</dd>
+													@endif
+													<dt>
+														@lang('events.format'):
+													</dt>
+													<dd>
+														{{ $tournament->format }}
+													</dd>
+												</dl>
 											@endif
-										@endif
-										@if ($tournamentParticipant->final_rank == 2)
-											@if ($tournament->team_size == '1v1')
-												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
-											@else
-												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
+											<!-- // TODO - refactor & add order on rank-->
+											@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
+												@if ($tournament->team_size != '1v1')
+													@foreach ($tournament->tournamentTeams->sortBy('final_rank') as $tournamentParticipant)
+														@if ($tournamentParticipant->final_rank == 1)
+															@if ($tournament->team_size == '1v1')
+																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
+															@else
+																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
+															@endif
+														@endif
+														@if ($tournamentParticipant->final_rank == 2)
+															@if ($tournament->team_size == '1v1')
+																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
+															@else
+																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
+															@endif
+														@endif
+														@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
+															@if ($tournament->team_size == '1v1')
+																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
+															@else
+																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
+															@endif
+														@endif
+													@endforeach
+												@endif
+												@if ($tournament->team_size == '1v1')
+													@foreach ($tournament->tournamentParticipants->sortBy('final_rank') as $tournamentParticipant)
+														@if ($tournamentParticipant->final_rank == 1)
+															@if ($tournament->team_size == '1v1')
+																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
+															@else
+																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
+															@endif
+														@endif
+														@if ($tournamentParticipant->final_rank == 2)
+															@if ($tournament->team_size == '1v1')
+																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
+															@else
+																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
+															@endif
+														@endif
+														@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
+															@if ($tournament->team_size == '1v1')
+																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
+															@else
+																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
+															@endif
+														@endif
+													@endforeach
+												@endif
 											@endif
-										@endif
-										@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
-											@if ($tournament->team_size == '1v1')
-												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
-											@else
-												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
-											@endif
-										@endif
-									@endforeach
-									<h4>@lang('events.signupsclosed')</h4>
-								@endif
-								<strong>
-									{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
-								</strong>
+											<strong>
+												{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
+											</strong>
+										</div>
+									</div>
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>
 				@endif
 			@endforeach
@@ -431,7 +456,7 @@
 	</table>
 
 	<!-- SEATING -->
-	@if (!$event->seatingPlans->isEmpty())
+	@if (!$event->online_event && !$event->seatingPlans->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="seating"></a>
 			<h3>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
@@ -482,7 +507,7 @@
 																	{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
 																</button>
 															@else
-																@if (Auth::user() && $event->getEventParticipant() && $event->getEventParticipant()->ticket->seatable)
+																@if (Auth::user() && $event->getEventParticipant() &&  ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
 																	<button
 																		class="btn btn-primary btn-sm"
 																		onclick="pickSeat(
