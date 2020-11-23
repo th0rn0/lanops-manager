@@ -127,9 +127,9 @@ class GameMatchApiController extends Controller
     */
     public function matchMakingMatchGolive(Request $request, MatchMaking $match, int $mapnumber)
     {
-        Storage::append('file.log', $request);
-        Storage::append('file.log', $match);
-        Storage::append('file.log', $mapnumber);
+        Storage::append('file.log', $request->key);
+        #Storage::append('file.log', $match);
+        #Storage::append('file.log', $mapnumber);
     }
 
     /**
