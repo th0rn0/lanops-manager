@@ -76,6 +76,11 @@ generate-images:
 generate-requireddatabase:
 	docker exec eventula_manager_app php artisan db:seed --class=RequiredDatabaseSeeder --force
 
+# execute command make command command=sqlcommandhere
+command:
+	docker exec eventula_manager_app $(command)
+
+
 # clear views
 clear-views:
 	docker exec eventula_manager_app php artisan view:clear
