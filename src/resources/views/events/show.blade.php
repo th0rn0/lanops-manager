@@ -77,7 +77,7 @@
 		<div class="col-md-12">
 			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<a name="event"></a>
-				<h3>@lang('events.eventinfo')</h3>
+				<h3><i class="fas fa-info mr-3"></i>@lang('events.eventinfo')</h3>
 			</div>
 			<div class="row">
 				<div class="col-12 col-sm-5">
@@ -97,7 +97,7 @@
 			@if (!$event->tickets->isEmpty())
 				<div class="pb-2 mt-4 mb-4 border-bottom">
 					<a name="purchaseTickets"></a>
-					<h3>@lang('events.purchasetickets')</h3>
+					<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.purchasetickets')</h3>
 				</div>
 				<div class="card-deck">
 					@foreach ($event->tickets as $ticket)
@@ -184,7 +184,7 @@
 	)
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="seating"></a>
-			<h3>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
+			<h3><i class="fas fa-chair mr-3"></i>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
 		</div>
 		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
@@ -315,7 +315,7 @@
 	<!-- VENUE INFORMATION -->
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<a name="venue"></a>
-		<h3>@lang('events.venueinformation')</h3>
+		<h3><i class="fas fa-map-marked-alt mr-3"></i>@lang('events.venueinformation')</h3>
 	</div>
 	<div class="row">
 		<div class="col-lg-7">
@@ -344,7 +344,7 @@
 	@if (!$event->sponsors->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="sponsors"></a>
-			<h3>>@lang('events.eventsponsoredby', ['event', $event->display_name]</h3>
+			<h3><i class="fas fa-running mr-3"></i>@lang('events.eventsponsoredby', ['event', $event->display_name])</h3>
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{ $sponsor->website }}">
@@ -360,7 +360,7 @@
 	<!-- EVENT INFORMATION SECTIONS -->
 	@if (!empty($event->information))
 		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<h3>@lang('events.therismore')</h3>
+			<h3><i class="fas fa-angle-double-right mr-3"></i>@lang('events.therismore')</h3>
 		</div>
 		@php($x = 0)
 		@foreach ($event->information as $section)
@@ -431,7 +431,7 @@
 	@if (!$event->timetables->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="timetable"></a>
-			<h3>@lang('events.timetable')</h3>
+			<h3><i class="fas fa-calendar-alt mr-3"></i>@lang('events.timetable')</h3>
 		</div>
 		@foreach ($event->timetables as $timetable)
 			@if (strtoupper($timetable->status) == 'DRAFT')
@@ -475,7 +475,7 @@
 	@if ($event->polls->count() > 0)
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="polls"></a>
-			<h3>@lang('events.haveyoursay')</h3>
+			<h3><i class="fas fa-poll mr-3"></i>@lang('events.haveyoursay')</h3>
 		</div>
 		@foreach ($event->polls as $poll)
 			<h4>
@@ -497,7 +497,7 @@
 	<!-- MY TICKETS -->
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<a name="yourTickets"></a>
-		<h3>@lang('events.mytickets')</h3>
+		<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.mytickets')</h3>
 	</div>
 	@if (Auth::user())
 		@if (!$user->eventParticipation->isEmpty())
@@ -515,7 +515,7 @@
 	@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="tournaments"></a>
-			<h3>@lang('events.tournaments')</h3>
+			<h3><i class="fas fa-trophy mr-3"></i>@lang('events.tournaments')</h3>
 		</div>
 		<div class="row">
 			@foreach ($event->tournaments as $tournament)
@@ -647,7 +647,7 @@
 	<!-- ATTENDEES -->
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<a name="attendees"></a>
-		<h3>@lang('events.attendees')</h3>
+		<h3><i class="fas fa-users mr-3"></i>@lang('events.attendees')</h3>
 	</div>
 	<table class="table table-striped">
 		<thead>
