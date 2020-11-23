@@ -29,10 +29,13 @@ class GameMatchApiHandler
 
 interface IGameMatchApiHandler
 {
-    public function start($matchid, $nummaps, $players_per_team, $finalizeurl, $finalizekey);
-    public function finalize($command);
+    public function start($matchid, $nummaps, $players_per_team, $apiurl, $apikey);
     public function addteam($name);
     public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
+    public function golive($matchid, $mapnumber);
+    public function updateround($matchid, $mapnumber);
+    public function updateplayer($matchid, $player, $mapnumber, $stats);
+    public function finalize($matchid, $mapnumber);
 }
 
 class Get5MatchApiHandler implements IGameMatchApiHandler
@@ -101,17 +104,17 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         $team->players->{$steamid} = $steamname;
     }
 
-    public function start($matchid, $nummaps, $players_per_team, $finalizeurl, $finalizekey)
+    public function start($matchid, $nummaps, $players_per_team, $apiurl, $apikey)
     {
         $this->result->matchid = "Match $matchid";
         $this->result->num_maps = intval ($nummaps);
         $this->result->players_per_team = $players_per_team;
         $this->result->min_players_to_ready = $players_per_team;
-        if ($finalizeurl != null && $finalizekey != null)
+        if ($apikey != null && $apiurl != null)
         {
             $this->result->cvars = new \stdClass();
-            $this->result->cvars->get5_eventula_apistats_url = $finalizeurl;
-            $this->result->cvars->get5_eventula_apistats_key = $finalizekey;
+            $this->result->cvars->get5_eventula_apistats_key = $apikey;
+            $this->result->cvars->get5_eventula_apistats_url = $apiurl;
         }
 
  
@@ -119,9 +122,21 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
     }
 
-    public function finalize($command)
+    public function golive($matchid, $mapnumber)
     {
-       
+
+    }
+    public function updateround($matchid, $mapnumber)
+    {
+
+    }
+    public function updateplayer($matchid, $player, $mapnumber, $stats)
+    {
+
+    }
+    public function finalize($matchid, $mapnumber)
+    {
+        
     }
 
 }
