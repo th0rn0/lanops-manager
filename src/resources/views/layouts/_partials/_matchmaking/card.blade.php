@@ -1,4 +1,4 @@
-<a href="/matchmaking/{{ $match->id }}" class="link-unstyled card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
+<a href="/matchmaking/{{ $match->id }}" class="link-unstyled card event-card card-hover @if(Colors::isBodyDarkMode()) border-light @endif mb-3">
     <div class="card-header @if(Colors::isBodyDarkMode()) border-light @endif">
         @if ($match->game && $match->game->image_thumbnail_path)
             <picture>
