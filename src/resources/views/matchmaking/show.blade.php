@@ -186,7 +186,7 @@
 									@endif
 									@if($match->status == "COMPLETE")
 										<div class="text-center float-right">
-											<h4 style="width:50px;" class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light @else  border-danger bg-danger-light @endif">{{ $team->team_score }}</h4>
+											<h4 style="width:50px;" class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light text-success @else border-danger bg-danger-light text-danger @endif">{{ $team->team_score }}</h4>
 										</div>
 									@endif
 								</div>
