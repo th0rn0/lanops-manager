@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\GameMatchApi;
 
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 use App\Event;
 use App\EventTournament;
@@ -116,5 +117,78 @@ class GameMatchApiController extends Controller
 
        return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
    }
+
+    /**
+    * matchMakingMatchGolive
+    * @param Request $request
+    * @param MatchMaking $match
+    * @param int $mapnumber
+    * @return View
+    */
+    public function matchMakingMatchGolive(Request $request, MatchMaking $match, int $mapnumber)
+    {
+        Storage::append('file.log', $request);
+        Storage::append('file.log', $match);
+        Storage::append('file.log', $mapnumber);
+    }
+
+    /**
+    * matchMakingMatchFinalize
+    * @param Request $request
+    * @param MatchMaking $match
+    * @return View
+    */
+    public function matchMakingMatchFinalize(Request $request, MatchMaking $match)
+    {
+        Storage::append('file.log', $request);
+        Storage::append('file.log', $match);
+    }
+
+    /**
+    * matchMakingMatchFinalizeMap
+    * @param Request $request
+    * @param MatchMaking $match
+    * @param int $mapnumber
+    * @return View
+    */
+    public function matchMakingMatchFinalizeMap(Request $request, MatchMaking $match, int $mapnumber)
+    {
+        Storage::append('file.log', $request);
+        Storage::append('file.log', $match);
+        Storage::append('file.log', $mapnumber);
+    }
+
+    /**
+    * matchMakingMatchUpdateround
+    * @param Request $request
+    * @param MatchMaking $match
+    * @param int $mapnumber
+    * @return View
+    */
+    public function matchMakingMatchUpdateround(Request $request, MatchMaking $match, int $mapnumber)
+    {
+        Storage::append('file.log', $request);
+        Storage::append('file.log', $match);
+        Storage::append('file.log', $mapnumber);
+    }
+
+    /**
+    * matchMakingMatchUpdateplayer
+    * @param Request $request
+    * @param MatchMaking $match
+    * @param int $mapnumber
+    * @return View
+    */
+    public function matchMakingMatchUpdateplayer(Request $request, MatchMaking $match, int $mapnumber, string $player)
+    {
+        Storage::append('file.log', $request);
+        Storage::append('file.log', $match);
+        Storage::append('file.log', $mapnumber);
+        Storage::append('file.log', $player);
+    }
+
+
+
+
 
 }
