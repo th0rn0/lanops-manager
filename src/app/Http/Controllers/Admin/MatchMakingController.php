@@ -616,6 +616,17 @@ class MatchMakingController extends Controller
             }
         }
 
+        if ($match->status == "PENDING")
+        {
+            if (!$match->setStatus('LIVE')) {
+                Session::flash('alert-danger', 'Cannot start Match!');
+                return Redirect::back();
+            }
+    
+            Session::flash('alert-success', 'Match Started!');
+            return Redirect::back();
+        }
+
         if (isset($match->game) && $match->game->matchmaking_autostart) {
             $availableservers = $match->game->getGameServerSelectArray();
 

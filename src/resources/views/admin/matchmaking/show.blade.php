@@ -165,10 +165,17 @@
 						{{ Form::close() }}
 						</div>
 					@endif
-					@if($match->status == "PENDING")
-					<div class="form-group">
-						<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
-					</div>
+					@if($match->status == "PENDING" && isset($match->game) )
+						<div class="form-group">
+							<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+						</div>
+					@endif
+					@if($match->status == "PENDING" && !isset($match->game) )
+						<div class="form-group">
+							{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/start' )) }}
+								<button type="submit" class="btn btn-success btn-block"><i class="fas fa-play"></i> @lang('matchmaking.startmatch')</button>
+							{{ Form::close() }}
+						</div>
 					@endif
 					@if($match->status == "LIVE")
 						@if(isset($match->game) && isset($match->matchMakingServer))
