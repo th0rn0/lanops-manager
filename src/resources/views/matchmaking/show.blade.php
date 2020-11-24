@@ -21,7 +21,10 @@
 					<span class="badge badge-success">@lang('matchmaking.live')</span>
 				@endif
 				@if ($match->status == 'PENDING')
-					<span class="badge badge-success">@lang('matchmaking.pending')</span>
+					<span class="badge badge-light">@lang('matchmaking.pending')</span>
+				@endif
+				@if ($match->status == 'WAITFORPLAYERS')
+					<span class="badge badge-light">@lang('matchmaking.waitforplayers')</span>
 				@endif
 				@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
 					<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
@@ -84,7 +87,7 @@
 					{{ Form::close() }}
 				@endif
 				{{-- Edit, Delete --}}
-				@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING")
+				@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING" && $match->status != "WAITFORPLAYERS")
 					<div class="row">
 						<div class="col">
 							<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-toggle="modal" data-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
@@ -161,7 +164,7 @@
 									<h4>@lang('matchmaking.team') #{{ $loop->iteration }}: {{ $team->name }}</h4>
 								</div>
 								<div class="col">
-									@if($team->match->status != "LIVE" && $team->match->status != "COMPLETE" && $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
+									@if($team->match->status != "LIVE" && $team->match->status != "COMPLETE" && $team->match->status != "PENDING" && $team->match->status != "WAITFORPLAYERS" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
 										<div class="row">
 											<div class="col">
 												<button class="btn btn-warning btn-sm btn-block float-right text-nowrap" data-toggle="modal" data-target="#editTeamModal_{{ $team->id }}"><i class="fas fa-user-edit"></i> @lang('matchmaking.editteam')</button>
@@ -193,7 +196,7 @@
 							</div>
 						</div>
 						<div class="card-body">
-							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" &&  $team->match->status != "DRAFT" && ($team->match->owner_id == Auth::id()))
+							@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE" &&  $team->match->status != "PENDING" && $team->match->status != "WAITFORPLAYERS" &&  $team->match->status != "DRAFT" && ($team->match->owner_id == Auth::id()))
 								<div>
 									<p class="mb-0 mt-2">@lang('matchmaking.inviteurl')</p>
 									<div class="input-group mb-3 mt-0" style="width: 100%">

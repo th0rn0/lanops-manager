@@ -17,6 +17,7 @@ return [
     'live' => 'is live',
     'draft' => 'draft',
     'pending' => 'is pending',
+    'waitforplayers' => 'Waiting for players',
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
     'matchowner' => 'Match owner',

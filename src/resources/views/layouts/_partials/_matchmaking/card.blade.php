@@ -16,7 +16,10 @@
                 <span class="badge badge-success">@lang('matchmaking.live')</span>
             @endif
             @if ($match->status == 'PENDING')
-                <span class="badge badge-success">@lang('matchmaking.pending')</span>
+                <span class="badge badge-light">@lang('matchmaking.pending')</span>
+            @endif
+            @if ($match->status == 'WAITFORPLAYERS')
+                <span class="badge badge-light">@lang('matchmaking.waitforplayers')</span>
             @endif
             @if ($match->status == 'DRAFT')
                 <span class="badge badge-success">@lang('matchmaking.draft')</span>

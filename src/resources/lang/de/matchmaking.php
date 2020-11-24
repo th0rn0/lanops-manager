@@ -16,6 +16,7 @@ return [
     'ended' => 'beendet',
     'live' => 'live',
     'pending' => 'wartend',
+    'waitforplayers' => 'auf Spieler warten',
     'draft' => 'Entwurf',
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
