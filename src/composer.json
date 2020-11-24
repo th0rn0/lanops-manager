@@ -7,7 +7,7 @@
     ],
     "repositories": [{
         "type": "vcs",
-        "url": "https://github.com/4ipalino/dedicated-server-api"
+        "url": "https://github.com/Lan2Play/dedicated-server-api"
     }],
     "license": "MIT",
     "type": "project",
