@@ -165,7 +165,17 @@
 						{{ Form::close() }}
 						</div>
 					@endif
+					@if($match->status == "PENDING")
+					<div class="form-group">
+						<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+					</div>
+					@endif
 					@if($match->status == "LIVE")
+						@if(isset($match->game) && isset($match->matchMakingServer))
+							<div class="form-group">
+								<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Execute Command</button>
+							</div>
+						@endif
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/finalize' )) }}
 						@foreach ($match->teams as $team)
@@ -317,6 +327,89 @@
 </div>
 
 <!-- Modals -->
+@if(isset($match->game) && isset($match->matchMakingServer))
+<!-- execute Command Modal -->
+<div class="modal fade" id="executeServerCommandModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel{{ $match->id }}" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match #{{ $match->id }}</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="row row-seperator">
+					<div class="col-12 col-md-3">
+						{{ Form::label("Command", NULL, array('id'=>'','class'=>'')) }}
+					</div>
+					<div class="col-12 col-md-6">
+						{{ Form::label("parameter", NULL, array('id'=>'','class'=>'')) }}
+					</div>
+					<div class="col-12 col-md-3">
+						{{ Form::label("execute", NULL, array('id'=>'','class'=>'')) }}
+					</div>
+				</div>
+				@foreach ($match->game->getMatchCommands() as $matchCommand)
+					{{ Form::open(array('url'=>'/admin/games/' . $match->game->slug . '/gameservercommands/execute/' . $match->matchMakingServer->gameServer->slug .'/matchmaking/' . $match->id, 'id'=>'executeServerCommandModal')) }}
+						{{ Form::hidden('command', $matchCommand->id) }}
+						{{ Form::hidden('match_id', $match->game->id) }}
+						match_id
+						<div class="row row-seperator">
+							<div class="col-12 col-md-3">
+								<h4>{{ $matchCommand->name }}</h4>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="row">
+									@foreach(App\GameServerCommandParameter::getParameters($matchCommand->command) as $gameServerCommandParameter)
+										<div class="form-group col-sm-12  col-md-6">
+											{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
+											{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
+										</div>
+									@endforeach
+								</div>
+							</div>
+							<div class="col-12 col-md-3">
+								<button type="submit" class="btn btn-success">Execute</button>
+							</div>
+						</div>
+					{{ Form::close() }}
+				@endforeach
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+@endif
+@if(isset($match->game))
+			<!-- Select Server Modal -->
+			<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match #{{ $match->id }}</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						</div>
+						{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . ((isset($match->matchMakingServer)) ? '/serverupdate':'/serverstore') , 'id'=>'selectServerModal')) }}
+
+
+
+						<div class="modal-body">
+								<div class="form-group">
+									{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
+									{{ Form::select('gameServer', $match->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-success">Select</button>
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+							</div>
+						{{ Form::close() }}
+					</div>
+				</div>
+
+			</div>
+		@endif
 @foreach ($match->teams as $team)
 
 	<div class="modal fade" id="editTeamModal_{{ $team->id }}" tabindex="-1" role="dialog" aria-labelledby="editTeamModalLabel_{{ $team->id }}" aria-hidden="true">
