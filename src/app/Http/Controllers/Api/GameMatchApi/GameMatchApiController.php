@@ -127,6 +127,14 @@ class GameMatchApiController extends Controller
     */
     public function matchMakingMatchGolive(Request $request, MatchMaking $match, int $mapnumber)
     {
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
         Storage::append('file.log', $request->key);
         #Storage::append('file.log', $match);
         #Storage::append('file.log', $mapnumber);
@@ -140,6 +148,14 @@ class GameMatchApiController extends Controller
     */
     public function matchMakingMatchFinalize(Request $request, MatchMaking $match)
     {
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
     }
@@ -153,6 +169,14 @@ class GameMatchApiController extends Controller
     */
     public function matchMakingMatchFinalizeMap(Request $request, MatchMaking $match, int $mapnumber)
     {
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
         Storage::append('file.log', $mapnumber);
@@ -167,6 +191,14 @@ class GameMatchApiController extends Controller
     */
     public function matchMakingMatchUpdateround(Request $request, MatchMaking $match, int $mapnumber)
     {
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
         Storage::append('file.log', $mapnumber);
@@ -181,6 +213,14 @@ class GameMatchApiController extends Controller
     */
     public function matchMakingMatchUpdateplayer(Request $request, MatchMaking $match, int $mapnumber, string $player)
     {
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
         Storage::append('file.log', $mapnumber);
