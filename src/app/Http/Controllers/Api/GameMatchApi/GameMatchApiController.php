@@ -135,9 +135,23 @@ class GameMatchApiController extends Controller
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
-        Storage::append('file.log', $request->key);
-        #Storage::append('file.log', $match);
-        #Storage::append('file.log', $mapnumber);
+
+        if ($mapnumber != 1)
+        {
+            return "Error: In matchmaking only one map is possible!";
+        }
+
+        if ($match->status != "WAITFORPLAYERS")
+        {
+            return "Error: Status is not WAITFORPLAYERS!";
+        }
+
+        if (!$match->setStatus('LIVE')) {
+            return 'Error: Cannot start Match!';
+        }
+
+        return 'Match Started successfully!';
+        
     }
 
     /**
