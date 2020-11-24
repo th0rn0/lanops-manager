@@ -162,7 +162,7 @@ class Game extends Model
         $openmatchmakings = array();
         foreach ($this->matchMakings as $match)
         {
-            if ($match->status == "LIVE")
+            if ($match->status == "LIVE" || $match->status == "WAITFORPLAYERS")
             {
                 $openmatchmakings[$match->id] = $match->id;
             }
