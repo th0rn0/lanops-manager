@@ -510,11 +510,17 @@
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_autostart', null, $game->matchmaking_autostart, array('id'=>'matchmaking_autostart')) }} Enable Match Autostart for Matchmaking
 							</label>
+							<div>
+								<small>Make sure the gamecommandhandler and a matchstartgameservercommand is selected! </small>
+							</div>
 						</div>
 						<div class="form-group">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_autofinalize', null, $game->matchmaking_autofinalize, array('id'=>'matchmaking_autofinalize')) }} Enable Match Autofinalizing for Matchmaking
 							</label>
+							<div>
+								<small>Make sure the selected gamematchapihandler supports the Autofinalizing! (Get5,)</small>
+							</div>
 						</div>
 						<div class="form-group">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
