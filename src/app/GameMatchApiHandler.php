@@ -3,6 +3,8 @@
 namespace App;
 
 use Exception;
+use Illuminate\Http\Request;
+
 
 class GameMatchApiHandler
 {
@@ -32,6 +34,7 @@ interface IGameMatchApiHandler
     public function start($matchid, $nummaps, $players_per_team, $apiurl, $apikey);
     public function addteam($name);
     public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
+    public function authorizeserver(Request $request, $serverkey);
     public function golive($matchid, $mapnumber);
     public function updateround($matchid, $mapnumber);
     public function updateplayer($matchid, $player, $mapnumber, $stats);
@@ -120,6 +123,18 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
  
         return $this->result;
 
+    }
+
+    public function authorizeserver(Request $request, $serverkey)
+    {
+        if ($serverkey != $request->key)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public function golive($matchid, $mapnumber)

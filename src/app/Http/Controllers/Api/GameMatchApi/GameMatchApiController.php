@@ -131,7 +131,16 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
-        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        if (!isset($match->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -151,7 +160,7 @@ class GameMatchApiController extends Controller
         }
 
         return 'Match Started successfully!';
-        
+
     }
 
     /**
@@ -166,10 +175,20 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
-        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        if (!isset($match->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
+
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
     }
@@ -187,10 +206,24 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
-        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($match->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
+
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
         Storage::append('file.log', $mapnumber);
@@ -209,10 +242,20 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
-        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        if (!isset($match->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
+
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
         Storage::append('file.log', $mapnumber);
@@ -231,10 +274,20 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
-        if($match->matchMakingServer->gameServer->gameserver_secret != $request->key)
+        if (!isset($match->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
+        
         Storage::append('file.log', $request);
         Storage::append('file.log', $match);
         Storage::append('file.log', $mapnumber);
