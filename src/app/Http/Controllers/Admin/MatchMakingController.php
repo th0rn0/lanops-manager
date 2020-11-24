@@ -16,6 +16,7 @@ use App\Game;
 use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
+use App\MatchMakingServer;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -615,6 +616,29 @@ class MatchMakingController extends Controller
             }
         }
 
+        if (isset($match->game) && $match->game->matchmaking_autostart) {
+            $availableservers = $match->game->getGameServerSelectArray();
+
+            if (count($availableservers) == 0) {
+                Session::flash('alert-danger', 'Currently no free Servers are available!');
+                return Redirect::back();
+            }
+
+            $request = new Request([
+                    'gameServer'   => array_key_first($availableservers),
+                ]);
+            $matchMakingServer                 = new MatchMakingServer();
+            $matchMakingServer->store($match, $request);
+                
+            if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != null) {
+                $request = new Request([
+                        'command'   => $match->game->matchStartGameServerCommand->id,
+                    ]);
+
+                $gccontroller = new GameServerCommandsController();
+                $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);
+            }
+
 
         if (!$match->setStatus('LIVE')) {
             Session::flash('alert-danger', 'Cannot start Match!');
@@ -623,6 +647,18 @@ class MatchMakingController extends Controller
 
         Session::flash('alert-success', 'Match Started!');
         return Redirect::back();
+        }
+        else
+        {
+            if (!$match->setStatus('PENDING')) {
+                Session::flash('alert-danger', 'Cannot start Match!');
+                return Redirect::back();
+            } 
+            Session::flash('alert-success', 'Match Started but pending, select a Server to start it!');
+            return Redirect::back();
+        }
+
+
     }
 
            /**
