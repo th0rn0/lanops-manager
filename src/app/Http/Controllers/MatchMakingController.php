@@ -658,6 +658,26 @@ class MatchMakingController extends Controller
                 }
              
                 
+                if (isset($match->game) && $match->game->matchmaking_autofinalize)
+                {
+                    if (!$match->setStatus('WAITFORPLAYERS')) {
+                Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
+                        return Redirect::back();
+                    }
+            
+            Session::flash('alert-success', __('matchmaking.matchstarted'));
+                    return Redirect::back();
+                }
+                else
+                {
+                    if (!$match->setStatus('LIVE')) {
+                Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
+                        return Redirect::back();
+                    }
+            
+            Session::flash('alert-success', __('matchmaking.matchstarted'));
+                    return Redirect::back();
+                }
 
             if (!$match->setStatus('LIVE')) {
                 Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));

@@ -46,9 +46,25 @@ class MatchMakingServerController extends Controller
 
         if ($match->status == "PENDING")
         {
-            if (!$match->setStatus("LIVE"))
+
+            if (isset($match->game) && $match->game->matchmaking_autofinalize)
             {
-                Session::flash('alert-danger', 'Could not start match!');
+                if (!$match->setStatus('WAITFORPLAYERS')) {
+                    Session::flash('alert-danger', 'Cannot start Match!');
+                    return Redirect::back();
+                }
+        
+                Session::flash('alert-success', 'Match Started!');
+                return Redirect::back();
+            }
+            else
+            {
+                if (!$match->setStatus('LIVE')) {
+                    Session::flash('alert-danger', 'Cannot start Match!');
+                    return Redirect::back();
+                }
+        
+                Session::flash('alert-success', 'Match Started!');
                 return Redirect::back();
             }
 

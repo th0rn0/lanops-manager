@@ -639,14 +639,26 @@ class MatchMakingController extends Controller
                 $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);
             }
 
-
-        if (!$match->setStatus('LIVE')) {
-            Session::flash('alert-danger', 'Cannot start Match!');
+        if (isset($match->game) && $match->game->matchmaking_autofinalize)
+        {
+            if (!$match->setStatus('WAITFORPLAYERS')) {
+                Session::flash('alert-danger', 'Cannot start Match!');
+                return Redirect::back();
+            }
+    
+            Session::flash('alert-success', 'Match Started!');
             return Redirect::back();
         }
-
-        Session::flash('alert-success', 'Match Started!');
-        return Redirect::back();
+        else
+        {
+            if (!$match->setStatus('LIVE')) {
+                Session::flash('alert-danger', 'Cannot start Match!');
+                return Redirect::back();
+            }
+    
+            Session::flash('alert-success', 'Match Started!');
+            return Redirect::back();
+        }
         }
         else
         {
