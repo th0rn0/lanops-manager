@@ -4,6 +4,8 @@ namespace App;
 
 use Exception;
 use Illuminate\Http\Request;
+use App\MatchMaking;
+use App\EventTournament;
 
 
 class GameMatchApiHandler
@@ -29,16 +31,22 @@ class GameMatchApiHandler
     }
 }
 
+ /**
+    * IGameMatchApiHandler
+    * @param $matchtype (0 for tournament, 1 for matchmaking)
+    * @return View
+    */
 interface IGameMatchApiHandler
 {
-    public function start($matchid, $nummaps, $players_per_team, $apiurl, $apikey);
+    public function getconfig($matchid, $nummaps, $players_per_team, $apiurl, $apikey);
     public function addteam($name);
     public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
     public function authorizeserver(Request $request, $serverkey);
-    public function golive($matchid, $mapnumber);
-    public function updateround($matchid, $mapnumber);
-    public function updateplayer($matchid, $player, $mapnumber, $stats);
-    public function finalize($matchid, $mapnumber);
+    public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, $mapnumber);
+    public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber);
+    public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber, string $player);
+    public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber);
+    public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null);
 }
 
 class Get5MatchApiHandler implements IGameMatchApiHandler
@@ -107,7 +115,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         $team->players->{$steamid} = $steamname;
     }
 
-    public function start($matchid, $nummaps, $players_per_team, $apiurl, $apikey)
+    public function getconfig($matchid, $nummaps, $players_per_team, $apiurl, $apikey)
     {
         $this->result->matchid = "Match $matchid";
         $this->result->num_maps = intval ($nummaps);
@@ -125,6 +133,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
     }
 
+
     public function authorizeserver(Request $request, $serverkey)
     {
         if ($serverkey != $request->key)
@@ -137,20 +146,96 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         }
     }
 
-    public function golive($matchid, $mapnumber)
+
+
+
+    public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, $mapnumber)
+    {
+        if ($match != null && $tournament == null) {
+            if (!$match->setStatus('LIVE')) {
+                return false;
+            }
+            return true;
+        }
+        if($match == null && $tournament != null)
+        {
+            //tournament stuff
+        }
+        return false;
+    }
+
+    public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber)
     {
 
-    }
-    public function updateround($matchid, $mapnumber)
-    {
+        if($match != null && $tournament == null)
+        {
+            $loop = 1;
+            foreach ($match->teams as $team) {
+                $team->team_score = $request->{"team".$loop."score"};
+                if (!$team->save()) {
+                   return false;
+                }
+                $loop++;
+            }
+            return true;
+        }
+        if($match == null && $tournament != null)
+        {
+            //tournament stuff
+        }
+        return false;
+
+
 
     }
-    public function updateplayer($matchid, $player, $mapnumber, $stats)
+    public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber, string $player)
     {
+        if($match != null && $tournament == null)
+        {
+            //matchmaking stuff
+            return true;
+        }
+        if($match == null && $tournament != null)
+        {
+            //tournament stuff
+        }
+        return false;
 
     }
-    public function finalize($matchid, $mapnumber)
+
+    public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber)
     {
+        if($match != null && $tournament == null)
+        {
+            if (!$this->updateround($request,$match,null,$mapnumber))
+            {
+                return false;
+            }
+            return true;
+
+        }
+        if($match == null && $tournament != null)
+        {
+            //tournament stuff
+        }
+        return false;
+    }    
+    public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null)
+    {
+        if($match != null && $tournament == null)
+        {
+            if (!$match->setStatus('COMPLETE'))
+            {
+                return false;
+            }
+            return true;
+
+        }
+        if($match == null && $tournament != null)
+        {
+            //tournament stuff
+        }
+        return false;
         
     }
 

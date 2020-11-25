@@ -16,7 +16,7 @@ use App\Game;
 use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
-use App\MatchMakingServer;
+use App\Http\Controllers\Admin\MatchMakingServerController;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -638,7 +638,7 @@ class MatchMakingController extends Controller
             $request = new Request([
                     'gameServer'   => array_key_first($availableservers),
                 ]);
-            $matchMakingServer                 = new MatchMakingServer();
+            $matchMakingServer                 = new MatchMakingServerController();
             $matchMakingServer->store($match, $request);
                 
             if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != null) {

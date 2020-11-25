@@ -77,13 +77,19 @@
 							@foreach ($match->teams as $team)
 								<div class="col">
 									<div class="form-group">
-										{{ Form::label('teamscore_'. $team->id, __('matchmaking.scoreof').' '.$team->name ,array('id'=>'','class'=>'')) }}
-										{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+										{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
+										@if ($match->game->matchmaking_autofinalize)
+											{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
+										@else
+											{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+										@endif
 									</div>
 								</div>
 							@endforeach
 						</div>
-						<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
+						@if (!$match->game->matchmaking_autofinalize)
+							<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
+						@endif
 					{{ Form::close() }}
 				@endif
 				{{-- Edit, Delete --}}

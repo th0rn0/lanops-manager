@@ -145,6 +145,9 @@
 			<div class="card-body">
 				<div class="list-group">
 					<p>Current Status: {{$match->status}}</p>
+					@if(isset($match->game) && isset($match->matchMakingServer) && ($match->status == "LIVE" || $match->status == "WAITFORPLAYERS" ))
+					<p>Current Server: {{ $match->matchMakingServer->gameServer->name}}</p>
+					@endif
 					@if($match->status == "DRAFT")
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/open' )) }}
@@ -188,8 +191,11 @@
 						@foreach ($match->teams as $team)
 
 							{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
-							{{ Form::number('teamscore_'. $team->id, 0, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
-
+							@if ($match->game->matchmaking_autofinalize)
+								{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
+							@else
+								{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+							@endif
 						@endforeach
 						<button type="submit" class="btn btn-success btn-block ">Finalize Match</button>
 						{{ Form::close() }}

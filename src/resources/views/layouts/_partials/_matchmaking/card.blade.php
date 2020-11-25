@@ -39,7 +39,7 @@
         </span>
     </div>
     <div class="card-body">
-        @if ($match->status != 'COMPLETE')
+        @if ($match->status != 'COMPLETE' && !($match->status == 'LIVE' && $match->game->matchmaking_autofinalize))
             <div>
                 <strong>@lang('matchmaking.teamsizes') {{ $match->team_size }}</strong>
             </div>
@@ -52,7 +52,7 @@
                 <strong>@lang('matchmaking.teamcount') {{ $match->teams->count() }}</strong>
             </div>
         @endif
-        @if ($match->status == 'COMPLETE' )
+        @if ($match->status == 'COMPLETE' || ($match->status == 'LIVE' && $match->game->matchmaking_autofinalize))
             @php
                 $teams = $match->teams;
                 $teams = $teams->sortByDesc('team_score')->take(3);
@@ -63,7 +63,11 @@
             <strong class="m-0 mt-1">
                 @lang('matchmaking.teamcount') {{ $match->teams->count() }}
             </strong>
-            <h5 class="m-0 mt-1">@lang('matchmaking.signupsclosed')</h5>
+            @if ($match->status == 'COMPLETE')
+                <h5 class="m-0 mt-1">@lang('matchmaking.ended')</h5>
+            @else
+                <h5 class="m-0 mt-1">@lang('matchmaking.live')</h5>
+            @endif
         @endif
     </div>
 </a>

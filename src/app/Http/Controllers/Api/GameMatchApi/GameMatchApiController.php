@@ -55,15 +55,15 @@ class GameMatchApiController extends Controller
             }
 
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-
+            //replace matchmaking_autofinalize
             if (isset($matchserver->gameServer->gameserver_secret) && $tournament->game->matchmaking_autofinalize)
             {
                 $apiurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
-                $result = $gamematchapihandler->start($challongeMatchId, $nummaps, $tournament->team_size[0],$apiurl, $matchserver->gameServer->gameserver_secret);
+                $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0],$apiurl, $matchserver->gameServer->gameserver_secret);
             }
             else
             {
-                $result = $gamematchapihandler->start($challongeMatchId, $nummaps, $tournament->team_size[0], null, null);
+                $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0], null, null);
             }
 
         }
@@ -102,11 +102,11 @@ class GameMatchApiController extends Controller
             if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autofinalize)
             {
                 $apiurl = config('app.url')."/api/matchmaking/".$match->id."/";
-                $result = $gamematchapihandler->start($match->id,$nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);
+                $result = $gamematchapihandler->getconfig($match->id,$nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);
             }
             else
             {
-                $result = $gamematchapihandler->start($match->id,$nummaps, $match->team_size, null, null);
+                $result = $gamematchapihandler->getconfig($match->id,$nummaps, $match->team_size, null, null);
             }
        }
        else
@@ -155,8 +155,9 @@ class GameMatchApiController extends Controller
             return "Error: Status is not WAITFORPLAYERS!";
         }
 
-        if (!$match->setStatus('LIVE')) {
-            return 'Error: Cannot start Match!';
+        if(!$gamematchapihandler->golive($request, $match , null , $mapnumber))
+        {
+            return "Error: GoLive failed!";
         }
 
         return 'Match Started successfully!';
@@ -189,8 +190,16 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        Storage::append('file.log', $request);
-        Storage::append('file.log', $match);
+        if (!$gamematchapihandler->finalize($request, $match, null))
+        {
+            return "Error: Finalizing failed!";
+        }
+        else
+        {
+            return "Success: Finalized Match!";
+        }
+
+
     }
 
     /**
@@ -222,11 +231,15 @@ class GameMatchApiController extends Controller
         if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
         {
             return "Error: Gameserver Secret Key is wrong!";
+        }      
+        if(!$gamematchapihandler->finalizemap($request, $match, null, $mapnumber))
+        {
+            return "Error: finalizemap failed!";
         }
 
-        Storage::append('file.log', $request);
-        Storage::append('file.log', $match);
-        Storage::append('file.log', $mapnumber);
+        return 'Map finalized successfully!';
+
+
     }
 
     /**
@@ -256,9 +269,12 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        Storage::append('file.log', $request);
-        Storage::append('file.log', $match);
-        Storage::append('file.log', $mapnumber);
+        if(!$gamematchapihandler->updateround($request, $match, null, $mapnumber))
+        {
+            return "Error: updateround failed!";
+        }
+        return 'round updated successfully!';
+
     }
 
     /**
@@ -287,11 +303,14 @@ class GameMatchApiController extends Controller
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
-        
-        Storage::append('file.log', $request);
-        Storage::append('file.log', $match);
-        Storage::append('file.log', $mapnumber);
-        Storage::append('file.log', $player);
+
+        if(!$gamematchapihandler->updateplayer($request, $match, null, $mapnumber))
+        {
+            return "Error: updateplayer failed!";
+        }
+        return 'player updated successfully!';
+
+
     }
 
 

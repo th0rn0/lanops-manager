@@ -14,13 +14,13 @@ use App\User;
 use App\Event;
 use App\Game;
 use App\Http\Controllers\Admin\GameServerCommandsController;
+use App\Http\Controllers\Admin\MatchMakingServerController;
 use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\MatchMakingServer;
 use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -643,8 +643,10 @@ class MatchMakingController extends Controller
                 $request = new Request([
                     'gameServer'   => array_key_first($availableservers),
                 ]);
-                $matchMakingServer                 = new MatchMakingServer();
+                $matchMakingServer                 = new MatchMakingServerController();
                 $matchMakingServer->store($match, $request);
+
+                
                 
                 if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != NULL)
                 {
