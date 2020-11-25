@@ -51,11 +51,7 @@
 				@endif
 			</div>
 			<div class="offset-md-2 col-md-2 offset-sm-2 col-sm-4 col-12">
-				<picture>
-					<source srcset="{{ $participant->qrcode }}.webp" type="image/webp">
-					<source srcset="{{ $participant->qrcode }}" type="image/jpeg">
 					<img class="img img-fluid" src="/{{ $participant->qrcode }}"/>
-				</picture>
 			</div>
 		</div>
 	</div>
