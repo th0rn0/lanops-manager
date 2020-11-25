@@ -86,6 +86,8 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'buy' => 'Buy',
+    'noseatableticket' => 'You own no seatable ticket.',
+    'noseatableticketlist' => 'No seatable Ticket owned.',
 
 
 

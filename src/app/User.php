@@ -138,6 +138,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+    * User has at least one seatable ticket for event
+    */
+    public function hasSeatableTicket($eventId)    {
+        $eventParticipants = $this->getAllTickets($eventId);
+        foreach ($eventParticipants as $eventParticipant){
+            if ($eventParticipant->ticket->seatable){
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    /**
      * Get seatable Tickets for current User
      * @param  $eventId
      * @param  boolean $obj

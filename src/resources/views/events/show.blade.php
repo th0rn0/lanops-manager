@@ -276,9 +276,9 @@
 										</picture>
 									</div>
 									<div class="col-12 col-md-4">
-										@if ($user && !$user->eventParticipation->isEmpty())
+										@if ($user && !$user->getAllTickets($event->id)->isEmpty() && $user->hasSeatableTicket($event->id))
 											<h5>@lang('events.yourseats')</h5>
-											@foreach ($user->eventParticipation as $participant)
+											@foreach ($user->getAllTickets($event->id) as $participant)
 												@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
 													{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
 														{{ Form::hidden('_method', 'DELETE') }}
@@ -293,6 +293,10 @@
 													{{ Form::close() }}
 												@endif
 											@endforeach
+										@elseif(!$user->hasSeatableTicket($event->id))
+											<div class="alert alert-info">
+												<h5>@lang('events.noseatableticket')</h5>
+											</div>
 										@elseif(Auth::user())
 											<div class="alert alert-info">
 												<h5>@lang('events.plspurchaseticket')</h5>
@@ -500,8 +504,8 @@
 		<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.mytickets')</h3>
 	</div>
 	@if (Auth::user())
-		@if (!$user->eventParticipation->isEmpty())
-			@foreach ($user->eventParticipation as $participant)
+		@if (!$user->getAllTickets($event->id)->isEmpty())
+			@foreach ($user->getAllTickets($event->id) as $participant)
 				@include('layouts._partials._tickets.index')
 			@endforeach
 		@else
@@ -679,10 +683,14 @@
 					{{$participant->user->firstname}}
 				</td>
 				<td style="vertical-align: middle;">
-					@if ($participant->seat)
-						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
+					@if ($participant->user->hasSeatableTicket($event->id)))
+						@if ($participant->seat)
+							{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
+						@else
+							@lang('events.notseated')
+						@endif
 					@else
-						@lang('events.notseated')
+						@lang('events.noseatableticketlist')
 					@endif
 				</td>
 			</tr>

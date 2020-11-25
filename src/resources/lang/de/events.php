@@ -82,6 +82,8 @@ return [
     'yes' => 'Ja',
     'no' => 'Nein',
     'buy' => 'Kaufen',
+    'noseatableticket' => 'Kein Ticket mit Sitzplatz in Besitz',
+    'noseatableticketlist' => 'Kein Ticket mit Sitzplatz in Besitz',
 
 
 
