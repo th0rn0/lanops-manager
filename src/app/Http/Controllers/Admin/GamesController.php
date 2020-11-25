@@ -60,7 +60,7 @@ class GamesController extends Controller
             'image_thumbnail'   => 'image',
             'matchmaking_enabled'   => 'in:on,off',
             'matchmaking_autostart'   => 'in:on,off',
-            'matchmaking_autofinalize'   => 'in:on,off',
+            'matchmaking_autoapi'   => 'in:on,off',
         ];
         $messages = [
             'name.required'         => 'Game name is required',
@@ -68,7 +68,7 @@ class GamesController extends Controller
             'image_thumbnail.image' => 'Thumbnail image must be a Image',
             'matchmaking_enabled.in' => 'matchmaking_enabled must be true or false',
             'matchmaking_autostart.in' => 'matchmaking_enabled must be true or false',
-            'matchmaking_autofinalize.in' => 'matchmaking_enabled must be true or false',
+            'matchmaking_autoapi.in' => 'matchmaking_enabled must be true or false',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -86,7 +86,7 @@ class GamesController extends Controller
         $game->gamematchapihandler = $request->gamematchapihandler;
         $game->matchmaking_enabled = ($request->matchmaking_enabled ? true : false);
         $game->matchmaking_autostart = ($request->matchmaking_autostart ? true : false);
-        $game->matchmaking_autofinalize = ($request->matchmaking_autofinalize ? true : false);
+        $game->matchmaking_autoapi = ($request->matchmaking_autoapi ? true : false);
         $game->public       = true;
         $game->min_team_count = $request->min_team_count;
         $game->max_team_count = $request->max_team_count;
@@ -151,7 +151,7 @@ class GamesController extends Controller
             'image_thumbnail'   => 'image',
             'matchmaking_enabled'   => 'in:on,off',
             'matchmaking_autostart'   => 'in:on,off',
-            'matchmaking_autofinalize'   => 'in:on,off',
+            'matchmaking_autoapi'   => 'in:on,off',
         ];
         $messages = [
             'name.required'         => 'Game name is required',
@@ -160,7 +160,7 @@ class GamesController extends Controller
             'image_thumbnail.image' => 'Thumbnail image must be a Image',
             'matchmaking_enabled.in' => 'matchmaking_enabled must be true or false',
             'matchmaking_autostart.in' => 'matchmaking_enabled must be true or false',
-            'matchmaking_autofinalize.in' => 'matchmaking_enabled must be true or false',
+            'matchmaking_autoapi.in' => 'matchmaking_enabled must be true or false',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -187,7 +187,7 @@ class GamesController extends Controller
         $game->matchstartgameservercommand = $matchstartgameservercommand;
         $game->matchmaking_enabled = ($request->matchmaking_enabled ? true : false);
         $game->matchmaking_autostart = ($request->matchmaking_autostart ? true : false);
-        $game->matchmaking_autofinalize = ($request->matchmaking_autofinalize ? true : false);
+        $game->matchmaking_autoapi = ($request->matchmaking_autoapi ? true : false);
         $game->public       = @($request->public ? true : false);
         $game->connect_game_url = @$request->connect_game_url;
         $game->connect_game_command = @$request->connect_game_command;

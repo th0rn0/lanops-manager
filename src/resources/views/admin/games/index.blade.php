@@ -160,10 +160,16 @@
 								{{ Form::checkbox('matchmaking_autostart', null, null, array('id'=>'matchmaking_autostart')) }} Enable Match Autostart for Matchmaking
 							</label>
 						</div>
+						<div>
+							<small>Make sure the gamecommandhandler and a matchstartgameservercommand is selected! </small>
+						</div>
 						<div class="form-group">
 							<label class="form-check-label">
-								{{ Form::checkbox('matchmaking_autofinalize', null, null, array('id'=>'matchmaking_autofinalize')) }} Enable Match Autofinalizing for Matchmaking
+								{{ Form::checkbox('matchmaking_autoapi', null, null, array('id'=>'matchmaking_autoapi')) }} Enable Match Auto Api for Matchmaking
 							</label>
+							<div>
+								<small>Make sure the selected gamematchapihandler supports the Autoapi feature! (Get5,)</small>
+							</div>
 						</div>
 						<div class="form-group">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}

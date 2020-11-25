@@ -516,10 +516,10 @@
 						</div>
 						<div class="form-group">
 							<label class="form-check-label">
-								{{ Form::checkbox('matchmaking_autofinalize', null, $game->matchmaking_autofinalize, array('id'=>'matchmaking_autofinalize')) }} Enable Match Autofinalizing for Matchmaking
+								{{ Form::checkbox('matchmaking_autoapi', null, $game->matchmaking_autoapi, array('id'=>'matchmaking_autoapi')) }} Enable Match Auto Api for Matchmaking
 							</label>
 							<div>
-								<small>Make sure the selected gamematchapihandler supports the Autofinalizing! (Get5,)</small>
+								<small>Make sure the selected gamematchapihandler supports the Autoapi feature! (Get5,)</small>
 							</div>
 						</div>
 						<div class="form-group">

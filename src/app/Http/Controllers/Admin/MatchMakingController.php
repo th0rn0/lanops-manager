@@ -650,7 +650,7 @@ class MatchMakingController extends Controller
                 $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);
             }
 
-        if (isset($match->game) && $match->game->matchmaking_autofinalize)
+        if (isset($match->game) && $match->game->matchmaking_autoapi)
         {
             if (!$match->setStatus('WAITFORPLAYERS')) {
                 Session::flash('alert-danger', 'Cannot start Match!');

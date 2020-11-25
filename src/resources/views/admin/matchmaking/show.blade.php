@@ -191,7 +191,7 @@
 						@foreach ($match->teams as $team)
 
 							{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
-							@if ($match->game->matchmaking_autofinalize)
+							@if ($match->game->matchmaking_autoapi)
 								{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
 							@else
 								{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}

@@ -55,8 +55,8 @@ class GameMatchApiController extends Controller
             }
 
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-            //replace matchmaking_autofinalize
-            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->game->matchmaking_autofinalize)
+            //replace matchmaking_autoapi
+            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->game->matchmaking_autoapi)
             {
                 $apiurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
                 $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0],$apiurl, $matchserver->gameServer->gameserver_secret);
@@ -99,7 +99,7 @@ class GameMatchApiController extends Controller
             }
 
         }
-            if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autofinalize)
+            if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autoapi)
             {
                 $apiurl = config('app.url')."/api/matchmaking/".$match->id."/";
                 $result = $gamematchapihandler->getconfig($match->id,$nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);

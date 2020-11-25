@@ -660,7 +660,7 @@ class MatchMakingController extends Controller
                 }
              
                 
-                if (isset($match->game) && $match->game->matchmaking_autofinalize)
+                if (isset($match->game) && $match->game->matchmaking_autoapi)
                 {
                     if (!$match->setStatus('WAITFORPLAYERS')) {
                 Session::flash('alert-danger', __('matchmaking.cannotstartmatch'));
