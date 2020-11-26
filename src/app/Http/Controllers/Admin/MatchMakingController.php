@@ -9,6 +9,7 @@ use DateTime;
 use Storage;
 use Settings;
 use Arr;
+use Debugbar;
 
 use App\User;
 use App\Event;
@@ -382,6 +383,8 @@ class MatchMakingController extends Controller
      */
     public function updateteam(MatchMaking $match, MatchMakingTeam $team,  Request $request)
     {
+        Debugbar::addMessage("match: ".json_encode($match), 'MatchMaking');
+        Debugbar::addMessage("team: ".json_encode($team), 'MatchMaking');
          $rules = [
             'teamname'          => 'required',
             'teamowner'               => 'required|exists:users,id',
