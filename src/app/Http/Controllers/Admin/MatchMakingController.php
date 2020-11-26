@@ -16,7 +16,7 @@ use App\Game;
 use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
-use App\Http\Controllers\Admin\MatchMakingServerController;
+use App\MatchMakingServer;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -394,6 +394,7 @@ class MatchMakingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
+
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
         {
             Session::flash('alert-danger', "you cannot update a team while the match is live or complete!");
@@ -635,11 +636,10 @@ class MatchMakingController extends Controller
                 return Redirect::back();
             }
 
-            $request = new Request([
-                    'gameServer'   => array_key_first($availableservers),
-                ]);
-            $matchMakingServer                 = new MatchMakingServerController();
-            $matchMakingServer->store($match, $request);
+            $matchMakingServer                 = new MatchMakingServer();
+            $matchMakingServer->match_id        = $match->id;
+            $matchMakingServer->game_server_id = array_key_first($availableservers);
+
                 
             if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != null) {
                 $request = new Request([
