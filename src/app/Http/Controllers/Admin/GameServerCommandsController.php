@@ -235,8 +235,10 @@ class GameServerCommandsController extends Controller
         $availableParameters->tournament = $tournament;
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $challongeMatch;
-        $availableParameters->gamematchapiurl->matchconfig = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatch->id."/configure/".$request->nummaps;
-        //$availableParameters->gamematchapiurl->matchfinalize = ;
+        $availableParameters->gamematchapiurl = new \stdClass();
+        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatch->id."/configure/".$request->nummaps;
+        $availableParameters->gamematchapiurl->matchapibase = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatch->id;
+     
 
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
 
@@ -269,9 +271,9 @@ class GameServerCommandsController extends Controller
         $availableParameters->game = $game;
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $match;
-        $availableParameters->gamematchapiurl->matchconfig = config('app.url')."/api/matchmaking/".$match->id."/configure/1";
-        //$availableParameters->gamematchapiurl->matchfinalize = ;
-
+        $availableParameters->gamematchapiurl = new \stdClass();
+        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url')."/api/matchmaking/".$match->id."/configure/1";
+        $availableParameters->gamematchapiurl->matchapibase = config('app.url')."/api/matchmaking/".$match->id;
 
 
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);

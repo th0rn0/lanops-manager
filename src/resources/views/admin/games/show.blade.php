@@ -255,10 +255,10 @@
 								GameServer: This Parameters are Visible per Server: Available Variable: {>game},{>gameServer}
 							</li>
 							<li>
-								Match (used in Tournaments): This Parameters are Visible for Matches and can use the variable {>game},{>event},{>tournament},{>match},{>gameServer},{>gamematchapiurl->matchconfig},{>gamematchapiurl->matchfinalize}
+								Match (used in Tournaments): This Parameters are Visible for Matches and can use the variable {>game},{>event},{>tournament},{>match},{>gameServer},{>gamematchapiurl->matchconfigapi},{>gamematchapiurl->matchapibase}
 							</li>
 							<li>
-								Match (used in Matchmaking): This Parameters are Visible for Matches and can use the variable {>game},{>match},{>gameServer},{>gamematchapiurl->matchconfig},{>gamematchapiurl->matchfinalize}
+								Match (used in Matchmaking): This Parameters are Visible for Matches and can use the variable {>game},{>match},{>gameServer},{>gamematchapiurl->matchconfigapi},{>gamematchapiurl->matchapibase}
 							</li>
 						</ul>
 					</div>
