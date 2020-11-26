@@ -1,3 +1,5 @@
+use Debugbar;
+
 @extends ('layouts.default')
 
 @section ('page_title', Settings::getOrgName() . ' - ' . $event->display_name)
@@ -444,10 +446,14 @@
 					{{ $participant->user->firstname }}
 				</td>
 				<td style="vertical-align: middle;">
-					@if ($participant->seat)
-						{{ $participant->seat->seat }}
+					@if ( $participant->user->hasSeatableTicket($event->id) )
+						@if ( $participant->seat )
+							{{ $participant->seat->seat }}
+						@else
+							@lang( 'events.notseated' )
+						@endif
 					@else
-						@lang('events.notseated')
+						@lang( 'events.noseatableticketlist' )
 					@endif
 				</td>
 			</tr>
@@ -546,7 +552,7 @@
 									</picture>
 								</div>
 								<div class="col-12 col-md-4">
-									@if ($ticketFlagSignedIn)
+									@if ($ticketFlagSignedIn && $user->hasSeatableTicket($event->id))
 										<h5>@lang('events.yourseats')</h5>
 										@foreach ($user->eventParticipation as $participant)
 											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
@@ -563,6 +569,10 @@
 												{{ Form::close() }}
 											@endif
 										@endforeach
+									@elseif(!$user->hasSeatableTicket($event->id))
+										<div class="alert alert-info">
+											<h5>@lang('events.noseatableticket')</h5>
+										</div>
 									@elseif(Auth::user())
 										<div class="alert alert-info">
 											<h5>@lang('events.plspurchaseticket')</h5>
