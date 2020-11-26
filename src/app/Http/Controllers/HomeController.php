@@ -181,7 +181,7 @@ class HomeController extends Controller
         $user = Auth::user();
         if ($user) {
             $clauses = ['user_id' => $user->id, 'event_id' => $event->id];
-            $user->event_participation = EventParticipant::where($clauses)->get();
+            $user->eventParticipation = EventParticipant::where($clauses)->get();
         }
 
         $ticketFlagSignedIn = false;
