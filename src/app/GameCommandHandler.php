@@ -66,6 +66,7 @@ class SourceQueryCommandHandler implements IGameCommandHandler
         try {
             $result->info = $this->query->GetInfo();
             $result->players = $this->query->GetPlayers();
+            $result->sourcequerytype = $sourceQueryType;
         } catch (Exception $e) {
             $result->error = $e->getMessage();
         } 
