@@ -40,6 +40,7 @@ interface IGameCommandHandler
 {
     public function init($address, $rconPort, $password);
     public function execute($command);
+    public function status();
     public function dispose();
 }
 
@@ -57,6 +58,18 @@ class SourceQueryCommandHandler implements IGameCommandHandler
     {
         $this->query->Connect($address, $rconPort, 1, SourceQuery::GOLDSOURCE);
         $this->query->SetRconPassword($password);
+    }
+
+    public function status()
+    {
+        $result = new \stdClass();
+        try {
+            $result->info = $this->query->GetInfo();
+            $result->players = $this->query->GetPlayers();
+        } catch (Exception $e) {
+            $result->error = $e->getMessage();
+        } 
+        return $result;
     }
 
     public function execute($command)
@@ -84,6 +97,24 @@ class ManiaplanetXrpcCommandHandler implements IGameCommandHandler
     public function init($address, $rconPort, $password)
     {
         $this->maniaConnection = new Connection($address, $rconPort, 5, "SuperAdmin", $password, Connection::API_2011_02_21);
+    }
+
+    public function status()
+    {
+        $result = new \stdClass();
+        try {
+
+            // Argument 1 => Trackmania * Forever
+            $challengeInfo = json_decode(json_encode($this->maniaConnection->execute("GetCurrentChallengeInfo", array(1))));
+            $players = $this->maniaConnection->getPlayerList();
+
+            $result->info = new \stdClass();
+            $result->info->Map =  @$challengeInfo->Name;
+            $result->info->Players =  @count($players);
+        } catch (Exception $e) {
+            $result->error = $e->getMessage();
+        }
+        return $result;
     }
 
     public function execute($command)
