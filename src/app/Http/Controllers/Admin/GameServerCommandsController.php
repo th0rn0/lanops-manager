@@ -258,6 +258,21 @@ class GameServerCommandsController extends Controller
      */
     public function executeGameServerMatchMakingCommand(Game $game, GameServer $gameServer, MatchMaking $match, Request $request)
     {
+        $this->internalExecuteGameServerMatchMakingCommand($game, $gameServer, $match, $request);
+
+        return Redirect::back();
+    }
+
+        /**
+     * execute executeGameServerTournamentMatchMakingCommand
+     * @param  Game  $game
+     * @param  GameServer  $gameServer
+     * @param  MatchMaking $match
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function internalExecuteGameServerMatchMakingCommand(Game $game, GameServer $gameServer, MatchMaking $match, Request $request)
+    {
         $rules = [
             'command'           => 'filled'
         ];
@@ -280,7 +295,7 @@ class GameServerCommandsController extends Controller
 
         $this->executeCommand($gameServer, $command);
 
-        // return Redirect::back();
+        //return Redirect::back();
     }
 
 }
