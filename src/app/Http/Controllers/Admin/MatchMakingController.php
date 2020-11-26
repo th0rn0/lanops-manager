@@ -640,6 +640,11 @@ class MatchMakingController extends Controller
             $matchMakingServer->match_id        = $match->id;
             $matchMakingServer->game_server_id = array_key_first($availableservers);
 
+            if (!$matchMakingServer->save()) {
+                Session::flash('alert-danger', 'Could not save matchMakingServer!');
+                return Redirect::back();
+            }
+
                 
             if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != null) {
                 $request = new Request([
@@ -647,7 +652,12 @@ class MatchMakingController extends Controller
                     ]);
 
                 $gccontroller = new GameServerCommandsController();
-                $gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request);
+                if(!$gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request))
+                {
+                    Session::flash('alert-danger', 'Cannot start Match on Gameserver!');
+                    return Redirect::back();
+                }
+
             }
 
         if (isset($match->game) && $match->game->matchmaking_autoapi)
