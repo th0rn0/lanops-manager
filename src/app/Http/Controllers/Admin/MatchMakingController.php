@@ -9,7 +9,6 @@ use DateTime;
 use Storage;
 use Settings;
 use Arr;
-use Debugbar;
 
 use App\User;
 use App\Event;
@@ -383,8 +382,6 @@ class MatchMakingController extends Controller
      */
     public function updateteam(MatchMaking $match, MatchMakingTeam $team,  Request $request)
     {
-        Debugbar::addMessage("match: ".json_encode($match), 'MatchMaking');
-        Debugbar::addMessage("team: ".json_encode($team), 'MatchMaking');
          $rules = [
             'teamname'          => 'required',
             'teamowner'               => 'required|exists:users,id',
@@ -407,9 +404,9 @@ class MatchMakingController extends Controller
         if ($team->team_owner_id != $request->teamowner)
         {
 
-            foreach($match->teams as $team)
+            foreach($match->teams as $matchteam)
             {
-                if (Arr::first($team->players, function($value, $key)use($request){return $value->user_id == $request->teamowner;},false))
+                if (Arr::first($matchteam->players, function($value, $key)use($request){return $value->user_id == $request->teamowner;},false))
                 {
                     Session::flash('alert-danger', "specifyed owner is already in a team!");
                     return Redirect::back();
