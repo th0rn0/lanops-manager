@@ -56,6 +56,7 @@
 				<table width="100%" class="table table-hover" id="dataTables-example">
 					<thead>
 						<tr>
+							<th>Enabled</th>
 							<th>Name</th>
 							<th>Slug</th>
 							<th>Type</th>
@@ -76,7 +77,13 @@
 									}
 								@endphp
 								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#collapse_row{{ $gameServer->id }}">
-
+									<td>
+										@if ($gameServer->isenabled)
+										<i class="fa fa-check-circle-o fa-1x" style="color:green"></i>
+										@else
+										<i class="fa fa-times-circle-o fa-1x" style="color:red"></i>
+										@endif
+									</td>
 									<td>
 										{{ $gameServer->name }}
 									</td>
@@ -99,29 +106,33 @@
 										{{ $gameServer->rcon_port }}
 									</td>
 									<td>
-										@if($game->gamecommandhandler != "0")
-											<script>
-												jQuery( document ).ready(function(){
-													jQuery.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
-														var serverStatus = JSON.parse(data);
-														updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
-													});
-													var start = new Date;
-
-													setInterval(function() {
+										@if($gameServer->isenabled)
+											@if($game->gamecommandhandler != "0")
+												<script>
+													jQuery( document ).ready(function(){
 														jQuery.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
 															var serverStatus = JSON.parse(data);
 															updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
 														});
-													}, 10000);
-												});
-											</script>
-											<div id="serverstatus_{{ $gameServer->id }}">
-												<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
-												<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
-											</div>
+														var start = new Date;
+
+														setInterval(function() {
+															jQuery.get( '/games/{{ $game->slug }}/gameservers/{{ $gameServer->slug }}/status', function( data ) {
+																var serverStatus = JSON.parse(data);
+																updateStatus('#serverstatus_{{ $gameServer->id }}', serverStatus);
+															});
+														}, 10000);
+													});
+												</script>
+												<div id="serverstatus_{{ $gameServer->id }}">
+													<div><strong>Map:</strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+													<div><strong>Players:</strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+												</div>
+											@else
+												<div>Game Commandhandler required</div>
+											@endif
 										@else
-											<div>Game Commandhandler required</div>
+										<div>Disabled</div>
 										@endif
 									</td>
 									<td width="15%">
@@ -214,6 +225,13 @@
 															<div class="checkbox">
 																	<label>
 																		{{ Form::checkbox('ispublic', null, $gameServer->ispublic, array('id'=>'ispublic')) }}Server is Public
+																	</label>
+															</div>
+														</div>														
+														<div class="form-group">
+															<div class="checkbox">
+																	<label>
+																		{{ Form::checkbox('isenabled', null, $gameServer->isenabled, array('id'=>'isenabled')) }}Server is Enabled
 																	</label>
 															</div>
 														</div>
@@ -585,6 +603,11 @@
 						<div class="form-check">
 							<label class="form-check-label">
 								{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }}Server is Public
+							</label>
+						</div>						
+						<div class="form-check">
+							<label class="form-check-label">
+								{{ Form::checkbox('isenabled', null, true, array('id'=>'isenabled')) }}Server is Enabled
 							</label>
 						</div>
 						<button type="submit" class="btn btn-success btn-block">Submit</button>

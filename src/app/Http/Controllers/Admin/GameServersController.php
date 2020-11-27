@@ -51,6 +51,7 @@ class GameServersController extends Controller
         $gameServer->game_id        = $game->id;
         $gameServer->type           = $request->type;
         $gameServer->ispublic       = ($request->ispublic ? true : false);
+        $gameServer->isenabled       = ($request->isenabled ? true : false);
         $gameServer->address        = $request->address;
         $gameServer->game_port      = $request->game_port;
         $gameServer->stream_port      = $request->stream_port;
@@ -95,6 +96,7 @@ class GameServersController extends Controller
         $gameServer->name           = $request->name;
         $gameServer->type           = $request->type;
         $gameServer->ispublic       = ($request->ispublic ? true : false);
+        $gameServer->isenabled       = ($request->isenabled ? true : false);
         $gameServer->address        = $request->address;
         $gameServer->game_port      = $request->game_port;
         $gameServer->stream_port      = $request->stream_port;

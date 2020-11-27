@@ -170,7 +170,7 @@ class Game extends Model
 
 
         $return = array();
-        foreach (GameServer::where(['game_id' => $this->id, 'type' => 'Match'])->get() as $gameServer) {
+        foreach (GameServer::where(['game_id' => $this->id, 'type' => 'Match', 'isenabled' => true])->get() as $gameServer) {
             $gameserver_is_used = false;
             foreach ($gameServer->eventTournamentMatchServer as $eventTournamentMatchServer) {
                 if (array_key_exists($eventTournamentMatchServer->challonge_match_id, $openmatchservers)) {

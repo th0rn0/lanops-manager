@@ -337,7 +337,7 @@ class Helpers
     public static function getCasualGameServers()
     {
         $returnarray = array();
-        foreach (GameServer::where(['type' => 'Casual'])->get() as $gameserver) {
+        foreach (GameServer::where(['type' => 'Casual', 'isenabled' => true])->get() as $gameserver) {
             if (!array_key_exists($gameserver->game->slug, $returnarray)) {
                 $returnarray[$gameserver->game->slug] = array();
             }
@@ -354,7 +354,7 @@ class Helpers
     public static function getPublicGameServers()
     {
         $returnarray = array();
-        foreach (GameServer::where(['ispublic' => true])->get() as $gameserver) {
+        foreach (GameServer::where(['ispublic' => true, 'isenabled' => true])->get() as $gameserver) {
             if (!array_key_exists($gameserver->game->slug, $returnarray)) {
                 $returnarray[$gameserver->game->slug] = array();
             }
