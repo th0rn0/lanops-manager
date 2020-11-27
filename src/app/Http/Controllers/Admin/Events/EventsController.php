@@ -96,6 +96,7 @@ class EventsController extends Controller
         $event->event_venue_id              = @$request->venue;
         $event->capacity                    = $request->capacity;
         $event->online_event  = ($request->online_event ? true : false);
+        $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
 
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
@@ -189,6 +190,7 @@ class EventsController extends Controller
         }
 
         $event->online_event  = ($request->online_event ? true : false);
+        $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
 
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;

@@ -132,6 +132,13 @@
 									{{ Form::checkbox('online_event', null, false, array('id'=>'online_event')) }} Online Event (allow tournament registration and home redirection without being signed in to the event)
 								</label>
 						</div>
+						<div class="form-group">
+							<div class="form-check">
+									<label class="form-check-label">
+										{{ Form::checkbox('matchmaking_enabled', null, false, array('id'=>'matchmaking_enabled')) }} Show Matchmaking (on the redirected home of the event)
+									</label>
+							</div>
+						</div>
 
 						@if ($eventTags)
 							<div class="form-group">
