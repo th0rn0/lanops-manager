@@ -23,7 +23,7 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 				</div>
-				<div id="navbar" class="navbar-collapse collapse justify-content-md-center">
+				<div id="navbar" class="navbar-collapse collapse justify-content-md-center mb-3">
 					<ul class="navbar-nav">
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#event">@lang('events.eventinfo')</a></li>
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#purchaseTickets">@lang('events.tickets')</a></li>

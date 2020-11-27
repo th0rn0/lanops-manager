@@ -19,8 +19,8 @@ use Debugbar;
 						<span class="navbar-toggler-icon"></span>
 					</button>
 				</div>
-				<div id="navbar" class="navbar-collapse collapse justify-content-md-center">
-					<ul class="navbar-nav" style="display: inline-block; float: none;">
+				<div id="navbar" class="navbar-collapse collapse justify-content-md-center mb-3">
+					<ul class="navbar-nav">
 						<!--<li style="font-size:15px; font-weight:bold;"><a href="#food">Food Orders</a></li>-->
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#event">@lang('events.eventinfo')</a></li>
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#server">@lang('events.server')</a></li>
