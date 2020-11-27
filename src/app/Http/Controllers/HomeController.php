@@ -15,6 +15,8 @@ use App\EventTimetableData;
 use App\EventParticipant;
 use App\EventTournamentTeam;
 use App\EventTournamentParticipant;
+use App\MatchMaking;
+use App\MatchMakingTeam;
 
 use App\Http\Requests;
 
@@ -195,7 +197,27 @@ class HomeController extends Controller
                 }
             }
         }
+
+        $currentuser                  = Auth::id();
+        $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->get()->append(['sort' => 'created_at']);
+        $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->get()->append(['sort' => 'created_at']);
+        $ownedteams = MatchMakingTeam::where(['team_owner_id' => $currentuser])->get()->append(['sort' => 'created_at']);
+        $currentuseropenlivependingdraftmatches = array();
+        
+        foreach (MatchMaking::where(['status' => 'OPEN'])->orWhere(['status' => 'LIVE'])->orWhere(['status' => 'DRAFT'])->orWhere(['status' => 'PENDING'])->get() as $match)
+        {
+            if ($match->getMatchTeamPlayer(Auth::id()))
+            {
+                $currentuseropenlivependingdraftmatches[$match->id] = $match->id;
+            }
+        }
+
+
         return view("events.home")
+            ->withOpenPublicMatches($openpublicmatches)
+            ->withOwnedTeams($ownedteams)
+            ->withOwnedMatches($ownedmatches)
+            ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)
             ->withEvent($event)
             ->withGameServerList($gameServerList)
             ->withTicketFlagSignedIn($ticketFlagSignedIn)
