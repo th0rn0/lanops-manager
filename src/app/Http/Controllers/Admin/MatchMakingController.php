@@ -654,7 +654,6 @@ class MatchMakingController extends Controller
                 $gccontroller = new GameServerCommandsController();
                 if(!$gccontroller->InternalExecuteGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request))
                 {
-                    #Session::flash('alert-danger', 'Cannot start Match on Gameserver!');
                     return Redirect::back();
                 }
 
