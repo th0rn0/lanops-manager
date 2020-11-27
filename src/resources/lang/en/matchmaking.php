@@ -23,7 +23,7 @@ return [
     'matchowner' => 'Match owner',
     'notsignedup' => 'not signed up',
     'ownedmatches' => 'Your owned matches',
-    'ownedteams' => 'Your matches with owned teams',
+    'ownedteams' => 'Matches with teams of which you are joined',
     'publicmatches' => 'Open public matches',
     'signedup' => 'signed up',
     'signupsclosed' => 'signeups closed',

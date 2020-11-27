@@ -29,8 +29,8 @@ use Debugbar;
 						@if (!$event->tournaments->isEmpty())
 							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif				
-						@if ($event->matchmaking_enabled)
-							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#matchmaking">@lang('events.matchmaking')</a></li>
+						@if ($event->matchmaking_enabled && $isMatchMakingEnabled)
+							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#matchmaking">@lang('matchmaking.matchmaking')</a></li>
 						@endif
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#information">@lang('events.essentialinfo')</a></li>
 					</ul>
@@ -416,8 +416,8 @@ use Debugbar;
 	
 	
 	<!-- Matchmaking -->
-	@if ($event->matchmaking_enabled)
-		<div class="row">
+	@if ($event->matchmaking_enabled && $isMatchMakingEnabled)
+		
 			<div class="pb-2 mt-4 mb-4 border-bottom">
 				<div class="row">
 					<div class="col-sm">
@@ -436,37 +436,48 @@ use Debugbar;
 		
 			<!-- owned matches -->
 			@if (!$ownedMatches->isEmpty())
+			<a name="ownedmatches"></a>
 				<div class="pb-2 mt-4 mb-4 border-bottom">
-					<a name="ownedmatches"></a>
 					<h3>@lang('matchmaking.ownedmatches')</h3>
 				</div>
 				<div class="card-deck">
 					@foreach ($ownedMatches as $match)
 						@include ('layouts._partials._matchmaking.card')
 					@endforeach
+
 				</div>
+				@if($ownedMatches->count())
+				<div>
+						{{ $ownedMatches->links() }}
+				</div>
+				@endif
 			@endif
 		
 			<!-- owned teams -->
-			@if (!$ownedTeams->isEmpty())
+			@if (!$memberedTeams->isEmpty())
+			<a name="memberedmatches"></a>
 				<div class="pb-2 mt-4 mb-4 border-bottom">
-					<a name="ownedteams"></a>
 					<h3>@lang('matchmaking.ownedteams')</h3>
 				</div>
 				<div class="card-deck">
-					@foreach ($ownedTeams as $team)
+					@foreach ($memberedTeams as $team)
 						@php
 							$match = $team->match;
 						@endphp
 						@include ('layouts._partials._matchmaking.card')
 					@endforeach
 				</div>
+				@if($memberedTeams->count())
+				<div>
+						{{ $memberedTeams->links() }}
+				</div>
+				@endif
 			@endif
 		
 				<!-- open public matches -->
 			@if (!$openPublicMatches->isEmpty())
-				<div class="pb-2 mt-4 mb-4 border-bottom">
-					<a name="ownedmatches"></a>
+			<a name="openpubmatches"></a>
+			<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h3>@lang('matchmaking.publicmatches')</h3>
 				</div>
 				<div class="card-deck">
@@ -474,8 +485,13 @@ use Debugbar;
 						@include ('layouts._partials._matchmaking.card')
 					@endforeach
 				</div>
+				@if($openPublicMatches->count())
+				<div>
+						{{ $openPublicMatches->links() }}
+				</div>
+				@endif
 			@endif
-		</div>
+		
 
 
 <!-- Modal -->

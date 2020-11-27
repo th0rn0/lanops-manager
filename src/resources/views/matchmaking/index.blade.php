@@ -23,37 +23,48 @@
 
 	<!-- owned matches -->
 	@if (!$ownedMatches->isEmpty())
+	<a name="ownedmatches"></a>
 		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="ownedmatches"></a>
 			<h3>@lang('matchmaking.ownedmatches')</h3>
 		</div>
 		<div class="card-deck">
 			@foreach ($ownedMatches as $match)
 				@include ('layouts._partials._matchmaking.card')
 			@endforeach
+
 		</div>
+		@if($ownedMatches->count())
+		<div>
+				{{ $ownedMatches->links() }}
+		</div>
+		@endif
 	@endif
 
 	<!-- owned teams -->
-	@if (!$ownedTeams->isEmpty())
+	@if (!$memberedTeams->isEmpty())
+	<a name="memberedmatches"></a>
 		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="ownedteams"></a>
 			<h3>@lang('matchmaking.ownedteams')</h3>
 		</div>
 		<div class="card-deck">
-			@foreach ($ownedTeams as $team)
+			@foreach ($memberedTeams as $team)
 				@php
 					$match = $team->match;
 				@endphp
 				@include ('layouts._partials._matchmaking.card')
 			@endforeach
 		</div>
+		@if($memberedTeams->count())
+		<div>
+				{{ $memberedTeams->links() }}
+		</div>
+		@endif
 	@endif
 
 		<!-- open public matches -->
 	@if (!$openPublicMatches->isEmpty())
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="ownedmatches"></a>
+	<a name="openpubmatches"></a>
+	<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.publicmatches')</h3>
 		</div>
 		<div class="card-deck">
@@ -61,8 +72,13 @@
 				@include ('layouts._partials._matchmaking.card')
 			@endforeach
 		</div>
+		@if($openPublicMatches->count())
+		<div>
+				{{ $openPublicMatches->links() }}
+		</div>
+		@endif
 	@endif
-
+	
 </div>
 
 

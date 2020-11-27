@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 use Helpers;
+use Arr;
+use Settings;
+
 
 use App\Event;
 use App\User;
@@ -199,9 +202,11 @@ class HomeController extends Controller
         }
 
         $currentuser                  = Auth::id();
-        $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->get()->sortByDesc('created_at');
-        $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->get()->sortByDesc('created_at');
-        $ownedteams = MatchMakingTeam::where(['team_owner_id' => $currentuser])->get()->sortByDesc('created_at');
+        $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->orderByDesc('created_at')->paginate(4, ['*'], 'openpubmatches');
+        $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->orderByDesc('created_at')->paginate(4, ['*'], 'owenedpage')->fragment('ownedmatches');
+        $memberedteams = Auth::user()->matchMakingTeams()->orderByDesc('created_at')->paginate(4, ['*'], 'memberedmatches')->fragment('memberedmatches');
+
+       
         $currentuseropenlivependingdraftmatches = array();
         
         foreach (MatchMaking::where(['status' => 'OPEN'])->orWhere(['status' => 'LIVE'])->orWhere(['status' => 'DRAFT'])->orWhere(['status' => 'PENDING'])->get() as $match)
@@ -214,9 +219,10 @@ class HomeController extends Controller
 
 
         return view("events.home")
+            ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled())
             ->withOpenPublicMatches($openpublicmatches)
-            ->withOwnedTeams($ownedteams)
             ->withOwnedMatches($ownedmatches)
+            ->withMemberedTeams($memberedteams)
             ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)
             ->withEvent($event)
             ->withGameServerList($gameServerList)

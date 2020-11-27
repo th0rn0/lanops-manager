@@ -68,6 +68,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\EventParticipant');
     }
+    public function matchMakingTeamplayers()
+    {
+        return $this->hasMany('App\MatchMakingTeamPlayer', 'user_id', 'id');
+    }
+    public function matchMakingTeams()
+    {
+        return $this->hasManyThrough('App\MatchMakingTeam', 'App\MatchMakingTeamPlayer', 'user_id', 'id', 'id', 'matchmaking_team_id');
+
+    }
     public function purchases()
     {
         return $this->hasMany('App\Purchase');
