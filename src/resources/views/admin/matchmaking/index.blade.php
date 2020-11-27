@@ -266,8 +266,6 @@
 						@foreach ($match->game->getMatchCommands() as $matchCommand)
 							{{ Form::open(array('url'=>'/admin/games/' . $match->game->slug . '/gameservercommands/execute/' . $match->matchMakingServer->gameServer->slug .'/matchmaking/' . $match->id, 'id'=>'executeServerCommandModal')) }}
 								{{ Form::hidden('command', $matchCommand->id) }}
-								{{ Form::hidden('match_id', $match->game->id) }}
-								match_id
 								<div class="row row-seperator">
 									<div class="col-12 col-md-3">
 										<h4>{{ $matchCommand->name }}</h4>
