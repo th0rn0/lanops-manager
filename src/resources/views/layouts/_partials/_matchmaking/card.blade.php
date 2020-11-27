@@ -1,4 +1,5 @@
-<a href="/matchmaking/{{ $match->id }}" class="link-unstyled card event-card card-hover mb-3">
+<div class="link-unstyled card event-card card-hover mb-3">
+<a href="/matchmaking/{{ $match->id }}" class="link-unstyled">
     <div class="card-header">
         @if ($match->game && $match->game->image_thumbnail_path)
             <picture>
@@ -71,3 +72,52 @@
         @endif
     </div>
 </a>
+@if (($match->status == 'LIVE' || $match->status == "WAITFORPLAYERS")  && isset($match->matchMakingServer) && isset($match->matchMakingServer->gameServer) )
+    <div class="card-footer">
+            <div>
+                @php
+                $availableParameters = new \stdClass();
+                $availableParameters->game = $match->matchMakingServer->gameServer->game;
+                $availableParameters->gameServer = $match->matchMakingServer->gameServer;
+                @endphp
+                        <h5>{{ $match->matchMakingServer->gameServer->name }}</h5>
+                        <script>
+
+                            document.addEventListener("DOMContentLoaded", function(event) {
+
+                                $.get( '/games/{{ $match->matchMakingServer->gameServer->game->slug }}/gameservers/{{ $match->matchMakingServer->gameServer->slug }}/status', function( data ) {
+                                    var serverStatus = JSON.parse(data);
+                                    updateStatus('#serverstatus_{{ $match->matchMakingServer->gameServer->id }}', serverStatus);
+                                });
+                                var start = new Date;
+
+                                setInterval(function() {
+                                    $.get( '/games/{{ $match->matchMakingServer->gameServer->game->slug }}/gameservers/{{ $match->matchMakingServer->gameServer->slug }}/status', function( data ) {
+                                        var serverStatus = JSON.parse(data);
+                                        updateStatus('#serverstatus_{{ $match->matchMakingServer->gameServer->id }}', serverStatus);
+                                    });
+                                }, 30000);
+                            });
+                        </script>
+
+                        <div class="mb-3" id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}">
+                            <div><i class="fas fa-map-marked-alt"></i><strong > Map: </strong><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_map"></span></div>
+                            <div><i class="fas fa-users"></i><span class ="ml-2"><strong class ="ml-2" > Players: </strong></span><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_players"></span></div>
+                        </div>
+                        @if($match->matchMakingServer->gameServer->game->connect_stream_url && $match->matchMakingServer->gameServer->stream_port != 0)
+                        <a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($match->matchMakingServer->gameServer->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
+                        @endif
+                        @if($match->matchMakingServer->gameServer->game->connect_game_url && $match->getMatchTeamPlayer(Auth::id()))
+                        <a class="btn btn-primary btn-block " id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($match->matchMakingServer->gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+                        @endif
+                        @if($match->matchMakingServer->gameServer->game->connect_game_command && $match->getMatchTeamPlayer(Auth::id()))
+                            <div class="input-group mt-2">
+                                <input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($match->matchMakingServer->gameServer->game->connect_game_command, NULL, $availableParameters) }}">
+                                <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="fas fa-external-link-alt"></i></button>
+                            </div> 
+                        @endif
+            </div>
+        </div>
+    @endif
+</div>
