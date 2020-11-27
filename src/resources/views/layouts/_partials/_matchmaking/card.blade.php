@@ -5,7 +5,7 @@
             <picture>
                 <source srcset="{{ $match->game->image_thumbnail_path }}.webp" type="image/webp">
                 <source srcset="{{ $match->game->image_thumbnail_path }}" type="image/jpeg">
-                <img class="img img-fluid rounded" src="{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
+                <img class="img img-fluid rounded" style="max-height: 212px;" src="{{ $match->game->image_thumbnail_path }}" alt="{{ $match->game->name }}">
             </picture>
         @endif
         <h3>@lang('matchmaking.match'){{ $match->id }}</h3>
