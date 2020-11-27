@@ -77,12 +77,11 @@ class SourceQueryCommandHandler implements IGameCommandHandler
     {
         // return $this->query->GetInfo();
         $result = $this->query->Rcon($command);
-        //tempdisable
-    
-        // if($result == false)
-        // {
-        //     throw new Exception("No Connection possible");
-        // }
+
+        if($result == false)
+        {
+            throw new Exception("No Connection possible");
+        }
 
         return $result;
     }
