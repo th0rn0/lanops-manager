@@ -199,9 +199,9 @@ class HomeController extends Controller
         }
 
         $currentuser                  = Auth::id();
-        $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->get()->append(['sort' => 'created_at']);
-        $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->get()->append(['sort' => 'created_at']);
-        $ownedteams = MatchMakingTeam::where(['team_owner_id' => $currentuser])->get()->append(['sort' => 'created_at']);
+        $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->get()->sortByDesc('created_at');
+        $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->get()->sortByDesc('created_at');
+        $ownedteams = MatchMakingTeam::where(['team_owner_id' => $currentuser])->get()->sortByDesc('created_at');
         $currentuseropenlivependingdraftmatches = array();
         
         foreach (MatchMaking::where(['status' => 'OPEN'])->orWhere(['status' => 'LIVE'])->orWhere(['status' => 'DRAFT'])->orWhere(['status' => 'PENDING'])->get() as $match)

@@ -35,9 +35,9 @@ class MatchMakingController extends Controller
     public function index()
     {
         $allusers = User::all();
-        $matches = MatchMaking::all()->append(['sort' => 'created_at']);
-        $pendingmatches = MatchMaking::where("status","PENDING")->get()->append(['sort' => 'updated_at']);
-        $livematches = MatchMaking::where("status","LIVE")->orWhere("status","WAITFORPLAYERS")->get()->append(['sort' => 'updated_at']);
+        $matches = MatchMaking::all()->sortByDesc('created_at');
+        $pendingmatches = MatchMaking::where("status","PENDING")->get()->sortByDesc('updated_at');
+        $livematches = MatchMaking::where("status","LIVE")->orWhere("status","WAITFORPLAYERS")->get()->sortByDesc('updated_at');
 
         $selectallusers = array();
 
