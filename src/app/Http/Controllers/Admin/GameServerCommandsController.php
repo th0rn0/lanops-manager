@@ -10,7 +10,6 @@ use Image;
 use File;
 use Helpers;
 use Validator;
-use Debugbar;
 
 use App\Game;
 use App\GameCommandHandler;
@@ -129,8 +128,6 @@ class GameServerCommandsController extends Controller
 
     private function executeCommand(GameServer $gameServer, string $command)
     {
-        Debugbar::addMessage("gameServer: ". json_encode($gameServer), "GameServerCommandsController@executeCommand");
-        Debugbar::addMessage("command: ". json_encode($command), "GameServerCommandsController@executeCommand");
 
         $validator = Validator::make(['gameServer' => $gameServer, 'command' => $command], [
             'gameServer'              => 'required',
@@ -201,17 +198,12 @@ class GameServerCommandsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        Debugbar::addMessage("game: ". json_encode($game), "GameServerCommandsController@executeGameServerCommand");
-        Debugbar::addMessage("gameServer: ". json_encode($gameServer), "GameServerCommandsController@executeGameServerCommand");
 
         $gameServerCommand = GameServerCommand::find($request->command);
-        Debugbar::addMessage("gameServerCommand: ". json_encode($gameServerCommand), "GameServerCommandsController@executeGameServerCommand");
         $availableParameters = new \stdClass();
         $availableParameters->game = $game;
         $availableParameters->gameServer = $gameServer;
-        Debugbar::addMessage("availableParameters: ". json_encode($availableParameters), "GameServerCommandsController@executeGameServerCommand");
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
-        Debugbar::addMessage("command: ". json_encode($command), "GameServerCommandsController@executeGameServerCommand");
 
 
         $this->executeCommand($gameServer, $command);
