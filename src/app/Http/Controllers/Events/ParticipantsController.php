@@ -8,12 +8,15 @@ use Session;
 use App\User;
 use App\Event;
 use App\EventParticipant;
+use App\EventTicket;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+
+use Debugbar;
 
 class ParticipantsController extends Controller
 {
@@ -81,17 +84,35 @@ class ParticipantsController extends Controller
         if ($user) {
             $participant = EventParticipant::where(['gift_accepted_url' => $request->url])->first();
             if ($participant != null) {
-                $participant->gift_accepted = true;
-                $participant->user_id = $user->id;
-                $participant->gift_accepted_url = null;
-                if ($participant->save()) {
-                    $request->session()->flash(
-                        'alert-success',
-                        'Gift Successfully accepted! Please visit the event page to pick a seat'
-                    );
+
+                /* check if maximum count of tickets for event ticket is already owned */
+                $clauses = ['id' => $participant->ticket_id, 'event_id' => $participant->event_id];
+                $ticket = EventTicket::where($clauses)->get()->first();
+
+                $no_of_owned_tickets = 0;
+
+                $eventParticipants = $user->getAllTickets($participant->event_id);
+                foreach ($eventParticipants as $eventParticipant){
+                    if ($ticket->id = $eventParticipant->ticket_id){
+                        $no_of_owned_tickets++;
+                    }
+                }              
+
+                if ($no_of_owned_tickets + 1 <= $ticket->no_tickets_per_user) {
+                    $participant->gift_accepted = true;
+                    $participant->user_id = $user->id;
+                    $participant->gift_accepted_url = null;
+                    if ($participant->save()) {
+                        $request->session()->flash(
+                            'alert-success',
+                            'Gift Successfully accepted! Please visit the event page to pick a seat'
+                        );
+                        return Redirect::to('account');
+                    }
+                    $request->session()->flash('alert-danger', 'Something went wrong. Please try again later.');
                     return Redirect::to('account');
                 }
-                $request->session()->flash('alert-danger', 'Something went wrong. Please try again later.');
+                $request->session()->flash('alert-danger', "You already own the maximum allowed number of event ticket: '" .$ticket->name. "'.");
                 return Redirect::to('account');
             }
             $request->session()->flash('alert-danger', 'Redemption code not found.');
