@@ -14,12 +14,17 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
     });
 
 if (mix.inProduction()) {
-    mix.purgeCss() // remove unused css rules
+    mix.purgeCss({
+        extend: {
+        content: [path.join(__dirname, './node_modules/summernote/dist/*.js')],
+        },
+    }); // remove unused css rules
 }
 
 mix.scripts([
         './node_modules/jquery/dist/jquery.js',
         './node_modules/jquery-ui-dist/jquery-ui.min.js',
+        './node_modules/popper.js/dist/umd/popper.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/summernote/dist/summernote-bs4.js',
     ], 'public/js/vendor.js')
