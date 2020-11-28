@@ -13,10 +13,10 @@ stop:
 app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-queue-failedtable generate-key stop ssh-keygen
 
 # Build Dependencies
-app-build-dep: composer-install npm-rebuild-sass npm-install
+app-build-dep: composer-install npm-install mix
 
 # Build Dev App & Dependencies
-app-build-dep-dev: composer-install-dev npm-rebuild-sass npm-install-dev
+app-build-dep-dev: composer-install-dev npm-install-dev mix-dev
 
 ###########
 # HELPERS #
