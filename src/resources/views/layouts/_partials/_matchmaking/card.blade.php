@@ -73,6 +73,7 @@
     </div>
 </a>
 @if (($match->status == 'LIVE' || $match->status == "WAITFORPLAYERS")  && isset($match->matchMakingServer) && isset($match->matchMakingServer->gameServer) )
+
     <div class="card-footer">
             <div>
                 @php

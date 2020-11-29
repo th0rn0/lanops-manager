@@ -208,7 +208,7 @@
 
 		@endif
 
-		<div class="row">
+		<div class="card-deck">
 
 			@php
 

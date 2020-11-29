@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
+    'ispublic' => 'is public (show match publicly for signup)',
     'ended' => 'has ended',
     'live' => 'is live',
     'draft' => 'draft',
@@ -33,6 +33,7 @@ return [
     'game' => 'Game:',
     'add' => 'Add',
     'addteam' => 'Add team',
+    'addmatch' => 'Add match',
     'currentstatus' => 'Current status:',
     'deletematch' => 'Delete match',
     'deleteteam' => 'Delete team',

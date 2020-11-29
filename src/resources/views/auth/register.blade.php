@@ -36,11 +36,12 @@
                     {{ Form::label('username',__('auth.username'),array('id'=>'','class'=>'')) }}
                     <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username">
                 </div>
-                <div class="form-group @error('email') is-invalid @enderror">
-                    {{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'')) }}
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
-                </div>
+
                 @if ($loginMethod == "standard")
+                    <div class="form-group @error('email') is-invalid @enderror">
+                        {{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'')) }}
+                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
+                    </div>
                     <div class="form-group @error('password1') is-invalid @enderror">
                         {{ Form::label('password1',__('auth.password'),array('id'=>'','class'=>'')) }}
                          <input id="password1" type="password" class="form-control" name="password1" required autocomplete="new-password">

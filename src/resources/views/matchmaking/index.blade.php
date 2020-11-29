@@ -3,7 +3,20 @@
 @section ('page_title', Settings::getOrgName() . ' - ' . __('matchmaking.matchmaking'))
 
 @section ('content')
+<script>
+	function updateStatus(id ,serverStatus){
 
+		if(serverStatus.info == false)
+		{
+			jQuery(id + "_map").html( "-" );
+			jQuery(id + "_players").html( "-" );
+		}else
+		{
+			jQuery(id + "_map").html( serverStatus.info.Map );
+			jQuery(id + "_players").html( serverStatus.info.Players );
+		}
+	}
+</script>
 <div class="container">
 
 	<div class="pb-2 mt-4 mb-4 border-bottom">
@@ -15,7 +28,7 @@
 			</div>
 			<div class="col-sm mt-4">
 				@if(Settings::getSystemsMatchMakingMaxopenperuser() == 0 || count($currentUserOpenLivePendingDraftMatches) < Settings::getSystemsMatchMakingMaxopenperuser())
-				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">Add Match</a>
+				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">@lang('matchmaking.addmatch')</a>
 				@endif
 			</div>
 		</div>
@@ -88,7 +101,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title" id="addMatchModal">Add Match</h4>
+					<h4 class="modal-title" id="addMatchModal">@lang('matchmaking.addmatch')</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
@@ -147,11 +160,11 @@
 					<div class="form-group">
 						<div class="form-check">
 								<label class="form-check-label">
-									{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} is public (show match publicly for signup)
+									{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} @lang('matchmaking.ispublic')
 								</label>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-success btn-block">Submit</button>
+					<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.submit')</button>
 				{{ Form::close() }}
 				</div>
 			</div>

@@ -12,7 +12,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
+    'ispublic' => 'Zeige match öffentlich auf der Matchmaking übersicht',
     'ended' => 'beendet',
     'live' => 'live',
     'pending' => 'wartend',
@@ -32,7 +32,8 @@ return [
     'teamsizes' => 'Teamgröße:',
     'game' => 'Spiel:',
     'add' => 'Hinzufügen',
-    'addteam' => 'Team Hinzufügen',
+    'addteam' => 'Team hinzufügen',
+    'addmatch' => 'Match hinzufügen',
     'currentstatus' => 'Aktueller Status:',
     'deletematch' => 'Match löschen',
     'deleteteam' => 'Team löschen',
