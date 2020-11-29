@@ -119,6 +119,20 @@
 		@endif
 
 		@if (($match->status == 'LIVE' || $match->status == "WAITFORPLAYERS")  && isset($match->matchMakingServer) && isset($match->matchMakingServer->gameServer) )
+		<script>
+			function updateStatus(id ,serverStatus){
+
+				if(serverStatus.info == false)
+				{
+					jQuery(id + "_map").html( "-" );
+					jQuery(id + "_players").html( "-" );
+				}else
+				{
+					jQuery(id + "_map").html( serverStatus.info.Map );
+					jQuery(id + "_players").html( serverStatus.info.Players );
+				}
+			}
+		</script>
 		<div class="row">
 			<div class="col-sm">
 			@php
