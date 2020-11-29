@@ -242,7 +242,7 @@
 									@endif
 									@if (!$team->match->getMatchTeamPlayer(Auth::id()) && $team->players->count() < $match->team_size )
 
-										{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/team/'. $team->id .'/teamplayer/add' )) }}
+										{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'. $team->id .'/teamplayer/add' )) }}
 										<button type="submit" class="btn btn-success btn-sm btn-block float-right"><i class="fas fa-user-plus"></i> @lang('matchmaking.jointeam')</button>
 										{{ Form::close() }}
 
