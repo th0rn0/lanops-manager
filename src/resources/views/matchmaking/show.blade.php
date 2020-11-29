@@ -113,7 +113,7 @@
 		@if ( $match->getMatchTeamPlayer(Auth::id()) && !$match->getMatchTeamOwner(Auth::id()) && Auth::id() != $match->owner_id )
 			{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $match->getMatchTeamPlayer(Auth::id())->team->id . '/teamplayer/'. $match->getMatchTeamPlayer(Auth::id())->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 				{{ Form::hidden('_method', 'DELETE') }}
-				<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.leavematch')</button>
+				<button type="submit" class="btn btn-danger btn-sm btn-block mb-3">@lang('matchmaking.leavematch')</button>
 			{{ Form::close() }}
 
 		@endif
