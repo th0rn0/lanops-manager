@@ -37,6 +37,7 @@ class MatchMakingController extends Controller
     {
         $currentuser                  = Auth::id();
         $openpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'OPEN'])->orderByDesc('created_at')->paginate(4, ['*'], 'openpubmatches');
+        $liveclosedpublicmatches = MatchMaking::where(['ispublic' => 1, 'status' => 'WAITFORPLAYERS'])->orWhere(['ispublic' => 1, 'status' => 'LIVE'])->orWhere(['ispublic' => 1, 'status' => 'COMPLETE'])->orderByDesc('created_at')->paginate(4, ['*'], 'closedpubmatches');
         $ownedmatches = MatchMaking::where(['owner_id' => $currentuser])->orderByDesc('created_at')->paginate(4, ['*'], 'owenedpage')->fragment('ownedmatches');
         $memberedteams = Auth::user()->matchMakingTeams()->orderByDesc('created_at')->paginate(4, ['*'], 'memberedmatches')->fragment('memberedmatches');
         $currentuseropenlivependingdraftmatches = array();
@@ -51,6 +52,7 @@ class MatchMakingController extends Controller
         
         return view('matchmaking.index')
             ->withOpenPublicMatches($openpublicmatches)
+            ->withLiveClosedPublicMatches($liveclosedpublicmatches)
             ->withMemberedTeams($memberedteams)
             ->withOwnedMatches($ownedmatches)
             ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)

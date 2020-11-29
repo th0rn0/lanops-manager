@@ -90,7 +90,27 @@
 				{{ $openPublicMatches->links() }}
 		</div>
 		@endif
+	@endif		
+	
+	<!-- live closed public matches -->
+	@if (!$liveClosedPublicMatches->isEmpty())
+	<a name="closedpubmatches"></a>
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+			<h3>@lang('matchmaking.closedpublicmatches')</h3>
+		</div>
+		<div class="card-deck">
+			@foreach ($liveClosedPublicMatches as $match)
+				@include ('layouts._partials._matchmaking.card')
+			@endforeach
+		</div>
+		@if($liveClosedPublicMatches->count())
+		<div>
+				{{ $liveClosedPublicMatches->links() }}
+		</div>
+		@endif
 	@endif
+
+
 	
 </div>
 

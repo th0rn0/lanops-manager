@@ -25,6 +25,7 @@ return [
     'ownedmatches' => 'Your owned matches',
     'ownedteams' => 'Matches with teams of which you are joined',
     'publicmatches' => 'Open public matches',
+    'closedpublicmatches' => 'Live/Closed public matches',
     'signedup' => 'signed up',
     'signupsclosed' => 'signeups closed',
     'teamcount' => 'Team count:',
