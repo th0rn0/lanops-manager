@@ -172,7 +172,7 @@
 							Form::number('team_count',
 								2,
 								array(
-									'id'    => 'team_size',
+									'id'    => 'team_count',
 									'class' => 'form-control'
 								))
 						}}
