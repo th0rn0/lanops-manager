@@ -145,7 +145,7 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if ($mapnumber != 1)
+        if ($mapnumber != 0)
         {
             return "Error: In matchmaking only one map is possible!";
         }
@@ -215,9 +215,9 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
-        if(!isset($match->matchMakingServer->gameServer))
+        if ($mapnumber != 0)
         {
-            return "Error: No GameServer setuped for this match!";
+            return "Error: In matchmaking only one map is possible!";
         }
         if (!isset($match->game->gamematchapihandler)) 
         {
@@ -255,6 +255,10 @@ class GameMatchApiController extends Controller
         {
             return "Error: No GameServer setuped for this match!";
         }
+        if ($mapnumber != 0)
+        {
+            return "Error: In matchmaking only one map is possible!";
+        }
         if (!isset($match->game->gamematchapihandler)) 
         {
             return "Error: No gamematchapihandler setuped for this match!";
@@ -289,6 +293,10 @@ class GameMatchApiController extends Controller
         if(!isset($match->matchMakingServer->gameServer))
         {
             return "Error: No GameServer setuped for this match!";
+        }
+        if ($mapnumber != 0)
+        {
+            return "Error: In matchmaking only one map is possible!";
         }
         if (!isset($match->game->gamematchapihandler)) 
         {
