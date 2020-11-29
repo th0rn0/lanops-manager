@@ -248,9 +248,9 @@ class MatchMakingController extends Controller
      
         $this->validate($request, $rules, $messages);
 
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS"||  $match->status == "PENDING")
         {
-            Session::flash('alert-danger', "you cannot update a match while it is live or complete!");
+            Session::flash('alert-danger', "you cannot update a match while it is live, waiting for players, pending or complete!");
             return Redirect::back();
         }
 
@@ -325,9 +325,9 @@ class MatchMakingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
-            Session::flash('alert-danger', "you cannot add a team while the match is live or complete!");
+            Session::flash('alert-danger', "you cannot add a team while the match is live,waitforplayers,pending or complete!");
             return Redirect::back();
         }
 
@@ -395,9 +395,9 @@ class MatchMakingController extends Controller
         $this->validate($request, $rules, $messages);
 
 
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
-            Session::flash('alert-danger', "you cannot update a team while the match is live or complete!");
+            Session::flash('alert-danger', "you cannot update a team while the match is live, waitforplayers, pending or complete!");
             return Redirect::back();
         }
 
@@ -455,9 +455,9 @@ class MatchMakingController extends Controller
      */
     public function deleteteam(MatchMaking $match, MatchMakingTeam $team,  Request $request)
     {
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
-            Session::flash('alert-danger', "you cannot delete a team while the match is live or complete!");
+            Session::flash('alert-danger', "you cannot delete a team while the match is live, waitforplayers,pending or complete!");
             return Redirect::back();
         }
         if ($team-> id == $match->oldestTeam->id)
@@ -501,9 +501,9 @@ class MatchMakingController extends Controller
 
         
 
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
-            Session::flash('alert-danger', "you cannot add a user to the team while the match is live or complete!");
+            Session::flash('alert-danger', "you cannot add a user to the team while the match is live, waitforplayers,pending or complete!");
             return Redirect::back();
         }
 
@@ -539,9 +539,9 @@ class MatchMakingController extends Controller
     {
 
 
-        if ($match->status == "LIVE" ||  $match->status == "COMPLETE")
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
-            Session::flash('alert-danger', "you cannot delete a user from the team while the match is live or complete!");
+            Session::flash('alert-danger', "you cannot delete a user from the team while the match is live, waitforplayers, pending or complete!");
             return Redirect::back();
         }
 
@@ -597,8 +597,8 @@ class MatchMakingController extends Controller
     {
      
 
-        if ($match->status == 'LIVE' || $match->status == 'COMPLETED') {
-            Session::flash('alert-danger', 'Match is already live or completed');
+        if ($match->status == 'LIVE' || $match->status == 'COMPLETED' || $match->status == 'WAITFORPLAYERS') {
+            Session::flash('alert-danger', 'Match is already live, waitforplayers or completed');
             return Redirect::back();
         }
 
@@ -701,8 +701,8 @@ class MatchMakingController extends Controller
     public function open(MatchMaking $match)
     {
        
-        if ($match->status == 'OPEN' || $match->status == 'LIVE' || $match->status == 'COMPLETED') {
-            Session::flash('alert-danger', 'Match is already open/ live or completed');
+        if ($match->status == 'OPEN' || $match->status == 'LIVE' || $match->status == 'COMPLETED' || $match->status == 'WAITFORPLAYERS'|| $match->status == 'PENDING') {
+            Session::flash('alert-danger', 'Match is already open/ live/ waitforplayers/pending or completed');
             return Redirect::back();
         }
 
