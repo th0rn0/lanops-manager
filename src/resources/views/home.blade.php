@@ -31,7 +31,7 @@
 					<h3>@lang('messages.next_event')</h3>
 					<h1>{{ $nextEvent->display_name }}</h1>
 					<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
-					<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">@lang('messages.book_now')</button></a>
+					<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-primary btn-lg">@lang('messages.book_now')</button></a>
 				</div>
 			@else
 				<div>
