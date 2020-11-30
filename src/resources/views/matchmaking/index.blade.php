@@ -36,7 +36,7 @@
 
 	<!-- owned matches -->
 	@if (!$ownedMatches->isEmpty())
-	<@php
+	@php
 		$scope = "ownedmatches";
 	@endphp
 	<a name="ownedmatches"></a>
@@ -58,7 +58,7 @@
 
 	<!-- owned teams -->
 	@if (!$memberedTeams->isEmpty())
-	<@php
+	@php
 		$scope = "memberedteams";
 	@endphp
 	<a name="memberedmatches"></a>
@@ -82,7 +82,7 @@
 
 		<!-- open public matches -->
 	@if (!$openPublicMatches->isEmpty())
-	<@php
+	@php
 		$scope = "openpublicmatches";
 	@endphp
 	<a name="openpubmatches"></a>
@@ -103,7 +103,7 @@
 	
 	<!-- live closed public matches -->
 	@if (!$liveClosedPublicMatches->isEmpty())
-	<@php
+	@php
 		$scope = "liveclosedpublicmatches";
 	@endphp
 	<a name="closedpubmatches"></a>
