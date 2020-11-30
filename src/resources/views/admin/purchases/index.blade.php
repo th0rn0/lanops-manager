@@ -23,8 +23,8 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-12 col-md-4">
-						<div class="card bg-primary">
-							<a href="/admin/purchases">
+						<div class="card border-secondary">
+							<a href="/admin/purchases" class="text-secondary">
 								<div class="card-footer">
 									<span class="float-left">All Purchases</span>
 									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -34,8 +34,8 @@
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
-						<div class="card bg-primary">
-							<a href="/admin/purchases/shop">
+						<div class="card border-secondary">
+							<a href="/admin/purchases/shop" class="text-secondary">
 								<div class="card-footer">
 									<span class="float-left">Shop Purchases</span>
 									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -45,8 +45,8 @@
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
-						<div class="card bg-primary">
-							<a href="/admin/purchases/event">
+						<div class="card border-secondary">
+							<a href="/admin/purchases/event" class="text-secondary">
 								<div class="card-footer">
 									<span class="float-left">Event Purchases</span>
 									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>

@@ -1,6 +1,18 @@
-$body-bg: #fff;
-$body-color: #000;
+$color_body_background: #fff;
+$color_body_text: #000;
 
-$brand-primary: #337ab7;
-$primary: #337ab7;
-$secondary: $color_primary;
+$color_primary: orange;
+
+$color_secondary_text: #fff;
+$color_primary_text: #333;
+
+$brand-primary: $color_primary;
+$primary: $color_primary;
+$body-bg: $color_body_background;
+$body-color: $color_body_text;
+$modal-content-bg: $color_body_background;
+$close-color: $color_body_text;
+
+$card-cap-bg: transparentize(invert($body-bg), 0.97);
+$card-bg: $body-bg;
+$card-border-color: invert($body-bg);
