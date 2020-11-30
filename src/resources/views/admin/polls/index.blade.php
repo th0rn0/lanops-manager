@@ -97,7 +97,7 @@
 					</div>
 					{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
 					@include ('layouts._partials._polls.add-options')
-					<div class="row">
+					<div class="row mt-3">
 						<div class="col-lg-6 col-sm-12 form-group">
 							<div class="form-check">
 								<label class="form-check-label">
