@@ -51,7 +51,9 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Login & Register
              */
+            
             Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+            Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
             Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
             Route::get('/register/{method}', 'Auth\AuthController@showRegister');
@@ -606,7 +608,4 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');
         });
     });
-
-    Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-
 });
