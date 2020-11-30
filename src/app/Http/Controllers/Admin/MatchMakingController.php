@@ -652,7 +652,7 @@ class MatchMakingController extends Controller
                     ]);
 
                 $gccontroller = new GameServerCommandsController();
-                if(!$gccontroller->InternalExecuteGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request))
+                if(!$gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request))
                 {
                     return Redirect::back();
                 }
