@@ -10,7 +10,10 @@ Route::group(['middleware' => ['web', 'notInstalled']], function () {
 
 Route::group(['middleware' => ['installed']], function () {
 
+
     Route::group(['middleware' => 'language'], function () {
+
+
 
         /**
          * Image Converter
@@ -46,14 +49,15 @@ Route::group(['middleware' => ['installed']], function () {
         /**
          * Front End
          */
+
+
         Route::group(['middleware' => ['web']], function () {
 
             /**
              * Login & Register
-             */
-            
+             */           
             Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-            Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+            Route::get('/register/email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
             Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
             Route::get('/register/{method}', 'Auth\AuthController@showRegister');
