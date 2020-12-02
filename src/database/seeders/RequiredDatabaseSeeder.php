@@ -394,6 +394,22 @@ class RequiredDatabaseSeeder extends Seeder
                 'description'   => 'Maximal open matchmaking matches per user'
             ]
         );
+        Setting::firstOrCreate(
+            ['setting'          => 'auth_steam_require_email'],
+            [
+                'value'         => false,
+                'default'       => true,
+                'description'   => 'Require email for a steam authenticated user'
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'auth_allow_email_change'],
+            [
+                'value'         => true,
+                'default'       => true,
+                'description'   => 'allow user to change the Email Address'
+            ]
+        );
 
         ## Apperance
         Appearance::firstOrCreate(

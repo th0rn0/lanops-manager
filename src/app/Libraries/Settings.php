@@ -961,4 +961,63 @@ class Settings
     {
         return \App\Setting::setSiteLocale($text);
     }
+
+    
+    /**
+     * Is auth_steam_require_email Enabled
+     * @return Boolean
+     */
+    public static function isAuthSteamRequireEmailEnabled()
+    {
+        return \App\Setting::isAuthSteamRequireEmailEnabled();
+    }
+
+    /**
+     * Enable auth_steam_require_email
+     * @return Boolean
+     */
+    public static function enableAuthSteamRequireEmail()
+    {
+        return \App\Setting::enableAuthSteamRequireEmail();
+    }
+
+    /**
+     * Disable auth_steam_require_email
+     * @return Boolean
+     */
+    public static function disableAuthSteamRequireEmail()
+    {
+        return \App\Setting::disableAuthSteamRequireEmail();
+    }   
+    
+    /**
+     * Is auth_allow_email_change Enabled
+     * @return Boolean
+     */
+    public static function isAuthAllowEmailChangeEnabled()
+    {
+        return \App\Setting::isAuthAllowEmailChangeEnabled();
+    }
+
+    /**
+     * Enable auth_allow_email_change
+     * @return Boolean
+     */
+    public static function enableAuthAllowEmailChange()
+    {
+        return \App\Setting::enableAuthAllowEmailChange();
+    }
+
+    /**
+     * Disable auth_allow_email_change
+     * @return Boolean
+     */
+    public static function disableAuthAllowEmailChange()
+    {
+        return \App\Setting::disableAuthAllowEmailChange();
+    }
+
+
+
 }
+

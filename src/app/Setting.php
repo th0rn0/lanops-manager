@@ -1226,7 +1226,6 @@ class Setting extends Model
         }
         return true;
     }
-
     
 
     /**
@@ -1290,6 +1289,91 @@ class Setting extends Model
         }
         return true;
     }
+
+
+
+    /**
+     * Is auth_steam_require_email Enabled
+     * @return Boolean
+     */
+    public static function isAuthSteamRequireEmailEnabled()
+    {
+        return self::where('setting', 'auth_steam_require_email')->first()->value;
+    }
+
+    /**
+     * Enable auth_steam_require_email
+     * @return Boolean
+     */
+    public static function enableAuthSteamRequireEmail()
+    {
+        if (!$AuthSteamRequireEmailEnabled = self::where('setting', 'auth_steam_require_email')->first()) {
+            return false;
+        }
+        $AuthSteamRequireEmailEnabled->value = true;
+        if (!$AuthSteamRequireEmailEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable auth_steam_require_email
+     * @return Boolean
+     */
+    public static function disableAuthSteamRequireEmail()
+    {
+        if (!$AuthSteamRequireEmailEnabled = self::where('setting', 'auth_steam_require_email')->first()) {
+            return false;
+        }
+        $AuthSteamRequireEmailEnabled->value = false;
+        if (!$AuthSteamRequireEmailEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Is auth_allow_email_change Enabled
+     * @return Boolean
+     */
+    public static function isAuthAllowEmailChangeEnabled()
+    {
+        return self::where('setting', 'auth_allow_email_change')->first()->value;
+    }
+
+    /**
+     * Enable auth_allow_email_change
+     * @return Boolean
+     */
+    public static function enableAuthAllowEmailChange()
+    {
+        if (!$AuthAllowEmailChangeEnabled = self::where('setting', 'auth_allow_email_change')->first()) {
+            return false;
+        }
+        $AuthAllowEmailChangeEnabled->value = true;
+        if (!$AuthAllowEmailChangeEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable auth_allow_email_change
+     * @return Boolean
+     */
+    public static function disableAuthAllowEmailChange()
+    {
+        if (!$AuthAllowEmailChangeEnabled = self::where('setting', 'auth_allow_email_change')->first()) {
+            return false;
+        }
+        $AuthAllowEmailChangeEnabled->value = false;
+        if (!$AuthAllowEmailChangeEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * Is App Installed

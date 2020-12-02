@@ -98,7 +98,9 @@ class SettingsController extends Controller
 
         return view('admin.settings.auth')
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
-            ->withActiveLoginMethods(Settings::getLoginMethods());
+            ->withActiveLoginMethods(Settings::getLoginMethods())
+            ->withIsAuthAllowEmailChangeEnabled(Settings::isAuthAllowEmailChangeEnabled())
+            ->withIsAuthSteamRequireEmailEnabled(Settings::isAuthSteamRequireEmailEnabled());
     }
 
     /**
@@ -705,5 +707,82 @@ class SettingsController extends Controller
         }
         Session::flash('alert-success', 'Successfully regenerated ' . $count . ' QR Codes!');
         return Redirect::back();
+    }
+
+        /**
+     * updateAuthGeneral 
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function updateAuthGeneral(Request $request)
+    {
+        
+        $rules = [
+            'auth_allow_email_change'               => 'in:on,off',
+
+        ];
+        $messages = [
+            'auth_allow_email_change.in'                    => 'Publicuse must be true or false',
+
+        ];
+        $this->validate($request, $rules, $messages);
+
+        if (($request->auth_allow_email_change ? true : false))
+        {
+            if (!Settings::enableAuthAllowEmailChange()) {
+                Session::flash('alert-danger', "Could not Enable auth_allow_email_change!");
+                return Redirect::back();
+            }
+        }
+        else
+        {
+            if (!Settings::disableAuthAllowEmailChange()) {
+                Session::flash('alert-danger', "Could not Disable auth_allow_email_change!");
+                return Redirect::back();
+            }
+
+        }
+
+        Session::flash('alert-success', "Successfully Saved General Authentication Settings!");
+        return Redirect::back();
+
+    }
+    /**
+     * updateAuthSteam 
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function updateAuthSteam(Request $request)
+    {
+        
+        $rules = [
+            'auth_steam_require_email'               => 'in:on,off',
+
+        ];
+        $messages = [
+            'auth_steam_require_email.in'                    => 'Publicuse must be true or false',
+
+        ];
+        $this->validate($request, $rules, $messages);
+
+        if (($request->auth_steam_require_email ? true : false))
+        {
+            if (!Settings::enableAuthSteamRequireEmail()) {
+                Session::flash('alert-danger', "Could not Enable auth_steam_require_email!");
+                return Redirect::back();
+            }
+        }
+        else
+        {
+            if (!Settings::disableAuthSteamRequireEmail()) {
+                Session::flash('alert-danger', "Could not Disable auth_steam_require_email!");
+                return Redirect::back();
+            }
+
+        }
+
+        Session::flash('alert-success', "Successfully Saved General Authentication Settings!");
+        return Redirect::back();
+
     }
 }

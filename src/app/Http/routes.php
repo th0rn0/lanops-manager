@@ -518,6 +518,8 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
             Route::post('/admin/settings/login/{method}/disable', 'Admin\SettingsController@disableLoginMethod');
             Route::post('/admin/settings/login/{method}/enable', 'Admin\SettingsController@enableLoginMethod');
+            Route::post('/admin/settings/auth/general', 'Admin\SettingsController@updateAuthGeneral');
+            Route::post('/admin/settings/auth/steam', 'Admin\SettingsController@updateAuthSteam');
             Route::post('/admin/settings/credit/enable', 'Admin\SettingsController@enableCreditSystem');
             Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
             Route::post('/admin/settings/shop/enable', 'Admin\SettingsController@enableShopSystem');
