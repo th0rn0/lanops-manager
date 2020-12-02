@@ -16,6 +16,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Debugbar;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
 
@@ -151,11 +153,14 @@ class User extends Authenticatable implements MustVerifyEmail
     */
     public function hasSeatableTicket($eventId)    {
         $eventParticipants = $this->getAllTickets($eventId);
+
         foreach ($eventParticipants as $eventParticipant){
-            if ($eventParticipant->ticket->seatable){
+            
+            if (($eventParticipant->ticket && $eventParticipant->ticket->seatable) ||
+                ($eventParticipant->free || $eventParticipant->staff)) {
                 return true;
             }
-
+            
         }
         return false;
     }

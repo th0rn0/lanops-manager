@@ -319,8 +319,12 @@ use Debugbar;
 												@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
 													<span class="badge badge-success">@lang('events.signedup')</span>
 												@endif
-												@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
-													<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
+												@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && $user->getAllTickets($event->id)->isEmpty())
+													<span class="badge badge-info">@lang('events.purchaseticketosignup')</span>
+												@else
+													@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
+														<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
+													@endif
 												@endif
 											</span>
 											@if ($tournament->status != 'COMPLETE')
