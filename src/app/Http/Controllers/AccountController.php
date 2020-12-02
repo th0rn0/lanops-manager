@@ -96,10 +96,11 @@ class AccountController extends Controller
     public function updateMail(Request $request)
     {
         $rules = [
-            'email'         => 'filled|email',
+            'email'         => 'filled|email|unique:users,email',
         ];
         $messages = [
             'email.filled'      => 'Email Cannot be blank.',
+            'email.unique'      => 'Email is already in use.',
         ];
         $this->validate($request, $rules, $messages);
 
