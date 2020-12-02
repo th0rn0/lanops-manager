@@ -43,12 +43,10 @@ class AccountController extends Controller
         $rules = [
             'firstname'     => 'filled',
             'surname'       => 'filled',
-            'email'         => 'filled|email',
             'password1'     => 'same:password2',
             'password2'     => 'same:password1',
         ];
         $messages = [
-            'email.filled'      => 'Email Cannot be blank.',
             'firstname.filled'  => 'Firstname Cannot be blank.',
             'surname.filled'    => 'Surname Cannot be blank.',
             'email.email'       => 'Email must be a valid Email Address.',
@@ -73,7 +71,6 @@ class AccountController extends Controller
             $user->password = Hash::make($request->password1);
         }
 
-        $user->email = @$request->email;
         $user->firstname = @$request->firstname;
         $user->surname = @$request->surname;
 
@@ -82,4 +79,32 @@ class AccountController extends Controller
         }
         return Redirect::back()->withSuccess('Account successfully updated!');
     }
+
+    public function updateMail(Request $request)
+    {
+        $rules = [
+            'email'         => 'filled|email',
+        ];
+        $messages = [
+            'email.filled'      => 'Email Cannot be blank.',
+        ];
+        $this->validate($request, $rules, $messages);
+
+        $user = Auth::user();
+
+        $user->email_verified_at = null;
+
+        $user->email = @$request->email;
+
+        if (!$user->save()) {
+            return Redirect::back()->withFail("Oops, Something went Wrong while updating the user.");
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        return Redirect::back()->withSuccess('Email updated but you need to confirm your email Adress !');
+    }
 }
+
+
+

@@ -131,19 +131,41 @@ class AuthController extends Controller
         }
         switch ($method) {
             case 'steam':
-                $this->validate($request, [
-                    'firstname' => 'required|string',
-                    'surname'   => 'required|string',
-                    'steamid'   => 'required|string',
-                    'avatar'    => 'required|string',
-                    'steamname' => 'required|string',
-                    'username'  => 'required|unique:users,username',
-                ]);
+                if (Settings::isAuthSteamRequireEmailEnabled())
+                {
+                    $this->validate($request, [
+                        'firstname' => 'required|string',
+                        'surname'   => 'required|string',
+                        'steamid'   => 'required|string',
+                        'avatar'    => 'required|string',
+                        'steamname' => 'required|string',
+                        'username'  => 'required|unique:users,username',
+                        'email'         => 'required|filled|email|unique:users,email',
+                    ]);
+                }
+                else
+                {
+                    $this->validate($request, [
+                        'firstname' => 'required|string',
+                        'surname'   => 'required|string',
+                        'steamid'   => 'required|string',
+                        'avatar'    => 'required|string',
+                        'steamname' => 'required|string',
+                        'username'  => 'required|unique:users,username',
+                    ]);
+                }
                 $user->avatar               = $request->avatar;
                 $user->steamid              = $request->steamid;
                 $user->steamname            = $request->steamname;
-                // No email Verification needed - just add the email_verified_at
-                $user->email_verified_at    = new \DateTime('NOW');
+
+                if (Settings::isAuthSteamRequireEmailEnabled()) 
+                {
+                    $user->email          = $request->email;
+                }
+                else
+                {
+                    $user->email_verified_at    = new \DateTime('NOW');
+                }
                 break;
 
             default:

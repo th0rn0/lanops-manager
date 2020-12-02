@@ -12,6 +12,7 @@ return [
     'accounts_title' => 'Profil aktualisieren', 
     'my_account' => 'Mein Konto',
     'account_details' => 'Konto Details',
+    'emaildetails' => 'Meine Email Adresse',
     'firstname' => 'Vorname',
     'surname' => 'Nachname',
     'username' => 'Benutzername',

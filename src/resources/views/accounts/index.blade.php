@@ -51,17 +51,6 @@
 											{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
 										</div>
 									@endif
-									@if ($user->email)
-										<div class="form-group">
-											{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
-											<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="@lang('accounts.email')">
-											@error('email')
-				                                <span class="invalid-feedback" role="alert">
-				                                    <strong>{{ $message }}</strong>
-				                                </span>
-				                            @enderror
-										</div>
-									@endif
 									@if ($user->password)
 										<div class="form-group">
 											<label for="password1">@lang('accounts.change_password')</label>
@@ -88,6 +77,55 @@
 						{{ Form::close() }}
 					</div>
 				</div>
+
+				<!-- Email -->
+				<div class="card mb-3">
+					<div class="card-header ">
+						<h3 class="card-title">@lang('accounts.emaildetails')</h3>
+					</div>
+					<div class="card-body">
+						{{ Form::open(array('url'=>'/account/email' )) }}
+							<div class="row" style="display: flex; align-items: center;">
+								<div class="col-md-2 col-sm-12">
+
+								</div>
+								<div class="col-md-10 col-sm-12">
+									@if ($user->email)
+										<div class="form-group">
+											{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
+											@if(Settings::isAuthAllowEmailChangeEnabled())
+												<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="@lang('accounts.email')">
+											@else
+												<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" disabled placeholder="@lang('accounts.email')">
+											@endif
+											
+											@error('email')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+									@else
+									<div class="form-group">
+										{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
+											<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="@lang('accounts.email')">
+										@error('email')
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
+									</div>
+									
+									@endif
+									@if (!$user->email || Settings::isAuthAllowEmailChangeEnabled())
+										<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
+									@endif
+								</div>
+							</div>
+						{{ Form::close() }}
+					</div>
+				</div>
+				<!-- creditlogs -->
 				@if ($creditLogs)
 					<div class="card mb-3">
 						<div class="card-header ">
@@ -154,6 +192,9 @@
 					</div>
 				@endif
 			</div>
+			
+			
+
 
 			<!-- TICKETS -->
 			<div class="col-sm-12 col-12 col-md-6 col-lg-7 mt-3 mb-3">

@@ -12,6 +12,7 @@ return [
     'accounts_title' => 'Updating your profile', 
     'my_account' => 'My account',
     'account_details' => 'Account details',
+    'emaildetails' => 'My email adress',
     'firstname' => 'Firstname',
     'surname' => 'Surname',
     'username' => 'User name',
