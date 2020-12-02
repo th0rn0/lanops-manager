@@ -13,6 +13,7 @@ return [
     'my_account' => 'Mein Konto',
     'account_details' => 'Konto Details',
     'emaildetails' => 'Meine Email Adresse',
+    'emailmessage' => 'Um deine Registrierung abzuschließen, trage bitte deine Email Adresse ein!',
     'firstname' => 'Vorname',
     'surname' => 'Nachname',
     'username' => 'Benutzername',

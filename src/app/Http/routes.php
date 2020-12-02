@@ -78,9 +78,14 @@ Route::group(['middleware' => ['installed']], function () {
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::get('/account', 'AccountController@index');
                 Route::post('/account', 'AccountController@update');
-                Route::post('/account/email', 'AccountController@updateMail');
                 Route::post('/account/delete', 'Auth\SteamController@destroy');
+            });          
+
+            Route::group(['middleware' => ['auth', 'banned']], function () {
+                Route::get('/account/email', 'AccountController@showMail');
+                Route::post('/account/email', 'AccountController@updateMail');
             });
+
 
             Route::group(['middleware' => ['auth']], function () {
                 Route::get('/logout', 'Auth\AuthController@logout');

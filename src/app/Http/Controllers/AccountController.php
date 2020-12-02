@@ -38,6 +38,19 @@ class AccountController extends Controller
 
     }
 
+    /**
+     * Show Email Change Page
+     * @return View
+     */
+    public function showMail()
+    {
+        $user = Auth::user();
+        
+        return view("accounts.email")
+            ->withUser($user);
+
+    }
+
     public function update(Request $request)
     {
         $rules = [
@@ -102,7 +115,8 @@ class AccountController extends Controller
 
         $user->sendEmailVerificationNotification();
 
-        return Redirect::back()->withSuccess('Email updated but you need to confirm your email Adress !');
+        return redirect('/register/email/verify');
+    
     }
 }
 

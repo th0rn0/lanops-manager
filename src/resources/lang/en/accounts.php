@@ -13,6 +13,7 @@ return [
     'my_account' => 'My account',
     'account_details' => 'Account details',
     'emaildetails' => 'My email adress',
+    'emailmessage' => 'To finish your registration, you have to enter your email adress!',
     'firstname' => 'Firstname',
     'surname' => 'Surname',
     'username' => 'User name',

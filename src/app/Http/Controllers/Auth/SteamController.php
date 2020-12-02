@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Auth;
 
 use Session;
+use Settings;
 
 use App\User;
 
@@ -58,6 +59,13 @@ class SteamController extends Controller
                     }
                     $user->last_login = Carbon::now()->toDateTimeString();
                     $user->save();
+                    if ((!isset($user->email) || $user->email == null ) &&  Settings::isAuthSteamRequireEmailEnabled())
+                    {
+                    $user->email_verified_at    = null;
+                    $user->save();
+                    return redirect('/account/email'); // redirect to site
+                    }
+
                     return redirect('/'); // redirect to site
                 } else {
                     $user = [

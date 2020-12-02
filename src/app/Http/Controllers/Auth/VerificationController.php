@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use Auth;
 
 
 use App\Http\Controllers\Controller;
@@ -34,6 +35,13 @@ class VerificationController extends Controller
 
 
     public function show (){
+
+        $user = Auth::user();
+
+        if ($user->email == NULL)
+        {
+        return redirect('/account/email');
+        }
         return view('auth.verify');
     }
 
