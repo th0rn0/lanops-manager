@@ -110,7 +110,7 @@
 		@endif
 
 
-		@if ( $match->getMatchTeamPlayer(Auth::id()) && !$match->getMatchTeamOwner(Auth::id()) && Auth::id() != $match->owner_id )
+		@if ( $match->getMatchTeamPlayer(Auth::id()) && !$match->getMatchTeamOwner(Auth::id()) && Auth::id() != $match->owner_id && $match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING" && $match->status != "WAITFORPLAYERS")
 			{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $match->getMatchTeamPlayer(Auth::id())->team->id . '/teamplayer/'. $match->getMatchTeamPlayer(Auth::id())->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 				{{ Form::hidden('_method', 'DELETE') }}
 				<button type="submit" class="btn btn-danger btn-sm btn-block mb-3">@lang('matchmaking.leavematch')</button>
