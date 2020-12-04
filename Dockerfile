@@ -1,5 +1,5 @@
-#FROM th0rn0/php-nginx-base:latest
-FROM lan2play/php-nginx-base:latest
+FROM th0rn0/php-nginx-base:latest
+#FROM lan2play/php-nginx-base:latest
 MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
 
 # ENV - App Defaults
