@@ -52,7 +52,7 @@
 					<div class="input-group mb-3 mt-0" style="width: 100%">
 						<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
+							<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
 						</div>
 					</div>
 				@endif
@@ -176,7 +176,7 @@
 						<div class="input-group mt-2 mb-3">
 							<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($match->matchMakingServer->gameServer->game->connect_game_command, NULL, $availableParameters) }}">
 							<span class="input-group-btn">
-							<button class="btn btn-primary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="fas fa-external-link-alt"></i></button>
+							<button class="btn btn-primary " type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="fas fa-external-link-alt"></i></button>
 						</div> 
 					@endif
 		
@@ -235,7 +235,7 @@
 						<div class="card-header @if(Colors::isBodyDarkMode()) border-light  @endif">
 							<div class="row">
 								<div class="col">
-									<h4>@lang('matchmaking.team') #{{ $loop->iteration }}: {{ $team->name }}</h4>
+									<h4>@lang('matchmaking.team') #{{ $loop->iteration }}: {{ $team->name }}</h4> <small>{{ $team->players->count() }}/ {{ $match->team_size }}</small>
 								</div>
 								<div class="col">
 									@if($team->match->status != "LIVE" && $team->match->status != "COMPLETE" && $team->match->status != "PENDING" && $team->match->status != "WAITFORPLAYERS" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
@@ -276,7 +276,7 @@
 									<div class="input-group mb-3 mt-0" style="width: 100%">
 										<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
 										<div class="input-group-append">
-											<button class="btn btn-outline-secondary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
+											<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
 										</div>
 									</div>
 								</div>
