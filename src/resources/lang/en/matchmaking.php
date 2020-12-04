@@ -44,6 +44,7 @@ return [
     'inviteurl' => 'Invitation link',
     'jointeam' => 'Join team',
     'switchteam' => 'Switch to team',
+    'successfullychangedteamplayer' => 'sucessfully switched the team!',
     'matchinviteurl' => 'Match invitation link',
     'name' => 'Name',
     'openmatch' => 'Open match',

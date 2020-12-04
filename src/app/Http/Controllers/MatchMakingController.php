@@ -605,7 +605,7 @@ class MatchMakingController extends Controller
             return Redirect::back();
         }
 
-            Session::flash('alert-success', __('matchmaking.successfullydeletedteamplayer'));
+            Session::flash('alert-success', __('matchmaking.successfullychangedteamplayer'));
             return Redirect::back();
       
 

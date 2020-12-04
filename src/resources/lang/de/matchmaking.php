@@ -44,6 +44,7 @@ return [
     'inviteurl' => 'Einladelink',
     'jointeam' => 'Team beitreten',
     'switchteam' => 'Zu Team wechseln',
+    'successfullychangedteamplayer' => 'Teamwechsel erfolgreich',
     'matchinviteurl' => 'Match Einladelink',
     'name' => 'Name',
     'openmatch' => 'Match Öffnen',
