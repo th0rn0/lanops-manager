@@ -261,7 +261,7 @@
 										{{ Form::close() }}
 
 									@endif
-									@if($match->status == "COMPLETE")
+									@if($match->status == "COMPLETE" || ($match->status == "LIVE" && isset($match->game) && isset ($match->game->gamematchapihandler) && $match->game->matchmaking_autoapi))
 										<div class="text-center float-right">
 											<h4 style="width:50px;" class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light text-success @else border-danger bg-danger-light text-danger @endif">{{ $team->team_score }}</h4>
 										</div>
