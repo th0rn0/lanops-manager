@@ -179,6 +179,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::post('/matchmaking', 'MatchMakingController@store');
                 Route::post('/matchmaking/{match}/team/{team}/teamplayer/add', 'MatchMakingController@addusertomatch');
                 Route::delete('/matchmaking/{match}/team/{team}/teamplayer/{teamplayer}/delete', 'MatchMakingController@deleteuserfrommatch');
+                Route::post('/matchmaking/{match}/team/{team}/teamplayer/{teamplayer}/change', 'MatchMakingController@changeuserteam');
                 Route::post('/matchmaking/{match}/team/add', 'MatchMakingController@addteam');
                 Route::post('/matchmaking/{match}/team/{team}/update', 'MatchMakingController@updateteam');
                 Route::delete('/matchmaking/{match}/team/{team}/delete', 'MatchMakingController@deleteteam');

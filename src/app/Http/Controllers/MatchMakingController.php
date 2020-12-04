@@ -575,6 +575,45 @@ class MatchMakingController extends Controller
  
 
     /**
+     * removes user from match and team Database
+     * @param  MatchMaking $match
+     * @param MatchMakingTeam $matchmakingteam
+     * @return Redirect
+     */
+    public function changeuserteam(MatchMaking $match, MatchMakingTeam $team, MatchMakingTeamPlayer $teamplayer, Request $request)
+    {
+
+        if ($match->status == "LIVE" ||  $match->status == "COMPLETE" || $match->status == 'WAITFORPLAYERS'|| $match->status == 'PENDING')
+        {
+            Session::flash('alert-danger', __('matchmaking.cannotleavestatus'));
+            return Redirect::back();
+        }
+
+     
+        if (!$teamplayer->delete()) {
+            Session::flash('alert-danger', __('matchmaking.cannotdeleteteamplayer'));
+            return Redirect::back();
+        }
+            
+        $teamplayer                             = new MatchMakingTeamPlayer();
+        $teamplayer->matchmaking_team_id                       = $team->id;
+        $teamplayer->user_id                  = Auth::id();
+       
+
+        if (!$teamplayer->save()) {
+            Session::flash('alert-danger', __('matchmaking.cannotcreateteamplayer'));
+            return Redirect::back();
+        }
+
+            Session::flash('alert-success', __('matchmaking.successfullydeletedteamplayer'));
+            return Redirect::back();
+      
+
+    }
+
+
+
+    /**
      * Delete Match from Database
      * @param  MatchMaking $match
      * @return Redirect

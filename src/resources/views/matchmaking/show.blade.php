@@ -261,6 +261,11 @@
 										{{ Form::close() }}
 
 									@endif
+									@if ($team->match->getMatchTeamPlayer(Auth::id()) && !$match->getMatchTeamOwner(Auth::id()) && $team->players->count() < $match->team_size && $team->match->getMatchTeamPlayer(Auth::id())->team->id != $team->id)
+									{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'. $team->id .'/teamplayer/'. $team->match->getMatchTeamPlayer(Auth::id())->id .'/change' )) }}
+										<button type="submit" class="btn btn-success btn-sm btn-block float-right"><i class="fas fa-user-plus"></i> @lang('matchmaking.switchteam')</button>
+									{{ Form::close() }}
+									@endif
 									@if($match->status == "COMPLETE" || ($match->status == "LIVE" && isset($match->game) && isset ($match->game->gamematchapihandler) && $match->game->matchmaking_autoapi))
 										<div class="text-center float-right">
 											<h4 style="width:50px;" class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light text-success @else border-danger bg-danger-light text-danger @endif">{{ $team->team_score }}</h4>

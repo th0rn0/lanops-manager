@@ -43,6 +43,7 @@ return [
     'finalizematch' => 'Match finalisieren',
     'inviteurl' => 'Einladelink',
     'jointeam' => 'Team beitreten',
+    'switchteam' => 'Zu Team wechseln',
     'matchinviteurl' => 'Match Einladelink',
     'name' => 'Name',
     'openmatch' => 'Match Öffnen',
