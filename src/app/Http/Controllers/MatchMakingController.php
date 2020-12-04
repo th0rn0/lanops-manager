@@ -204,7 +204,7 @@ class MatchMakingController extends Controller
         
 
         $match->game_id                    = $game_id;
-        $match->status                     = 'DRAFT';
+        $match->status                     = 'OPEN';
         $match->ispublic                     = ($request->ispublic ? true : false);
         $match->team_size                  = $request->team_size[0];
         $match->team_count                  = $request->team_count;
