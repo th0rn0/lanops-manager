@@ -440,6 +440,9 @@ use Debugbar;
 		
 			<!-- owned matches -->
 			@if (!$ownedMatches->isEmpty())
+			@php
+				$scope = "ownedmatches";
+			@endphp
 			<a name="ownedmatches"></a>
 				<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h3>@lang('matchmaking.ownedmatches')</h3>
@@ -456,9 +459,12 @@ use Debugbar;
 				</div>
 				@endif
 			@endif
-		
+
 			<!-- owned teams -->
 			@if (!$memberedTeams->isEmpty())
+			@php
+				$scope = "memberedteams";
+			@endphp
 			<a name="memberedmatches"></a>
 				<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h3>@lang('matchmaking.ownedteams')</h3>
@@ -477,9 +483,12 @@ use Debugbar;
 				</div>
 				@endif
 			@endif
-		
+
 				<!-- open public matches -->
 			@if (!$openPublicMatches->isEmpty())
+			@php
+				$scope = "openpublicmatches";
+			@endphp
 			<a name="openpubmatches"></a>
 			<div class="pb-2 mt-4 mb-4 border-bottom">
 					<h3>@lang('matchmaking.publicmatches')</h3>
@@ -492,6 +501,27 @@ use Debugbar;
 				@if($openPublicMatches->count())
 				<div>
 						{{ $openPublicMatches->links() }}
+				</div>
+				@endif
+			@endif		
+			
+			<!-- live closed public matches -->
+			@if (!$liveClosedPublicMatches->isEmpty())
+			@php
+				$scope = "liveclosedpublicmatches";
+			@endphp
+			<a name="closedpubmatches"></a>
+			<div class="pb-2 mt-4 mb-4 border-bottom">
+					<h3>@lang('matchmaking.closedpublicmatches')</h3>
+				</div>
+				<div class="card-deck">
+					@foreach ($liveClosedPublicMatches as $match)
+						@include ('layouts._partials._matchmaking.card')
+					@endforeach
+				</div>
+				@if($liveClosedPublicMatches->count())
+				<div>
+						{{ $liveClosedPublicMatches->links() }}
 				</div>
 				@endif
 			@endif
