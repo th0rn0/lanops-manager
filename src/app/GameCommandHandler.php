@@ -56,7 +56,7 @@ class SourceQueryCommandHandler implements IGameCommandHandler
 
     public function init($address, $rconPort, $password)
     {
-        $this->query->Connect($address, $rconPort, 25, $this->sourceQueryType);
+        $this->query->Connect($address, $rconPort, 3, $this->sourceQueryType);
         $this->query->SetRconPassword($password);
     }
 
