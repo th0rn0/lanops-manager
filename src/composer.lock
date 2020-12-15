@@ -2462,16 +2462,16 @@
         },
         {
             "name": "laravelcollective/html",
-            "version": "v6.2.0",
+            "version": "v6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "3bb99be7502feb2129b375cd026ccb0fa4b66628"
+                "reference": "ae15b9c4bf918ec3a78f092b8555551dd693fde3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/3bb99be7502feb2129b375cd026ccb0fa4b66628",
-                "reference": "3bb99be7502feb2129b375cd026ccb0fa4b66628",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/ae15b9c4bf918ec3a78f092b8555551dd693fde3",
+                "reference": "ae15b9c4bf918ec3a78f092b8555551dd693fde3",
                 "shasum": ""
             },
             "require": {
@@ -2485,12 +2485,12 @@
             "require-dev": {
                 "illuminate/database": "^6.0|^7.0|^8.0",
                 "mockery/mockery": "~1.0",
-                "phpunit/phpunit": "~7.1"
+                "phpunit/phpunit": "~8.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.0-dev"
+                    "dev-master": "6.x-dev"
                 },
                 "laravel": {
                     "providers": [
@@ -2526,7 +2526,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "https://laravelcollective.com",
-            "time": "2020-09-07T19:59:40+00:00"
+            "time": "2020-12-15T20:20:05+00:00"
         },
         {
             "name": "league/commonmark",
@@ -7080,12 +7080,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lan2Play/ChallongePHP",
-                "reference": "680493e91f3806191448fa17f64fe4bb5045ce5e"
+                "reference": "557242ef394634505db87a2244b39925c16d2f03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lan2Play/ChallongePHP/zipball/680493e91f3806191448fa17f64fe4bb5045ce5e",
-                "reference": "680493e91f3806191448fa17f64fe4bb5045ce5e",
+                "url": "https://api.github.com/repos/Lan2Play/ChallongePHP/zipball/557242ef394634505db87a2244b39925c16d2f03",
+                "reference": "557242ef394634505db87a2244b39925c16d2f03",
                 "shasum": ""
             },
             "require": {
@@ -7125,7 +7125,7 @@
                 }
             ],
             "description": "PSR-18 compatible library to interface with the bracket generator Challonge.",
-            "time": "2020-12-15T20:18:11+00:00"
+            "time": "2020-12-15T20:38:38+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
