@@ -7,6 +7,7 @@ use Cache;
 use Settings;
 use Colors;
 use Session;
+use Helpers;
 
 use App\EventParticipant;
 use App\EventTournamentParticipant;
@@ -92,6 +93,7 @@ class EventTournament extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
                 $model->delete();
             }
@@ -205,6 +207,7 @@ class EventTournament extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
             }
             return false;
@@ -231,6 +234,7 @@ class EventTournament extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
             }
             return false;
@@ -303,6 +307,7 @@ class EventTournament extends Model
                     try {
                         $tournament->start();
                     } catch (\Exception $e) {
+                        Helpers::rethrowIfDebug($e);
                         Session::flash('alert-danger', $e->getMessage());
                         return false;
                     }
@@ -314,6 +319,7 @@ class EventTournament extends Model
                     try {
                         $tournament->finalize();
                     } catch (\Exception $e) {
+                        Helpers::rethrowIfDebug($e);
                         Session::flash('alert-danger', $e->getMessage());
                         return false;
                     }
@@ -325,6 +331,7 @@ class EventTournament extends Model
             }
             return true;
         } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
             Session::flash('alert-danger', $e->getMessage());
         }
         return false;
@@ -406,6 +413,7 @@ class EventTournament extends Model
             }
             return $return;
         } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
             Session::flash('alert-danger', $e->getMessage());
         }
 
@@ -440,6 +448,7 @@ class EventTournament extends Model
                 }
             }
         } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
             Session::flash('alert-danger', $e->getMessage());
         }
 
@@ -509,6 +518,7 @@ class EventTournament extends Model
             }
             return $tournamentStandings;
         } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
             Session::flash('alert-danger', $e->getMessage());
         }
 
@@ -548,6 +558,7 @@ class EventTournament extends Model
             }
             return $nextMatches;
         } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
             Session::flash('alert-danger', $e->getMessage());
         }
 
@@ -598,6 +609,7 @@ class EventTournament extends Model
             $this->getStandings();
             return $response;
         } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
             Session::flash('alert-danger', $e->getMessage());
         }
 

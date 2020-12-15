@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Helpers;
+
 use Illuminate\Database\Eloquent\Model;
 
 use GuzzleHttp;
@@ -56,6 +58,7 @@ class EventTournamentTeam extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
                 $model->delete();
             }
@@ -77,6 +80,7 @@ class EventTournamentTeam extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
             }
 

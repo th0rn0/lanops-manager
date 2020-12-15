@@ -4,6 +4,7 @@ namespace App;
 
 use Settings;
 use Colors;
+use Helpers;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -66,6 +67,7 @@ class EventTournamentParticipant extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
                 $model->delete();
             }
@@ -92,6 +94,7 @@ class EventTournamentParticipant extends Model
                 }
                 return true;
             } catch (\Throwable $e) {
+                Helpers::rethrowIfDebug($e);
                 Session::flash('alert-danger', $e->getMessage());
             }
 
