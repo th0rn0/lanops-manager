@@ -1,5 +1,14 @@
 <?php
 
+if (env('ENABLE_HTTPS') || env('FORCE_APP_HTTPS'))
+{
+    $usehttps = true;
+}
+else
+{
+    $usehttps = false;
+}
+
 return [
 
     /*
@@ -13,6 +22,7 @@ return [
     /*
      * Is using https?
      */
-    'https' => env('ENABLE_HTTPS')
+
+    'https' => $usehttps
 
 ];
