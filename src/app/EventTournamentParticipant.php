@@ -7,8 +7,9 @@ use Colors;
 
 use Illuminate\Database\Eloquent\Model;
 
-use GuzzleHttp\Client;
-use Lanops\Challonge\Challonge;
+use GuzzleHttp;
+// use Lanops\Challonge\Challonge;
+use Reflex\Challonge\Challonge;
 
 class EventTournamentParticipant extends Model
 {
@@ -46,41 +47,55 @@ class EventTournamentParticipant extends Model
     {
         parent::boot();
         self::created(function ($model) {
-            if ((!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
-                (!$model->pug && $model->event_tournament_team_id == null) &&
-                $model->eventTournament->format != 'list'
-            ) {
-                $challonge = new Challonge(config('challonge.api_key'));
-                $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
-                if (!$response = $tournament->addParticipant(
-                    ['participant[name]' => $model->eventParticipant->user->username]
-                )
+            try {
+                if ((!isset($model->event_tournament_team_id) || trim($model->event_tournament_team_id) == '') &&
+                    (!$model->pug && $model->event_tournament_team_id == null) &&
+                    $model->eventTournament->format != 'list'
                 ) {
-                    $model->delete();
-                    return false;
+                    $http = new GuzzleHttp\Client();
+                    $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    $tournament = $challonge->fetchTournament($model->eventTournament->challonge_tournament_id);
+                    if (!$response = $tournament->addParticipant(
+                        ['participant[name]' => $model->eventParticipant->user->username]
+                    )) {
+                        $model->delete();
+                        return false;
+                    }
+                    $model->challonge_participant_id = $response->id;
+                    $model->save();
                 }
-                $model->challonge_participant_id = $response->id;
-                $model->save();
+                return true;
+            } catch (\Throwable $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                $model->delete();
             }
-            return true;
+
+            return false;
         });
         self::deleting(function ($model) {
-            if (!$model->pug && $model->event_tournament_team_id == null && $model->eventTournament->format != 'list') {
-                $challonge = new Challonge(config('challonge.api_key'));
-                $participant = $challonge->getParticipant(
-                    $model->eventTournament->challonge_tournament_id,
-                    $model->challonge_participant_id
-                );
-                if (!$response = $participant->delete()) {
-                    return false;
+            try {
+                if (!$model->pug && $model->event_tournament_team_id == null && $model->eventTournament->format != 'list') {
+                    $http = new GuzzleHttp\Client();
+                    $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    $participant = $challonge->getParticipant(
+                        $model->eventTournament->challonge_tournament_id,
+                        $model->challonge_participant_id
+                    );
+                    if (!$response = $participant->delete()) {
+                        return false;
+                    }
                 }
-            }
-            if ($model->tournamentTeam && $model->tournamentTeam->tournamentParticipants->count() == 1) {
-                if (!$model->tournamentTeam->delete()) {
-                    return false;
+                if ($model->tournamentTeam && $model->tournamentTeam->tournamentParticipants->count() == 1) {
+                    if (!$model->tournamentTeam->delete()) {
+                        return false;
+                    }
                 }
+                return true;
+            } catch (\Throwable $e) {
+                Session::flash('alert-danger', $e->getMessage());
             }
-            return true;
+
+            return false;
         });
     }
 

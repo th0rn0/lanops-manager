@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use GuzzleHttp\Client;
-use Lanops\Challonge\Challonge;
+use GuzzleHttp;
+// use Lanops\Challonge\Challonge;
+use Reflex\Challonge\Challonge;
 
 class EventTournamentTeam extends Model
 {
@@ -36,35 +37,50 @@ class EventTournamentTeam extends Model
         'created_at',
         'updated_at'
     );
-   
+
     public static function boot()
     {
         parent::boot();
         self::created(function ($model) {
-            if ($model->eventTournament->format != 'list') {
-                $challonge = new Challonge(config('challonge.api_key'));
-                $tournament = $challonge->getTournament($model->eventTournament->challonge_tournament_id);
-                if (!$response = $tournament->addParticipant(['participant[name]' => $model->name])) {
-                    $model->delete();
-                    return false;
+            try {
+                if ($model->eventTournament->format != 'list') {
+                    $http = new GuzzleHttp\Client();
+                    $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    $tournament = $challonge->fetchTournament($model->eventTournament->challonge_tournament_id);
+                    if (!$response = $tournament->addParticipant(['participant[name]' => $model->name])) {
+                        $model->delete();
+                        return false;
+                    }
+                    $model->challonge_participant_id = $response->id;
+                    $model->save();
                 }
-                $model->challonge_participant_id = $response->id;
-                $model->save();
+                return true;
+            } catch (\Throwable $e) {
+                Session::flash('alert-danger', $e->getMessage());
+                $model->delete();
             }
-            return true;
+
+            return false;
         });
         self::deleting(function ($model) {
-            if ($model->eventTournament->format != 'list') {
-                $challonge = new Challonge(config('challonge.api_key'));
-                $participant = $challonge->getParticipant(
-                    $model->eventTournament->challonge_tournament_id,
-                    $model->challonge_participant_id
-                );
-                if (!$response = $participant->delete()) {
-                    return false;
+            try {
+                if ($model->eventTournament->format != 'list') {
+                    $http = new GuzzleHttp\Client();
+                    $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    $participant = $challonge->getParticipant(
+                        $model->eventTournament->challonge_tournament_id,
+                        $model->challonge_participant_id
+                    );
+                    if (!$response = $participant->delete()) {
+                        return false;
+                    }
                 }
+                return true;
+            } catch (\Throwable $e) {
+                Session::flash('alert-danger', $e->getMessage());
             }
-            return true;
+
+            return false;
         });
     }
 
