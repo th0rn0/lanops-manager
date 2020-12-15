@@ -61,19 +61,6 @@
 			@endforeach
 		</div>
 
-		@if ($errors->any())
-			<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
-				<h4 mt-0>Errors occured</h4>
-				<ul>
-					@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-		@endif
 		<script src="/js/vendor.js"></script>
 		<script>
 			jQuery(function () {
