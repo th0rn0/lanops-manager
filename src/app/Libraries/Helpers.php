@@ -12,6 +12,7 @@ use App\User;
 use App\GameServer;
 use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
+use Throwable;
 
 class Helpers
 {
@@ -846,5 +847,13 @@ class Helpers
         }
 
         return false;
+    }
+
+    public static function rethrowIfDebug(\Throwable $e)
+    {
+        if (env('APP_DEBUG'))
+        {
+            throw $e;
+        }
     }
 }

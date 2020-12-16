@@ -107,6 +107,7 @@
 						@lang('events.nextmatch')
 					</h4>
 					<div class="row">
+					
 						@foreach ($tournament->getNextMatches(2) as $match)
 							<div class="col-12 col-sm-4">
 								<table class="table table-bordered table-sm">
