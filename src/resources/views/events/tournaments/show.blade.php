@@ -107,7 +107,7 @@
 						@lang('events.nextmatch')
 					</h4>
 					<div class="row">
-					
+
 						@foreach ($tournament->getNextMatches(2) as $match)
 							<div class="col-12 col-sm-4">
 								<table class="table table-bordered table-sm">
@@ -195,22 +195,24 @@
 									</div>
 								</div>
 								<div class="col-12 col-sm-6">
-									<label>@lang('events.createateam')</label>
-									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
-										<div class="row">
-											<div class="form-group col-sm-6 col-12">
-												{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required', 'placeholder' => 'Team Name')) }}
+									@if (!$tournament->random_teams)
+										<label>@lang('events.createateam')</label>
+										{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
+											<div class="row">
+												<div class="form-group col-sm-6 col-12">
+													{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required', 'placeholder' => 'Team Name')) }}
+												</div>
+												<div class="form-group col-sm-6 col-12">
+													<button type="submit" class="btn btn-primary btn-block">@lang('events.createteam')</button>
+												</div>
 											</div>
-											<div class="form-group col-sm-6 col-12">
-												<button type="submit" class="btn btn-secondary btn-block">@lang('events.createteam')</button>
-											</div>
-										</div>
-										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-									{{ Form::close() }}
-									<hr>
+											<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
+										{{ Form::close() }}
+										<hr>
+									@endif
 									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/pug', 'files' => true )) }}
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-										<button type="submit" class="btn btn-secondary btn-block">@lang('events.signinaspug')</button>
+										<button type="submit" class="btn btn-primary btn-block">@lang('events.signinaspug')</button>
 									{{ Form::close() }}
 								</div>
 							</div>

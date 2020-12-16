@@ -14,7 +14,7 @@ class AddRandomTeamsEventTournamentsTable extends Migration
     public function up()
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->boolean('random_teams')->after('isenabled')->default(true);
+            $table->boolean('random_teams')->default(false);
         });
     }
 
