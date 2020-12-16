@@ -174,6 +174,14 @@
 									</label>
 								</div>
 							</div>
+							<div class="col-lg-6 col-sm-12 form-group">
+								<div class="form-check">
+									<label class="form-check-label">
+										{{ Form::checkbox('random_teams', null, false, array('id'=>'random_teams')) }} Random Teams
+										<small>All Players can join as PUG. On Tournament start all Teams will be generated. </small>
+									</label>
+								</div>
+							</div>
 						</div>
 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>

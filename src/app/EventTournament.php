@@ -45,7 +45,8 @@ class EventTournament extends Model
         'description',
         'rules',
         'allow_player_teams',
-        'status'
+        'status',
+        'randomteams'
     ];
 
     /**

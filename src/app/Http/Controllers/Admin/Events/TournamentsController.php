@@ -51,7 +51,7 @@ class TournamentsController extends Controller
             ->withEvent($event)
             ->withTournament($tournament);
     }
-   
+
     /**
      * Store Tournament to Database
      * @param  Event   $event
@@ -101,6 +101,8 @@ class TournamentsController extends Controller
         $tournament->rules                      = $request->rules;
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
+        $tournament->random_teams               = ($request->random_teams ? true : false);
+
         $tournament->status                     = 'DRAFT';
 
         if (!$tournament->save()) {
@@ -153,6 +155,7 @@ class TournamentsController extends Controller
                     $game_id = $request->game_id;
                 }
             }
+
             $tournament->game_id                    = $game_id;
         }
 
@@ -236,7 +239,7 @@ class TournamentsController extends Controller
         return Redirect::back();
     }
 
-       
+
     /**
      * Enable live Editing
      * @param  Event           $event
@@ -245,7 +248,7 @@ class TournamentsController extends Controller
      */
     public function enableliveediting(Event $event, EventTournament $tournament)
     {
- 
+
         $tournament->enable_live_editing  = true;
 
         if (!$tournament->save()) {
@@ -256,7 +259,7 @@ class TournamentsController extends Controller
         session::flash('alert-success', 'Successfully enabled liveediting!');
         return Redirect::back();
     }
-        
+
     /**
      * Disable live Editing
      * @param  Event           $event
@@ -265,7 +268,7 @@ class TournamentsController extends Controller
      */
     public function disableliveediting(Event $event, EventTournament $tournament)
     {
- 
+
         $tournament->enable_live_editing  = false;
 
         if (!$tournament->save()) {
@@ -300,7 +303,7 @@ class TournamentsController extends Controller
         $this->validate($request, $rules, $messages);
 
         $participant->event_tournament_team_id = $request->event_tournament_team_id;
-        
+
         if (!$participant->save()) {
             Session::flash('alert-danger', 'Cannot update Participant!');
             return Redirect::back();
@@ -399,7 +402,7 @@ class TournamentsController extends Controller
      */
     public function unregisterParticipant(Event $event, EventTournament $tournament, EventParticipant $participant, Request $request)
     {
-        
+
 
         if (!$tournamentParticipant = $tournament->getParticipant($participant->id)) {
 
