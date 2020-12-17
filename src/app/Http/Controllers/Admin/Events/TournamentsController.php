@@ -7,6 +7,7 @@ use Auth;
 use Session;
 use DateTime;
 use Storage;
+use Debugbar;
 
 use App\User;
 use App\Event;
@@ -51,7 +52,7 @@ class TournamentsController extends Controller
             ->withEvent($event)
             ->withTournament($tournament);
     }
-   
+
     /**
      * Store Tournament to Database
      * @param  Event   $event
@@ -101,6 +102,8 @@ class TournamentsController extends Controller
         $tournament->rules                      = $request->rules;
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
+        $tournament->random_teams               = ($request->random_teams ? true : false);
+
         $tournament->status                     = 'DRAFT';
 
         if (!$tournament->save()) {
@@ -153,6 +156,7 @@ class TournamentsController extends Controller
                     $game_id = $request->game_id;
                 }
             }
+
             $tournament->game_id                    = $game_id;
         }
 
@@ -200,9 +204,59 @@ class TournamentsController extends Controller
             return Redirect::back();
         }
 
+        if($tournament->random_teams) {
+            // Create Random Teams
+            $shuffledParticipants = $tournament->tournamentParticipants;//->toArray();// (new \ArrayObject($tournament->tournamentParticipants))->getArrayCopy();
+
+            // Debugbar::addMessage("Teams: " . json_encode($shuffledParticipants), 'Tournament');
+
+            $shuffledParticipants = $shuffledParticipants->shuffle();
+            // shuffle($shuffledParticipants);
+
+            $teamSize = intval ($tournament->team_size[0]);
+            // Debugbar::addMessage("TeamSize: $teamSize($tournament->team_size)", 'Tournament');
+
+            // $teams = array_chunk($shuffledParticipants, $teamSize);
+            $teams = $shuffledParticipants->chunk($teamSize);
+
+            // Debugbar::addMessage("Teams: " . json_encode($teams), 'Tournament');
+
+            // $key = 0;
+            // $team = $shuffledParticipants;
+            foreach($teams as $key=>$team) {
+                // Debugbar::addMessage("TeamType: " . gettype($team) . " Team: " . json_encode($team), 'Tournament');
+                $tournamentTeam                         = new EventTournamentTeam();
+                $tournamentTeam->event_tournament_id    = $tournament->id;
+                $tournamentTeam->name                   = "Team " . ($key + 1);
+
+                if (!$tournamentTeam->save()) {
+                    Session::flash('alert-danger', "Couldnt save random Team " + ($key + 1));
+                    return Redirect::back();
+                }
+
+                Debugbar::addMessage("EventTournamentTeam: " . json_encode($tournamentTeam), 'Tournament');
+
+                foreach($team as $teamParticipant) {
+                    // Debugbar::addMessage("TeamParticipantType: " . gettype($teamParticipant) . " TeamParticipant: " . json_encode($teamParticipant), 'Tournament');
+                    $teamParticipant->event_tournament_team_id    = $tournamentTeam->id;
+                    $teamParticipant->event_tournament_id         = $tournament->id;
+                    $teamParticipant->event_tournament_team_id    = $tournamentTeam->id;
+
+                    if (!$teamParticipant->save()) {
+                        Session::flash('alert-danger', "Couldn´t add a player to Team " . ($key + 1));
+                        return Redirect::back();
+                    }
+                }
+            }
+
+            $tournament->load('tournamentTeams');
+        }
+
         if (!$tournament->tournamentTeams->isEmpty()) {
             foreach ($tournament->tournamentTeams as $team) {
+                $team->load('tournamentParticipants');
                 if ($team->tournamentParticipants->isEmpty()) {
+                    Debugbar::addMessage("Team is empty: $team->name", 'Tournament');
                     if (!$team->delete()) {
                         Session::flash('message', 'Error connecting to Challonge!');
                         return Redirect::to('admin/events/' . $event->slug . '/tournaments');
@@ -236,7 +290,7 @@ class TournamentsController extends Controller
         return Redirect::back();
     }
 
-       
+
     /**
      * Enable live Editing
      * @param  Event           $event
@@ -245,7 +299,7 @@ class TournamentsController extends Controller
      */
     public function enableliveediting(Event $event, EventTournament $tournament)
     {
- 
+
         $tournament->enable_live_editing  = true;
 
         if (!$tournament->save()) {
@@ -256,7 +310,7 @@ class TournamentsController extends Controller
         session::flash('alert-success', 'Successfully enabled liveediting!');
         return Redirect::back();
     }
-        
+
     /**
      * Disable live Editing
      * @param  Event           $event
@@ -265,7 +319,7 @@ class TournamentsController extends Controller
      */
     public function disableliveediting(Event $event, EventTournament $tournament)
     {
- 
+
         $tournament->enable_live_editing  = false;
 
         if (!$tournament->save()) {
@@ -300,7 +354,7 @@ class TournamentsController extends Controller
         $this->validate($request, $rules, $messages);
 
         $participant->event_tournament_team_id = $request->event_tournament_team_id;
-        
+
         if (!$participant->save()) {
             Session::flash('alert-danger', 'Cannot update Participant!');
             return Redirect::back();
@@ -399,7 +453,7 @@ class TournamentsController extends Controller
      */
     public function unregisterParticipant(Event $event, EventTournament $tournament, EventParticipant $participant, Request $request)
     {
-        
+
 
         if (!$tournamentParticipant = $tournament->getParticipant($participant->id)) {
 

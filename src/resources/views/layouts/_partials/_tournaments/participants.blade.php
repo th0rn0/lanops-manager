@@ -96,47 +96,49 @@
 @endif
 <!-- Teams -->
 @if ($tournament->team_size != '1v1')
-	<h3>Teams</h3>
-	<div class="table-responsive">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>
-						Name
-					</th>
-					<th>
-						Roster
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach ($tournament->tournamentTeams as $tournamentTeam)
+	@if (!$tournament->random_teams || $tournament->status == 'LIVE' || $tournament->status == 'COMPLETE' )
+		<h3>Teams</h3>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
 					<tr>
-						<td width="50%">
-							<h4>{{ $tournamentTeam->name }}</h4>
-						</td>
-						<td>
-							@if ($tournamentTeam->tournamentParticipants)
-								@foreach ($tournamentTeam->tournamentParticipants as $participant)
-									<img alt="{{ $participant->eventParticipant->user->username }}'s Avatar" class="rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
-									<span class="float-right">
-										@if ($participant->eventParticipant->seat)
-											{{ $participant->eventParticipant->seat->seat }}
-										@else
-											Not Seated
-										@endif
-									</span>
-									<br><br>
-								@endforeach
-							@else
-								No one yet
-							@endif
-						</td>
+						<th>
+							Name
+						</th>
+						<th>
+							Roster
+						</th>
 					</tr>
-				@endforeach
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+					@foreach ($tournament->tournamentTeams as $tournamentTeam)
+						<tr>
+							<td width="50%">
+								<h4>{{ $tournamentTeam->name }}</h4>
+							</td>
+							<td>
+								@if ($tournamentTeam->tournamentParticipants)
+									@foreach ($tournamentTeam->tournamentParticipants as $participant)
+										<img alt="{{ $participant->eventParticipant->user->username }}'s Avatar" class="rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
+										<span class="float-right">
+											@if ($participant->eventParticipant->seat)
+												{{ $participant->eventParticipant->seat->seat }}
+											@else
+												Not Seated
+											@endif
+										</span>
+										<br><br>
+									@endforeach
+								@else
+									No one yet
+								@endif
+							</td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+	@endif
 	<h3>PUGs</h3>
 	<div class="table-responsive">
 		<table class="table">
@@ -157,45 +159,6 @@
 							<td>
 								<p>
 									<img alt="{{ $tournamentParticipant->eventParticipant->user->username }}'s Avatar" class="rounded style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
-								</p>
-							</td>
-							<td>
-								<p>
-									@if ($tournamentParticipant->eventParticipant->seat)
-										{{ $tournamentParticipant->eventParticipant->seat->seat }}
-									@else
-										Not Seated
-									@endif
-								</p>
-							</td>
-						</tr>
-					@endif
-				@endforeach
-			</tbody>
-		</table>
-	</div>
-
-	<h3>PUGs</h3>
-	<div class="table-responsive">
-		<table class="table">
-			 <thead>
-				<tr>
-					<th>
-						Name
-					</th>
-					<th>
-						Seat
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach ($tournament->tournamentParticipants as $tournamentParticipant)
-					@if ($tournamentParticipant->pug)
-						<tr>
-							<td>
-								<p>
-									<img alt="{{ $tournamentParticipant->eventParticipant->user->username }}'s Avatar" class="img-rounded" style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
 								</p>
 							</td>
