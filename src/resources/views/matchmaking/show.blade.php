@@ -332,10 +332,10 @@
 
 												<td width="15%">
 													@if ($teamplayer->user->id == $team->team_owner_id)
-														Teamowner
+														@lang('matchmaking.teamowner')
 													@endif
 													@if($teamplayer->user->id == $match->owner_id)
-														Matchowner
+														@lang('matchmaking.matchowner')
 													@endif
 													@if($teamplayer->user->id != $team->team_owner_id && $teamplayer->user->id != $match->owner_id && $team->match->status != "LIVE" &&  $team->match->status != "COMPLETE"&&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
 														{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
