@@ -71,6 +71,10 @@ generate-appearance:
 # Generate Images - This will erase your current settings!
 generate-images:
 	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
+	
+# Generate testusers - This will spam 50 testuser to the Database!
+generate-testuser:
+	docker exec eventula_manager_app php artisan db:seed --class=TestUserSeeder
 
 # Generate requireddatabase - This will erase your current settings!
 generate-requireddatabase:
@@ -188,13 +192,6 @@ npm-outdated:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:14.10 /bin/bash -ci "npm outdated"
-
-#rebuild node sass
-npm-rebuild-sass:
-	docker run --rm --name js-maintainence-outdated --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
-	-w /usr/src/app \
-	node:14.10 /bin/bash -ci "npm rebuild node-sass"
 
 #rebuild node
 npm-rebuild:
