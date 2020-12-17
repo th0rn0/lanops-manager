@@ -121,7 +121,7 @@
 						<h4 class="modal-title" id="sendMailModalLabel{{ $mailTemplate->id }}">Send Mail {{ $mailTemplate->subject }}</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
-						<div class="modal-footer">
+					<div class="modal-body">
 							<small>(preview with your data)</small>
 								<div class="card mb-3 mt-3" style="width: 100%;">
 									<div class="card-header">
@@ -132,9 +132,10 @@
 									</div>
 								</div>
 							If you Confirm, the Mail will be sent to the following users
-							
+					</div>
 		
 							{!! Form::select('userswithmails', $usersWithMail, null, ['multiple' => true, 'class' => 'form-control margin','disabled' => true]) !!}
+						<div class="modal-footer">
 							{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id .'/send', 'id'=>'sendMailModal')) }}
 							<button type="submit" class="btn btn-warning">Send Mail to all listed Users</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
