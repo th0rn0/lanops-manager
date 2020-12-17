@@ -39,6 +39,8 @@ class MailingController extends Controller
         $user = Auth::user();
         $userswithmail = User::whereNotNull('email')->get();
         $selectallusers = array();
+        $nextevent = Event::where('end', '>=', \Carbon\Carbon::now())
+        ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
 
         foreach($userswithmail as $user) {
             $selectallusers[$user->id] = $user->username;
@@ -46,6 +48,7 @@ class MailingController extends Controller
         return view('admin.mailing.index')->withMailTemplates(MailTemplate::all())
         ->withMailVariables(EventulaMailingMail::getVariables())
         ->withUsersWithMail($selectallusers)
+        ->withNextEvent($nextevent)
         ->withUser($user);
     }
 
@@ -146,6 +149,9 @@ class MailingController extends Controller
      */
     public function send(MailTemplate $mailTemplate, Request $request)
     {
+        $nextevent = Event::where('end', '>=', \Carbon\Carbon::now())
+        ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
+
         $requestvarname = "userswithmails".$mailTemplate->id;
         $selectedusers = $request->{$requestvarname};
 
@@ -168,7 +174,7 @@ class MailingController extends Controller
             }
             else
             {
-                Mail::to($user)->queue(new EventulaMailingMail($user));
+                Mail::to($user)->queue(new EventulaMailingMail($user, $nextevent));
             }
 
         }
