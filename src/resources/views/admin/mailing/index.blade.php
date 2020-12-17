@@ -131,13 +131,25 @@
 										{!! $content !!}
 									</div>
 								</div>
-							If you Confirm, the Mail will be sent to the following users
-					</div>
-		
-							{!! Form::select('userswithmails', $usersWithMail, null, ['multiple' => true, 'class' => 'form-control margin','disabled' => true]) !!}
-						<div class="modal-footer">
+							If you Confirm, the Mail will be sent to the following users  <br>
+							<div class="row">
+								<div class="col-6">
+							<small> hold strg to (de)/(multi)select users </small>
+								</div>
+								<div class="col">
+								  <a href="#" id="selectalluserswithmails{{$mailTemplate->id}}">Select All</a>
+								</div>								
+								<div class="col">
+									<a href="#" id="deselectalluserswithmails{{$mailTemplate->id}}">Deselect All</a>
+								</div>
+							  </div>
 							{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id .'/send', 'id'=>'sendMailModal')) }}
-							<button type="submit" class="btn btn-warning">Send Mail to all listed Users</button>
+							{!! Form::select('userswithmails'.$mailTemplate->id.'[]', $usersWithMail, null, ['multiple' => true, 'class' => 'form-control margin', 'id' => 'userswithmails'.$mailTemplate->id]) !!}
+
+						</div>
+						<div class="modal-footer">
+							
+							<button type="submit" class="btn btn-warning">Send Mail to all selected Users</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 						</div>
 					{{ Form::close() }}
@@ -145,6 +157,32 @@
 			</div>
 
 		</div>
+		<script type="text/javascript">
+
+		
+
+
+		function selectalluserswithmails{{$mailTemplate->id}}() {
+			  
+			$("#userswithmails{{ $mailTemplate->id }} option").prop('selected', true);
+			
+		}
+
+		function deselectalluserswithmails{{$mailTemplate->id}}() {
+			  
+			$("#userswithmails{{ $mailTemplate->id }} option").prop('selected', false);
+			
+		}
+
+		$( document ).ready(function() {
+			selectalluserswithmails{{$mailTemplate->id}}();
+		});
+
+		$("#selectalluserswithmails{{$mailTemplate->id}}").click(selectalluserswithmails{{$mailTemplate->id}});
+		$("#deselectalluserswithmails{{$mailTemplate->id}}").click(deselectalluserswithmails{{$mailTemplate->id}});
+
+		</script>
+
 	@endif
 @endforeach
 
@@ -152,7 +190,11 @@
 	jQuery( function() {
 		jQuery( "#start_date" ).datepicker();
 		jQuery( "#end_date" ).datepicker();
+		
 	});
+
+
+
 </script>
 
 @endsection

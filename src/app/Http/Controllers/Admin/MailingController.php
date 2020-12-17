@@ -146,20 +146,22 @@ class MailingController extends Controller
      */
     public function send(MailTemplate $mailTemplate, Request $request)
     {
-        $users = User::whereNotNull('email')->get();
+        $requestvarname = "userswithmails".$mailTemplate->id;
+        $selectedusers = $request->{$requestvarname};
 
-        if ($users->count() == 0)
+        if (count($selectedusers) == 0)
         {
-            Session::flash('alert-danger', 'no Users with Email adresses are there!');
+            Session::flash('alert-danger', 'no Users selected!');
             return Redirect::back();
         }
 
-
         $erroruser = array();
 
-        foreach ($users as $user)
+        foreach ($selectedusers as $selecteduser)
         {
-            if(!Mail::to($user)->queue(new EventulaMailingMail($user)))
+            $user = User::whereNotNull('email')->where('id', $selecteduser)->first();
+
+            if(!isset($user) || !Mail::to($user)->queue(new EventulaMailingMail($user)))
             {
                 $erroruser[$user->id] = $user->username;
             }
