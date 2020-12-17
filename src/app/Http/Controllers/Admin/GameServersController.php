@@ -17,9 +17,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-
-use xPaw\SourceQuery\SourceQuery;
-use Maniaplanet\DedicatedServer\Connection;
+use Illuminate\Support\Str;
 
 class GameServersController extends Controller
 {
@@ -58,7 +56,7 @@ class GameServersController extends Controller
         $gameServer->game_password  = $request->game_password;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
-        $gameServer->gameserver_secret = base_convert(microtime(false), 10, 36);
+        $gameServer->gameserver_secret = "gs_" . Str::random();
 
         if (!$gameServer->save()) {
             Session::flash('alert-danger', 'Could not save GameServer!');

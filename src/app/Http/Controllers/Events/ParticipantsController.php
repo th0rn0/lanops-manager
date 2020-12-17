@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use Debugbar;
 
@@ -31,7 +32,7 @@ class ParticipantsController extends Controller
         if ($participant->gift != true && $participant->gift_sendee == null) {
             $participant->gift = true;
             $participant->gift_accepted = false;
-            $participant->gift_accepted_url = base_convert(microtime(false), 10, 36);
+            $participant->gift_accepted_url = "gift_" . Str::random();
             $participant->gift_sendee = $participant->user_id;
             if ($participant->save()) {
                 $request->session()->flash(
@@ -46,7 +47,7 @@ class ParticipantsController extends Controller
         $request->session()->flash('alert-danger', 'This Ticket has already Gifted.');
         return Redirect::back();
     }
-    
+
     /**
      * Revoke Gifted Ticket
      * @param  EventParticipant $participant
@@ -72,7 +73,7 @@ class ParticipantsController extends Controller
         Session::flash('alert-danger', 'This Ticket is already Gifted.');
         return Redirect::back();
     }
-    
+
     /**
      * Accept Gifted Ticket
      * @param  Request $request
@@ -96,7 +97,7 @@ class ParticipantsController extends Controller
                     if ($ticket->id = $eventParticipant->ticket_id){
                         $no_of_owned_tickets++;
                     }
-                }              
+                }
 
                 if ($no_of_owned_tickets + 1 <= $ticket->no_tickets_per_user) {
                     $participant->gift_accepted = true;
