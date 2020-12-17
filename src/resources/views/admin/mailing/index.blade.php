@@ -135,7 +135,7 @@
 							
 		
 							{!! Form::select('userswithmails', $usersWithMail, null, ['multiple' => true, 'class' => 'form-control margin','disabled' => true]) !!}
-							{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id .'send', 'id'=>'sendMailModal')) }}
+							{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id .'/send', 'id'=>'sendMailModal')) }}
 							<button type="submit" class="btn btn-warning">Send Mail to all listed Users</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 						</div>
