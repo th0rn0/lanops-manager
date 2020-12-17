@@ -161,7 +161,8 @@ class MailingController extends Controller
         {
             $user = User::whereNotNull('email')->where('id', $selecteduser)->first();
 
-            if(!isset($user) || !Mail::to($user)->queue(new EventulaMailingMail($user)))
+            dd(Mail::to($user)->queue(new EventulaMailingMail($user)));
+            if(!isset($user))
             {
                 $erroruser[$user->id] = $user->username;
             }
@@ -170,7 +171,12 @@ class MailingController extends Controller
 
         if (count($erroruser) != 0)
         {
-            Session::flash('alert-danger', 'Could not queue Mails for the users: '. print_r($erroruser));
+            $erroruserprint = "";
+            foreach ($erroruser as $euser)
+            {
+                $erroruserprint=$erroruserprint.";".$euser;
+            }
+            Session::flash('alert-danger', 'Could not queue Mails for the users: '. $erroruserprint);
             return Redirect::back();
         }
 
