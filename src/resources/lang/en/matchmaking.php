@@ -68,7 +68,7 @@ return [
     'maxopened' => 'You have already more opened matches than allowed. Please finalize your matches first!',
     'error' => 'Error',
 
-    
+
     'team_size_required'    => 'Team size is required',
     'team_size_mustbeoneof'    => 'Team size must be one of: 1v1,2v2,3v3,4v4,5v5,6v6',
     'team_count_required'    => 'Team Count is required',
@@ -134,7 +134,9 @@ return [
     'invitationnotfound' => 'Invitation not found!',
     'pleaselogin' => 'Please Login.',
     'cannotjoinyoualreadyareinateam' => 'You can not join the team because you are already member of a team!',
-    
+    'scramble' => 'Scramble Teams',
+
+
 
 
 ];

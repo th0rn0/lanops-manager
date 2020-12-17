@@ -56,56 +56,67 @@
 						</div>
 					</div>
 				@endif
+				<div class="row">
 				{{-- Open, Start, Finalize --}}
 				@if($match->status == "DRAFT")
-					<div class="form-group">
-					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
-						<button type="submit" class="btn btn-success btn-block"><i class="fas fa-wifi"></i> @lang('matchmaking.openmatch')</button>
-					{{ Form::close() }}
+					<div class="col">
+						<div class="form-group">
+						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
+							<button type="submit" class="btn btn-success btn-block"><i class="fas fa-wifi"></i> @lang('matchmaking.openmatch')</button>
+						{{ Form::close() }}
+						</div>
 					</div>
 				@endif
 				@if($match->status == "OPEN")
-					<div class="form-group">
-					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/start' )) }}
-						<button type="submit" class="btn btn-success btn-block"><i class="fas fa-play"></i> @lang('matchmaking.startmatch')</button>
-					{{ Form::close() }}
+					<div class="col">
+						<div class="form-group">
+						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/start' )) }}
+							<button type="submit" class="btn btn-success btn-block"><i class="fas fa-play"></i> @lang('matchmaking.startmatch')</button>
+						{{ Form::close() }}
+						</div>
 					</div>
 				@endif
 				@if($match->status == "LIVE")
-					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/finalize' )) }}
-						<div class="row">
-							@foreach ($match->teams as $team)
-								<div class="col">
-									<div class="form-group">
-										{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
-										@if ($match->game->matchmaking_autoapi)
-											{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
-										@else
-											{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
-										@endif
+					<div class="col">
+						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/finalize' )) }}
+							<div class="row">
+								@foreach ($match->teams as $team)
+									<div class="col">
+										<div class="form-group">
+											{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
+											@if ($match->game->matchmaking_autoapi)
+												{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
+											@else
+												{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
+											@endif
+										</div>
 									</div>
-								</div>
-							@endforeach
-						</div>
-						@if (!$match->game->matchmaking_autoapi)
-							<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
-						@endif
-					{{ Form::close() }}
+								@endforeach
+							</div>
+							@if (!$match->game->matchmaking_autoapi)
+								<button type="submit" class="btn btn-success btn-block ">@lang('matchmaking.finalizematch')</button>
+							@endif
+						{{ Form::close() }}
+					</div>
 				@endif
 				{{-- Edit, Delete --}}
 				@if ($match->status != "LIVE" && $match->status != "COMPLETE" && $match->status != "PENDING" && $match->status != "WAITFORPLAYERS")
-					<div class="row">
-						<div class="col">
-							<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-toggle="modal" data-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
-						</div>
-						<div class="col">
-							{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
-							{{ Form::hidden('_method', 'DELETE') }}
-							<button type="submit" class="btn btn-danger btn-block  mb-3 text-nowrap"><i class="fas fa-trash"></i> @lang('matchmaking.deletematch')</button>
-							{{ Form::close() }}
-						</div>
+					<div class="col">
+						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/scramble' )) }}
+							<button type="submit" class="btn btn-warning btn-block mb-3 text-nowrap"><i class="fas fa-dice"></i> @lang('matchmaking.scramble')</button>
+						{{ Form::close() }}
+					</div>
+					<div class="col">
+						<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-toggle="modal" data-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
+					</div>
+					<div class="col">
+						{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger btn-block  mb-3 text-nowrap"><i class="fas fa-trash"></i> @lang('matchmaking.deletematch')</button>
+						{{ Form::close() }}
 					</div>
 				@endif
+			</div>
 			<hr>
 		@endif
 
@@ -177,9 +188,9 @@
 							<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($match->matchMakingServer->gameServer->game->connect_game_command, NULL, $availableParameters) }}">
 							<span class="input-group-btn">
 							<button class="btn btn-primary " type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="fas fa-external-link-alt"></i></button>
-						</div> 
+						</div>
 					@endif
-		
+
 		</div>
 
 		</div>
@@ -307,6 +318,12 @@
 													@if ($teamplayer->user->steamid)
 														- <span class="text-muted"><small>Steam: {{ $teamplayer->user->steamname }}</small></span>
 													@endif
+													@if ($teamplayer->user->id == $team->team_owner_id)
+														<i class="fas fa-chess-king text-primary"></i>
+													@endif
+													@if ($teamplayer->user->id == $match->owner_id)
+														<i class="fas fa-chess-queen text-success"></i>
+													@endif
 												</td>
 												<td>
 													{{ $teamplayer->user->firstname }} {{ $teamplayer->user->surname }}
@@ -314,15 +331,17 @@
 												</td>
 
 												<td width="15%">
-													@if ($teamplayer->user->id != $team->team_owner_id)
-														@if($team->match->status != "LIVE" &&  $team->match->status != "COMPLETE"&&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
-															{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
-																{{ Form::hidden('_method', 'DELETE') }}
-																<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.removefrommatch')</button>
-															{{ Form::close() }}
-														@endif
-													@else
-														Teamowner
+													@if ($teamplayer->user->id == $team->team_owner_id)
+														@lang('matchmaking.teamowner')
+													@endif
+													@if($teamplayer->user->id == $match->owner_id)
+														@lang('matchmaking.matchowner')
+													@endif
+													@if($teamplayer->user->id != $team->team_owner_id && $teamplayer->user->id != $match->owner_id && $team->match->status != "LIVE" &&  $team->match->status != "COMPLETE"&&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
+														{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
+															{{ Form::hidden('_method', 'DELETE') }}
+															<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.removefrommatch')</button>
+														{{ Form::close() }}
 													@endif
 												</td>
 											</tr>
