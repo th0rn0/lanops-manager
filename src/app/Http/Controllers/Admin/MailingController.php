@@ -155,20 +155,23 @@ class MailingController extends Controller
         }
 
 
+        $erroruser = array();
+
         foreach ($users as $user)
         {
-            Mail::to($user)->queue(new EventulaMailingMail($user));
+            if(!Mail::to($user)->queue(new EventulaMailingMail($user)))
+            {
+                $erroruser[$user->id] = $user->username;
+            }
 
         }
 
-
-
-
-
-        if (!$mailTemplate->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Mailtemplate!');
+        if (count($erroruser) != 0)
+        {
+            Session::flash('alert-danger', 'Could not queue Mails for the users: '. print_r($erroruser));
             return Redirect::back();
         }
+
 
         Session::flash('alert-success', 'Successfully deleted Mailtemplate!');
         return Redirect::to('admin/mailing/');
