@@ -5,7 +5,12 @@
 @section ('content')
 
 	<div class="container">
-
+	
+		@if(session()->has('message'))
+			<div class="alert alert-success">
+				{{ session()->get('message') }}
+			</div>
+		@endif
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h1>
 			@lang('accounts.my_account')

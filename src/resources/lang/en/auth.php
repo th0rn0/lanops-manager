@@ -36,6 +36,7 @@ return [
     'confirm_password' => 'Confirm password',
     'submit' => 'Submit',
     'verify_email' => 'Verify email',
+    'verifyed_email' => 'Email verified sucessfully',
     'fresh_verification' => 'A fresh verification link has been sent to your email address.',
     'check_mail' => 'Before proceeding, please check your email for a verification link.',
     'mail_not_received' => 'If you did not receive the email,',
