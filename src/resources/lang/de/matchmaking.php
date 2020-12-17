@@ -132,6 +132,7 @@ return [
     'invitationnotfound' => 'Einladungslink konnte nicht gefunden werden!',
     'pleaselogin' => 'Bitte einloggen um das Matchmaking zu benutzen',
     'cannotjoinyoualreadyareinateam' => 'Du kannst dem Team nicht beitreten, da du bereits Mitglied eines Teams bist!',
+    'scramble' => 'Zufällige Teams',
 
-   
+
 ];

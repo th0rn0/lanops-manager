@@ -55,7 +55,7 @@ Route::group(['middleware' => ['installed']], function () {
 
             /**
              * Login & Register
-             */           
+             */
             Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
             Route::get('/register/email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
             Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::get('/account', 'AccountController@index');
                 Route::post('/account', 'AccountController@update');
                 Route::post('/account/delete', 'Auth\SteamController@destroy');
-            });          
+            });
 
             Route::group(['middleware' => ['auth', 'banned']], function () {
                 Route::get('/account/email', 'AccountController@showMail');
@@ -186,6 +186,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::post('/matchmaking/{match}/update', 'MatchMakingController@update');
                 Route::post('/matchmaking/{match}/start', 'MatchMakingController@start');
                 Route::post('/matchmaking/{match}/open', 'MatchMakingController@open');
+                Route::post('/matchmaking/{match}/scramble', 'MatchMakingController@scramble');
                 Route::post('/matchmaking/{match}/finalize', 'MatchMakingController@finalize');
                 Route::delete('/matchmaking/{match}', 'MatchMakingController@destroy');
             });

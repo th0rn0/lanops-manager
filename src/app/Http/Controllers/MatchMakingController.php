@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 use Session;
-use DateTime;
-use Storage;
 use Settings;
 use Arr;
 
 use App\User;
-use App\Event;
 use App\Game;
 use App\Http\Controllers\Admin\GameServerCommandsController;
 use App\MatchMaking;
@@ -19,13 +15,10 @@ use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
 use App\MatchMakingServer;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Lanops\Challonge\Models\Match;
 
 class MatchMakingController extends Controller
 {
@@ -756,13 +749,43 @@ class MatchMakingController extends Controller
             Session::flash('alert-success', __('matchmaking.matchpending'));
             return Redirect::back();
         }
-
-
-
-
     }
 
-           /**
+    /**
+     * scramble TeamParticipants of Match
+     * @param  MatchMaking $match
+     * @return Redirect
+     */
+    public function scramble(MatchMaking $match)
+    {
+        $players = $match->players;
+        $players = $players->shuffle();
+
+        $teamSize = intval ($match->team_size);
+        $teams = $players->chunk($teamSize);
+
+        foreach($teams as $key=>$team) {
+            $teamToUpdate = $match->teams[$key];
+            // After scrambling there is no team owner available.
+            $teamToUpdate->team_owner_id = null;
+            if (!$teamToUpdate->save()) {
+                Session::flash('alert-danger', "Couldn´t set team owner id");
+                return Redirect::back();
+            }
+
+            foreach($team as $teamPlayer) {
+                $teamPlayer->matchmaking_team_id = $teamToUpdate->id;
+                if (!$teamPlayer->save()) {
+                    Session::flash('alert-danger', "Couldn´t add a player to Team " . ($key + 1));
+                    return Redirect::back();
+                }
+            }
+        }
+
+        return Redirect::back();
+    }
+
+    /**
      * open Match
      * @param  MatchMaking $match
      * @return Redirect
