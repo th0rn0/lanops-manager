@@ -61,6 +61,9 @@
 			<li class="nav-item {{ Request::is('admin/settings') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
 			</li>
+			<li class="nav-item {{ Request::is('admin/mailing') ? 'active' : '' }}">
+				<a class="nav-link" href="/admin/mailing"><i class="fas fa-envelope fa-fw"></i> Mailing</a>
+			</li>
 			<li class="nav-item {{ Request::is('admin/credit') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/credit"><i class="fa fa-refresh fa-fw" aria-hidden="true"></i> Credit System (Beta)</a>
 			</li>
