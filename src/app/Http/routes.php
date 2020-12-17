@@ -422,8 +422,8 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/mailing', 'Admin\MailingController@index');
             Route::get('/admin/mailing/{mailTemplate}', 'Admin\MailingController@show');
             Route::post('/admin/mailing', 'Admin\MailingController@store');
-            Route::post('/admin/mailing/{mailTemplate}', 'Admin\MailingController@update');
             Route::post('/admin/mailing/{mailTemplate}/send', 'Admin\MailingController@send');
+            Route::post('/admin/mailing/{mailTemplate}', 'Admin\MailingController@update');
             Route::delete('/admin/mailing/{mailTemplate}', 'Admin\MailingController@destroy');
 
 
