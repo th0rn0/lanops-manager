@@ -148,7 +148,7 @@ class MailingController extends Controller
     {
         $users = User::whereNotNull('email')->get();
 
-        if ($user->count() == 0)
+        if ($users->count() == 0)
         {
             Session::flash('alert-danger', 'no Users with Email adresses are there!');
             return Redirect::back();
