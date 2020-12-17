@@ -27,7 +27,16 @@
 		</div>
 		<div class="col-12 col-sm-6">
 			<!-- // TODO - add user account public pages -->
-			<p class="news-post-meta float-right">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by <a href="#">{{ $newsArticle->user->username }}</a><span class="d-none d-sm-block"> | @lang('layouts.comments') {{ $newsArticle->comments->count() }}</span></p>
+			<p class="news-post-meta float-right">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by 
+				
+				@if(isset($newsArticle->user->username))
+					<a href="#">{{ $newsArticle->user->username }}</a>
+				@else
+					@lang('news.unknownuser')
+				@endif
+				
+				
+				<span class="d-none d-sm-block"> | @lang('layouts.comments') {{ $newsArticle->comments->count() }}</span></p>
 		</div>
 	</div>
 </div><br>

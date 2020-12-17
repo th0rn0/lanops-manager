@@ -109,7 +109,11 @@
 									{{ $newsArticle->title }}
 								</td>
 								<td>
-									{{ $newsArticle->user->username }}
+									@if(isset($newsArticle->user->username))
+										{{ $newsArticle->user->username }}
+									@else
+										@lang('news.unknownuser')
+									@endif
 								</td>
 								<td>
 									{{ $newsArticle->created_at }}

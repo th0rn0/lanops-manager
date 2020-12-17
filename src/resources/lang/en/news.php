@@ -32,6 +32,7 @@ return [
     'comment_edit_not_your' => 'This is not your comment to edit!',
     'comment_cannot_edit' => 'Cannot edit comment. Please try again.',
     'comment_edited' => 'Comment edited!',
+    'unknownuser'  => 'unknown user',
 
 
 ];

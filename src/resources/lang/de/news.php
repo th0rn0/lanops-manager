@@ -31,5 +31,6 @@ return [
     'comment_edit_not_your' => 'Der Kommentar den du versuchst zu bearbeiten wurde nicht von dir gepostet!',
     'comment_cannot_edit' => 'Der Kommentar den du versuchst zu bearbeiten wurde nicht von dir gepostet!',
     'comment_edited' => 'Der Kommentar wurde bearbeitet!',
+    'unknownuser'  => 'Unbekannter Benutzer',
 
 ];
