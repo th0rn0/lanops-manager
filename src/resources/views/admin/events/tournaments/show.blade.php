@@ -205,6 +205,29 @@
 			</div>
 		</div>
 
+
+		@if ($tournament->team_size != '1v1' && (($tournament->status == 'LIVE' && $tournament->enable_live_editing) ||$tournament->status == 'DRAFT' || $tournament->status == 'OPEN'))
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-wrench fa-fw"></i> Add Team
+				</div>
+				<div class="card-body">
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug. '/addteam' )) }}
+						
+
+							<div class="form-group">
+								{{ Form::label('team_name','Teamname',array('id'=>'','class'=>'')) }}
+								{{ Form::text('team_name', Null ,array('id'=>'team_name','class'=>'form-control')) }}
+								<button type="submit" class="btn btn-success btn-block mt-3">Add team</button>
+									{{ Form::close() }}
+							</div>
+						
+						
+					
+				</div>
+			</div>
+		@endif
+
 	</div>
 </div>
 

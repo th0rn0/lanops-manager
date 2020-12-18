@@ -443,6 +443,30 @@ class TournamentsController extends Controller
         return Redirect::back();
     }
 
+        /**
+     * add Team to Tournament
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @param  Request         $request
+     * @return Redirect
+     */
+    public function addTeam(Event $event, EventTournament $tournament, Request $request)
+    {
+   
+        $tournamentTeam                         = new EventTournamentTeam();
+        $tournamentTeam->event_tournament_id    = $tournament->id;
+        $tournamentTeam->name                   = $request->team_name;
+
+        if (!$tournamentTeam->save()) {
+            Session::flash('alert-danger', __('events.tournament_can_not_add_team'));
+            return Redirect::back();
+        }
+
+
+        Session::flash('alert-success', __('events.tournament_team_created'));
+        return Redirect::back();
+    }
+
     /**
      * Unregister Participant from Tournament
      * @param  Event           $event

@@ -313,6 +313,10 @@ Route::group(['middleware' => ['installed']], function () {
                 'Admin\Events\TournamentsController@disableliveediting'
             );
             Route::post(
+                '/admin/events/{event}/tournaments/{tournament}/addteam',
+                'Admin\Events\TournamentsController@addTeam'
+            );
+            Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/match',
                 'Admin\Events\TournamentsController@updateMatch'
             );
@@ -343,7 +347,8 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/addsingle',
                 'Admin\Events\TournamentsController@addSingle'
-            );
+            );            
+
 
             // TODO - REMOVE THIS AND ALL LIKE IT
             /**
