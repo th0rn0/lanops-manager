@@ -165,7 +165,24 @@
 
 
 					@endif
-					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
+
+					@if ($tournament->status != 'COMPLETE')
+						<div class="" form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('match_autostart',  null,$tournament->match_autostart, array('id'=>'match_autostart')) }} Enable Match Autostart for this Tournament
+							</label>
+						</div>
+						<div>
+							<small>Make sure to select a game where the gamecommandhandler and a matchstartgameservercommand is selected in the <a href="/admin/games">game settings</a>! </small>
+						</div>
+						<div class="form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('match_autoapi', null, $tournament->match_autoapi, array('id'=>'match_autoapi')) }} Enable Match Auto Api for this Tournament
+							</label>
+							<div>
+								<small>Make sure to select a game where the in the <a href="/admin/games">settings</a> selected gamematchapihandler supports the Autoapi feature! (Get5,)</small>
+							</div>
+						</div>
 						<div class="form-group">
 							<button type="submit" class="btn btn-secondary btn-block">Submit</button>
 						</div>
