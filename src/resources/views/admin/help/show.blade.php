@@ -65,6 +65,41 @@
 										</td>
 									{{ Form::close() }}
 								</tr>
+								<tr>									
+									<td>
+										<table width="100%" class="table" id="dataTables-example">
+											<thead>
+												<tr>
+													<th>Attachments</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach ($entry->attachments as $attachment)
+													<tr>
+														<td>
+															<div>{{ $attachment->display_name }}</div>
+														</td>
+													</tr>	
+												@endforeach
+											</tbody>
+										</table>
+									</td>
+									<td></td>
+									<td>
+										<div>
+											{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/upload', 'files' => 'true')) }}
+												{{ csrf_field() }}
+												<div class="form-group">
+													{{ Form::label('attachments','Upload attachments',array('id'=>'','class'=>'')) }}
+													{{ Form::file('attachments[]',array('id'=>'attachments','class'=>'form-control', 'multiple'=>true)) }}
+												</div>
+											<button type="submit" class="btn btn-primary btn-block">Upload</button>
+											{{ Form::close() }}
+										</div>	
+									</td>
+									<td></td>
+									<td></td>									
+								</tr>
 							@endforeach
 						</tbody>
 					</table>
