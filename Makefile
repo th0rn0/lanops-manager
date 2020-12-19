@@ -101,6 +101,7 @@ folder-structure:
 	mkdir -p src/storage/app/public/images/venues/
 	mkdir -p src/storage/app/public/images/main/
 	mkdir -p src/storage/app/public/images/shop/
+	mkdir -p src/storage/app/public/help/
 
 # Permissions - Dev
 permissions:
