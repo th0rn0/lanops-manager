@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HelpCategoryEntry extends Model
+class HelpCategoryEntryAttachment extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'help_category_entrys';
+    protected $table = 'help_category_entry_attachments';
 
     /**
     * The attributes excluded from the model's JSON form.
@@ -26,13 +26,9 @@ class HelpCategoryEntry extends Model
     /*
     * Relationships
     */
-    public function helpCategory()
+    public function entry()
     {
-        return $this->belongsTo('App\HelpCategory');
+        return $this->belongsTo('App\HelpCategoryEntry');
     }
 
-    public function attachments()
-    {
-        return $this->hasMany('App\HelpCategoryEntryAttachment');
-    }
 }

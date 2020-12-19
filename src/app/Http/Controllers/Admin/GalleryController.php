@@ -199,10 +199,13 @@ class GalleryController extends Controller
                     $imageName
                     );
             }
+            
             $image->path = $destinationPath . $imageName;
-            $image->save();
+            
+            if ($image->save()){
+                $uploadcount++;
+            }
 
-            $uploadcount++;
         }
         if ($uploadcount != $fileCount) {
             Session::flash('alert-danger', 'Upload unsuccessful!');

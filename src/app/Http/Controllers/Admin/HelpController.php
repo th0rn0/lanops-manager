@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Storage;
-use Image;
 use Validator;
 use Session;
 use Settings;
@@ -16,6 +15,7 @@ use App\User;
 use App\Event;
 use App\HelpCategory;
 use App\HelpCategoryEntry;
+use App\HelpCategoryEntryAttachment;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -212,6 +212,108 @@ class HelpController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully updated entry!');
+        return Redirect::back();
+    }
+
+    /**
+     * Upload Attachements to HelpCategoryEntry
+     * @param  HelpCategory         $helpCategory
+     * @param  HelpCategoryEntry    $entry
+     * @param  Request              $request
+     * @return Redirect
+     */
+    public function uploadFiles(HelpCategory $helpCategory, HelpCategoryEntry $entry, Request $request)
+    {
+        $rules = [
+            'attachments.*'   => 'required|max:20000',
+
+        ];
+        $messages = [
+            'attachments.*.required' => 'Please upload an attachment',
+            'attachments.*.max' => 'Sorry! Maximum allowed size for an attachment is 20MB',
+        ];
+        $this->validate($request, $rules, $messages);
+
+        $files = $request->file('attachments');
+        //Keep a count of uploaded files
+        $fileCount = count($files);
+        //Counter for uploaded files
+        $uploadcount = 0;
+        $destinationPathFiles = '/attachments/help/' . $entry->id . '/';
+        $destinationPath = '/storage'. $destinationPathFiles;
+        if ($request->file('attachments') && !File::exists(public_path() . $destinationPath)) {
+            File::makeDirectory(public_path() . $destinationPath, 0777, true);
+        }
+        foreach ($files as $file) {
+            $attachmentName  = $file->getClientOriginalName();
+
+            $attachment                         = new HelpCategoryEntryAttachment();
+            $attachment->display_name           = $attachmentName;
+            $attachment->nice_name              = $attachment->url = strtolower(str_replace(' ', '-', $attachmentName));
+            $attachment->help_category_entry_id = $entry->id;
+            $ext = preg_replace('/^.*\.([^.]+)$/D', '$1', $attachmentName);
+
+            Storage::disk('public')->putFileAs(
+                    $destinationPathFiles,
+                    $file,
+                    $attachmentName
+            );
+
+            $attachment->path = $destinationPath . $attachmentName;
+
+            if ($attachment->save()){
+                $uploadcount++;
+            }       
+                 
+        }
+        if ($uploadcount != $fileCount) {
+            Session::flash('alert-danger', 'Upload unsuccessful!');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Upload successful!');
+        return Redirect::back();
+    }
+
+    /**
+     * Delete Attachment from Help Category Entry
+     * @param  HelpCategory                 $helpCategory
+     * @param  HelpCategoryEntry            $entry
+     * @param  HelpCategoryEntryAttachment  $attachment
+     * @return Redirect
+     */
+    public function destroyFile(HelpCategory $helpCategory, HelpCategoryEntry $entry, HelpCategoryEntryAttachment $attachment)
+    {
+        if (!$entry->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Attachment!');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Successfully deleted Attachment!');
+        return Redirect::back();
+    }
+
+    /**
+     * Update Attachment from Gallery
+     * @param  HelpCategory                 $helpCategory
+     * @param  HelpCategoryEntry            $entry
+     * @param  HelpCategoryEntryAttachment  $attachment
+     * @param  Request                      $request
+     * @return Redirect
+     */
+    public function updateFile(HelpCategory $helpCategory, HelpCategoryEntry $entry, HelpCategoryEntryAttachment $attachment, Request $request)
+    {
+        //DEBUG - Refactor - replace attachement name as well!
+        $attachment->display_name  = $request->name;
+        $attachment->nice_name     = strtolower(str_replace(' ', '-', $request->name));
+        $attachment->desc          = $request->desc;
+
+        if (!$attachment->save()) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }
 }
