@@ -218,7 +218,7 @@
 								<p>
 									@if ($tournament->team_size != '1v1')
 										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addpug')) }}
-										<button type="submit" class="btn btn-default btn-block">Add as PUG</button>
+										<button type="submit" class="btn btn-primary btn-block">Add as PUG</button>
 										{{ Form::close() }}
 
 										@if (count($tournament->getTeams()) != 0)
