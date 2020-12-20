@@ -183,6 +183,22 @@
 								</div>
 							</div>
 						</div>
+						<div class="" form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('match_autostart', null, null, array('id'=>'match_autostart')) }} Enable Match Autostart for this Tournament
+							</label>
+						</div>
+						<div>
+							<small>Make sure to select a game where the gamecommandhandler and a matchstartgameservercommand is selected in the <a href="/admin/games">game settings</a>! </small>
+						</div>
+						<div class="form-group">
+							<label class="form-check-label">
+								{{ Form::checkbox('match_autoapi', null, null, array('id'=>'match_autoapi')) }} Enable Match Auto Api for this Tournament
+							</label>
+							<div>
+								<small>Make sure to select a game where the in the <a href="/admin/games">settings</a> selected gamematchapihandler supports the Autoapi feature! (Get5,)</small>
+							</div>
+						</div>
 
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}

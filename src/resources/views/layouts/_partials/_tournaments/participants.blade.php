@@ -221,6 +221,7 @@
 										<button type="submit" class="btn btn-default btn-block">Add as PUG</button>
 										{{ Form::close() }}
 
+										@if (count($tournament->getTeams()) != 0)
 										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addsingle')) }}
 										<div class="form-group col-12 col-sm-8">
 												{{ Form::select('event_tournament_team_id', $tournament->getTeams(), NULL, array('id'=>'name','class'=>'form-control')) }}
@@ -229,6 +230,8 @@
 												<button type="submit" class="btn btn-default btn-sm btn-block">Add to Team</button>
 										</div>
 										{{ Form::close() }}
+									@endif
+
 									@else
 										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addsingle')) }}
 												<button type="submit" class="btn btn-default btn-sm btn-block">Add to 1vs1</button>

@@ -102,7 +102,7 @@ class EventTournament extends Model
         });
         self::saved(function ($model) {
             try {
-                if ($model->format != 'list') {
+                if ($model->format != 'list' && $model->status != 'LIVE') {
                     // TODO - fire only when name is updated
                     $http = new GuzzleHttp\Client();
                     $challonge = new Challonge($http, config('challonge.api_key'), false);

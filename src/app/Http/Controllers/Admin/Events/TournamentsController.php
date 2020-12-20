@@ -103,6 +103,9 @@ class TournamentsController extends Controller
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
         $tournament->random_teams               = ($request->random_teams ? true : false);
+        $tournament->match_autoapi               = ($request->match_autoapi ? true : false);
+        $tournament->match_autostart               = ($request->match_autostart ? true : false);
+
 
         $tournament->status                     = 'DRAFT';
 
@@ -145,20 +148,27 @@ class TournamentsController extends Controller
             }
         }
 
-        $tournament->name           = $request->name;
-        $tournament->description    = $request->description;
-        $tournament->rules          = $request->rules;
-        $disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
-        if (!in_array($tournament->status, $disallowed_array)) {
-            $game_id = null;
-            if (isset($request->game_id)) {
-                if (Game::where('id', $request->game_id)->first()) {
-                    $game_id = $request->game_id;
+        if ($tournament->status != 'LIVE') {
+            $tournament->name           = $request->name;
+            $tournament->description    = $request->description;
+            $tournament->rules          = $request->rules;
+            
+            $disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
+            if (!in_array($tournament->status, $disallowed_array)) {
+                $game_id = null;
+                if (isset($request->game_id)) {
+                    if (Game::where('id', $request->game_id)->first()) {
+                        $game_id = $request->game_id;
+                    }
                 }
-            }
 
-            $tournament->game_id                    = $game_id;
+                $tournament->game_id                    = $game_id;
+            }
         }
+
+        $tournament->match_autoapi               = ($request->match_autoapi ? true : false);
+        $tournament->match_autostart               = ($request->match_autostart ? true : false);
+
 
         if (!$tournament->save()) {
             session::flash('alert-danger', 'Cannot update Tournament!');
@@ -440,6 +450,30 @@ class TournamentsController extends Controller
         }
 
         Session::flash('alert-success', __('events.tournament_sucessfully_registered'));
+        return Redirect::back();
+    }
+
+        /**
+     * add Team to Tournament
+     * @param  Event           $event
+     * @param  EventTournament $tournament
+     * @param  Request         $request
+     * @return Redirect
+     */
+    public function addTeam(Event $event, EventTournament $tournament, Request $request)
+    {
+   
+        $tournamentTeam                         = new EventTournamentTeam();
+        $tournamentTeam->event_tournament_id    = $tournament->id;
+        $tournamentTeam->name                   = $request->team_name;
+
+        if (!$tournamentTeam->save()) {
+            Session::flash('alert-danger', __('events.tournament_can_not_add_team'));
+            return Redirect::back();
+        }
+
+
+        Session::flash('alert-success', __('events.tournament_team_created'));
         return Redirect::back();
     }
 

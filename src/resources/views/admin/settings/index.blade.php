@@ -45,6 +45,7 @@
 								strpos($setting->setting, 'payment') === false &&
 								strpos($setting->setting, 'credit') === false &&
 								strpos($setting->setting, 'login') === false &&
+								strpos($setting->setting, 'auth') === false &&
 								strpos($setting->setting, 'shop') === false &&
 								strpos($setting->setting, 'gallery') === false &&
 								strpos($setting->setting, 'help') === false &&

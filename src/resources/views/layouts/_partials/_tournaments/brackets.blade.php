@@ -112,7 +112,7 @@
 								 				Submit Scores
 								 			</button>
 							 			@endif
-
+										@if(isset($tournament->game))
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
 											<!-- Select Command Modal -->
 											<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
@@ -137,6 +137,8 @@
 													</div>
 												</div>
 											</div>
+										@endif
+
 										@if ( isset($matchserver) && isset($matchserver->gameServer) )
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Commands</button>
 											<!-- execute Command Modal -->
