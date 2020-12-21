@@ -253,7 +253,7 @@
 
 			@foreach ($match->teams as $team)
 				<div class="col">
-					<div class="card mb-3">
+					<div class="card mr-0 ml-0 mb-3">
 						<div class="card-header @if(Colors::isBodyDarkMode()) border-light  @endif">
 							<div class="row">
 								<div class="col">
@@ -557,14 +557,14 @@
 			localStorage.setItem('autoReload', $(this).prop('checked'));
 		});
 
-		if(localStorage.getItem('autoReload') == "true")
+		if(localStorage.getItem('autoReload') != "false")
 		{
 			$('#autoReload').prop("checked", true);
 		}
 
 		setInterval(function()
 		{
-			if(!isABootstrapModalOpen() && localStorage.getItem('autoReload') == "true")
+			if(!isABootstrapModalOpen() && localStorage.getItem('autoReload') != "false")
 			{
 				location.reload();
 			}
