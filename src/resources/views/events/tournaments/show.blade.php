@@ -5,13 +5,11 @@
 @section ('content')
 	<div class="container">
 		@if (isset($tournament->game) && $tournament->game->image_header_path != null)
-			<div class="row">
-				<picture>
-					<source srcset="{{ $tournament->game->image_header_path }}.webp" type="image/webp">
-					<source srcset="{{ $tournament->game->image_header_path }}" type="image/jpeg">
-					<img class="img-fluid rounded mx-auto full-width" width="100%" src="{{ $tournament->game->image_header_path }}">
-				</picture>
-			</div>
+			<picture>
+				<source srcset="{{ $tournament->game->image_header_path }}.webp" type="image/webp">
+				<source srcset="{{ $tournament->game->image_header_path }}" type="image/jpeg">
+				<img class="img-fluid full-width top-image" width="100%" src="{{ $tournament->game->image_header_path }}">
+			</picture>
 		@endif
 		<!-- HEADER -->
 		<div class="pb-2 mt-4 mb-4 border-bottom">
