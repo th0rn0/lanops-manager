@@ -10,35 +10,46 @@
 
 		<span>
 			<h1 class="d-inline">@lang('matchmaking.match') {{ $match->id }} </h1>
-			<span class="float-right">
-				@if ($match->status == 'COMPLETE')
-					<span class="badge badge-success">@lang('matchmaking.ended')</span>
-				@endif
-				@if ($match->status == 'OPEN')
-					<span class="badge badge-success"><i class="fas fa-wifi"></i></span>
-				@endif
-				@if ($match->status == 'LIVE')
-					<span class="badge badge-success">@lang('matchmaking.live')</span>
-				@endif
-				@if ($match->status == 'PENDING')
-					<span class="badge badge-light">@lang('matchmaking.pending')</span>
-				@endif
-				@if ($match->status == 'WAITFORPLAYERS')
-					<span class="badge badge-light">@lang('matchmaking.waitforplayers')</span>
-				@endif
-				@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
-					<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
-				@endif
-				@if ($match->status != 'COMPLETE' && $match->getMatchTeamPlayer(Auth::id()))
-					<span class="badge badge-success">@lang('matchmaking.signedup')</span>
-				@endif
-				@if ( $match->owner_id == Auth::id())
-					<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
-				@endif
-				@if ( $match->getMatchTeamOwner(Auth::id()))
-					<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
-				@endif
-			</span>
+			<div class="float-right">
+
+				<div>
+
+					@if ($match->status == 'COMPLETE')
+						<span class="badge badge-success">@lang('matchmaking.ended')</span>
+					@endif
+					@if ($match->status == 'OPEN')
+						<span class="badge badge-success"><i class="fas fa-wifi"></i></span>
+					@endif
+					@if ($match->status == 'LIVE')
+						<span class="badge badge-success">@lang('matchmaking.live')</span>
+					@endif
+					@if ($match->status == 'PENDING')
+						<span class="badge badge-light">@lang('matchmaking.pending')</span>
+					@endif
+					@if ($match->status == 'WAITFORPLAYERS')
+						<span class="badge badge-light">@lang('matchmaking.waitforplayers')</span>
+					@endif
+					@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
+						<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
+					@endif
+					@if ($match->status != 'COMPLETE' && $match->getMatchTeamPlayer(Auth::id()))
+						<span class="badge badge-success">@lang('matchmaking.signedup')</span>
+					@endif
+					@if ( $match->owner_id == Auth::id())
+						<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
+					@endif
+					@if ( $match->getMatchTeamOwner(Auth::id()))
+						<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
+					@endif
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="autoReload">
+					<label class="form-check-label" for="autoReload">
+					  Auto Reload
+					</label>
+				</div>
+			</div>
+
 		</span>
 
 	</div>
@@ -517,9 +528,12 @@
 	</div>
 </div>
 
+@endsection
 
+@section ('scripts')
 
-<script>
+<script language="javascript" type="text/javascript">
+
 	function copyToClipBoard(inputId) {
 		/* Get the text field */
 		var copyText = document.getElementById(inputId);
@@ -531,10 +545,31 @@
 		/* Copy the text inside the text field */
 		document.execCommand("copy");
 	}
+
+	function isABootstrapModalOpen() {
+		return $('.modal.show').length > 0;
+	}
+
+	jQuery( function()
+	{
+		$('#autoReload').change(function()
+		{
+			localStorage.setItem('autoReload', $(this).prop('checked'));
+		});
+
+		if(localStorage.getItem('autoReload') == "true")
+		{
+			$('#autoReload').prop("checked", true);
+		}
+
+		setInterval(function()
+		{
+			if(!isABootstrapModalOpen() && localStorage.getItem('autoReload') == "true")
+			{
+				location.reload();
+			}
+		}, 10000);
+	});
 </script>
-
-
-
-
 
 @endsection
