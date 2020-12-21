@@ -2,21 +2,14 @@
 
 namespace App;
 
-use DB;
 use Cache;
 use Settings;
-use Colors;
 use Session;
 use Helpers;
-use Debugbar;
 
-use App\EventParticipant;
 use App\EventTournamentParticipant;
-use Closure;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Illuminate\Queue\SerializableClosure;
 
 use GuzzleHttp;
 // use Lanops\Challonge\Challonge;
@@ -401,7 +394,6 @@ class EventTournament extends Model
             $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                // $matches = json_encode($challonge->getMatches($this->challonge_tournament_id));
                 $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
                 Cache::rememberForever($this->challonge_tournament_id . "_matches", function () use ($matches) {
                     return $matches;
@@ -437,7 +429,6 @@ class EventTournament extends Model
             $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                // $matches = json_encode($challonge->getMatches($this->challonge_tournament_id));
                 $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
                 Cache::rememberForever($this->challonge_tournament_id . "_matches", function () use ($matches) {
                     return $matches;
@@ -544,7 +535,6 @@ class EventTournament extends Model
             $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                // $matches = json_encode($challonge->getMatches($this->challonge_tournament_id));
                 $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
                 Cache::rememberForever($this->challonge_tournament_id . "_matches",function () use ($matches) {
                     return $matches;
@@ -741,11 +731,11 @@ class EventTournament extends Model
             "threefinal" => "Best of three finals",
             "threesemifinalfinal" => "Best of three semifinals + finals",
         );
-     
+
     }
 
     /**
-     * get isFinalMatch 
+     * get isFinalMatch
      * @return Array
      */
     public function isFinalMatch(int $challongeMatchId)
@@ -765,17 +755,17 @@ class EventTournament extends Model
                 }
             }
         }
-    
-        return $selectedmatchround == $matchcount;   
+
+        return $selectedmatchround == $matchcount;
     }
 
     /**
-     * get isSemiFinalMatch 
+     * get isSemiFinalMatch
      * @return Array
      */
     public function isSemiFinalMatch(int $challongeMatchId)
     {
-        
+
         $matches = $this->getMatches();
         $matchcount = count($matches) - 2;
         $selectedmatchround = 0;
@@ -791,14 +781,14 @@ class EventTournament extends Model
                 }
             }
         }
-    
-        return $selectedmatchround == $matchcount;   
 
-     
+        return $selectedmatchround == $matchcount;
+
+
     }
 
       /**
-     * get isSemiFinalMatch 
+     * get isSemiFinalMatch
      * @return Array
      */
     public function getnummaps(int $challongeMatchId)
@@ -830,8 +820,4 @@ class EventTournament extends Model
         throw new \InvalidArgumentException('Wrong bestof:'. $this->bestof);
 
     }
-
- 
-
-
 }
