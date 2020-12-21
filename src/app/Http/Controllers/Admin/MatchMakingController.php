@@ -17,7 +17,8 @@ use App\Game;
 use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
-use App\MatchMakingServer;
+use App\Jobs\GameServerAsign;
+
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -628,35 +629,8 @@ class MatchMakingController extends Controller
         }
 
         if (isset($match->game) && $match->game->matchmaking_autostart) {
-            $availableservers = $match->game->getGameServerSelectArray();
 
-            if (count($availableservers) == 0) {
-                Session::flash('alert-danger', 'Currently no free Servers are available!');
-                return Redirect::back();
-            }
-
-            $matchMakingServer                 = new MatchMakingServer();
-            $matchMakingServer->match_id        = $match->id;
-            $matchMakingServer->game_server_id = array_key_first($availableservers);
-
-            if (!$matchMakingServer->save()) {
-                Session::flash('alert-danger', 'Could not save matchMakingServer!');
-                return Redirect::back();
-            }
-
-
-            if (isset($match->game->matchStartGameServerCommand) &&  $match->game->matchStartGameServerCommand != null) {
-                $request = new Request([
-                        'command'   => $match->game->matchStartGameServerCommand->id,
-                    ]);
-
-                $gccontroller = new GameServerCommandsController();
-                if(!$gccontroller->executeGameServerMatchMakingCommand($match->game, $matchMakingServer->gameServer, $match, $request))
-                {
-                    return Redirect::back();
-                }
-
-            }
+            GameServerAsign::dispatch($match,null,null)->onQueue('gameserver');
 
         if (isset($match->game) && $match->game->matchmaking_autoapi)
         {

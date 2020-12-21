@@ -150,6 +150,22 @@
 								}}
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-lg-6 col-sm-12 form-group">
+								{{ Form::label('bestof','Best of',array('id'=>'','class'=>'')) }}
+								{{
+									Form::select(
+										'bestof',
+										App\EventTournament::getBestofnames(),
+										null,
+										array(
+											'id'    => 'bestof',
+											'class' => 'form-control'
+										)
+									)
+								}}
+							</div>
+						</div>
 
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}

@@ -618,6 +618,45 @@ class EventTournament extends Model
     }
 
     /**
+     * Update Match
+     * @param  string $matchId
+     * @param  string $player1Score
+     * @param  string $player2Score
+     * @param  string $player_winner_verify
+     * @return Array|Object
+     */
+    public function updateMatchScores($matchId, $player1Score, $player2Score)
+    {
+        try {
+            // TODO - add support for multiple sets
+            $http = new GuzzleHttp\Client();
+            $challonge = new Challonge($http, config('challonge.api_key'), false);
+            $match = $challonge->getMatch($this->challonge_tournament_id, $matchId);
+
+
+            $params = [
+                'match' => [
+                    'scores_csv' => $player1Score . '-' . $player2Score
+                ]
+            ];
+            if (!$response = $match->update($params)) {
+                return false;
+            }
+            # Update Cache
+            Cache::forget($this->challonge_tournament_id . "_matches");
+            Cache::forget($this->challonge_tournament_id . "_standings");
+            $this->getMatches();
+            $this->getStandings();
+            return $response;
+        } catch (\Throwable $e) {
+            Helpers::rethrowIfDebug($e);
+            Session::flash('alert-danger', $e->getMessage());
+        }
+
+        return false;
+    }
+
+    /**
      * Update all scores Retoractively - This is for Legacy
      * @return Array|Object
      */
@@ -682,4 +721,110 @@ class EventTournament extends Model
         }
         dd('DUN');
     }
+
+    /**
+     * get bestofnames
+     * @return Array
+     */
+    public static function getBestofnames()
+    {
+        return array(
+            "one" => "Best of one",
+            "three" => "Best of three",
+            "threefinal" => "Best of three finals",
+            "threesemifinalfinal" => "Best of three semifinals + finals",
+        );
+     
+    }
+
+    /**
+     * get isFinalMatch 
+     * @return Array
+     */
+    public function isFinalMatch(int $challongeMatchId)
+    {
+        $matches = $this->getMatches();
+        $matchcount = count($matches);
+        $selectedmatchround = 0;
+        foreach($matches as $roundkey => $matchround)
+        {
+            foreach($matchround as $match)
+            {
+                print_r($match->id);
+                if ($match->id == $challongeMatchId)
+                {
+                    $selectedmatchround = $roundkey;
+                    break 2;
+                }
+            }
+        }
+    
+        return $selectedmatchround == $matchcount;   
+    }
+
+    /**
+     * get isSemiFinalMatch 
+     * @return Array
+     */
+    public function isSemiFinalMatch(int $challongeMatchId)
+    {
+        
+        $matches = $this->getMatches();
+        $matchcount = count($matches) - 2;
+        $selectedmatchround = 0;
+        foreach($matches as $roundkey => $matchround)
+        {
+            foreach($matchround as $match)
+            {
+                print_r($match->id);
+                if ($match->id == $challongeMatchId)
+                {
+                    $selectedmatchround = $roundkey;
+                    break 2;
+                }
+            }
+        }
+    
+        return $selectedmatchround == $matchcount;   
+
+     
+    }
+
+      /**
+     * get isSemiFinalMatch 
+     * @return Array
+     */
+    public function getnummaps(int $challongeMatchId)
+    {
+        if (!isset($challongeMatchId))
+        {
+        throw new \InvalidArgumentException('Challonge Match Id is empty!');
+        }
+        if ( $this->bestof == "one" )
+        {
+            return 1;
+        }
+        if($this->bestof == "three")
+        {
+            return 3;
+        }
+        if($this->bestof == "threefinal")
+        {
+           return $this->isFinalMatch($challongeMatchId) ? 3 : 1;
+
+        }
+        if($this->bestof == "threesemifinalfinal")
+        {
+
+           return $this->isFinalMatch($challongeMatchId) || $this->isSemiFinalMatch($challongeMatchId) ? 3 : 1;
+
+        }
+
+        throw new \InvalidArgumentException('Wrong bestof:'. $this->bestof);
+
+    }
+
+ 
+
+
 }

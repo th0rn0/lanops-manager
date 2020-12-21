@@ -16,6 +16,7 @@ use App\EventParticipant;
 use App\EventTournament;
 use App\EventTournamentParticipant;
 use App\EventTournamentTeam;
+use App\Jobs\GameServerAsign;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -68,6 +69,7 @@ class TournamentsController extends Controller
         $rules = [
             'name'          => 'required',
             'format'        => 'required|in:single elimination,double elimination,round robin,list',
+            'bestof'        => 'required|in:one,three,threefinal,threesemifinalfinal',
             'team_size'     => 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
             'description'   => 'required',
             'rules'         => 'required',
@@ -77,6 +79,8 @@ class TournamentsController extends Controller
             'name.required'         => 'Tournament name is required',
             'format.required'       => 'Format is required',
             'format.in'             => 'Single Elimation, Double Elimination, List or Round Robin only',
+            'bestof.required'       => 'bestof is required',
+            'bestof.in'             => 'Best of one, Best of three, Best of three finals, Best of three semifinals + finals',
             'team_size.required'    => 'Team size is required',
             'team_size.in'          => 'Team Size must be in format 1v1, 2v2, 3v3 etc',
             'description.required'  => 'Description is required',
@@ -99,6 +103,7 @@ class TournamentsController extends Controller
         $tournament->format                     = $request->format;
         $tournament->team_size                  = $request->team_size;
         $tournament->description                = $request->description;
+        $tournament->bestof                     = $request->bestof;
         $tournament->rules                      = $request->rules;
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
@@ -132,11 +137,13 @@ class TournamentsController extends Controller
             'status'        => 'in:DRAFT,OPEN,CLOSED,LIVE,COMPLETE',
             'description'   => 'filled',
             'rules'         => 'filled',
+            'bestof'        => 'in:one,three,threefinal,threesemifinalfinal',
         ];
         $messages = [
             'name.filled'           => 'Tournament name cannot be empty',
             'status.in'             => 'Status must be DRAFT, OPEN, CLOSED, LIVE or COMPLETE',
             'description.filled'    => 'Description cannot be empty',
+            'bestof.in'             => 'Best of one, Best of three, Best of three finals, Best of three semifinals + finals',
             'rules.filled'          => 'Rules cannot be empty',
         ];
         $this->validate($request, $rules, $messages);
@@ -152,6 +159,8 @@ class TournamentsController extends Controller
             $tournament->name           = $request->name;
             $tournament->description    = $request->description;
             $tournament->rules          = $request->rules;
+            $tournament->bestof         = $request->bestof;
+
             
             $disallowed_array = ['OPEN', 'CLOSED', 'LIVE', 'COMPLETED'];
             if (!in_array($tournament->status, $disallowed_array)) {
@@ -278,6 +287,22 @@ class TournamentsController extends Controller
         if (!$tournament->setStatus('LIVE')) {
             Session::flash('alert-danger', 'Cannot start Tournament!');
             return Redirect::back();
+        }
+
+
+        if (isset($tournament->game) && $tournament->match_autostart)
+        {
+            
+
+            $nextmatches = $tournament->getNextMatches();
+
+            foreach ($nextmatches as $nextmatch)
+            {
+                GameServerAsign::dispatch(null,$tournament,$nextmatch->id)->onQueue('gameserver');
+
+            }
+            
+
         }
 
         Session::flash('alert-success', 'Tournament Started!');
@@ -536,6 +561,21 @@ class TournamentsController extends Controller
         ) {
             Session::flash('alert-danger', 'Cannot update match scores!');
             return Redirect::back();
+        }
+
+        if (isset($tournament->game) && $tournament->match_autostart)
+        {
+            
+
+            $nextmatches = $tournament->getNextMatches();
+
+            foreach ($nextmatches as $nextmatch)
+            {
+                GameServerAsign::dispatch(null,$tournament,$nextmatch->id)->onQueue('gameserver');
+
+            }
+            
+
         }
 
         Session::flash('alert-success', 'Successfully updated match scores!');
