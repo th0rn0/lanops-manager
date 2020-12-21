@@ -566,7 +566,7 @@
 		{
 			if(!isABootstrapModalOpen() && localStorage.getItem('autoReload') == "true")
 			{
-				// location.reload();
+				location.reload();
 			}
 		}, 10000);
 	});
