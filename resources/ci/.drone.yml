@@ -11,13 +11,13 @@ steps:
   commands:
   - apk add make
   - make folder-structure layout-images env-file-blank
-    
+
 - name: build-composer
   image: composer
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
-    
+
 - name: build-npm
   image: node:14.10
   commands:
@@ -98,7 +98,7 @@ steps:
   when:
     event:
     - push
-    
+
 - name: build-composer
   image: composer
   commands:
@@ -107,7 +107,7 @@ steps:
   when:
     event:
     - push
-    
+
 - name: build-npm
   image: node:14.10
   commands:
@@ -123,7 +123,7 @@ steps:
   image: plugins/docker
   settings:
     repo: th0rn0/eventula-manager
-    tags: 
+    tags:
     - staging
     username:
       from_secret: DOCKERHUB_USERNAME
@@ -139,7 +139,7 @@ steps:
   image: plugins/docker
   settings:
     repo: th0rn0/eventula-manager
-    tags: 
+    tags:
     - latest
     username:
       from_secret: DOCKERHUB_USERNAME
@@ -277,7 +277,7 @@ steps:
   when:
     event:
     - tag
-    
+
 - name: build-composer
   image: composer
   commands:
@@ -286,7 +286,7 @@ steps:
   when:
     event:
     - tag
-    
+
 - name: build-npm
   image: node:14.10
   commands:
@@ -302,7 +302,7 @@ steps:
   image: plugins/docker
   settings:
     repo: th0rn0/eventula-manager
-    tags: 
+    tags:
     - ${DRONE_TAG}
     - latest
     username:
@@ -354,5 +354,3 @@ steps:
 trigger:
   event:
   - tag
-
-

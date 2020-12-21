@@ -8,6 +8,7 @@ use Settings;
 use Colors;
 use Session;
 use Helpers;
+use Debugbar;
 
 use App\EventParticipant;
 use App\EventTournamentParticipant;
@@ -15,6 +16,7 @@ use Closure;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Queue\SerializableClosure;
 
 use GuzzleHttp;
 // use Lanops\Challonge\Challonge;
@@ -396,15 +398,17 @@ class EventTournament extends Model
     public function getMatches($obj = false)
     {
         try {
-            $tournamentMatches = Cache::get($this->challonge_tournament_id . "_matches", function () {
+            $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                $matches = $challonge->getMatches($this->challonge_tournament_id);
-                Cache::remember($this->challonge_tournament_id . "_matches", 0, function () use ($matches) {
+                // $matches = json_encode($challonge->getMatches($this->challonge_tournament_id));
+                $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
+                Cache::rememberForever($this->challonge_tournament_id . "_matches", function () use ($matches) {
                     return $matches;
-                });
+                 });
                 return $matches;
             });
+            $tournamentMatches = json_decode($tournamentMatchesJson);
             $return = array();
             foreach ($tournamentMatches as $match) {
                 $return[$match->round][$match->suggested_play_order] = $match;
@@ -430,15 +434,17 @@ class EventTournament extends Model
     public function getMatch(int $challongeMatchId, $obj = false)
     {
         try {
-            $tournamentMatches = Cache::get($this->challonge_tournament_id . "_matches", function () {
+            $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                $matches = $challonge->getMatches($this->challonge_tournament_id);
-                Cache::remember($this->challonge_tournament_id . "_matches", 0, function () use ($matches) {
+                // $matches = json_encode($challonge->getMatches($this->challonge_tournament_id));
+                $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
+                Cache::rememberForever($this->challonge_tournament_id . "_matches", function () use ($matches) {
                     return $matches;
-                });
+                 });
                 return $matches;
             });
+            $tournamentMatches = json_decode($tournamentMatchesJson);
 
             foreach ($tournamentMatches as $match) {
                 if ($match->id == $challongeMatchId) {
@@ -535,18 +541,19 @@ class EventTournament extends Model
     public function getNextMatches($limit = 0, $obj = false)
     {
         try {
-            $tournamentMatches = Cache::get($this->challonge_tournament_id . "_matches", function () {
+            $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                $matches = $challonge->getMatches($this->challonge_tournament_id);
-                // dd($matches);
-                Cache::remember($this->challonge_tournament_id . "_matches", 0, function () use ($matches) {
+                // $matches = json_encode($challonge->getMatches($this->challonge_tournament_id));
+                $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
+                Cache::rememberForever($this->challonge_tournament_id . "_matches",function () use ($matches) {
                     return $matches;
-                });
+                 });
                 return $matches;
             });
+            $tournamentMatches = json_decode($tournamentMatchesJson);
             $nextMatches = array();
-            foreach ($tournamentMatches->toArray() as $match) {
+            foreach ($tournamentMatches as $match) {
                 if ($match->state == 'open') {
                     $nextMatches[] = $match;
                 }

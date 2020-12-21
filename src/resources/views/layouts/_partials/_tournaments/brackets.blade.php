@@ -9,11 +9,53 @@
 <div class="row">
 	@php
 		$matches = $tournament->getMatches();
+		$isLoosersBracket = false;
+		$prevIsLoosersBracket = false;
+
+		$isFinalsBracket = false;
+		$prevIsFinalsBracket = false;
+
+		$matchNumbers = array();
 	@endphp
 	@foreach ($matches as $roundNumber => $round)
+
+		@php
+
+			$isFinal = false;
+
+			$prevIsLoosersBracket = $isLoosersBracket;
+			$isLoosersBracket = false;
+
+			$prevIsFinalsBracket = $isFinalsBracket;
+			$isFinalsBracket = false;
+
+			$roundTitle = "Round $roundNumber";
+			if (( $round == end($matches) || ( $roundNumber == count($matches) && !Helpers::pregArrayKeyExists('/-$/',$matches))) && $tournament->format != 'round robin' )
+			{
+				$roundTitle = "Finals";
+				$isFinalsBracket = true;
+			}
+			elseif ($roundNumber == count($matches) - 2 && $tournament->format != 'round robin')
+			{
+				$roundTitle = "Semi-Finals";
+				$isFinalsBracket = true;
+			}
+			elseif (substr($roundNumber, 0, 1) == '-' && $tournament->format != 'round robin')
+			{
+				$roundTitle = "Losers Round ". substr($roundNumber, 1, 1);
+				$isLoosersBracket = true;
+			}
+		@endphp
+
+		@if ($isLoosersBracket && !$prevIsLoosersBracket || $isFinalsBracket && !$prevIsFinalsBracket)
+			</div>
+			<div class="row">
+		@endif
+
 		<div class="col-12 col-sm-6 col-md-3">
 			<h4 class="pb-2 mt-4 mb-4 border-bottom">
-				@if (
+				{{ $roundTitle }}
+				{{-- @if (
 					(
 						(
 							$round == end($matches)
@@ -33,11 +75,12 @@
 					Losers Round {{ substr($roundNumber, 1, 1) }}
 				@else
 					Round {{ $roundNumber }}
-				@endif
+				@endif --}}
 			</h4>
 			@foreach ($round as $match)
 				@php
 					$matchserver = App\EventTournamentMatchServer::getTournamentMatchServer($match->id);
+					$matchNumbers[$match->id] = $matchCounter;
 				@endphp
 				<table class="table table-bordered table-sm">
 					<tbody>
@@ -79,15 +122,17 @@
 									<span class="badge badge-pill float-right">{{ $scores[0] }}</span>
 								@endif
 								@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
-									<small><i>Loser of {{ ($matchCounter - 1) }}</i></small>
+									<small><i>Loser of {{ $matchNumbers[$match->player1_prereq_match_id] }}</i></small>
+								@elseif (!$match->player1_is_prereq_match_loser && !$match->player1_id)
+									<small><i>Winner of {{ $matchNumbers[$match->player1_prereq_match_id] }}</i></small>
 								@endif
 							</td>
 							@if ( @$admin && $user->admin )
-								<td rowspan="3" class="text-center" width="10%">
+								<td rowspan="3" class="text-center p-0" width="10%">
 									@if ($match->state == 'open' && ($match->player2_id != null && $match->player1_id != null))
 										@if ($tournament->team_size != '1v1')
 											<button
-										 		class="btn btn-sm btn-primary"
+										 		class="btn btn-sm btn-primary rounded-0"
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
 										 			'{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}',
@@ -100,7 +145,7 @@
 								 			</button>
 										@else
 										 	<button
-										 		class="btn btn-sm btn-primary"
+										 		class="btn btn-sm btn-primary rounded-0"
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
 										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}',
@@ -113,7 +158,7 @@
 								 			</button>
 							 			@endif
 										@if(isset($tournament->game))
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+											<button class="btn btn-primary btn-sm btn-block rounded-0" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
 											<!-- Select Command Modal -->
 											<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
@@ -140,7 +185,7 @@
 										@endif
 
 										@if ( isset($matchserver) && isset($matchserver->gameServer) )
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Commands</button>
+											<button class="btn btn-primary btn-sm btn-block rounded-0" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Commands</button>
 											<!-- execute Command Modal -->
 											<div class="modal fade" id="executeServerCommandModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
@@ -211,14 +256,10 @@
 									@endif
 									<span class="badge badge-pill float-right">{{ $scores[1] }}</span>
 								@endif
-								@if ($roundNumber != count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
-									<small><i>Loser of {{ ($matchCounter - 2) }}</i></small>
-								@endif
-								@if ($roundNumber == count($tournament->getMatches()) - 1 && !$match->player2_is_prereq_match_loser && !$match->player2_id)
-									<small><i>Winner of Losers Bracket</i></small>
-								@endif
-								@if ($roundNumber == count($tournament->getMatches()) - 1 && $match->player2_is_prereq_match_loser && !$match->player2_id)
-									<small><i>Loser of {{ ($matchCounter - 1) }} (if necessary)</i></small>
+								@if ($match->player2_is_prereq_match_loser && !$match->player2_id)
+									<small><i>Loser of {{ $matchNumbers[$match->player2_prereq_match_id] }}</i></small>
+								@elseif (!$match->player2_is_prereq_match_loser && !$match->player2_id)
+									<small><i>Winner of {{ $matchNumbers[$match->player2_prereq_match_id] }}</i></small>
 								@endif
 							</td>
 						</tr>
@@ -267,7 +308,7 @@
 					$matchCounter++
 				@endphp
 			@endforeach
-			</div>
+		</div>
 	@endforeach
 </div>
 
