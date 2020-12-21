@@ -79,3 +79,8 @@ h6 {
 .event-card {
     min-width: 12.5rem;
 }
+
+.custom-control-input-green:checked~.custom-control-label::before {
+    border-color: $color_primary !important;
+    background-color: $color_primary !important;
+}

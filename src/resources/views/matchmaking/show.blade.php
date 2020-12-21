@@ -42,9 +42,9 @@
 						<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
 					@endif
 				</div>
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="" id="autoReload">
-					<label class="form-check-label" for="autoReload">
+				<div class="custom-control custom-checkbox">
+					<input class="custom-control-input" type="checkbox" value="" id="autoReload">
+					<label class="custom-control-label" for="autoReload">
 					  Auto Reload
 					</label>
 				</div>
@@ -566,7 +566,7 @@
 		{
 			if(!isABootstrapModalOpen() && localStorage.getItem('autoReload') == "true")
 			{
-				location.reload();
+				// location.reload();
 			}
 		}, 10000);
 	});
