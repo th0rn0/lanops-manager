@@ -55,8 +55,7 @@ class GameMatchApiController extends Controller
             }
 
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-            //replace matchmaking_autoapi
-            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->game->matchmaking_autoapi)
+            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->match_autoapi)
             {
                 $apiurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
                 $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0],$apiurl, $matchserver->gameServer->gameserver_secret);
@@ -76,6 +75,216 @@ class GameMatchApiController extends Controller
         return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     } 
     
+    /**
+    * tournamentMatchGolive
+    * @param Event $event
+    * @param EventTournament $tournament
+    * @param int $challongeMatchId
+    * @param int $mapnumber
+    * @param Request $request
+    * @param int $mapnumber
+    * @return View
+    */
+    public function tournamentMatchGolive(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, Request $request)
+    {
+        $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        if(!isset($gameserver))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($tournament->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
+
+        if(!$gamematchapihandler->golive($request, null , $tournament, $challongeMatchId , $mapnumber))
+        {
+            return "Error: GoLive failed!";
+        }
+
+        return 'Match Started successfully!';
+
+    }
+
+
+
+    /**
+    * tournamentMatchFinalize
+    * @param Event $event
+    * @param EventTournament $tournament
+    * @param int $challongeMatchId
+    * @param Request $request
+    * @return View
+    */
+    public function tournamentMatchFinalize(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
+    {
+        $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        if(!isset($gameserver))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($tournament->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
+
+        if (!$gamematchapihandler->finalize($request, null, $tournament, $challongeMatchId))
+        {
+            return "Error: Finalizing failed!";
+        }
+        else
+        {
+            return "Success: Finalized Match!";
+        }
+
+
+    }
+
+
+    /**
+    * tournamentgMatchFinalizeMap
+    * @param Event $event
+    * @param EventTournament $tournament
+    * @param int $challongeMatchId
+    * @param int $mapnumber
+    * @param Request $request
+    * @return View
+    */
+    public function tournamentMatchFinalizeMap(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, Request $request)
+    {
+        $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        if(!isset($gameserver))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+    
+        if (!isset($tournament->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }      
+        if(!$gamematchapihandler->finalizemap($request, null, $tournament, $challongeMatchId, $mapnumber))
+        {
+            return "Error: finalizemap failed!";
+        }
+
+        return 'Map finalized successfully!';
+
+
+    }
+
+
+
+    /**
+    * tournamentMatchUpdateround
+    * @param Event $event
+    * @param EventTournament $tournament
+    * @param int $challongeMatchId
+    * @param int $mapnumber
+    * @param Request $request
+    * @return View
+    */
+    public function tournamentMatchUpdateround(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, Request $request)
+    {
+        $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        if(!isset($gameserver))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($tournament->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
+
+        if(!$gamematchapihandler->updateround($request, null, $tournament, $challongeMatchId, $mapnumber))
+        {
+            return "Error: updateround failed!";
+        }
+        return 'round updated successfully!';
+
+    }
+
+
+   /**
+    * tournamentMatchUpdateplayer
+    * @param Event $event
+    * @param EventTournament $tournament
+    * @param int $challongeMatchId
+    * @param int $mapnumber
+    * @param string $player
+    * @param Request $request
+    * @return View
+    */
+    public function tournamentMatchUpdateplayer(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, string $player, Request $request )
+    {
+        $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        if(!isset($gameserver))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($tournament->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
+
+        if(!$gamematchapihandler->updateplayer($request, null, $tournament, $challongeMatchId, $mapnumber))
+        {
+            return "Error: updateplayer failed!";
+        }
+        return 'player updated successfully!';
+
+
+    }
+
+
+
+
+
+
     /**
     * matchMakingMatchConfig
     * @return View
@@ -155,7 +364,7 @@ class GameMatchApiController extends Controller
             return "Error: Status is not WAITFORPLAYERS!";
         }
 
-        if(!$gamematchapihandler->golive($request, $match , null , $mapnumber))
+        if(!$gamematchapihandler->golive($request, $match , null, null , $mapnumber))
         {
             return "Error: GoLive failed!";
         }
@@ -190,7 +399,7 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if (!$gamematchapihandler->finalize($request, $match, null))
+        if (!$gamematchapihandler->finalize($request, $match, null, null))
         {
             return "Error: Finalizing failed!";
         }
@@ -232,7 +441,7 @@ class GameMatchApiController extends Controller
         {
             return "Error: Gameserver Secret Key is wrong!";
         }      
-        if(!$gamematchapihandler->finalizemap($request, $match, null, $mapnumber))
+        if(!$gamematchapihandler->finalizemap($request, $match, null, null, $mapnumber))
         {
             return "Error: finalizemap failed!";
         }
@@ -273,7 +482,7 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateround($request, $match, null, $mapnumber))
+        if(!$gamematchapihandler->updateround($request, $match, null, null, $mapnumber))
         {
             return "Error: updateround failed!";
         }
@@ -312,7 +521,7 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateplayer($request, $match, null, $mapnumber))
+        if(!$gamematchapihandler->updateplayer($request, $match, null, null, $mapnumber))
         {
             return "Error: updateplayer failed!";
         }

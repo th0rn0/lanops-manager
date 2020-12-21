@@ -63,7 +63,7 @@
 						(
 							$roundNumber == count($matches) &&
 							!Helpers::pregArrayKeyExists('/-$/',$matches)
-						)
+						)						
 					) && (
 						$tournament->format != 'round robin'
 					)

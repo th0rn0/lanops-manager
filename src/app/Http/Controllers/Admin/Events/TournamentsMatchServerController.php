@@ -17,6 +17,8 @@ use App\EventTournamentMatchServer;
 use App\Game;
 use App\GameServer;
 use App\GameServerCommand;
+use App\Jobs\GameServerAsign;
+
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;

@@ -123,6 +123,41 @@
 							{{ Form::text('format', ucfirst($tournament->format) .  ' - ' . $tournament->team_size ,array('id'=>'format','class'=>'form-control', 'disabled'=>'true')) }}
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-lg-6 col-sm-12 form-group">
+							{{ Form::label('bestof','Best of',array('id'=>'','class'=>'')) }}
+							@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')							
+								{{
+									Form::select(
+										'bestof',
+										App\EventTournament::getBestofnames(),
+										$tournament->bestof,
+										array(
+											'id'    => 'bestof',
+											'class' => 'form-control',
+											'disabled' => 'true'
+										)
+									)
+								}}
+							@else
+							{{
+								Form::select(
+									'bestof',
+									App\EventTournament::getBestofnames(),
+									$tournament->bestof,
+									array(
+										'id'    => 'bestof',
+										'class' => 'form-control'
+									)
+								)
+							}}
+							@endif
+							
+
+						</div>
+					</div>
+
 					<div class="form-group">
 						{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 						@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')

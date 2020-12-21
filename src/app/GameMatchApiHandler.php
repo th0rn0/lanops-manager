@@ -42,11 +42,11 @@ interface IGameMatchApiHandler
     public function addteam($name);
     public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
     public function authorizeserver(Request $request, $serverkey);
-    public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, $mapnumber);
-    public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber);
-    public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber, string $player);
-    public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber);
-    public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null);
+    public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
+    public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
+    public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber, string $player);
+    public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
+    public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid);
 }
 
 class Get5MatchApiHandler implements IGameMatchApiHandler
@@ -149,7 +149,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
 
 
-    public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, $mapnumber)
+    public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber)
     {
         if ($match != null && $tournament == null) {
             if (!$match->setStatus('LIVE')) {
@@ -157,14 +157,15 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             }
             return true;
         }
-        if($match == null && $tournament != null)
+        if($match == null && $tournament != null && $challongematchid != null)
         {
             //tournament stuff
+            return true;
         }
         return false;
     }
 
-    public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber)
+    public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber)
     {
 
         if($match != null && $tournament == null)
@@ -179,48 +180,59 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             }
             return true;
         }
-        if($match == null && $tournament != null)
+        if($match == null && $tournament != null && $challongematchid != null)
         {
-            //tournament stuff
+            $tournament->updateMatchScores($challongematchid, $request->{"team1score"}, $request->{"team2score"});
+            return true;
         }
         return false;
 
 
 
     }
-    public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber, string $player)
+    public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber, string $player)
     {
         if($match != null && $tournament == null)
         {
             //matchmaking stuff
             return true;
         }
-        if($match == null && $tournament != null)
+        if($match == null && $tournament != null && $challongematchid != null)
         {
             //tournament stuff
+            return true;
         }
         return false;
 
     }
 
-    public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, int $mapnumber)
+    public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber)
     {
         if($match != null && $tournament == null)
         {
-            if (!$this->updateround($request,$match,null,$mapnumber))
+            if (!$this->updateround($request,$match,null,null,$mapnumber))
             {
                 return false;
             }
             return true;
 
         }
-        if($match == null && $tournament != null)
+        if($match == null && $tournament != null && $challongematchid != null)
         {
-            //tournament stuff
+            if ($mapnumber == $tournament->getnummaps($challongematchid))
+            {
+                $tournament->updateMatch($challongematchid, $request->{"team1score"}, $request->{"team2score"});
+                return true;
+            }
+            if (!$this->updateround($request,null,$tournament,$challongematchid,$mapnumber))
+            {
+                return false;
+            }
+            return true;
         }
         return false;
     }    
-    public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null)
+    public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid)
     {
         if($match != null && $tournament == null)
         {
@@ -231,9 +243,10 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             return true;
 
         }
-        if($match == null && $tournament != null)
+        if($match == null && $tournament != null && $challongematchid != null)
         {
             //tournament stuff
+            
         }
         return false;
         
