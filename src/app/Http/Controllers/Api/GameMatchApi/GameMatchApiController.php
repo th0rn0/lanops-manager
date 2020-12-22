@@ -271,7 +271,7 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateplayer($request, null, $tournament, $challongeMatchId, $mapnumber))
+        if(!$gamematchapihandler->updateplayer($request, null, $tournament, $challongeMatchId, $mapnumber, $player))
         {
             return "Error: updateplayer failed!";
         }
@@ -521,7 +521,7 @@ class GameMatchApiController extends Controller
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateplayer($request, $match, null, null, $mapnumber))
+        if(!$gamematchapihandler->updateplayer($request, $match, null, null, $mapnumber, $player))
         {
             return "Error: updateplayer failed!";
         }
@@ -529,6 +529,7 @@ class GameMatchApiController extends Controller
 
 
     }
+
 
 
 
