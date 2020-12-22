@@ -26,6 +26,7 @@ If you are using this please consider signing up to eventula for event mapping.
 
 - White Label
 - Event Management
+  - Online and presence events
   - Signup/Info Pages
   - Tickets
   - Signups/Gifts/Staff/Refunds
@@ -52,14 +53,23 @@ If you are using this please consider signing up to eventula for event mapping.
   - Supported via Challonge API
   - 1v1, Teams and PUGs supported!
   - Single/Double Elimination and Round Robin supported!
+  - Different rules for each Tournament 
+- Matchmaking feature
 - Event Sign in
   - Sign in via QR Code
 - Event specific page for when at the event
   - Shows Timetables, Attendees, Tournaments, Announcements and Seating
-- Gallery
+- Game Management
+  - Gamserver Management
+    - RCON Support for remote management and status gathering (currently only for Maniaplanet (and Trackmania), Source and Goldsource)
+    - Support for automated Gameserver assignments and fully automated matchmaking / tournaments (currently only Get5 for CS:GO is supported via https://github.com/Lan2Play/get5_eventula_apistats)
+    - Public gameserver list on the homepage 
+- (File)Gallery
+- Helpsystem to publish help/faq articles
 - Admin Interface
 - Web based CSS Editor
-- Expandable templating and CSS System
+- Light and Dark Theme out of the Box
+- Expandable templating and CSS System based on Bootstrap 4
 - API Endpoints
   - Events
   - Participants
@@ -69,13 +79,18 @@ If you are using this please consider signing up to eventula for event mapping.
   - Terms & Conditions
   - Paypal Express
   - Stripe Card payments
+  - Free payment provider
   - Breakdowns in Admin
 - Voting and Poll Management
 - News Management
 - Comment Management
 - Account Management
+- Newsletter / Email Feature
+- Multilanguage (currently EN and DE)
+- EU cookie consent
+- Imprint / Dataprotection page
 - Fully Encapsulated in Docker Containers
-- Built on Laravel
+- Built on Laravel 8x
 - Easily Expandable
 - NGINX, MYSQL & PHP Docker stack
 
@@ -169,6 +184,8 @@ services:
       - LOG_FILES=false
       # HTTPS
       - ENABLE_HTTPS=false
+      # Reverse Proxy HTTPS
+      - FORCE_APP_HTTPS=false
       # Only Secure Cookies
       - SESSION_SECURE_COOKIE=false
       # Migrate Database on Boot
@@ -243,7 +260,7 @@ Once running and the database has migrated go to your app and you will be greate
 
 ### Makefile
 
-This method is intended for development but can be used in production. It uses docker-compose to build the image and database from the source code instead of pulling them from docker hub.
+This method is intended for development but can be used in production. It uses docker-compose to build the image and database from the source code instead of pulling them from docker hub. If you plan to participate in the development of eventula, its worth checking out the Makefile. There are many useful commands implemented that you can use to make your life easier.
 
 #### 1. Setup & Configuration
 
@@ -291,6 +308,15 @@ Note: Only set HTTPS to true if you are doing SSL Termination within the app.
 ### Caveats
 
 - You must rename the certs to ```eventula_manager.crt``` and ```eventula_manager.key```.
+
+## Running behind a reverse proxy
+
+If you want to run eventula with http and a reverse proxy in front which serves it to the web via https you have to enable set ```ENABLE_HTTPS=false``` and ```FORCE_APP_HTTPS=true``` in your env file / your docker-compose.yml . This will run the NGINX running eventula in http mode but it will force the https link schema for all the links in eventula.
+
+
+## Custom Timezone
+
+If you have to run the Container for a different Timezone, you can specify it via ```TIMEZONE=Europe/Berlin``` in your env file / your docker-compose.yml . You have to set your specify a valid timezone name for Alpine linux.
 
 ## Secret Managers
 
