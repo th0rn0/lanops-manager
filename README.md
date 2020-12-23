@@ -130,6 +130,7 @@ docker run -it \
   -e FACEBOOK_APP_SECRET= \
   -e LOG_FILES=false \
   -e ENABLE_HTTPS=false \
+  -e FORCE_APP_HTTPS=false \
   -e SESSION_SECURE_COOKIE=false \
   -e DB_CONNECTION=mysql \
   -e DB_MIGRATE=true \
