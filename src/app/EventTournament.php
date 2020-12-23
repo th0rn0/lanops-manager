@@ -80,7 +80,11 @@ class EventTournament extends Model
                         'tournament[hold_third_place_match]'  => @($model->allow_bronze ? true : false),
                         'tournament[show_rounds]'             => true,
                     ];
-                    if (!$response = $challonge->createTournament($params)) {
+
+
+                    
+
+                    if (!$response = retry(5, function () use($challonge, $params) { return $challonge->createTournament($params); }, 100) ) {
                         $model->delete();
                         return false;
                     }
@@ -101,7 +105,9 @@ class EventTournament extends Model
                     // TODO - fire only when name is updated
                     $http = new GuzzleHttp\Client();
                     $challonge = new Challonge($http, config('challonge.api_key'), false);
-                    $challongeTournament = $challonge->fetchTournament($model->challonge_tournament_id);
+
+                    $challongeTournament = retry(5, function () use($challonge, $model) { return $challonge->fetchTournament($model->challonge_tournament_id); }, 100);
+                    
                     $params = [
                         'tournament[name]' => $model->name
                     ];
@@ -113,7 +119,7 @@ class EventTournament extends Model
                     foreach ($model->getStandings('desc', true)->final as $standings) {
                         $http = new GuzzleHttp\Client();
                         $challonge = new Challonge($http, config('challonge.api_key'), false);
-                        if (!$challongeParticipants = $challonge->getParticipants($model->challonge_tournament_id)) {
+                        if (!$challongeParticipants = retry(5, function () use($challonge, $model) { return $challonge->getParticipants($model->challonge_tournament_id); }, 100)) {                
                             return false;
                         }
                         if ($model->team_size == '1v1') {
@@ -213,19 +219,25 @@ class EventTournament extends Model
                 if ($model->format != 'list') {
                     $http = new GuzzleHttp\Client();
                     $challonge = new Challonge($http, config('challonge.api_key'), false);
-                    $matches = $challonge->getMatches($model->challonge_tournament_id);
-                    $matchServers = EventTournamentMatchServer::all();
-                    foreach ($matchServers as $key => $matchServer) {
-                        foreach ($matches as $key => $match) {
-                            if ($match->id == $matchServer->challonge_match_id) {
-                                $matchServer->delete();
-                                break;
+                    if(isset ($model->challonge_tournament_id) && $model->challonge_tournament_id != null)
+                    {
+                        $matches = retry(5, function () use($challonge, $model) { return $challonge->getMatches($model->challonge_tournament_id); }, 100);
+                        
+                        $matchServers = EventTournamentMatchServer::all();
+                        foreach ($matchServers as $key => $matchServer) {
+                            foreach ($matches as $key => $match) {
+                                if ($match->id == $matchServer->challonge_match_id) {
+                                    $matchServer->delete();
+                                    break;
+                                }
                             }
                         }
-                    }
-                    $response = $challonge->fetchTournament($model->challonge_tournament_id);
-                    if (!$response->delete()) {
-                        return false;
+                         
+                        $response = retry(5, function () use($challonge, $model) { return $challonge->fetchTournament($model->challonge_tournament_id); }, 100);
+                        
+                        if (!$response->delete()) {
+                            return false;
+                        }
                     }
                 }
                 return true;
@@ -299,7 +311,9 @@ class EventTournament extends Model
                     }
                 }
                 if ($this->format != 'list') {
-                    $tournament = $challonge->fetchTournament($this->challonge_tournament_id);
+                 
+                    $tournament = retry(5, function () use($challonge) { return $challonge->fetchTournament($this->challonge_tournament_id); }, 100);
+                    
                     try {
                         $tournament->start();
                     } catch (\Exception $e) {
@@ -311,7 +325,8 @@ class EventTournament extends Model
             }
             if ($status == 'COMPLETE') {
                 if ($this->format != 'list') {
-                    $tournament = $challonge->fetchTournament($this->challonge_tournament_id);
+                    $tournament = retry(5, function () use($challonge) { return $challonge->fetchTournament($this->challonge_tournament_id); }, 100);
+                    
                     try {
                         $tournament->finalize();
                     } catch (\Exception $e) {
@@ -394,7 +409,7 @@ class EventTournament extends Model
             $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
+                $matches = json_encode(retry(5, function () use($challonge) { return $challonge->getMatches($this->challonge_tournament_id)->toArray(); }, 100));
                 Cache::rememberForever($this->challonge_tournament_id . "_matches", function () use ($matches) {
                     return $matches;
                  });
@@ -429,7 +444,8 @@ class EventTournament extends Model
             $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
+                $matches = json_encode(retry(5, function () use($challonge) { return $challonge->getMatches($this->challonge_tournament_id)->toArray(); }, 100));
+
                 Cache::rememberForever($this->challonge_tournament_id . "_matches", function () use ($matches) {
                     return $matches;
                  });
@@ -496,8 +512,8 @@ class EventTournament extends Model
                     if ($retroactive || ($this->status != 'COMPLETE' && !$this->api_complete && $this->format != 'list')) {
                         $http = new GuzzleHttp\Client();
                         $challonge = new Challonge($http, config('challonge.api_key'), false);
-                        $standings = $challonge->getStandings($this->challonge_tournament_id);
-                    }
+                        $standings = retry(5, function () use($challonge) { return $challonge->getStandings($this->challonge_tournament_id); }, 100);
+                       }
 
                     Cache::forever($this->challonge_tournament_id . "_standings", $standings);
                     return $standings;
@@ -535,7 +551,8 @@ class EventTournament extends Model
             $tournamentMatchesJson = Cache::get($this->challonge_tournament_id . "_matches", function () {
                 $http = new GuzzleHttp\Client();
                 $challonge = new Challonge($http, config('challonge.api_key'), false);
-                $matches = json_encode($challonge->getMatches($this->challonge_tournament_id)->toArray());
+                $matches = json_encode(retry(5, function () use($challonge) { return $challonge->getMatches($this->challonge_tournament_id)->toArray(); }, 100));
+
                 Cache::rememberForever($this->challonge_tournament_id . "_matches",function () use ($matches) {
                     return $matches;
                  });
@@ -577,8 +594,8 @@ class EventTournament extends Model
             // TODO - add support for multiple sets
             $http = new GuzzleHttp\Client();
             $challonge = new Challonge($http, config('challonge.api_key'), false);
-            $match = $challonge->getMatch($this->challonge_tournament_id, $matchId);
-
+            $match = retry(5, function () use($challonge, $matchId) { return $challonge->getMatch($this->challonge_tournament_id, $matchId); }, 100);
+            
             if ($player1Score > $player2Score) {
                 $playerWinnerId = $match->player1_id;
             }
@@ -628,7 +645,7 @@ class EventTournament extends Model
             // TODO - add support for multiple sets
             $http = new GuzzleHttp\Client();
             $challonge = new Challonge($http, config('challonge.api_key'), false);
-            $match = $challonge->getMatch($this->challonge_tournament_id, $matchId);
+            $match = retry(5, function () use($challonge, $matchId) { return $challonge->getMatch($this->challonge_tournament_id, $matchId); }, 100);
 
 
             $params = [
@@ -665,7 +682,11 @@ class EventTournament extends Model
                 foreach ($model->getStandings('desc', true, true)->final as $standings) {
                     $http = new GuzzleHttp\Client();
                     $challonge = new Challonge($http, config('challonge.api_key'), false);
-                    if (!$challongeParticipants = $challonge->getParticipants($model->challonge_tournament_id)) {
+
+             
+
+
+                    if (!$challongeParticipants = retry(5, function () use($challonge, $model) { return $challonge->getParticipants($model->challonge_tournament_id); }, 100)) {
                         return false;
                     }
                     if ($model->team_size == '1v1') {
