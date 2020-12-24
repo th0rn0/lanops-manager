@@ -267,7 +267,7 @@ class HelpController extends Controller
                  
         }
         if ($uploadcount != $fileCount) {
-            Session::flash('alert-danger', 'Upload unsuccessful!');
+            Session::flash('alert-danger', 'Upload unsuccessful check attachments!');
             return Redirect::back();
         }
 
@@ -284,7 +284,7 @@ class HelpController extends Controller
      */
     public function destroyFile(HelpCategory $helpCategory, HelpCategoryEntry $entry, HelpCategoryEntryAttachment $attachment)
     {
-        if (!$entry->delete()) {
+        if (!$attachment->delete()) {
             Session::flash('alert-danger', 'Cannot delete Attachment!');
             return Redirect::back();
         }
