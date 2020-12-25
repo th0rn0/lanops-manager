@@ -284,8 +284,15 @@ class HelpController extends Controller
      */
     public function destroyFile(HelpCategory $helpCategory, HelpCategoryEntry $entry, HelpCategoryEntryAttachment $attachment)
     {
+        $destinationPathFile = '/attachments/help/' . $entry->id . '/' . $attachment->display_name;
+        
         if (!$attachment->delete()) {
             Session::flash('alert-danger', 'Cannot delete Attachment!');
+            return Redirect::back();
+        }
+
+        if (!Storage::disk('public')->delete($destinationPathFile)) {
+            Session::flash('alert-danger', 'Cannot delete Attachment File, check file system!');
             return Redirect::back();
         }
 
