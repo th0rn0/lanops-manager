@@ -43,15 +43,17 @@
 							@foreach ($images as $image)
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
-										<td class="col-3">
+										<td >
 											@if ($image->filetype == 0)
 												<picture>
 													<source srcset="{{ $image->path }}.webp" type="image/webp">
 													<source srcset="{{ $image->path }}" type="image/jpeg">
-													<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
+													<img class="img-responsive img-thumbnail" style="width: 100px" src="{{ $image->path }}">
 												</picture>
-											@else
+											@elseif ($image->filetype == 1)
 												<i class="fas fa-file-download fa-7x"></i>
+											@else
+												<i class="far fa-question-circle fa-7x"></i>
 											@endif
 										</td>
 										<td>
@@ -83,11 +85,11 @@
 										</td>
 										<td width="15%">
 											<button type="submit" class="btn btn-primary btn-sm btn-block">Update</button>
-										</td>
+										{{-- </td> --}}
 									{{ Form::close() }}
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
-										<td width="15%">
+										{{-- <td width="15%"> --}}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										</td>
 									{{ Form::close() }}
