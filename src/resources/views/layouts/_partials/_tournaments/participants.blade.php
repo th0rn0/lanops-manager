@@ -158,7 +158,7 @@
 						<tr>
 							<td>
 								<p>
-									<img alt="{{ $tournamentParticipant->eventParticipant->user->username }}'s Avatar" class="rounded style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
+									<img alt="{{ $tournamentParticipant->eventParticipant->user->username }}'s Avatar" class="rounded" style="max-width: 6%;" src="{{ $tournamentParticipant->eventParticipant->user->avatar }}">
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $tournamentParticipant->eventParticipant->user->username }}
 								</p>
 							</td>
