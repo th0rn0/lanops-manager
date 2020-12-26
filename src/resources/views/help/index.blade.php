@@ -29,6 +29,9 @@
 									</h4>
 									<span class="float-right">
 										<span class="badge badge-info">{{ $helpCategory->name }}</span>
+										@if ($entry->hasAttachment())
+											<span class="badge badge-info">@lang('help.attachment')</span>
+										@endif
 									</span>
 								</span>
 							</div>
@@ -36,6 +39,24 @@
 						<div id="collapse_{{ $entry->nice_name }}" class="collapse" role="tabpanel" aria-labelledby="{{ $entry->nice_name }}" data-parent="#helpentries">
 							<div class="card-body">
 								{!! $entry->content !!}
+								<div>
+									<table width="100%" class="table" id="dataTables-example">
+										<thead>
+											<tr>
+												<th>@lang('help.filename')</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach ($entry->attachments as $attachment)										
+												<tr>
+													<td>
+														<a href="{{ $attachment->path }}">{{ $attachment->display_name }}</a>
+													</td>
+												</tr>	
+											@endforeach
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>

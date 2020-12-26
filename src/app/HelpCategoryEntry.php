@@ -35,4 +35,17 @@ class HelpCategoryEntry extends Model
     {
         return $this->hasMany('App\HelpCategoryEntryAttachment');
     }
+
+        /**
+     * Delete Attachment from Help Category Entry
+     * @return bool
+     */
+    public function hasAttachment() {
+
+        foreach ($this->attachments as $attachment){
+            return true;            
+        }
+        return false;
+
+    }
 }
