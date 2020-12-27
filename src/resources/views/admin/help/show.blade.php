@@ -35,6 +35,7 @@
 								<th>Added</th>
 								<th></th>
 								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -59,12 +60,8 @@
 												{{ Form::close() }}
 												<button
 												class="btn btn-primary btn-sm btn-block"
-												onclick="showAttachmentManager(
-													'{{ $helpCategory->slug }}',
-													'{{ $entry->id }}'
-												)"
 												data-toggle="modal"
-												data-target="#attachmentManagerModal"
+												data-target="#attachmentManagerModal{{$entry->id}}"
 											>
 												@lang('help.showattachmentmanager')
 											</button>
@@ -75,7 +72,7 @@
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
 									</td>
-								</tr>
+								</tr>								
 							@endforeach
 						</tbody>
 					</table>
@@ -165,69 +162,61 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 
 <!-- Attachments Modal -->
-<div class="modal fade" id="attachmentManagerModal" tabindex="-1" role="dialog" aria-labelledby="editSeatingModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="attachmentManagerModalLabel"></h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<h4>@lang('help.attachmentmanager')</h4>
-					<table width="100%" class="table" id="dataTables-example">
-						<thead>
-							<tr>
-								<th>@lang('help.uploadedattachments')</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($entry->attachments as $attachment)
+@foreach ($entrys as $entry)
+	<div class="modal fade" id="attachmentManagerModal{{$entry->id}}" tabindex="-1" role="dialog" aria-labelledby="attachmentManagerModalLabel{{$entry->id}}" aria-hidden="true">		
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="attachmentManagerModalLabel{{$entry->id}}">@lang('help.attachmentmanager')</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<table width="100%" class="table" id="dataTables-example">
+							<thead>
 								<tr>
-									<td>
-										<div>{{ $attachment->display_name }}</div>
-									</td>
-									<td>
-									{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/' . $attachment->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
-										{{ Form::hidden('_method', 'DELETE') }}
-										<button type="submit" class="btn btn-danger btn-block">Delete</button>
-									{{ Form::close() }}
-									</td>
+									<th>@lang('help.uploadedattachments')</th>
 								</tr>
-							@endforeach
-						</tbody>
-					</table>
-					{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/upload', 'files' => 'true')) }}
-						{{ csrf_field() }}
-						<div class="form-group">
-							{{ Form::label('attachments','Upload new attachments',array('id'=>'','class'=>'')) }}
-							{{ Form::file('attachments[]',array('id'=>'attachments','class'=>'form-control', 'multiple'=>true)) }}
-						</div>
-						<button type="submit" class="btn btn-primary btn-block">Upload</button>
-					{{ Form::close() }}
+							</thead>
+							<tbody>
+								@foreach ($entry->attachments as $attachment)
+									<tr>
+										<td>
+											<div>{{ $attachment->display_name }}</div>
+										</td>
+										<td>
+											{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/' . $attachment->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
+												{{ Form::hidden('_method', 'DELETE') }}
+												<button type="submit" class="btn btn-danger btn-block">Delete</button>
+											{{ Form::close() }}
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+						{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/upload', 'files' => 'true')) }}
+							{{ csrf_field() }}
+							<div class="form-group">
+								{{ Form::label('attachments','Upload new attachments',array('id'=>'','class'=>'')) }}
+								{{ Form::file('attachments[]',array('id'=>'attachments','class'=>'form-control', 'multiple'=>true)) }}
+							</div>
+							<button type="submit" class="btn btn-primary btn-block">Upload</button>
+						{{ Form::close() }}
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
+@endforeach
 <script type="text/javascript">
 	jQuery( function() {
 		jQuery( "#start_date" ).datepicker();
 		jQuery( "#end_date" ).datepicker();
 	});
-</script>
-
-<script>
-	function showAttachmentManager(help_category, help_category_entry)
-	{
-		//placeholder
-	}
 </script>
 
 @endsection
