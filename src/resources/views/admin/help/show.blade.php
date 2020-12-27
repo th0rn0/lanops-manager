@@ -68,13 +68,13 @@
 											>
 												@lang('help.showattachmentmanager')
 											</button>
-										</td>									
+										</td>
 									<td width="15%">
 										{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
-									</td>									
+									</td>
 								</tr>
 							@endforeach
 						</tbody>
@@ -176,7 +176,7 @@
 			<div class="modal-header">
 				<h4 class="modal-title" id="attachmentManagerModalLabel"></h4>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			</div>			
+			</div>
 			<div class="modal-body">
 				<div class="form-group">
 					<h4>@lang('help.attachmentmanager')</h4>
@@ -193,14 +193,12 @@
 										<div>{{ $attachment->display_name }}</div>
 									</td>
 									<td>
-									</td>
-									<td>
 									{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/' . $attachment->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										<button type="submit" class="btn btn-danger btn-block">Delete</button>
 									{{ Form::close() }}
 									</td>
-								</tr>	
+								</tr>
 							@endforeach
 						</tbody>
 					</table>
@@ -210,7 +208,7 @@
 							{{ Form::label('attachments','Upload new attachments',array('id'=>'','class'=>'')) }}
 							{{ Form::file('attachments[]',array('id'=>'attachments','class'=>'form-control', 'multiple'=>true)) }}
 						</div>
-					<button type="submit" class="btn btn-primary btn-block">Upload</button>
+						<button type="submit" class="btn btn-primary btn-block">Upload</button>
 					{{ Form::close() }}
 				</div>
 			</div>
