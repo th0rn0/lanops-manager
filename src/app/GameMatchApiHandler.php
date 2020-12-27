@@ -219,7 +219,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         }
         if($match == null && $tournament != null && $challongematchid != null)
         {
-            if ($mapnumber == $tournament->getnummaps($challongematchid))
+            if (($mapnumber + 1) == $tournament->getnummaps($challongematchid))
             {
                 $tournament->updateMatch($challongematchid, $request->{"team1score"}, $request->{"team2score"});
                 return true;
