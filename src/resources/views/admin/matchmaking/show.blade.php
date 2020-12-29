@@ -76,7 +76,7 @@
 											<img class="img-fluid rounded" style="max-width: 20%;" src="{{ $teamplayer->user->avatar }}">
 										</td>
 										<td>
-											{{ $teamplayer->user->username }}
+											{{-- {{ $teamplayer->user->username }} --}}
 											@if ($teamplayer->user->steamid)
 												- <span class="text-muted"><small>Steam: {{ $teamplayer->user->steamname }}</small></span>
 											@endif
