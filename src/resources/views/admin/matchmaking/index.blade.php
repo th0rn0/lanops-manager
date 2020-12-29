@@ -43,10 +43,14 @@
 											{{ $match->oldestTeam->name }}
 										</td>
 										<td>				
-											{{ $match->oldestTeam->owner->username }}
+											@if (isset($match->oldestTeam->owner->username))
+												{{ $match->oldestTeam->owner->username }}
+											@endif
 										</td>
 										<td>
-											{{ $match->owner->username }}
+											@if (isset($match->owner->username))
+												{{ $match->owner->username }}
+											@endif
 										</td>
 										<td>
 											{{ $match->teams->count() }}
@@ -105,10 +109,14 @@
 											{{ $match->oldestTeam->name }}
 										</td>
 										<td>				
-											{{ $match->oldestTeam->owner->username }}
+											@if (isset($match->oldestTeam->owner->username))
+												{{ $match->oldestTeam->owner->username }}
+											@endif
 										</td>
 										<td>
-											{{ $match->owner->username }}
+											@if (isset($match->owner->username))
+												{{ $match->owner->username }}
+											@endif
 										</td>
 										<td>
 											{{ $match->teams->count() }}
@@ -345,10 +353,14 @@
 										{{ $match->oldestTeam->name }}
 									</td>
 									<td>				
-										{{ $match->oldestTeam->owner->username }}
+										@if (isset($match->oldestTeam->owner->username))
+											{{ $match->oldestTeam->owner->username }}
+										@endif
 									</td>
 									<td>
-										{{ $match->owner->username }}
+										@if (isset($match->owner->username))
+											{{ $match->owner->username }}
+										@endif
 									</td>
 									<td>
 										{{ $match->teams->count() }}
