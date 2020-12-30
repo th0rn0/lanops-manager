@@ -75,7 +75,7 @@ class EventTournamentMatchServer extends Model
     /**
      * Get the Server for a match.
      *
-     * @return string
+     * @return EventTournamentMatchServer
      */
     public static function getTournamentMatchServer(int $challongeMatchId)
     {

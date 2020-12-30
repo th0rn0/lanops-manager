@@ -62,7 +62,7 @@ class MatchMakingServer extends Model
     /**
      * Get the Server for a match.
      *
-     * @return string
+     * @return MatchMakingServer
      */
     public static function getMatchMakingServer(int $matchId)
     {
