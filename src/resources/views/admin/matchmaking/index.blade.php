@@ -45,6 +45,8 @@
 										<td>				
 											@if (isset($match->oldestTeam->owner->username))
 												{{ $match->oldestTeam->owner->username }}
+											@else
+												Teams randomized
 											@endif
 										</td>
 										<td>
