@@ -87,7 +87,7 @@ class GameServerAsign implements ShouldQueue
         if ($this->type == 1) {
 
 
-            $matchserver = MatchMakingServer::getTournamentMatchServer($this->challongematchid);
+            $matchserver = MatchMakingServer::getMatchMakingServer($this->matchmakingmatch->id);
             if (!isset($matchserver)) {
                 $availableservers = $this->matchmakingmatch->game->getGameServerSelectArray();
 
