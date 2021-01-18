@@ -16,3 +16,5 @@ src/public/css/admin\.css\.map
 src/public/css/app\.css\.map
 src/public/css/font/*
 src/public/uploads/gallery/*
+
+docs/build
