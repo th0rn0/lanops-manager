@@ -134,8 +134,8 @@ Some things you should think of before starting out implementing new features:
 - Can another feature thats already implemented be expanded? yes? then go for that instead of Building complete new stuff!
 - Does the addition / change might affect other usecases than your own? Build your changes with legacy support in mind!
 - Try to follow the coding Style which is used within eventula, just look around in our features to see which case is handled mostly in which manner
-- Have i started an ssue to announce that im working on a feature/change to get thoughts from the other developers and to prevent incompatibillities
-- Why is shouldn't join the eventula discord developer channel for discussion?  
+- Have i started an issue to announce that im working on a feature/change to get thoughts from the other developers and to prevent incompatibillities? No? Go for it! :)
+- Why i shouldn't join the eventula discord developer channel for discussion?  
 
 Before you want to PR changes to master you should ask yourself some questions:
 
