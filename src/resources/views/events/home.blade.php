@@ -747,7 +747,7 @@ use Debugbar;
 									</picture>
 								</div>
 								<div class="col-12 col-md-4">
-									@if ($ticketFlagSignedIn && $user->hasSeatableTicket($event->id))
+									@if ($user && $ticketFlagSignedIn && $user->hasSeatableTicket($event->id))
 										<h5>@lang('events.yourseats')</h5>
 										@foreach ($user->eventParticipation as $participant)
 											@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
@@ -764,7 +764,7 @@ use Debugbar;
 												{{ Form::close() }}
 											@endif
 										@endforeach
-									@elseif(!$user->hasSeatableTicket($event->id))
+									@elseif($user && !$user->hasSeatableTicket($event->id))
 										<div class="alert alert-info">
 											<h5>@lang('events.noseatableticket')</h5>
 										</div>
