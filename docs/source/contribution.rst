@@ -11,18 +11,91 @@ If you plan to add a feature to eventula, please open an issue as well so no one
 
 Documentation
 --------------
-This documentation is written in restructured text and its build using spingx and the read the docs theme. The source can be found in our main repository in the ``docs/`` subfolder (https://github.com/th0rn0/eventula-manager/tree/master/src).
+This documentation is written in restructured text and its build using sphinx and the read the docs theme. The source can be found in our main repository in the ``docs/`` subfolder (https://github.com/th0rn0/eventula-manager/tree/master/src).
+Feel free to PR corrections or expansions of the documentation at any time! 
 
-To build the documentation locally you have to install sphinx (https://www.sphinx-doc.org/en/master/usage/installation.html) and the read the docs theme (https://github.com/readthedocs/sphinx_rtd_theme#installation) and run
+To build the documentation locally to the ``docs/build`` subfolder you have two options:
+
+- Building with docker and the make file (recommended)
+- Building manually with the sphinx make file
+
+Building with docker and the make file
+.......................................
+
+Windows
+'''''''
+Prereqirements: 
+
+- Docker for Windows with wsl2 backend (https://docs.docker.com/docker-for-windows/wsl/ Follow the Prerequisites, the Download and the Install part!)
+
+
+ .. warning::
+
+        If you are using git, consider cloning the repository within your wsl distro instead of with git for windows to get around line ending problems!
+
+To build the documentation just enter yor wsl2 distribution and follow the Linux part below!
+
+
+Linux
+'''''''
+Prereqirements: 
+
+- Docker (https://docs.docker.com/engine/install)
+- Make (should be available for nearly every linux distro in the corresponding packagemanager)
+
+In order to build the documentation you have to build the build container a single time. 
+change to the root folder of the repository and run
+
+.. code-block:: bash
+
+   make docs-build
+
+to build the documentation run
+
+.. code-block:: bash
+
+   make docs-html
+
+Building manually with the sphinx make file
+............................................
+
+Windows
+'''''''
+Prereqirements: 
+
+- python 3 (https://docs.python.org/3/using/index.html) with pip
+- sphinx (https://www.sphinx-doc.org/en/master/usage/installation.html) 
+- the read the docs theme (https://github.com/readthedocs/sphinx_rtd_theme#installation)
+
+open a cmd or powershell and change your folder to the ``docs/`` subfolder and run
+
+CMD
+
+.. code-block:: cmd
+
+   make.bat html
+
+Psh
+
+.. code-block:: powershell
+
+   ./make.bat html
+
+
+Linux
+'''''''
+Prereqirements: 
+
+- python 3 (https://docs.python.org/3/using/index.html) with pip
+- sphinx (https://www.sphinx-doc.org/en/master/usage/installation.html) 
+- the read the docs theme (https://github.com/readthedocs/sphinx_rtd_theme#installation)
+- Make (should be available for nearly every linux distro in the corresponding packagemanager)
+
+open your favorite shell and change your folder to the ``docs/`` subfolder and run
 
 .. code-block:: bash
 
    make html
-
-
-in the local copy of your ``docs/`` folder.
-
-Feel free to PR corrections or expansions of the documentation at any time! 
 
 
 Localisation
@@ -54,7 +127,7 @@ or within blade files (Views):
 
 Code
 -----
-If you want to get into coding for eventula, check out the developer documentation, there you can find an introduction into how to setup your development environment and some specific Parts of eventula where we would love to see adaption for more usecases.
+If you want to get into coding for eventula, check out the developer documentation, there you can find an introduction into how to setup your development environment and some specific parts of eventula where we would love to see adaption for more usecases.
 
 Some things you should think of before starting out implementing new features:
 
