@@ -33,7 +33,9 @@ Create an Event
 
        Before you Create an Event you might want to jump to the Venues Documentation and create a new Venue before the Event! 
 
+.. warning::
 
+       Once an event is created you cant change the associated venue! 
 
 On the right side you cann Add new events:
 

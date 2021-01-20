@@ -43,7 +43,7 @@ To delete a news article simply click ``Delete`` on the ``News`` list entry and 
 Edit News article
 ------------------
 
-To delete a news article simply click ``Edit`` on the ``News`` list entry:
+To edit a news article simply click ``Edit`` on the ``News`` list entry:
 
 .. image:: ../images/news_03.png
    :scale: 50 %
