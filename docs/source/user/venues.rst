@@ -5,7 +5,7 @@ You can create venues for your events so you dont need to enter the adress for e
 Add Venue
 -----------------
 
-Lets create a Venue! go to your Admin Panel to the ``Venues`` Section and you can Write your entry in the ``Add Venue`` area.
+Lets create a Venue! go to your Admin Panel to the ``Venues`` Section and you can add your venue in the ``Add Venue`` area.
 You have to fill everything and you can add a image if you want:
 
 .. image:: ../images/venues_01.png
@@ -13,7 +13,7 @@ You have to fill everything and you can add a image if you want:
    :alt: eventula event deletion
    :align: center
 
-Press ``Submit`` to add the entry.
+Press ``Submit`` to add the venue.
 
 You will then be redirected to the detailed / editing view.
 
