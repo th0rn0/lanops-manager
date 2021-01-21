@@ -49,7 +49,7 @@ Detailed with example album with an event linked
 
 Enable/Disable Gallery
 ----------------------
-To use the Gallery system and enable the link in your top Navigation you have to enable it.
+To use the Gallery system and enable the link in your top navigation you have to enable it.
 You can either refer to the settings documentation or use the buttons direcctly on the ``Gallery`` site in your admin panel:
 
 Enable:
@@ -149,7 +149,12 @@ Hit the corresponding ``delete`` Button of the image / file you want to delete a
 
 Delete Album
 -------------
-To delete a venue simply click ``Delete`` on the ``Albums`` list entry on your ``Gallery`` admin page and confirm the upcoming messagebox:
+
+.. warning::
+
+       If you delete an Album, all the images / files within it will be deleted too! 
+
+To delete an Album simply click ``Delete`` on the ``Albums`` list entry on your ``Gallery`` admin page and confirm the upcoming messagebox:
 
 .. image:: ../images/gallery_06.png
    :scale: 50 %
