@@ -102,7 +102,7 @@
 					<div class="col-xs-12 col-md-6">
 				        <p>You Must supply at least one Payment Gateway API.</p>
 				        <p>
-				        	To find out more visit the @if (config('app.env') == 'staging') <a href="https://staging.eventula.com/faq/manager">Eventula FAQ</a> @else <a href="https://staging.eventula.com/faq/manager">Eventula FAQ</a> @endif
+				        	To find out more visit the @if (config('app.env') == 'staging') <a href="https://eventula.com/faq/manager">Eventula FAQ</a> @else <a href="https://eventula.com/faq/manager">Eventula FAQ</a> @endif
 				        </p>
 				    </div>
 				</div>
