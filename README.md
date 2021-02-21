@@ -79,7 +79,7 @@ If you are using this please consider signing up to eventula for event mapping.
 - Easily Expandable
 - NGINX, MYSQL & PHP Docker stack
 
-## Installation Prerequisites
+## Installation Prerequisites 
 
 ### Prerequisites
 
