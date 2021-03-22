@@ -468,19 +468,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
-						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
-						</div>						
-						<div class="form-group">
-						{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
-						{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), $game->gamematchapihandler, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
-						</div>
-						<div class="form-group">
-							{{ Form::label('matchstartgameservercommand','Match start command',array('id'=>'','class'=>'')) }}
-							{{ Form::select('matchstartgameservercommand', $allCommands, $game->matchStartgameServerCommand, array('id'=>'matchstartgameservercommand','class'=>'form-control')) }}
-						<small>if match autostarting is enabled in either the Tournament or the Matchmaking settings this gameservercommand would be executed on match start</small>
-						</div>
-						<div class="form-group">
 							@if ($game->image_thumbnail_path != '')
 								<h5>Preview:</h5>
 								<picture>
@@ -504,6 +491,20 @@
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
+						<div class="form-group">
+						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
+						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+						</div>						
+						<div class="form-group">
+						{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
+						{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), $game->gamematchapihandler, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('matchstartgameservercommand','Match start command',array('id'=>'','class'=>'')) }}
+							{{ Form::select('matchstartgameservercommand', $allCommands, $game->matchStartgameServerCommand, array('id'=>'matchstartgameservercommand','class'=>'form-control')) }}
+						<small>if match autostarting is enabled in either the Tournament or the Matchmaking settings this gameservercommand would be executed on match start</small>
+						</div>
+						
 						<div class="form-group">
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', $game->connect_game_url, array('id'=>'connect_game_url','class'=>'form-control')) }}

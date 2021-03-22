@@ -120,20 +120,20 @@
 							{{ Form::text('version',NULL, array('id'=>'version','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
-							{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
-							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
-						</div>
-						<div class="form-group">
-							{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
-							{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), null, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
-						</div>
-						<div class="form-group">
 							{{ Form::label('image_thumbnail','Thumbnail Image - 500x500',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
+							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
+							{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), null, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
