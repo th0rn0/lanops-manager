@@ -95,6 +95,7 @@ This method is intended to be run as just a image with your own database. Persis
 
 ```
 docker run -it \
+  -e APP_KEY=somekey \
   -e APP_DEBUG=true \
   -e APP_ENV=local \
   -e APP_URL=localhost \
@@ -121,7 +122,7 @@ docker run -it \
   -p 443:443 \
   -v eventula_manager_storage:/web/html/storage/ \
   --name eventula_manager_app \
-  eventula/manager:latest
+  th0rn0/eventula-manager:latest
 ```
 
 Follow Post-Docker Below
@@ -134,12 +135,13 @@ This method is intended to be run with docker-compose. It will create a full sta
 version: "3.4"
 services:
   app:
-    image: eventula/manager:latest
+    image: th0rn0/eventula-manager:latest
     volumes:
       - eventula_manager_certs:/etc/nginx/certs
       - eventula_manager_storage:/web/html/storage/
     environment:
       # App Config
+      - APP_KEY=somekey
       - APP_DEBUG=true
       - APP_ENV=local
       - APP_URL=localhost
@@ -233,6 +235,8 @@ Follow Post-Docker Below
 
 When running for the first time you'll be a new APP_KEY will be generated. Keep this safe!. You'll need to add it to the env variables (EG ```-e APP_KEY=someRandomKey```) otherwise it will regenerate the APP_KEY on each reboot.
 
+Please also refer to the ENV section below.
+
 Once running and the database has migrated go to your app and you will be greated with the install page
 
 ### Makefile
@@ -275,12 +279,58 @@ Stop the stack.
 ```
 make stop
 ```
+## ENV
+
+By Default the manager will take env variables from the database unless the override is set. See below.
+
+### Variables
+
+| Key                          | Required | Default          | Notes                                                                               |
+|------------------------------|----------|------------------|-------------------------------------------------------------------------------------|
+| APP_KEY                      | True     |                  |                                                                                     |
+| APP_DEBUG                    | False    | DEBUG            |                                                                                     |
+| APP_ENV                      | False    | local            |                                                                                     |
+| APP_NAME                     | True     |                  |                                                                                     |
+| APP_TAGLINE                  | True     |                  |                                                                                     |
+| APP_URL                      | True     | http://localhost |                                                                                     |
+| APP_EMAIL                    | True     |                  |                                                                                     |
+| MAIL_DRIVER                  | False    | smtp             |                                                                                     |
+| MAIL_HOST                    | False    |                  |                                                                                     |
+| MAIL_PORT                    | False    |                  |                                                                                     |
+| MAIL_USERNAME                | False    |                  |                                                                                     |
+| MAIL_PASSWORD                | False    |                  |                                                                                     |
+| MAIL_ENCRYPTION              | False    |                  |                                                                                     |
+| DB_DATABASE                  | True     |                  |                                                                                     |
+| DB_USERNAME                  | True     |                  |                                                                                     |
+| DB_PASSWORD                  | True     |                  |                                                                                     |
+| DB_HOST                      | True     |                  |                                                                                     |
+| DB_SEED                      | False    | true             |                                                                                     |
+| DB_CONNECTION                | False    | mysql            |                                                                                     |
+| DB_PORT                      | False    | 3306             |                                                                                     |
+| GOOGLE_ANALYTICS_TRACKING_ID | False    |                  | Google Tracking                                                                     |
+| PAYPAL_USERNAME              | False    |                  |                                                                                     |
+| PAYPAL_PASSWORD              | False    |                  |                                                                                     |
+| PAYPAL_SIGNATURE             | False    |                  |                                                                                     |
+| STRIPE_SECRET_KEY            | False    |                  |                                                                                     |
+| STRIPE_PUBLIC_KEY            | False    |                  |                                                                                     |
+| STEAM_API_KEY                | False    |                  | Used for Steam Login                                                                |
+| CHALLONGE_API_KEY            | False    |                  | Used for Tournaments                                                                |
+| FACEBOOK_APP_ID              | False    |                  | Experimental                                                                        |
+| FACEBOOK_APP_SECRET          | False    |                  | Experimental                                                                        |
+| LOG_FILES                    | False    | False            | If set to true, the App and Nginx will log to file                                  |
+| ENABLE_HTTPS                 | False    | False            | If set to true, the App will redirect all requests to HTTPS                         |
+| DB_MIGRATE                   | True     | True             | If set to true, the App will migrate the database on boot                           |
+| ENV_OVERRIDE                 | False    | False            | If set to true, the App will take its API Keys from the ENV instead of the database |
+
+### Override
+
+By Default the Manager will take its API Keys from the Database and ignore the Env variables set. To change this set ```ENV_OVERRIDE=true``` and API Keys in the database will be ignored if it set. NOTE: This will not affect the API Keys page in the admin. This will still show the API Keys in the database. If an env variable is ommited it will refer to the database.
 
 ## HTTPS
 
 To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` or mount in the certs to the ```/etc/nginx/certs``` directory on the container. 
 
-Note: Only set HTTPS to true if you are doing SSL Termination within the app.
+Note: Only set HTTPS to true if you are doing SSL Termination within the app. If you are doing SSL Termination within an external loadbalancer (EG Traefik) set ```ENABLE_HTTPS=false```.
 
 ### Caveats
 

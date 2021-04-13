@@ -91,7 +91,7 @@
 							</div>
 							<div class="form-group">
 								{{ Form::label('facebook_app_secret','App Secret',array('id'=>'','class'=>'')) }}
-								{{ Form::text('facebook_app_secret', $facebookAppSecret, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('facebook_app_secret', '', array('placeholder'=>'Obfuscated','id'=>'','class'=>'form-control')) }}
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
@@ -120,7 +120,7 @@
 							</div>
 							<div class="form-group">
 								{{ Form::label('paypal_password','Password',array('id'=>'','class'=>'')) }}
-								{{ Form::text('paypal_password', $paypalPassword, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('paypal_password', '', array('placeholder'=>'Obfuscated','id'=>'','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('paypal_signature','Signature',array('id'=>'','class'=>'')) }}
@@ -151,7 +151,7 @@
 							</div>
 							<div class="form-group">
 								{{ Form::label('stripe_secret_key','Secret Key',array('id'=>'','class'=>'')) }}
-								{{ Form::text('stripe_secret_key', $stripeSecretKey, array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('stripe_secret_key', '', array('placeholder'=>'Obfuscated','id'=>'','class'=>'form-control')) }}
 							</div>
 							<button type="submit" class="btn btn-success btn-block">Submit</button>
 						</div>
