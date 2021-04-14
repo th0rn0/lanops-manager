@@ -131,6 +131,9 @@ Follow Post-Docker Below
 
 This method is intended to be run with docker-compose. It will create a full stack including database, load balancer & SSL Encryption.
 
+
+Example:
+
 ```
 version: "3.4"
 services:
@@ -145,9 +148,10 @@ services:
       - APP_DEBUG=true
       - APP_ENV=local
       - APP_URL=localhost
+      - APP_EMAIL=example@example.com
       - ENV_OVERRIDE=true
       # Database Settings
-      - DB_DATABASE=eventula_manager
+      - DB_DATABASE=eventula_manager_database
       - DB_USERNAME=eventula_manager
       - DB_PASSWORD=password
       # Google Analytics
@@ -173,11 +177,8 @@ services:
       # DO NOT CHANGE BELOW
       - DB_CONNECTION=mysql
       - DB_PORT=3306
-      - DB_HOST=database
+      - DB_HOST=eventula_manager_database
     container_name: eventula_manager_app
-    ports:
-      - 80:80
-      - 443:443
   database:
     image: mysql:5.6
     volumes:

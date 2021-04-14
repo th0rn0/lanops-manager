@@ -13,7 +13,7 @@ steps:
   - make folder-structure layout-images env-file-blank
     
 - name: build-composer
-  image: composer
+  image: composer:1
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
@@ -100,7 +100,7 @@ steps:
     - push
     
 - name: build-composer
-  image: composer
+  image: composer:1
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
@@ -279,7 +279,7 @@ steps:
     - tag
     
 - name: build-composer
-  image: composer
+  image: composer:1
   commands:
   - cd src/
   - composer install --ignore-platform-reqs --no-scripts
@@ -357,6 +357,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 3bc9a2664941587c72af4d0d2292bd0970c19f068ef20f9949757d8e8518ce61
+hmac: 7e3d1ea2d9f4655ed01d615a54bfb30d33b7ff3163a60195144e1182b285fed8
 
 ...
