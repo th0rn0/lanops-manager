@@ -4,10 +4,15 @@ namespace App\Mail;
 use App\User;
 use App\Event;
 use Spatie\MailTemplates\TemplateMailable;
+use Spatie\MailTemplates\Interfaces\MailTemplateInterface;
+use Spatie\MailTemplates\Models\MailTemplate;
 
 class EventulaMailingMail extends TemplateMailable
 {
-    /** @var string */
+    /** @var int */
+    public $templateid;
+
+   /** @var string */
     public $firstname;
 
     /** @var string */
@@ -64,8 +69,9 @@ class EventulaMailingMail extends TemplateMailable
     
 
 
-    public function __construct(User $user, ?Event $nextevent)
+    public function __construct(User $user, ?Event $nextevent, int $templateid)
     {
+        $this->templateid = $templateid;
         $this->firstname = $user->firstname;
         $this->surname = $user->surname;
         $this->email = $user->email;
@@ -91,4 +97,13 @@ class EventulaMailingMail extends TemplateMailable
 
 
     }
+
+    protected function resolveTemplateModel(): MailTemplateInterface
+    {
+         
+
+         return MailTemplate::where('id',$this->templateid)->first();
+
+    }
+
 }

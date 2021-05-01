@@ -174,7 +174,7 @@ class MailingController extends Controller
             }
             else
             {
-                Mail::to($user)->queue(new EventulaMailingMail($user, $nextevent));
+                Mail::to($user)->queue(new EventulaMailingMail($user, $nextevent,$mailTemplate->id));
             }
 
         }
@@ -191,7 +191,7 @@ class MailingController extends Controller
         }
 
 
-        Session::flash('alert-success', 'Successfully deleted Mailtemplate!');
+        Session::flash('alert-success', 'Successfully sended Mails!');
         return Redirect::to('admin/mailing/');
     }
 

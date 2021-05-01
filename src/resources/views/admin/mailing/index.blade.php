@@ -111,8 +111,11 @@
 
 
 @foreach ($mailTemplates as $mailTemplate)
-	@if(isset($mailTemplate->subject))
-		<?php	$content= (new App\Mail\EventulaMailingMail($user,$nextEvent))->render();	?>
+	@if(isset($mailTemplate->subject))	
+		<?php	
+		$content= (new App\Mail\EventulaMailingMail($user,$nextEvent,$mailTemplate->id))->render();	
+		
+		?>
 		<!-- Select Server Modal -->
 		<div class="modal fade" id="sendMailModal{{ $mailTemplate->id }}" tabindex="-1" role="dialog" aria-labelledby="sendMailModalLabel{{ $mailTemplate->id }}" aria-hidden="true">
 			<div class="modal-dialog">
