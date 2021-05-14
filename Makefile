@@ -68,6 +68,10 @@ database-rollback:
 generate-key:
 	docker exec eventula_manager_app php artisan key:generate
 
+# show newly generated Application Key
+generate-key-show-newkey:
+	docker run --rm composer /bin/bash -c "echo 'generating key..' && composer create-project laravel/laravel example-app >/dev/null 2>/dev/null && cd example-app && php artisan key:generate >/dev/null 2>/dev/null && cat .env | grep APP_KEY=b"
+
 # Generate Settings - This will erase your current settings!
 generate-settings:
 	docker exec eventula_manager_app php artisan db:seed --class=SettingsTableSeeder
