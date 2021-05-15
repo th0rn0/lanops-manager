@@ -81,6 +81,8 @@
 						</div>
 						<small>
 							<div>Usable Variables:</div>
+							<div>Note: if you want to use url variables like @{{url}} or @{{nextevent_url}} you have to disable the "Use default protocol" option when creating the link. Otherwise the colon behind the protocol is missing!</div>
+							<br>
 							@foreach ($mailVariables as $mailVariable)
 							<?php
 							echo "{{". $mailVariable . "}}<br>" 
