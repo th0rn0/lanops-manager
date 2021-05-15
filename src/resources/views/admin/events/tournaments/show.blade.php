@@ -187,6 +187,10 @@
 							}}
 						@endif
 					</div>
+
+
+
+
 					@if ($tournament->status != 'LIVE' && $tournament->status != 'COMPLETE')
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
@@ -197,7 +201,18 @@
 							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
 						</div>
+										 
+					@else
+						<div class="form-group">
+							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
+							{{ Form::textarea('description', $tournament->description,array('id'=>'description','class'=>'form-control', 'rows'=>'2','disabled'	=> 'true')) }}
+						</div>
 
+						<div class="form-group">
+							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
+							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor','disabled'	=> 'true')) }}
+						</div>
+					 
 
 					@endif
 
