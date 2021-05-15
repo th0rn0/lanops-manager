@@ -170,7 +170,7 @@
 						<div class="card mb-3">
 							<div class="card-header">
 								<h4 class="card-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#collaspe-{{ $section->id }}" aria-expanded="false" class="collapsed">{{ $section->title }}</a>
+									<a data-toggle="collapse" href="#collaspe-{{ $section->id }}" aria-expanded="false" class="collapsed" aria-controls="collaspe-{{ $section->id }}">{{ $section->title }}</a>
 									<div class="float-right">
 										{{ Form::open(array('url' => '/admin/information/' . $section->id)) }}
 											{{ Form::hidden('_method', 'DELETE') }}
@@ -178,8 +178,8 @@
 										{{ Form::close() }}
 									</div>
 								</h4>
-							</div>
-							<div id="collaspe-{{ $section->id }}" class="collapse" aria-expanded="false" style="height: 0px;">
+							</div>						
+							<div id="collaspe-{{ $section->id }}" class="collapse">
 								<div class="card-body">
 									{{ Form::open(array('url'=>'/admin/information/' . $section->id, 'files' => 'true')) }}
 										<div class="row">
