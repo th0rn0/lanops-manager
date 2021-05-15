@@ -23,9 +23,15 @@ class EventulaMailingMail extends TemplateMailable
     
     /** @var string */
     public $email;    
+
+    /** @var string */
+    public $url;    
     
     /** @var string */
-    public $nextevent_display_name;   
+    public $nextevent_display_name;       
+    
+    /** @var string */
+    public $nextevent_url;   
     
     /** @var string */
     public $nextevent_capacity;
@@ -76,10 +82,12 @@ class EventulaMailingMail extends TemplateMailable
         $this->surname = $user->surname;
         $this->email = $user->email;
         $this->username = $user->username_nice;
+        $this->url = config('app.url');
 
         if (isset($nextevent)) 
         {
             $this->nextevent_display_name = $nextevent->display_name;
+            $this->nextevent_url =  config('app.url')."/events/".$nextevent->slug;
             $this->nextevent_capacity = $nextevent->capacity;
             $this->nextevent_desc_long = $nextevent->desc_long;
             $this->nextevent_desc_short = $nextevent->desc_short;
