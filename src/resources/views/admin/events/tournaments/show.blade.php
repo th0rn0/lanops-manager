@@ -273,7 +273,7 @@
 		</div>
 
 
-		@if ($tournament->team_size != '1v1' && $tournament->random_teams != '1' &&(($tournament->status == 'LIVE' && $tournament->enable_live_editing) ||$tournament->status == 'DRAFT' || $tournament->status == 'OPEN'))
+		@if ($tournament->team_size != '1v1' && $tournament->random_teams != '1' && (($tournament->status == 'LIVE' && $tournament->enable_live_editing) ||$tournament->status == 'DRAFT' || $tournament->status == 'OPEN'))
 			<div class="card mb-3">
 				<div class="card-header">
 					<i class="fa fa-wrench fa-fw"></i> Add Team
