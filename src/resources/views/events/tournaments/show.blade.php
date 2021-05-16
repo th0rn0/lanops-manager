@@ -221,7 +221,7 @@
 								<div class="col-6 col-sm-6">
 									{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register', 'files' => true )) }}
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-										<button type="submit" class="btn btn-secondary btn-block">@lang('events.signup')</button>
+										<button type="submit" class="btn btn-primary btn-block">@lang('events.signup')</button>
 									{{ Form::close() }}
 								</div>
 							</div>
@@ -241,7 +241,7 @@
 											<h4>@lang('events.signedup')</h4>
 										@endif
 										<input type="hidden" name="event_participant_id" value="{{ $user->active_event_participant->id }}">
-										<button type="submit" class="btn btn-secondary btn-block">@lang('events.removesignup')</button>
+										<button type="submit" class="btn btn-danger btn-block">@lang('events.removesignup')</button>
 									</div>
 								</div>
 							{{ Form::close() }}

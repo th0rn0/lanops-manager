@@ -13,6 +13,8 @@ use App\EventParticipant;
 use App\EventTournament;
 use App\EventTournamentParticipant;
 use App\EventTournamentTeam;
+use App\GameMatchApiHandler;
+use Helpers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -91,6 +93,16 @@ class TournamentsController extends Controller
             }
         }
 
+        if ($tournament->game->gamematchapihandler != 0 && $tournament->match_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', EventParticipant::where('id', '=', $request->event_participant_id)->first()->user_id)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('events.tournament_cannot_join_thirdparty'));
+                return Redirect::back();
+            }
+
+        }
+
         // TODO - Refactor
         $tournamentParticipant                              = new EventTournamentParticipant();
         $tournamentParticipant->event_participant_id        = $request->event_participant_id;
@@ -128,6 +140,16 @@ class TournamentsController extends Controller
         if ($tournament->getParticipant($request->event_participant_id)) {
             Session::flash('alert-danger', __('events.tournament_already_signed_up'));
             return Redirect::back();
+        }
+
+        if ($tournament->game->gamematchapihandler != 0 && $tournament->match_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', EventParticipant::where('id', '=', $request->event_participant_id)->first()->user_id)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('events.tournament_cannot_join_thirdparty'));
+                return Redirect::back();
+            }
+
         }
 
         $tournamentTeam                         = new EventTournamentTeam();
@@ -176,6 +198,16 @@ class TournamentsController extends Controller
         if ($tournament->getParticipant($request->event_participant_id)) {
             Session::flash('alert-danger', __('events.tournament_already_signed_up'));
             return Redirect::back();
+        }
+
+        if ($tournament->game->gamematchapihandler != 0 && $tournament->match_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', EventParticipant::where('id', '=', $request->event_participant_id)->first()->user_id)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('events.tournament_cannot_join_thirdparty'));
+                return Redirect::back();
+            }
+
         }
 
         $tournamentParticipant                          = new EventTournamentParticipant();

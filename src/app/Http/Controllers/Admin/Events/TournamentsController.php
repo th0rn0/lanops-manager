@@ -17,6 +17,9 @@ use App\EventTournament;
 use App\EventTournamentParticipant;
 use App\EventTournamentTeam;
 use App\Jobs\GameServerAsign;
+use App\GameMatchApiHandler;
+use Helpers;
+
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -420,6 +423,16 @@ class TournamentsController extends Controller
             return Redirect::back();
         }
 
+        if ($tournament->game->gamematchapihandler != 0 && $tournament->match_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', $participant->user_id)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('events.tournament_cannot_join_thirdparty'));
+                return Redirect::back();
+            }
+
+        }
+
         $tournamentParticipant                          = new EventTournamentParticipant();
         $tournamentParticipant->event_participant_id    = $participant->id;
         $tournamentParticipant->event_tournament_id     = $tournament->id;
@@ -463,6 +476,16 @@ class TournamentsController extends Controller
             }
         }
 
+        if ($tournament->game->gamematchapihandler != 0 && $tournament->match_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', $participant->user_id)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('events.tournament_cannot_join_thirdparty'));
+                return Redirect::back();
+            }
+
+        }
+
         // TODO - Refactor
         $tournamentParticipant                              = new EventTournamentParticipant();
         $tournamentParticipant->event_participant_id        = $participant->id;
@@ -503,7 +526,7 @@ class TournamentsController extends Controller
     }
 
     /**
-     * Unregister Participant from Tournament
+     * a Participant from Tournament
      * @param  Event           $event
      * @param  EventTournament $tournament
      * @param  Request         $request
