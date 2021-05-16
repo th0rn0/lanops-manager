@@ -14,7 +14,8 @@ use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
 use App\Jobs\GameServerAsign;
-
+use App\GameMatchApiHandler;
+use Helpers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -162,6 +163,8 @@ class MatchMakingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
+ 
+
 
         $currentuseropenlivependingdraftmatches = array();
 
@@ -185,6 +188,17 @@ class MatchMakingController extends Controller
         if (isset($request->game_id)) {
             if (Game::where('id', $request->game_id)->first()) {
                 $tempgame = Game::where('id', $request->game_id)->first();
+
+                if ($tempgame->gamematchapihandler != 0 && $tempgame->matchmaking_autoapi)
+                {
+                    if (!Helpers::checkUserFields(User::where('id', '=', Auth::id())->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tempgame->gamematchapihandler)->getuserthirdpartyrequirements()))
+                    {
+                        Session::flash('alert-danger', __('matchmaking.cannotcreatethirdparty'));
+                        return Redirect::back();
+                    }
+        
+                }
+
                 $game_id = $request->game_id;
                 if ($tempgame->min_team_count > 0 && $tempgame->max_team_count > 0)
                 {
@@ -373,6 +387,16 @@ class MatchMakingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
+        if ($match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', Auth::id())->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('matchmaking.cannotjointhirdparty'));
+                return Redirect::back();
+            }
+
+        }
+
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE" || $match->status == 'WAITFORPLAYERS'|| $match->status == 'PENDING')
         {
             Session::flash('alert-danger', __('matchmaking.cannotaddteamstatus'));
@@ -520,6 +544,16 @@ class MatchMakingController extends Controller
         {
             Session::flash('alert-danger', __('matchmaking.cannotjoinalreadyfull'));
             return Redirect::back();
+        }
+
+        if ($match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', Auth::id())->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', __('matchmaking.cannotjointhirdparty'));
+                return Redirect::back();
+            }
+
         }
 
 

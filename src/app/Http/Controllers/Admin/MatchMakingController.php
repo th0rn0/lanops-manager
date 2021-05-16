@@ -18,7 +18,8 @@ use App\MatchMaking;
 use App\MatchMakingTeam;
 use App\MatchMakingTeamPlayer;
 use App\Jobs\GameServerAsign;
-
+use App\GameMatchApiHandler;
+use Helpers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -142,6 +143,17 @@ class MatchMakingController extends Controller
         if (isset($request->game_id)) {
             if (Game::where('id', $request->game_id)->first()) {
                 $tempgame = Game::where('id', $request->game_id)->first();
+
+                if ($tempgame->gamematchapihandler != 0 && $tempgame->matchmaking_autoapi)
+                {
+                    if (!Helpers::checkUserFields(User::where('id', '=', $request->team1owner)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($tempgame->gamematchapihandler)->getuserthirdpartyrequirements()))
+                    {
+                        Session::flash('alert-danger', "you cannot create the match with the selected team 1 owner, because the nessecary third party account link on the user is missing");
+                        return Redirect::back();
+                    }
+        
+                }
+
                 $game_id = $request->game_id;
                 if ($tempgame->min_team_count > 0 && $tempgame->max_team_count > 0)
                 {
@@ -394,6 +406,15 @@ class MatchMakingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
+        if ($match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', $request->teamowner)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', "you cannot set this teamowner because the nessecary third party account link on the user is missing");
+                return Redirect::back();
+            }
+
+        }
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
@@ -489,6 +510,10 @@ class MatchMakingController extends Controller
      */
     public function addusertomatch(MatchMaking $match, MatchMakingTeam $team, Request $request)
     {
+
+        
+
+
          $rules = [
             'userid'               => 'required|exists:users,id',
         ];
@@ -500,6 +525,18 @@ class MatchMakingController extends Controller
         $this->validate($request, $rules, $messages);
 
 
+        if ($match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi)
+        {
+            if (!Helpers::checkUserFields(User::where('id', '=', $request->userid)->first(),(new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler)->getuserthirdpartyrequirements()))
+            {
+                Session::flash('alert-danger', "you cannot add this user to the team because the nessecary third party account link on the user is missing");
+                return Redirect::back();
+            }
+
+        }
+
+
+       
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {

@@ -12,6 +12,7 @@ use App\User;
 use App\GameServer;
 use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
+use GrahamCampbell\ResultType\Result;
 use Throwable;
 
 class Helpers
@@ -855,5 +856,19 @@ class Helpers
         {
             throw $e;
         }
+    }
+
+    public static function checkUserFields(User $user, Array $properties)
+    {
+        $result = true;
+        foreach ($properties as $property) {
+            
+            if (!$user->$property || $user->$property == "" )
+            {
+                $result = false;
+            }
+        }
+        return $result;
+
     }
 }

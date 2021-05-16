@@ -133,6 +133,8 @@ return [
     'pleaselogin' => 'Bitte einloggen um das Matchmaking zu benutzen',
     'cannotjoinyoualreadyareinateam' => 'Du kannst dem Team nicht beitreten, da du bereits Mitglied eines Teams bist!',
     'scramble' => 'Zufällige Teams',
+    'cannotjointhirdparty' => 'Du kannst dem Match nicht beitreten, da die nötige Authentifizierung deines Benutzers mit einem Drittanbieterdienst nicht eingerichtet ist. Bitte prüfe die Single Sign-On Optionen in deinem Profil.',
+    'cannotcreatethirdparty' => 'Du kannst kein Match mit diesem Spieltyp erstellen, da die nötige Authentifizierung deines Benutzers mit einem Drittanbieterdienst nicht eingerichtet ist. Bitte prüfe die Single Sign-On Optionen in deinem Profil.',
 
 
 ];
