@@ -303,17 +303,32 @@
 				</div>
 			</div>
 
+			<!-- Single Sign-on -->
+			<div class="col-sm-12 col-12 col-md-6 col-lg-7 mt-3 mb-3">
+				<div class="card mb-3">
+					<div class="card-header ">
+						<h3 class="card-title">@lang('accounts.single_sign_on')</h3>
+					</div>
+					<div class="card-body">
+						@if (!$user->steamid && !$user->steamname)
+						<a href="/account/sso/add/steam" type="button" name="" value="" class="btn btn-success">@lang('accounts.add_steam_account')</a>						
+						@else
+						<a href="/account/sso/remove/steam" type="button" name="" value="" class="btn btn-danger">@lang('accounts.remove_steam_account')</a>							
+						@endif
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_second_steam_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_twitch_account')</button>
+						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.remove_twitch_account')</button>
+					</div>
+				</div>
+			</div>
+
 			<!-- DANGER ZONE -->
-			<div class="col-sm-12 col-12 col-md-12 col-lg-12 mt-3 mb-3">
+			<div class="col-sm-12 col-12 col-md-6 col-lg-5 mt-3 mb-3">
 				<div class="card mb-3">
 					<div class="card-header ">
 						<h3 class="card-title">@lang('accounts.danger_zone')</h3>
 					</div>
 					<div class="card-body">
-						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.remove_steam_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_second_steam_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_twitch_account')</button>
-						<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.remove_twitch_account')</button>
 						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">@lang('accounts.remove_account')</button>
 					</div>
 				</div>

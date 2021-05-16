@@ -40,7 +40,11 @@ class VerificationController extends Controller
 
         if ($user->email == NULL)
         {
-        return redirect('/account/email');
+            return redirect('/account/email');
+        }
+        if ($user->email_verified_at != null)
+        {
+            return redirect('/account/');
         }
         return view('auth.verify');
     }

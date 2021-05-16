@@ -77,6 +77,9 @@ Route::group(['middleware' => ['installed']], function () {
 
             Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
                 Route::get('/account', 'AccountController@index');
+                Route::get('/account/sso/remove/{method}', 'AccountController@showRemoveSso');
+                Route::post('/account/sso/remove/{method}', 'AccountController@removeSso');
+                Route::get('/account/sso/add/{method}', 'AccountController@addSso');
                 Route::post('/account', 'AccountController@update');
                 Route::post('/account/delete', 'Auth\SteamController@destroy');
             });

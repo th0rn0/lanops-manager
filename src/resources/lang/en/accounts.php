@@ -39,6 +39,8 @@ return [
     'show_shop_orders' => 'View shop orders',
     'remove_steam_account' => 'Remove Steam account',
     'add_second_steam_account' => 'Add secondary Steam account',
+    'single_sign_on' => 'Single Sign-on',
+    'add_steam_account' => 'Add Steam account',
     'add_twitch_account' => 'Add Twitch account',
     'remove_twitch_account' => 'Remove Twitch account',
     'remove_account' => 'Delete account',
@@ -57,6 +59,13 @@ return [
     'remove_account_accept' => 'Accept',
     'remove_account_cancel' => 'Cancel',
     'danger_zone' => 'Danger zone',
-
-    
+    'removesso' => 'Remove Single Sign on',
+    'removessowarning' => 'Attention: if you remove this authentification option, you have to make sure that you have setted your email adress and a password and that you remember them. If thats both the case, you can skip any changes here.',
+    'setted' => "setted",
+    'notsetted' => "not setted",
+    'ssoemailmessage' => 'To remove your single sign on, you have to enter your email adress here!',
+    'ssochangeemailmessage' => 'If this email adress is not right anymore, you can change your email adress here!',
+    'ssodontemailmessage' => 'Your email adress can not be changed. If thats a problem contact an administrator please!',
+    'ssopasswordmessage' => 'To remove your single sign on, you have to enter a password here!',
+    'ssochangpasswordmessage' => 'If you dont remember your password, you can change it here!',
 ];

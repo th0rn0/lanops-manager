@@ -6,6 +6,8 @@ use Auth;
 
 use Session;
 use Settings;
+use Validator;
+
 
 use App\User;
 
@@ -68,19 +70,71 @@ class SteamController extends Controller
 
                     return redirect('/'); // redirect to site
                 } else {
-                    $user = [
-                            'steamname'     => $info->personaname,
-                            'avatar'        => $info->avatarfull,
-                            'steamid'       => $info->steamID64,
-                    ];
-                    Session::put('user', $user);
-                    Session::save();
-                    return Redirect('/register/steam');
+                    if (!Auth::user())
+                    {
+                        $user = [
+                                'steamname'     => $info->personaname,
+                                'avatar'        => $info->avatarfull,
+                                'steamid'       => $info->steamID64,
+                        ];
+                        Session::put('user', $user);
+                        Session::save();
+                        return Redirect('/register/steam');
+                    }
+                    else
+                    {
+                        if (!Auth::user()->steamid)
+                        {
+                           return $this->addtoexistingaccount($info, Auth::user());
+
+                        }
+                        else
+                        {
+                            Session::flash('alert-danger', 'Another steamid is already set in your account, remove it first in your account settings!');
+                            return Redirect::to('/account/')->withError('Another steamid is already set in your account, remove it first in your account settings!');
+                        }
+
+                    }
+
+
                 }
             }
         } else {
             return $this->steam->redirect(); // redirect to Steam login page
         }
+    }
+
+    /**
+     * Add Steam account to existing account.
+     * @param  $info
+     * @param  User    $user
+     * @return Redirect
+     */
+    private function addtoexistingaccount($info, User $user)
+    {
+        print_r($info->toArray());
+        $validator = Validator::make($info->toArray(), [
+            'personaname'   => 'required|string',
+            'avatarfull'    => 'required|string',
+            'steamID64' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/account/')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $user->steamname = $info->personaname;
+        $user->avatar = $info->avatarfull;
+        $user->steamid = $info->steamID64;
+        if ($user->save()) {
+            Session::flash('alert-success', "Successfully added steam account!");
+            return Redirect('/account');
+        }
+        Session::flash('alert-danger', 'Saving user failed!');
+        return Redirect::to('/account/')->withError('Saving user failed!');
+        
     }
 
     /**
