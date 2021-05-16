@@ -550,6 +550,19 @@
 		return $('.modal.show').length > 0;
 	}
 
+	function isAddTeamActive(){
+		
+		if($('#teamname').val() != "" || $('#teamname').is(":focus"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}	
+	
 	jQuery( function()
 	{
 		$('#autoReload').change(function()
@@ -564,7 +577,7 @@
 
 		setInterval(function()
 		{
-			if(!isABootstrapModalOpen() && localStorage.getItem('autoReload') != "false")
+			if(!isABootstrapModalOpen() && !isAddTeamActive() && localStorage.getItem('autoReload') != "false")
 			{
 				location.reload();
 			}
