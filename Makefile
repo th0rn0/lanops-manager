@@ -241,6 +241,10 @@ purge-cache:
 	sudo rm -rf src/bootstrap/cache/*
 	sudo rm -rf src/storage/debugbar/*
 
+# execute mysql upgrade after upgrading db container usage make database-upgrade sqlrootpw=rootpasswordhere
+database-upgrade:
+	docker exec -i eventula_manager_database /bin/bash -c 'mysql_upgrade -uroot -p$(sqlrootpw)'
+
 # execute mysql command usage make database-command command=sqlcommandhere
 database-command:
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
