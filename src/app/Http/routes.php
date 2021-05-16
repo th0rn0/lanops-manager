@@ -104,10 +104,12 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/news', 'NewsController@index');
             Route::get('/news/{newsArticle}', 'NewsController@show');
-            Route::post('/news/{newsArticle}/comments', 'NewsController@storeComment');
-            Route::post('/news/{newsArticle}/comments/{newsComment}', 'NewsController@editComment');
-            Route::get('/news/{newsArticle}/comments/{newsComment}/report', 'NewsController@reportComment');
-            Route::get('/news/{newsArticle}/comments/{newsComment}/delete', 'NewsController@destroyComment');
+            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+                Route::post('/news/{newsArticle}/comments', 'NewsController@storeComment');
+                Route::post('/news/{newsArticle}/comments/{newsComment}', 'NewsController@editComment');
+                Route::get('/news/{newsArticle}/comments/{newsComment}/report', 'NewsController@reportComment');
+                Route::get('/news/{newsArticle}/comments/{newsComment}/delete', 'NewsController@destroyComment');
+            });
             Route::get('/news/tags/{newsTag}', 'NewsController@showTag');
 
             /**
