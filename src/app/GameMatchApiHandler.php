@@ -39,8 +39,9 @@ class GameMatchApiHandler
 interface IGameMatchApiHandler
 {
     public function getconfig($matchid, $nummaps, $players_per_team, $apiurl, $apikey);
+    public function getuserthirdpartyrequirements();
     public function addteam($name);
-    public function addplayer ($teamName, $steamid, $steamname, $userid, $username);
+    public function addplayer ($teamName, $thirdpartyid, $thirdpartyname, $userid, $username);
     public function authorizeserver(Request $request, $serverkey);
     public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
     public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
@@ -71,6 +72,15 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         );
     }
 
+    public function getuserthirdpartyrequirements()
+    {
+        $return = array(
+            "thirdpartyid" => "steamid",
+            "thirdpartyname" => "steamname",
+        );
+        return $return;
+    }
+
     public function addteam($name)
     {
         if (!isset($this->result->team1))
@@ -94,7 +104,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         }
     }
 
-    public function addplayer ($teamName, $steamid, $steamname, $userid, $username)
+    public function addplayer ($teamName, $thirdpartyid, $thirdpartyname, $userid, $username)
     {
         $team = null;
 
@@ -112,7 +122,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             $team->players = new \stdClass();
         }
 
-        $team->players->{$steamid} = $steamname;
+        $team->players->{$thirdpartyid} = $thirdpartyname;
     }
 
     public function getconfig($matchid, $nummaps, $players_per_team, $apiurl, $apikey)

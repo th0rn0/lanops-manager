@@ -43,15 +43,18 @@ class GameMatchApiController extends Controller
             $gamematchapihandler->addteam($team1->name);
             $gamematchapihandler->addteam($team2->name);
 
+            $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid;
+            $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname;
+
             foreach ($team1->tournamentParticipants as $key => $team1Participant) {
                 $eventParticipant = $team1Participant->eventParticipant;
                 $user = $eventParticipant->user;
-                $gamematchapihandler->addplayer($team1->name, $user->steamid, $user->steamname, $user->id, $user->username);
+                $gamematchapihandler->addplayer($team1->name, $user->$thirdpartyidprop, $user->$thirdpartynameprop, $user->id, $user->username);
             }
             foreach ($team2->tournamentParticipants as $key => $team2Participant) {
                 $eventParticipant = $team2Participant->eventParticipant;
                 $user = $eventParticipant->user;
-                $gamematchapihandler->addplayer($team2->name, $user->steamid, $user->steamname, $user->id, $user->username);
+                $gamematchapihandler->addplayer($team2->name, $user->$thirdpartyidprop, $user->$thirdpartynameprop, $user->id, $user->username);
             }
 
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
@@ -294,16 +297,18 @@ class GameMatchApiController extends Controller
        if(isset($match->game) && isset ($match->game->gamematchapihandler))
        {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
-        
+            $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid;
+            $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname;
+
         
         foreach( $match->teams as $team)
         {
             $gamematchapihandler->addteam($team->name);
 
             foreach ($team->players as $player) {
-                if (isset($player->user->steamid) && isset($player->user->steamname)) 
+                if (isset($player->user->$thirdpartyidprop) && isset($player->user->$thirdpartynameprop)) 
                 {
-                    $gamematchapihandler->addplayer($team->name, $player->user->steamid, $player->user->steamname, $player->user->id, $player->user->username);
+                    $gamematchapihandler->addplayer($team->name, $player->user->$thirdpartyidprop, $player->user->$thirdpartynameprop, $player->user->id, $player->user->username);
                 }
             }
 
