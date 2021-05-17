@@ -129,12 +129,37 @@ You can create, edit and delete Announcements on every event, wich will be displ
 
 Event information
 --------------------
-On the buttom of the Event Page you can add / delete / edit Event informations which will be displayed on the Event Information page 
+On the buttom of the Event Page you can add / delete / edit Event informations which will be displayed on the Event Information page.
+
+To add an event info entry click ``Add Event event_event_information_03`` and fill out the Title and the Text. You can add an image if you want to.
 
 .. image:: ../../images/event_event_information_01.png
    :scale: 50 %
    :alt: eventula event creation
    :align: center
+
+If you want to edit an Entry, you can just click on the Title :   
+   
+.. image:: ../../images/event_event_information_02.png
+   :scale: 50 %
+   :alt: eventula event creation
+   :align: center
+
+Here you can edit everything that you added in the event information and also set an order for the event informations.
+
+.. image:: ../../images/event_event_information_03.png
+   :scale: 50 %
+   :alt: eventula event creation
+   :align: center
+
+To delete event informations just click ``Delete`` on the entry.
+
+.. image:: ../../images/event_event_information_04.png
+   :scale: 50 %
+   :alt: eventula event creation
+   :align: center
+
+The event information will be shown on the event information page:
 
 .. image:: ../../images/event_01.png
    :scale: 50 %
