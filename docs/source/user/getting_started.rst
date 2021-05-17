@@ -142,7 +142,7 @@ This method is intended to be run with docker-compose. It will create a full sta
         - 80:80
         - 443:443
     database:
-        image: mysql:5.6
+        image: mysql:5.7
         volumes:
         - eventula_manager_database:/var/lib/mysql
         environment:
