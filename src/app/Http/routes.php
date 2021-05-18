@@ -501,6 +501,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/admin/users', 'Admin\UsersController@index');
             Route::get('/admin/users/{user}', 'Admin\UsersController@show');
+            Route::delete('/admin/users/{user}', 'Admin\UsersController@remove');
             Route::post('/admin/users/{user}/admin', 'Admin\UsersController@grantAdmin');
             Route::delete('/admin/users/{user}/admin', 'Admin\UsersController@removeAdmin');
             Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');

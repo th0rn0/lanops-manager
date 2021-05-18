@@ -88,6 +88,28 @@ class UsersController extends Controller
         return Redirect::back();
     }
 
+
+    /**
+     * Remove User 
+     * @param  User  $user
+     * @return View
+     */
+    public function remove(User $user)
+    {
+        if (!Auth::user()->admin) {
+            Session::flash('alert-danger', 'You do not have permissions to do this!');
+            return Redirect::back();
+        }
+        if (!$user->delete()) {
+            Session::flash('alert-danger', 'Cannot remove user!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully removed user!');
+        return Redirect::to('/admin/users/');
+    }
+
+
+
     /**
      * Ban User
      * @param  User  $user
