@@ -160,7 +160,7 @@
 							<small>This will reset the users password and sent a verification link to their email. If they are using a 3rd party Login this will do nothing.</small>
 						</div>
 					@endif
-					@if ($userShow->email != null && $userShow->password == null)
+					{{-- @if ($userShow->email != null && $userShow->password == null)
 					<div class="col-12 col-sm-6">
 						{{ Form::open(array('url'=>'/login/forgot')) }}
 							@csrf
@@ -169,7 +169,7 @@
 						{{ Form::close() }}
 						<small>This will send a verification link to the users email so a password can be setted.</small>
 					</div>
-					@endif
+					@endif --}}
 
 				</div>
 				<br>
