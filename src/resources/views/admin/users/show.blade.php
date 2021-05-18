@@ -160,6 +160,16 @@
 							<small>This will reset the users password and sent a verification link to their email. If they are using a 3rd party Login this will do nothing.</small>
 						</div>
 					@endif
+					@if ($userShow->email != null && $userShow->password == null)
+					<div class="col-12 col-sm-6">
+						{{ Form::open(array('url'=>'/login/forgot')) }}
+							@csrf
+							<input type="hidden" name="email" value="{{ $userShow->email }}">
+							<button type="submit" class="btn btn-block btn-success">Send password set link</button>
+						{{ Form::close() }}
+						<small>This will send a verification link to the users email so a password can be setted.</small>
+					</div>
+					@endif
 				</div>
 				<br>
 				<h4>Danger Zone</h4>
