@@ -88,6 +88,39 @@ class UsersController extends Controller
         return Redirect::back();
     }
 
+    /**
+     * Unauthorize thirdparty
+     * @param  User  $user
+     * @param  String  $method
+     * @return View
+     */
+    public function unauthorizeThirdparty(User $user, String $method)
+    {
+        if (!Auth::user()->admin) {
+            Session::flash('alert-danger', 'You do not have permissions to do this!');
+            return Redirect::back();
+        }
+
+        switch ($method) {
+            case 'steam':
+                $user->steamname = null;
+                $user->steamid = null;
+                $user->avatar = null;
+                break;
+            default:
+                Session::flash('alert-danger', 'Cannot remove thirdparty authentication, no method selected!!');
+                return Redirect::back();
+                break;
+        }
+
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Cannot remove thirdparty authentication!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully removed thirdparty authentication!');
+        return Redirect::back();
+    }
+
 
     /**
      * Remove User 

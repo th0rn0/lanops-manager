@@ -170,12 +170,13 @@
 						<small>This will send a verification link to the users email so a password can be setted.</small>
 					</div>
 					@endif
+
 				</div>
 				<br>
 				<h4>Danger Zone</h4>
 				<hr>
 				<div class="row">
-					<div class="col-12 col-sm-6">
+					<div class="col-12 col-sm-6 mb-4">
 						@if (!$userShow->banned)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/ban')) }}
 								<button type="submit" class="btn btn-block btn-danger">Ban</button>
@@ -186,7 +187,7 @@
 							{{ Form::close() }}
 						@endif
 					</div>
-					<div class="col-12 col-sm-6">
+					<div class="col-12 col-sm-6 mb-4">
 						@if ($userShow->banned)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id, 'onsubmit' => 'return ConfirmDelete()')) }}
 								{{ Form::hidden('_method', 'DELETE') }}
@@ -196,6 +197,15 @@
 							<button type="submit" class="btn btn-block btn-danger" disabled="true">Delete</button>
 						@endif
 					</div>
+
+					@if ($userShow->steamname != null || $userShow->steamid != null)
+					<div class="col-12 col-sm-6 mb-4">
+						{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/unauthorizeThirdparty/steam')) }}
+							<button type="submit" class="btn btn-block btn-danger">Remove Steam account</button>
+						{{ Form::close() }}
+						<small>This will remove the Steam account of the user.</small>
+					</div>
+					@endif
 				</div>
 			</div>
 		</div>

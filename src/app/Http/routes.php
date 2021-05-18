@@ -506,6 +506,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::delete('/admin/users/{user}/admin', 'Admin\UsersController@removeAdmin');
             Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');
             Route::post('/admin/users/{user}/unban', 'Admin\UsersController@unban');
+            Route::post('/admin/users/{user}/unauthorizeThirdparty/{method}', 'Admin\UsersController@unauthorizeThirdparty');
 
             /**
              * MatchMaking
