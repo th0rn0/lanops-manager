@@ -14,7 +14,7 @@ To use the basic features like manual tournaments you have to fill in a name and
 Its recommended to add a ``Thumbnail Image `` and a ``Header Image``, they will be shown on the tournaments / matches.
 
 
-.. image:: ../images/games_add_01.png
+.. image:: ../../images/games_add_01.png
    :scale: 50 %
    :alt: eventula event deletion
    :align: center
@@ -27,7 +27,7 @@ The currently available Commandhandlers are:
 - SourceQuery Source (supported games: CS:GO, Minecraft only commands | no status support)
 - Maniaplanet XRPC (supported games: Trackmania nations, and all new maniaplanet games )
 
-.. image:: ../images/games_add_02.png
+.. image:: ../../images/games_add_02.png
    :scale: 50 %
    :alt: eventula event deletion
    :align: center
@@ -36,9 +36,9 @@ If you want to enable the possibilities to manage fully automated tournaments or
 
 The currently available APIhandlers are: 
 
-- Get5 (supported games: CS:GO with the Get5 Plugin from Splewis [https://github.com/splewis/get5] and the get5_eventula_apistats plugin [https://github.com/Lan2Play/get5_eventula_apistats])
+- Get5 (supported games: CS:GO with the `Get5 Plugin from Splewis <https://github.com/splewis/get5>`_ and the `get5_eventula_apistats plugin <https://github.com/Lan2Play/get5_eventula_apistats>`_)
 
-.. image:: ../images/games_add_03.png
+.. image:: ../../images/games_add_03.png
    :scale: 50 %
    :alt: eventula event deletion
    :align: center
