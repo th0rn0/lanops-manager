@@ -62,13 +62,13 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         $this->result->veto_first = "team1";
         $this->result->side_type = "standard";
         $this->result->maplist = array(
-            "de_cache",
+            "de_vertigo",
             "de_dust2",
             "de_inferno",
             "de_mirage",
             "de_nuke",
             "de_overpass",
-            "de_train"
+            "de_ancient"
         );
     }
 
