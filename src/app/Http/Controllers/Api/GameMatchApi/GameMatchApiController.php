@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\GameMatchApi;
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Debugbar;
 
 use App\Event;
 use App\EventTournament;
@@ -296,7 +297,10 @@ class GameMatchApiController extends Controller
    {
        if(isset($match->game) && isset ($match->game->gamematchapihandler))
        {
+            Debugbar::addMessage("matchapihandler: ".$match->game->gamematchapihandler, 'matchconfig');
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+            Debugbar::addMessage("getuserthirdpartyrequirements: ".$gamematchapihandler->getuserthirdpartyrequirements(), 'matchconfig');
+        
             $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid;
             $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname;
 
