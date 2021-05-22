@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\GameMatchApi;
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Storage;
-use Debugbar;
 
 use App\Event;
 use App\EventTournament;
@@ -44,8 +43,8 @@ class GameMatchApiController extends Controller
             $gamematchapihandler->addteam($team1->name);
             $gamematchapihandler->addteam($team2->name);
 
-            $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid;
-            $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname;
+            $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()["thirdpartyid"];
+            $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()["thirdpartyname"];
 
             foreach ($team1->tournamentParticipants as $key => $team1Participant) {
                 $eventParticipant = $team1Participant->eventParticipant;
@@ -297,12 +296,9 @@ class GameMatchApiController extends Controller
    {
        if(isset($match->game) && isset ($match->game->gamematchapihandler))
        {
-            Debugbar::addMessage("matchapihandler: ".$match->game->gamematchapihandler, 'matchconfig');
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
-            $requirements = $gamematchapihandler->getuserthirdpartyrequirements();
-            Debugbar::addMessage("getuserthirdpartyrequirements: ".json_encode($requirements), 'matchconfig');
-            $thirdpartyidprop = $requirements->thirdpartyid;
-            $thirdpartynameprop = $requirements->thirdpartyname;
+            $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()["thirdpartyid"];
+            $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()["thirdpartyname"];
 
         
         foreach( $match->teams as $team)
