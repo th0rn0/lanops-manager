@@ -74,10 +74,10 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
     public function getuserthirdpartyrequirements()
     {
-        $return = array(
+        $return = [
             "thirdpartyid" => "steamid",
             "thirdpartyname" => "steamname",
-        );
+        ];
         return $return;
     }
 
