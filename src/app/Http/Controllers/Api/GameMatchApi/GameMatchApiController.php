@@ -299,8 +299,9 @@ class GameMatchApiController extends Controller
        {
             Debugbar::addMessage("matchapihandler: ".$match->game->gamematchapihandler, 'matchconfig');
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
-            Debugbar::addMessage("getuserthirdpartyrequirements: ".$gamematchapihandler->getuserthirdpartyrequirements(), 'matchconfig');
-        
+            Debugbar::addMessage("getuserthirdpartyrequirements 1: ".$gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid, 'matchconfig');
+            Debugbar::addMessage("getuserthirdpartyrequirements 2: ".$gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname, 'matchconfig');
+         
             $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid;
             $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname;
 
