@@ -299,10 +299,10 @@ class GameMatchApiController extends Controller
        {
             Debugbar::addMessage("matchapihandler: ".$match->game->gamematchapihandler, 'matchconfig');
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
-            Debugbar::addMessage("getuserthirdpartyrequirements: ".json_encode($gamematchapihandler->getuserthirdpartyrequirements()), 'matchconfig');
-        
-            $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyid;
-            $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()->thirdpartyname;
+            $requirements = $gamematchapihandler->getuserthirdpartyrequirements();
+            Debugbar::addMessage("getuserthirdpartyrequirements: ".json_encode($requirements), 'matchconfig');
+            $thirdpartyidprop = $requirements->thirdpartyid;
+            $thirdpartynameprop = $requirements->thirdpartyname;
 
         
         foreach( $match->teams as $team)
