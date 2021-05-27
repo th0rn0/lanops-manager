@@ -392,8 +392,8 @@
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'.$team->id.'/update' )) }}
 					<div class="form-group">
-						{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
-						{{ Form::text('teamname',$team->name,array('id'=>'teamname','class'=>'form-control')) }}
+						{{ Form::label('editteamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
+						{{ Form::text('editteamname',$team->name,array('id'=>'editteamname','class'=>'form-control')) }}
 					</div>
 					<button type="submit" class="btn btn-success btn-block">@lang('matchmaking.submit')</button>
 					{{ Form::close() }}
@@ -551,8 +551,8 @@
 	}
 
 	function isAddTeamActive(){
-		
-		if($('#teamname').val() != "" || $('#teamname').is(":focus"))
+
+		if($('#teamname').val() != undefined && ($('#teamname').val() != "" || $('#teamname').is(":focus")))
 		{
 			return true;
 		}

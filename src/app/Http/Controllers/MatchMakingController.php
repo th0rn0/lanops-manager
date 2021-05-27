@@ -455,10 +455,10 @@ class MatchMakingController extends Controller
     public function updateteam(MatchMaking $match, MatchMakingTeam $team,  Request $request)
     {
          $rules = [
-            'teamname'          => 'required',
+            'editteamname'          => 'required',
         ];
         $messages = [
-            'teamname.required'    => __('matchmaking.teamname_required'),
+            'editteamname.required'    => __('matchmaking.teamname_required'),
 
         ];
         $this->validate($request, $rules, $messages);
@@ -477,7 +477,7 @@ class MatchMakingController extends Controller
 
 
 
-        $team->name                       = $request->teamname;
+        $team->name                       = $request->editteamname;
         if (!$team->save()) {
             Session::flash('alert-danger', __('matchmaking.cannotsaveteam'));
             return Redirect::back();
