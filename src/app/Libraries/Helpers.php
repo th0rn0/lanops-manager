@@ -356,7 +356,7 @@ class Helpers
     public static function getPublicGameServers()
     {
         $returnarray = array();
-        foreach (GameServer::where(['ispublic' => true, 'isenabled' => true])->get() as $gameserver) {
+        foreach (GameServer::where(['ispublic' => true, 'type' => 'Casual', 'isenabled' => true])->get() as $gameserver) {
             if (!array_key_exists($gameserver->game->slug, $returnarray)) {
                 $returnarray[$gameserver->game->slug] = array();
             }
