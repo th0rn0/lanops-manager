@@ -139,10 +139,19 @@
 											}, 30000);
 										});
 									</script>
-									<div id="serverstatus_{{ $gameServer->id }}">
-										<div><i class="fas fa-map-marked-alt"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
-										<div><i class="fas fa-users"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
-									</div>
+
+									@if($gameServer->game->gamecommandhandler != "0")
+										<div id="serverstatus_{{ $gameServer->id }}">
+											<div><i class="fas fa-map-marked-alt"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+											<div><i class="fas fa-users"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+										</div>
+									@else
+										<div id="serverstatus_{{ $gameServer->id }}">
+											<div><span id="serverstatus_{{ $gameServer->id }}_nostats">No Status</span></div>
+										</div>
+									@endif	
+
+
 						@endforeach
 						@endforeach
 				</div>

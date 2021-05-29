@@ -240,10 +240,18 @@ use Debugbar;
 																}, 30000);
 															});
 														</script>
-														<div id="serverstatus_{{ $gameServer->id }}">
-															<div><i class="fas fa-map-marked-alt margin"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
-															<div><i class="fas fa-users margin"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
-														</div>
+														@if($game->gamecommandhandler != "0")
+															<div id="serverstatus_{{ $gameServer->id }}">
+																<div><i class="fas fa-map-marked-alt margin"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
+																<div><i class="fas fa-users margin"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+															</div>
+														@else
+															<div id="serverstatus_{{ $gameServer->id }}">
+																<div><span id="serverstatus_{{ $gameServer->id }}_nostats">No Status</span></div>
+															</div>
+														@endif
+
+
 														@if($gameServer->game->connect_game_url)
 														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
 														@endif
