@@ -240,10 +240,10 @@ use Debugbar;
 																}, 30000);
 															});
 														</script>
-														@if($game->gamecommandhandler != "0")
+														@if($gameServer->game->gamecommandhandler != "0")
 															<div id="serverstatus_{{ $gameServer->id }}">
-																<div><i class="fas fa-map-marked-alt margin"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
-																<div><i class="fas fa-users margin"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+																<div><i class="fas fa-map-marked-alt margin"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map">Waiting for status</span></div>
+																<div><i class="fas fa-users margin"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players">Waiting for status</span></div>
 															</div>
 														@else
 															<div id="serverstatus_{{ $gameServer->id }}">
@@ -252,16 +252,30 @@ use Debugbar;
 														@endif
 
 
-														@if($gameServer->game->connect_game_url)
-														<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+														@if($gameServer->game->connect_game_url || $gameServer->game->connect_game_command )
+															@if($gameServer->game->connect_game_url)
+															<a class="btn btn-primary btn-block" id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button">Join Game</a>
+															@endif
+															@if($gameServer->game->connect_game_command)
+																<div class="input-group" style="width: 100%">
+																	<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_command, NULL, $availableParameters) }}">
+																	<span class="input-group-btn">
+																	<button class="btn btn-primary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="fas fa-external-link-alt"></i></button>
+																</div>
+															@endif
+														@else
+														@if($gameServer->address)
+															<div><strong>IP: </strong><span id="serverip_{{ $gameServer->id }}">{{$gameServer->address}}</span></div>
 														@endif
-														@if($gameServer->game->connect_game_command)
-															<div class="input-group" style="width: 100%">
-																<input class="form-control" id="connectGameCommand{{ $availableParameters->gameServer->id }}" type="text" readonly value="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_command, NULL, $availableParameters) }}">
-																<span class="input-group-btn">
-																<button class="btn btn-primary" type="button" onclick="copyToClipBoard('connectGameCommand{{$availableParameters->gameServer->id}}')"><i class="fas fa-external-link-alt"></i></button>
-															</div>
+														@if($gameServer->game_port)
+															<div><strong>Port: </strong><span id="serverip_{{ $gameServer->id }}">{{$gameServer->game_port}}</span></div>
 														@endif
+														@if($gameServer->game_password)
+															<div><strong>Password: </strong><span id="serverpw_{{ $gameServer->id }}">{{$gameServer->game_password}}</span></div>
+														@endif
+														@endif
+													
+
 														@if($gameServer->game->connect_stream_url && $gameServer->stream_port != 0)
 															<a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>
 														@endif

@@ -119,8 +119,21 @@
 									@if($gameServer->game->connect_game_url)
 									<a id="connectGameUrl" href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_game_url, NULL, $availableParameters) }}" role="button"><strong>#{{$counter}} - {{ $gameServer->name }}</strong></a>
 									@else
-									<strong>#{{$counter}} - {{ $gameServer->name }}</strong>
+										<strong>#{{$counter}} - {{ $gameServer->name }}</strong>
+										@if($gameServer->address)
+											<div><strong>IP: </strong><span id="serverip_{{ $gameServer->id }}">{{$gameServer->address}}</span></div>
+										@endif
+										@if($gameServer->game_port)
+											<div><strong>Port: </strong><span id="serverip_{{ $gameServer->id }}">{{$gameServer->game_port}}</span></div>
+										@endif
+										@if($gameServer->game_password)
+											<div><strong>Password: </strong><span id="serverpw_{{ $gameServer->id }}">{{$gameServer->game_password}}</span></div>
+										@endif
+
 									@endif
+									@if($gameServer->game->connect_stream_url && $gameServer->stream_port != 0)
+									<div><a href="{{ Helpers::resolveServerCommandParameters($gameServer->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a></div>
+														@endif
 									<script>
 
 										document.addEventListener("DOMContentLoaded", function(event) {
@@ -142,8 +155,8 @@
 
 									@if($gameServer->game->gamecommandhandler != "0")
 										<div id="serverstatus_{{ $gameServer->id }}">
-											<div><i class="fas fa-map-marked-alt"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map"></span></div>
-											<div><i class="fas fa-users"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players"></span></div>
+											<div><i class="fas fa-map-marked-alt"></i><strong>Map: </strong><span id="serverstatus_{{ $gameServer->id }}_map">Waiting for status</span></div>
+											<div><i class="fas fa-users"></i><strong>Players: </strong><span id="serverstatus_{{ $gameServer->id }}_players">Waiting for status</span></div>
 										</div>
 									@else
 										<div id="serverstatus_{{ $gameServer->id }}">
