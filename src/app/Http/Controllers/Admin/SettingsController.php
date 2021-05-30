@@ -142,6 +142,14 @@ class SettingsController extends Controller
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
+        if (isset($request->stripe_public_key) && !ApiKey::setStripePublicKey($request->stripe_public_key)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+        if (isset($request->stripe_secret_key) && !ApiKey::setStripeSecretKey($request->stripe_secret_key)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }
