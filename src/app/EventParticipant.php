@@ -132,7 +132,11 @@ class EventParticipant extends Model
      */
     public function generateQRCode()
     {
-        $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
+        if(Str::startsWith(config('app.url'), ['http://', 'https://'])) {
+            $ticketUrl = config('app.url') . '/tickets/retrieve/' . $this->id;
+        } else {
+            $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
+        }
         $qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
         $qrCodeFileName =  $this->event->slug . '-' . Str::random(32) . '.png';
         if (!file_exists($qrCodePath)) {
