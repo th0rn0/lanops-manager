@@ -337,7 +337,7 @@
 													@endif
 												</td>
 												<td>
-													{{ $teamplayer->user->firstname }} {{ $teamplayer->user->surname }}
+													{{ $teamplayer->user->firstname }}
 
 												</td>
 
