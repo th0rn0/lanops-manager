@@ -47,7 +47,7 @@ use Debugbar;
 	@if (!$event->sponsors->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="sponsors"></a>
-			<h3>@lang('events.eventsponsoredby', ['event', $event->display_name])</h3>
+			<h3>@lang('events.eventsponsoredby', ['event' => $event->display_name])</h3>
 		</div>
 		@foreach ($event->sponsors as $sponsor)
 			<a href="{{$sponsor->website}}">
