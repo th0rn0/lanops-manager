@@ -87,7 +87,7 @@ class TicketsController extends Controller
     {
         $user = Auth::user();
         if ($user->admin == 1) {
-            return Redirect::to('/admin/events/' . $participant->event_id . '/participants/' . $participant->id); // redirect to site
+            return Redirect::to('/admin/events/' . $participant->event->slug . '/participants/' . $participant->id); // redirect to site
         }
         return Redirect::to('/events/' . $participant->event_id); // redirect to site
     }
