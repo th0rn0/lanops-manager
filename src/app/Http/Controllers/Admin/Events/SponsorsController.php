@@ -53,4 +53,22 @@ class SponsorsController extends Controller
         Session::flash('alert-success', 'Successfully Saved Sponsor!');
         return Redirect::to('admin/events/' . $event->slug);
     }
+
+    /**
+     * Remove Sponsor from Database
+     * Add Sponsor to Database
+     * @param  Request $request
+     * @param  Event   $event
+     * @return Redirect
+     */
+    public function destroy(EventSponsor $sponsor)
+    {
+        if (!$sponsor->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Venue!');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Successfully deleted venue!');
+        return Redirect::to('admin/events/' . $event->slug);
+    }
 }
