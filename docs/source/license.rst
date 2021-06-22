@@ -1,9 +1,6 @@
 
-License
+License (GNU General Public License)
 ==================================================
-
-GNU General Public License
-==========================
 
 | *Version 3, 29 June 2007*
 | *Copyright © 2007 Free Software Foundation, Inc. <http://fsf.org/\ >*
