@@ -8,11 +8,12 @@ use Settings;
 use Session;
 use Colors;
 
+
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
 
 class AccountController extends Controller
 {
@@ -64,6 +65,138 @@ class AccountController extends Controller
             ->withMethod($method);
 
     }
+
+
+   /**
+     * add a user token
+     * @return View
+     */
+    public function addToken(Request $request)
+    {      
+        $rules = [
+            'token_name'         => 'filled|string',
+        ];
+        $messages = [
+            'token_name.filled'      => 'Token Name Cannot be blank.',
+        ];
+        $this->validate($request, $rules, $messages);
+
+    
+        foreach ($request->user()->tokens as $currtoken)
+        {
+            if ($request->token_name == $currtoken->name)
+            {
+                Session::flash('alert-danger', "This Token name is already in use!");
+                return Redirect::back();
+            }
+        }
+
+        $token = $request->user()->createToken($request->token_name);
+
+        Session::flash('alert-success', "The Token is created successfully! You can find it above!. Note: it is only shown a single time, so keep it safe!");
+        return redirect::back()->with('newtoken', $token->plainTextToken);
+
+    }  
+
+    /**
+     * remove a user token
+     * @return View
+     */
+    public function removeToken($token)
+    {      
+        $user = Auth::user();
+        if($token == null || $token == "")
+        {
+            Session::flash('alert-danger', "Token id is not available!");
+            return Redirect::back(); 
+        }
+        
+        $selectedtoken = false;
+
+        foreach ($user->tokens as $currtoken)
+        {
+            if ($token == $currtoken->id)
+            {
+                $selectedtoken = $currtoken;
+            }
+        }
+
+        if ($selectedtoken == false)
+        {
+            Session::flash('alert-danger', "This Token could not be found on your user!");
+            return Redirect::back();
+        }
+
+        if (!$selectedtoken->delete()) {
+            Session::flash('alert-danger',  "This Token could not be deleted!");
+            return Redirect::back();
+        }
+
+        
+
+        Session::flash('alert-success', "Token deleted successfully!");
+        return redirect('/account');
+
+    }     
+    
+     /**
+     * start the application authentication wizzard
+     * @return View
+     */
+    public function showTokenWizzardStart($application = "", $callbackurl = "")
+    {      
+        $user = Auth::user();
+        if($application == null || $application == "")
+        {
+            return view("accounts.tokenwizzard_start")->withStatus('no_application');
+        }
+        
+
+        foreach ($user->tokens as $currtoken)
+        {
+            if ($currtoken->name == $application)
+            {
+                return view("accounts.tokenwizzard_start")->withStatus('exists')->withApplication($application)->withCallbackurl($callbackurl);
+            }
+        }
+
+        return view("accounts.tokenwizzard_start")->withStatus("not_exists")->withApplication($application)->withCallbackurl($callbackurl);
+    }  
+    
+     /**
+     * finish the application authentication wizzard
+     * @return View
+     */
+    public function showTokenWizzardFinish(Request $request)
+    {      
+        $user = Auth::user();
+
+
+        foreach ($user->tokens as $currtoken)
+        {
+            if ($currtoken->name == $request->application)
+            {                    
+                if (!$currtoken->delete()) {
+                    return view("accounts.tokenwizzard_finish")->withStatus('del_failed')->withApplication($request->application);
+                }
+            }
+        }
+
+        
+
+        $token = $user->createToken($request->application);
+
+        if($token->plainTextToken == null || $token->plainTextToken == "")
+        {
+            return view("accounts.tokenwizzard_finish")->withStatus('creation_failed')->withApplication($request->application);
+        }
+
+        $newcallbackurl = Str::replace("&&TOKEN&&", $token->plainTextToken, urldecode($request->callbackurl));
+
+        return view("accounts.tokenwizzard_finish")->withStatus('success')->withNewtoken($token->plainTextToken)->withApplication($request->application)->withCallbackurl($newcallbackurl);
+
+    }  
+
 
     /**
      * add single sign on
