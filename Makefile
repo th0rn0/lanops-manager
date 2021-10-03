@@ -171,12 +171,19 @@ composer-outdated:
     --user $(id -u):$(id -g) \
     composer outdated
 
-# Update Dev PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
+# add PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(id -u):$(id -g) \
     composer require $(module) --ignore-platform-reqs --no-scripts
+
+# add Dev PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
+composer-add-dep-dev:
+	docker run --rm --name compose-maintainence-update --interactive \
+    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
+    --user $(id -u):$(id -g) \
+    composer require $(module) --ignore-platform-reqs --no-scripts --dev
 
 # Install JS Dependencies via NPM
 npm-install:
@@ -198,6 +205,28 @@ npm-ls:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	node:14.10 /bin/bash -ci "npm ls $(module)"
+
+#update npm packages - usage make npm-update
+npm-update:
+	docker run --rm --name js-maintainence-list --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:14.10 /bin/bash -ci "npm update"
+
+#audit npm packages - usage make npm-audit
+npm-audit:
+	docker run --rm --name js-maintainence-list --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:14.10 /bin/bash -ci "npm audit"
+
+#audit fix npm packages - usage make npm-audit-fix
+npm-audit-fix:
+	docker run --rm --name js-maintainence-list --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+	node:14.10 /bin/bash -ci "npm audit fix"
+
 
 #list outdated npm packages
 npm-outdated:
