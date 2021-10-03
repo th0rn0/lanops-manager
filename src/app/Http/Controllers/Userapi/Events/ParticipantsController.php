@@ -44,7 +44,7 @@ class ParticipantsController extends Controller
             }
             $return[] = [
                 'id' => $participant->user->id,
-                'firstname' => $user->firstname,
+                'firstname' => $participant->user->firstname,
                 'username' => $participant->user->username,
                 'username_nice' => $participant->user->username_nice,
                 'steamname' => $participant->user->steamname,
