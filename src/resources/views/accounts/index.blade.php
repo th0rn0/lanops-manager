@@ -375,7 +375,7 @@
 										@lang('accounts.no_tokens')
 									@endif
 			
-									{{ Form::open(array('url'=>'/account/tokens/add' )) }}
+									{{-- {{ Form::open(array('url'=>'/account/tokens/add' )) }}
 										<div class="row mt-3" style="display: flex; align-items: center;">
 											<div class="col-md-2 col-sm-12">
 			
@@ -391,7 +391,7 @@
 											<button type="submit" class="btn btn-primary btn-block">@lang('accounts.add_token')</button>
 											</div>
 										</div>
-									{{ Form::close() }}
+									{{ Form::close() }} --}}
 									
 								</div>
 							</div>
