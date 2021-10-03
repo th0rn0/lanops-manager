@@ -191,7 +191,7 @@ class AccountController extends Controller
             return view("accounts.tokenwizzard_finish")->withStatus('creation_failed')->withApplication($request->application);
         }
 
-        $newcallbackurl = Str::replace("&&TOKEN&&", $token->plainTextToken, urldecode($request->callbackurl));
+        $newcallbackurl = $request->callbackurl . "://" . $token->plainTextToken;
 
         return view("accounts.tokenwizzard_finish")->withStatus('success')->withNewtoken($token->plainTextToken)->withApplication($request->application)->withCallbackurl($newcallbackurl);
 
