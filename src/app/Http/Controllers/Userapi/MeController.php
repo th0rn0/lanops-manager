@@ -27,7 +27,14 @@ class MeController extends Controller
 
         return [
             'id' => $user->id,
-            'name' => $user->username,
+            'firstname' => $user->firstname,
+            'surname' => $user->surname,
+            'username' => $user->username,
+            'username_nice' => $user->username_nice,
+            'steamname' => $user->steamname,
+            'email' => $user->email,
+            'steamid' => $user->steamid,
+            'credit_total' => $user->credit_total,
             'admin' => $user->admin,
         ];
 
