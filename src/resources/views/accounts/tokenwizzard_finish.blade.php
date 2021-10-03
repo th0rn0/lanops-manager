@@ -44,11 +44,7 @@
 			@if ($status == 'success')
 				@if (isset($newtoken))
 				<div class="alert alert-success">
-					@lang('accounts.new_token_wizzard_success_1') {{ $application }} @lang('accounts.new_token_wizzard_success_2')
-					@if(isset($callbackurl) && $callbackurl != "")
-					<br>
-					@lang('accounts.new_token_wizzard_clickoncallback')
-					@endif
+					@lang('accounts.new_token_wizzard_success_1') {{ $application }} @lang('accounts.new_token_wizzard_success_2')<br><font size="3"><strong> @lang('accounts.new_token_wizzard_success_3')</strong></font>
 				</div>
 
 				<div class="input-group mt-2 mb-3">

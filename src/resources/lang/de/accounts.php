@@ -88,8 +88,8 @@ return [
     'new_token_wizzard_application_already_exists_2' => '. Wenn du auf Token Hinzufügen klickst wird der bisherige Token für die Applikation überschrieben.',  
     'new_token_wizzard_connect_back' => 'Zurück verbinden zu',
     'new_token_wizzard_success_1' => 'Der Token für die Applikation',
-    'new_token_wizzard_success_2' => 'wurde erfolgreich hinzugefügt. Er wird nur einmal angezeigt, also bewahre ihn sicher auf.',
+    'new_token_wizzard_success_2' => 'wurde erfolgreich hinzugefügt. ',
+    'new_token_wizzard_success_3' => 'Er wird nur einmal angezeigt, also bewahre ihn sicher auf.',
     'new_token_wizzard_del_failed' => 'Das Löschen des alten Tokens ist fehlgeschlagen. Bitte versuche es noch einmal.',
     'new_token_wizzard_creation_failed' => 'Das Erstellen des Tokens ist fehlgeschlagen. Bitte versuche es noch einmal.',
-    'new_token_wizzard_clickoncallback' => 'Du Kannst jetzt auf den zurück verbinden Button klicken oder den Token kopieren und manuell in deine Applikation einfügen.',
 ];
