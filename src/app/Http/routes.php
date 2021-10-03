@@ -47,6 +47,14 @@ Route::group(['middleware' => ['installed']], function () {
         });
 
         /**
+         * User API 
+         */
+        Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
+            Route::get('/userapi/me', 'Userapi\MeController@getMe');
+            Route::get('/userapi/event/participants', 'Userapi\Events\ParticipantsController@getParticipants');
+        });
+
+        /**
          * Front End
          */
 
