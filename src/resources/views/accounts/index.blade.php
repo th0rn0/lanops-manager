@@ -206,94 +206,6 @@
 				@endif
 			</div>
 			
-			
-			<!-- Tokens -->
-			<div class="col-12  col-lg-12">
-				<div class="card mb-3">
-					<div class="card-header ">
-						<h3 class="card-title">@lang('accounts.tokens')</h3>
-					</div>
-					<div class="card-body">
-						@if (count($user->tokens))
-								
-
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th>
-											@lang('accounts.token_id')
-										</th>
-										<th>
-											@lang('accounts.token_name')
-										</th>
-										<th>
-											@lang('accounts.token_lastuse_date')
-										</th>
-										<th>
-											@lang('accounts.token_creation_date')
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach ($user->tokens as $token)
-										<tr>
-											<td>
-												{{ $token->id }}
-											</td>
-											<td>
-												{{ $token->name }}
-											</td>											
-											<td>
-												@if ($token->last_used_at)
-													{{  date('d-m-y H:i', strtotime($token->last_used_at)) }}
-												@else
-													@lang('accounts.token_never_used')
-												@endif
-											</td>
-											<td>
-												{{  date('d-m-y H:i', strtotime($token->created_at)) }}
-											</td>
-											<td>
-												{{ Form::open(array('url'=>'/account/tokens/remove/' . $token->id, 'onsubmit' => 'return ConfirmDeleteToken()')) }}
-												{{ Form::hidden('_method', 'DELETE') }}
-												<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('accounts.token_remove_button')</button>
-												{{ Form::close() }}
-											</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-
-
-
-				
-						@else
-							@lang('accounts.no_tokens')
-						@endif
-
-						{{ Form::open(array('url'=>'/account/tokens/add' )) }}
-							<div class="row mt-3" style="display: flex; align-items: center;">
-								<div class="col-md-2 col-sm-12">
-
-								</div>
-								<div class="col-md-10 col-sm-12">
-									<div class="form-group">
-										{{ Form::label('token_name',__('accounts.token_name'),array('id'=>'','class'=>'')) }}
-										{{ Form::text('token_name', null ,array('id'=>'token_name','class'=>'form-control')) }}
-									</div>
-									
-									
-
-								<button type="submit" class="btn btn-primary btn-block">@lang('accounts.add_token')</button>
-								</div>
-							</div>
-						{{ Form::close() }}
-						
-					</div>
-				</div>
-			</div>
 
 			<!-- TICKETS -->
 			<div class="col-sm-12 col-12 col-md-6 col-lg-7 mt-3 mb-3">
@@ -397,6 +309,94 @@
 				</div>
 			</div>
 
+						<!-- Tokens -->
+						<div class="col-12  col-lg-12">
+							<div class="card mb-3">
+								<div class="card-header ">
+									<h3 class="card-title">@lang('accounts.tokens')</h3>
+								</div>
+								<div class="card-body">
+									@if (count($user->tokens))
+											
+			
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<th>
+														@lang('accounts.token_id')
+													</th>
+													<th>
+														@lang('accounts.token_name')
+													</th>
+													<th>
+														@lang('accounts.token_lastuse_date')
+													</th>
+													<th>
+														@lang('accounts.token_creation_date')
+													</th>
+													<th>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach ($user->tokens as $token)
+													<tr>
+														<td>
+															{{ $token->id }}
+														</td>
+														<td>
+															{{ $token->name }}
+														</td>											
+														<td>
+															@if ($token->last_used_at)
+																{{  date('d-m-y H:i', strtotime($token->last_used_at)) }}
+															@else
+																@lang('accounts.token_never_used')
+															@endif
+														</td>
+														<td>
+															{{  date('d-m-y H:i', strtotime($token->created_at)) }}
+														</td>
+														<td>
+															{{ Form::open(array('url'=>'/account/tokens/remove/' . $token->id, 'onsubmit' => 'return ConfirmDeleteToken()')) }}
+															{{ Form::hidden('_method', 'DELETE') }}
+															<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('accounts.token_remove_button')</button>
+															{{ Form::close() }}
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
+			
+			
+			
+							
+									@else
+										@lang('accounts.no_tokens')
+									@endif
+			
+									{{ Form::open(array('url'=>'/account/tokens/add' )) }}
+										<div class="row mt-3" style="display: flex; align-items: center;">
+											<div class="col-md-2 col-sm-12">
+			
+											</div>
+											<div class="col-md-10 col-sm-12">
+												<div class="form-group">
+													{{ Form::label('token_name',__('accounts.token_name'),array('id'=>'','class'=>'')) }}
+													{{ Form::text('token_name', null ,array('id'=>'token_name','class'=>'form-control')) }}
+												</div>
+												
+												
+			
+											<button type="submit" class="btn btn-primary btn-block">@lang('accounts.add_token')</button>
+											</div>
+										</div>
+									{{ Form::close() }}
+									
+								</div>
+							</div>
+						</div>
+						
 			<!-- Single Sign-on -->
 			<div class="col-sm-12 col-12 col-md-6 col-lg-7 mt-3 mb-3">
 				<div class="card mb-3">
