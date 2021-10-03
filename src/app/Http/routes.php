@@ -47,6 +47,14 @@ Route::group(['middleware' => ['installed']], function () {
         });
 
         /**
+         * User API 
+         */
+        Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
+            Route::get('/userapi/me', 'Userapi\MeController@getMe');
+            Route::get('/userapi/event/participants', 'Userapi\Events\ParticipantsController@getParticipants');
+        });
+
+        /**
          * Front End
          */
 
@@ -80,6 +88,10 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::get('/account/sso/remove/{method}', 'AccountController@showRemoveSso');
                 Route::post('/account/sso/remove/{method}', 'AccountController@removeSso');
                 Route::get('/account/sso/add/{method}', 'AccountController@addSso');
+                Route::get('/account/tokens/wizzard/start/{application?}/{callbackurl?}', 'AccountController@showTokenWizzardStart');
+                Route::post('/account/tokens/wizzard/finish', 'AccountController@showTokenWizzardFinish');
+                Route::post('/account/tokens/add', 'AccountController@addToken');
+                Route::delete('/account/tokens/remove/{token}', 'AccountController@removeToken');
                 Route::post('/account', 'AccountController@update');
                 Route::post('/account/delete', 'Auth\SteamController@destroy');
             });
