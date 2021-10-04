@@ -68,10 +68,27 @@ class Purchase extends Model
                 break;
             case 'free':
                 return 'free';
+                break;            
+            case 'onsite':
+                return 'onsite';
                 break;
             default:
                 return $this->type;
                 break;
         }
     }
+
+    /**
+     * Get Purchase Success
+     * @return boolean
+     */
+    public function setSuccess()
+    {
+        $this->status = "Success";
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
+
 }

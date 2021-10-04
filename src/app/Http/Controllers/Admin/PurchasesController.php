@@ -56,5 +56,25 @@ class PurchasesController extends Controller
     {
         return view('admin.purchases.show')
             ->withPurchase($purchase);
+    } 
+    /**
+     * Show Purchase Page
+     * @param Purchase $purchase
+     * @return View
+     */
+    public function setSuccess(Purchase $purchase)
+    {
+        if ($purchase->status != "Pending")
+        {
+            Session::flash('alert-danger', 'Purchase is not pending!');
+            return Redirect::to('/admin/purchases/' . $purchase->id);
+        }
+        if (!$purchase->setSuccess()) {
+            Session::flash('alert-danger', 'Cannot set purchase status!');
+            return Redirect::to('/admin/purchases/' . $purchase->id);
+        }
+        Session::flash('alert-success', 'Successfully updated purchase status!');
+        return Redirect::to('/admin/purchases/' . $purchase->id);
     }
+
 }
