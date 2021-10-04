@@ -46,7 +46,7 @@ class ParticipantsController extends Controller
                 $seat = $participant->seat->seat;
             }
             $return[] = [
-                'username' => $participant->user->steamname,
+                'username' => $participant->user->steamname ?? $participant->user->username,
                 'seat' => $seat,
             ];
             // $x['user']['steamname'] = $participant->user->steamname;
