@@ -58,7 +58,7 @@ class PurchasesController extends Controller
             ->withPurchase($purchase);
     } 
     /**
-     * Show Purchase Page
+     * Set Purchase Success
      * @param Purchase $purchase
      * @return View
      */
