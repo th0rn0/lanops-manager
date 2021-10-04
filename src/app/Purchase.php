@@ -79,7 +79,7 @@ class Purchase extends Model
     }
 
     /**
-     * Get Purchase Success
+     * Set Purchase Success
      * @return boolean
      */
     public function setSuccess()
