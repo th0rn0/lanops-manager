@@ -26,7 +26,7 @@ class ParticipantsController extends Controller
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
                     ($participant->signed_in || $participant->event->online_event))
                 {
-                    $event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
+                    $event = Event::where('start', '<', date("Y-m-d H:i:s"))->where('end', '>', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
                 }
             }
         }
