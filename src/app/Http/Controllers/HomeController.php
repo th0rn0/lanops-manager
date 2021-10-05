@@ -54,7 +54,7 @@ class HomeController extends Controller
                     ($participant->signed_in || $participant->event->online_event) &&
                     ($participant->purchase->status == "Success"))
                 {
-                Debugbar::addMessage("Participant gets event", 'Event');
+                    Debugbar::addMessage("Participant gets event", 'Event');
 
                     return $this->event();
                 }
