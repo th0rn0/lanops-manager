@@ -74,4 +74,17 @@ class Purchase extends Model
                 break;
         }
     }
+
+     /**
+     * Set Purchase Success
+     * @return boolean
+     */
+    public function setSuccess()
+    {
+        $this->status = "Success";
+        if (!$this->save()) {
+            return false;
+        }
+        return true;
+    }
 }

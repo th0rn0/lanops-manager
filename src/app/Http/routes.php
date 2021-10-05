@@ -55,6 +55,15 @@ Route::group(['middleware' => ['installed']], function () {
         });
 
         /**
+         * Admin API 
+         */
+        Route::group(['middleware' => ['api', 'auth:sanctum', 'admin']], function () {
+            Route::get('/adminapi/event/participants/{participant}/signIn', 'Adminapi\Events\ParticipantsController@signIn');
+            Route::get('/adminapi/event/participants/', 'Adminapi\Events\ParticipantsController@getParticipants');
+            Route::get('/adminapi/purchases/{purchase}/setSuccess', 'Adminapi\PurchaseController@setSuccess');
+        });
+
+        /**
          * Front End
          */
 

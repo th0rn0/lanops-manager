@@ -173,7 +173,7 @@ class HomeController extends Controller
     {
         $signedIn = true;
         $gameServerList = Helpers::getCasualGameServers();
-        $event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
+        $event = Event::where('start', '<', date("Y-m-d H:i:s"))->where('end', '>', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
         $event->load('eventParticipants.user');
         $event->load('timetables');
         foreach ($event->timetables as $timetable) {
