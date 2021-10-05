@@ -44,24 +44,27 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/updateround/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchUpdateround');
             Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/updateplayer/{mapnumber}/{player}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchUpdateplayer');
             Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/configure/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchConfig');
+            
+            Route::group(['middleware' => ['auth:sanctum']], function () {
+                /**
+                 * User API 
+                 */
+                    Route::get('/api/user/me', 'Userapi\MeController@getMe');
+                    Route::get('/api/user/event/participants', 'Userapi\Events\ParticipantsController@getParticipants');
+
+                /**
+                 * Admin API 
+                 */
+                Route::group(['middleware' => ['admin']], function () {
+                    Route::get('/api/admin/event/participants/{participant}/signIn', 'Adminapi\Events\ParticipantsController@signIn');
+                    Route::get('/api/admin/event/participants/', 'Adminapi\Events\ParticipantsController@getParticipants');
+                    Route::get('/api/admin/purchases/{purchase}/setSuccess', 'Adminapi\PurchaseController@setSuccess');
+                });
+            });
+
         });
 
-        /**
-         * User API 
-         */
-        Route::group(['middleware' => ['api', 'auth:sanctum']], function () {
-            Route::get('/userapi/me', 'Userapi\MeController@getMe');
-            Route::get('/userapi/event/participants', 'Userapi\Events\ParticipantsController@getParticipants');
-        });
 
-        /**
-         * Admin API 
-         */
-        Route::group(['middleware' => ['api', 'auth:sanctum', 'admin']], function () {
-            Route::get('/adminapi/event/participants/{participant}/signIn', 'Adminapi\Events\ParticipantsController@signIn');
-            Route::get('/adminapi/event/participants/', 'Adminapi\Events\ParticipantsController@getParticipants');
-            Route::get('/adminapi/purchases/{purchase}/setSuccess', 'Adminapi\PurchaseController@setSuccess');
-        });
 
         /**
          * Front End
