@@ -78,6 +78,7 @@ class Purchase extends Model
         }
     }
 
+
     /**
      * Set Purchase Success
      * @return boolean

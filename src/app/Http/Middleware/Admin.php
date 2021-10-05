@@ -11,7 +11,7 @@ class Admin
     public function handle($request, Closure $next)
     {
 
-        if (Auth::check() && Auth::user()->getAdmin()) {
+        if ((Auth::check() && Auth::user()->getAdmin()) || auth('sanctum')->user()->getAdmin()) {
             return $next($request);
         }
 
