@@ -495,6 +495,31 @@ class PaymentsController extends Controller
             ->withBasket($basket)
             ->withPurchase($purchase)
         ;
+    }    
+    
+    /**
+     * Pending Payment Page
+     * @param  Purchase $purchase
+     * @return View
+     */
+    public function showPending(Purchase $purchase)
+    {
+        if (!Session::has('params')) {
+            return Redirect::to('/');
+        }
+        $basket = Session::get(Settings::getOrgName() . '-basket');
+        $type = 'tickets';
+        if (array_key_exists('shop', $basket)) {
+            $type = 'shop';
+        }
+        $basket = Helpers::formatBasket($basket);
+        Session::forget('params');
+        Session::forget(Settings::getOrgName() . '-basket');
+        return view('payments.pending')
+            ->withType($type)
+            ->withBasket($basket)
+            ->withPurchase($purchase)
+        ;
     }
 
     /**

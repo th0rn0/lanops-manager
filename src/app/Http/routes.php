@@ -222,6 +222,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::get('/payment/failed', 'PaymentsController@showFailed');
                 Route::get('/payment/cancelled', 'PaymentsController@showCancelled');
                 Route::get('/payment/successful/{purchase}', 'PaymentsController@showSuccessful');
+                Route::get('/payment/pending/{purchase}', 'PaymentsController@showPending');
             });
 
             /**
