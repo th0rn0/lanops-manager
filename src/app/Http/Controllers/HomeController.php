@@ -51,8 +51,11 @@ class HomeController extends Controller
                 Debugbar::addMessage("Participant: " . json_encode($participant), 'Event');
                 if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                    ($participant->signed_in || $participant->event->online_event))
+                    ($participant->signed_in || $participant->event->online_event) &&
+                    ($participant->purchase->status == "Success"))
                 {
+                    Debugbar::addMessage("Participant gets event", 'Event');
+
                     return $this->event();
                 }
             }
@@ -173,7 +176,8 @@ class HomeController extends Controller
     {
         $signedIn = true;
         $gameServerList = Helpers::getCasualGameServers();
-        $event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
+        $event = Event::where('start', '<', date("Y-m-d H:i:s"))->where('end', '>', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
+
         $event->load('eventParticipants.user');
         $event->load('timetables');
         foreach ($event->timetables as $timetable) {

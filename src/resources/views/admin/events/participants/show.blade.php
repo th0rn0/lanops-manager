@@ -104,7 +104,7 @@
 						<p>{{ $participant->purchase->paypal_email }}</p>
 					@endif
 				@endif
-				@if (!$participant->signed_in)
+				@if ((!$participant->signed_in) && ($participant->purchase->status == "Success"))
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/transfer')) }}
 						<div class="form-group">
 							{{ Form::label('event_id','Transfer to event',array('id'=>'','class'=>'')) }}
@@ -135,6 +135,12 @@
 						<button type="submit" class="btn btn-danger btn-block" disabled>Refund - <small>Coming soon</small></button>
 					</div>
 				@endif
+				@if ((!$participant->signed_in) && ($participant->purchase->status != "Success"))
+				<div class="form-group">
+					complete payment to transfer or sign in the user
+				</div>
+				@endif
+
 			</div>
 		</div>
 

@@ -209,6 +209,7 @@ class PaymentsController extends Controller
         }
         $offSitePaymentGateways = [
             'paypal_express',
+            'onsite',
             'free'
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
@@ -271,6 +272,10 @@ class PaymentsController extends Controller
                 $processPaymentSkip = true;
                 $params = array();
                 break;
+            case 'onsite':
+                $processPaymentSkip = true;
+                $params = array();
+                break;
             case 'free':
                 $processPaymentSkip = true;
                 $params = array();
@@ -326,6 +331,20 @@ class PaymentsController extends Controller
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
+        }
+
+        // Onsite
+        if ($processPaymentSkip && $paymentGateway == 'onsite') {
+            $purchaseParams = [
+                'user_id'           => Auth::id(),
+                'type'              => 'onsite',
+                'transaction_id'    => '',
+                'token'             => '',
+                'status'            => 'Pending'
+            ];
+            $purchase = Purchase::create($purchaseParams);
+            $this->processBasket($basket, $purchase->id);
+            return Redirect::to('/payment/pending/' . $purchase->id);
         }
 
         if ($response->isSuccessful()) {
@@ -476,6 +495,31 @@ class PaymentsController extends Controller
             ->withBasket($basket)
             ->withPurchase($purchase)
         ;
+    }    
+    
+    /**
+     * Pending Payment Page
+     * @param  Purchase $purchase
+     * @return View
+     */
+    public function showPending(Purchase $purchase)
+    {
+        if (!Session::has('params')) {
+            return Redirect::to('/');
+        }
+        $basket = Session::get(Settings::getOrgName() . '-basket');
+        $type = 'tickets';
+        if (array_key_exists('shop', $basket)) {
+            $type = 'shop';
+        }
+        $basket = Helpers::formatBasket($basket);
+        Session::forget('params');
+        Session::forget(Settings::getOrgName() . '-basket');
+        return view('payments.pending')
+            ->withType($type)
+            ->withBasket($basket)
+            ->withPurchase($purchase)
+        ;
     }
 
     /**
@@ -586,8 +630,8 @@ class PaymentsController extends Controller
 		if($paymentGateway == 'free' && (Helpers::formatBasket($basket)->total > 0 || Helpers::formatBasket($basket)->total_credit > 0)) {
 			Session::flash('alert-danger', __('payments.payment_method_not_allowed'));
 			return false;
-		}
-        if ($paymentGateway != 'credit' && $paymentGateway != 'free' && !Helpers::formatBasket($basket)->allow_payment) {
+		}		
+        if ($paymentGateway != 'credit' && $paymentGateway != 'free' && $paymentGateway != 'onsite' && !Helpers::formatBasket($basket)->allow_payment) {
             Session::flash('alert-danger', __('payments.payment_method_not_allowed'));
             return false;
         }

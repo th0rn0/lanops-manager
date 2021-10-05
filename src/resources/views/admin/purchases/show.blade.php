@@ -117,7 +117,7 @@
 						</strong>
 					</li>
 					<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-right">{{ $purchase->user->firstname }} {{ $purchase->user->surname }}</span></strong></li>
-					<li class="list-group-item @if (strtolower($purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Status: <span class="float-right">{{ $purchase->status }}</span></strong></li>
+					<li class="list-group-item @if ((strtolower($purchase->status) != 'success') && (strtolower($purchase->status) != 'pending')) list-group-item-danger @endif @if (strtolower($purchase->status) == 'success') list-group-item-success @endif @if (strtolower($purchase->status) == 'pending') list-group-item-warning @endif"><strong>Status: <span class="float-right">{{ $purchase->status }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Type: <span class="float-right">{{ $purchase->type }}</span></strong></li>
 					@if ($purchase->paypal_email != null)
 						<li class="list-group-item list-group-item-info">
@@ -127,14 +127,32 @@
 					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-right">{{ $purchase->transaction_id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Timestamp: <span class="float-right">{{ $purchase->created_at }}</span></strong></li>
 				</ul>
-				@if ($purchase->order)
-					<a href="/admin/orders/{{ $purchase->order->id }}"><button class="btn btn-block btn-success">View Order</button></a>
+				<div class="mb-3">
+				</div>
+				@if (strtolower($purchase->status) == 'pending')
+				<div class="form-group">	
+					
+					{{ Form::open(array('url'=>'/admin/purchases/' . $purchase->id . '/setSuccess', 'onsubmit' => 'return ConfirmSubmit()')) }}
+					{{ Form::hidden('_method', 'GET') }}
+					<button type="submit" class="btn btn-block btn-success">Mark as payed</button>
+					{{ Form::close() }}
+				</div>
 				@endif
+				@if ($purchase->order)
+				<div class="form-group">	
+					<a href="/admin/orders/{{ $purchase->order->id }}"><button class="btn btn-block btn-success">View Order</button></a>
+				</div>
+				@endif
+
 				@if (count($purchase->participants) > 0)
+				<div class="form-group">	
 					@foreach ($purchase->participants as $participant)
 						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}"><button class="btn btn-block btn-success">View Participant - {{ $participant->user->username }}</button></a>
 					@endforeach
+				</div>
 				@endif
+
+
 			</div>
 		</div>
 	</div>

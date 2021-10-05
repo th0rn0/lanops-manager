@@ -6,7 +6,6 @@ use DB;
 use Auth;
 use Settings;
 use Colors;
-
 use App\CreditLog;
 use App\EventTournament;
 
@@ -114,7 +113,9 @@ class User extends Authenticatable implements MustVerifyEmail
         {
             $clauses = ['user_id' => $this->id, 'signed_in' => true];
         }
-        $this->active_event_participant = EventParticipant::where($clauses)->orderBy('updated_at', 'DESC')->first();
+        $this->active_event_participant = EventParticipant::whereRelation('purchase', 'status', '=', 'Success')->where($clauses)->orderBy('updated_at', 'DESC')->first();
+        Debugbar::addMessage("active_event_participant: ", 'setActiveEventParticipant');
+        Debugbar::addMessage("active_event_participant: " . json_encode($this->active_event_participant), 'setActiveEventParticipant');
 
     }
 

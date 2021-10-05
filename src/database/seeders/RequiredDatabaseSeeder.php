@@ -250,6 +250,13 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => true,
                 'default'       => true,
             ]
+        );		
+        Setting::firstOrCreate(
+            ['setting'          => 'payment_gateway_onsite'],
+            [
+                'value'         => true,
+                'default'       => true,
+            ]
         );
         Setting::firstOrCreate(
             ['setting'          => 'credit_enabled'],

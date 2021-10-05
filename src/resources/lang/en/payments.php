@@ -92,4 +92,11 @@ return [
     'payment_method_not_allowed' => 'You cannot use that method to purchase this basket!',
     'pay_by_1' => 'Pay by paymentprovider',
     'pay_by_2' => '',
+    'payment_pending' => 'Payment pending!',
+    'thank_you_pending' => 'Thank you for your order!',
+    'tickets_pending_active' => 'Your tickets are now active but you have to pay onsite with cash to sign in! The order is legally binding!',
+    'payment_pending_text1' => 'You may now go to the',
+    'payment_pending_linktext1' => 'Events page and book a seat!',
+    'payment_pending_text2' => 'You can also take a look for which',
+    'payment_pending_linktext2' => 'tournaments you can register',
 ];

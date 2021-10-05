@@ -111,6 +111,7 @@ class InstallController extends Controller
 	        Settings::enablePaymentGateway('stripe');
         }
 		Settings::enablePaymentGateway('free');
+		Settings::enablePaymentGateway('onsite');
 
         // Clear Cache
         Artisan::call('config:clear');

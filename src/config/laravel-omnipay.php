@@ -36,8 +36,15 @@ return [
         'free' => [
             'driver'  => 'free_driver',
             'options' => [
-                'displayName'   => 'Kostenlos',
+                'displayName'   => 'Free',
                 'note'          => '',
+            ]
+            ],
+        'onsite' => [
+            'driver'  => 'onsite_driver',
+            'options' => [
+                'displayName'   => 'On site',
+                'note'          => 'pay cash on site',
             ]
         ]
     ]

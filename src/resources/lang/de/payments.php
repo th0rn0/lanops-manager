@@ -91,4 +91,11 @@ return [
     'payment_method_not_allowed' => 'Sie können diese Bezahlmethode nicht verwenden um diesen Warenkorb zu bezahlen!',
     'pay_by_1' => 'Mit Bezahlanbieter',
     'pay_by_2' => 'bezahlen',
+    'payment_pending' => 'Bezahlung ausstehend!',
+    'thank_you_pending' => 'Vielen Dank für deine Bestellung!',
+    'tickets_pending_active' => 'Deine Tickets sind nun aktiv, du musst allerdings vor Ort bezahlen um einchecken zu können. Der Kauf ist rechtlich bindend!',
+    'payment_pending_text1' => 'Du kannst nun zur',
+    'payment_pending_linktext1' => 'Events Seite wechseln und dir einen Sitzplatz buchen',
+    'payment_pending_text2' => 'Außerdem kannst du dir anschauen',
+    'payment_pending_linktext2' => 'bei welchen Turnieren du mitspielen kannst und dich für jene anmelden',
 ];
