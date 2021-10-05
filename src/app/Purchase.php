@@ -68,6 +68,9 @@ class Purchase extends Model
                 break;
             case 'free':
                 return 'free';
+                break;            
+            case 'onsite':
+                return 'onsite';
                 break;
             default:
                 return $this->type;
@@ -75,7 +78,8 @@ class Purchase extends Model
         }
     }
 
-     /**
+
+    /**
      * Set Purchase Success
      * @return boolean
      */
@@ -87,4 +91,5 @@ class Purchase extends Model
         }
         return true;
     }
+
 }

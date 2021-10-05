@@ -231,6 +231,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::get('/payment/failed', 'PaymentsController@showFailed');
                 Route::get('/payment/cancelled', 'PaymentsController@showCancelled');
                 Route::get('/payment/successful/{purchase}', 'PaymentsController@showSuccessful');
+                Route::get('/payment/pending/{purchase}', 'PaymentsController@showPending');
             });
 
             /**
@@ -626,6 +627,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/purchases', 'Admin\PurchasesController@index');
             Route::get('/admin/purchases/shop', 'Admin\PurchasesController@showShop');
             Route::get('/admin/purchases/event', 'Admin\PurchasesController@showEvent');
+            Route::get('/admin/purchases/{purchase}/setSuccess', 'Admin\PurchasesController@setSuccess');
             Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
 
             /**

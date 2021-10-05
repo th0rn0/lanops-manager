@@ -63,6 +63,11 @@ class ParticipantsController extends Controller
      */
     public function signIn(Event $event, EventParticipant $participant)
     {
+        if ($participant->purchase->status != "Success")
+        {
+            Session::flash('alert-danger', 'Cannot sign in Participant because the payment is not completed!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
         if (!$participant->setSignIn()) {
             Session::flash('alert-danger', 'Cannot sign in Participant!');
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
@@ -73,6 +78,11 @@ class ParticipantsController extends Controller
 
     public function transfer(Event $event, EventParticipant $participant, Request $request)
     {
+        if ($participant->purchase->status != "Success")
+        {
+            Session::flash('alert-danger', 'Cannot sign in Participant because the payment is not completed!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
         $rules = [
             'event_id'  => 'required',
             'event_id'  => 'exists:events,id',

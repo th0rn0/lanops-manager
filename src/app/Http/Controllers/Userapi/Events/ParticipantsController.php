@@ -24,7 +24,8 @@ class ParticipantsController extends Controller
             foreach ($user->eventParticipants as $participant) {
                 if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                    ($participant->signed_in || $participant->event->online_event))
+                    ($participant->signed_in || $participant->event->online_event) && 
+                    ($participant->purchase->status == "Success"))
                 {
                     $event = Event::where('start', '<', date("Y-m-d H:i:s"))->where('end', '>', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
                 }
