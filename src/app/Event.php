@@ -58,13 +58,23 @@ class Event extends Model
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
         }
-        if (!$admin) {
+        if (!$admin && Auth::user()) {
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
             });
             static::addGlobalScope('statusPublished', function (Builder $builder) {
                 $builder->where('status', 'PUBLISHED')
-                        ->orWhere('status', 'PRIVATE');
+                    ->orWhere('status', 'REGISTEREDONLY')
+                    ->orWhere('status', 'PRIVATE');
+            });
+        }
+        if ((!$admin) && (!Auth::user())) {
+            static::addGlobalScope('statusDraft', function (Builder $builder) {
+                $builder->where('status', '!=', 'DRAFT');
+            });
+            static::addGlobalScope('statusPublished', function (Builder $builder) {
+                $builder->where('status', 'PUBLISHED')
+                    ->orWhere('status', 'PRIVATE');
             });
         }
     }

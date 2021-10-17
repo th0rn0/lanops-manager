@@ -4,6 +4,11 @@
 		@php
 			$eventStatusColor = 'green';
 			$eventStatusIcon = 'fa-check-circle-o';
+		@endphp	
+	@elseif ($event->status == 'REGISTEREDONLY')
+		@php
+			$eventStatusColor = 'blue';
+			$eventStatusIcon = 'fa-check-circle-o';
 		@endphp
 	@elseif ($event->status == 'DRAFT')
 		@php
@@ -30,6 +35,8 @@
 				<div class="huge ml-auto">
 					@if ($event->status == 'PUBLISHED')
 						<small>Live</small>
+					@elseif ($event->status == 'REGISTEREDONLY')
+						<small>Registered only</small>					
 					@elseif ($event->status == 'DRAFT')
 						<small>Draft</small>
 					@elseif ($event->status == 'PREVIEW')

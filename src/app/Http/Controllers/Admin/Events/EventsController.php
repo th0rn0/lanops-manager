@@ -123,7 +123,7 @@ class EventsController extends Controller
             'end_time'          => 'filled|date_format:H:i',
             'start_date'        => 'filled|date_format:m/d/Y',
             'start_time'        => 'filled|date_format:H:i',
-            'status'            => 'in:draft,preview,published,private',
+            'status'            => 'in:draft,preview,published,private,registeredonly',
             'capacity'          => 'filled|integer',
             'venue'             => 'exists:event_venues,id',
         ];
