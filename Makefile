@@ -1,16 +1,23 @@
 dev:
 	docker-compose -f docker-compose.yml up -d --build
+dev-local:
+	docker-compose -f docker-compose.local.yml up -d --build
 
 # Debug
 interactive:
 	docker-compose -f docker-compose.yml up --build
+interactive-local:
+	docker-compose -f docker-compose.local.yml up --build
 
 # Stop all Containers
 stop:
 	docker-compose -f docker-compose.yml stop
+stop-local:
+	docker-compose -f docker-compose.local.yml stop
 
 # Build from clean
 app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-key stop ssh-keygen
+app-build-clean-local: folder-structure layout-images dev-local app-build-dep wait database-migrate database-seed generate-key stop-local ssh-keygen
 
 # Build Dependencies
 app-build-dep: composer-install npm-install mix
@@ -83,7 +90,7 @@ generate-appearance:
 # Generate Images - This will erase your current settings!
 generate-images:
 	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
-	
+
 # Generate testusers - This will spam 50 testuser to the Database!
 generate-testuser:
 	docker exec eventula_manager_app php artisan db:seed --class=TestUserSeeder
