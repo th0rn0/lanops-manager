@@ -18,3 +18,4 @@ src/public/css/font/*
 src/public/uploads/gallery/*
 
 docs/build
+docker-compose.local.yml

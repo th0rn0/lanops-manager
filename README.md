@@ -1,6 +1,6 @@
 # Eventula Event Manager - ECO System
 
-The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management. 
+The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management.
 
 https://eventula.com
 
@@ -53,7 +53,7 @@ If you are using this please consider signing up to eventula for event mapping.
   - Supported via Challonge API
   - 1v1, Teams and PUGs supported!
   - Single/Double Elimination and Round Robin supported!
-  - Different rules for each Tournament 
+  - Different rules for each Tournament
 - Matchmaking feature
 - Event Sign in
   - Sign in via QR Code
@@ -63,7 +63,7 @@ If you are using this please consider signing up to eventula for event mapping.
   - Gamserver Management
     - RCON Support for remote management and status gathering (currently only for Maniaplanet (and Trackmania), Source and Goldsource)
     - Support for automated Gameserver assignments and fully automated matchmaking / tournaments (currently only Get5 for CS:GO is supported via https://github.com/Lan2Play/get5_eventula_apistats)
-    - Public gameserver list on the homepage 
+    - Public gameserver list on the homepage
 - (File)Gallery
 - Helpsystem to publish help/faq articles
 - Admin Interface
@@ -265,11 +265,11 @@ This method is intended for development but can be used in production. It uses d
 
 #### 1. Setup & Configuration
 
-Run ```make env-file``` to create a ```.env``` file in the ```src```  directory. Then modify it as according to your preferences. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything! 
+Run ```make env-file``` to create a ```.env``` file in the ```src```  directory. Then modify it as according to your preferences. KEEP THIS SAFE & SECURE! This file holds the credentials used within the app. If any would be hacker was to get hold of this file they have access to everything!
 
 #### 2. Run
 
-Run the stack detached. This is re attachable. 
+Run the stack detached. This is re attachable.
 
 ```
 make
@@ -300,9 +300,16 @@ Stop the stack.
 make stop
 ```
 
+#### Troublesooting
+
+##### app-build-clean
+
+No Permissions in some folders: **sudo make permissions-custom user=<user>**
+
+
 ## HTTPS
 
-To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` or mount in the certs to the ```/etc/nginx/certs``` directory on the container. 
+To enable HTTPS set ```ENABLE_HTTPS=true```. If you wish to use your own certs, copy them to ```resources/certs``` or mount in the certs to the ```/etc/nginx/certs``` directory on the container.
 
 Note: Only set HTTPS to true if you are doing SSL Termination within the app.
 
