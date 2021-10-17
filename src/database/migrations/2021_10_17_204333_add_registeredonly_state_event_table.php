@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class AddRegisteredonlyStateEventTable extends Migration
@@ -14,7 +12,6 @@ class AddRegisteredonlyStateEventTable extends Migration
     public function up()
     {
         DB::statement("ALTER TABLE events MODIFY status ENUM('DRAFT','PREVIEW','PUBLISHED', 'PRIVATE', 'REGISTEREDONLY') NOT NULL");
-
     }
 
     /**
@@ -25,8 +22,5 @@ class AddRegisteredonlyStateEventTable extends Migration
     public function down()
     {
         DB::statement("ALTER TABLE events MODIFY status ENUM('DRAFT','PREVIEW','PUBLISHED', 'PRIVATE') NOT NULL");
-
-
     }
 }
-
