@@ -25,15 +25,16 @@ class ParticipantsController extends Controller
             foreach ($user->eventParticipants as $participant) {
                 if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                    ($participant->signed_in || $participant->event->online_event))
-                {
+                    ($participant->signed_in || $participant->event->online_event)
+                ) {
                     $event = Event::where('start', '<', date("Y-m-d H:i:s"))->where('end', '>', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
+                    break;
                 }
             }
         }
 
         if (!isset($event)) {
-            abort(404);
+            abort(404, "Event not found.");
         }
 
         $return = array();
@@ -67,18 +68,15 @@ class ParticipantsController extends Controller
     {
         if (!$participant->setSignIn()) {
             return [
-            'successful' => 'false',
-            'reason' => 'Cannot sign in Participant',
-            'participant' => $participant,
+                'successful' => 'false',
+                'reason' => 'Cannot sign in Participant',
+                'participant' => $participant,
             ];
         }
         return [
             'successful' => 'true',
             'reason' => '',
             'participant' => $participant,
-            ]; 
-        
-
+        ];
     }
-
 }
