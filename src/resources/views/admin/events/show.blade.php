@@ -62,7 +62,8 @@
 													'draft'=>'Draft',
 													'preview'=>'Preview',
 													'published'=>'Published',
-													'private' => 'Private'
+													'private' => 'Private',
+													'registeredonly' => 'Registered only',
 												),
 												strtolower($event->status),
 												array(
