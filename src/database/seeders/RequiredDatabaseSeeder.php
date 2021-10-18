@@ -8,6 +8,10 @@ use App\Appearance;
 use App\SliderImage;
 use App\ApiKey;
 
+use Spatie\MailTemplates\Models\MailTemplate;
+
+
+use App\Mail\EventulaTicketOrderMail;
 
 use Faker\Factory as Faker;
 
@@ -603,5 +607,16 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => env('STEAM_API_KEY', null),
             ]
         );
+
+        #Mailing
+        MailTemplate::firstOrCreate(
+            ['mailable' => EventulaTicketOrderMail::class],
+            [
+                'subject' => "ticket order", 
+                'html_template' => "<h1> placeholder </h1>", 
+                'text_template' => "placeholder", 
+            ]
+        );
+
     }
 }

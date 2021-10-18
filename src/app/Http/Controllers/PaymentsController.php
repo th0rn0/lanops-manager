@@ -8,6 +8,7 @@ use Settings;
 use Colors;
 use Helpers;
 use Auth;
+use Mail;
 
 use App\Purchase;
 use App\User;
@@ -17,6 +18,8 @@ use App\ShopItem;
 use App\ShopOrder;
 use App\ShopOrderItem;
 use App\EventParticipant;
+
+use App\Mail\EventulaTicketOrderMail;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -330,6 +333,7 @@ class PaymentsController extends Controller
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
+            Mail::to(Auth::user())->queue(new EventulaTicketOrderMail(Auth::user(), $purchase, $basket ));
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
 

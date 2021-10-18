@@ -61,7 +61,7 @@ class MailingController extends Controller
     {
         return view('admin.mailing.show')
             ->withMailTemplate($mailTemplate)
-            ->withMailVariables(EventulaMailingMail::getVariables())
+            ->withMailVariables($mailTemplate->mailable::getVariables())
         ;
     }
 
@@ -132,6 +132,11 @@ class MailingController extends Controller
      */
     public function destroy(MailTemplate $mailTemplate)
     {
+        if ($mailTemplate->mailable != "App\Mail\EventulaMailingMail")
+        {
+            Session::flash('alert-danger', 'Cannot delete static mailtemplate!');
+            return Redirect::back();
+        }
         if (!$mailTemplate->delete()) {
             Session::flash('alert-danger', 'Cannot delete Mailtemplate!');
             return Redirect::back();

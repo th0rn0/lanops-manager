@@ -40,11 +40,13 @@
 
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
-				<hr>
-				{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id, 'onsubmit' => 'return ConfirmDelete()')) }}
-					{{ Form::hidden('_method', 'DELETE') }}
-					<button type="submit" class="btn btn-danger btn-block">Delete</button>
-				{{ Form::close() }}
+				@if ($mailTemplate->mailable == "App\Mail\EventulaMailingMail")
+					<hr>
+					{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger btn-block">Delete</button>
+					{{ Form::close() }}
+				@endif
 			</div>
 		</div>
 	</div>
