@@ -1,14 +1,18 @@
 <?php
 namespace App\Mail;
 use Storage; 
+use Helpers;
 use App\User;
 use App\Event;
+use App\EventTicket;
+use App\ShopItem;
 use App\Purchase;
 use App\EventParticipant;
+use App\Libraries\MustacheModelHelper;
 use Spatie\MailTemplates\TemplateMailable;
 use Spatie\MailTemplates\Interfaces\MailTemplateInterface;
 use Spatie\MailTemplates\Models\MailTemplate;
-
+use Illuminate\support\Collection;
 
 class EventulaTicketOrderMail extends TemplateMailable
 {
@@ -29,7 +33,7 @@ class EventulaTicketOrderMail extends TemplateMailable
 
     /** @var string */
     public $url;    
-    
+
     /** @var int */
     public $purchase_id;    
     
@@ -40,8 +44,15 @@ class EventulaTicketOrderMail extends TemplateMailable
     public array $purchase_participants;   
 
     /** @var array */
-    public array $basket;      
-    
+    public array $basket;     
+
+    /** @var float */
+    public float $basket_total;     
+
+    /** @var float */
+    public float $basket_total_credit;     
+
+
 
 
     public function __construct(User $user, Purchase $purchase, Array $basket)
@@ -50,87 +61,44 @@ class EventulaTicketOrderMail extends TemplateMailable
         $this->surname = $user->surname;
         $this->email = $user->email;
         $this->username = $user->username_nice;
-        $this->url = config('app.url');
+        $this->url = rtrim(config('app.url'), "/") . "/";
 
-
-        // $this->purchase_participants = array(
-        //                         array(
-        //                             'qrcode'  => "testknaddle",
-        //                             'event' => array(
-        //                                 'display_name' => 'EventNameHere 3',
-        //                             ),                                    
-        //                             'ticket' => array(
-        //                                 'id' => 2,
-        //                             ),
-
-        //                         ),                                
-                                
-        //                     );
 
         if (isset($purchase))
         {
             $this->purchase_id = $purchase->id;
             $this->purchase_payment_method = $purchase->getPurchaseType();
-            $this->purchase_participants = array();
-            Storage::append('filez.log', '______________________________________________________________________________________________');
-
-            Storage::append('filez.log', 'create purchase object');
-            Storage::append('filez.log', "json: " . json_encode($this->purchase_participants));
-
+            $this->purchase_participants = array();            
 
             foreach($purchase->participants as $participant)
             {
-                Storage::append('filez.log', "participant: " . json_encode($participant));
+                $this->purchase_participants[]=(new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first()));
 
-                Storage::append('filez.log', "eventparticipant: " . json_encode(EventParticipant::with('event','ticket')->where('id', $participant->id)->get()));
-
-
-               
-                $tempparticipant = EventParticipant::with('event','ticket')->where('id', $participant->id)->first();
-                
-                Storage::append('filez.log', "participant: " . print_r((array)$tempparticipant, true));
-                Storage::append('filez.log', "participant: " . print_r($tempparticipant, true));
-            
-                $this->purchase_participants[]=($tempparticipant);
             }
-
-
-            Storage::append('filez.log', 'finished');
-            Storage::append('filez.log', "json: " . json_encode($this->purchase_participants));
-
-
         }
         if (isset($basket))
         {
-            Storage::append('filez.log', 'basket');
-            Storage::append('filez.log', "basket: " . json_encode($basket));
-            $this->basket = $basket;
-        }
+            $tempbasket = Helpers::formatBasket($basket);
+            $this->basket = array(); 
 
-
-    }
-
-    function object_to_array_recursive($object, $assoc=TRUE, $empty='')
-    {
-        $res_arr = array();
-
-        if (!empty($object)) {
-
-            $arrObj = is_object($object) ? get_object_vars($object) : $object;
-
-            $i=0;
-            foreach ($arrObj as $key => $val) {
-                $akey = ($assoc !== FALSE) ? $key : $i;
-                if (is_array($val) || is_object($val)) {
-                    $res_arr[$akey] = (empty($val)) ? $empty : object_to_array_recursive($val);
+            foreach($tempbasket->all() as $item)
+            {
+                if (get_class($item) == "App\ShopItem")
+                {
+                    $this->basket[]=(new MustacheModelHelper(ShopItem::where('id', $item->id)->first()));
                 }
-                else {
-                    $res_arr[$akey] = (empty($val)) ? $empty : (string)$val;
+                if (get_class($item) == "App\EventTicket")
+                {
+                    $this->basket[]=(new MustacheModelHelper(EventTicket::where('id', $item->id)->first()));
                 }
-                $i++;
             }
+
+            $this->basket_total = $tempbasket->total;
+            $this->basket_total_credit = $tempbasket->total_credit;
+
         }
-        return $res_arr;
-    }
+
+
+    } 
 
 }
