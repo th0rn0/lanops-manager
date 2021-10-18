@@ -8,9 +8,7 @@ use Faker\Factory as Faker;
 
 class SettingsTableSeeder extends Seeder
 {
-    private $settings = [
-
-    ];
+    private $settings = [];
     /**
      * Run the database seeds.
      *
@@ -239,13 +237,13 @@ class SettingsTableSeeder extends Seeder
                 'default'       => true,
             ]
         );
-		Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_free'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
-        );		
+        );
         Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_onsite'],
             [
@@ -413,5 +411,13 @@ class SettingsTableSeeder extends Seeder
             ]
         );
 
+        Setting::firstOrCreate(
+            ['setting'          => 'auth_require_phonenumber'],
+            [
+                'value'         => false,
+                'default'       => true,
+                'description'   => 'Require phonenumber for all users'
+            ]
+        );
     }
 }

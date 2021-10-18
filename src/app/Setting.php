@@ -310,7 +310,7 @@ class Setting extends Model
         return true;
     }
 
-        /**
+    /**
      * Get Twitter Link
      * @return String
      */
@@ -356,7 +356,7 @@ class Setting extends Model
         return true;
     }
 
-        /**
+    /**
      * Get Mumble Link
      * @return String
      */
@@ -611,7 +611,7 @@ class Setting extends Model
         return true;
     }
 
-     /**
+    /**
      * Get Privacy Policy
      * @return String
      */
@@ -692,7 +692,7 @@ class Setting extends Model
      */
     public static function enablePaymentGateway($gateway)
     {
-        if (!$paymentGateway = self::where('setting', 'like', '%payment_gateway_'. $gateway . '%')->first()) {
+        if (!$paymentGateway = self::where('setting', 'like', '%payment_gateway_' . $gateway . '%')->first()) {
             return false;
         }
         $paymentGateway->value = true;
@@ -708,7 +708,7 @@ class Setting extends Model
      */
     public static function disablePaymentGateway($gateway)
     {
-        if (!$paymentGateway = self::where('setting', 'like', '%payment_gateway_'. $gateway . '%')->first()) {
+        if (!$paymentGateway = self::where('setting', 'like', '%payment_gateway_' . $gateway . '%')->first()) {
             return false;
         }
         $paymentGateway->value = false;
@@ -1226,7 +1226,7 @@ class Setting extends Model
         }
         return true;
     }
-    
+
 
     /**
      * Get Active Login Methods
@@ -1264,7 +1264,7 @@ class Setting extends Model
      */
     public static function enableLoginMethod($method)
     {
-        if (!$loginMethod = self::where('setting', 'like', '%login_'. $method . '%')->first()) {
+        if (!$loginMethod = self::where('setting', 'like', '%login_' . $method . '%')->first()) {
             return false;
         }
         $loginMethod->value = true;
@@ -1280,7 +1280,7 @@ class Setting extends Model
      */
     public static function disableLoginMethod($method)
     {
-        if (!$loginMethod = self::where('setting', 'like', '%login_'. $method . '%')->first()) {
+        if (!$loginMethod = self::where('setting', 'like', '%login_' . $method . '%')->first()) {
             return false;
         }
         $loginMethod->value = false;
@@ -1328,6 +1328,47 @@ class Setting extends Model
         }
         $AuthSteamRequireEmailEnabled->value = false;
         if (!$AuthSteamRequireEmailEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Is auth_require_phonenumber Enabled
+     * @return Boolean
+     */
+    public static function isAuthRequirePhonenumberEnabled()
+    {
+        return self::where('setting', 'auth_require_phonenumber')->first()->value;
+    }
+
+    /**
+     * Enable auth_require_phonenumber
+     * @return Boolean
+     */
+    public static function enableAuthRequirePhonenumber()
+    {
+        if (!$AuthRequirePhonenumberEnabled = self::where('setting', 'auth_require_phonenumber')->first()) {
+            return false;
+        }
+        $AuthRequirePhonenumberEnabled->value = true;
+        if (!$AuthRequirePhonenumberEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable auth_require_phonenumber
+     * @return Boolean
+     */
+    public static function disableAuthRequirePhonenumber()
+    {
+        if (!$AuthRequirePhonenumberEnabled = self::where('setting', 'auth_require_phonenumber')->first()) {
+            return false;
+        }
+        $AuthRequirePhonenumberEnabled->value = false;
+        if (!$AuthRequirePhonenumberEnabled->save()) {
             return false;
         }
         return true;

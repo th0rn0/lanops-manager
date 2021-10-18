@@ -33,6 +33,7 @@ return [
     'username' => 'Benutzername',
     'steamname' => 'Steam Benutzername',
     'email' => 'Email Adresse',
+    'phonenumber' => 'Handy/Tel.',
     'change_password' => 'Passwort ändern',
     'confirm_password' => 'Passwort bestätigen',
     'submit' => 'Absenden',

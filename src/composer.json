@@ -50,7 +50,8 @@
         "maniaplanet/dedicated-server-api": "6.0.x-dev",
         "laravel/ui": "^3.0",
         "spatie/laravel-database-mail-templates": "^3.4",
-        "laravel/sanctum": "^2.11"
+        "laravel/sanctum": "^2.11",
+        "propaganistas/laravel-phone": "^4.3"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

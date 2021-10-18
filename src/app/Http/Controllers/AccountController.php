@@ -34,9 +34,7 @@ class AccountController extends Controller
             ->withUser($user)
             ->withCreditLogs($creditLogs)
             ->withPurchases($purchases)
-            ->withEventParticipants($tickets)
-        ;
-
+            ->withEventParticipants($tickets);
     }
 
     /**
@@ -46,12 +44,11 @@ class AccountController extends Controller
     public function showMail()
     {
         $user = Auth::user();
-        
+
         return view("accounts.email")
             ->withUser($user);
+    }
 
-    }    
-    
     /**
      * Show Remove single sign on Page
      * @return View
@@ -59,20 +56,19 @@ class AccountController extends Controller
     public function showRemoveSso($method)
     {
         $user = Auth::user();
-        
+
         return view("accounts.removesso")
             ->withUser($user)
             ->withMethod($method);
-
     }
 
 
-   /**
+    /**
      * add a user token
      * @return View
      */
     public function addToken(Request $request)
-    {      
+    {
         $rules = [
             'token_name'         => 'filled|string',
         ];
@@ -81,11 +77,9 @@ class AccountController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-    
-        foreach ($request->user()->tokens as $currtoken)
-        {
-            if ($request->token_name == $currtoken->name)
-            {
+
+        foreach ($request->user()->tokens as $currtoken) {
+            if ($request->token_name == $currtoken->name) {
                 Session::flash('alert-danger', "This Token name is already in use!");
                 return Redirect::back();
             }
@@ -95,34 +89,29 @@ class AccountController extends Controller
 
         Session::flash('alert-success', "The Token is created successfully! You can find it above!. Note: it is only shown a single time, so keep it safe!");
         return redirect::back()->with('newtoken', $token->plainTextToken);
-
-    }  
+    }
 
     /**
      * remove a user token
      * @return View
      */
     public function removeToken($token)
-    {      
+    {
         $user = Auth::user();
-        if($token == null || $token == "")
-        {
+        if ($token == null || $token == "") {
             Session::flash('alert-danger', "Token id is not available!");
-            return Redirect::back(); 
+            return Redirect::back();
         }
-        
+
         $selectedtoken = false;
 
-        foreach ($user->tokens as $currtoken)
-        {
-            if ($token == $currtoken->id)
-            {
+        foreach ($user->tokens as $currtoken) {
+            if ($token == $currtoken->id) {
                 $selectedtoken = $currtoken;
             }
         }
 
-        if ($selectedtoken == false)
-        {
+        if ($selectedtoken == false) {
             Session::flash('alert-danger', "This Token could not be found on your user!");
             return Redirect::back();
         }
@@ -132,70 +121,62 @@ class AccountController extends Controller
             return Redirect::back();
         }
 
-        
+
 
         Session::flash('alert-success', "Token deleted successfully!");
         return redirect('/account');
+    }
 
-    }     
-    
-     /**
+    /**
      * start the application authentication wizzard
      * @return View
      */
     public function showTokenWizzardStart($application = "", $callbackurl = "")
-    {      
+    {
         $user = Auth::user();
-        if($application == null || $application == "")
-        {
+        if ($application == null || $application == "") {
             return view("accounts.tokenwizzard_start")->withStatus('no_application');
         }
-        
 
-        foreach ($user->tokens as $currtoken)
-        {
-            if ($currtoken->name == $application)
-            {
+
+        foreach ($user->tokens as $currtoken) {
+            if ($currtoken->name == $application) {
                 return view("accounts.tokenwizzard_start")->withStatus('exists')->withApplication($application)->withCallbackurl($callbackurl);
             }
         }
 
         return view("accounts.tokenwizzard_start")->withStatus("not_exists")->withApplication($application)->withCallbackurl($callbackurl);
-    }  
-    
-     /**
+    }
+
+    /**
      * finish the application authentication wizzard
      * @return View
      */
     public function showTokenWizzardFinish(Request $request)
-    {      
+    {
         $user = Auth::user();
 
 
-        foreach ($user->tokens as $currtoken)
-        {
-            if ($currtoken->name == $request->application)
-            {                    
+        foreach ($user->tokens as $currtoken) {
+            if ($currtoken->name == $request->application) {
                 if (!$currtoken->delete()) {
                     return view("accounts.tokenwizzard_finish")->withStatus('del_failed')->withApplication($request->application);
                 }
             }
         }
 
-        
+
 
         $token = $user->createToken($request->application);
 
-        if($token->plainTextToken == null || $token->plainTextToken == "")
-        {
+        if ($token->plainTextToken == null || $token->plainTextToken == "") {
             return view("accounts.tokenwizzard_finish")->withStatus('creation_failed')->withApplication($request->application);
         }
 
         $newcallbackurl = $request->callbackurl . "://" . $token->plainTextToken;
 
         return view("accounts.tokenwizzard_finish")->withStatus('success')->withNewtoken($token->plainTextToken)->withApplication($request->application)->withCallbackurl($newcallbackurl);
-
-    }  
+    }
 
 
     /**
@@ -205,28 +186,26 @@ class AccountController extends Controller
     public function addSso($method)
     {
         switch ($method) {
-            case 'steam':                
+            case 'steam':
                 return redirect('/login/steam');
                 break;
             default:
                 return Redirect::back()->withError('no valid sso method selected');
                 break;
         }
+    }
 
-    }  
-    
     /**
      * remove single sign on
      * @return View
      */
     public function removeSso(Request $request, $method)
-    {       
+    {
         $user = Auth::user();
         $mailchanged = false;
 
 
-        if ($user->email != $request->email)
-        {
+        if ($user->email != $request->email) {
             $rules = [
                 'email'         => 'filled|email|unique:users,email',
             ];
@@ -257,10 +236,9 @@ class AccountController extends Controller
             $user->password = Hash::make($request->password1);
         }
 
-        if(isset($user->email) && isset($user->password))
-        {
+        if (isset($user->email) && isset($user->password)) {
             switch ($method) {
-                case 'steam':                
+                case 'steam':
                     $user->steamname = "";
                     $user->steamid = "";
                     $user->avatar = "";
@@ -275,18 +253,14 @@ class AccountController extends Controller
             return Redirect::back()->withFail("Oops, Something went Wrong while updating the user.");
         }
 
-        if($mailchanged)
-        {
+        if ($mailchanged) {
             Session::flash('alert-success', "Successfully removed steam account, email verification is needed!");
             $user->sendEmailVerificationNotification();
             return redirect('/register/email/verify');
-        }
-        else
-        {
+        } else {
             Session::flash('alert-success', "Successfully removed steam account!");
             return redirect('/account');
         }
-
     }
 
 
@@ -335,31 +309,37 @@ class AccountController extends Controller
 
     public function updateMail(Request $request)
     {
-        $rules = [
-            'email'         => 'filled|email|unique:users,email',
-        ];
-        $messages = [
-            'email.filled'      => 'Email Cannot be blank.',
-            'email.unique'      => 'Email is already in use.',
-        ];
+        $rules = [];
+        $messages = [];
+
+        if (Settings::isAuthSteamRequireEmailEnabled()) {
+            $rules['email'] = 'filled|email|unique:users,email';
+            $messages['email.filled'] = 'Email Cannot be blank.';
+            $messages['email.unique'] = 'Email is already in use.';
+        }
+
+        if (Settings::isAuthRequirePhonenumberEnabled()) {
+            $rules['phonenumber'] = 'required|filled|phone:AUTO,DE';
+            $messages['phonenumber.phone'] = 'The field contains an invalid number.';
+        }
+
         $this->validate($request, $rules, $messages);
 
         $user = Auth::user();
 
-        $user->email_verified_at = null;
+        if ($user->email != @$request->email) {
+            $user->email_verified_at = null;
+        }
 
         $user->email = @$request->email;
+        $user->phonenumber = @$request->phonenumber;
 
         if (!$user->save()) {
             return Redirect::back()->withFail("Oops, Something went Wrong while updating the user.");
         }
-
-        $user->sendEmailVerificationNotification();
-
+        if ($user->email != @$request->email) {
+            $user->sendEmailVerificationNotification();
+        }
         return redirect('/register/email/verify');
-    
     }
 }
-
-
-

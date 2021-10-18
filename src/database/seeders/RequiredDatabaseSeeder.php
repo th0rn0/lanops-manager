@@ -13,9 +13,7 @@ use Faker\Factory as Faker;
 
 class RequiredDatabaseSeeder extends Seeder
 {
-    private $settings = [
-
-    ];
+    private $settings = [];
     /**
      * Run the database seeds.
      *
@@ -244,13 +242,13 @@ class RequiredDatabaseSeeder extends Seeder
                 'default'       => true,
             ]
         );
-		Setting::firstOrCreate(
+        Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_free'],
             [
                 'value'         => true,
                 'default'       => true,
             ]
-        );		
+        );
         Setting::firstOrCreate(
             ['setting'          => 'payment_gateway_onsite'],
             [
@@ -362,7 +360,7 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => false,
                 'default'       => true,
             ]
-        );        
+        );
         Setting::firstOrCreate(
             ['setting'          => 'matchmaking_enabled'],
             [
@@ -415,6 +413,14 @@ class RequiredDatabaseSeeder extends Seeder
                 'value'         => true,
                 'default'       => true,
                 'description'   => 'allow user to change the Email Address'
+            ]
+        );
+        Setting::firstOrCreate(
+            ['setting'          => 'auth_require_phonenumber'],
+            [
+                'value'         => false,
+                'default'       => true,
+                'description'   => 'Require phonenumber for all users'
             ]
         );
 

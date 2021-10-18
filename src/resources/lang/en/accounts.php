@@ -9,16 +9,17 @@ return [
     |
     |
     */
-    'accounts_title' => 'Updating your profile', 
+    'accounts_title' => 'Updating your profile',
     'my_account' => 'My account',
     'account_details' => 'Account details',
-    'emaildetails' => 'My email adress',
-    'emailmessage' => 'To finish your registration, you have to enter your email adress!',
+    'contactdetails' => 'Contact details',
+    'emailmessage' => 'To finish your registration, you have to enter addition information!',
     'firstname' => 'Firstname',
     'surname' => 'Surname',
     'username' => 'User name',
     'steamname' => 'Steam username',
     'email' => 'Email adress',
+    'phonenumber' => 'Phone number',
     'password' => 'Password',
     'change_password' => 'Change password',
     'confirm_password' => 'Confirm password',
@@ -50,7 +51,7 @@ return [
     'remove_account_line1' => 'Once it is gone... It is s gone, puff... Aaaannnd it is gone!',
     'remove_account_line2' => 'user records will be deleted.',
     'remove_account_line3' => 'tickets for upcoming events will be forfeit.',
-    'remove_account_line4' => 'tickets gifted to you for upcoming will be forfeit.', 
+    'remove_account_line4' => 'tickets gifted to you for upcoming will be forfeit.',
     'remove_account_line5_1' => 'Tickets gifted to you will',
     'remove_account_line5_2' => 'be transferred back to the gifter',
     'remove_account_line6_1' => 'Refunds will',
@@ -85,7 +86,7 @@ return [
     'new_token_wizzard_application_authenticate_1' => 'The application',
     'new_token_wizzard_application_authenticate_2' => 'asks for authentication for your account. Do you want to create an app token for it?',
     'new_token_wizzard_application_already_exists_1' => 'There already exists a token for the application',
-    'new_token_wizzard_application_already_exists_2' => '. If you click on create token, the old application token for this app gets replaced by the new one.',  
+    'new_token_wizzard_application_already_exists_2' => '. If you click on create token, the old application token for this app gets replaced by the new one.',
     'new_token_wizzard_connect_back' => 'Connect back to',
     'new_token_wizzard_success_1' => 'The token was added successfully for',
     'new_token_wizzard_success_2' => '. ',
@@ -93,7 +94,7 @@ return [
     'new_token_wizzard_del_failed' => 'Deletion of the old token failed. Please try again.',
     'new_token_wizzard_creation_failed' => 'Creation of the token failed. Please try again.',
     'new_token_wizzard_clickoncallback' => 'You can now click on the connect back button or you can copy the token manually to your application.',
-    
+
 
 
 ];

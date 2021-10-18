@@ -42,7 +42,8 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
-    public function authenticated(Request $request, $user) {
+    public function authenticated(Request $request, $user)
+    {
         $user->last_login = Carbon::now()->toDateTimeString();
         $user->save();
     }
@@ -100,7 +101,8 @@ class AuthController extends Controller
 
                 $user = Session::get('user');
 
-                if (is_null($user['steamid']) ||
+                if (
+                    is_null($user['steamid']) ||
                     is_null($user['avatar']) ||
                     is_null($user['steamname'])
                 ) {
@@ -131,41 +133,39 @@ class AuthController extends Controller
         }
         switch ($method) {
             case 'steam':
-                if (Settings::isAuthSteamRequireEmailEnabled())
-                {
-                    $this->validate($request, [
-                        'firstname' => 'required|string',
-                        'surname'   => 'required|string',
-                        'steamid'   => 'required|string',
-                        'avatar'    => 'required|string',
-                        'steamname' => 'required|string',
-                        'username'  => 'required|unique:users,username',
-                        'email'         => 'required|filled|email|unique:users,email',
-                    ]);
+                $validationRules = [
+                    'firstname' => 'required|string',
+                    'surname'   => 'required|string',
+                    'steamid'   => 'required|string',
+                    'avatar'    => 'required|string',
+                    'steamname' => 'required|string',
+                    'username'  => 'required|unique:users,username',
+                ];
+
+                if (Settings::isAuthSteamRequireEmailEnabled()) {
+                    $validationRules['email'] = 'required|filled|email|unique:users,email';
                 }
-                else
-                {
-                    $this->validate($request, [
-                        'firstname' => 'required|string',
-                        'surname'   => 'required|string',
-                        'steamid'   => 'required|string',
-                        'avatar'    => 'required|string',
-                        'steamname' => 'required|string',
-                        'username'  => 'required|unique:users,username',
-                    ]);
+
+                if (Settings::isAuthRequirePhonenumberEnabled()) {
+                    $validationRules['phonenumber'] = 'required|filled|phone:AUTO,DE';
                 }
+
+                $this->validate($request, $validationRules);
+
                 $user->avatar               = $request->avatar;
                 $user->steamid              = $request->steamid;
                 $user->steamname            = $request->steamname;
 
-                if (Settings::isAuthSteamRequireEmailEnabled()) 
-                {
+                if (Settings::isAuthSteamRequireEmailEnabled()) {
                     $user->email          = $request->email;
-                }
-                else
-                {
+                } else {
                     $user->email_verified_at    = new \DateTime('NOW');
                 }
+
+                if (Settings::isAuthRequirePhonenumberEnabled()) {
+                    $user->phonenumber          = $request->phonenumber;
+                }
+
                 break;
 
             default:
@@ -176,6 +176,7 @@ class AuthController extends Controller
                     'firstname'     => 'required|string',
                     'surname'       => 'required|string',
                 ];
+
                 $messages = [
                     'username.unique'       => 'Username must be unique',
                     'username.required'     => 'Username is required',
@@ -187,6 +188,12 @@ class AuthController extends Controller
                     'password1.required'    => 'Password is required.',
                     'password1.min'         => 'Password must be atleast 8 characters long.',
                 ];
+
+                if (Settings::isAuthRequirePhonenumberEnabled()) {
+                    $rules['phonenumber'] = 'required|filled|phone:AUTO,DE';
+                    $messages['phonenumber.phone'] = 'The field contains an invalid number.';
+                }
+
                 $this->validate($request, $rules, $messages);
                 $user->email          = $request->email;
                 $user->password       = Hash::make($request->password1);
@@ -208,7 +215,6 @@ class AuthController extends Controller
             $user->sendEmailVerificationNotification();
         }
         return Redirect('/account');
-
     }
 
     public function redirectToProvider($provider)
@@ -218,14 +224,14 @@ class AuthController extends Controller
 
     public function handleProviderCallback($provider)
     {
-     //notice we are not doing any validation, you should do it
+        //notice we are not doing any validation, you should do it
 
         $user = Socialite::driver($provider)->user();
 
         // stroing data to our use table and logging them in
         $data = [
-           'name' => $user->getName(),
-           'email' => $user->getEmail()
+            'name' => $user->getName(),
+            'email' => $user->getEmail()
         ];
 
         Auth::login(User::firstOrCreate($data));

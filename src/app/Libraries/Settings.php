@@ -824,7 +824,7 @@ class Settings
         return \App\Setting::disableMatchMakingSystem();
     }
 
-        /**
+    /**
      * Is MatchMaking Publicuse Enabled
      * @return Boolean
      */
@@ -962,7 +962,7 @@ class Settings
         return \App\Setting::setSiteLocale($text);
     }
 
-    
+
     /**
      * Is auth_steam_require_email Enabled
      * @return Boolean
@@ -988,8 +988,35 @@ class Settings
     public static function disableAuthSteamRequireEmail()
     {
         return \App\Setting::disableAuthSteamRequireEmail();
-    }   
-    
+    }
+
+    /**
+     * Is auth_require_phonenumber Enabled
+     * @return Boolean
+     */
+    public static function isAuthRequirePhonenumberEnabled()
+    {
+        return \App\Setting::isAuthRequirePhonenumberEnabled();
+    }
+
+    /**
+     * Enable auth_require_phonenumber
+     * @return Boolean
+     */
+    public static function enableAuthRequirePhonenumber()
+    {
+        return \App\Setting::enableAuthRequirePhonenumber();
+    }
+
+    /**
+     * Disable auth_require_phonenumber
+     * @return Boolean
+     */
+    public static function disableAuthRequirePhonenumber()
+    {
+        return \App\Setting::disableAuthRequirePhonenumber();
+    }
+
     /**
      * Is auth_allow_email_change Enabled
      * @return Boolean
@@ -1016,8 +1043,4 @@ class Settings
     {
         return \App\Setting::disableAuthAllowEmailChange();
     }
-
-
-
 }
-
