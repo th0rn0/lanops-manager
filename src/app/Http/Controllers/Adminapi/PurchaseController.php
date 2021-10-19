@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Adminapi;
 
+use Mail;
 
 use App\User;
 use App\Purchase;
@@ -9,6 +10,9 @@ use App\Purchase;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+
+use App\Mail\EventulaTicketOrderPaymentFinishedMail;
+
 
 class PurchaseController extends Controller
 {
@@ -34,6 +38,9 @@ class PurchaseController extends Controller
                 'purchase' => $purchase,
             ];
         }
+
+        Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+
         return [
             'successful' => 'true',
             'reason' => '',

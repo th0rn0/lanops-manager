@@ -77,7 +77,7 @@ class PurchasesController extends Controller
             return Redirect::to('/admin/purchases/' . $purchase->id);
         }
 
-        Mail::to(Auth::user())->queue(new EventulaTicketOrderPaymentFinishedMail(Auth::user(), $purchase));
+        Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
 
         Session::flash('alert-success', 'Successfully updated purchase status!');
         return Redirect::to('/admin/purchases/' . $purchase->id);
