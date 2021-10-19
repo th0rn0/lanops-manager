@@ -41,7 +41,11 @@
 									<td>{{ $mailTemplate->subject }}</td>
 									<td>{{ $mailTemplate->id }}</td>
 									<td width="15%">
+									@if ($mailTemplate->mailable == "App\Mail\EventulaMailingMail")
 					 						<button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#sendMailModal{{ $mailTemplate->id }}">Send</button>
+									@else
+											<button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#previewMailModal{{ $mailTemplate->id }}">Preview</button>
+									@endif
 									</td>
 									<td width="15%">
 										<a href="/admin/mailing/{{ $mailTemplate->id }}">
@@ -49,10 +53,14 @@
 										</a>
 									</td>
 									<td width="15%">
+									@if ($mailTemplate->mailable == "App\Mail\EventulaMailingMail")
 										{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
+									@else
+										{{ $mailTemplate->mailable::staticname }} Template
+									@endif
 									</td>
 								</tr>
 							@endforeach
@@ -113,12 +121,12 @@
 
 
 @foreach ($mailTemplates as $mailTemplate)
-	@if(isset($mailTemplate->subject))	
+	@if(isset($mailTemplate->subject) && $mailTemplate->mailable == "App\Mail\EventulaMailingMail")	
 		<?php	
 		$content= (new App\Mail\EventulaMailingMail($user,$nextEvent,$mailTemplate->id))->render();	
 		
 		?>
-		<!-- Select Server Modal -->
+		<!-- Send Mail Modal -->
 		<div class="modal fade" id="sendMailModal{{ $mailTemplate->id }}" tabindex="-1" role="dialog" aria-labelledby="sendMailModalLabel{{ $mailTemplate->id }}" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -188,6 +196,36 @@
 
 		</script>
 
+	@endif
+	@if(isset($mailTemplate->subject) && $mailTemplate->mailable != "App\Mail\EventulaMailingMail")	
+		<?php
+		// TODO!!!!
+		// $content= (new App\Mail\EventulaMailingMail($user,$nextEvent,$mailTemplate->id))->render();	
+		$content = "todo"
+		?>
+		<!-- Preview Mail Modal -->
+		<div class="modal fade" id="previewMailModal{{ $mailTemplate->id }}" tabindex="-1" role="dialog" aria-labelledby="previewMailModalLabel{{ $mailTemplate->id }}" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="previewMailModalLabel{{ $mailTemplate->id }}">Preview Mail {{ $mailTemplate->static }}</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					</div>
+					<div class="modal-body">
+							<small>(preview with your data)</small>
+								<div class="card mb-3 mt-3" style="width: 100%;">
+									<div class="card-header">
+										<i class="fas fa-envelope fa-fw"></i> {{ $mailTemplate->subject }} 
+									</div>
+									<div class="card-body">
+										{!! $content !!}
+									</div>
+								</div>
+				</div>
+			</div>
+
+		</div>
+		</div>
 	@endif
 @endforeach
 

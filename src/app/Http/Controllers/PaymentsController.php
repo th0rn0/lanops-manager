@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use QrCode;
-use Storage;
 use Settings;
 use Colors;
 use Helpers;
 use Auth;
+use Mail;
 
 use App\Purchase;
 use App\User;
@@ -17,6 +17,9 @@ use App\ShopItem;
 use App\ShopOrder;
 use App\ShopOrderItem;
 use App\EventParticipant;
+
+use App\Mail\EventulaTicketOrderMail;
+use App\Mail\EventulaTicketOrderPendingMail;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -316,6 +319,7 @@ class PaymentsController extends Controller
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
             Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
+            Mail::to(Auth::user())->queue(new EventulaTicketOrderMail(Auth::user(), $purchase, Session::get(Settings::getOrgName() . '-basket') ));
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
 
@@ -330,6 +334,7 @@ class PaymentsController extends Controller
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
+            Mail::to(Auth::user())->queue(new EventulaTicketOrderMail(Auth::user(), $purchase, Session::get(Settings::getOrgName() . '-basket') ));
             return Redirect::to('/payment/successful/' . $purchase->id);
         }
 
@@ -344,6 +349,7 @@ class PaymentsController extends Controller
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
+            Mail::to(Auth::user())->queue(new EventulaTicketOrderPendingMail(Auth::user(), $purchase, Session::get(Settings::getOrgName() . '-basket') ));
             return Redirect::to('/payment/pending/' . $purchase->id);
         }
 
@@ -369,6 +375,7 @@ class PaymentsController extends Controller
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
+            Mail::to(Auth::user())->queue(new EventulaTicketOrderMail(Auth::user(), $purchase, Session::get(Settings::getOrgName() . '-basket') ));
             return Redirect::to('/payment/successful/' . $purchase->id);
         } else if($response->isRedirect()) {
             // Payment Requires redirect

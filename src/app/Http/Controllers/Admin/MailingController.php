@@ -27,7 +27,6 @@ use Illuminate\Support\Str;
 use Spatie\MailTemplates\TemplateMailable;
 use Spatie\MailTemplates\Models\MailTemplate;
 
-
 class MailingController extends Controller
 {
     /**
@@ -40,16 +39,16 @@ class MailingController extends Controller
         $userswithmail = User::whereNotNull('email')->get();
         $selectallusers = array();
         $nextevent = Event::where('end', '>=', \Carbon\Carbon::now())
-        ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
+            ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
 
-        foreach($userswithmail as $user) {
+        foreach ($userswithmail as $user) {
             $selectallusers[$user->id] = $user->username;
         }
         return view('admin.mailing.index')->withMailTemplates(MailTemplate::all())
-        ->withMailVariables(EventulaMailingMail::getVariables())
-        ->withUsersWithMail($selectallusers)
-        ->withNextEvent($nextevent)
-        ->withUser($user);
+            ->withMailVariables(EventulaMailingMail::getVariables())
+            ->withUsersWithMail($selectallusers)
+            ->withNextEvent($nextevent)
+            ->withUser($user);
     }
 
     /**
@@ -61,8 +60,7 @@ class MailingController extends Controller
     {
         return view('admin.mailing.show')
             ->withMailTemplate($mailTemplate)
-            ->withMailVariables(EventulaMailingMail::getVariables())
-        ;
+            ->withMailVariables($mailTemplate->mailable::getVariables());
     }
 
     /**
@@ -80,13 +78,12 @@ class MailingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if (!$mailTemplate=MailTemplate::create([
+        if (!$mailTemplate = MailTemplate::create([
             'mailable' => EventulaMailingMail::class,
-            'subject' => $request->subject, 
-            'html_template' => $request->html_template, 
-            'text_template' => $request->text_template, 
-        ]))
-        {
+            'subject' => $request->subject,
+            'html_template' => $request->html_template,
+            'text_template' => $request->text_template,
+        ])) {
             Session::flash('alert-danger', 'Cannot save Mailtemplate!');
             return Redirect::back();
         }
@@ -132,6 +129,10 @@ class MailingController extends Controller
      */
     public function destroy(MailTemplate $mailTemplate)
     {
+        if ($mailTemplate->mailable != "App\Mail\EventulaMailingMail") {
+            Session::flash('alert-danger', 'Cannot delete static mailtemplate!');
+            return Redirect::back();
+        }
         if (!$mailTemplate->delete()) {
             Session::flash('alert-danger', 'Cannot delete Mailtemplate!');
             return Redirect::back();
@@ -141,7 +142,6 @@ class MailingController extends Controller
         return Redirect::to('admin/mailing/');
     }
 
-
     /**
      * sends MailTemplate
      * @param  MailTemplate $mailTemplate
@@ -150,50 +150,39 @@ class MailingController extends Controller
     public function send(MailTemplate $mailTemplate, Request $request)
     {
         $nextevent = Event::where('end', '>=', \Carbon\Carbon::now())
-        ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
+            ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
 
-        $requestvarname = "userswithmails".$mailTemplate->id;
+        $requestvarname = "userswithmails" . $mailTemplate->id;
         $selectedusers = $request->{$requestvarname};
 
-        if (count($selectedusers) == 0)
-        {
+        if (count($selectedusers) == 0) {
             Session::flash('alert-danger', 'no Users selected!');
             return Redirect::back();
         }
 
         $erroruser = array();
 
-        foreach ($selectedusers as $selecteduser)
-        {
+        foreach ($selectedusers as $selecteduser) {
             $user = User::whereNotNull('email')->where('id', $selecteduser)->first();
 
-            
-            if(!isset($user))
-            {
-                $erroruser[$user->id] = $user->username;
-            }
-            else
-            {
-                Mail::to($user)->queue(new EventulaMailingMail($user, $nextevent,$mailTemplate->id));
-            }
 
+            if (!isset($user)) {
+                $erroruser[$user->id] = $user->username;
+            } else {
+                Mail::to($user)->queue(new EventulaMailingMail($user, $nextevent, $mailTemplate->id));
+            }
         }
 
-        if (count($erroruser) != 0)
-        {
+        if (count($erroruser) != 0) {
             $erroruserprint = "";
-            foreach ($erroruser as $euser)
-            {
-                $erroruserprint=$erroruserprint.$euser.";";
+            foreach ($erroruser as $euser) {
+                $erroruserprint = $erroruserprint . $euser . ";";
             }
-            Session::flash('alert-danger', 'Mails have been queued but the following selected users have no valid email addresses: '. $erroruserprint);
+            Session::flash('alert-danger', 'Mails have been queued but the following selected users have no valid email addresses: ' . $erroruserprint);
             return Redirect::back();
         }
-
 
         Session::flash('alert-success', 'Successfully sended Mails!');
         return Redirect::to('admin/mailing/');
     }
-
-    
 }

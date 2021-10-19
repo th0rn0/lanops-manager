@@ -31,7 +31,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('html_template','HTML Template',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('html_template', $mailTemplate->html_template, array('id'=>'html_template','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('html_template', $mailTemplate->html_template, array('id'=>'html_template','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('text_template','Text Template',array('id'=>'','class'=>'')) }}
@@ -40,11 +40,13 @@
 
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
-				<hr>
-				{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id, 'onsubmit' => 'return ConfirmDelete()')) }}
-					{{ Form::hidden('_method', 'DELETE') }}
-					<button type="submit" class="btn btn-danger btn-block">Delete</button>
-				{{ Form::close() }}
+				@if ($mailTemplate->mailable == "App\Mail\EventulaMailingMail")
+					<hr>
+					{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+						{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger btn-block">Delete</button>
+					{{ Form::close() }}
+				@endif
 			</div>
 		</div>
 	</div>
