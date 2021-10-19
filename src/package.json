@@ -9,12 +9,12 @@
     "devDependencies": {
         "cross-env": "^7.0.3",
         "dns-packet": "^5.3.0",
-        "laravel-mix": "^6.0.31",
+        "laravel-mix": "^6.0.34",
         "laravel-mix-purgecss": "^6.0.0",
         "node-sass": "^6.0.0",
-        "postcss": "^8.3.8",
+        "postcss": "^8.3.9",
         "resolve-url-loader": "^3.1.4",
-        "sass": "^1.42.1",
+        "sass": "^1.43.2",
         "sass-loader": "^10.1.0",
         "vue-template-compiler": "^2.6.14"
     },
@@ -24,6 +24,6 @@
         "jquery": "^3.5.1",
         "jquery-ui-dist": "^1.12.1",
         "popper.js": "^1.16.1",
-        "summernote": "^0.8.18"
+        "summernote": "^0.8.20"
     }
 }
