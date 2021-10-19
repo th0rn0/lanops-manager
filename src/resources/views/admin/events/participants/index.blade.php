@@ -38,6 +38,7 @@
 							<tr>
 								<th>User</th>
 								<th>Name</th>
+								<th>Contact</th>
 								<th>Seat</th>
 								<th>Ticket</th>
 								<th>Paypal Email</th>
@@ -47,50 +48,51 @@
 							</tr>
 						</thead>
 						<tbody>
-							 @foreach ($participants as $participant)
-								<tr class="odd gradeX">
-									<td>
-										{{ $participant->user->username }}
-										@if ($participant->user->steamid)
-											<br><span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
-										@endif
-									</td>
-									<td>{{ $participant->user->firstname }} {{ $participant->user->surname }}</td>
-									<td>
-										@if (isset($participant->seat)) {{ $participant->seat->seat }} @endif
-									</td>
-									<td>
-										@if ($participant->free) Free @endif
-										@if ($participant->ticket) {{ $participant->ticket->name }} @endif
-									</td>
-									<td>
-										@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif
-									</td>
-									<td>
-										@if ($participant->free)
-											<strong>Free</strong>
-											<small>Assigned by: {{ $participant->getAssignedByUser()->username }}</small>
-										@elseif ($participant->staff)
-											<strong>Staff</strong>
-											<small>Assigned by: {{ $participant->getAssignedByUser()->username }}</small>
-										@elseif ($participant->gift)
-											<strong>Gift</strong>
-											<small>Assigned by: {{ $participant->getGiftedByUser()->username }}</small>
-										@endif
-									</td>
-									<td>
-										@if ($participant->signed_in)
-											Yes
-										@else
-											No
-										@endif
-									</td>
-									<td width="10%">
-										<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}">
-											<button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
-										</a>
-									</td>
-								</tr>
+							@foreach ($participants as $participant)
+							<tr class="odd gradeX">
+								<td>
+									{{ $participant->user->username }}
+									@if ($participant->user->steamid)
+									<br><span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+									@endif
+								</td>
+								<td>{{ $participant->user->firstname }} {{ $participant->user->surname }}</td>
+								<td>{{ $participant->user->email }} @if (isset($participant->user->phonenumber) && !empty($participant->user->phonenumber)) <br /><a href="tel:{{ $participant->user->phonenumber }}">{{ $participant->user->phonenumber }}</a>@endif</td>
+								<td>
+									@if (isset($participant->seat)) {{ $participant->seat->seat }} @endif
+								</td>
+								<td>
+									@if ($participant->free) Free @endif
+									@if ($participant->ticket) {{ $participant->ticket->name }} @endif
+								</td>
+								<td>
+									@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif
+								</td>
+								<td>
+									@if ($participant->free)
+									<strong>Free</strong>
+									<small>Assigned by: {{ $participant->getAssignedByUser()->username }}</small>
+									@elseif ($participant->staff)
+									<strong>Staff</strong>
+									<small>Assigned by: {{ $participant->getAssignedByUser()->username }}</small>
+									@elseif ($participant->gift)
+									<strong>Gift</strong>
+									<small>Assigned by: {{ $participant->getGiftedByUser()->username }}</small>
+									@endif
+								</td>
+								<td>
+									@if ($participant->signed_in)
+									Yes
+									@else
+									No
+									@endif
+								</td>
+								<td width="10%">
+									<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}">
+										<button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
+									</a>
+								</td>
+							</tr>
 							@endforeach
 						</tbody>
 					</table>
