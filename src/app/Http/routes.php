@@ -95,7 +95,7 @@ Route::group(['middleware' => ['installed']], function () {
 
             Route::post('/login/standard', 'Auth\LoginController@login');
 
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::get('/account', 'AccountController@index');
                 Route::get('/account/sso/remove/{method}', 'AccountController@showRemoveSso');
                 Route::post('/account/sso/remove/{method}', 'AccountController@removeSso');
@@ -128,7 +128,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/news', 'NewsController@index');
             Route::get('/news/{newsArticle}', 'NewsController@show');
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::post('/news/{newsArticle}/comments', 'NewsController@storeComment');
                 Route::post('/news/{newsArticle}/comments/{newsComment}', 'NewsController@editComment');
                 Route::get('/news/{newsArticle}/comments/{newsComment}/report', 'NewsController@reportComment');
@@ -155,7 +155,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Tickets
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::get('/tickets/retrieve/{participant}', 'Events\TicketsController@retrieve');
                 Route::post('/tickets/purchase/{ticket}', 'Events\TicketsController@purchase');
             });
@@ -163,7 +163,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Gifts
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::get('/gift/accept', 'Events\ParticipantsController@acceptGift');
                 Route::post('/gift/{participant}', 'Events\ParticipantsController@gift');
                 Route::post('/gift/{participant}/revoke', 'Events\ParticipantsController@revokeGift');
@@ -185,7 +185,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
             Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
                 Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
                 Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
@@ -201,7 +201,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * MatchMaking
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::get('/matchmaking', 'MatchMakingController@index');
                 Route::get('/matchmaking/invite', 'MatchMakingController@showInvite');
                 Route::get('/matchmaking/{match}', 'MatchMakingController@show');
@@ -223,7 +223,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Payments
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::get('/payment/checkout', 'PaymentsController@showCheckout');
                 Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
                 Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
@@ -240,7 +240,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Seating
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
                 Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
             });
@@ -264,7 +264,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Shop
              */
-            Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function () {
                 Route::get('/shop/orders', 'ShopController@showAllOrders');
                 Route::get('/shop/orders/{order}', 'ShopController@showOrder');
             });

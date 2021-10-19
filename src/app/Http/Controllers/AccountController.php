@@ -309,10 +309,12 @@ class AccountController extends Controller
 
     public function updateMail(Request $request)
     {
+        $user = Auth::user();
         $rules = [];
         $messages = [];
+        $email_changed = $user->email != @$request->email;
 
-        if (Settings::isAuthSteamRequireEmailEnabled()) {
+        if (Settings::isAuthSteamRequireEmailEnabled() && $email_changed) {
             $rules['email'] = 'filled|email|unique:users,email';
             $messages['email.filled'] = 'Email Cannot be blank.';
             $messages['email.unique'] = 'Email is already in use.';
@@ -325,9 +327,8 @@ class AccountController extends Controller
 
         $this->validate($request, $rules, $messages);
 
-        $user = Auth::user();
 
-        if ($user->email != @$request->email) {
+        if ($email_changed) {
             $user->email_verified_at = null;
         }
 
@@ -337,7 +338,7 @@ class AccountController extends Controller
         if (!$user->save()) {
             return Redirect::back()->withFail("Oops, Something went Wrong while updating the user.");
         }
-        if ($user->email != @$request->email) {
+        if ($email_changed) {
             $user->sendEmailVerificationNotification();
         }
         return redirect('/register/email/verify');
