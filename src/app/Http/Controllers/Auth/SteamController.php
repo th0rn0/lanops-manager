@@ -50,53 +50,43 @@ class SteamController extends Controller
                     //username found... Log user in
                     Auth::login($user, true);
                     //Check if the user has changed their steam details
-                    $steam_changes = false;
                     if ($info->personaname != $user->steamname) {
                         $user->steamname = $info->personaname;
-                        $steam_changes = true;
                     }
                     if ($info->avatarfull != $user->avatar) {
                         $user->avatar = $info->avatarfull;
-                        $steam_changes = true;
                     }
                     $user->last_login = Carbon::now()->toDateTimeString();
                     $user->save();
-                    if ((!isset($user->email) || $user->email == null ) &&  Settings::isAuthSteamRequireEmailEnabled())
-                    {
-                    $user->email_verified_at    = null;
-                    $user->save();
-                    return redirect('/account/email'); // redirect to site
+                    if ((!isset($user->email) || $user->email == null) &&  Settings::isAuthSteamRequireEmailEnabled()) {
+                        $user->email_verified_at    = null;
+                        $user->save();
+                        return redirect('/account/email'); // redirect to site
+                    }
+
+                    if ((!isset($user->phonenumber) || $user->phonenumber == null) &&  Settings::isAuthRequirePhonenumberEnabled()) {
+                        return redirect('/account/email'); // redirect to site
                     }
 
                     return redirect('/'); // redirect to site
                 } else {
-                    if (!Auth::user())
-                    {
+                    if (!Auth::user()) {
                         $user = [
-                                'steamname'     => $info->personaname,
-                                'avatar'        => $info->avatarfull,
-                                'steamid'       => $info->steamID64,
+                            'steamname'     => $info->personaname,
+                            'avatar'        => $info->avatarfull,
+                            'steamid'       => $info->steamID64,
                         ];
                         Session::put('user', $user);
                         Session::save();
                         return Redirect('/register/steam');
-                    }
-                    else
-                    {
-                        if (!Auth::user()->steamid)
-                        {
-                           return $this->addtoexistingaccount($info, Auth::user());
-
-                        }
-                        else
-                        {
+                    } else {
+                        if (!Auth::user()->steamid) {
+                            return $this->addtoexistingaccount($info, Auth::user());
+                        } else {
                             Session::flash('alert-danger', 'Another steamid is already set in your account, remove it first in your account settings!');
                             return Redirect::to('/account/')->withError('Another steamid is already set in your account, remove it first in your account settings!');
                         }
-
                     }
-
-
                 }
             }
         } else {
@@ -121,8 +111,8 @@ class SteamController extends Controller
 
         if ($validator->fails()) {
             return redirect('/account/')
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $user->steamname = $info->personaname;
@@ -134,7 +124,6 @@ class SteamController extends Controller
         }
         Session::flash('alert-danger', 'Saving user failed!');
         return Redirect::to('/account/')->withError('Saving user failed!');
-        
     }
 
     /**
@@ -146,9 +135,9 @@ class SteamController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, [
-                'fistname'  => 'string',
-                'surname'   => 'string',
-                'username'  => 'unique:users,username',
+            'fistname'  => 'string',
+            'surname'   => 'string',
+            'username'  => 'unique:users,username',
         ]);
         $user->firstname = $request->firstname;
         $user->surname = $request->surname;

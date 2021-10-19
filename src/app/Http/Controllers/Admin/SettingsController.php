@@ -85,8 +85,7 @@ class SettingsController extends Controller
             ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled())
             ->withMaxOpenPerUser(Settings::getSystemsMatchMakingMaxopenperuser())
             ->withIsMatchMakingEnabled(Settings::isMatchMakingEnabled())
-            ->withIsCreditEnabled(Settings::isCreditEnabled())
-            ;
+            ->withIsCreditEnabled(Settings::isCreditEnabled());
     }
 
     /**
@@ -100,7 +99,8 @@ class SettingsController extends Controller
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
             ->withIsAuthAllowEmailChangeEnabled(Settings::isAuthAllowEmailChangeEnabled())
-            ->withIsAuthSteamRequireEmailEnabled(Settings::isAuthSteamRequireEmailEnabled());
+            ->withIsAuthSteamRequireEmailEnabled(Settings::isAuthSteamRequireEmailEnabled())
+            ->withIsAuthRequirePhonenumberEnabled(Settings::isAuthRequirePhonenumberEnabled());
     }
 
     /**
@@ -177,7 +177,7 @@ class SettingsController extends Controller
      */
     public function updateSystems(Request $request)
     {
-        
+
         $rules = [
             'publicuse'               => 'in:on,off',
             'maxopenperuser'  => 'numeric',
@@ -191,23 +191,20 @@ class SettingsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if (($request->publicuse ? true : false))
-        {
+        if (($request->publicuse ? true : false)) {
             if (!Settings::enableSystemsMatchMakingPublicuse()) {
                 Session::flash('alert-danger', "Could not Enable the MatchMaking System Publicuse!");
                 return Redirect::back();
             }
-        }
-        else
-        {
+        } else {
             if (!Settings::disableSystemsMatchMakingPublicuse()) {
                 Session::flash('alert-danger', "Could not Disable the MatchMaking System Publicuse!");
                 return Redirect::back();
             }
-
         }
 
-        if (isset($request->maxopenperuser) && !Settings::setSystemsMatchMakingMaxopenperuser($request->maxopenperuser)
+        if (
+            isset($request->maxopenperuser) && !Settings::setSystemsMatchMakingMaxopenperuser($request->maxopenperuser)
         ) {
             Session::flash('alert-danger', 'Could not update maxopenperuser!');
             return Redirect::back();
@@ -215,7 +212,6 @@ class SettingsController extends Controller
 
         Session::flash('alert-success', "Successfully Saved OptSystems Settings!");
         return Redirect::back();
-
     }
 
 
@@ -717,52 +713,60 @@ class SettingsController extends Controller
         return Redirect::back();
     }
 
-        /**
-     * updateAuthGeneral 
+    /**
+     * updateAuthGeneral
      * @param  Request $request
      * @return Redirect
      */
     public function updateAuthGeneral(Request $request)
     {
-        
+
         $rules = [
             'auth_allow_email_change'               => 'in:on,off',
-
+            'auth_require_phonenumber'               => 'in:on,off',
         ];
         $messages = [
-            'auth_allow_email_change.in'                    => 'Publicuse must be true or false',
-
+            'auth_allow_email_change.in'                    => 'Public use must be true or false',
+            'auth_require_phonenumber.in'                    => 'Require Phonenumber must be true or false',
         ];
+
         $this->validate($request, $rules, $messages);
 
-        if (($request->auth_allow_email_change ? true : false))
-        {
+        if ($request->auth_allow_email_change) {
             if (!Settings::enableAuthAllowEmailChange()) {
                 Session::flash('alert-danger', "Could not Enable auth_allow_email_change!");
                 return Redirect::back();
             }
-        }
-        else
-        {
+        } else {
             if (!Settings::disableAuthAllowEmailChange()) {
                 Session::flash('alert-danger', "Could not Disable auth_allow_email_change!");
                 return Redirect::back();
             }
+        }
 
+        if ($request->auth_require_phonenumber) {
+            if (!Settings::enableAuthRequirePhonenumber()) {
+                Session::flash('alert-danger', "Could not Enable auth_require_phonenumber!");
+                return Redirect::back();
+            }
+        } else {
+            if (!Settings::disableAuthRequirePhonenumber()) {
+                Session::flash('alert-danger', "Could not Disable auth_require_phonenumber!");
+                return Redirect::back();
+            }
         }
 
         Session::flash('alert-success', "Successfully Saved General Authentication Settings!");
         return Redirect::back();
-
     }
     /**
-     * updateAuthSteam 
+     * updateAuthSteam
      * @param  Request $request
      * @return Redirect
      */
     public function updateAuthSteam(Request $request)
     {
-        
+
         $rules = [
             'auth_steam_require_email'               => 'in:on,off',
 
@@ -773,24 +777,20 @@ class SettingsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if (($request->auth_steam_require_email ? true : false))
-        {
+        if ($request->auth_steam_require_email) {
             if (!Settings::enableAuthSteamRequireEmail()) {
                 Session::flash('alert-danger', "Could not Enable auth_steam_require_email!");
                 return Redirect::back();
             }
-        }
-        else
-        {
+        } else {
             if (!Settings::disableAuthSteamRequireEmail()) {
                 Session::flash('alert-danger', "Could not Disable auth_steam_require_email!");
                 return Redirect::back();
             }
-
         }
+
 
         Session::flash('alert-success', "Successfully Saved General Authentication Settings!");
         return Redirect::back();
-
     }
 }

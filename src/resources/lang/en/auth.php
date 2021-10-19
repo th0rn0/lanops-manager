@@ -33,6 +33,7 @@ return [
     'username' => 'Username',
     'steamname' => 'Steam username',
     'email' => 'Email adress',
+    'phonenumber' => 'Phone number',
     'confirm_password' => 'Confirm password',
     'submit' => 'Submit',
     'verify_email' => 'Verify email',

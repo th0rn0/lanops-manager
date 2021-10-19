@@ -29,8 +29,9 @@
 							<th>Avatar</th>
 							<th>User</th>
 							<th>Name</th>
+							<th>Contact</th>
 							@if (Settings::isCreditEnabled())
-								<th>Credit</th>
+							<th>Credit</th>
 							@endif
 							<th>Admin</th>
 							<th>Edit</th>
@@ -38,39 +39,40 @@
 					</thead>
 					<tbody>
 						@foreach ($users as $user)
-							<tr>
-								<td width="3%">
-									<picture>
-										<source srcset="{{ $user->avatar }}.webp" type="image/webp">
-										<source srcset="{{ $user->avatar }}" type="image/jpeg">
-										<img class="img-fluid rounded" src="{{ $user->avatar }}">
-									</picture>
-								</td>
-								<td>
-									{{ $user->username }}
-									@if ($user->steamid)
-										- <span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
-									@endif
-								</td>
-								<td>{{ $user->firstname }} {{ $user->surname }}</td>
-								@if (Settings::isCreditEnabled())
-									<td>
-										{{ $user->credit_total }}
-									</td>
+						<tr>
+							<td width="3%">
+								<picture>
+									<source srcset="{{ $user->avatar }}.webp" type="image/webp">
+									<source srcset="{{ $user->avatar }}" type="image/jpeg">
+									<img class="img-fluid rounded" src="{{ $user->avatar }}">
+								</picture>
+							</td>
+							<td>
+								{{ $user->username }}
+								@if ($user->steamid)
+								- <span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
 								@endif
-								<td>
-									@if ($user->admin)
-										Yes
-									@else
-										No
-									@endif
-								</td>
-								<td>
-									<a href="/admin/users/{{ $user->id }}">
-										<button class="btn btn-primary btn-sm btn-block">Edit</button>
-									</a>
-								</td>
-							</tr>
+							</td>
+							<td>{{ $user->firstname }} {{ $user->surname }}</td>
+							<td>{{ $user->email }} @if (isset($user->phonenumber) && !empty($user->phonenumber)) <br /><a href="tel:{{ $user->phonenumber }}">{{ $user->phonenumber }}</a>@endif</td>
+							@if (Settings::isCreditEnabled())
+							<td>
+								{{ $user->credit_total }}
+							</td>
+							@endif
+							<td>
+								@if ($user->admin)
+								Yes
+								@else
+								No
+								@endif
+							</td>
+							<td>
+								<a href="/admin/users/{{ $user->id }}">
+									<button class="btn btn-primary btn-sm btn-block">Edit</button>
+								</a>
+							</td>
+						</tr>
 						@endforeach
 					</tbody>
 				</table>

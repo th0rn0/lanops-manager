@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Session;
+use Settings;
 
 use App\User;
 
@@ -35,7 +36,8 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
-    public function authenticated(Request $request, $user) {
+    public function authenticated(Request $request, $user)
+    {
         $user->last_login = Carbon::now()->toDateTimeString();
         $user->save();
     }
@@ -55,8 +57,10 @@ class LoginController extends Controller
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
-        if (method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)) {
+        if (
+            method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)
+        ) {
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);
@@ -68,6 +72,11 @@ class LoginController extends Controller
             }
         }
         if ($this->attemptLogin($request)) {
+
+            if ((!isset($user->phonenumber) || $user->phonenumber == null) &&  Settings::isAuthRequirePhonenumberEnabled()) {
+                return redirect('/account/email'); // redirect to site
+            }
+
             return $this->sendLoginResponse($request);
         }
 
