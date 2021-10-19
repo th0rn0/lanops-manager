@@ -205,6 +205,11 @@ ul.alert-dropdown {
   font-size: 40px;
 }
 
+.card-header:first-child{
+  margin-left: -1px;
+  margin-top: -1px;
+}
+
 .panel-green {
   border-color: #5cb85c;
 }
