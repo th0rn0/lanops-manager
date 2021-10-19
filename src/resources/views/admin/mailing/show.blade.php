@@ -31,7 +31,7 @@
 					</div>
 					<div class="form-group">
 						{{ Form::label('html_template','HTML Template',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('html_template', $mailTemplate->html_template, array('id'=>'html_template','class'=>'form-control wysiwyg-editor')) }}
+						{{ Form::textarea('html_template', $mailTemplate->html_template, array('id'=>'html_template','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
 						{{ Form::label('text_template','Text Template',array('id'=>'','class'=>'')) }}

@@ -12,6 +12,8 @@ use Spatie\MailTemplates\Models\MailTemplate;
 
 
 use App\Mail\EventulaTicketOrderMail;
+use App\Mail\EventulaTicketOrderPendingMail;
+use App\Mail\EventulaTicketOrderPaymentFinishedMail;
 
 use Faker\Factory as Faker;
 
@@ -613,7 +615,23 @@ class RequiredDatabaseSeeder extends Seeder
             ['mailable' => EventulaTicketOrderMail::class],
             [
                 'subject' => "ticket order", 
-                'html_template' => "<h1> placeholder </h1>", 
+                'html_template' => '<p>placeholder<p>', 
+                'text_template' => "placeholder", 
+            ]
+        );
+        MailTemplate::firstOrCreate(
+            ['mailable' => EventulaTicketOrderPendingMail::class],
+            [
+                'subject' => "ticket order pending", 
+                'html_template' => '<p>placeholder<p>', 
+                'text_template' => "placeholder", 
+            ]
+        );        
+        MailTemplate::firstOrCreate(
+            ['mailable' => EventulaTicketOrderPaymentFinishedMail::class],
+            [
+                'subject' => "ticket payment finished", 
+                'html_template' => '<p>placeholder<p>', 
                 'text_template' => "placeholder", 
             ]
         );

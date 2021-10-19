@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Auth;
 use Session;
+use Mail;
 
 use App\User;
 use App\Purchase;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Mail\EventulaTicketOrderPaymentFinishedMail;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -57,6 +59,7 @@ class PurchasesController extends Controller
         return view('admin.purchases.show')
             ->withPurchase($purchase);
     } 
+    
     /**
      * Set Purchase Success
      * @param Purchase $purchase
@@ -73,6 +76,8 @@ class PurchasesController extends Controller
             Session::flash('alert-danger', 'Cannot set purchase status!');
             return Redirect::to('/admin/purchases/' . $purchase->id);
         }
+        Mail::to(Auth::user())->queue(new EventulaTicketOrderPaymentFinishedMail(Auth::user(), $purchase ));
+
         Session::flash('alert-success', 'Successfully updated purchase status!');
         return Redirect::to('/admin/purchases/' . $purchase->id);
     }
