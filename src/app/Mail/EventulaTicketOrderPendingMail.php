@@ -52,9 +52,6 @@ class EventulaTicketOrderPendingMail extends TemplateMailable
     /** @var float */
     public float $basket_total_credit;     
 
-
-
-
     public function __construct(User $user, Purchase $purchase, Array $basket)
     {
         $this->firstname = $user->firstname;
@@ -62,7 +59,6 @@ class EventulaTicketOrderPendingMail extends TemplateMailable
         $this->email = $user->email;
         $this->username = $user->username_nice;
         $this->url = rtrim(config('app.url'), "/") . "/";
-
 
         if (isset($purchase))
         {
@@ -72,34 +68,30 @@ class EventulaTicketOrderPendingMail extends TemplateMailable
 
             foreach($purchase->participants as $participant)
             {
-                $this->purchase_participants[]=(new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first()));
-
+                $this->purchase_participants[] = new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first());
             }
         }
+
         if (isset($basket))
         {
             $tempbasket = Helpers::formatBasket($basket);
-
             $this->basket = array(); 
 
             foreach($tempbasket->all() as $item)
             {
                 if (get_class($item) == "App\ShopItem")
                 {
-                    $this->basket[]=(new MustacheModelHelper($item));
+                    $this->basket[] = new MustacheModelHelper($item);
                 }
+
                 if (get_class($item) == "App\EventTicket")
                 {
-                    $this->basket[]=(new MustacheModelHelper($item));
+                    $this->basket[] = new MustacheModelHelper($item);
                 }
             }
 
             $this->basket_total = $tempbasket->total;
             $this->basket_total_credit = $tempbasket->total_credit;
-
         }
-
-
     } 
-
 }

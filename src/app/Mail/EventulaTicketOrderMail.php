@@ -52,9 +52,6 @@ class EventulaTicketOrderMail extends TemplateMailable
     /** @var float */
     public float $basket_total_credit;     
 
-
-
-
     public function __construct(User $user, Purchase $purchase, Array $basket)
     {
         $this->firstname = $user->firstname;
@@ -62,7 +59,6 @@ class EventulaTicketOrderMail extends TemplateMailable
         $this->email = $user->email;
         $this->username = $user->username_nice;
         $this->url = rtrim(config('app.url'), "/") . "/";
-
 
         if (isset($purchase))
         {
@@ -72,10 +68,10 @@ class EventulaTicketOrderMail extends TemplateMailable
 
             foreach($purchase->participants as $participant)
             {
-                $this->purchase_participants[]=(new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first()));
-
+                $this->purchase_participants[] = new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first());
             }
         }
+
         if (isset($basket))
         {
             $tempbasket = Helpers::formatBasket($basket);
@@ -85,20 +81,17 @@ class EventulaTicketOrderMail extends TemplateMailable
             {
                 if (get_class($item) == "App\ShopItem")
                 {
-                    $this->basket[]=(new MustacheModelHelper(ShopItem::where('id', $item->id)->first()));
+                    $this->basket[] = new MustacheModelHelper(ShopItem::where('id', $item->id)->first());
                 }
+
                 if (get_class($item) == "App\EventTicket")
                 {
-                    $this->basket[]=(new MustacheModelHelper(EventTicket::where('id', $item->id)->first()));
+                    $this->basket[] = new MustacheModelHelper(EventTicket::where('id', $item->id)->first());
                 }
             }
 
             $this->basket_total = $tempbasket->total;
             $this->basket_total_credit = $tempbasket->total_credit;
-
         }
-
-
     } 
-
 }

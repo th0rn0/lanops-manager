@@ -43,7 +43,6 @@ class EventulaTicketOrderPaymentFinishedMail extends TemplateMailable
     /** @var array */
     public array $purchase_participants;   
 
-
     public function __construct(User $user, Purchase $purchase)
     {
         $this->firstname = $user->firstname;
@@ -51,7 +50,6 @@ class EventulaTicketOrderPaymentFinishedMail extends TemplateMailable
         $this->email = $user->email;
         $this->username = $user->username_nice;
         $this->url = rtrim(config('app.url'), "/") . "/";
-
 
         if (isset($purchase))
         {
@@ -61,11 +59,8 @@ class EventulaTicketOrderPaymentFinishedMail extends TemplateMailable
 
             foreach($purchase->participants as $participant)
             {
-                $this->purchase_participants[]=(new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first()));
-
+                $this->purchase_participants[] = new MustacheModelHelper(EventParticipant::with('event','ticket')->where('id', $participant->id)->first());
             }
         }
- 
     } 
-
 }
