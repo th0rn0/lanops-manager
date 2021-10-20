@@ -304,6 +304,13 @@ database-show-foreign:
 get-lang-blade:
 	cat $(blade) | grep -o "'$(prefix)\..*'" | sed "s|'||g" | sort | uniq | sed "s|.*\.|'|g" | sed -e "s/$$/' => '',/"
 
+# set installed in database 
+set-installed:
+	make database-command command="update settings set value=1 where setting='installed';"
+	
+# set not installed in database
+set-not-installed:
+	make database-command command="update settings set value=0 where setting='installed';"
 
 # Wait for containers to initialize
 wait:
