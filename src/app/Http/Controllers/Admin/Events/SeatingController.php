@@ -11,6 +11,7 @@ use App\Event;
 use App\EventTicket;
 use App\EventSeating;
 use App\EventSeatingPlan;
+use app\EventSeatingPlanSeat;
 use App\EventParticipant;
 use App\EventParticipantType;
 
@@ -205,6 +206,13 @@ class SeatingController extends Controller
      */
     public function storeSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
+        $rules = [
+            'seat_status_modal'        => 'in:active,inactive',
+        ];
+        $messages = [
+            'seat_status_modal.in'     => 'Status must be active or inactive',
+        ];
+        
         if (!in_array(substr($request->seat_number_modal, 0, 1), explode(',', $seatingPlan->headers)) ||
             substr($request->seat_number_modal, 1, 1) <= 0 ||
             substr($request->seat_number_modal, 1, 1) > $seatingPlan->rows
@@ -247,6 +255,7 @@ class SeatingController extends Controller
         $newSeat->seat                   = $request->seat_number_modal;
         $newSeat->event_participant_id   = $request->participant_select_modal;
         $newSeat->event_seating_plan_id  = $seatingPlan->id;
+        $newSeat->status                 = $request->seat_status_modal;
 
         if (!$newSeat->save()) {
             Session::flash('alert-danger', 'Could not update Seat!');

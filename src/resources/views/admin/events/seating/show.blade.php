@@ -49,15 +49,24 @@
 									@if($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
 										@foreach($seatingPlan->seats as $seat)
 											<?php
-												if($seat->seat == (ucwords($headers[$column]) . $row)){
+												if($seat->seat == (ucwords($headers[$column]) . $row) ){
+													$status = $seat->status;
+												}
+												if($seat->seat == (ucwords($headers[$column]) . $row) && isset($seat->eventParticipant)){
 													$username = $seat->eventParticipant->user->username;
 													$participant_id = $seat->eventParticipant->id;
 												}
 											?>
 										@endforeach
-										<button class="btn btn-success btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', '{{ $username }}', '{{ $participant_id }}')" data-toggle="modal" data-target="#editSeatingModal">
-											{{ ucwords($headers[$column]) . $row }} - {{ $username }}
-										</button>
+										@if ($status == 'ACTIVE')											
+											<button class="btn btn-success btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }})" data-toggle="modal" data-target="#editSeatingModal">
+												{{ ucwords($headers[$column]) . $row }} - {{ $username }}
+											</button>
+										@else
+											<button class="btn btn-danger btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', null, null, '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
+												{{ ucwords($headers[$column]) . $row }} - Blocked
+											</button>
+										@endif
 									@else
 										<button class="btn btn-primary btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}')" data-toggle="modal" data-target="#editSeatingModal">
 											{{ ucwords($headers[$column]) . $row }} - Empty
@@ -90,6 +99,7 @@
 						</thead>
 						<tbody>
 							@foreach ($seats as $seat)
+								@if (isset($seat->eventParticipant))
 								<tr class="odd gradeX">
 									<td></td>
 									<td>{{ ucwords($seat->seat) }}</td>
@@ -118,6 +128,7 @@
 										<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
 									</td>
 								</tr>
+								@endif								
 							@endforeach
 						</tbody>
 					</table>
@@ -227,6 +238,16 @@
 						{{ Form::label('participant_select_modal','Participant',array('id'=>'','class'=>'')) }}
 						{{ Form::select('participant_select_modal', $event->getParticipants(), null, array('id'=>'participant_select_modal','class'=>'form-control')) }}
 					</div>
+					<div class="form-group">
+						{{ Form::label('seat_status_modal','Seat status',array('id'=>'','class'=>'')) }}
+						{{ Form::select(
+							'seat_status_modal', 
+							array( 
+								'active'=>'Active',
+								'inactive'=>'Inactive'), 
+							null, 
+							array('id'=>'seat_status_modal','class'=>'form-control')) }}	
+					</div>
 					{{ Form::hidden('participant_id_modal', null, array('id'=>'participant_id_modal','class'=>'form-control')) }}
 					{{ Form::hidden('event_id_modal', null, array('id'=>'event_id_modal','class'=>'form-control')) }}
 
@@ -249,11 +270,12 @@
 
 <!-- JavaScript-->
 <script>
-	function editSeating(seat, username = null, participant_id = null)
+	function editSeating(seat, username = null, participant_id = null, seat_status = null)
 	{
 		seat = seat.trim();
 		jQuery("#seat_number_modal").val(seat);
 		jQuery("#seat_number").val(seat);
+		jQuery("#seat_status_modal").val(seat_status);
 		var orginal_participant_id = jQuery("#participant_id_modal").val();
 		//Reset all inputs
 		jQuery("#seat_number_modal").prop('readonly', '');
