@@ -33,7 +33,7 @@
 							</div>
 							@endif
 
-							@if (Settings::isAuthRequirePhonenumberEnabled() && !$user->phonenumber)
+							@if (Settings::isAuthRequirePhonenumberEnabled())
 							<div class="form-group">
 								{{ Form::label('phonenumber',__('accounts.phonenumber'),array('id'=>'','class'=>'')) }}
 								<input type="phonenumber" class="form-control" name="phonenumber" id="phonenumber @error('phonenumber') is-invalid @enderror" aria-describedby="phonenumber" value="{{ $user->phonenumber }}" placeholder="@lang('accounts.phonenumber')">

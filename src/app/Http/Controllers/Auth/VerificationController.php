@@ -51,7 +51,10 @@ class VerificationController extends Controller
 
     public function verify (EmailVerificationRequest $request) {
         $request->fulfill();
-
+        if ($request->session()->get('eventula_req_url') != "")
+        {
+            return redirect($request->session()->get('eventula_req_url'));
+        }
         return redirect('/account')->with('message', __('auth.verifyed_email'));
     }
 
