@@ -679,7 +679,7 @@
 					{{$participant->user->firstname}}
 				</td>
 				<td style="vertical-align: middle;">
-					@if ($participant->user->hasSeatableTicket($event->id)))
+					@if ($participant->user->hasSeatableTicket($event->id))
 					@if ($participant->seat)
 					{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
 					@else
