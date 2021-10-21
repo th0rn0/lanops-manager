@@ -214,7 +214,7 @@
 								@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 									<tr>
 										<td>
-											<h4><strong>ROW {{ucwords($headers[$row])}}</strong></h4>
+											<h4><strong>{{ucwords($headers[$row])}}</strong></h4>
 										</td>
 										@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 
