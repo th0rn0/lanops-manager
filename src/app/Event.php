@@ -203,7 +203,7 @@ class Event extends Model
     {
         $total = 0;
         foreach ($this->seatingPlans as $seatingPlan) {
-            $total += $seatingPlan->seats()->where('status', 'ACTIVE')->count();
+            $total += $seatingPlan->getSeatedCount();
         }
         return $total;
     }
@@ -216,7 +216,7 @@ class Event extends Model
     {
         $total = 0;
         foreach ($this->seatingPlans as $seatingPlan) {
-            $total += ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats()->where('status', 'INACTIVE')->count();
+            $total += $seatingPlan->getSeatingCapacity();
         }
         return $total;
     }

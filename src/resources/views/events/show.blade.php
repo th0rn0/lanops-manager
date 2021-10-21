@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title',  Settings::getOrgName() . ' - ' . $event->display_name)
+@section ('page_title', Settings::getOrgName() . ' - ' . $event->display_name)
 
 @section ('content')
 
@@ -10,7 +10,7 @@
 		<h1>
 			{{$event->display_name}}
 			@if ($event->status != 'PUBLISHED')
-				<small> - {{ $event->status }}</small>
+			<small> - {{ $event->status }}</small>
 			@endif
 		</h1>
 		<h4>{!! $event->desc_short !!}</h4>
@@ -28,26 +28,28 @@
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#event">@lang('events.eventinfo')</a></li>
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#purchaseTickets">@lang('events.tickets')</a></li>
 						@if (!$event->sponsors->isEmpty())
-							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#sponsors">@lang('events.sponsors')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#sponsors">@lang('events.sponsors')</a></li>
 						@endif
-						@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray()))	)
-							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#seating">@lang('events.seating')</a></li>
+						@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())) )
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#seating">@lang('events.seating')</a></li>
 						@endif
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#attendees">@lang('events.attendees')</a></li>
 						@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
-							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#tournaments">@lang('events.tournaments')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif
 						@if (!$event->timetables->isEmpty())
-							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#timetable">@lang('events.timetable')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#timetable">@lang('events.timetable')</a></li>
 						@endif
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#yourTickets">@lang('events.yourtickets')</a></li>
 						@if (!$event->polls->isEmpty())
-							<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#polls">@lang('events.haveyoursay')</a></li>
+						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#polls">@lang('events.haveyoursay')</a></li>
 						@endif
 
 					</ul>
-				</div><!--/.nav-collapse -->
-			</div><!--/.container-fluid -->
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+			<!--/.container-fluid -->
 		</nav>
 		<div class="row">
 			<div class="col-12">
@@ -56,17 +58,17 @@
 				</h3>
 			</div>
 			@if ($event->capacity > 0)
-				<div class="col-12">
-					<div class="progress">
-						<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{ ($event->eventParticipants->count() / $event->capacity) * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
-							@lang('events.purchased')
-						</div>
-						<div class="progress-bar bg-success" style="width: {{ 100 - ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
-							<span class="sr-only">@lang('events.available')</span>
-							@lang('events.available')
-						</div>
+			<div class="col-12">
+				<div class="progress">
+					<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{ ($event->eventParticipants->count() / $event->capacity) * 100}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
+						@lang('events.purchased')
+					</div>
+					<div class="progress-bar bg-success" style="width: {{ 100 - ($event->eventParticipants->count() / $event->capacity) * 100}}%;">
+						<span class="sr-only">@lang('events.available')</span>
+						@lang('events.available')
 					</div>
 				</div>
+			</div>
 			@endif
 		</div>
 
@@ -95,227 +97,215 @@
 		<div class="col-md-12">
 			<!-- PURCHASE TICKETS -->
 			@if (!$event->tickets->isEmpty())
-				<div class="pb-2 mt-4 mb-4 border-bottom">
-					<a name="purchaseTickets"></a>
-					<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.purchasetickets')</h3>
-				</div>
-				<div class="card-deck">
-					@foreach ($event->tickets as $ticket)
-						{{-- <div class="col-12 col-sm-4"> --}}
-							<div class="card mb-3" disabled>
-								<div class="card-body d-flex flex-column">
-									<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
+			<div class="pb-2 mt-4 mb-4 border-bottom">
+				<a name="purchaseTickets"></a>
+				<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.purchasetickets')</h3>
+			</div>
+			<div class="card-deck">
+				@foreach ($event->tickets as $ticket)
+				{{-- <div class="col-12 col-sm-4"> --}}
+				<div class="card mb-3" disabled>
+					<div class="card-body d-flex flex-column">
+						<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
+						@if ($ticket->quantity != 0)
+						<small>
+							@lang('events.limitedavailability')
+						</small>
+						@endif
+						<div class="row mt-auto">
+							<div class="col-sm-12 col-12">
+								<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
 									@if ($ticket->quantity != 0)
-										<small>
-											@lang('events.limitedavailability')
-										</small>
+									<small>
+										{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} @lang('events.available')
+									</small>
 									@endif
-									<div class="row mt-auto" >
-										<div class="col-sm-12 col-12">
-											<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
-												@if ($ticket->quantity != 0)
-													<small>
-														{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} @lang('events.available')
-													</small>
-												@endif
-											</h3>
-											@if ($user)
-												{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
-													@if (
-														$event->capacity <= $event->eventParticipants->count()
-														|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
-														)
-														<div class="row">
-															<div class="form-group col-sm-6 col-12">
-																{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-																{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
-															</div>
-															<div class="form-group col-sm-6 col-12 d-flex">
-																<button class="btn btn-md btn-primary btn-block mt-auto" disabled >@lang('events.soldout')</button>
-															</div>
-														</div>
-													@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
-														<h5>
-															@lang('events.availablefrom', ['time' => date('H:i', strtotime($ticket->sale_start)), 'date'=> date ('d-m-Y', strtotime($ticket->sale_start))])
-														</h5>
-													@elseif(
-														$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s')
-														|| date('Y-m-d H:i:s') >= $event->end
-													)
-														<h5>
-															@lang('events.ticketnolongavailable')
-														</h5>
-													@else
-														<div class="row">
-															<div class="form-group col-sm-6 col-12 ">
-																{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-																{{ Form::select('quantity', Helpers::getTicketQuantitySelection($ticket, $ticket->quantity - $ticket->participants()->count()), null, array('id'=>'quantity','class'=>'form-control')) }}
-															</div>
-															<div class="form-group col-sm-6 col-12 d-flex">
-																{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-																<button class="btn btn-md btn-primary btn-block mt-auto"><i class="fas fa-shopping-cart"></i> @lang('events.buy')</button>
-															</div>
-														</div>
-													@endif
-												{{ Form::close() }}
-											@else
-												<div class="alert alert-info">
-													<h5>@lang('events.plslogintopurchaseticket')</h5>
-												</div>
-											@endif
+								</h3>
+								@if ($user)
+								{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
+								@if (
+								$event->capacity <= $event->eventParticipants->count()
+									|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
+									)
+									<div class="row">
+										<div class="form-group col-sm-6 col-12">
+											{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+											{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
+										</div>
+										<div class="form-group col-sm-6 col-12 d-flex">
+											<button class="btn btn-md btn-primary btn-block mt-auto" disabled>@lang('events.soldout')</button>
 										</div>
 									</div>
-								</div>
+									@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
+									<h5>
+										@lang('events.availablefrom', ['time' => date('H:i', strtotime($ticket->sale_start)), 'date'=> date ('d-m-Y', strtotime($ticket->sale_start))])
+									</h5>
+									@elseif(
+									$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s') || date('Y-m-d H:i:s')>= $event->end
+										)
+										<h5>
+											@lang('events.ticketnolongavailable')
+										</h5>
+										@else
+										<div class="row">
+											<div class="form-group col-sm-6 col-12 ">
+												{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+												{{ Form::select('quantity', Helpers::getTicketQuantitySelection($ticket, $ticket->quantity - $ticket->participants()->count()), null, array('id'=>'quantity','class'=>'form-control')) }}
+											</div>
+											<div class="form-group col-sm-6 col-12 d-flex">
+												{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+												<button class="btn btn-md btn-primary btn-block mt-auto"><i class="fas fa-shopping-cart"></i> @lang('events.buy')</button>
+											</div>
+										</div>
+										@endif
+										{{ Form::close() }}
+										@else
+										<div class="alert alert-info">
+											<h5>@lang('events.plslogintopurchaseticket')</h5>
+										</div>
+										@endif
 							</div>
-						{{-- </div> --}}
-					@endforeach
+						</div>
+					</div>
 				</div>
+				{{-- </div> --}}
+				@endforeach
+			</div>
 			@endif
 		</div>
 	</div>
 
 	<!-- SEATING -->
 	@if (!$event->online_event &&
-		!$event->seatingPlans->isEmpty() &&
-		(
-			in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) ||
-			in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())
-		)
+	!$event->seatingPlans->isEmpty() &&
+	(
+	in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) ||
+	in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())
 	)
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="seating"></a>
-			<h3><i class="fas fa-chair mr-3"></i>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
-		</div>
-		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
-			@foreach ($event->seatingPlans as $seatingPlan)
-				@if ($seatingPlan->status != 'DRAFT')
-					<div class="card mb-3">
-						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-							<div class="card-header  bg-success-light" role="tab" id="headingOne">
-								<h4 class="card-title m-0">
-									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} @lang('events.available')</small>
-									@if ($seatingPlan->status != 'PUBLISHED')
-										<small> - {{ $seatingPlan->status }}</small>
-									@endif
-								</h4>
-							</div>
-						</a>
-						<div id="collapse_{{ $seatingPlan->slug }}" class="collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
-							<div class="card-body">
-								<div class="table-responsive text-center">
-									<table class="table">
-										<thead>
-											<tr>
-											<?php
-												$headers = explode(',', $seatingPlan->headers);
-												$headers = array_combine(range(1, count($headers)), $headers);
-											?>
-											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-												<th class="text-center"><h4><strong>@lang('events.row') {{ucwords($headers[$column])}}</strong></h4></th>
-											@endfor
-											</tr>
-										 </thead>
-										<tbody>
-											@for ($row = $seatingPlan->rows; $row > 0; $row--)
-												<tr>
-													@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-														<td style="padding-top:14px;">
-															@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
-																@if($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row)->status == 'ACTIVE')
-																	@if ($seatingPlan->locked)
-																		<button class="btn btn-success btn-sm" disabled>
-																			{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																		</button>
-																	@else
-																		<button class="btn btn-success btn-sm" disabled>
-																			{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																		</button>
-																	@endif
-																@endif
-															@else
-																@if ($seatingPlan->locked)
-																	<button class="btn btn-primary btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
-																	</button>
-																@else
-																	@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
-																		<button
-																			class="btn btn-primary btn-sm"
-																			onclick="pickSeat(
-																				'{{ $seatingPlan->slug }}',
-																				'{{ ucwords($headers[$column]) . $row }}'
-																			)"
-																			data-toggle="modal"
-																			data-target="#pickSeatModal"
-																		>
-																			{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
-																		</button>
-																	@else
-																		<button class="btn btn-primary btn-sm" disabled>
-																			{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
-																		</button>
-																	@endif
-																@endif
-															@endif
-														</td>
-													@endfor
-												</tr>
-											@endfor
-										</tbody>
-									</table>
-									@if ($seatingPlan->locked)
-										<p class="text-center"><strong> @lang('events.seatingplanlocked')</strong></p>
-									@endif
-								</div>
-							</div>
-							<div class="card-footer">
-								<div class="row" style="display: flex; align-items: center;">
-									<div class="col-12 col-md-8">
-										<picture>
-											<source srcset="{{ $seatingPlan->image_path }}.webp" type="image/webp">
-											<source srcset="{{ $seatingPlan->image_path }}" type="image/jpeg">
-											<img class="img-fluid" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
-										</picture>
-									</div>
-									<div class="col-12 col-md-4">
-										@if ($user && !$user->getAllTickets($event->id)->isEmpty() && $user->hasSeatableTicket($event->id))
-											<h5>@lang('events.yourseats')</h5>
-											@foreach ($user->getAllTickets($event->id) as $participant)
-												@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
-													{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
-														{{ Form::hidden('_method', 'DELETE') }}
-														{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-														{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-														{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
-														<h5>
-															<button class="btn btn-success btn-block">
-																{{ $participant->seat->seat }} - @lang('events.remove')
-															</button>
-														</h5>
-													{{ Form::close() }}
+	)
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<a name="seating"></a>
+		<h3><i class="fas fa-chair mr-3"></i>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
+	</div>
+	<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
+		@foreach ($event->seatingPlans as $seatingPlan)
+		@if ($seatingPlan->status != 'DRAFT')
+		<div class="card mb-3">
+			<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
+				<div class="card-header  bg-success-light" role="tab" id="headingOne">
+					<h4 class="card-title m-0">
+						{{ $seatingPlan->name }} <small>- {{ $seatingPlan->getSeatingCapacity() - $seatingPlan->getSeatedCount() }} / {{ $seatingPlan->getSeatingCapacity() }} @lang('events.available')</small>
+						@if ($seatingPlan->status != 'PUBLISHED')
+						<small> - {{ $seatingPlan->status }}</small>
+						@endif
+					</h4>
+				</div>
+			</a>
+			<div id="collapse_{{ $seatingPlan->slug }}" class="collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
+				<div class="card-body">
+					<div class="table-responsive text-center">
+						<table class="table">
+
+							<?php
+							$headers = explode(',', $seatingPlan->headers);
+							$headers = array_combine(range(1, count($headers)), $headers);
+							?>
+							<tbody>
+								@for ($row = 1; $row <= $seatingPlan->rows; $row++)
+									<tr>
+										<td>
+											<h4><strong>ROW {{ucwords($headers[$row])}}</strong></h4>
+										</td>
+										@for ($column = 1; $column <= $seatingPlan->columns; $column++)
+
+											<td style="padding-top:14px;">
+												@if ($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
+												@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column)->status == 'ACTIVE')
+												@if ($seatingPlan->locked)
+												<button class="btn btn-success btn-sm" disabled>
+													{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+												</button>
+												@else
+												<button class="btn btn-success btn-sm" disabled>
+													{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+												</button>
 												@endif
-											@endforeach
-										@elseif($user && !$user->hasSeatableTicket($event->id))
-											<div class="alert alert-info">
-												<h5>@lang('events.noseatableticket')</h5>
-											</div>
-										@elseif(Auth::user())
-											<div class="alert alert-info">
-												<h5>@lang('events.plspurchaseticket')</h5>
-											</div>
-										@else
-											<div class="alert alert-info">
-												<h5>@lang('events.plslogintopurchaseticket')</h5>
-											</div>
-										@endif
-									</div>
-								</div>
+												@endif
+												@else
+												@if ($seatingPlan->locked)
+												<button class="btn btn-primary btn-sm" disabled>
+													{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+												</button>
+												@else
+												@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
+												<button class="btn btn-primary btn-sm" onclick="pickSeat(
+																				'{{ $seatingPlan->slug }}',
+																				'{{ ucwords($headers[$row]) . $column }}'
+																			)" data-toggle="modal" data-target="#pickSeatModal">
+													{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+												</button>
+												@else
+												<button class="btn btn-primary btn-sm" disabled>
+													{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+												</button>
+												@endif
+												@endif
+												@endif
+											</td>
+											@endfor
+									</tr>
+									@endfor
+							</tbody>
+						</table>
+						@if ($seatingPlan->locked)
+						<p class="text-center"><strong> @lang('events.seatingplanlocked')</strong></p>
+						@endif
+					</div>
+				</div>
+				<div class="card-footer">
+					<div class="row" style="display: flex; align-items: center;">
+						<div class="col-12 col-md-8">
+							<img class="img-fluid" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}" />
+						</div>
+						<div class="col-12 col-md-4">
+							@if ($user && !$user->getAllTickets($event->id)->isEmpty() && $user->hasSeatableTicket($event->id))
+							<h5>@lang('events.yourseats')</h5>
+							@foreach ($user->getAllTickets($event->id) as $participant)
+							@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
+							{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
+							{{ Form::hidden('_method', 'DELETE') }}
+							{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+							{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
+							{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
+							<h5>
+								<button class="btn btn-success btn-block">
+									{{ $participant->seat->seat }} - @lang('events.remove')
+								</button>
+							</h5>
+							{{ Form::close() }}
+							@endif
+							@endforeach
+							@elseif($user && !$user->hasSeatableTicket($event->id))
+							<div class="alert alert-info">
+								<h5>@lang('events.noseatableticket')</h5>
 							</div>
+							@elseif(Auth::user())
+							<div class="alert alert-info">
+								<h5>@lang('events.plspurchaseticket')</h5>
+							</div>
+							@else
+							<div class="alert alert-info">
+								<h5>@lang('events.plslogintopurchaseticket')</h5>
+							</div>
+							@endif
 						</div>
 					</div>
-				@endif
-			@endforeach
+				</div>
+			</div>
 		</div>
+		@endif
+		@endforeach
+	</div>
 	@endif
 
 	<!-- VENUE INFORMATION -->
@@ -337,167 +327,167 @@
 		</div>
 		<div class="col-lg-5">
 			@foreach ($event->venue->images as $image)
-				<picture>
-					<source srcset="{{ $image->path }}.webp" type="image/webp">
-					<source srcset="{{ $image->path }}" type="image/jpeg">
-					<img class="img-fluid rounded" alt="{{ $event->venue->display_name }}" src="{{ $image->path }}"/>
-				</picture>
+			<picture>
+				<source srcset="{{ $image->path }}.webp" type="image/webp">
+				<source srcset="{{ $image->path }}" type="image/jpeg">
+				<img class="img-fluid rounded" alt="{{ $event->venue->display_name }}" src="{{ $image->path }}" />
+			</picture>
 			@endforeach
 		</div>
 	</div>
 
 	<!-- EVENT SPONSORS -->
 	@if (!$event->sponsors->isEmpty())
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="sponsors"></a>
-			<h3><i class="fas fa-running mr-3"></i>@lang('events.eventsponsoredby', ['event', $event->display_name])</h3>
-		</div>
-		@foreach ($event->sponsors as $sponsor)
-			<a href="{{ $sponsor->website }}">
-				<picture>
-					<source srcset="{{ $sponsor->image_path }}.webp" type="image/webp">
-					<source srcset="{{ $sponsor->image_path }}" type="image/jpeg">
-					<img class="img-fluid rounded" src="{{ $sponsor->image_path }}" alt="{{ $sponsor->website}}" />
-				</picture>
-			</a>
-		@endforeach
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<a name="sponsors"></a>
+		<h3><i class="fas fa-running mr-3"></i>@lang('events.eventsponsoredby', ['event', $event->display_name])</h3>
+	</div>
+	@foreach ($event->sponsors as $sponsor)
+	<a href="{{ $sponsor->website }}">
+		<picture>
+			<source srcset="{{ $sponsor->image_path }}.webp" type="image/webp">
+			<source srcset="{{ $sponsor->image_path }}" type="image/jpeg">
+			<img class="img-fluid rounded" src="{{ $sponsor->image_path }}" alt="{{ $sponsor->website}}" />
+		</picture>
+	</a>
+	@endforeach
 	@endif
 
 	<!-- EVENT INFORMATION SECTIONS -->
 	@if (!empty($event->information))
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<h3><i class="fas fa-angle-double-right mr-3"></i>@lang('events.therismore')</h3>
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<h3><i class="fas fa-angle-double-right mr-3"></i>@lang('events.therismore')</h3>
+	</div>
+	@php($x = 0)
+	@foreach ($event->information as $section)
+	<div class="row">
+		@if ($x % 2 == 0)
+		@if (isset($section->image_path))
+		<div class="col-sm-4 d-block d-sm-none">
+			<h4>{{$section->title}}</h4>
+			<center>
+				<picture>
+					<source srcset="{{ $section->image_path }}.webp" type="image/webp">
+					<source srcset="{{ $section->image_path }}" type="image/jpeg">
+					<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+				</picture>
+			</center>
 		</div>
-		@php($x = 0)
-		@foreach ($event->information as $section)
-			<div class="row">
-				@if ($x % 2 == 0)
-					@if (isset($section->image_path))
-						<div class="col-sm-4 d-block d-sm-none">
-							<h4>{{$section->title}}</h4>
-							<center>
-								<picture>
-									<source srcset="{{ $section->image_path }}.webp" type="image/webp">
-									<source srcset="{{ $section->image_path }}" type="image/jpeg">
-									<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
-								</picture>
-							</center>
-						</div>
-						<div class="col-sm-8">
-							<h4 class="d-none d-sm-block">{{$section->title}}</h4>
-							<p>{!! $section->text !!}</p>
-						</div>
-						<div class="col-sm-4 d-none d-sm-block">
-							@if (isset($section->image_path))
-								<center>
-									<picture>
-										<source srcset="{{ $section->image_path }}.webp" type="image/webp">
-										<source srcset="{{ $section->image_path }}" type="image/jpeg">
-										<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
-									</picture>
-								</center>
-							@endif
-						</div>
-					@else
-						<div class="col-sm-12">
-							<h4>{{$section->title}}</h4>
-							<p>{!! $section->text !!}</p>
-						</div>
-					@endif
-				@else
-					@if (isset($section->image_path))
-						<div class="col-sm-4">
-							<h4 class="d-block d-sm-none">{{$section->title}}</h4>
-							<center>
-								<picture>
-									<source srcset="{{ $section->image_path }}.webp" type="image/webp">
-									<source srcset="{{ $section->image_path }}" type="image/jpeg">
-									<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
-								</picture>
-							</center>
-						</div>
-						<div class="col-sm-8">
-							<h4 class="d-none d-sm-block">{{$section->title}}</h4>
-							<p>{!! $section->text !!}</p>
-						</div>
-					@else
-						<div class="col-sm-12">
-							<h4>{{$section->title}}</h4>
-							<p>{!! $section->text !!}</p>
-						</div>
-					@endif
-				@endif
-			</div>
-			<hr>
-			@php($x++)
-		@endforeach
+		<div class="col-sm-8">
+			<h4 class="d-none d-sm-block">{{$section->title}}</h4>
+			<p>{!! $section->text !!}</p>
+		</div>
+		<div class="col-sm-4 d-none d-sm-block">
+			@if (isset($section->image_path))
+			<center>
+				<picture>
+					<source srcset="{{ $section->image_path }}.webp" type="image/webp">
+					<source srcset="{{ $section->image_path }}" type="image/jpeg">
+					<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+				</picture>
+			</center>
+			@endif
+		</div>
+		@else
+		<div class="col-sm-12">
+			<h4>{{$section->title}}</h4>
+			<p>{!! $section->text !!}</p>
+		</div>
+		@endif
+		@else
+		@if (isset($section->image_path))
+		<div class="col-sm-4">
+			<h4 class="d-block d-sm-none">{{$section->title}}</h4>
+			<center>
+				<picture>
+					<source srcset="{{ $section->image_path }}.webp" type="image/webp">
+					<source srcset="{{ $section->image_path }}" type="image/jpeg">
+					<img class="img-fluid rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+				</picture>
+			</center>
+		</div>
+		<div class="col-sm-8">
+			<h4 class="d-none d-sm-block">{{$section->title}}</h4>
+			<p>{!! $section->text !!}</p>
+		</div>
+		@else
+		<div class="col-sm-12">
+			<h4>{{$section->title}}</h4>
+			<p>{!! $section->text !!}</p>
+		</div>
+		@endif
+		@endif
+	</div>
+	<hr>
+	@php($x++)
+	@endforeach
 	@endif
 
 	<!-- TIMETABLE -->
 	@if (!$event->timetables->isEmpty())
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="timetable"></a>
-			<h3><i class="fas fa-calendar-alt mr-3"></i>@lang('events.timetable')</h3>
-		</div>
-		@foreach ($event->timetables as $timetable)
-			@if (strtoupper($timetable->status) == 'DRAFT')
-				<h4>DRAFT</h4>
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<a name="timetable"></a>
+		<h3><i class="fas fa-calendar-alt mr-3"></i>@lang('events.timetable')</h3>
+	</div>
+	@foreach ($event->timetables as $timetable)
+	@if (strtoupper($timetable->status) == 'DRAFT')
+	<h4>DRAFT</h4>
+	@endif
+	<h4>{{ $timetable->name }}</h4>
+	<table class="table table-striped">
+		<thead>
+			<th>
+				@lang('events.time')
+			</th>
+			<th>
+				@lang('events.game')
+			</th>
+			<th>
+				@lang('events.description')
+			</th>
+		</thead>
+		<tbody>
+			@foreach ($timetable->data as $slot)
+			@if ($slot->name != NULL && $slot->desc != NULL)
+			<tr>
+				<td>
+					{{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
+				</td>
+				<td>
+					{{ $slot->name }}
+				</td>
+				<td>
+					{{ $slot->desc }}
+				</td>
+			</tr>
 			@endif
-			<h4>{{ $timetable->name }}</h4>
-			<table class="table table-striped">
-				<thead>
-					<th>
-						@lang('events.time')
-					</th>
-					<th>
-						@lang('events.game')
-					</th>
-					<th>
-						@lang('events.description')
-					</th>
-				</thead>
-				<tbody>
-					@foreach ($timetable->data as $slot)
-						@if ($slot->name != NULL && $slot->desc != NULL)
-							<tr>
-								<td>
-									{{ date("D", strtotime($slot->start_time)) }} - {{ date("H:i", strtotime($slot->start_time)) }}
-								</td>
-								<td>
-									{{ $slot->name }}
-								</td>
-								<td>
-									{{ $slot->desc }}
-								</td>
-							</tr>
-						@endif
-					@endforeach
-				</tbody>
-			</table>
-		@endforeach
+			@endforeach
+		</tbody>
+	</table>
+	@endforeach
 	@endif
 
 	<!-- POLLS-->
 	@if ($event->polls->count() > 0)
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="polls"></a>
-			<h3><i class="fas fa-poll mr-3"></i>@lang('events.haveyoursay')</h3>
-		</div>
-		@foreach ($event->polls as $poll)
-			<h4>
-				{{ $poll->name }}
-				@if ($poll->status != 'PUBLISHED')
-					<small> - {{ $poll->status }}</small>
-				@endif
-				@if ($poll->hasEnded())
-					<small> - @lang('events.ended')</small>
-				@endif
-			</h4>
-			@if (!empty($poll->description))
-				<p>{{ $poll->description }}</p>
-			@endif
-			@include ('layouts._partials._polls.votes')
-		@endforeach
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<a name="polls"></a>
+		<h3><i class="fas fa-poll mr-3"></i>@lang('events.haveyoursay')</h3>
+	</div>
+	@foreach ($event->polls as $poll)
+	<h4>
+		{{ $poll->name }}
+		@if ($poll->status != 'PUBLISHED')
+		<small> - {{ $poll->status }}</small>
+		@endif
+		@if ($poll->hasEnded())
+		<small> - @lang('events.ended')</small>
+		@endif
+	</h4>
+	@if (!empty($poll->description))
+	<p>{{ $poll->description }}</p>
+	@endif
+	@include ('layouts._partials._polls.votes')
+	@endforeach
 	@endif
 
 	<!-- MY TICKETS -->
@@ -506,152 +496,152 @@
 		<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.mytickets')</h3>
 	</div>
 	@if (Auth::user())
-		@if (!$user->getAllTickets($event->id)->isEmpty())
-			@foreach ($user->getAllTickets($event->id) as $participant)
-				@include('layouts._partials._tickets.index')
-			@endforeach
-		@else
-			<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
-		@endif
+	@if (!$user->getAllTickets($event->id)->isEmpty())
+	@foreach ($user->getAllTickets($event->id) as $participant)
+	@include('layouts._partials._tickets.index')
+	@endforeach
 	@else
-		<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
+	<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
+	@endif
+	@else
+	<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
 	@endif
 
 	<!-- TOURNAMENTS -->
 	@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
-		<div class="pb-2 mt-4 mb-4 border-bottom">
-			<a name="tournaments"></a>
-			<h3><i class="fas fa-trophy mr-3"></i>@lang('events.tournaments')</h3>
-		</div>
-		<div class="row">
-			@foreach ($event->tournaments as $tournament)
-				@if ($tournament->status != 'DRAFT')
-					<div class="col-12 col-sm-6 col-md-3">
-						<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="link-unstyled">
-							<div class="card card-hover mb-3">
-								<div class="card-header ">
-									@if ($tournament->game && $tournament->game->image_thumbnail_path)
-										<picture>
-											<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
-											<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
-											<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
-										</picture>
-									@endif
-									<h3 class="text-primary">{{ $tournament->name }}</h3>
-								</div>
-								<div class="card-body">
-									<div class="thumbnail">
-										<div class="caption">
-											<span class="small">
-												@if ($tournament->status == 'COMPLETE')
-													<span class="badge badge-success">@lang('events.ended')</span>
-												@endif
-												@if ($tournament->status == 'LIVE')
-													<span class="badge badge-success">@lang('events.live')</span>
-												@endif
-												@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && !$tournament->getParticipant($user->active_event_participant->id))
-													<span class="badge badge-danger">@lang('events.notsignedup')</span>
-												@endif
-												@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
-													<span class="badge badge-success">@lang('events.signedup')</span>
-												@endif
-												@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && $user->getAllTickets($event->id)->isEmpty())
-													<span class="badge badge-info">@lang('events.purchaseticketosignup')</span>
-												@else
-													@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
-														<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
-													@endif
-												@endif
-											</span>
-											@if ($tournament->status != 'COMPLETE')
-												<dl>
-													<dt>
-														@lang('events.teamsizes'):
-													</dt>
-													<dd>
-														{{ $tournament->team_size }}
-													</dd>
-													@if ($tournament->game)
-														<dt>
-															@lang('events.game'):
-														</dt>
-														<dd>
-															{{ $tournament->game->name }}
-														</dd>
-													@endif
-													<dt>
-														@lang('events.format'):
-													</dt>
-													<dd>
-														{{ $tournament->format }}
-													</dd>
-												</dl>
-											@endif
-											<!-- // TODO - refactor & add order on rank-->
-											@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
-												@if ($tournament->team_size != '1v1')
-													@foreach ($tournament->tournamentTeams->sortBy('final_rank') as $tournamentParticipant)
-														@if ($tournamentParticipant->final_rank == 1)
-															@if ($tournament->team_size == '1v1')
-																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
-															@else
-																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
-															@endif
-														@endif
-														@if ($tournamentParticipant->final_rank == 2)
-															@if ($tournament->team_size == '1v1')
-																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
-															@else
-																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
-															@endif
-														@endif
-														@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
-															@if ($tournament->team_size == '1v1')
-																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
-															@else
-																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
-															@endif
-														@endif
-													@endforeach
-												@endif
-												@if ($tournament->team_size == '1v1')
-													@foreach ($tournament->tournamentParticipants->sortBy('final_rank') as $tournamentParticipant)
-														@if ($tournamentParticipant->final_rank == 1)
-															@if ($tournament->team_size == '1v1')
-																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
-															@else
-																<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
-															@endif
-														@endif
-														@if ($tournamentParticipant->final_rank == 2)
-															@if ($tournament->team_size == '1v1')
-																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
-															@else
-																<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
-															@endif
-														@endif
-														@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
-															@if ($tournament->team_size == '1v1')
-																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
-															@else
-																<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
-															@endif
-														@endif
-													@endforeach
-												@endif
-											@endif
-											<strong>
-												{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
-											</strong>
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
+	<div class="pb-2 mt-4 mb-4 border-bottom">
+		<a name="tournaments"></a>
+		<h3><i class="fas fa-trophy mr-3"></i>@lang('events.tournaments')</h3>
+	</div>
+	<div class="row">
+		@foreach ($event->tournaments as $tournament)
+		@if ($tournament->status != 'DRAFT')
+		<div class="col-12 col-sm-6 col-md-3">
+			<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="link-unstyled">
+				<div class="card card-hover mb-3">
+					<div class="card-header ">
+						@if ($tournament->game && $tournament->game->image_thumbnail_path)
+						<picture>
+							<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
+							<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
+							<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
+						</picture>
+						@endif
+						<h3 class="text-primary">{{ $tournament->name }}</h3>
 					</div>
-				@endif
-			@endforeach
+					<div class="card-body">
+						<div class="thumbnail">
+							<div class="caption">
+								<span class="small">
+									@if ($tournament->status == 'COMPLETE')
+									<span class="badge badge-success">@lang('events.ended')</span>
+									@endif
+									@if ($tournament->status == 'LIVE')
+									<span class="badge badge-success">@lang('events.live')</span>
+									@endif
+									@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && !$tournament->getParticipant($user->active_event_participant->id))
+									<span class="badge badge-danger">@lang('events.notsignedup')</span>
+									@endif
+									@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
+									<span class="badge badge-success">@lang('events.signedup')</span>
+									@endif
+									@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && $user->getAllTickets($event->id)->isEmpty())
+									<span class="badge badge-info">@lang('events.purchaseticketosignup')</span>
+									@else
+									@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
+									<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
+									@endif
+									@endif
+								</span>
+								@if ($tournament->status != 'COMPLETE')
+								<dl>
+									<dt>
+										@lang('events.teamsizes'):
+									</dt>
+									<dd>
+										{{ $tournament->team_size }}
+									</dd>
+									@if ($tournament->game)
+									<dt>
+										@lang('events.game'):
+									</dt>
+									<dd>
+										{{ $tournament->game->name }}
+									</dd>
+									@endif
+									<dt>
+										@lang('events.format'):
+									</dt>
+									<dd>
+										{{ $tournament->format }}
+									</dd>
+								</dl>
+								@endif
+								<!-- // TODO - refactor & add order on rank-->
+								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
+								@if ($tournament->team_size != '1v1')
+								@foreach ($tournament->tournamentTeams->sortBy('final_rank') as $tournamentParticipant)
+								@if ($tournamentParticipant->final_rank == 1)
+								@if ($tournament->team_size == '1v1')
+								<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
+								@else
+								<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
+								@endif
+								@endif
+								@if ($tournamentParticipant->final_rank == 2)
+								@if ($tournament->team_size == '1v1')
+								<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
+								@else
+								<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
+								@endif
+								@endif
+								@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
+								@if ($tournament->team_size == '1v1')
+								<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
+								@else
+								<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
+								@endif
+								@endif
+								@endforeach
+								@endif
+								@if ($tournament->team_size == '1v1')
+								@foreach ($tournament->tournamentParticipants->sortBy('final_rank') as $tournamentParticipant)
+								@if ($tournamentParticipant->final_rank == 1)
+								@if ($tournament->team_size == '1v1')
+								<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
+								@else
+								<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
+								@endif
+								@endif
+								@if ($tournamentParticipant->final_rank == 2)
+								@if ($tournament->team_size == '1v1')
+								<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
+								@else
+								<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
+								@endif
+								@endif
+								@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
+								@if ($tournament->team_size == '1v1')
+								<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
+								@else
+								<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
+								@endif
+								@endif
+								@endforeach
+								@endif
+								@endif
+								<strong>
+									{{ $tournament->tournamentParticipants->count() }} @lang('events.signups')
+								</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+			</a>
 		</div>
+		@endif
+		@endforeach
+	</div>
 	@endif
 
 	<!-- ATTENDEES -->
@@ -682,7 +672,7 @@
 				<td style="vertical-align: middle;">
 					{{ $participant->user->username }}
 					@if ($participant->user->steamid)
-						- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+					- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
 					@endif
 				</td>
 				<td style="vertical-align: middle;">
@@ -690,13 +680,13 @@
 				</td>
 				<td style="vertical-align: middle;">
 					@if ($participant->user->hasSeatableTicket($event->id)))
-						@if ($participant->seat)
-							{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
-						@else
-							@lang('events.notseated')
-						@endif
+					@if ($participant->seat)
+					{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
 					@else
-						@lang('events.noseatableticketlist')
+					@lang('events.notseated')
+					@endif
+					@else
+					@lang('events.noseatableticketlist')
 					@endif
 				</td>
 			</tr>
@@ -714,11 +704,11 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			@if (Auth::user())
-				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
-					<div class="modal-body">
-						<div class="form-group">
-							<h4>@lang('events.wichtickettoseat')</h4>
-							{{
+			{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
+			<div class="modal-body">
+				<div class="form-group">
+					<h4>@lang('events.wichtickettoseat')</h4>
+					{{
 								Form::select(
 									'participant_id',
 									$user->getTickets($event->id),
@@ -729,25 +719,24 @@
 									)
 								)
 							}}
-							<p>>@lang('events.wantthisseat')</p>
-							<p>@lang('events.removeitanytime')</p>
-						</div>
-					</div>
-					{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-					{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">@lang('events.yes')</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('events.no')</button>
-					</div>
-				{{ Form::close() }}
+					<p>>@lang('events.wantthisseat')</p>
+					<p>@lang('events.removeitanytime')</p>
+				</div>
+			</div>
+			{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+			{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-success">@lang('events.yes')</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('events.no')</button>
+			</div>
+			{{ Form::close() }}
 			@endif
 		</div>
 	</div>
 </div>
 
 <script>
-	function pickSeat(seating_plan_slug, seat)
-	{
+	function pickSeat(seating_plan_slug, seat) {
 		jQuery("#seat_number_modal").val(seat);
 		jQuery("#seat_modal").val(seat);
 		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);

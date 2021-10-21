@@ -20,7 +20,7 @@ class EventSeatingPlan extends Model
      * @var string
      */
     protected $table = 'event_seating_plans';
-    
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -97,5 +97,23 @@ class EventSeatingPlan extends Model
             $name = $this->name_short;
         }
         return $name;
+    }
+
+    /**
+     * Get Total Seated
+     * @return Integer
+     */
+    public function getSeatedCount()
+    {
+        return $this->seats()->where('status', 'ACTIVE')->count();;
+    }
+
+    /**
+     * Get Seating Capacity
+     * @return Integer
+     */
+    public function getSeatingCapacity()
+    {
+        return ($this->columns * $this->rows) - $this->seats()->where('status', 'INACTIVE')->count();
     }
 }
