@@ -36,7 +36,7 @@ class TicketsController extends Controller
             Session::flash('alert-danger', 'User not found.');
             return Redirect::to('/events/' . $ticket->event->slug);
         }
-        if ($ticket->event->status != 'PUBLISHED' && $ticket->event->status != 'PRIVATE') {
+        if ($ticket->event->status != 'PUBLISHED' && $ticket->event->status != 'PRIVATE'  && $ticket->event->status != 'REGISTEREDONLY') {
             Session::flash(
                 'alert-danger',
                 'Event is currently in ' . strtolower($ticket->event->status) . '. You cannot buy tickets yet.'
@@ -60,9 +60,9 @@ class TicketsController extends Controller
         }
 
 
-        $user_event_tickets = $user->getAllTickets( $ticket->event->id);
-        if(is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0 && count($user_event_tickets) + $request->quantity > $ticket->no_tickets_per_user) {
-            Session::flash('alert-danger', __('tickets.max_ticket_count_reached',['maxticketcount' =>  $ticket->no_tickets_per_user]));
+        $user_event_tickets = $user->getAllTickets($ticket->event->id);
+        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0 && count($user_event_tickets) + $request->quantity > $ticket->no_tickets_per_user) {
+            Session::flash('alert-danger', __('tickets.max_ticket_count_reached', ['maxticketcount' =>  $ticket->no_tickets_per_user]));
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
