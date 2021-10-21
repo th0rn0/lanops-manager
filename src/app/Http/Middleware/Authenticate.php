@@ -21,6 +21,7 @@ class Authenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
+                $request->session()->put('eventula_req_url', $request->getRequestUri());
                 return redirect()->guest('login');
             }
         }

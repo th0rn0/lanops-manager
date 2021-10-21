@@ -36,7 +36,7 @@ class SteamController extends Controller
      * Login User
      * @return Redirect
      */
-    public function login()
+    public function login(Request $request)
     {
         if ($this->steam->validate()) {
             $info = $this->steam->getUserInfo();
@@ -66,6 +66,11 @@ class SteamController extends Controller
 
                     if ((!isset($user->phonenumber) || $user->phonenumber == null) &&  Settings::isAuthRequirePhonenumberEnabled()) {
                         return redirect('/account/email'); // redirect to site
+                    }
+
+                    if ($request->session()->get('eventula_req_url') != "")
+                    {
+                        return redirect($request->session()->get('eventula_req_url'));
                     }
 
                     return redirect('/'); // redirect to site

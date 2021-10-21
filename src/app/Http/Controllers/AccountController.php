@@ -340,7 +340,12 @@ class AccountController extends Controller
         }
         if ($email_changed) {
             $user->sendEmailVerificationNotification();
+            return redirect('/register/email/verify');
         }
-        return redirect('/register/email/verify');
+        if ($request->session()->get('eventula_req_url') != "")
+        {
+            return redirect($request->session()->get('eventula_req_url'));
+        }
+        return redirect('/');
     }
 }
