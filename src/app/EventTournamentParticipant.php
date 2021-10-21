@@ -54,7 +54,7 @@ class EventTournamentParticipant extends Model
                     $model->eventTournament->format != 'list'
                 ) {
                     $http = new GuzzleHttp\Client();
-                    $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    $challonge = new Challonge($http, config('challonge.api_key'), true);
                     $tournament = $challonge->fetchTournament($model->eventTournament->challonge_tournament_id);
                     if (!$response = $tournament->addParticipant(
                         ['participant[name]' => $model->eventParticipant->user->username]
@@ -78,7 +78,7 @@ class EventTournamentParticipant extends Model
             try {
                 if (!$model->pug && $model->event_tournament_team_id == null && $model->eventTournament->format != 'list') {
                     $http = new GuzzleHttp\Client();
-                    $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    $challonge = new Challonge($http, config('challonge.api_key'), true);
                     $participant = $challonge->getParticipant(
                         $model->eventTournament->challonge_tournament_id,
                         $model->challonge_participant_id
