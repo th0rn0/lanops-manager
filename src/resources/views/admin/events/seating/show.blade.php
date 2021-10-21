@@ -58,17 +58,17 @@
 												}
 											?>
 										@endforeach
-										@if ($status == 'ACTIVE')											
+										@if($status == 'ACTIVE' && isset($seat->eventParticipant))											
 											<button class="btn btn-success btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }})" data-toggle="modal" data-target="#editSeatingModal">
 												{{ ucwords($headers[$column]) . $row }} - {{ $username }}
 											</button>
 										@else
 											<button class="btn btn-danger btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', null, null, '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
-												{{ ucwords($headers[$column]) . $row }} - Blocked
+												{{ ucwords($headers[$column]) . $row }} - Inactive
 											</button>
 										@endif
 									@else
-										<button class="btn btn-primary btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}')" data-toggle="modal" data-target="#editSeatingModal">
+										<button class="btn btn-primary btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', null, null, 'ACTIVE')" data-toggle="modal" data-target="#editSeatingModal">
 											{{ ucwords($headers[$column]) . $row }} - Empty
 										</button>
 									@endif
@@ -125,7 +125,7 @@
 										@endif
 									</td>
 									<td width="10%">
-										<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
+										<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
 									</td>
 								</tr>
 								@endif								
@@ -244,8 +244,8 @@
 							'seat_status_modal', 
 							array( 
 								'active'=>'Active',
-								'inactive'=>'Inactive'), 
-							null, 
+								'inactive'=>'Inactive'),
+							'Active', 
 							array('id'=>'seat_status_modal','class'=>'form-control')) }}	
 					</div>
 					{{ Form::hidden('participant_id_modal', null, array('id'=>'participant_id_modal','class'=>'form-control')) }}
@@ -292,6 +292,11 @@
 			jQuery("#participant_link").show();
 			jQuery("#clear_seat_form").show();
 			jQuery('#participant_select_modal').val(participant_id);
+		}
+		if(seat_status == 'INACTIVE'){
+			//we have an inactive seat status - show opportunity to clear seat
+			jQuery("#seat_number_modal").prop('readonly', 'readonly');
+			jQuery("#clear_seat_form").show();
 		}
 	}
 </script>

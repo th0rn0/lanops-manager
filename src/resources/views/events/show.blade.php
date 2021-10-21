@@ -221,14 +221,16 @@
 													@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 														<td style="padding-top:14px;">
 															@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
-																@if ($seatingPlan->locked)
-																	<button class="btn btn-success btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																	</button>
-																@else
-																	<button class="btn btn-success btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																	</button>
+																@if($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row)->status == 'ACTIVE')
+																	@if ($seatingPlan->locked)
+																		<button class="btn btn-success btn-sm" disabled>
+																			{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
+																		</button>
+																	@else
+																		<button class="btn btn-success btn-sm" disabled>
+																			{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
+																		</button>
+																	@endif
 																@endif
 															@else
 																@if ($seatingPlan->locked)

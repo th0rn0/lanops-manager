@@ -21,6 +21,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use Debugbar;
+
 class SeatingController extends Controller
 {
     /**
@@ -206,13 +208,7 @@ class SeatingController extends Controller
      */
     public function storeSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
-        $rules = [
-            'seat_status_modal'        => 'in:active,inactive',
-        ];
-        $messages = [
-            'seat_status_modal.in'     => 'Status must be active or inactive',
-        ];
-        
+
         if (!in_array(substr($request->seat_number_modal, 0, 1), explode(',', $seatingPlan->headers)) ||
             substr($request->seat_number_modal, 1, 1) <= 0 ||
             substr($request->seat_number_modal, 1, 1) > $seatingPlan->rows
@@ -220,11 +216,16 @@ class SeatingController extends Controller
             Session::flash('alert-danger', 'Invalid seat selection!');
             return Redirect::back();
         }
+        
+        if (!isset($request->seat_status_modal) || trim($request->seat_status_modal) == '') {
+            Session::flash('alert-danger', 'A status has to be selected!');
+            return Redirect::back();
+        }
 
         if (isset($request->participant_id_modal) && trim($request->participant_id_modal) != '') {
             $clauses = ['event_participant_id' => $request->participant_id_modal];
             $previousSeat = EventSeating::where($clauses)->first();
-            if ($previousSeat != null) {
+            if ($previousSeat != null && $previousSeat->status == 'ACTIVE' && strtoupper($request->seat_status_modal) == 'ACTIVE') {
                 $previousSeat->delete();
             }
         }
@@ -240,7 +241,7 @@ class SeatingController extends Controller
 
         $clauses = ['event_participant_id' => $request->participant_select_modal];
         $previousSeat = EventSeating::where($clauses)->first();
-        if ($previousSeat != null) {
+        if ($previousSeat != null && $previousSeat->status == 'ACTIVE' &&  strtoupper($request->seat_status_modal) == 'ACTIVE') {
             $previousSeat->delete();
         }
 
@@ -248,6 +249,20 @@ class SeatingController extends Controller
         $seat = EventSeating::where($clauses)->first();
         if ($seat != null) {
             Session::flash('alert-danger', 'Seat is still occupied. Please try again!');
+            return Redirect::back();
+        }
+
+        //if status is set to active, the seat has to be paired with an event participant
+        if ( (!isset($request->participant_select_modal) && trim($request->participant_select_modal) == '')
+            &&  strtoupper($request->seat_status_modal) == 'ACTIVE') {
+            Session::flash('alert-danger', 'Seat can not be active and not have an event participant!');
+            return Redirect::back();
+        }
+
+        //if an participant is selected for seating, status can't be inactive
+        if ( (isset($request->participant_select_modal) && trim($request->participant_select_modal) != '')
+            &&  strtoupper($request->seat_status_modal) == 'INACTIVE') {
+            Session::flash('alert-danger', 'Seat for event participants can not be inactive!');
             return Redirect::back();
         }
 
@@ -274,7 +289,7 @@ class SeatingController extends Controller
      * @return Redirect
      */
     public function destroySeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
-    {
+    {        
         if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number)->first()) {
             Session::flash('alert-danger', 'Could not find seat!');
             return Redirect::back();
