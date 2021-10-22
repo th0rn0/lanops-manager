@@ -46,7 +46,7 @@ class SeatingController extends Controller
         return view('admin.events.seating.show')
             ->withEvent($event)
             ->withSeatingPlan($seatingPlan)
-            ->withSeats($seatingPlan->seats()->paginate(15, ['*'], 'se'));
+            ->withSeats($seatingPlan->seats()->where('status', 'ACTIVE')->paginate(15, ['*'], 'se'));
     }
 
     /**

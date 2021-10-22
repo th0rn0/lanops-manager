@@ -44,16 +44,16 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/updateround/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchUpdateround');
             Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/updateplayer/{mapnumber}/{player}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchUpdateplayer');
             Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/configure/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchConfig');
-            
+
             Route::group(['middleware' => ['auth:sanctum']], function () {
                 /**
-                 * User API 
+                 * User API
                  */
-                    Route::get('/api/user/me', 'Userapi\MeController@getMe');
-                    Route::get('/api/user/event/participants', 'Userapi\Events\ParticipantsController@getParticipants');
+                Route::get('/api/user/me', 'Userapi\MeController@getMe');
+                Route::get('/api/user/event/participants', 'Userapi\Events\ParticipantsController@getParticipants');
 
                 /**
-                 * Admin API 
+                 * Admin API
                  */
                 Route::group(['middleware' => ['admin']], function () {
                     Route::get('/api/admin/event/participants/{participant}/signIn', 'Adminapi\Events\ParticipantsController@signIn');
@@ -61,7 +61,6 @@ Route::group(['middleware' => ['installed']], function () {
                     Route::get('/api/admin/purchases/{purchase}/setSuccess', 'Adminapi\PurchaseController@setSuccess');
                 });
             });
-
         });
 
 
@@ -338,7 +337,7 @@ Route::group(['middleware' => ['installed']], function () {
                 '/admin/events/{event}/tournaments/{tournament}/enableliveediting',
                 'Admin\Events\TournamentsController@enableliveediting'
             );
-           Route::post(
+            Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/disableliveediting',
                 'Admin\Events\TournamentsController@disableliveediting'
             );
@@ -377,7 +376,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post(
                 '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/addsingle',
                 'Admin\Events\TournamentsController@addSingle'
-            );            
+            );
 
 
             // TODO - REMOVE THIS AND ALL LIKE IT
@@ -513,10 +512,10 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/help', 'Admin\HelpController@store');
             Route::get('/admin/help/{helpCategory}', 'Admin\HelpController@show');
             Route::post('/admin/help/{helpCategory}', 'Admin\HelpController@update');
-            Route::delete('/admin/help/{helpCategory}', 'Admin\HelpController@destroy');            
+            Route::delete('/admin/help/{helpCategory}', 'Admin\HelpController@destroy');
             Route::post('/admin/help/{helpCategory}/{entry}/upload', 'Admin\HelpController@uploadFiles');
             Route::post('/admin/help/{helpCategory}/{entry}/{attachment}', 'Admin\HelpController@updateFile');
-            Route::delete('/admin/help/{helpCategory}/{entry}/{attachment}', 'Admin\HelpController@destroyFile');            
+            Route::delete('/admin/help/{helpCategory}/{entry}/{attachment}', 'Admin\HelpController@destroyFile');
             Route::post('/admin/help/{helpCategory}/add', 'Admin\HelpController@addHelpEntry');
             Route::post('/admin/help/{helpCategory}/{entry}', 'Admin\HelpController@updateHelpEntry');
             Route::delete('/admin/help/{helpCategory}/{entry}', 'Admin\HelpController@destroyHelpEntry');
@@ -537,7 +536,7 @@ Route::group(['middleware' => ['installed']], function () {
              * MatchMaking
              */
             Route::get('/admin/matchmaking', 'Admin\MatchMakingController@index');
-            Route::post('/admin/matchmaking/{match}/serverstore','Admin\MatchMakingServerController@store');
+            Route::post('/admin/matchmaking/{match}/serverstore', 'Admin\MatchMakingServerController@store');
             Route::post('/admin/matchmaking/{match}/serverupdate', 'Admin\MatchMakingServerController@update');
             Route::delete('/admin/matchmaking/{match}/serverdelete', 'Admin\MatchMakingServerController@destroy');
             Route::get('/admin/matchmaking/{match}', 'Admin\MatchMakingController@show');
