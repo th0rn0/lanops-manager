@@ -44,7 +44,7 @@ class TicketsController extends Controller
             ->withEvent($event)
             ->withTicket($ticket);
     }
-    
+
     /**
      * Store Ticket to Database
      * @param  Request $request
@@ -187,7 +187,9 @@ class TicketsController extends Controller
 
         $ticket->sale_start = @$saleStart;
         $ticket->sale_end   = @$saleEnd;
-        $ticket->price = $request->price;
+        if (isset($request->price)) {
+            $ticket->price = $request->price;
+        }
 
         if (isset($request->quantity)) {
             $ticket->quantity   = $request->quantity;
@@ -221,12 +223,12 @@ class TicketsController extends Controller
             Session::flash('alert-danger', 'Cannot delete Ticket, Purchases have been made!');
             return Redirect::back();
         }
-        
+
         if (!$ticket->delete()) {
             Session::flash('alert-danger', 'Cannot delete Ticket!');
             return Redirect::back();
         }
-        
+
         Session::flash('alert-success', 'Successfully deleted Ticket!');
         return Redirect::to('admin/events/' . $event->slug . '/tickets');
     }
