@@ -52,7 +52,7 @@ class Handler extends ExceptionHandler
             strpos($request->getRequestUri(), '/api/', 0) === 0 &&
             $exception instanceof NotFoundHttpException
         ) {
-            return response()->json(['error' => 'Request URI Not found'], 404);
+            return response()->json(['error' => $exception->getMessage()], 404);
         }
 
         return parent::render($request, $exception);
