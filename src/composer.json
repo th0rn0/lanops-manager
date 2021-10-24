@@ -5,15 +5,13 @@
         "framework",
         "laravel"
     ],
-    "repositories": [{
-        "type": "github",
-        "url": "https://github.com/Lan2Play/dedicated-server-api",
-	"no-api": true
-    },{
-        "type": "github",
-        "url": "https://github.com/Lan2Play/ChallongePHP",
-	"no-api": true
-    }],
+    "repositories": [
+        {
+            "type": "github",
+            "url": "https://github.com/Lan2Play/dedicated-server-api",
+            "no-api": true
+        }
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -28,8 +26,8 @@
         "doctrine/dbal": "2.13",
         "simplesoftwareio/simple-qrcode": "~1",
         "guzzlehttp/guzzle": "^7.2.0",
-	    "php-http/guzzle7-adapter": "^0.1.1",
-        "team-reflex/challonge-php": "dev-master",
+        "php-http/guzzle7-adapter": "^0.1.1",
+        "team-reflex/challonge-php": "^3.1",
         "ipunkt/laravel-analytics": "^4.0.0",
         "intervention/image": "^2.5.1",
         "facebook/graph-sdk": "^5.7",
