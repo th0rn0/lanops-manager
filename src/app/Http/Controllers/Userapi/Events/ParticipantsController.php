@@ -21,7 +21,6 @@ class ParticipantsController extends Controller
         $user = auth('sanctum')->user();
 
         if ($user && !empty($user->eventParticipants)) {
-            dd($user->eventParticipants);
             foreach ($user->eventParticipants as $participant) {
                 if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
