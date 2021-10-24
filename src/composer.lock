@@ -8064,12 +8064,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lan2Play/ChallongePHP",
-                "reference": "ac781e229d9d36c273580bdd50d02eac8a04474c"
+                "reference": "b1e16f7f361a5b2cf97968b1a6d4444b570997c7"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Lan2Play/ChallongePHP/zipball/ac781e229d9d36c273580bdd50d02eac8a04474c",
-                "reference": "ac781e229d9d36c273580bdd50d02eac8a04474c",
+                "reference": "b1e16f7f361a5b2cf97968b1a6d4444b570997c7",
                 "shasum": ""
             },
             "require": {
