@@ -70,7 +70,7 @@ class ParticipantsController extends Controller
             return [
             'successful' => 'true',
             'reason' => '',
-            'participant' => EventParticipant::with(['user','ticket', 'purchase','seat'])->where('id',$participant->id)->get(),
+            'participant' => EventParticipant::with(['user','ticket', 'purchase','seat'])->where('id',$participant->id)->get()->first(),
         ];
     }
 
