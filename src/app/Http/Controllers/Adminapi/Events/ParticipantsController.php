@@ -59,6 +59,21 @@ class ParticipantsController extends Controller
 
         return $return;
     }
+
+    /**
+     * Get participant
+     * @param  EventParticipant $participant
+     * @return Redirect
+     */
+    public function getParticipant(EventParticipant $participant)
+    {
+            return [
+            'successful' => 'true',
+            'reason' => '',
+            'participant' => EventParticipant::with(['user','ticket', 'purchase','seat'])->where('id',$participant->id)->get(),
+        ];
+    }
+
     /**
      * Sign in to user to current Event
      * @param  EventParticipant $participant
