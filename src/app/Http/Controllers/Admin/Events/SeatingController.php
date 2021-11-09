@@ -246,8 +246,8 @@ class SeatingController extends Controller
             $previousSeat->delete();
         }
 
-        $clauses = ['seat' => $request->seat_number_modal, 'event_seating_plan_id' => $seatingPlan->id, ];
-        $seat = EventSeating::where($clauses)->whereNotNull('event_participant_id')->first();
+        $clauses = ['seat' => $request->seat_number_modal, 'event_seating_plan_id' => $seatingPlan->id];
+        $seat = EventSeating::where($clauses)->first();
         if ($seat != null) {
             Session::flash('alert-danger', 'Seat is still occupied. Please try again!');
             return Redirect::back();
