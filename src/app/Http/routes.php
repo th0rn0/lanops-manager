@@ -428,6 +428,7 @@ Route::group(['middleware' => ['installed']], function () {
              * Participants
              */
             Route::get('/admin/events/{event}/participants', 'Admin\Events\ParticipantsController@index');
+            Route::get('/admin/events/{event}/participants/signoutall', 'Admin\Events\ParticipantsController@signoutall');
             Route::get('/admin/events/{event}/participants/{participant}', 'Admin\Events\ParticipantsController@show');
             Route::post('/admin/events/{event}/participants/{participant}', 'Admin\Events\ParticipantsController@update');
             Route::post(

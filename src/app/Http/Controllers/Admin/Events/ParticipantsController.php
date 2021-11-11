@@ -101,4 +101,29 @@ class ParticipantsController extends Controller
         Session::flash('alert-success', 'Participant Transferred!');
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
+
+    /**
+     * Sign out all participants for the event
+     * @param  Event  $event
+     * @return View
+     */
+    public function signoutall(Event $event)
+    {   
+
+        foreach ($event->eventParticipants() as $participant)
+        {
+            if (!$participant->setSignIn(false)) {
+                Session::flash('alert-danger', 'Cannot sign out Participant! '. $participant->name);
+                return Redirect::to('admin/events/' . $event->slug . '/participants/');
+            }
+        }
+        Session::flash('alert-success', 'Participants signed out!');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
+
+
+    
+
+
+
 }
