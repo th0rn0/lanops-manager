@@ -63,6 +63,7 @@
 								</td>
 								<td>
 									@if ($participant->free) Free @endif
+									@if ($participant->staff) Staff @endif
 									@if ($participant->ticket) {{ $participant->ticket->name }} @endif
 								</td>
 								<td>
