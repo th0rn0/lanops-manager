@@ -29,6 +29,10 @@
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> All Participants
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/signoutall' , 'onsubmit' => 'return ConfirmSignOutAll()')) }}
+				{{ Form::hidden('_method', 'GET') }}
+				<button type="submit" class="btn btn-danger btn-sm float-right mr-3 ml-3">Sign Out all Participants</button>
+				{{ Form::close() }}
 				<a href="/admin/events/{{ $event->slug }}/tickets#freebies" class="btn btn-info btn-sm float-right">Freebies</a>
 			</div>
 			<div class="card-body">
@@ -103,5 +107,15 @@
 
 	</div>
 </div>
+
+<script>
+	function ConfirmSignOutAll() {
+		var x = confirm("do you really want to sign out all participants? This cannot be undone!");
+		if (x)
+			return true;
+		else
+			return false;
+	}
+</script>
 
 @endsection
