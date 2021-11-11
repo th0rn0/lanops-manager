@@ -26,14 +26,14 @@ class PurchaseController extends Controller
         if ($purchase->status != "Pending")
         {
             return [
-                'successful' => 'false',
+                'successful' => false,
                 'reason' => 'purchase status not pending',
                 'purchase' => $purchase,
             ];
         }
         if (!$purchase->setSuccess()) {
             return [
-                'successful' => 'false',
+                'successful' => false,
                 'reason' => 'purchase update failed',
                 'purchase' => $purchase,
             ];
@@ -42,7 +42,7 @@ class PurchaseController extends Controller
         Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
 
         return [
-            'successful' => 'true',
+            'successful' => true,
             'reason' => '',
             'purchase' => $purchase,
         ];
