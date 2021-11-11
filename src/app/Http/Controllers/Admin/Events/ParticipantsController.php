@@ -109,8 +109,7 @@ class ParticipantsController extends Controller
      */
     public function signoutall(Event $event)
     {   
-
-        foreach ($event->eventParticipants() as $participant)
+        foreach ($event->eventParticipants()->get() as $participant)
         {
             if (!$participant->setSignIn(false)) {
                 Session::flash('alert-danger', 'Cannot sign out Participant! '. $participant->name);
