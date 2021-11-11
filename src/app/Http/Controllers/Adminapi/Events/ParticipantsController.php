@@ -68,7 +68,7 @@ class ParticipantsController extends Controller
     public function getParticipant(EventParticipant $participant)
     {
             return [
-            'successful' => 'true',
+            'successful' => true,
             'reason' => '',
             'participant' => EventParticipant::with(['user','ticket', 'purchase','seat'])->where('id',$participant->id)->get()->first(),
         ];
@@ -83,13 +83,13 @@ class ParticipantsController extends Controller
     {
         if (!$participant->setSignIn()) {
             return [
-                'successful' => 'false',
+                'successful' => false,
                 'reason' => 'Cannot sign in Participant',
                 'participant' => $participant,
             ];
         }
         return [
-            'successful' => 'true',
+            'successful' => true,
             'reason' => '',
             'participant' => $participant,
         ];
