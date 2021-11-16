@@ -3201,12 +3201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lan2Play/dedicated-server-api",
-                "reference": "8d9d1d4bd6f4ae421746793a2ea1be60934ef83a"
+                "reference": "7de7858f03921997b63aaa9fe2e7f5e98d2bdb76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lan2Play/dedicated-server-api/zipball/8d9d1d4bd6f4ae421746793a2ea1be60934ef83a",
-                "reference": "8d9d1d4bd6f4ae421746793a2ea1be60934ef83a",
+                "url": "https://api.github.com/repos/Lan2Play/dedicated-server-api/zipball/7de7858f03921997b63aaa9fe2e7f5e98d2bdb76",
+                "reference": "7de7858f03921997b63aaa9fe2e7f5e98d2bdb76",
                 "shasum": ""
             },
             "require": {
@@ -3245,7 +3245,7 @@
             "support": {
                 "forum": "http://forum.maniaplanet.com/viewforum.php?f=40"
             },
-            "time": "2021-10-26T08:40:43+00:00"
+            "time": "2021-11-16T21:15:48+00:00"
         },
         {
             "name": "maximebf/debugbar",
