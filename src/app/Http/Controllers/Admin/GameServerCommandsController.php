@@ -144,7 +144,7 @@ class GameServerCommandsController extends Controller
         try
         {
             $commandHandler = (new GameCommandHandler())->getGameCommandHandler($gameServer->game->gamecommandhandler);
-            $commandHandler->init($gameServer->address, $gameServer->rcon_port, $gameServer->rcon_password);
+            $commandHandler->init($gameServer->rcon_address ?? $gameServer->address, $gameServer->rcon_port, $gameServer->rcon_password);
             $result = $commandHandler->execute($command);
             if($result == false)
             {

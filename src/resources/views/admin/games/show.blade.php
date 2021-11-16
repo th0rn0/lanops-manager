@@ -95,6 +95,9 @@
 									</td>
 									<td>
 										{{ $gameServer->address }}
+										@if(isset($gameServer->rcon_address))
+										Rcon:{{ $gameServer->rcon_address }}
+										@endif
 									</td>
 									<td>
 										{{ $gameServer->game_port }}
@@ -212,6 +215,10 @@
 														<div class="form-group">
 															{{ Form::label('stream_port','Stream Port',array('id'=>'','class'=>'')) }}
 															{{ Form::number('stream_port', $gameServer->stream_port, array('id'=>'stream_port','class'=>'form-control')) }}
+														</div>
+														<div class="form-group">
+															{{ Form::label('rcon_address','RCON Address (optional)',array('id'=>'','class'=>'')) }}
+															{{ Form::text('rcon_address', $gameServer->rcon_address, array('id'=>'rcon_address','class'=>'form-control')) }}
 														</div>
 														<div class="form-group">
 															{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
