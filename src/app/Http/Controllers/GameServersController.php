@@ -37,7 +37,7 @@ class GameServersController extends Controller
         $result = new \stdClass();
         
         $gameCommandhandler = (new GameCommandHandler())->getGameCommandHandler($game->gamecommandhandler);
-        $gameCommandhandler->init($gameServer->address, $gameServer->rcon_port, $gameServer->rcon_password);
+        $gameCommandhandler->init($gameServer->rcon_address ?? $gameServer->address, $gameServer->rcon_port, $gameServer->rcon_password);
         $result=$gameCommandhandler->status();
         $gameCommandhandler->dispose();
 
