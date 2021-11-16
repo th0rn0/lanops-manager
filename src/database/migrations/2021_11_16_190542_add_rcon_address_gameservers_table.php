@@ -14,8 +14,7 @@ class AddRconAddressGameserversTable extends Migration
     public function up()
     {
         Schema::table('game_servers', function (Blueprint $table) {
-            $table->string('rcon_address')->after('rcon_password');
-
+            $table->string('rcon_address')->after('rcon_password')->nullable()->default(null);
         });
     }
 

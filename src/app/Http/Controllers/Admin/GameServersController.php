@@ -54,7 +54,7 @@ class GameServersController extends Controller
         $gameServer->game_port      = $request->game_port;
         $gameServer->stream_port      = $request->stream_port;
         $gameServer->game_password  = $request->game_password;
-        $gameServer->rcon_address   = $request->rcon_address;
+        $gameServer->rcon_address   = $request->rcon_address != "" ? $request->rcon_address : null ;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
         $gameServer->gameserver_secret = "gs_" . Str::random();
@@ -100,7 +100,7 @@ class GameServersController extends Controller
         $gameServer->game_port      = $request->game_port;
         $gameServer->stream_port      = $request->stream_port;
         $gameServer->game_password  = $request->game_password;
-        $gameServer->rcon_address   = $request->rcon_address;
+        $gameServer->rcon_address   = $request->rcon_address != "" ? $request->rcon_address : null ;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
 
