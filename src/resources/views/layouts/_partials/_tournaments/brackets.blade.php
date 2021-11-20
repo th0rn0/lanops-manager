@@ -81,7 +81,7 @@
 				@php
 					$matchserver = App\EventTournamentMatchServer::getTournamentMatchServer($match->id);
 					$matchNumbers[$match->id] = $matchCounter;
-					dd($matchnumbers);
+					dd($matchNumbers);
 				@endphp
 				<table class="table table-bordered table-sm">
 					<tbody>
