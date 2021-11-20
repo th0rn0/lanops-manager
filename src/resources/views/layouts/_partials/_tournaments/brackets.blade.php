@@ -9,6 +9,7 @@
 <div class="row">
 	@php
 		$matches = $tournament->getMatches();
+		dd($matches);
 		$isLoosersBracket = false;
 		$prevIsLoosersBracket = false;
 
@@ -81,7 +82,6 @@
 				@php
 					$matchserver = App\EventTournamentMatchServer::getTournamentMatchServer($match->id);
 					$matchNumbers[$match->id] = $matchCounter;
-					dd($matchNumbers);
 				@endphp
 				<table class="table table-bordered table-sm">
 					<tbody>
@@ -122,11 +122,11 @@
 									@endif
 									<span class="badge badge-pill float-right">{{ $scores[0] }}</span>
 								@endif
-								@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
+								{{-- @if ($match->player1_is_prereq_match_loser && !$match->player1_id)
 									<small><i>Loser of {{ $matchNumbers[$match->player1_prereq_match_id] }}</i></small>
 								@elseif (!$match->player1_is_prereq_match_loser && !$match->player1_id)
 									<small><i>Winner of {{ $matchNumbers[$match->player1_prereq_match_id] }}</i></small>
-								@endif
+								@endif --}}
 							</td>
 							@if ( @$admin && $user->admin )
 								<td rowspan="3" class="text-center p-0" width="10%">
