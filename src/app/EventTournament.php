@@ -432,8 +432,11 @@ class EventTournament extends Model
             });
             $tournamentMatches = json_decode($tournamentMatchesJson);
             $return = array();
+            $suggestedplayordercounter = 0;
             foreach ($tournamentMatches as $match) {
-                $return[$match->round][$match->suggested_play_order] = $match;
+
+                $suggestedplayordercounter++;
+                $return[$match->round][$suggestedplayordercounter] = $match;
             }
             if ($obj) {
                 return json_decode(json_encode($return), false);
