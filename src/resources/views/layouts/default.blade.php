@@ -44,7 +44,7 @@
 		@yield ('prefetch')
 	</head>
 	<body class="full-height">
-		{!! Analytics::render() !!}
+		{{-- {!! Analytics::render() !!} --}}
 
 		@include ('layouts._partials.navigation')
 

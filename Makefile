@@ -267,7 +267,7 @@ purge-containers:
 	docker-compose -f docker-compose.yml -p eventula_manager rm -vf
 	docker rm eventula_manager_app
 	docker rm eventula_manager_database
-	docker volume rm eventula_manager_db
+	docker volume rm eventula_manager_database
 
 # Purge Caches
 purge-cache:

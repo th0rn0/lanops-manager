@@ -51,7 +51,7 @@ class EventTimetable extends Model
         return $this->hasMany('App\EventTimetableData');
     }
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [

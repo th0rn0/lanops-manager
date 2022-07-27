@@ -1,5 +1,9 @@
 <?php
 
+Route::get('phpmyinfo', function () {
+    phpinfo(); 
+})->name('phpmyinfo');
+
 /**
  * Install
  */

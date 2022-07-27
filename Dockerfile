@@ -1,6 +1,6 @@
-FROM th0rn0/php-nginx-base:v1.2
-#FROM lan2play/php-nginx-base:latest
-MAINTAINER Thornton Phillis (Th0rn0@lanops.co.uk)
+# FROM th0rn0/php-nginx-base:latest
+FROM lan2play/php-nginx-base:latest
+LABEL org.opencontainers.image.authors="Thornton Phillis (Th0rn0@lanops.co.uk), Alexader Volz (Alexander@volzit.de)"
 
 # ENV - App Defaults
 
@@ -28,13 +28,14 @@ RUN cp -a $NGINX_DOCUMENT_ROOT/storage /tmp/storage
 
 # PHP Fixes
 
-RUN sed -i 's/;clear_env/clear_env/' /etc/php7/php-fpm.d/www.conf
-RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /etc/php7/php.ini
-RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' /etc/php7/php.ini
-RUN sed -i 's/post_max_size = 8M/post_max_size = 512M/' /etc/php7/php.ini
+RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+RUN sed -i 's/;clear_env/clear_env/' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /usr/local/etc/php/php.ini
+RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' /usr/local/etc/php/php.ini
+RUN sed -i 's/post_max_size = 8M/post_max_size = 512M/' /usr/local/etc/php/php.ini
 
-RUN sed -i 's/user = nobody/user = ${UUID}/' /etc/php7/php-fpm.d/www.conf
-RUN sed -i 's/group = nobody/group = ${GUID}/' /etc/php7/php-fpm.d/www.conf
+RUN sed -i 's/user = nobody/user = ${UUID}/' /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i 's/group = nobody/group = ${GUID}/' /usr/local/etc/php-fpm.d/www.conf
 
 # Default Command
 
