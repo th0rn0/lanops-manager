@@ -21,6 +21,9 @@ class FacebookPersistentDataHandler implements \Facebook\PersistentData\Persiste
    */
     public function set($key, $value)
     {
+      if (! isset($value)) {
+        throw new InvalidArgumentException('The given value is null.');
+      }
         \Session::put($this->sessionPrefix . $key, $value);
     }
 }

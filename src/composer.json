@@ -52,7 +52,9 @@
         "laravel/ui": "^3.4",
         "spatie/laravel-database-mail-templates": "^3.5",
         "laravel/sanctum": "^2.15.1",
-        "propaganistas/laravel-phone": "^4.3.7"
+        "propaganistas/laravel-phone": "^4.3.7",
+        "symfony/mailgun-mailer": "^6.1",
+        "symfony/http-client": "^6.1"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
