@@ -23,6 +23,9 @@ use App\Http\Controllers\Controller;
 use Leafo\ScssPhp\Compiler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+use function PHPUnit\Framework\isEmpty;
 
 class SettingsController extends Controller
 {
@@ -665,6 +668,11 @@ class SettingsController extends Controller
      */
     public function enableLoginMethod($method)
     {
+        if ($method == "steam" &&  Str::of(ApiKey::where('key', 'steam_api_key')->first()->value)->trim()->isEmpty())
+        {
+            Session::flash('alert-danger', "Could not Enable {$method} because of missing api key!");
+            return Redirect::back();
+        }
         if (!Settings::enableLoginMethod($method)) {
             Session::flash('alert-danger', "Could not Enable {$method}!");
             return Redirect::back();
@@ -684,6 +692,8 @@ class SettingsController extends Controller
             Session::flash('alert-danger', "You must have at least one Login Method enabled!");
             return Redirect::back();
         }
+
+
         if (!Settings::disableLoginMethod($method)) {
             Session::flash('alert-danger', "Could not Disable {$method}!");
             return Redirect::back();
