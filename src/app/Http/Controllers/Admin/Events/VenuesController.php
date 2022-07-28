@@ -103,6 +103,11 @@ class VenuesController extends Controller
         $venue->address_postcode    = $request->address_postcode;
         $venue->address_country     = $request->address_country;
 
+        if (!$venue->save()) {
+            Session::flash('alert-danger', 'Cannot save Venue before image upload!');
+            return Redirect::back();
+        }
+
         if ($request->file('images')) {
             foreach ($request->file('images') as $image) {
                 $venue->images()->create([
