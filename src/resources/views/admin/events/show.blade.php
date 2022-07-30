@@ -335,7 +335,7 @@
 				@if (!$event->sponsors->isEmpty())
 					<div class="list-group">
 						@foreach ($event->sponsors as $sponsor)
-							<a href="/admin/tickets/{{ $ticket->id }}" class="list-group-item-action">
+							<a href="#" class="list-group-item-action" data-toggle="modal" onclick="editSponsor('{{$sponsor->id}}', '{{$sponsor->name}}', '{{$sponsor->website}}', '{{$sponsor->image_path}}')" data-target="#editSponsorModal">
 								<i class="fa fa-pencil fa-fw"></i> {{ $sponsor->name }} - {{ ucwords($sponsor->website) }}
 								<img class="img-fluid img-thumbnail" src="{{ $sponsor->image_path }}" />
 							</a>
@@ -394,7 +394,7 @@
 						{{ Form::text('sponsor_name',NULL,array('id'=>'sponsor_name','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
-						{{ Form::label('sponsor_website','Sponsor Website',array('id'=>'','class'=>'')) }}
+						{{ Form::label('sponsor_website','Sponsor Website',array('id'=>'','class'=>'')) }} <small>should start with http(s)://</small>
 						{{ Form::text('sponsor_website',NULL,array('id'=>'sponsor_website','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
@@ -407,6 +407,58 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="modal fade" id="editSponsorModal" tabindex="-1" role="dialog" aria-labelledby="editSponsorModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="editSponsorModalLabel">Edit Sponsor</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/sponsors', 'files' => 'true', 'id' => 'editSponsorForm')) }}
+					<div class="form-group">
+						{{ Form::label('sponsor_name','Sponsor Name',array('id'=>'','class'=>'')) }}
+						{{ Form::text('sponsor_name',NULL,array('id'=>'sponsor_name_id','class'=>'form-control')) }}
+					</div>
+					<div class="form-group">
+						{{ Form::label('sponsor_website','Sponsor Website',array('id'=>'','class'=>'')) }} <small>should start with http(s)://</small>
+						{{ Form::text('sponsor_website',NULL,array('id'=>'sponsor_website_id','class'=>'form-control')) }}
+					</div>
+					<div class="form-group">
+						{{ Form::label('curr_sponsor_image','Current Sponsor Image',array('id'=>'','class'=>'')) }}
+						<img class="img-fluid img-thumbnail" id='sponsor_image_preview' src=""/>
+					</div>
+					<div class="form-group">
+						{{ Form::label('sponsor_image','New Sponsor Image',array('id'=>'','class'=>'')) }}
+						{{ Form::file('sponsor_image',array('id'=>'sponsor_image_id','class'=>'form-control')) }}
+					</div>
+					<button type="submit" name="action" value="add_sponsor" class="btn btn-secondary">Submit</button>
+
+				{{ Form::close() }}
+				{{ Form::open(array('method'  => 'delete', 'url'=>'/admin/events/' . $event->slug . '/sponsors', 'id'=>'deleteSponsorForm', 'files' => 'true' , 'onsubmit' => 'return ConfirmDelete()')) }}
+					<button type="submit" class="btn btn-danger btn-block">Delete</button>
+				{{ Form::close() }}
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function editSponsor(sponsor_id, sponsor_name, sponsor_website, sponsor_image)
+	{
+		jQuery('#sponsor_image_preview').hide();
+		jQuery("#editSponsorForm").prop('action', '/admin/events/{{ $event->slug }}/sponsors/' + sponsor_id);
+		jQuery("#deleteSponsorForm").prop('action', '/admin/events/{{ $event->slug }}/sponsors/' + sponsor_id);
+		jQuery('#sponsor_name_id').val(sponsor_name);
+		jQuery('#sponsor_website_id').val(sponsor_website);
+		if (sponsor_image !== "") {
+			jQuery('#sponsor_image_preview').attr("src", sponsor_image);;
+			jQuery('#sponsor_image_preview').show();
+		}
+	}
+</script>
+
 
 <div class="modal fade" id="addAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
