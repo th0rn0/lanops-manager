@@ -674,134 +674,187 @@ use Debugbar;
 		</tbody>
 	</table>
 
-	<!-- SEATING -->
-	@if (!$event->online_event && !$event->seatingPlans->isEmpty())
-	<div class="pb-2 mt-4 mb-4 border-bottom">
-		<a name="seating"></a>
-		<h3>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
-	</div>
-	<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
-		@foreach ($event->seatingPlans as $seatingPlan)
-		<div class="card mb-3">
-			<div class="card-header " role="tab" id="headingOne">
-				<h4 class="card-title">
-					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-						{{ $seatingPlan->name }} <small>- @lang('events.numofseatedseats')</small>
-					</a>
-				</h4>
-			</div>
-			<div id="collapse_{{ $seatingPlan->slug }}" class="collapse" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
-				<div class="card-body">
-					<div class="text-center ">
-						<table class="table table-responsive">
-							<thead>
-								<tr>
-									<?php
-									$headers = explode(',', $seatingPlan->headers);
-									$headers = array_combine(range(1, count($headers)), $headers);
-									?>
-									@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-										<th class="text-center">
-											<h4><strong>@lang('events.row') {{ucwords($headers[$column])}}</strong></h4>
-										</th>
-										@endfor
-								</tr>
-							</thead>
-							<tbody>
-								@for ($row = $seatingPlan->rows; $row > 0; $row--)
-								<tr>
-									@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-										<td style="padding-top:14px;">
-											@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
-											@if($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row)->status == 'ACTIVE')
-											@if ($seatingPlan->locked)
-											<button class="btn btn-success btn-sm" disabled>
-												{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-											</button>
-											@else
-											<button class="btn btn-success btn-sm" disabled>
-												{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-											</button>
-											@endif
-											@endif
-											@else
-											@if ($seatingPlan->locked)
-											<button class="btn btn-primary btn-sm" disabled>
-												{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
-											</button>
-											@else
-											@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
-											<button class="btn btn-primary btn-sm" onclick="pickSeat(
-																			'{{ $seatingPlan->id }}',
-																			'{{ ucwords($headers[$column]) . $row }}'
-																		)" data-toggle="modal" data-target="#pickSeatModal">
-												{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
-											</button>
-											@else
-											<button class="btn btn-primary btn-sm" disabled>
-												{{ ucwords($headers[$column]) . $row }} - @lang('events.empty')
-											</button>
-											@endif
-											@endif
-											@endif
-										</td>
-										@endfor
-								</tr>
-								@endfor
-							</tbody>
-						</table>
-						@if ($seatingPlan->locked)
-						<p class="text-center"><strong>@lang('events.seatingplanlocked')</strong></p>
-						@endif
+		<!-- SEATING -->
+		@if (!$event->online_event &&
+		!$event->seatingPlans->isEmpty() &&
+		(
+		in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) ||
+		in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())
+		)
+		)
+		<div class="pb-2 mt-4 mb-4 border-bottom">
+			<a name="seating"></a>
+			<h3><i class="fas fa-chair mr-3"></i>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
+		</div>
+		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
+			@foreach ($event->seatingPlans as $seatingPlan)
+			@if ($seatingPlan->status != 'DRAFT')
+			<div class="card mb-3">
+				<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
+					<div class="card-header  bg-success-light" role="tab" id="headingOne">
+						<h4 class="card-title m-0">
+							{{ $seatingPlan->name }} <small>- {{ $seatingPlan->getSeatingCapacity() - $seatingPlan->getSeatedCount() }} / {{ $seatingPlan->getSeatingCapacity() }} @lang('events.available')</small>
+							@if ($seatingPlan->status != 'PUBLISHED')
+							<small> - {{ $seatingPlan->status }}</small>
+							@endif
+						</h4>
 					</div>
-					<hr>
-					<div class="row" style="display: flex; align-items: center;">
-						<div class="col-12 col-md-8">
-							<picture>
-								<source srcset="{{ $seatingPlan->image_path }}.webp" type="image/webp">
-								<source srcset="{{ $seatingPlan->image_path }}" type="image/jpeg">
-								<img class="img-fluid" src="{{ $seatingPlan->image_path }}" />
-							</picture>
+				</a>
+				<div id="collapse_{{ $seatingPlan->slug }}" class="collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
+					<div class="card-body">
+						<div class="table-responsive text-center">
+							<table class="table">
+	
+								<?php
+								$headers = explode(',', $seatingPlan->headers);
+								$headers = array_combine(range(1, count($headers)), $headers);
+								?>
+								<tbody>
+									@for ($row = 1; $row <= $seatingPlan->rows; $row++)
+										<tr>
+											<td>
+												<h4><strong>{{ucwords($headers[$row])}}</strong></h4>
+											</td>
+											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
+	
+												<td style="padding-top:14px;">
+													@if ($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
+													@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column)->status == 'ACTIVE')
+													@if ($seatingPlan->locked)
+													<button class="btn btn-success btn-sm" disabled>
+														{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+													</button>
+													@else
+													<button class="btn btn-success btn-sm" disabled>
+														{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+													</button>
+													@endif
+													@endif
+													@else
+													@if ($seatingPlan->locked)
+													<button class="btn btn-primary btn-sm" disabled>
+														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+													</button>
+													@else
+													@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
+													<button class="btn btn-primary btn-sm" onclick="pickSeat(
+																					'{{ $seatingPlan->slug }}',
+																					'{{ ucwords($headers[$row]) . $column }}'
+																				)" data-toggle="modal" data-target="#pickSeatModal">
+														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+													</button>
+													@else
+													<button class="btn btn-primary btn-sm" disabled>
+														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+													</button>
+													@endif
+													@endif
+													@endif
+												</td>
+												@endfor
+										</tr>
+										@endfor
+								</tbody>
+							</table>
+							@if ($seatingPlan->locked)
+							<p class="text-center"><strong> @lang('events.seatingplanlocked')</strong></p>
+							@endif
 						</div>
-						<div class="col-12 col-md-4">
-							@if ($user && $ticketFlagSignedIn && $user->hasSeatableTicket($event->id))
-							<h5>@lang('events.yourseats')</h5>
-							@foreach ($user->eventParticipation as $participant)
-							@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
-							{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
-							{{ Form::hidden('_method', 'DELETE') }}
-							{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-							{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-							{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
-							<h5>
-								<button class="btn btn-success btn-block">
-									{{ $participant->seat->seat }} - @lang('events.remove')
-								</button>
-							</h5>
-							{{ Form::close() }}
-							@endif
-							@endforeach
-							@elseif($user && !$user->hasSeatableTicket($event->id))
-							<div class="alert alert-info">
-								<h5>@lang('events.noseatableticket')</h5>
+					</div>
+					<div class="card-footer">
+						<div class="row" style="display: flex; align-items: center;">
+							<div class="col-12 col-md-8">
+								<img class="img-fluid" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}" />
 							</div>
-							@elseif(Auth::user())
-							<div class="alert alert-info">
-								<h5>@lang('events.plspurchaseticket')</h5>
+							<div class="col-12 col-md-4">
+								@if ($user && !$user->getAllTickets($event->id)->isEmpty() && $user->hasSeatableTicket($event->id))
+								<h5>@lang('events.yourseats')</h5>
+								@foreach ($user->getAllTickets($event->id) as $participant)
+								@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
+								{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
+								{{ Form::hidden('_method', 'DELETE') }}
+								{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+								{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
+								{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
+								<h5>
+									<button class="btn btn-success btn-block">
+										{{ $participant->seat->seat }} - @lang('events.remove')
+									</button>
+								</h5>
+								{{ Form::close() }}
+								@endif
+								@endforeach
+								@elseif($user && !$user->hasSeatableTicket($event->id))
+								<div class="alert alert-info">
+									<h5>@lang('events.noseatableticket')</h5>
+								</div>
+								@elseif(Auth::user())
+								<div class="alert alert-info">
+									<h5>@lang('events.plspurchaseticket')</h5>
+								</div>
+								@else
+								<div class="alert alert-info">
+									<h5>@lang('events.plslogintopurchaseticket')</h5>
+								</div>
+								@endif
 							</div>
-							@else
-							<div class="alert alert-info">
-								<h5>@lang('events.plslogintopurchaseticket')</h5>
-							</div>
-							@endif
 						</div>
 					</div>
 				</div>
 			</div>
+			@endif
+			@endforeach
 		</div>
-		@endforeach
+		@endif
+
+	<!-- Seat Modal -->
+	<div class="modal fade" id="pickSeatModal" tabindex="-1" role="dialog" aria-labelledby="editSeatingModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="pickSeatModalLabel"></h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				@if (Auth::user())
+				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
+				<div class="modal-body">
+					<div class="form-group">
+						<h4>@lang('events.wichtickettoseat')</h4>
+						{{
+									Form::select(
+										'participant_id',
+										$user->getTickets($event->id),
+										null,
+										array(
+											'id'    => 'format',
+											'class' => 'form-control'
+										)
+									)
+								}}
+						<p>>@lang('events.wantthisseat')</p>
+						<p>@lang('events.removeitanytime')</p>
+					</div>
+				</div>
+				{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+				{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success">@lang('events.yes')</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('events.no')</button>
+				</div>
+				{{ Form::close() }}
+				@endif
+			</div>
+		</div>
 	</div>
-	@endif
+
+<script>
+	function pickSeat(seating_plan_slug, seat) {
+		jQuery("#seat_number_modal").val(seat);
+		jQuery("#seat_modal").val(seat);
+		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
+		jQuery("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
+	}
+</script>
 
 	<!-- Image Uploader -->
 	<div class="pb-2 mt-4 mb-4 border-bottom d-none">
