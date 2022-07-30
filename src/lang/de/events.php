@@ -19,7 +19,7 @@ return [
     'description' => 'Beschreibung',
 
     /* Home */
-'onsoredby' => ':event wird gesponsort durch',
+    'eventsponsoredby' => ':event wird gesponsort von',
     'essentialinfo' => 'Allgemeine Informationen',
     'announcements' => 'Ankündigungen',
     'noannouncements' => 'Keine Ankündigungen',

@@ -17,6 +17,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Session;
+use Storage;
 
 class SponsorsController extends Controller
 {
@@ -29,7 +31,7 @@ class SponsorsController extends Controller
     public function store(Request $request, Event $event)
     {
         $sponsor            = new EventSponsor();
-        $sponsor->event_id  = $event_id;
+        $sponsor->event_id  = $event->id;
         $sponsor->name      = $request->sponsor_name;
 
         if ($request->file('sponsor_image') !== null) {
@@ -49,6 +51,24 @@ class SponsorsController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully Saved Sponsor!');
+        return Redirect::to('admin/events/' . $event->slug);
+    }
+
+    /**
+     * Remove Sponsor from Database
+     * Add Sponsor to Database
+     * @param  Request $request
+     * @param  Event   $event
+     * @return Redirect
+     */
+    public function destroy(EventSponsor $sponsor)
+    {
+        if (!$sponsor->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Venue!');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Successfully deleted venue!');
         return Redirect::to('admin/events/' . $event->slug);
     }
 }

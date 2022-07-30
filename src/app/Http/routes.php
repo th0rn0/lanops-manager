@@ -483,6 +483,7 @@ Route::group(['middleware' => ['installed']], function () {
              * Sponsors
              */
             Route::post('/admin/events/{event}/sponsors', 'Admin\Events\SponsorsController@store');
+            Route::delete('/admin/events/{event}/sponsors', 'Admin\Events\SponsorsController@destroy');
 
             /**
              * Venues
