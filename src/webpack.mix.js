@@ -33,3 +33,5 @@ mix.scripts([
     .copyDirectory('./node_modules/jquery-ui-dist/images', 'public/css/images')
     .copyDirectory('./node_modules/summernote/dist/font', 'public/css/font')
     .copyDirectory('./node_modules/@fortawesome/fontawesome-free/webfonts', 'public/css/font');
+
+mix.minify('public/js/vendor.js');
