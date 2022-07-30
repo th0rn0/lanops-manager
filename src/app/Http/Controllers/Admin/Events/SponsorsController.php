@@ -56,19 +56,19 @@ class SponsorsController extends Controller
 
     /**
      * Remove Sponsor from Database
-     * Add Sponsor to Database
      * @param  Request $request
      * @param  Event   $event
      * @return Redirect
      */
     public function destroy(EventSponsor $sponsor)
     {
+        $event = $sponsor->event()->slug;
         if (!$sponsor->delete()) {
-            Session::flash('alert-danger', 'Cannot delete Venue!');
+            Session::flash('alert-danger', 'Cannot delete Sponsor!');
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Successfully deleted venue!');
-        return Redirect::to('admin/events/' . $event->slug);
+        Session::flash('alert-success', 'Successfully deleted Sponsor!');
+        return Redirect::to('admin/events/' . $event);
     }
 }
