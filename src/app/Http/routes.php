@@ -1,6 +1,15 @@
 <?php
 
 /**
+ * phpinfo in debug mode
+ */
+if (config('app.debug') === true) {
+    Route::get('phpinfo', function () {
+        phpinfo(); 
+    })->name('phpinfo');
+}
+
+/**
  * Install
  */
 Route::group(['middleware' => ['web', 'notInstalled']], function () {
