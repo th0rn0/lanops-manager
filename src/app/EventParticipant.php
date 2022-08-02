@@ -142,9 +142,7 @@ class EventParticipant extends Model
         if (!file_exists($qrCodePath)) {
             mkdir($qrCodePath, 0775, true);
         }
-        QrCode::format('png');
-        QrCode::size(300);
-        QrCode::generate($ticketUrl, $qrCodePath . $qrCodeFileName);
+        QrCode::format('png')->size(300)->generate($ticketUrl, $qrCodePath . $qrCodeFileName);
         $this->qrcode = $qrCodePath . $qrCodeFileName;
         if (!$this->save()) {
             return false;
