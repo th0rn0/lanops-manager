@@ -39,6 +39,9 @@
 							<li class="list-group-item">
 								Admin: @if ($userShow->admin) Yes @else No @endif
 							</li>
+							<li class="list-group-item">
+								Email Verified: @if ($userShow->email_verified_at) {{ $userShow->email_verified_at }} @else Not verified @endif
+							</li>
 							@if ($userShow->email != null)
 								<li class="list-group-item">Email: {{ $userShow->email }}</li>
 							@endif
@@ -197,7 +200,17 @@
 							<button type="submit" class="btn btn-block btn-danger" disabled="true">Delete</button>
 						@endif
 					</div>
-
+					<div class="col-12 col-sm-6 mb-4">
+						@if ($userShow->email_verified_at)
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/removemailverification')) }}
+								<button type="submit" class="btn btn-block btn-danger">Remove Email Verification</button>
+							{{ Form::close() }}
+						@else
+							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/setemailverification')) }}
+								<button type="submit" class="btn btn-block btn-success">Set Email Verification</button>
+							{{ Form::close() }}
+						@endif
+					</div>
 					@if ($userShow->steamname != null || $userShow->steamid != null)
 					<div class="col-12 col-sm-6 mb-4">
 						{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/unauthorizeThirdparty/steam')) }}

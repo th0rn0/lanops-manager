@@ -34,6 +34,7 @@
 							<th>Credit</th>
 							@endif
 							<th>Admin</th>
+							<th>Email Verified</th>
 							<th>Edit</th>
 						</tr>
 					</thead>
@@ -65,6 +66,13 @@
 								Yes
 								@else
 								No
+								@endif
+							</td>
+							<td>
+								@if ($user->email_verified_at)
+								{{ $user->email_verified_at }}
+								@else
+								Not verified
 								@endif
 							</td>
 							<td>

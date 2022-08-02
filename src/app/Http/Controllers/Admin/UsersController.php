@@ -89,6 +89,39 @@ class UsersController extends Controller
     }
 
     /**
+     * Set User Email Verification
+     * @param  User  $user
+     * @return View
+     */
+    public function setemailverification(User $user)
+    {
+        $user->email_verified_at = now();
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Cannot set email verification!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully updated user!');
+        return Redirect::back();
+    }
+
+    /**
+     * Remove User Email Verification
+     * @param  User  $user
+     * @return View
+     */
+    public function removemailverification(User $user)
+    {
+        $user->email_verified_at = null;
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Cannot remove email verification!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully updated user!');
+        return Redirect::back();
+    }
+
+
+    /**
      * Unauthorize thirdparty
      * @param  User  $user
      * @param  String  $method
