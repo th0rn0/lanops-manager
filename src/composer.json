@@ -51,7 +51,7 @@
         "maniaplanet/dedicated-server-api": "6.0.x-dev",
         "laravel/ui": "^3.4",
         "spatie/laravel-database-mail-templates": "^3.5",
-        "laravel/sanctum": "^2.15.1",
+        "laravel/sanctum": "^3.0",
         "propaganistas/laravel-phone": "^4.3.7",
         "symfony/mailgun-mailer": "^6.1",
         "symfony/http-client": "^6.1"
