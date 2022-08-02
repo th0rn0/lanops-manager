@@ -105,18 +105,22 @@
 
 
 					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-right">{{ $purchase->id }}</span></strong></li>
-					<li class="list-group-item list-group-item-info">
+					<li class="list-group-item @if(isset($purchase->user)) list-group-item-info @else list-group-item-danger @endif">
 						<strong>
-							User:
-							<span class="float-right">
-								{{ $purchase->user->username }}
-								@if ($purchase->user->steamid)
-									- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
-								@endif
-							</span>
+							@if(isset($purchase->user))
+								User:
+								<span class="float-right">
+									{{ $purchase->user->username }}
+									@if ($purchase->user->steamid)
+										- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
+									@endif
+								</span>
+							@else
+								User deleted
+							@endif
 						</strong>
 					</li>
-					<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-right">{{ $purchase->user->firstname }} {{ $purchase->user->surname }}</span></strong></li>
+					<li class="list-group-item @if(isset($purchase->user)) list-group-item-info @else list-group-item-danger @endif"><strong>Name: <span class="float-right">@if(isset($purchase->user)) {{ $purchase->user->firstname }} {{ $purchase->user->surname }}@else User deleted @endif</span></strong></li>
 					<li class="list-group-item @if ((strtolower($purchase->status) != 'success') && (strtolower($purchase->status) != 'pending')) list-group-item-danger @endif @if (strtolower($purchase->status) == 'success') list-group-item-success @endif @if (strtolower($purchase->status) == 'pending') list-group-item-warning @endif"><strong>Status: <span class="float-right">{{ $purchase->status }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Type: <span class="float-right">{{ $purchase->type }}</span></strong></li>
 					@if ($purchase->paypal_email != null)
@@ -134,7 +138,9 @@
 					
 					{{ Form::open(array('url'=>'/admin/purchases/' . $purchase->id . '/setSuccess', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					{{ Form::hidden('_method', 'GET') }}
-					<button type="submit" class="btn btn-block btn-success">Mark as payed</button>
+					
+					<button type="submit" class="btn btn-block @if (isset($purchase->user))	btn-success	@else btn-warning @endif">Mark as payed</button>
+					@if (!isset($purchase->user)) <small>caution, the user is already deleted!</small> @endif
 					{{ Form::close() }}
 				</div>
 				@endif

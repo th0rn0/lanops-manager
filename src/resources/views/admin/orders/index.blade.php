@@ -51,8 +51,8 @@
 							@endphp
 							<tr class="table-{{ $statusColor }} text-{{ $statusColor }}">
 								<td>{{ $order->id }}</td>
-								<td>{{ $order->purchase->user->username }}</td>
-								<td>{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</td>
+								<td>@if(isset($order->purchase->user)) {{ $order->purchase->user->username }} @else User deleted @endif</td>
+								<td>@if(isset($order->purchase->user)) {{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }} @else User deleted @endif</td>
 								<td><strong>{{ $order->status }}</strong></td>
 								<td>{{ $order->purchase->type }}</td>
 								<td>{{ $order->created_at }}</td>

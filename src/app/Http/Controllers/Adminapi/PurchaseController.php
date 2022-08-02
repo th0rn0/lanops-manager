@@ -38,8 +38,10 @@ class PurchaseController extends Controller
                 'purchase' => $purchase,
             ];
         }
-
-        Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+        if (isset($purchase->user))
+        {
+            Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+        }
 
         return [
             'successful' => true,

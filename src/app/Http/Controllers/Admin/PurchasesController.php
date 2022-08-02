@@ -76,8 +76,10 @@ class PurchasesController extends Controller
             Session::flash('alert-danger', 'Cannot set purchase status!');
             return Redirect::to('/admin/purchases/' . $purchase->id);
         }
-
-        Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+        if (isset($purchase->user))
+        {
+            Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+        }
 
         Session::flash('alert-success', 'Successfully updated purchase status!');
         return Redirect::to('/admin/purchases/' . $purchase->id);

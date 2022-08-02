@@ -83,12 +83,16 @@
 							<tr class="table-{{ $statusColor }} text-{{ $statusColor }}">
 								<td>{{ $purchase->id }}</td>
 								<td>
-									{{ $purchase->user->username }}
-									@if ($purchase->user->steamid)
-										- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
+									@if(isset($purchase->user)) 
+										{{ $purchase->user->username }}
+										@if ($purchase->user->steamid)
+											- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
+										@endif
+									@else
+										User deleted
 									@endif
 								</td>
-								<td>{{ $purchase->user->firstname }} {{ $purchase->user->surname }}</td>
+								<td>@if(isset($purchase->user)) {{ $purchase->user->firstname }} {{ $purchase->user->surname }} @else User deleted @endif</td>
 								<td>{{ $purchase->status }}</td>
 								<td>{{ $purchase->type }}</td>
 								<td>{{ $purchase->paypal_email }}</td>

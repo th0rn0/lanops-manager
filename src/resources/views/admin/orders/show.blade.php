@@ -165,11 +165,15 @@
 				@endif
 				@if ($order->deliver_to_event && !in_array($order->status, ['ERROR', 'CANCELLED', 'COMPLETE']))
 					<h4>User has chosen Delivery At Event</h4>
-					<p>The next Event {{ $order->purchase->user->firstname }} is attending is...</p>
-					@if ($order->purchase->user->getNextEvent())
-						<p><a href="/admin/events/{{ $order->purchase->user->getNextEvent()->slug }}">{{ $order->purchase->user->getNextEvent()->display_name }}</a></p>
-					@else
-						<h5>No future event found</h5>
+					@if(isset($order->purchase->user)) 
+						<p>The next Event {{ $order->purchase->user->firstname }} is attending is...</p>
+						@if ($order->purchase->user->getNextEvent())
+							<p><a href="/admin/events/{{ $order->purchase->user->getNextEvent()->slug }}">{{ $order->purchase->user->getNextEvent()->display_name }}</a></p>
+						@else
+							<h5>No future event found</h5>
+						@endif
+					@else 
+						User deleted 
 					@endif
 					<hr>
 				@endif
@@ -197,18 +201,24 @@
 							<strong>Paypal Email: <span class="float-right">{{ $order->purchase->paypal_email }}</span></strong>
 						</li>
 					@endif
-					<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-right">{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</span></strong></li>
-					<li class="list-group-item list-group-item-info">
-						<strong>
-							User:
-							<span class="float-right">
-								{{ $order->purchase->user->username }}
-								@if ($order->purchase->user->steamid)
-									- <span class="text-muted"><small>Steam: {{ $order->purchase->user->steamname }}</small></span>
-								@endif
-							</span>
-						</strong>
-					</li>
+					@if(isset($order->purchase->user)) 
+						<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-right">{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</span></strong></li>
+						<li class="list-group-item list-group-item-info">
+							<strong>
+								User:
+								<span class="float-right">
+									{{ $order->purchase->user->username }}
+									@if ($order->purchase->user->steamid)
+										- <span class="text-muted"><small>Steam: {{ $order->purchase->user->steamname }}</small></span>
+									@endif
+								</span>
+							</strong>
+						</li>
+					@else 
+						User deleted 
+					@endif	
+
+
 					<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="float-right">{{ $order->purchase->type }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="float-right">{{ $order->created_at }}</span></strong></li>
 				</ul>
