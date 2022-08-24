@@ -4,8 +4,8 @@ LABEL org.opencontainers.image.authors="Thornton Phillis (Th0rn0@lanops.co.uk), 
 
 # ENV - App Defaults
 
-ENV UUID 100
-ENV GUID 101
+ENV UUID 82
+ENV GUID 82
 ENV ENABLE_HTTPS false
 ENV LOG_FILES false
 ENV ANALYTICS_PROVIDER GoogleAnalytics
