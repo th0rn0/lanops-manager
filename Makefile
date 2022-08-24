@@ -124,26 +124,26 @@ folder-structure:
 
 # Permissions - Dev
 permissions:
-	chown -R ${USER}:101 src/
+	chown -R ${USER}:82 src/
 	find src -type f -exec chmod 664 {} \;
 	find src -type d -exec chmod 775 {} \;
-	chgrp -R 101 src/storage src/bootstrap/cache
+	chgrp -R 82 src/storage src/bootstrap/cache
 	chmod -R ug+rwx src/storage src/bootstrap/cache
 
 # Permissions custom - usage make permissions-custom user=username
 permissions-custom:
-	chown -R $(user):101 src/
+	chown -R $(user):82 src/
 	find src -type f -exec chmod 664 {} \;
 	find src -type d -exec chmod 775 {} \;
-	chgrp -R 101 src/storage src/bootstrap/cache
+	chgrp -R 82 src/storage src/bootstrap/cache
 	chmod -R ug+rwx src/storage src/bootstrap/cache
 
 # Permissions - Docker
 permissions-docker:
-	chown -R 100:101 src/
+	chown -R 82:82 src/
 	find src -type f -exec chmod 664 {} \;
 	find src -type d -exec chmod 775 {} \;
-	chgrp -R 101 src/storage src/bootstrap/cache
+	chgrp -R 82 src/storage src/bootstrap/cache
 	chmod -R ug+rwx src/storage src/bootstrap/cache
 
 # Create SSL Keypair for Development
