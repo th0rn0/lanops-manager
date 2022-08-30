@@ -28,7 +28,7 @@
 					{{ Form::label('card_number', __('payments.card_details'), array('id'=>'','class'=>'')) }}
 					<div class="form-control" id="card-element"></div>
 			  		<div id="card-errors" role="alert"></div>
-					<p><small>@lang('payments.delivery_required_fields)</small></p>
+					<p><small>@lang('payments.delivery_required_fields')</small></p>
 					{{ Form::hidden('gateway', $paymentGateway) }}
 					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">@lang('payments.confirm_order')</button>
 				{{ Form::close() }}
