@@ -60,7 +60,7 @@ class GameMatchApiController extends Controller
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
             if (isset($matchserver->gameServer->gameserver_secret) && $tournament->match_autoapi)
             {
-                $apiurl = "http://api.lan2play.de/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
+                $apiurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
                 $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0],$apiurl, $matchserver->gameServer->gameserver_secret);
             }
             else
@@ -315,7 +315,7 @@ class GameMatchApiController extends Controller
         }
             if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autoapi)
             {
-                $apiurl = "http://api.lan2play.de/api/matchmaking/".$match->id."/";
+                $apiurl = config('app.url')."/api/matchmaking/".$match->id."/";
                 $result = $gamematchapihandler->getconfig($match->id,$nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);
             }
             else
