@@ -64,6 +64,7 @@
 							<th>Game Port</th>
 							<th>Stream Port</th>
 							<th>RCON Port</th>
+							<th>Secret in DB</th>
 							<th>Status</th>
 							<th><th>
 						</tr>
@@ -107,6 +108,13 @@
 									</td>
 									<td>
 										{{ $gameServer->rcon_port }}
+									</td>
+									<td>
+										@if (isset($gameServer->gameserver_secret) && $gameServer->gameserver_secret != "")
+										<i class="fa fa-check-circle-o fa-1x" style="color:green"></i>
+										@else
+										<i class="fa fa-times-circle-o fa-1x" style="color:red"></i>
+										@endif
 									</td>
 									<td>
 										@if($gameServer->isenabled)
@@ -599,6 +607,10 @@
 						<div class="form-group">
 							{{ Form::label('stream_port','Stream Port',array('id'=>'','class'=>'')) }}
 							{{ Form::number('stream_port', NULL, array('id'=>'stream_port','class'=>'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('rcon_address','RCON Address (optional)',array('id'=>'','class'=>'')) }}
+							{{ Form::text('rcon_address', NULL, array('id'=>'rcon_address','class'=>'form-control')) }}
 						</div>
 						<div class="form-group">
 							{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
