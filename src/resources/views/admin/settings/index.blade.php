@@ -220,9 +220,16 @@
 				<i class="fa fa-wrench fa-fw"></i> Misc
 			</div>
 			<div class="card-body">
-				{{ Form::open(array('url'=>'/admin/settings/generate/qr', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<button type="submit" class="btn btn-danger btn-sm btn-block">Re generate QR Codes</button>
-				{{ Form::close() }}
+				<div class="mb-3">
+					{{ Form::open(array('url'=>'/admin/settings/generate/qr', 'onsubmit' => 'return ConfirmSubmit()')) }}
+						<button type="submit" class="btn btn-danger btn-sm btn-block">Re generate QR Codes</button>
+					{{ Form::close() }}
+				</div>
+				<div class="mb-3">
+					{{ Form::open(array('url'=>'/admin/settings/generate/newqr', 'onsubmit' => 'return ConfirmSubmit()')) }}
+						<button type="submit" class="btn btn-danger btn-sm btn-block">Re generate QR Codes with new urls</button>
+					{{ Form::close() }}
+				</div>
 				@foreach (config() as $config)
 					{{ dd($config) }}
 				@endforeach

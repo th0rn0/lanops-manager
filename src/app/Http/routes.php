@@ -598,6 +598,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings/matchmaking/enable', 'Admin\SettingsController@enableMatchMakingSystem');
             Route::post('/admin/settings/matchmaking/disable', 'Admin\SettingsController@disableMatchMakingSystem');
             Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
+            Route::post('/admin/settings/generate/newqr', 'Admin\SettingsController@regenerateQRCodesWithNewNames');
 
             /**
              * Appearance

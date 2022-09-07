@@ -130,7 +130,7 @@ class EventParticipant extends Model
      * Regenerate QR Codes
      * @return Boolean
      */
-    public function generateQRCode()
+    public function generateQRCode($forcenewname = false)
     {
         if(Str::startsWith(config('app.url'), ['http://', 'https://'])) {
             $ticketUrl = config('app.url') . '/tickets/retrieve/' . $this->id;
@@ -138,7 +138,7 @@ class EventParticipant extends Model
             $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
         }
 
-        if (isset($this->qrcode) && $this->qrcode != "")
+        if (isset($this->qrcode) && $this->qrcode != "" && !$forcenewname)
         {
             $qrCodeFullPath = $this->qrcode;
         }
@@ -151,7 +151,7 @@ class EventParticipant extends Model
             }
             $qrCodeFullPath = $qrCodePath . $qrCodeFileName;
         }
-        
+
         QrCode::format('png')->size(300)->margin(1)->generate($ticketUrl, $qrCodeFullPath);
         $this->qrcode = $qrCodeFullPath;
 

@@ -724,6 +724,26 @@ class SettingsController extends Controller
     }
 
     /**
+     * Regenerate QR codes for Event Participants with a new QR Code URL
+     * @return Redirect
+     */
+    public function regenerateQRCodesWithNewNames()
+    {
+        $count = 0;
+        foreach (Event::all() as $event) {
+            if (!$event->eventParticipants->isEmpty()) {
+                foreach ($event->eventParticipants as $participant) {
+                    $participant->generateQRCode(true);
+                    $participant->save();
+                    $count++;
+                }
+            }
+        }
+        Session::flash('alert-success', 'Successfully regenerated ' . $count . ' QR Codes with new names!');
+        return Redirect::back();
+    }
+
+    /**
      * updateAuthGeneral
      * @param  Request $request
      * @return Redirect
