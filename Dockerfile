@@ -33,7 +33,7 @@ RUN sed -i 's/;clear_env/clear_env/' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/memory_limit = 128M/memory_limit = 512M/' /usr/local/etc/php/php.ini
 RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' /usr/local/etc/php/php.ini
 RUN sed -i 's/post_max_size = 8M/post_max_size = 512M/' /usr/local/etc/php/php.ini
-RUN sed -i 's/max_execution_time = 30/max_execution_time = 120/' /usr/local/etc/php/php.ini
+RUN sed -i 's/max_execution_time = 30/max_execution_time = 240/' /usr/local/etc/php/php.ini
 
 RUN sed -i 's/user = nobody/user = ${UUID}/' /usr/local/etc/php-fpm.d/www.conf
 RUN sed -i 's/group = nobody/group = ${GUID}/' /usr/local/etc/php-fpm.d/www.conf
