@@ -137,13 +137,24 @@ class EventParticipant extends Model
         } else {
             $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
         }
-        $qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
-        $qrCodeFileName =  $this->event->slug . '-' . Str::random(32) . '.png';
-        if (!file_exists($qrCodePath)) {
-            mkdir($qrCodePath, 0775, true);
+
+        if (isset($this->qrcode) && $this->qrcode != "")
+        {
+            $qrCodeFullPath = $this->qrcode;
         }
-        QrCode::format('png')->size(300)->margin(1)->generate($ticketUrl, $qrCodePath . $qrCodeFileName);
-        $this->qrcode = $qrCodePath . $qrCodeFileName;
+        else
+        {
+            $qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
+            $qrCodeFileName =  $this->event->slug . '-' . Str::random(32) . '.png';
+            if (!file_exists($qrCodePath)) {
+                mkdir($qrCodePath, 0775, true);
+            }
+            $qrCodeFullPath = $qrCodePath . $qrCodeFileName;
+        }
+        
+        QrCode::format('png')->size(300)->margin(1)->generate($ticketUrl, $qrCodeFullPath);
+        $this->qrcode = $qrCodeFullPath;
+
         if (!$this->save()) {
             return false;
         }
