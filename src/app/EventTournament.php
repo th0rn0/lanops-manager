@@ -863,7 +863,27 @@ class EventTournament extends Model
         return false;
     }
     
+    /**
+     * get isFinalMatch
+     * @return bool
+     */
+    public function isLoserBracketMatch(int $challongeMatchId)
+    {
+        $matches = $this->getMatches();
+        $matchcount = count($matches);
+        $selectedmatchround = 0;
 
+        foreach ($matches as $roundkey => $matchround) {
+            foreach ($matchround as $match) {
+                if ($match->id == $challongeMatchId) {
+                    return $match->round < 0;
+                }
+            }
+        }
+        
+        return false;
+    }  
+    
     /**
      * get isSemiFinalMatch
      * @return Array
