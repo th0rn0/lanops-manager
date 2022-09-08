@@ -852,10 +852,11 @@ class EventTournament extends Model
         
         foreach ($matches as $roundkey => $matchround) {
             foreach ($matchround as $match) {
-                
-                if($match->round == 0)
-                {
-                    return true;
+                if ($match->id == $challongeMatchId) {
+                    if($match->round == 0)
+                    {
+                        return true;
+                    }
                 }
             }
         }
