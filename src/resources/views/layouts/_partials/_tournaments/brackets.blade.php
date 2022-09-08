@@ -20,7 +20,6 @@
 	@foreach ($matches as $roundNumber => $round)
 
 		@php
-
 			$isFinal = false;
 
 			$prevIsLoosersBracket = $isLoosersBracket;
@@ -30,20 +29,32 @@
 			$isFinalsBracket = false;
 
 			$roundTitle = "Round $roundNumber";
-			if (( $round == end($matches) || ( $roundNumber == count($matches) && !Helpers::pregArrayKeyExists('/-$/',$matches))) && $tournament->format != 'round robin' )
+			
+			// Matches are grouped by round, therefor we can use the first match for checks
+			$firstMatchInRound = reset($round);
+			
+			if($tournament->format == 'single elimination' || $tournament->format == 'double elimination')
 			{
-				$roundTitle = "Finals";
-				$isFinalsBracket = true;
-			}
-			elseif ($roundNumber == count($matches) - 2 && $tournament->format != 'round robin')
-			{
-				$roundTitle = "Semi-Finals";
-				$isFinalsBracket = true;
-			}
-			elseif (substr($roundNumber, 0, 1) == '-' && $tournament->format != 'round robin')
-			{
-				$roundTitle = "Losers Round ". substr($roundNumber, 1, 1);
-				$isLoosersBracket = true;
+				if($tournament->isFinalMatch($firstMatchInRound->id))
+				{
+					$roundTitle = "Finals";
+					$isFinalsBracket = true;
+				}
+				else if($tournament->isSemiFinalMatch($firstMatchInRound->id))
+				{
+					$roundTitle = "Semi-Finals";
+					$isFinalsBracket = true;
+				}
+				else if($tournament->isThirdPlaceMatch($firstMatchInRound->id))
+				{
+					$roundTitle = "Match for 3rd place";
+					$isFinalsBracket = true;
+				}
+				else if($tournament->isLoserBracketMatch($firstMatchInRound->id))
+				{
+					$roundTitle = "Losers Round " . abs($roundNumber);
+					$isLoosersBracket = true;
+				}
 			}
 		@endphp
 
@@ -55,27 +66,6 @@
 		<div class="col-12 col-sm-6 col-md-3">
 			<h4 class="pb-2 mt-4 mb-4 border-bottom">
 				{{ $roundTitle }}
-				{{-- @if (
-					(
-						(
-							$round == end($matches)
-						) ||
-						(
-							$roundNumber == count($matches) &&
-							!Helpers::pregArrayKeyExists('/-$/',$matches)
-						)						
-					) && (
-						$tournament->format != 'round robin'
-					)
-				)
-					Finals
-				@elseif ($roundNumber == count($matches) - 2 && $tournament->format != 'round robin')
-					Semi-Finals
-				@elseif (substr($roundNumber, 0, 1) == '-' && $tournament->format != 'round robin')
-					Losers Round {{ substr($roundNumber, 1, 1) }}
-				@else
-					Round {{ $roundNumber }}
-				@endif --}}
 			</h4>
 			@foreach ($round as $match)
 				@php

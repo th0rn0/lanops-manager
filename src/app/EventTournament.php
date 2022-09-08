@@ -809,49 +809,104 @@ class EventTournament extends Model
 
     /**
      * get isFinalMatch
-     * @return Array
+     * @return bool
      */
     public function isFinalMatch(int $challongeMatchId)
     {
         $matches = $this->getMatches();
         $matchcount = count($matches);
         $selectedmatchround = 0;
+        
+        $maxRound = 1;
+        
         foreach ($matches as $roundkey => $matchround) {
             foreach ($matchround as $match) {
-                print_r($match->id);
+
+                if($match->round > $maxRound)
+                {
+                    $maxRound = $match->round;
+                }
+
                 if ($match->id == $challongeMatchId) {
-                    $selectedmatchround = $roundkey;
-                    break 2;
+                    $selectedmatchround = $match->round;
                 }
             }
         }
-
-        return $selectedmatchround == $matchcount;
+        
+        return $selectedmatchround == $maxRound;
     }
 
     /**
      * get isSemiFinalMatch
-     * @return Array
+     * @return bool
      */
     public function isSemiFinalMatch(int $challongeMatchId)
     {
-
         $matches = $this->getMatches();
-        $matchcount = count($matches) - 2;
+        $matchcount = count($matches);
         $selectedmatchround = 0;
+        
+        $maxRound = 1;
+        
         foreach ($matches as $roundkey => $matchround) {
             foreach ($matchround as $match) {
-                print_r($match->id);
+
+                if($match->round > $maxRound)
+                {
+                    $maxRound = $match->round;
+                }
+
                 if ($match->id == $challongeMatchId) {
-                    $selectedmatchround = $roundkey;
-                    break 2;
+                    $selectedmatchround = $match->round;
                 }
             }
         }
-
-        return $selectedmatchround == $matchcount;
+        
+        return $selectedmatchround == $maxRound -1;
     }
+    
+    /**
+     * get isThirdPlaceMatch
+     * @return bool
+     */
+    public function isThirdPlaceMatch(int $challongeMatchId)
+    {
+        $matches = $this->getMatches();
+        
+        foreach ($matches as $roundkey => $matchround) {
+            foreach ($matchround as $match) {
+                
+                if($match->round == 0)
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * get isFinalMatch
+     * @return bool
+     */
+    public function isLoserBracketMatch(int $challongeMatchId)
+    {
+        $matches = $this->getMatches();
+        $matchcount = count($matches);
+        $selectedmatchround = 0;
 
+        foreach ($matches as $roundkey => $matchround) {
+            foreach ($matchround as $match) {
+                if ($match->id == $challongeMatchId) {
+                    return $match->round < 0;
+                }
+            }
+        }
+        
+        return false;
+    }  
+    
     /**
      * get isSemiFinalMatch
      * @return Array
