@@ -47,6 +47,7 @@ class EventTournament extends Model
         'rules',
         'allow_player_teams',
         'status',
+        'grand_finals_modifier',
         'randomteams'
     ];
 
@@ -73,16 +74,25 @@ class EventTournament extends Model
                 if ($model->format != 'list') {
                     $http = new GuzzleHttp\Client();
                     $challonge = new Challonge($http, config('challonge.api_key'), false);
+                    switch ($model->grand_finals_modifier){
+                        case 'skip':
+                            $grand_finals_modifier = 'skip';
+                            break;
+                        case 'singlematch':
+                            $grand_finals_modifier = 'single match';
+                            break;
+                        case 'doublematch':
+                            $grand_finals_modifier = NULL;
+                            break;
+                    }
                     $params = [
                         'tournament[name]'                    => $model->name,
                         'tournament[tournament_type]'         => strtolower($model->format),
                         'tournament[url]'                     => $model->challonge_tournament_url,
                         'tournament[hold_third_place_match]'  => @($model->allow_bronze ? true : false),
                         'tournament[show_rounds]'             => true,
+                        'tournament[grand_finals_modifier]'   => $grand_finals_modifier,
                     ];
-
-
-
 
                     if (!$response = retry(5, function () use ($challonge, $params) {
                         return $challonge->createTournament($params);
@@ -781,6 +791,19 @@ class EventTournament extends Model
             "three" => "Best of three",
             "threefinal" => "Best of three finals",
             "threesemifinalfinal" => "Best of three semifinals + finals",
+        );
+    }
+
+    /**
+     * get grandfinalsmodifiernames
+     * @return Array
+     */
+    public static function getGrandfinalmodifiernames()
+    {
+        return array(
+            "skip" => "no grand finale",
+            "singlematch" => "Grand finale with 1 match",
+            "doublematch" => "Grand finale with 1 or 2 matches",
         );
     }
 

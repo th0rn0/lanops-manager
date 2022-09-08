@@ -70,25 +70,28 @@ class TournamentsController extends Controller
             return Redirect::back();
         }
         $rules = [
-            'name'          => 'required',
-            'format'        => 'required|in:single elimination,double elimination,round robin,list',
-            'bestof'        => 'required|in:one,three,threefinal,threesemifinalfinal',
+            'name'                  => 'required',
+            'format'                => 'required|in:single elimination,double elimination,round robin,list',
+            'bestof'                => 'required|in:one,three,threefinal,threesemifinalfinal',
+            'grand_finals_modifier' => 'required|in:skip,singlematch,doublematch',
             'team_size'     => 'required|in:1v1,2v2,3v3,4v4,5v5,6v6',
             'description'   => 'required',
             'rules'         => 'required',
             'image'         => 'image',
         ];
         $messages = [
-            'name.required'         => 'Tournament name is required',
-            'format.required'       => 'Format is required',
-            'format.in'             => 'Single Elimation, Double Elimination, List or Round Robin only',
-            'bestof.required'       => 'bestof is required',
-            'bestof.in'             => 'Best of one, Best of three, Best of three finals, Best of three semifinals + finals',
-            'team_size.required'    => 'Team size is required',
-            'team_size.in'          => 'Team Size must be in format 1v1, 2v2, 3v3 etc',
-            'description.required'  => 'Description is required',
-            'rules.required'        => 'Rules are required',
-            'image.image'           => 'Tournament image must be a Image'
+            'name.required'                         => 'Tournament name is required',
+            'format.required'                       => 'Format is required',
+            'format.in'                             => 'Single Elimation, Double Elimination, List or Round Robin only',
+            'bestof.required'                       => 'bestof is required',
+            'bestof.in'                             => 'Best of one, Best of three, Best of three finals, Best of three semifinals + finals',
+            'grand_finals_modifier.required'        => 'Grand Finals modifier is required',
+            'grand_finals_modifier.in'              => 'skip, singlematch ,doublematch',
+            'team_size.required'                    => 'Team size is required',
+            'team_size.in'                          => 'Team Size must be in format 1v1, 2v2, 3v3 etc',
+            'description.required'                  => 'Description is required',
+            'rules.required'                        => 'Rules are required',
+            'image.image'                           => 'Tournament image must be a Image'
         ];
         $this->validate($request, $rules, $messages);
 
@@ -107,12 +110,13 @@ class TournamentsController extends Controller
         $tournament->team_size                  = $request->team_size;
         $tournament->description                = $request->description;
         $tournament->bestof                     = $request->bestof;
+        $tournament->grand_finals_modifier      = $request->grand_finals_modifier;
         $tournament->rules                      = $request->rules;
         $tournament->allow_bronze               = ($request->allow_bronze ? true : false);
         $tournament->allow_player_teams         = ($request->allow_player_teams ? true : false);
         $tournament->random_teams               = ($request->random_teams ? true : false);
-        $tournament->match_autoapi               = ($request->match_autoapi ? true : false);
-        $tournament->match_autostart               = ($request->match_autostart ? true : false);
+        $tournament->match_autoapi              = ($request->match_autoapi ? true : false);
+        $tournament->match_autostart            = ($request->match_autostart ? true : false);
 
 
         $tournament->status                     = 'DRAFT';

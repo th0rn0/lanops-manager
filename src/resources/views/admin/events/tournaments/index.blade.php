@@ -165,7 +165,22 @@
 									)
 								}}
 							</div>
-						</div>
+							<div class="col-lg-6 col-sm-12 form-group">
+								{{ Form::label('grand_finals_modifier','Grand finals',array('id'=>'','class'=>'')) }} <small> setting only for double elim </small>
+								{{
+									Form::select(
+										'grand_finals_modifier',
+										App\EventTournament::getGrandfinalmodifiernames(),
+										null,
+										array(
+											'id'    => 'grand_finals_modifier',
+											'class' => 'form-control'
+										)
+									)
+								}}
+							</div>						
+						</div>						
+					
 
 						<div class="form-group">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
@@ -179,7 +194,7 @@
 							<div class="col-lg-6 col-sm-12 form-group">
 								<div class="form-check">
 									<label class="form-check-label">
-										{{ Form::checkbox('allow_bronze', null, true, array('id'=>'allow_bronze')) }} Match for 3rd Place?
+										{{ Form::checkbox('allow_bronze', null, true, array('id'=>'allow_bronze')) }} Match for 3rd Place? <small> setting only for single elim </small>
 									</label>
 								</div>
 							</div>
