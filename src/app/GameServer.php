@@ -5,12 +5,14 @@ namespace App;
 use Storage;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Laravel\Sanctum\HasApiTokens;
 
-class GameServer extends Model
+class GameServer extends Authenticatable
 {
-    use Sluggable;
+    use Sluggable, HasApiTokens;
 
     /**
      * The name of the table.
