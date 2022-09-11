@@ -66,7 +66,7 @@ Route::group(['middleware' => ['installed']], function () {
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/updateplayer/{mapnumber}/{player}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchUpdateplayer');
                     Route::get('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/configure/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchConfig');
 
-                }
+                });
 
                 /**
                  * Admin API
@@ -418,6 +418,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/games/{game}/gameservers', 'Admin\GameServersController@index');
             Route::post('/admin/games/{game}/gameservers', 'Admin\GameServersController@store');
             Route::get('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@show');
+            Route::post('/admin/games/{game}/gameservers/{gameServer}/updatetoken', 'Admin\GameServersController@updatetoken');
             Route::post('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@update');
             Route::delete('/admin/games/{game}/gameservers/{gameServer}', 'Admin\GameServersController@destroy');
 

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'language'      => \App\Http\Middleware\LanguageSwitcher::class,    
+        'gameserver'      => \App\Http\Middleware\Gameserver::class,    
     ];
 }

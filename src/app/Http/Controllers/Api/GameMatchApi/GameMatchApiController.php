@@ -104,7 +104,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -144,7 +144,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -188,7 +188,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }      
@@ -229,7 +229,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -269,7 +269,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -354,7 +354,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -399,7 +399,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -442,7 +442,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }      
@@ -482,7 +482,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }
@@ -521,7 +521,7 @@ class GameMatchApiController extends Controller
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer->gameserver_secret))
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
         {
             return "Error: Gameserver Secret Key is wrong!";
         }

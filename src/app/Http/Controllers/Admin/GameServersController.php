@@ -57,8 +57,19 @@ class GameServersController extends Controller
         $gameServer->rcon_address   = $request->rcon_address != "" ? $request->rcon_address : null ;
         $gameServer->rcon_port      = $request->rcon_port;
         $gameServer->rcon_password  = $request->rcon_password;
-        $gameServer->gameserver_secret = "gs_" . Str::random();
 
+        if (!$gameServer->save()) {
+            Session::flash('alert-danger', 'Could not save GameServer!');
+            return Redirect::back();
+        }
+
+        $token = $gameServer->createToken("gs_" . Str::random());
+        if (!isset($token->plainTextToken) || $token->plainTextToken == "")
+        {
+            Session::flash('alert-danger', 'Could not create GameServer token!');
+            return Redirect::back();
+        }
+        $gameServer->gameserver_secret = $token->plainTextToken;
         if (!$gameServer->save()) {
             Session::flash('alert-danger', 'Could not save GameServer!');
             return Redirect::back();
@@ -110,6 +121,30 @@ class GameServersController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully saved Game Server!');
+        return Redirect::to('admin/games/' . $game->slug . '#gameservers');
+    }
+
+    /**
+     * Update Gameserver Token
+     * @param  GameServer $gameServer
+     * @param  Request $request
+     * @return Redirect
+     */
+    public function updatetoken(Game $game, GameServer $gameServer, Request $request)
+    {   
+        $gameServer->tokens()->delete();
+        $token = $gameServer->createToken("gs_" . Str::random());
+        if (!isset($token->plainTextToken) || $token->plainTextToken == "")
+        {
+            Session::flash('alert-danger', 'Could not create GameServer token!');
+            return Redirect::back();
+        }
+        $gameServer->gameserver_secret = $token->plainTextToken;
+        if (!$gameServer->save()) {
+            Session::flash('alert-danger', 'Could not save GameServer!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully saved Game Server token!');
         return Redirect::to('admin/games/' . $game->slug . '#gameservers');
     }
 
