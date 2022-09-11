@@ -150,6 +150,10 @@
 
 										<div>
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
+											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug . '/updatetoken', 'onsubmit' => 'return ConfirmSubmit()')) }}
+												{{ Form::hidden('_method', 'POST') }}
+												<button type="submit" class="btn btn-primary btn-sm btn-block">Regenerate token</button>
+											{{ Form::close() }}
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>

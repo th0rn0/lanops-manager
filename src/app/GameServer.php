@@ -5,12 +5,19 @@ namespace App;
 use Storage;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Laravel\Sanctum\HasApiTokens;
 
-class GameServer extends Model
+class GameServer extends Model implements
+AuthenticatableContract,
+AuthorizableContract
 {
-    use Sluggable;
+    use Sluggable, HasApiTokens, Authenticatable, Authorizable;
 
     /**
      * The name of the table.

@@ -42,7 +42,7 @@ interface IGameMatchApiHandler
     public function getuserthirdpartyrequirements();
     public function addteam($name);
     public function addplayer ($teamName, $thirdpartyid, $thirdpartyname, $userid, $username);
-    public function authorizeserver(Request $request, $serverkey);
+    public function authorizeserver(Request $request, GameServer $gameserver);
     public function golive(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
     public function updateround(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
     public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber, string $player);
@@ -144,9 +144,9 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
     }
 
 
-    public function authorizeserver(Request $request, $serverkey)
+    public function authorizeserver(Request $request, GameServer $gameserver)
     {
-        if ($serverkey != $request->key)
+        if ($request->user()->id != $gameserver->id)
         {
             return false;
         }
