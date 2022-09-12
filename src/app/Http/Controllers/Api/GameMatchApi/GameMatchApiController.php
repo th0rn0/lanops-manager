@@ -27,7 +27,7 @@ class GameMatchApiController extends Controller
      * tournamentMatchConfig
      * @return View
      */
-    public function tournamentMatchConfig(Event $event, EventTournament $tournament, int $challongeMatchId, int $nummaps)
+    public function tournamentMatchConfig(Event $event, EventTournament $tournament, int $challongeMatchId, int $nummaps, Request $request)
     {
         $match = $tournament->getMatch($challongeMatchId);
         if (!$match) {
@@ -58,6 +58,14 @@ class GameMatchApiController extends Controller
             }
 
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+            if(!isset($matchserver->gameServer))
+            {
+                return "Error: Gameserver not selected!";
+            }
+            if(!$gamematchapihandler->authorizeserver($request, $matchserver->gameServer))
+            {
+                return "Error: Gameserver Secret Key is wrong!";
+            }
             if (isset($matchserver->gameServer->gameserver_secret) && $tournament->match_autoapi)
             {
                 $apiurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
@@ -292,7 +300,7 @@ class GameMatchApiController extends Controller
     * matchMakingMatchConfig
     * @return View
     */
-   public function matchMakingMatchConfig(MatchMaking $match, int $nummaps)
+   public function matchMakingMatchConfig(MatchMaking $match, int $nummaps, Request $request )
    {
        if(isset($match->game) && isset ($match->game->gamematchapihandler))
        {
@@ -313,6 +321,14 @@ class GameMatchApiController extends Controller
             }
 
         }
+            if(!isset($match->matchMakingServer->gameServer))
+            {
+                return "Error: Gameserver not selected!";
+            }
+            if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
+            {
+                return "Error: Gameserver Secret Key is wrong!";
+            }
             if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autoapi)
             {
                 $apiurl = config('app.url')."/api/matchmaking/".$match->id."/";

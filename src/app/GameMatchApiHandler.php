@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\MatchMaking;
 use App\EventTournament;
-
+use Auth;
 
 class GameMatchApiHandler
 {
@@ -146,7 +146,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
     public function authorizeserver(Request $request, GameServer $gameserver)
     {
-        if ($request->user()->id != $gameserver->id)
+        if (auth('sanctum')->user()->id != $gameserver->id)
         {
             return false;
         }
