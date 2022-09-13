@@ -74,7 +74,7 @@ class EventTournament extends Model
                 if ($model->format != 'list') {
                     $http = new GuzzleHttp\Client();
                     $challonge = new Challonge($http, config('challonge.api_key'), false);
-                    switch ($model->grand_finals_modifier){
+                    switch ($model->grand_finals_modifier) {
                         case 'skip':
                             $grand_finals_modifier = 'skip';
                             break;
@@ -444,9 +444,10 @@ class EventTournament extends Model
             $return = array();
             $suggestedplayordercounter = 0;
             foreach ($tournamentMatches as $match) {
-
-                $suggestedplayordercounter++;
-                $return[$match->round][$suggestedplayordercounter] = $match;
+                if (!property_exists($match, "optional") || !$match->optional) {
+                    $suggestedplayordercounter++;
+                    $return[$match->round][$suggestedplayordercounter] = $match;
+                }
             }
             if ($obj) {
                 return json_decode(json_encode($return), false);
@@ -816,14 +817,13 @@ class EventTournament extends Model
         $matches = $this->getMatches();
         $matchcount = count($matches);
         $selectedmatchround = 0;
-        
+
         $maxRound = 1;
-        
+
         foreach ($matches as $roundkey => $matchround) {
             foreach ($matchround as $match) {
 
-                if($match->round > $maxRound)
-                {
+                if ($match->round > $maxRound) {
                     $maxRound = $match->round;
                 }
 
@@ -832,7 +832,7 @@ class EventTournament extends Model
                 }
             }
         }
-        
+
         return $selectedmatchround == $maxRound;
     }
 
@@ -845,14 +845,13 @@ class EventTournament extends Model
         $matches = $this->getMatches();
         $matchcount = count($matches);
         $selectedmatchround = 0;
-        
+
         $maxRound = 1;
-        
+
         foreach ($matches as $roundkey => $matchround) {
             foreach ($matchround as $match) {
 
-                if($match->round > $maxRound)
-                {
+                if ($match->round > $maxRound) {
                     $maxRound = $match->round;
                 }
 
@@ -861,10 +860,10 @@ class EventTournament extends Model
                 }
             }
         }
-        
-        return $selectedmatchround == $maxRound -1;
+
+        return $selectedmatchround == $maxRound - 1;
     }
-    
+
     /**
      * get isThirdPlaceMatch
      * @return bool
@@ -872,21 +871,20 @@ class EventTournament extends Model
     public function isThirdPlaceMatch(int $challongeMatchId)
     {
         $matches = $this->getMatches();
-        
+
         foreach ($matches as $roundkey => $matchround) {
             foreach ($matchround as $match) {
                 if ($match->id == $challongeMatchId) {
-                    if($match->round == 0)
-                    {
+                    if ($match->round == 0) {
                         return true;
                     }
                 }
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * get isFinalMatch
      * @return bool
@@ -904,10 +902,10 @@ class EventTournament extends Model
                 }
             }
         }
-        
+
         return false;
-    }  
-    
+    }
+
     /**
      * get isSemiFinalMatch
      * @return Array
