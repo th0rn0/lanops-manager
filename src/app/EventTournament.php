@@ -625,6 +625,11 @@ class EventTournament extends Model
      */
     public function updateMatch($matchId, $player1Score, $player2Score, $playerWinnerVerify = null)
     {
+        if ($player1Score == 0 && $player2Score == 0)
+        {
+            return false;
+        }
+
         try {
             // TODO - add support for multiple sets
             $http = new GuzzleHttp\Client();
