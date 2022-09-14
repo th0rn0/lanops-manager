@@ -89,7 +89,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             $this->result->team1->name = $name;
             $this->result->team1->tag = $name;
             $this->result->team1->flag = "DE";
-            
+
         }
         elseif (!isset($this->result->team2))
         {
@@ -129,8 +129,8 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
     {
         $this->result->matchid = "Match $matchid";
         $this->result->num_maps = intval ($nummaps);
-        $this->result->players_per_team = $players_per_team;
-        $this->result->min_players_to_ready = $players_per_team;
+        $this->result->players_per_team = intval($players_per_team);
+        $this->result->min_players_to_ready = intval($players_per_team);
         if ($apikey != null && $apiurl != null)
         {
             $this->result->cvars = new \stdClass();
@@ -138,7 +138,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             $this->result->cvars->get5_eventula_apistats_url = $apiurl;
         }
 
- 
+
         return $this->result;
 
     }
@@ -241,7 +241,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             return true;
         }
         return false;
-    }    
+    }
     public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid)
     {
         if($match != null && $tournament == null)
@@ -256,10 +256,10 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         if($match == null && $tournament != null && $challongematchid != null)
         {
             //tournament stuff
-            
+
         }
         return false;
-        
+
     }
 
 }
