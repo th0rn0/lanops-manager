@@ -49,7 +49,8 @@
         "laravel/sanctum": "^3.0",
         "propaganistas/laravel-phone": "^4.3.7",
         "symfony/mailgun-mailer": "^6.1",
-        "symfony/http-client": "^6.1"
+        "symfony/http-client": "^6.1",
+        "spatie/backtrace": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
