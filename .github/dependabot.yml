@@ -11,6 +11,7 @@ updates:
     allow:
       # Allow both direct and indirect updates for all packages
       - dependency-type: "all"
+    versioning-strategy: increase-if-necessary
   
   # Enable version updates for npm
   - package-ecosystem: "npm"
