@@ -1,4 +1,5 @@
 version: 2
+
 updates:
 
   # Enable version updates for composer
@@ -6,9 +7,14 @@ updates:
     directory: "/src" 
     schedule:
       interval: "daily"
-
+    open-pull-requests-limit: 30
+    allow:
+      # Allow both direct and indirect updates for all packages
+      - dependency-type: "all"
+  
   # Enable version updates for npm
   - package-ecosystem: "npm"
     directory: "/src"
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 30
