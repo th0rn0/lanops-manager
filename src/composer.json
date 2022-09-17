@@ -9,7 +9,8 @@
         {
             "type": "github",
             "url": "https://github.com/Lan2Play/dedicated-server-api",
-            "no-api": true
+            "no-api": true,
+            "only": ["maniaplanet/dedicated-server-api"]
         }
     ],
     "license": "MIT",
