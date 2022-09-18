@@ -150,6 +150,3 @@ class Twitter extends Artesaos\SEOTools\Facades\TwitterCard
 class JsonLd extends Artesaos\SEOTools\Facades\JsonLd
 {
 }
-class LaravelFacebookPixel extends WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelFacade
-{
-}

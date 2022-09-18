@@ -52,7 +52,6 @@ return [
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
-        WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -121,7 +120,6 @@ return [
         'OpenGraph'             => Artesaos\SEOTools\Facades\OpenGraph::class,
         'Twitter'               => Artesaos\SEOTools\Facades\TwitterCard::class,
         'JsonLd'                => Artesaos\SEOTools\Facades\JsonLd::class,
-        'LaravelFacebookPixel'  => WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
