@@ -7,22 +7,22 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "cross-env": "^7.0.3",
-        "dns-packet": "^5.4.0",
-        "laravel-mix": "^6.0.49",
-        "laravel-mix-purgecss": "^6.0.0",
-        "postcss": "^8.4.14",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.54.1",
-        "sass-loader": "^13.0.2",
-        "vue-template-compiler": "^2.7.8"
+        "cross-env": "7.0.3",
+        "dns-packet": "5.4.0",
+        "laravel-mix": "6.0.49",
+        "laravel-mix-purgecss": "6.0.0",
+        "postcss": "8.4.14",
+        "resolve-url-loader": "5.0.0",
+        "sass": "1.54.1",
+        "sass-loader": "13.0.2",
+        "vue-template-compiler": "2.7.8"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.1.2",
-        "bootstrap": "^4.6.2",
-        "jquery": "^3.6.0",
-        "jquery-ui-dist": "^1.13.1",
-        "popper.js": "^1.16.1",
-        "summernote": "^0.8.20"
+        "bootstrap": "4.6.2",
+        "jquery": "3.6.0",
+        "jquery-ui-dist": "1.13.1",
+        "popper.js": "1.16.1",
+        "summernote": "0.8.20"
     }
 }
