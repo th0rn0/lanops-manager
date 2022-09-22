@@ -291,6 +291,14 @@ mix:
     --user 82:82 \
 	node:14.10 /bin/bash -ci "npm run production"
 
+mix-gh:
+	docker run --rm --name js-maintainence-dev --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+    --user $(shell id -u):$(shell id -g) \
+	node:14.10 /bin/bash -ci "npm run production"
+
+
 mix-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
