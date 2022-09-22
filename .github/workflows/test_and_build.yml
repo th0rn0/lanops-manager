@@ -26,6 +26,8 @@ jobs:
         uses: docker/setup-qemu-action@v2.0.0
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+      - name: prepare permissions
+        run: chown -R 82:82 src
       - name: get dependencies
         run: make app-build-dep
       - name: Login to DockerHub
