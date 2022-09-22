@@ -1,5 +1,5 @@
 # FROM th0rn0/php-nginx-base:latest
-FROM lan2play/php-nginx-base:latest
+FROM lan2play/docker-php-nginx-base:latest
 LABEL org.opencontainers.image.authors="Thornton Phillis (Th0rn0@lanops.co.uk), Alexader Volz (Alexander@volzit.de)"
 
 # ENV - App Defaults
@@ -35,8 +35,7 @@ RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 512M/' /usr/local/e
 RUN sed -i 's/post_max_size = 8M/post_max_size = 512M/' /usr/local/etc/php/php.ini
 RUN sed -i 's/max_execution_time = 30/max_execution_time = 240/' /usr/local/etc/php/php.ini
 
-RUN sed -i 's/user = nobody/user = ${UUID}/' /usr/local/etc/php-fpm.d/www.conf
-RUN sed -i 's/group = nobody/group = ${GUID}/' /usr/local/etc/php-fpm.d/www.conf
+
 
 # Default Command
 

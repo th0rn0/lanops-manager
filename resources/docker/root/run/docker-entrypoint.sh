@@ -232,6 +232,40 @@ else
 	echo 'API Keys from the Database will be used'
 fi
 
+
+
+
+# handle user stuff
+echo "---------------"
+echo "Check if uid $UUID and $GUID exists..."
+if getent group| grep $GUID| wc -l ; then
+	export GROUPNAME=$(getent group| grep $GUID | cut -d: -f1)
+	echo "GUID $GUID exists with name $GROUPNAME"
+else
+	echo "GUID $GUID does not exist, creating $GROUPNAME"
+	export GROUPNAME=eventula
+	addgroup -g $GUID $GROUPNAME
+fi
+
+if id -u "$UUID" >/dev/null 2>&1; then
+	export USERNAME=$(id -un "$UUID")
+    echo "user $UUID exists with username $USERNAME"
+else
+ 	echo "user $UUID does not exists, create eventula"
+    adduser --disabled-password --uid $UUID --ingroup $GROUPNAME eventula
+	export USERNAME=$(id -un "$UUID")
+fi
+
+
+
+if id -nGz $USERNAME | tr '\0' '\n' | grep '^'${GROUPNAME}'$' | wc -l ; then
+	echo "User $USERNAME is in group $GROUPNAME";
+else
+	echo "User $USERNAME is not in group $GROUPNAME , adding...";
+	addgroup $USERNAME $GROUPNAME
+fi
+
+
 # Populate Storage Volume if Bind mount - Fix for Bind Mounts on Host system
 if [ -z "$(ls -A $NGINX_DOCUMENT_ROOT/storage)" ]; then
 	echo "---------------"
@@ -255,6 +289,23 @@ if [ "$TIMEZONE" != "UTC" ]; then
 	cp /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 	echo "$TIMEZONE" >  /etc/timezone
 fi
+
+
+# Set users in configs
+echo "---------------"
+echo "replacing users in configs"
+sed -i "s|user = .*|user = $UUID |g" /usr/local/etc/php-fpm.d/www.conf
+sed -i "s|group = .*|group = $GUID |g" /usr/local/etc/php-fpm.d/www.conf
+sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/nginx/nginx.conf
+sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/nginx/nginx-ssl.conf
+
+# set permissions
+echo "---------------"
+echo "set file permissions..."
+chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT
+find $NGINX_DOCUMENT_ROOT -type f -exec chmod 664 {} \;
+find $NGINX_DOCUMENT_ROOT -type d -exec chmod 775 {} \;
+chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
 # Database Wait check
 echo "---------------"
