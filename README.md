@@ -8,19 +8,19 @@ If you are using this please consider signing up to eventula for event mapping.
 
 ##### Home Page:
 
-![Manager front page](resources/images/home-page.png)
+![Manager front page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/home-page.png)
 ##### Event Page:
-![Event Page](resources/images/events-page.png)
+![Event Page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/events-page.png)
 ##### Successful Payment Page
-![Successful Payment](resources/images/success-payment-page.png)
+![Successful Payment](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/success-payment-page.png)
 ##### Event Management
-![Event Admin Page](resources/images/events-management-page.png)
+![Event Admin Page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/events-management-page.png)
 ##### Ticket Management
-![Tickets Breakdown](resources/images/tickets-management-page.png)
+![Tickets Breakdown](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tickets-management-page.png)
 ##### Tournament Management
-![Tournament Management](resources/images/tournaments-management-page.png)
+![Tournament Management](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tournaments-management-page.png)
 ##### Tournament Brakcets
-![Tournament Brackets](resources/images/tournaments-brackets-page.png)
+![Tournament Brackets](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tournaments-brackets-page.png)
 
 ##### Features
 
