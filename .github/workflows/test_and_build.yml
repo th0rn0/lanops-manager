@@ -28,6 +28,8 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: get dependencies
         run: make composer-install-dev; make npm-install-gh
+      - name: make foldersctructure and layout images
+        run: make folder-structure-dev; make layout-images-dev         
       - name: Login to DockerHub
         if: ${{ github.event_name != 'pull_request' }}
         uses: docker/login-action@v2.0.0
@@ -51,7 +53,7 @@ jobs:
           no-cache: true
           push: false      
       - name: Build and push Linux Image
-        if: ${{ startsWith(github.ref, 'refs/tags/master') && github.event_name == 'push' }}
+        if: ${{ startsWith(github.ref, 'refs/heads/master') && github.event_name == 'push' }}
         uses: docker/build-push-action@v3.1.1
         with:
           context: .
@@ -67,7 +69,7 @@ jobs:
           no-cache: true
           push: true
       - name: Build and push Linux Image dev
-        if: ${{ startsWith(github.ref, 'refs/tags/dev') && github.event_name == 'push' }}
+        if: ${{ startsWith(github.ref, 'refs/heads/dev') && github.event_name == 'push' }}
         uses: docker/build-push-action@v3.1.1
         with:
           context: .
