@@ -226,6 +226,15 @@ npm-install:
     --user 82:82 \
 	node:14.10 /bin/bash -ci "npm install --no-audit && npm run production"
 
+
+# Install JS Dependencies via NPM
+npm-install-gh:
+	docker run --rm --name js-maintainence --interactive \
+	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-w /usr/src/app \
+    --user 0 \
+	node:14.10 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(shell id -u):$(shell id -g) /usr/src/app"
+
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
@@ -290,14 +299,6 @@ mix:
 	-w /usr/src/app \
     --user 82:82 \
 	node:14.10 /bin/bash -ci "npm run production"
-
-mix-gh:
-	docker run --rm --name js-maintainence-dev --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
-	-w /usr/src/app \
-    --user $(shell id -u):$(shell id -g) \
-	node:14.10 /bin/bash -ci "npm run production"
-
 
 mix-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
