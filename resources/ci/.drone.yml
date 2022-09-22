@@ -7,7 +7,7 @@ steps:
 # Build Dependencies & Structure
 
 - name: build-structure
-  image: alpine:3.12
+  image: alpine:3.16
   commands:
   - apk add make
   - make folder-structure layout-images env-file-blank
@@ -55,7 +55,7 @@ trigger:
 
 services:
 - name: database
-  image: mysql:5.6
+  image: mysql:8
   environment:
     MYSQL_DATABASE: eventula_manager_database
     MYSQL_USER: eventula_manager
@@ -91,7 +91,7 @@ steps:
 # Build Dependencies & Structure
 
 - name: build-structure
-  image: alpine:3.12
+  image: alpine:3.16
   commands:
   - apk add make
   - make folder-structure layout-images env-file-blank
@@ -237,7 +237,7 @@ depends_on:
 
 services:
 - name: database
-  image: mysql:5.6
+  image: mysql:8
   environment:
     MYSQL_DATABASE: eventula_manager_database
     MYSQL_USER: eventula_manager
@@ -270,7 +270,7 @@ steps:
 # Build Dependencies & Structure
 
 - name: build-structure
-  image: alpine:3.12
+  image: alpine:3.16
   commands:
   - apk add make
   - make folder-structure layout-images env-file-blank

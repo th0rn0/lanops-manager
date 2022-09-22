@@ -301,12 +301,16 @@ sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/nginx/nginx-ssl.conf
 
 # set permissions
 echo "---------------"
-echo "set file permissions..."
+echo "set file permissions, this will take some time..."
 if [[ "$UUID" != "82" || "$GUID" != "82" ]]; then
+	echo "set src owner..."
 	chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT
 fi
+echo "set file permissions..."
 find $NGINX_DOCUMENT_ROOT -type f -exec chmod 664 {} \;
+echo "set folder permissions..."
 find $NGINX_DOCUMENT_ROOT -type d -exec chmod 775 {} \;
+echo "set storage and cache permissions..."
 chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
 # Database Wait check
