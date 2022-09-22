@@ -1,9 +1,11 @@
 version: "3.4"
 services:
   eventula_manager_app:
-    image: lan2play/eventula-manager
+    build:
+      context: .
+    working_dir: /web/html/
     volumes:
-      - eventula_manager_storage:/web/html/storage
+      - $PWD/src/:/web/html/
       - $PWD/resources/certs:/etc/nginx/certs
       - $PWD/resources/secrets:/run/secrets
     env_file: $PWD/src/.env
@@ -27,9 +29,7 @@ services:
     restart: unless-stopped
 volumes:
   eventula_manager_database:
-    name: eventula_manager_database  
-  eventula_manager_storage:
-    name: eventula_manager_storage
+    name: eventula_manager_database
 networks:
   lan:
     external: true

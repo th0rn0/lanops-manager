@@ -302,7 +302,9 @@ sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/nginx/nginx-ssl.conf
 # set permissions
 echo "---------------"
 echo "set file permissions..."
-chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT
+if [[ "$UUID" != "82" || "$GUID" != "82" ]]; then
+	chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT
+fi
 find $NGINX_DOCUMENT_ROOT -type f -exec chmod 664 {} \;
 find $NGINX_DOCUMENT_ROOT -type d -exec chmod 775 {} \;
 chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache

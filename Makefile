@@ -2,21 +2,21 @@
 start-local-dev: env-file-dev app-build-clean-dev interactive
 
 dev:
-	docker-compose -f docker-compose.yml up -d --build
+	docker-compose -f docker-compose-dev.yml up -d --build
 dev-local:
-	docker-compose -f docker-compose.local.yml up -d --build
+	docker-compose -f docker-compose-dev.local.yml up -d --build
 
 # Debug
 interactive:
-	docker-compose -f docker-compose.yml up --build
+	docker-compose -f docker-compose-dev.yml up --build
 interactive-local:
-	docker-compose -f docker-compose.local.yml up --build
+	docker-compose -f docker-compose-dev.local.yml up --build
 
 # Stop all Containers
 stop:
-	docker-compose -f docker-compose.yml stop
+	docker-compose -f docker-compose-dev.yml stop
 stop-local:
-	docker-compose -f docker-compose.local.yml stop
+	docker-compose -f docker-compose-dev.local.yml stop
 
 # Build from clean
 app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait database-migrate database-seed stop
@@ -309,8 +309,8 @@ mix-dev:
 
 # Purge Containers
 purge-containers:
-	docker-compose -f docker-compose.yml -p eventula_manager stop || true
-	docker-compose -f docker-compose.yml -p eventula_manager rm -vf || true
+	docker-compose -f docker-compose-dev.yml -p eventula_manager stop || true
+	docker-compose -f docker-compose-dev.yml -p eventula_manager rm -vf || true
 	docker rm eventula_manager_app || true
 	docker rm eventula_manager_database || true
 	docker volume rm eventula_manager_database || true
