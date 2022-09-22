@@ -51,7 +51,7 @@ jobs:
           no-cache: true
           push: false      
       - name: Build and push Linux Image
-        if: ${{ startsWith(github.ref, 'refs/tags/master) && github.event_name == 'push' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/master') && github.event_name == 'push' }}
         uses: docker/build-push-action@v3.1.1
         with:
           context: .
@@ -67,7 +67,7 @@ jobs:
           no-cache: true
           push: true
       - name: Build and push Linux Image dev
-        if: ${{ startsWith(github.ref, 'refs/tags/dev) && github.event_name == 'push' }}
+        if: ${{ startsWith(github.ref, 'refs/tags/dev') && github.event_name == 'push' }}
         uses: docker/build-push-action@v3.1.1
         with:
           context: .
