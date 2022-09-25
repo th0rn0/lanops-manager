@@ -210,6 +210,23 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="col-md-6 col-12">
+		<div class="card mb-3">
+			<div class="card-header">
+				<i class="fa fa-list fa-fw"></i> Version
+			</div>
+			<div class="card-body">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-info"><strong>BUILDNUMBER: <span class="float-right">{{ env('BUILDNUMBER', 'dev') }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>BUILDID: <span class="float-right">{{ env('BUILDID', 'dev') }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>SOURCE_COMMIT: <span class="float-right">{{ env('SOURCE_COMMIT', 'dev') }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>BUILDNODE: <span class="float-right">{{ env('BUILDNODE', 'dev') }}</span></strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 <script>
