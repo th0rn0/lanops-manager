@@ -32,13 +32,9 @@ app-build-dep: composer-install npm-install mix
 # Build Dev App & Dependencies
 app-build-dep-dev: composer-install-dev npm-install-dev mix-dev
 
-# Build docs container
-docs-build:
-	docker pull sphinxdoc/sphinx:latest
-	docker build -t eventula_docs docs
 # Make Documentation
 docs-html:
-	docker run --rm -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/docs:/docs eventula_docs make html
+	docker run --rm -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/docs:/docs lan2play/docker-sphinxbuild:latest
 
 ###########
 # HELPERS #
