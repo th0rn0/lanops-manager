@@ -4,19 +4,20 @@ Contribution Guide
 
 We are looking forward to every conbtirbution you possibly can bring in.
 
-If you encounter serious errors while using eventula and you are not able to fix them, feel free to open issues on https://github.com/th0rn0/eventula-manager/issues
+If you encounter serious errors while using eventula and you are not able to fix them, feel free to open issues on https://github.com/Lan2Play/eventula-manager/issues
 
 If you plan to add a feature to eventula, please open an issue as well so no one has to do work when someone already working on something.
 
 
 Documentation
 --------------
-This documentation is written in restructured text and its build using sphinx and the read the docs theme. The source can be found in our main repository in the ``docs/`` subfolder (https://github.com/th0rn0/eventula-manager/tree/master/src).
+This documentation is written in restructured text and its build using sphinx and the read the docs theme. The source can be found in our main repository in the ``docs/`` subfolder (https://github.com/Lan2Play/eventula-manager/tree/master/src).
 Feel free to PR corrections or expansions of the documentation at any time! 
 
 To build the documentation locally to the ``docs/build`` subfolder you have two options:
 
 - Building with docker and the make file (recommended)
+- Building with docker
 - Building manually with the sphinx make file
 
 Building with docker and the make file
@@ -43,18 +44,41 @@ Prereqirements:
 - Docker (https://docs.docker.com/engine/install)
 - Make (should be available for nearly every linux distro in the corresponding packagemanager)
 
-In order to build the documentation you have to build the build container a single time. 
-change to the root folder of the repository and run
-
-.. code-block:: bash
-
-   make docs-build
-
-to build the documentation run
+In order to build the documentation run
 
 .. code-block:: bash
 
    make docs-html
+
+
+Building with docker
+.......................................
+
+Windows
+'''''''
+Prereqirements: 
+
+- Docker for Windows with wsl2 backend (https://docs.docker.com/docker-for-windows/wsl/ Follow the Prerequisites, the Download and the Install part!)
+
+
+ .. warning::
+
+        If you are using git, consider cloning the repository within your wsl distro instead of with git for windows to get around line ending problems!
+
+To build the documentation just enter yor wsl2 distribution and follow the Linux part below!
+
+
+Linux
+'''''''
+Prereqirements: 
+
+- Docker (https://docs.docker.com/engine/install)
+
+In order to build the documentation run the following command inside the root of the cloned repository
+
+.. code-block:: bash
+
+   docker run --rm -v $PWD/docs:/docs lan2play/docker-sphinxbuild:latest
 
 Building manually with the sphinx make file
 ............................................
