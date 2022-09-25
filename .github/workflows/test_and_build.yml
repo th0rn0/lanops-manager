@@ -55,6 +55,7 @@ jobs:
             BUILDID=${{ github.run_id }}
             BUILDNUMBER=${{ github.run_number }}
             SOURCE_COMMIT=${{ github.sha }}
+            SOURCE_REF=${{ github.ref }}
           no-cache: true
           push: false      
       - name: Build and push Linux Image
@@ -71,6 +72,7 @@ jobs:
             BUILDID=${{ github.run_id }}
             BUILDNUMBER=${{ github.run_number }}
             SOURCE_COMMIT=${{ github.sha }}
+            SOURCE_REF=${{ github.ref }}
           no-cache: true
           push: true
       - name: Build and push Linux Image dev
@@ -87,5 +89,6 @@ jobs:
             BUILDID=${{ github.run_id }}
             BUILDNUMBER=${{ github.run_number }}
             SOURCE_COMMIT=${{ github.sha }}
+            SOURCE_REF=${{ github.ref }}
           no-cache: true
           push: true

@@ -221,6 +221,7 @@
 					<li class="list-group-item list-group-item-info"><strong>BUILDNUMBER: <span class="float-right">{{ env('BUILDNUMBER', 'dev') }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>BUILDID: <span class="float-right">{{ env('BUILDID', 'dev') }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>SOURCE_COMMIT: <span class="float-right">{{ env('SOURCE_COMMIT', 'dev') }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>SOURCE_REF: <span class="float-right">{{ env('SOURCE_REF', 'dev') }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>BUILDNODE: <span class="float-right">{{ env('BUILDNODE', 'dev') }}</span></strong></li>
 				</ul>
 			</div>
