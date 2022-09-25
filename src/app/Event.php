@@ -59,7 +59,7 @@ class Event extends Model
             $admin = true;
         }
 
-        if (isset(auth('sanctum')) && isset(auth('sanctum')->user()) && get_class(auth('sanctum')->user()) == "App\GameServer") {
+        if (isset(auth('sanctum')->user()->id) && get_class(auth('sanctum')->user()) == "App\GameServer") {
             $admin = true;
         }
 
