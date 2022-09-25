@@ -58,6 +58,11 @@ class Event extends Model
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
         }
+
+        if (get_class(auth('sanctum')->user()) == "App\GameServer") {
+            $admin = true;
+        }
+
         if (!$admin && (Auth::user() || auth('sanctum')->user())) {
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
@@ -68,6 +73,7 @@ class Event extends Model
                     ->orWhere('status', 'PRIVATE');
             });
         }
+
         if (!$admin && !Auth::user() && !auth('sanctum')->user()) {
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', 'DRAFT');
