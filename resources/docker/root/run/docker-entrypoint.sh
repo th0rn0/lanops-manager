@@ -238,7 +238,7 @@ fi
 # handle user stuff
 echo "---------------"
 echo "Check if uid $UUID and $GUID exists..."
-if getent group| grep $GUID| wc -l ; then
+if [ "$(getent group| grep $GUID| wc -l)" -gt "0" ] ; then
 	export GROUPNAME=$(getent group| grep $GUID | cut -d: -f1)
 	echo "GUID $GUID exists with name $GROUPNAME"
 else
@@ -257,8 +257,7 @@ else
 fi
 
 
-
-if id -nGz $USERNAME | tr '\0' '\n' | grep '^'${GROUPNAME}'$' | wc -l ; then
+if [ "$(id -nGz $USERNAME | tr '\0' '\n' | grep '^'${GROUPNAME}'$' | wc -l)" -gt "0" ] ; then
 	echo "User $USERNAME is in group $GROUPNAME";
 else
 	echo "User $USERNAME is not in group $GROUPNAME , adding...";
@@ -298,18 +297,19 @@ sed -i "s|user = .*|user = $UUID |g" /usr/local/etc/php-fpm.d/www.conf
 sed -i "s|group = .*|group = $GUID |g" /usr/local/etc/php-fpm.d/www.conf
 sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/nginx/nginx.conf
 sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/nginx/nginx-ssl.conf
+sed -i "s|%%USERNAME%%|$USERNAME|g" /etc/supervisor/conf.d/supervisord.conf
 
 # set permissions
 echo "---------------"
 echo "set file permissions, this will take some time..."
 if [[ "$UUID" != "82" || "$GUID" != "82" ]]; then
 	echo "set src owner..."
-	chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT
+	find $NGINX_DOCUMENT_ROOT ! -user $USERNAME -print0 | xargs -0 -r chown $UUID:$GUID
 fi
 echo "set file permissions..."
-find $NGINX_DOCUMENT_ROOT -type f -exec chmod 664 {} \;
+find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -print0 | xargs -0 -r chmod 664 
 echo "set folder permissions..."
-find $NGINX_DOCUMENT_ROOT -type d -exec chmod 775 {} \;
+find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -print0 | xargs -0 -r chmod 775 
 echo "set storage and cache permissions..."
 chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
