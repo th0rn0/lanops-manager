@@ -1,0 +1,55 @@
+name: lan2play_website_build
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+    - 'docs/**'
+    - '.github/workflows/website_build.yml'
+  pull_request:
+    branches: 
+    - master
+    - dev
+    - 'feature/**'
+    paths:
+    - 'docs/**'
+    - '.github/workflows/website_build.yml'
+
+jobs:
+
+  build_only:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: build
+      run: docker run --rm -v ${{ github.workspace }}/Docs:/docs -e USERID=$(id -u ${USER}) -e GROUPID=$(id -g ${USER}) lan2play/docker-sphinxbuild:latest
+
+
+  publish_prd:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/heads/master') && github.event_name == 'push' }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: build
+      run: docker run --rm -v ${{ github.workspace }}/Docs:/docs -e USERID=$(id -u ${USER}) -e GROUPID=$(id -g ${USER}) lan2play/docker-sphinxbuild:latest
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.EVENTULA_LAN2PLAY_DE_SSH }}
+        name: id_rsa
+        # config: ${{ secrets.SSH_CONFIG }} 
+        known_hosts: unnecessary
+        if_key_exists: fail 
+    - name: git config
+      run: git config --global user.email "ci@eventula.lan2play.de" && git config --global user.name "NetEvent CI"
+    - name: clone pages repo
+      run: git clone git@github.com:Lan2Play/eventula.lan2play.de.git
+    - name: remove old things and add new
+      run: rm -rf ./eventula.lan2play.de/docs/* && cp -rf ./docs/build/html/* ./eventula.lan2play.de/docs/
+    - name: readd cname and nojekyll
+      run: echo "eventula.lan2play.de" >> ./eventula.lan2play.de/docs/CNAME ; touch ./eventula.lan2play.de/docs/.nojekyll
+    - name: push pages repo
+      run: cd ./eventula.lan2play.de && if [ $(git status --short | wc -l) -gt 0 ]; then git add . && git commit -m "CI Build" && git push; fi
+    
+
