@@ -214,7 +214,7 @@
 	<div class="col-md-6 col-12">
 		<div class="card mb-3">
 			<div class="card-header">
-				<i class="fa fa-list fa-fw"></i> Version
+				<i class="fa fa-info fa-fw"></i> Version
 			</div>
 			<div class="card-body">
 				<ul class="list-group">
