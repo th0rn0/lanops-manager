@@ -19,7 +19,6 @@ on:
       - 'README.md'
       - '.github/workflows/update-dockerhub.yml'
       - 'docs'
-  repository_dispatch: # Allows action to be triggered via webhook
   workflow_dispatch: # Allows action to be run manually from the Actions tab
 
 jobs:
