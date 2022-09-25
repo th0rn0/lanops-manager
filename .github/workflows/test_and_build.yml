@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - 'README.md'
       - '.github/workflows/update-dockerhub.yml'
+      - '.github/workflows/website_build.yml'
       - 'docs'
   pull_request:
     branches: 
@@ -18,6 +19,7 @@ on:
     paths-ignore:
       - 'README.md'
       - '.github/workflows/update-dockerhub.yml'
+      - '.github/workflows/website_build.yml'
       - 'docs'
   workflow_dispatch: # Allows action to be run manually from the Actions tab
 

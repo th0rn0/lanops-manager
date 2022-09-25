@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: build
-      run: docker run --rm -v ${{ github.workspace }}/Docs:/docs -e USERID=$(id -u ${USER}) -e GROUPID=$(id -g ${USER}) lan2play/docker-sphinxbuild:latest
+      run: docker run --rm -v ${{ github.workspace }}/docs:/docs -e USERID=$(id -u ${USER}) -e GROUPID=$(id -g ${USER}) lan2play/docker-sphinxbuild:latest
 
 
   publish_prd:
@@ -32,7 +32,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: build
-      run: docker run --rm -v ${{ github.workspace }}/Docs:/docs -e USERID=$(id -u ${USER}) -e GROUPID=$(id -g ${USER}) lan2play/docker-sphinxbuild:latest
+      run: docker run --rm -v ${{ github.workspace }}/docs:/docs -e USERID=$(id -u ${USER}) -e GROUPID=$(id -g ${USER}) lan2play/docker-sphinxbuild:latest
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
       with:
