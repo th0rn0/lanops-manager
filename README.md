@@ -9,7 +9,7 @@ You can find the full documentation on https://eventula.lan2play.de .
 If you are using this please consider signing up to eventula for event mapping.
 
 > **Warning**
-> This fork of eventula manager is not 100% update compatible to the current upstream. We have intended to merge it someday, but currently there are to many changes and there is not enough time to do so. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter whith the upgrade.
+> This fork of eventula manager is not 100% update compatible to the current upstream. We have intended to merge it someday, but currently there are to many changes and there is not enough time to do so. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade.
 
 ##### Home Page:
 
