@@ -1,6 +1,11 @@
 
 Getting Started
 ==================================================
+
+    .. warning::
+
+        This fork of eventula manager is not 100% update compatible to the current upstream. We have intended to merge it someday, but currently there are to many changes and there is not enough time to do so. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade. Also this documentation is not fully up to date and not finished, so if you find something that is not right, consider contributing to it or open an issue. 
+
 We are glad that you want to try or use the eventula event manager.
 You have 2 different ways to distribute your instance of eventula:
 
