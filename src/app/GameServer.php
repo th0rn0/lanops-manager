@@ -94,4 +94,43 @@ AuthorizableContract
     {
         return 'slug';
     }
+
+
+
+    public function getAssignedMatchServer()
+    {
+        $matchmaking = $this->MatchMakingServers;
+        $eventtournament = $this->eventTournamentMatchServer;
+        $matchcount = count($matchmaking) + count($eventtournament);
+
+        if ($matchcount > 1 || $matchcount == 0)
+        {
+            return [
+                    'count' => $matchcount
+            ]; 
+        }
+        else
+        {
+
+            if (count($matchmaking) == 1)
+            {
+                return [
+                    'count' => $matchcount,
+                    'match'  => $matchmaking->first()    
+                ];  
+            }
+            if (count($eventtournament) == 1)
+            {
+                return [
+                    'count' => $matchcount,
+                    'match'  => $eventtournament->first()    
+                ];  
+            }
+
+            
+        }
+
+
+    }
+
 }
