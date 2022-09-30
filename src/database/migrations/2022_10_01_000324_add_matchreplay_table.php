@@ -31,9 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('event_tournaments', function (Blueprint $table) {
-            $table->dropColumn('grand_finals_modifier');
-        });
+        Schema::drop('matchreplay');
     }
-
 };
