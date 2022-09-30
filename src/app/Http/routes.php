@@ -5,7 +5,7 @@
  */
 if (config('app.debug') === true) {
     Route::get('phpinfo', function () {
-        phpinfo(); 
+        phpinfo();
     })->name('phpinfo');
 }
 
@@ -53,12 +53,14 @@ Route::group(['middleware' => ['installed']], function () {
                  * Gameserver API
                  */
                 Route::group(['middleware' => ['gameserver']], function () {
+                    Route::post('/api/matchmaking/{match}/demo/', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchDemo');
                     Route::post('/api/matchmaking/{match}/finalize/', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalize');
                     Route::post('/api/matchmaking/{match}/finalize/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalizeMap');
                     Route::post('/api/matchmaking/{match}/golive/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchGolive');
                     Route::post('/api/matchmaking/{match}/updateround/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchUpdateround');
                     Route::post('/api/matchmaking/{match}/updateplayer/{mapnumber}/{player}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchUpdateplayer');
                     Route::get('/api/matchmaking/{match}/configure/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchConfig');
+                    Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/demo/', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchDemo');
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize/', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalize');
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalizeMap');
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/golive/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchGolive');

@@ -1,4 +1,4 @@
-# Run local dev 
+# Run local dev
 start-local-dev: env-file-dev app-build-clean-dev interactive
 
 dev:
@@ -8,7 +8,7 @@ dev-local:
 
 # Debug
 interactive:
-	docker-compose -f docker-compose-dev.yml up --build
+	docker-compose -f docker-compose-dev.yml up
 interactive-local:
 	docker-compose -f docker-compose-dev.local.yml up --build
 
@@ -365,10 +365,10 @@ database-show-foreign:
 get-lang-blade:
 	cat $(blade) | grep -o "'$(prefix)\..*'" | sed "s|'||g" | sort | uniq | sed "s|.*\.|'|g" | sed -e "s/$$/' => '',/"
 
-# set installed in database 
+# set installed in database
 set-installed:
 	make database-command command="update settings set value=1 where setting='installed';"
-	
+
 # set not installed in database
 set-not-installed:
 	make database-command command="update settings set value=0 where setting='installed';"

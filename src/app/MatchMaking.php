@@ -12,7 +12,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class MatchMaking extends Model
 {
-    
+
     /**
      * The name of the table.
      *
@@ -63,7 +63,10 @@ class MatchMaking extends Model
         return $this->hasOne('App\MatchMakingServer', 'match_id', 'id');
     }
 
-
+    public function matchReplays()
+    {
+        return $this->hasMany('App\MatchReplay', 'matchmaking_id');
+    }
 
 
     /*
@@ -97,7 +100,7 @@ class MatchMaking extends Model
         return $this->teams()->where('team_owner_id', $matchTeamOwnerId)->first();
     }
 
-    
+
 
 
     /**
