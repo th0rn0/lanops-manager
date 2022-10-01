@@ -267,7 +267,8 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
     {
         if($match != null && $tournament == null)
         {
-            if (!$match->setStatus('COMPLETE'))
+
+            if (!$match->matchMakingServer->delete())
             {
                 return false;
             }
@@ -276,8 +277,17 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         }
         if($match == null && $tournament != null && $challongematchid != null)
         {
-            //tournament stuff
 
+            $evtms= EventTournamentMatchServer::where(['challonge_match_id' => $challongematchid])->first();
+
+            if(isset($evtms))
+            {
+                if (!$evtms->delete())
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         return false;
 

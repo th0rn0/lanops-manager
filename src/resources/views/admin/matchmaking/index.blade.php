@@ -215,6 +215,9 @@
 							@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
 								<small style="color: red">This does not start the match remotely on the assigned server. You have to manually execute the nessecary commands on your server with the Execute Command button.</small>
 							@endif
+							@if (isset($match->matchMakingServer))
+							<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
+							@endif
 								<div class="form-group">
 									{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 									{{ Form::select('gameServer', $match->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
@@ -246,8 +249,12 @@
 
 
 						<div class="modal-body">
+
 							@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
 								<small style="color: red">This does not end the match remotely on the currently assigned server and does not load it on the new assigned Server. You have to manually execute the nessecary commands on your server with the Execute Command button.</small>
+							@endif
+							@if (isset($match->matchMakingServer))
+							<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
 							@endif
 								<div class="form-group">
 									{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
@@ -398,7 +405,10 @@
 						</thead>
 						<tbody>
 							@foreach ($matches as $match)
-								<tr>
+
+
+
+								<tr @if ($match->status == 'COMPLETE' && isset($match->matchMakingServer)) style="border:2px solid red;" @endif >
 									<td>{{ $match->id }}</td>
 									<td>
 										{{ $match->oldestTeam->name }}
@@ -420,7 +430,11 @@
 										@endif
 									</td>
 									<td>{{ $match->team_size }}v{{ $match->team_size }}</td>
-									<td>{{ $match->status }}</td>
+									<td>{{ $match->status }}
+										@if ($match->status == 'COMPLETE' && isset($match->matchMakingServer))
+											<p><small style="color: red">It seems like the match is finished, but the server is still assigned. Depending on your gameservers config it might take some time to free the servers. If it should already be free you can delete the assignment on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
+										@endif
+									</td>
 									<td width="15%">
 										<a href="/admin/matchmaking/{{ $match->id }}">
 											<button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>
@@ -431,7 +445,7 @@
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
 										{{ Form::close() }}
-									</td>
+									</td>		
 								</tr>
 							@endforeach
 						</tbody>

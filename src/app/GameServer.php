@@ -14,8 +14,8 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Laravel\Sanctum\HasApiTokens;
 
 class GameServer extends Model implements
-AuthenticatableContract,
-AuthorizableContract
+    AuthenticatableContract,
+    AuthorizableContract
 {
     use Sluggable, HasApiTokens, Authenticatable, Authorizable;
 
@@ -63,12 +63,12 @@ AuthorizableContract
 
     public function eventTournamentMatchServer()
     {
-        return $this->hasMany('App\EventTournamentMatchServer');
+        return $this->hasOne('App\EventTournamentMatchServer', 'game_server_id', 'id');
     }
 
-    public function MatchMakingServers()
+    public function matchMakingServer()
     {
-        return $this->hasMany('App\MatchMakingServer', 'game_server_id', 'id');
+        return $this->hasOne('App\MatchMakingServer', 'game_server_id', 'id');
     }
 
     /**
@@ -99,38 +99,33 @@ AuthorizableContract
 
     public function getAssignedMatchServer()
     {
-        $matchmaking = $this->MatchMakingServers;
+        $matchmaking = $this->matchMakingServer;
         $eventtournament = $this->eventTournamentMatchServer;
-        $matchcount = count($matchmaking) + count($eventtournament);
 
-        if ($matchcount > 1 || $matchcount == 0)
-        {
+        if (isset($matchmaking) && isset($eventtournament)) {
             return [
-                    'count' => $matchcount
-            ]; 
-        }
-        else
-        {
-
-            if (count($matchmaking) == 1)
-            {
-                return [
-                    'count' => $matchcount,
-                    'match'  => $matchmaking->first()    
-                ];  
-            }
-            if (count($eventtournament) == 1)
-            {
-                return [
-                    'count' => $matchcount,
-                    'match'  => $eventtournament->first()    
-                ];  
-            }
-
-            
+                'count' => 2
+            ];
         }
 
+        if (!isset($matchmaking) && !isset($eventtournament)) {
+            return [
+                'count' => 0
+            ];
+        }
 
+        if (isset($matchmaking)) {
+            return [
+                'count' => 1,
+                'match'  => $matchmaking
+            ];
+        }
+
+        if (isset($eventtournament)) {
+            return [
+                'count' => 1,
+                'match'  => $eventtournament
+            ];
+        }
     }
-
 }

@@ -140,11 +140,43 @@
 													MM {{ $gameServer->getAssignedMatchServer()["match"]->match->id }}
 												</a>
 											@endif
+
+											@if (get_class($gameServer->getAssignedMatchServer()["match"]) == 'App\EventTournamentMatchServer')
+												<a href="/admin/events/{{ $gameServer->getAssignedMatchServer()["match"]->eventTournament->event->slug }}/tournaments/{{ $gameServer->getAssignedMatchServer()["match"]->eventTournament->slug }}/">
+													EVT {{ $gameServer->getAssignedMatchServer()["match"]->eventTournament->name }} Match  
+													
+													@php 
+														$matchCounter = 1;
+														$matches = $gameServer->getAssignedMatchServer()["match"]->eventTournament->getMatches();
+													@endphp
+
+													@foreach ($matches as $roundNumber => $round)
+														@foreach ($round as $match)
+
+															
+															@if ($match->id == $gameServer->getAssignedMatchServer()["match"]->challonge_match_id)
+
+																{{ $matchCounter }}
+
+															@endif
+																@php 
+																	$matchCounter++
+																@endphp
+
+														@endforeach
+
+													@endforeach
+												
+												
+													<small>({{ $gameServer->getAssignedMatchServer()["match"]->challonge_match_id }})</small>
+												</a>												
+											@endif
+
 										@endif
 										@if ($gameServer->getAssignedMatchServer()["count"] > 1)
 										
 										
-										<a href="/admin/games/{{ $gameServer->game->slug }}/gameserver/{{ $gameServer->slug }}">
+										<a href="/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}">
 										<p style="color:red">{{$gameServer->getAssignedMatchServer()["count"]}} Matches assigned! This should never happen! Please klick here to fix it manually</p>
 										</a>
 										@endif
@@ -183,6 +215,7 @@
 									<td width="15%">
 
 										<div>
+											<a href="/admin/games/{{$game->slug}}/gameservers/{{$gameServer->slug}}" class="btn btn-primary btn-sm btn-block">Details</a>
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug . '/updatetoken', 'onsubmit' => 'return ConfirmSubmit()')) }}
 												{{ Form::hidden('_method', 'POST') }}

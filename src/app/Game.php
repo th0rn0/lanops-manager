@@ -94,7 +94,7 @@ class Game extends Model
 
     public function matchStartGameServerCommand()
     {
-        return $this->hasOne('App\GameServerCommand','id', 'matchStartgameServerCommand');
+        return $this->hasOne('App\GameServerCommand', 'id', 'matchStartgameServerCommand');
     }
 
     public function gameServerMatchCommands()
@@ -148,48 +148,13 @@ class Game extends Model
 
     public function getGameServerSelectArray()
     {
-        $openmatchservers = array();
-        foreach ($this->eventTournaments as $eventTournament) {
-            if($eventTournament->format != 'list')
-            {
-                foreach ($eventTournament->getNextMatches() as $match)
-                {
-                    $openmatchservers[$match->id] = $match->id;
-                }
-            }
-        }
-
-        $openmatchmakings = array();
-        foreach ($this->matchMakings as $match)
-        {
-            if ($match->status == "LIVE" || $match->status == "WAITFORPLAYERS")
-            {
-                $openmatchmakings[$match->id] = $match->id;
-            }
-        }
-
-
         $return = array();
         foreach (GameServer::where(['game_id' => $this->id, 'type' => 'Match', 'isenabled' => true])->get() as $gameServer) {
-            $gameserver_is_used = false;
-            foreach ($gameServer->eventTournamentMatchServer as $eventTournamentMatchServer) {
-                if (array_key_exists($eventTournamentMatchServer->challonge_match_id, $openmatchservers)) {
-                    $gameserver_is_used = true;
-                    break;
-                }
-            }
-            foreach ($gameServer->matchMakingServers as $matchMakingServers) {
-                if (array_key_exists($matchMakingServers->match_id, $openmatchmakings)) {
-                    $gameserver_is_used = true;
-                    break;
-                }
-            }
 
-            if (!$gameserver_is_used) {
+            if (!isset($gameServer->eventTournamentMatchServer) && !isset($gameServer->matchMakingServer)) {
                 $return[$gameServer->id] = $gameServer->name;
             }
         }
-
         return $return;
     }
 
@@ -200,7 +165,8 @@ class Game extends Model
             $return[$game->id] = $game->name;
         }
         return $return;
-    } 
+    }
+
     public static function getMatchmakingGameSelectArray($publicOnly = true)
     {
         $return[0] = 'None';
@@ -209,5 +175,4 @@ class Game extends Model
         }
         return $return;
     }
-    
 }

@@ -21,6 +21,17 @@ use Illuminate\Support\Str;
 
 class GameServersController extends Controller
 {
+
+     /**
+     * Show Gameserver Page
+     * @return Redirect
+     */
+    public function show(Game $game, GameServer $gameServer)
+    {
+        return view('admin.games.gameserver.show')
+            ->withGameServer($gameServer);
+    }
+
     /**
      * Store GameServer to Database
      * @param  Request $request

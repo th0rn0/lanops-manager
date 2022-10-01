@@ -148,6 +148,7 @@ class GameServerAsign implements ShouldQueue
 
                 $tournamentMatchServer                 = new EventTournamentMatchServer();
                 $tournamentMatchServer->challonge_match_id        = $this->challongematchid;
+                $tournamentMatchServer->event_tournament_id        = $this->EventTournament->id;
                 $tournamentMatchServer->game_server_id = array_key_first($availableservers);
 
                 if (!$tournamentMatchServer->save()) {

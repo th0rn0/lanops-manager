@@ -1,14 +1,21 @@
 # Run local dev 
 start-local-dev: env-file-dev app-build-clean-dev interactive
 
+switch-database: purge-containers dev-database database-import stop interactive
+
 dev:
 	docker-compose -f docker-compose-dev.yml up -d --build
 dev-local:
 	docker-compose -f docker-compose-dev.local.yml up -d --build
 
+dev-database:
+	docker-compose -f docker-compose-dev.yml up -d eventula_manager_database
+dev-database-local:
+	docker-compose -f docker-compose-dev.local.yml up -d eventula_manager_database
+
 # Debug
 interactive:
-	docker-compose -f docker-compose-dev.yml up --build
+	docker-compose -f docker-compose-dev.yml up
 interactive-local:
 	docker-compose -f docker-compose-dev.local.yml up --build
 
@@ -345,6 +352,13 @@ database-upgrade:
 # execute mysql command usage make database-command command=sqlcommandhere
 database-command:
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+
+# import mysql database usage make database-command dbfile=dbfile.sql
+ifndef dbfile
+override dbfile = dbfile.sql
+endif
+database-import:
+	docker exec -i eventula_manager_database mysql -u eventula_manager -p'password' eventula_manager_database < $(dbfile)
 
 # drops the database
 database-drop:
