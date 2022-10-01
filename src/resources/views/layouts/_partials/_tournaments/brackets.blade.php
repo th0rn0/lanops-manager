@@ -97,7 +97,9 @@
 						@endphp
 						<tr>
 							<td rowspan="2" class="text-center" width="10%">
-								{{ $matchCounter }}
+								{{ $matchCounter }} 
+								<p><small>({{ $match->id }})</small> </p>
+								<p><small>{{ $match->state }}</small></p>
 							</td>
 							<td class="text-center " width="10%">
 								1
@@ -122,7 +124,7 @@
 									@if ($match->state == 'open' && ($match->player2_id != null && $match->player1_id != null))
 										@if ($tournament->team_size != '1v1')
 											<button
-										 		class="btn btn-sm btn-primary rounded-0"
+										 		class="btn btn-sm @if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 ) btn-danger @else btn-primary @endif rounded-0"
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
 										 			'{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}',
@@ -135,7 +137,7 @@
 								 			</button>
 										@else
 										 	<button
-										 		class="btn btn-sm btn-primary rounded-0"
+										 		class="btn btn-sm @if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 ) btn-danger @else btn-primary @endif rounded-0"
 										 		onclick="submitScores(
 										 			'{{ $match->id }}',
 										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}',
@@ -148,8 +150,8 @@
 								 			</button>
 							 			@endif
 										@if(isset($tournament->game))
-											<button class="btn btn-primary btn-sm btn-block rounded-0" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
-											<!-- Select Command Modal -->
+											<button class="btn @if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 ) btn-danger @else btn-primary @endif btn-sm btn-block rounded-0" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+											<!-- Select Server Modal -->
 											<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
@@ -159,13 +161,19 @@
 														</div>
 														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . ((isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'') , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
+															@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )
+																<small style="color: red">This does not end the match remotely on the currently assigned server and does not load it on the new assigned Server. You have to manually execute the nessecary commands on your server with the Execute Command button. Also if you're automation works as its intended, you should never have to assign a server here.</small>
+															@endif
+															@if (isset($matchserver) && isset($matchserver->gameServer))
+																<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$matchserver->gameServer->game->slug}}/gameservers/{{$matchserver->gameServer->slug}}">gameservers detail page</a></small></p>
+															@endif
 																<div class="form-group">
 																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 																	{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
 																</div>
 															</div>
 															<div class="modal-footer">
-																<button type="submit" class="btn btn-success">Execute</button>
+																<button type="submit" class="btn btn-success">Select Server</button>
 																<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 															</div>
 														{{ Form::close() }}
@@ -185,6 +193,9 @@
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 														</div>
 														<div class="modal-body">
+															@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )
+																<small style="color: orange">You have the tournament autoapi enabled on this tournament. This means, you should never have to execute commands here if everything works like intended. Use this with caution!</small>
+															@endif
 															<div class="row row-seperator">
 																<div class="col-12 col-md-3">
 																	{{ Form::label("Command", NULL, array('id'=>'','class'=>'')) }}
@@ -285,12 +296,20 @@
 								</td>
 							</tr>
 						@endif
-						@if ( @$admin && $user->admin && $matchserver && $match->state == 'open')
+						@if ( @$admin && $user->admin && $matchserver)
 							<tr>
 								<td colspan="3">
 									Selected Server: {{ $matchserver->gameServer->name }}
 								</td>
 							</tr>
+							@if ($match->state == 'complete' && isset($matchserver))
+								<tr>
+									<td colspan="3">
+										<p><small style="color: red">It seems like the match is finished, but the server is still assigned. Depending on your gameservers config it might take some time to free the servers. If it should already be free you can delete the assignment on the <a href="/admin/games/{{$matchserver->gameServer->game->slug}}/gameservers/{{$matchserver->gameServer->slug}}">gameservers detail page</a></small></p>
+									</td>
+								</tr>
+							@endif
+
 						@endif
 					</tbody>
 				</table>
@@ -312,6 +331,9 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
+					@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )
+					<small style="color: red">You have the tournament autoapi enabled on this tournament. This means, you should never have to finish the game here if everything works like intended. This also does not end the match remotely on the currently assigned server. You have to make sure that its manually ended and the server is free before finalizing the match manually.</small>
+					@endif
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/match', 'class'=>'form-horizontal')) }}
 						<div class="form-group">
 							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}

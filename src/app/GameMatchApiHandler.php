@@ -48,6 +48,7 @@ interface IGameMatchApiHandler
     public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber, string $player);
     public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
     public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid);
+    public function freeserver(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid);
 }
 
 class Get5MatchApiHandler implements IGameMatchApiHandler
@@ -257,6 +258,36 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         {
             //tournament stuff
 
+        }
+        return false;
+
+    }
+
+    public function freeserver(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid)
+    {
+        if($match != null && $tournament == null)
+        {
+
+            if (!$match->matchMakingServer->delete())
+            {
+                return false;
+            }
+            return true;
+
+        }
+        if($match == null && $tournament != null && $challongematchid != null)
+        {
+
+            $evtms= EventTournamentMatchServer::where(['challonge_match_id' => $challongematchid])->first();
+
+            if(isset($evtms))
+            {
+                if (!$evtms->delete())
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         return false;
 

@@ -53,12 +53,14 @@ Route::group(['middleware' => ['installed']], function () {
                  * Gameserver API
                  */
                 Route::group(['middleware' => ['gameserver']], function () {
+                    Route::post('/api/matchmaking/{match}/freeserver/', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFreeServer');
                     Route::post('/api/matchmaking/{match}/finalize/', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalize');
                     Route::post('/api/matchmaking/{match}/finalize/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchFinalizeMap');
                     Route::post('/api/matchmaking/{match}/golive/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchGolive');
                     Route::post('/api/matchmaking/{match}/updateround/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchUpdateround');
                     Route::post('/api/matchmaking/{match}/updateplayer/{mapnumber}/{player}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchUpdateplayer');
                     Route::get('/api/matchmaking/{match}/configure/{nummaps}', 'Api\GameMatchApi\GameMatchApiController@matchMakingMatchConfig');
+                    Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/freeserver/', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFreeServer');
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize/', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalize');
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/finalize/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchFinalizeMap');
                     Route::post('/api/events/{event}/tournaments/{tournament}/{challongeMatchId}/golive/{mapnumber}', 'Api\GameMatchApi\GameMatchApiController@tournamentMatchGolive');

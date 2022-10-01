@@ -20,3 +20,5 @@ src/public/uploads/gallery/*
 docs/build
 docker-compose.local.yml
 docker-compose-dev.local.yml
+
+dbfile.sql

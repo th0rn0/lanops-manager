@@ -882,7 +882,17 @@ class MatchMakingController extends Controller
         if (!$match->setStatus('COMPLETE')) {
             Session::flash('alert-danger', __('matchmaking.cannotfinalize'));
             return Redirect::back();
+        }        
+        
+        if(isset($match->matchMakingServer))
+        {
+            if (!$match->matchMakingServer->delete()) {
+                Session::flash('alert-danger', __('matchmaking.cannotdeletemmserver'));
+                return Redirect::back();
+            }
         }
+
+
         Session::flash('alert-success', __('matchmaking.matchfinalized'));
         return Redirect::back();
     }
