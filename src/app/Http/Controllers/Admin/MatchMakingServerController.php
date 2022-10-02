@@ -112,7 +112,7 @@ class MatchMakingServerController extends Controller
      */
     public function destroy(MatchMaking $match, Request $request)
     {
-        $matchMakingServer = MatchMakingServer::where(['_match_id' => $match->id])->first();
+        $matchMakingServer = MatchMakingServer::where(['match_id' => $match->id])->first();
 
         if (!isset($matchMakingServer))
         {

@@ -41,9 +41,19 @@ class GamesController extends Controller
             $allcommands[$gameservercommand->id] = $gameservercommand->name;
         }
 
+        $matchcounterror = false;
+        foreach ($game->gameServers as $gameServer)
+        {
+            if ($gameServer->getAssignedMatchServer()["count"] > 1)
+            {
+                $matchcounterror = true;
+            }
+        }
+
         return view('admin.games.show')
             ->withAllCommands($allcommands)
-            ->withGame($game);
+            ->withGame($game)
+            ->withMatchCountError($matchcounterror);
     }
 
     /**

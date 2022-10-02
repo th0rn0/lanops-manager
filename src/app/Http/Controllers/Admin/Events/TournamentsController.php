@@ -14,6 +14,7 @@ use App\Event;
 use App\Game;
 use App\EventParticipant;
 use App\EventTournament;
+use App\EventTournamentMatchServer;
 use App\EventTournamentParticipant;
 use App\EventTournamentTeam;
 use App\Jobs\GameServerAsign;
@@ -611,6 +612,22 @@ class TournamentsController extends Controller
             
 
         }
+
+        $evtms= EventTournamentMatchServer::where(['challonge_match_id' => $request->tournament_match_id])->first();
+
+        if(isset($evtms))
+        {
+            if (!$evtms->delete())
+            {
+                Session::flash('alert-danger', 'Cannot delete EventTournamentMatchServer entry, you have to remove the assignment manually');
+                return Redirect::back();
+            }
+        
+        
+        }
+        
+        
+        
 
         Session::flash('alert-success', 'Successfully updated match scores!');
         return Redirect::back();

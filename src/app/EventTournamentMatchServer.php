@@ -27,6 +27,7 @@ class EventTournamentMatchServer extends Model
     protected $fillable = [
         'slug',
         'challonge_match_id',
+        'event_tournament_id',
         'game_server'
     ];
 
@@ -46,6 +47,11 @@ class EventTournamentMatchServer extends Model
     public function gameServer()
     {
         return $this->belongsTo('App\GameServer');
+    }
+    
+    public function eventTournament()
+    {
+        return $this->belongsTo('App\EventTournament', 'event_tournament_id', 'id');
     }
 
     /**

@@ -156,6 +156,47 @@ class GameMatchApiController extends Controller
         }
     }
 
+    /**
+    * tournamentMatchFreeServer
+    * @param Event $event
+    * @param EventTournament $tournament
+    * @param int $challongeMatchId
+    * @param Request $request
+    * @return View
+    */
+    public function tournamentMatchFreeServer(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
+    {
+        $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        if(!isset($gameserver))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($tournament->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
+
+        if (!$gamematchapihandler->freeserver($request, null, $tournament, $challongeMatchId))
+        {
+            return "Error: Freeing server failed!";
+        }
+        else
+        {
+            return "Success: Server freed!";
+        }
+
+
+    }
+
 
     /**
      * tournamentgMatchFinalizeMap
@@ -401,6 +442,43 @@ class GameMatchApiController extends Controller
             return "Success: Finalized Match!";
         }
     }
+
+    /**
+    * matchMakingMatchFreeServer
+    * @param Request $request
+    * @param MatchMaking $match
+    * @return View
+    */
+    public function matchMakingMatchFreeServer(Request $request, MatchMaking $match)
+    {
+        if(!isset($match->matchMakingServer->gameServer))
+        {
+            return "Error: No GameServer setuped for this match!";
+        }
+        if (!isset($match->game->gamematchapihandler)) 
+        {
+            return "Error: No gamematchapihandler setuped for this match!";
+        }
+        else
+        {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+
+        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
+        {
+            return "Error: Gameserver Secret Key is wrong!";
+        }
+
+        if (!$gamematchapihandler->freeserver($request, $match, null, null))
+        {
+            return "Error: Freeing server failed!";
+        }
+        else
+        {
+            return "Success: Server freed!";
+        }
+    }
+
 
     /**
      * matchMakingMatchFinalizeMap

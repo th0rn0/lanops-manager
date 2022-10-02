@@ -283,6 +283,10 @@ class EventTournament extends Model
     {
         return $this->hasMany('App\EventTournamentTeam');
     }
+    public function eventTournamentMatchServer()
+    {
+        return $this->hasMany('App\EventTournamentMatchServer');
+    }
     public function game()
     {
         return $this->belongsTo('App\Game');

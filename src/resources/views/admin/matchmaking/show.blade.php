@@ -183,24 +183,36 @@
 							{{ Form::close() }}
 						</div>
 					@endif
-					@if($match->status == "LIVE")
+					@if($match->status == "LIVE" || $match->status == "WAITFORPLAYERS")
 						@if(isset($match->game) && isset($match->matchMakingServer))
 							<div class="form-group">
 								<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Execute Command</button>
 							</div>
 						@endif
+							@if(isset($match->game) && isset($match->matchMakingServer))
+								@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
+									<button class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Change Server</button>
+								@else
+									<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Change Server</button>
+								@endif
+							@endif
+							@if(isset($match->game) && !isset($match->matchMakingServer))
+							<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+							@endif
 						<div class="form-group">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/finalize' )) }}
 						@foreach ($match->teams as $team)
 
 							{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
-							@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
-								{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
-							@else
-								{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
-							@endif
+							{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3')) }}
 						@endforeach
-						<button type="submit" class="btn btn-success btn-block ">Finalize Match</button>
+
+						@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
+							<button type="submit" class="btn btn-danger btn-block ">Finalize Match Manually</button>
+							<small style="color: red">This does not end the match remotely on the assigned server if it is still active. You have to make sure that its manually ended and the server is free before finalizing the match manually.</small>
+						@else
+							<button type="submit" class="btn btn-success btn-block ">Finalize Match</button>
+						@endif
 						{{ Form::close() }}
 						</div>
 					@endif
@@ -210,7 +222,11 @@
 						<p>{{$team->name}} Score: {{$team->team_score}}</p>
 					@endforeach
 					@endif
-
+					
+					{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+					{{ Form::hidden('_method', 'DELETE') }}
+						<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+					{{ Form::close() }}
 
 
 
@@ -353,6 +369,9 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
+				@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
+					<small style="color: orange">You have the matchmaking autoapi enabled on this game. This means, you should never have to execute commands here if everything works like intended. Use this with caution!</small>
+				@endif
 				<div class="row row-seperator">
 					<div class="col-12 col-md-3">
 						{{ Form::label("Command", NULL, array('id'=>'','class'=>'')) }}
@@ -411,6 +430,12 @@
 
 
 						<div class="modal-body">
+							@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
+								<small style="color: red">This does not end the match remotely on the currently assigned server and does not load it on the new assigned Server. You have to manually execute the nessecary commands on your server with the Execute Command button.</small>
+							@endif
+							@if (isset($match->matchMakingServer))
+							<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
+							@endif
 								<div class="form-group">
 									{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 									{{ Form::select('gameServer', $match->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}

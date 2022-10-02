@@ -42,6 +42,7 @@ class TournamentsMatchServerController extends Controller
     {
         $tournamentMatchServer                 = new EventTournamentMatchServer();
         $tournamentMatchServer->challonge_match_id        = $challongeMatchId;
+        $tournamentMatchServer->event_tournament_id        = $tournament->id;
         $tournamentMatchServer->game_server_id = $request->gameServer;
 
         if (!$tournamentMatchServer->save()) {
