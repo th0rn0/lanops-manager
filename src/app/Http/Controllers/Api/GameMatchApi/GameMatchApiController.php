@@ -123,6 +123,34 @@ class GameMatchApiController extends Controller
      */
     public function tournamentMatchDemo(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
+
+        $demoname = $request->headers->get('Get5-DemoName');
+        $matchId = $request->headers->get('Get5-MatchId');
+        $mapNumber = $request->headers->get('Get5-MapNumber');
+        $serverId = $request->headers->get('Get5-ServerId');
+
+
+        //Counter for uploaded files
+        $uploadcount = 0;
+        $destinationPathFiles = '/demos/' . $tournament->game->slug . '/';
+        $destinationPath = '/storage' . $destinationPathFiles;
+        if ($request->file() && !File::exists(public_path() . $destinationPath)) {
+            File::makeDirectory(public_path() . $destinationPath, 0777, true);
+        }
+
+        if(Storage::disk('public')->put($destinationPathFiles.$demoname, $request->getContent()) == false)
+        {
+            return response('Error saving uploaded demo!', 500);
+        }
+
+        $replay = new MatchReplay();
+        $replay->name = $demoname;
+        $replay->challonge_match_id = $matchId;
+        if(!$replay->save())
+        {
+            return response('Error uploading demo!', 500);
+        }
+
     }
 
     /**
@@ -401,7 +429,7 @@ class GameMatchApiController extends Controller
             File::makeDirectory(public_path() . $destinationPath, 0777, true);
         }
 
-        if(Storage::disk('public')->putFileAs($destinationPathFiles, $request->getContent(),  $demoname) == false)
+        if(Storage::disk('public')->put($destinationPathFiles.$demoname, $request->getContent()) == false)
         {
             return response('Error saving uploaded demo!', 500);
         }

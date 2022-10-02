@@ -31,6 +31,17 @@ class MatchReplay extends Model
         'updated_at'
     );
 
+   /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'challonge_match_id',
+        'matchmaking_id',
+    ];
+
 
     /*
     * Relationships

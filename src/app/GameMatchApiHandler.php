@@ -138,8 +138,8 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             $this->result->cvars->get5_eventula_apistats_key = $apikey;
             $this->result->cvars->get5_eventula_apistats_url = $apiurl;
 
-            $this->result->get5_demo_upload_header_key = "authentication";
-            $this->result->get5_demo_upload_header_value = $apikey;
+            $this->result->get5_demo_upload_header_key = "Authorization";
+            $this->result->get5_demo_upload_header_value = "Bearer ".$apikey;
             $this->result->get5_demo_upload_url = $apiurl . "demo";
         }
 

@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('matchreplay', function (Blueprint $table) {
+        Schema::create('matchreplay', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('matchmaking_id')->unsigned()->index();
+            $table->integer('matchmaking_id')->unsigned()->nullable()->index();
+            $table->integer('challonge_match_id')->nullable();
             $table->timestamps();
 
             ## Foreign Keys
@@ -31,6 +32,12 @@ return new class extends Migration
      */
     public function down()
     {
+
+        Schema::table('matchreplay', function (Blueprint $table) 
+        {
+            $table->dropForeign('matchreplay_matchmaking_id_foreign');
+        });
+           
         Schema::drop('matchreplay');
     }
 };
