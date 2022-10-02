@@ -399,6 +399,7 @@
 								<th>Teamcount</th>
 								<th>Teamsize</th>
 								<th>Status</th>
+								<th>Replay(s)</th>
 								<th></th>
 								<th></th>
 							</tr>
@@ -433,6 +434,13 @@
 									<td>{{ $match->status }}
 										@if ($match->status == 'COMPLETE' && isset($match->matchMakingServer))
 											<p><small style="color: red">It seems like the match is finished, but the server is still assigned. Depending on your gameservers config it might take some time to free the servers. If it should already be free you can delete the assignment on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
+										@endif
+									</td>
+									<td>
+										@if (isset($match->matchReplays) && count($match->matchReplays) > 0)
+										<i class="fa fa-check-circle-o fa-1x" style="color:green"></i>
+										@else
+										<i class="fa fa-times-circle-o fa-1x" style="color:red"></i>
 										@endif
 									</td>
 									<td width="15%">

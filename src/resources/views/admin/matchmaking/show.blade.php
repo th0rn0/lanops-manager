@@ -355,7 +355,60 @@
 		@endif
 
 
-	</div>
+
+	@if (isset($match->matchReplays) && count($match->matchReplays) > 0)
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-info-circle fa-fw"></i> Replays
+				</div>
+				<div class="card-body">
+
+
+
+					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Size</th>
+								<th>Created</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($match->matchReplays as $matchReplay)
+								<tr>
+									<td>
+										<a href="/storage{{ App\MatchReplay::getReplayPath($match->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
+									</td>
+									
+									<td>
+										{{ App\MatchReplay::getReplaySize($match->game, $matchReplay->name) }}
+									</td>
+									<td>
+										{{ $matchReplay->created_at }}
+									</td>
+
+									<td width="15%">
+												{{ Form::open(array('url'=>'/admin/replays/'. $matchReplay->id , 'onsubmit' => 'return ConfirmDelete()')) }}
+													{{ Form::hidden('_method', 'DELETE') }}
+													<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
+												{{ Form::close() }}
+
+									</td>
+								</tr>
+							@endforeach
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		
+	@endif
+	</div>	
+
+
 </div>
 
 <!-- Modals -->

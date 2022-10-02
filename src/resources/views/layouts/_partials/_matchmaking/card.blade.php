@@ -10,6 +10,9 @@
         @endif
         <h3>@lang('matchmaking.match'){{ $match->id }}</h3>
         <span class="small">
+            @if (isset($match->matchReplays) && count($match->matchReplays) > 0)
+                <span class="badge badge-primary">@lang('matchmaking.replayavailable')</span>
+            @endif           
             @if ($match->status == 'COMPLETE')
                 <span class="badge badge-success">@lang('matchmaking.ended')</span>
             @endif

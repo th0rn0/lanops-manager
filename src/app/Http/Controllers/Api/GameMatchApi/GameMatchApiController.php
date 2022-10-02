@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\GameMatchApi;
 
 use DB;
 use Auth;
+use File;
 use Illuminate\Support\Facades\Storage;
 
 use App\Event;
@@ -18,8 +19,10 @@ use App\GameMatchApiHandler;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\MatchMaking;
+use App\MatchReplay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Response;
 
 class GameMatchApiController extends Controller
 {
@@ -33,10 +36,9 @@ class GameMatchApiController extends Controller
         if (!$match) {
             return "No Match found for $challongeMatchId";
         }
-        if (isset($tournament->game) && isset($tournament->game->gamematchapihandler)) 
-        {
+        if (isset($tournament->game) && isset($tournament->game->gamematchapihandler)) {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
-            
+
             $team1 = $tournament->getTeamByChallongeId($match->player1_id);
             $team2 = $tournament->getTeamByChallongeId($match->player2_id);
 
@@ -58,115 +60,120 @@ class GameMatchApiController extends Controller
             }
 
             $matchserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-            if(!isset($matchserver->gameServer))
-            {
+            if (!isset($matchserver->gameServer)) {
                 return "Error: Gameserver not selected!";
             }
-            if(!$gamematchapihandler->authorizeserver($request, $matchserver->gameServer))
-            {
+            if (!$gamematchapihandler->authorizeserver($request, $matchserver->gameServer)) {
                 return "Error: Gameserver Secret Key is wrong!";
             }
-            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->match_autoapi)
-            {
-                $apiurl = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatchId."/";
-                $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0],$apiurl, $matchserver->gameServer->gameserver_secret);
-            }
-            else
-            {
+            if (isset($matchserver->gameServer->gameserver_secret) && $tournament->match_autoapi) {
+                $apiurl = config('app.url') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatchId . "/";
+                $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0], $apiurl, $matchserver->gameServer->gameserver_secret);
+            } else {
                 $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0], null, null);
             }
-
-        }
-        else
-        {
+        } else {
             return "no gamematchapihandler for match available!";
         }
 
 
         return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-    } 
-    
+    }
+
     /**
-    * tournamentMatchGolive
-    * @param Event $event
-    * @param EventTournament $tournament
-    * @param int $challongeMatchId
-    * @param int $mapnumber
-    * @param Request $request
-    * @param int $mapnumber
-    * @return View
-    */
+     * tournamentMatchGolive
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param int $mapnumber
+     * @param Request $request
+     * @param int $mapnumber
+     * @return View
+     */
     public function tournamentMatchGolive(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, Request $request)
     {
         $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-        if(!isset($gameserver))
-        {
+        if (!isset($gameserver)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($tournament->game->gamematchapihandler)) 
-        {
+        if (!isset($tournament->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->golive($request, null , $tournament, $challongeMatchId , $mapnumber))
-        {
+        if (!$gamematchapihandler->golive($request, null, $tournament, $challongeMatchId, $mapnumber)) {
             return "Error: GoLive failed!";
         }
 
         return 'Match Started successfully!';
+    }
+
+    /**
+     * tournamentMatchFinalize
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param Request $request
+     * @return View
+     */
+    public function tournamentMatchDemo(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
+    {
+
+        $demoname = $request->headers->get('Get5-DemoName');
+        $matchId = $request->headers->get('Get5-MatchId');
+        $mapNumber = $request->headers->get('Get5-MapNumber');
+        $serverId = $request->headers->get('Get5-ServerId');
+        $destinationPathDemo =  MatchReplay::createReplayPath($tournament->game, $demoname);
+
+        if(Storage::disk('public')->put($destinationPathDemo, $request->getContent()) == false)
+        {
+            return response('Error saving uploaded demo!', 500);
+        }
+
+        $replay = new MatchReplay();
+        $replay->name = $demoname;
+        $replay->challonge_match_id = $matchId;
+        if(!$replay->save())
+        {
+            return response('Error uploading demo!', 500);
+        }
 
     }
 
-
-
     /**
-    * tournamentMatchFinalize
-    * @param Event $event
-    * @param EventTournament $tournament
-    * @param int $challongeMatchId
-    * @param Request $request
-    * @return View
-    */
+     * tournamentMatchFinalize
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param Request $request
+     * @return View
+     */
     public function tournamentMatchFinalize(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
         $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-        if(!isset($gameserver))
-        {
+        if (!isset($gameserver)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($tournament->game->gamematchapihandler)) 
-        {
+        if (!isset($tournament->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if (!$gamematchapihandler->finalize($request, null, $tournament, $challongeMatchId))
-        {
+        if (!$gamematchapihandler->finalize($request, null, $tournament, $challongeMatchId)) {
             return "Error: Finalizing failed!";
-        }
-        else
-        {
+        } else {
             return "Success: Finalized Match!";
         }
-
-
     }
 
     /**
@@ -212,124 +219,101 @@ class GameMatchApiController extends Controller
 
 
     /**
-    * tournamentgMatchFinalizeMap
-    * @param Event $event
-    * @param EventTournament $tournament
-    * @param int $challongeMatchId
-    * @param int $mapnumber
-    * @param Request $request
-    * @return View
-    */
+     * tournamentgMatchFinalizeMap
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param int $mapnumber
+     * @param Request $request
+     * @return View
+     */
     public function tournamentMatchFinalizeMap(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, Request $request)
     {
         $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-        if(!isset($gameserver))
-        {
+        if (!isset($gameserver)) {
             return "Error: No GameServer setuped for this match!";
         }
-    
-        if (!isset($tournament->game->gamematchapihandler)) 
-        {
+
+        if (!isset($tournament->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
-        }      
-        if(!$gamematchapihandler->finalizemap($request, null, $tournament, $challongeMatchId, $mapnumber))
-        {
+        }
+        if (!$gamematchapihandler->finalizemap($request, null, $tournament, $challongeMatchId, $mapnumber)) {
             return "Error: finalizemap failed!";
         }
 
         return 'Map finalized successfully!';
-
-
     }
 
 
 
     /**
-    * tournamentMatchUpdateround
-    * @param Event $event
-    * @param EventTournament $tournament
-    * @param int $challongeMatchId
-    * @param int $mapnumber
-    * @param Request $request
-    * @return View
-    */
+     * tournamentMatchUpdateround
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param int $mapnumber
+     * @param Request $request
+     * @return View
+     */
     public function tournamentMatchUpdateround(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, Request $request)
     {
         $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-        if(!isset($gameserver))
-        {
+        if (!isset($gameserver)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($tournament->game->gamematchapihandler)) 
-        {
+        if (!isset($tournament->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateround($request, null, $tournament, $challongeMatchId, $mapnumber))
-        {
+        if (!$gamematchapihandler->updateround($request, null, $tournament, $challongeMatchId, $mapnumber)) {
             return "Error: updateround failed!";
         }
         return 'round updated successfully!';
-
     }
 
 
-   /**
-    * tournamentMatchUpdateplayer
-    * @param Event $event
-    * @param EventTournament $tournament
-    * @param int $challongeMatchId
-    * @param int $mapnumber
-    * @param string $player
-    * @param Request $request
-    * @return View
-    */
-    public function tournamentMatchUpdateplayer(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, string $player, Request $request )
+    /**
+     * tournamentMatchUpdateplayer
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param int $mapnumber
+     * @param string $player
+     * @param Request $request
+     * @return View
+     */
+    public function tournamentMatchUpdateplayer(Event $event, EventTournament $tournament, int $challongeMatchId, int $mapnumber, string $player, Request $request)
     {
         $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-        if(!isset($gameserver))
-        {
+        if (!isset($gameserver)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($tournament->game->gamematchapihandler)) 
-        {
+        if (!isset($tournament->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateplayer($request, null, $tournament, $challongeMatchId, $mapnumber, $player))
-        {
+        if (!$gamematchapihandler->updateplayer($request, null, $tournament, $challongeMatchId, $mapnumber, $player)) {
             return "Error: updateplayer failed!";
         }
         return 'player updated successfully!';
-
-
     }
 
 
@@ -338,135 +322,135 @@ class GameMatchApiController extends Controller
 
 
     /**
-    * matchMakingMatchConfig
-    * @return View
-    */
-   public function matchMakingMatchConfig(MatchMaking $match, int $nummaps, Request $request )
-   {
-       if(isset($match->game) && isset ($match->game->gamematchapihandler))
-       {
+     * matchMakingMatchConfig
+     * @return View
+     */
+    public function matchMakingMatchConfig(MatchMaking $match, int $nummaps, Request $request)
+    {
+        if (isset($match->game) && isset($match->game->gamematchapihandler)) {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
             $thirdpartyidprop = $gamematchapihandler->getuserthirdpartyrequirements()["thirdpartyid"];
             $thirdpartynameprop = $gamematchapihandler->getuserthirdpartyrequirements()["thirdpartyname"];
 
-        
-        foreach( $match->teams as $team)
-        {
-            $gamematchapihandler->addteam($team->name);
 
-            foreach ($team->players as $player) {
-                if (isset($player->user->$thirdpartyidprop) && isset($player->user->$thirdpartynameprop)) 
-                {
-                    $gamematchapihandler->addplayer($team->name, $player->user->$thirdpartyidprop, $player->user->$thirdpartynameprop, $player->user->id, $player->user->username);
+            foreach ($match->teams as $team) {
+                $gamematchapihandler->addteam($team->name);
+
+                foreach ($team->players as $player) {
+                    if (isset($player->user->$thirdpartyidprop) && isset($player->user->$thirdpartynameprop)) {
+                        $gamematchapihandler->addplayer($team->name, $player->user->$thirdpartyidprop, $player->user->$thirdpartynameprop, $player->user->id, $player->user->username);
+                    }
                 }
             }
-
-        }
-            if(!isset($match->matchMakingServer->gameServer))
-            {
+            if (!isset($match->matchMakingServer->gameServer)) {
                 return "Error: Gameserver not selected!";
             }
-            if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-            {
+            if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
                 return "Error: Gameserver Secret Key is wrong!";
             }
-            if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autoapi)
-            {
-                $apiurl = config('app.url')."/api/matchmaking/".$match->id."/";
-                $result = $gamematchapihandler->getconfig($match->id,$nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);
+            if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autoapi) {
+                $apiurl = config('app.url') . "/api/matchmaking/" . $match->id . "/";
+                $result = $gamematchapihandler->getconfig($match->id, $nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);
+            } else {
+                $result = $gamematchapihandler->getconfig($match->id, $nummaps, $match->team_size, null, null);
             }
-            else
-            {
-                $result = $gamematchapihandler->getconfig($match->id,$nummaps, $match->team_size, null, null);
-            }
-       }
-       else
-       {
-           return "no gamematchapihandler for match available!";
-       }
-       
+        } else {
+            return "no gamematchapihandler for match available!";
+        }
 
-       return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
-   }
+
+        return response()->json($result)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+    }
 
     /**
-    * matchMakingMatchGolive
-    * @param Request $request
-    * @param MatchMaking $match
-    * @param int $mapnumber
-    * @return View
-    */
+     * matchMakingMatchGolive
+     * @param Request $request
+     * @param MatchMaking $match
+     * @param int $mapnumber
+     * @return View
+     */
     public function matchMakingMatchGolive(Request $request, MatchMaking $match, int $mapnumber)
     {
-        if(!isset($match->matchMakingServer->gameServer))
-        {
+        if (!isset($match->matchMakingServer->gameServer)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($match->game->gamematchapihandler)) 
-        {
+        if (!isset($match->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if ($mapnumber != 0)
-        {
+        if ($mapnumber != 0) {
             return "Error: In matchmaking only one map is possible!";
         }
 
-        if ($match->status != "WAITFORPLAYERS")
-        {
+        if ($match->status != "WAITFORPLAYERS") {
             return "Error: Status is not WAITFORPLAYERS!";
         }
 
-        if(!$gamematchapihandler->golive($request, $match , null, null , $mapnumber))
-        {
+        if (!$gamematchapihandler->golive($request, $match, null, null, $mapnumber)) {
             return "Error: GoLive failed!";
         }
 
         return 'Match Started successfully!';
-
     }
 
     /**
-    * matchMakingMatchFinalize
-    * @param Request $request
-    * @param MatchMaking $match
-    * @return View
-    */
+     * matchMakingMatchFinalize
+     * @param Request $request
+     * @param MatchMaking $match
+     * @return View
+     */
+    public function matchMakingMatchDemo(Request $request, MatchMaking $match)
+    {
+        $demoname = $request->headers->get('Get5-DemoName');
+        $matchId = $request->headers->get('Get5-MatchId');
+        $mapNumber = $request->headers->get('Get5-MapNumber');
+        $serverId = $request->headers->get('Get5-ServerId');
+        $destinationPathDemo =  MatchReplay::createReplayPath($match->game, $demoname);
+
+        if(Storage::disk('public')->put($destinationPathDemo, $request->getContent()) == false)
+        {
+            return response('Error saving uploaded demo!', 500);
+        }
+
+        $replay = new MatchReplay();
+        $replay->name = $demoname;
+        $replay->matchmaking_id = $match->id;
+        if(!$replay->save())
+        {
+            return response('Error uploading demo!', 500);
+        }
+    }
+
+    /**
+     * matchMakingMatchFinalize
+     * @param Request $request
+     * @param MatchMaking $match
+     * @return View
+     */
     public function matchMakingMatchFinalize(Request $request, MatchMaking $match)
     {
-        if(!isset($match->matchMakingServer->gameServer))
-        {
+        if (!isset($match->matchMakingServer->gameServer)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($match->game->gamematchapihandler)) 
-        {
+        if (!isset($match->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if (!$gamematchapihandler->finalize($request, $match, null, null))
-        {
+        if (!$gamematchapihandler->finalize($request, $match, null, null)) {
             return "Error: Finalizing failed!";
-        }
-        else
-        {
+        } else {
             return "Success: Finalized Match!";
         }
     }
@@ -509,127 +493,95 @@ class GameMatchApiController extends Controller
 
 
     /**
-    * matchMakingMatchFinalizeMap
-    * @param Request $request
-    * @param MatchMaking $match
-    * @param int $mapnumber
-    * @return View
-    */
+     * matchMakingMatchFinalizeMap
+     * @param Request $request
+     * @param MatchMaking $match
+     * @param int $mapnumber
+     * @return View
+     */
     public function matchMakingMatchFinalizeMap(Request $request, MatchMaking $match, int $mapnumber)
     {
-        if(!isset($match->matchMakingServer->gameServer))
-        {
+        if (!isset($match->matchMakingServer->gameServer)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if ($mapnumber != 0)
-        {
+        if ($mapnumber != 0) {
             return "Error: In matchmaking only one map is possible!";
         }
-        if (!isset($match->game->gamematchapihandler)) 
-        {
+        if (!isset($match->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
-        }      
-        if(!$gamematchapihandler->finalizemap($request, $match, null, null, $mapnumber))
-        {
+        }
+        if (!$gamematchapihandler->finalizemap($request, $match, null, null, $mapnumber)) {
             return "Error: finalizemap failed!";
         }
 
         return 'Map finalized successfully!';
-
-
     }
 
     /**
-    * matchMakingMatchUpdateround
-    * @param Request $request
-    * @param MatchMaking $match
-    * @param int $mapnumber
-    * @return View
-    */
+     * matchMakingMatchUpdateround
+     * @param Request $request
+     * @param MatchMaking $match
+     * @param int $mapnumber
+     * @return View
+     */
     public function matchMakingMatchUpdateround(Request $request, MatchMaking $match, int $mapnumber)
     {
-        if(!isset($match->matchMakingServer->gameServer))
-        {
+        if (!isset($match->matchMakingServer->gameServer)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if ($mapnumber != 0)
-        {
+        if ($mapnumber != 0) {
             return "Error: In matchmaking only one map is possible!";
         }
-        if (!isset($match->game->gamematchapihandler)) 
-        {
+        if (!isset($match->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateround($request, $match, null, null, $mapnumber))
-        {
+        if (!$gamematchapihandler->updateround($request, $match, null, null, $mapnumber)) {
             return "Error: updateround failed!";
         }
         return 'round updated successfully!';
-
     }
 
     /**
-    * matchMakingMatchUpdateplayer
-    * @param Request $request
-    * @param MatchMaking $match
-    * @param int $mapnumber
-    * @return View
-    */
+     * matchMakingMatchUpdateplayer
+     * @param Request $request
+     * @param MatchMaking $match
+     * @param int $mapnumber
+     * @return View
+     */
     public function matchMakingMatchUpdateplayer(Request $request, MatchMaking $match, int $mapnumber, string $player)
     {
-        if(!isset($match->matchMakingServer->gameServer))
-        {
+        if (!isset($match->matchMakingServer->gameServer)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if ($mapnumber != 0)
-        {
+        if ($mapnumber != 0) {
             return "Error: In matchmaking only one map is possible!";
         }
-        if (!isset($match->game->gamematchapihandler)) 
-        {
+        if (!isset($match->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if(!$gamematchapihandler->updateplayer($request, $match, null, null, $mapnumber, $player))
-        {
+        if (!$gamematchapihandler->updateplayer($request, $match, null, null, $mapnumber, $player)) {
             return "Error: updateplayer failed!";
         }
         return 'player updated successfully!';
-
-
     }
-
-
-
-
-
-
 }
