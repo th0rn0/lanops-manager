@@ -4,7 +4,10 @@ namespace App;
 
 use DB;
 use Auth;
+use File;
+use Storage;
 
+use Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -51,4 +54,40 @@ class MatchReplay extends Model
     {
         return $this->belongsTo('App\MatchMaking', 'matchmaking_id');
     }
+
+
+    /*
+    * MatchReplay features
+    */
+
+    public static function createReplayPath(Game $game, String $demoname)
+    {
+        $destinationPath = '/storage' . MatchReplay::getDestinationPathFiles($game);
+        if (!File::exists(public_path() . $destinationPath)) {
+            if (!File::makeDirectory(public_path() . $destinationPath, 0777, true))
+            {
+                return false;
+            }
+        }
+        return MatchReplay::getDemoPath($game,$demoname);
+
+    }
+
+    public static function getDemoPath(Game $game, String $demoname)
+    {
+        return MatchReplay::getDestinationPathFiles($game).$demoname;
+    }
+
+
+
+    public static function getDestinationPathFiles(Game $game)
+    {
+        return '/demos/' . $game->slug . '/';
+    }
+
+    public static function getReplaySize(Game $game,$demoname)
+    {
+        return Helpers::bytesToHuman(Storage::disk('public')->size(MatchReplay::getDemoPath($game, $demoname)));
+    }
+
 }

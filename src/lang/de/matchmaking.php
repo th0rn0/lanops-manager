@@ -135,6 +135,9 @@ return [
     'scramble' => 'Zufällige Teams',
     'cannotjointhirdparty' => 'Du kannst dem Match nicht beitreten, da die nötige Authentifizierung deines Benutzers mit einem Drittanbieterdienst nicht eingerichtet ist. Bitte prüfe die Single Sign-On Optionen in deinem Profil.',
     'cannotcreatethirdparty' => 'Du kannst kein Match mit diesem Spieltyp erstellen, da die nötige Authentifizierung deines Benutzers mit einem Drittanbieterdienst nicht eingerichtet ist. Bitte prüfe die Single Sign-On Optionen in deinem Profil.',
-
-
+    'replayavailable' => 'Replay verfügbar',
+    'Replays' => 'Replays',
+    'ReplayName' => 'Name',
+    'ReplaySize' => 'Größe',
+    'ReplayCreated' => 'Erstelldatum',
 ];

@@ -445,6 +445,13 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@update');
             Route::delete('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@destroy');
 
+
+            /**
+             * MatchReplays
+             */
+            Route::delete('/admin/replays/{matchReplay}', 'Admin\MatchReplayController@destroy');
+
+
             /**
              * Participants
              */

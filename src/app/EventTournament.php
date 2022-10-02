@@ -466,7 +466,7 @@ class EventTournament extends Model
     }
 
     /**
-     * Get Matches
+     * Get single Match
      * @param int $challongeMatchId
      * @param boolean $obj
      * @return Array|Object
@@ -503,6 +503,18 @@ class EventTournament extends Model
 
         return false;
     }
+
+    /**
+     * Get Matches
+     * @param int $challongeMatchId
+     * @param boolean $obj
+     * @return Array|Object
+     */
+    public function getMatchReplays(int $challongeMatchId, $obj = false)
+    {            
+        return MatchReplay::where('challonge_match_id', $challongeMatchId)->get();
+    }
+
 
     /**
      * Get Standings

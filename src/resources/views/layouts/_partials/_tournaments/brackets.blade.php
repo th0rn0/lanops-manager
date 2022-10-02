@@ -309,8 +309,61 @@
 									</td>
 								</tr>
 							@endif
+							@endif
+						
+							@php
+								$matchReplays = $tournament->getMatchReplays($match->id);
+							@endphp
+							@if (isset($matchReplays) && count($matchReplays) > 0)
 
-						@endif
+								<tr>
+									<td colspan="3">
+					
+											Replays
+											<table width="100%" class="table table-striped table-hover mt-3" id="dataTables-example">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Size</th>
+														<th>Created</th>
+														@if (isset($admin))
+														<th></th>
+														@endif
+													</tr>
+												</thead>
+												<tbody>
+													@foreach ($matchReplays as $matchReplay)
+														<tr>
+															<td>
+																<a href="/storage{{ App\MatchReplay::getDemoPath($tournament->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
+															</td>
+															
+															<td>
+																{{ App\MatchReplay::getReplaySize($tournament->game, $matchReplay->name) }}
+															</td>
+															<td>
+																{{ $matchReplay->created_at }}
+															</td>
+															@if (isset($admin))
+															<td width="15%">
+																		{{ Form::open(array('url'=>'/admin/replays/'. $matchReplay->id , 'onsubmit' => 'return ConfirmDelete()')) }}
+																			{{ Form::hidden('_method', 'DELETE') }}
+																			<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
+																		{{ Form::close() }}
+						
+															</td>
+															@endif
+														</tr>
+													@endforeach
+						
+												</tbody>
+											</table>	
+									</td>
+								</tr>			
+									
+						
+							@endif
+						
 					</tbody>
 				</table>
 				@php
