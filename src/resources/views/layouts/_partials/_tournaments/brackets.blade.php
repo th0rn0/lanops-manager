@@ -335,7 +335,7 @@
 													@foreach ($matchReplays as $matchReplay)
 														<tr>
 															<td>
-																<a href="/storage{{ App\MatchReplay::getDemoPath($tournament->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
+																<a href="/storage{{ App\MatchReplay::getReplayPath($tournament->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
 															</td>
 															
 															<td>

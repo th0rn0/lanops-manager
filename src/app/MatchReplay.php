@@ -69,11 +69,11 @@ class MatchReplay extends Model
                 return false;
             }
         }
-        return MatchReplay::getDemoPath($game,$demoname);
+        return MatchReplay::getReplayPath($game,$demoname);
 
     }
 
-    public static function getDemoPath(Game $game, String $demoname)
+    public static function getReplayPath(Game $game, String $demoname)
     {
         return MatchReplay::getDestinationPathFiles($game).$demoname;
     }
@@ -87,7 +87,7 @@ class MatchReplay extends Model
 
     public static function getReplaySize(Game $game,$demoname)
     {
-        return Helpers::bytesToHuman(Storage::disk('public')->size(MatchReplay::getDemoPath($game, $demoname)));
+        return Helpers::bytesToHuman(Storage::disk('public')->size(MatchReplay::getReplayPath($game, $demoname)));
     }
 
 }
