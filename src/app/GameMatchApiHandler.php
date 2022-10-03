@@ -128,7 +128,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
     public function getconfig($matchid, $nummaps, $players_per_team, $apiurl, $apikey)
     {
-        $this->result->matchid = "Match $matchid";
+        $this->result->matchid = "$matchid";
         $this->result->num_maps = intval ($nummaps);
         $this->result->players_per_team = intval($players_per_team);
         $this->result->min_players_to_ready = intval($players_per_team);
