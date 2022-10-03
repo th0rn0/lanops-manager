@@ -124,7 +124,7 @@ class GameMatchApiController extends Controller
     public function tournamentMatchDemo(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
 
-        $demoname = $request->headers->get('Get5-DemoName');
+        $demoname = str_replace(' ', '_', $request->headers->get('Get5-DemoName'));
         $matchId = $request->headers->get('Get5-MatchId');
         $mapNumber = $request->headers->get('Get5-MapNumber');
         $serverId = $request->headers->get('Get5-ServerId');
@@ -407,7 +407,7 @@ class GameMatchApiController extends Controller
      */
     public function matchMakingMatchDemo(Request $request, MatchMaking $match)
     {
-        $demoname = $request->headers->get('Get5-DemoName');
+        $demoname = str_replace(' ', '_', $request->headers->get('Get5-DemoName'));
         $matchId = $request->headers->get('Get5-MatchId');
         $mapNumber = $request->headers->get('Get5-MapNumber');
         $serverId = $request->headers->get('Get5-ServerId');
