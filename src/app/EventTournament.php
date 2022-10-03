@@ -8,8 +8,11 @@ use Session;
 use Helpers;
 
 use App\EventTournamentParticipant;
+use App\EventTournamentMatchServer;
+use App\Jobs\GameServerAsign;
 
 use Illuminate\Database\Eloquent\Model;
+
 
 use GuzzleHttp;
 // use Lanops\Challonge\Challonge;
@@ -680,6 +683,22 @@ class EventTournament extends Model
             Cache::forget($this->challonge_tournament_id . "_standings");
             $this->getMatches();
             $this->getStandings();
+
+            # queue next matches
+            if (isset($this->game) && $this->match_autostart)
+            {
+                
+                $nextmatches = $this->getNextMatches();
+    
+                foreach ($nextmatches as $nextmatch)
+                {
+                    $matchserver = EventTournamentMatchServer::getTournamentMatchServer($nextmatch->id);
+                    if (!isset($matchserver)) {
+                        GameServerAsign::dispatch(null,$this,$nextmatch->id)->onQueue('gameserver');
+                    }
+                }
+            }
+
             return $response;
         } catch (\Throwable $e) {
             Helpers::rethrowIfDebug($e);
