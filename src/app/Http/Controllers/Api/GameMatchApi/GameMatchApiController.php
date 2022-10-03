@@ -137,7 +137,7 @@ class GameMatchApiController extends Controller
 
         $replay = new MatchReplay();
         $replay->name = $demoname;
-        $replay->challonge_match_id = $matchId;
+        $replay->challonge_match_id = $challongeMatchId;
         if(!$replay->save())
         {
             return response('Error uploading demo!', 500);
