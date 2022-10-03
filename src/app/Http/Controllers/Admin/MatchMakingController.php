@@ -785,6 +785,15 @@ class MatchMakingController extends Controller
             Session::flash('alert-danger', 'Cannot finalize. Match is still live!');
             return Redirect::back();
         }
+
+        if(isset($match->matchMakingServer))
+        {
+            if (!$match->matchMakingServer->delete()) {
+                Session::flash('alert-danger', 'cannot delete matchmakingserver. Server will not be available for other matches until you remove the assignment manually.');
+                return Redirect::back();
+            }
+        }
+
         Session::flash('alert-success', 'Match Finalized!');
         return Redirect::back();
     }

@@ -1,16 +1,23 @@
-# Run local dev 
+# Run local dev
 start-local-dev: env-file-dev app-build-clean-dev interactive
+
+switch-database: purge-containers dev-database wait database-import stop interactive
 
 dev:
 	docker-compose -f docker-compose-dev.yml up -d --build
 dev-local:
 	docker-compose -f docker-compose-dev.local.yml up -d --build
 
+dev-database:
+	docker-compose -f docker-compose-dev.yml up -d eventula_manager_database
+dev-database-local:
+	docker-compose -f docker-compose-dev.local.yml up -d eventula_manager_database
+
 # Debug
 interactive:
-	docker-compose -f docker-compose-dev.yml up --build
+	docker-compose -f docker-compose-dev.yml up
 interactive-local:
-	docker-compose -f docker-compose-dev.local.yml up --build
+	docker-compose -f docker-compose-dev.local.yml up
 
 # Stop all Containers
 stop:
@@ -39,6 +46,10 @@ docs-html:
 ###########
 # HELPERS #
 ###########
+
+# Make .env
+logs:
+	docker-compose logs -f
 
 # Make .env
 env-file-dev:
@@ -346,6 +357,13 @@ database-upgrade:
 database-command:
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
 
+# import mysql database usage make database-command dbfile=dbfile.sql
+ifndef dbfile
+override dbfile = dbfile.sql
+endif
+database-import:
+	docker exec -i eventula_manager_database mysql -u eventula_manager -p'password' eventula_manager_database < $(dbfile)
+
 # drops the database
 database-drop:
 	echo "DROP DATABASE eventula_manager_database;" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
@@ -365,10 +383,10 @@ database-show-foreign:
 get-lang-blade:
 	cat $(blade) | grep -o "'$(prefix)\..*'" | sed "s|'||g" | sort | uniq | sed "s|.*\.|'|g" | sed -e "s/$$/' => '',/"
 
-# set installed in database 
+# set installed in database
 set-installed:
 	make database-command command="update settings set value=1 where setting='installed';"
-	
+
 # set not installed in database
 set-not-installed:
 	make database-command command="update settings set value=0 where setting='installed';"

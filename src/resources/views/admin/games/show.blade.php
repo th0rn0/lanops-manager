@@ -18,6 +18,18 @@
 </div>
 </div>
 
+
+
+@if($matchCountError)
+	<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
+		<h4 mt-0>Errors occured</h4>
+		<ul>At least one of youre servers have more than one match assigned. This should never happen! Please look through the list and fix the error manually.</ul>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+@endif
+
 <div class="row">
 	<div class="col-lg-8">
 
@@ -65,6 +77,7 @@
 							<th>Stream Port</th>
 							<th>RCON Port</th>
 							<th>Secret in DB</th>
+							<th>Assigned Match</th>
 							<th>Status</th>
 							<th><th>
 						</tr>
@@ -77,7 +90,7 @@
 										$context = 'danger';
 									}
 								@endphp
-								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#collapse_row{{ $gameServer->id }}">
+								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#collapse_row{{ $gameServer->id }}" @if ($gameServer->getAssignedMatchServer()["count"] > 1) style="border:2px solid red;"@endif>
 									<td>
 										@if ($gameServer->isenabled)
 										<i class="fa fa-check-circle-o fa-1x" style="color:green"></i>
@@ -117,6 +130,59 @@
 										@endif
 									</td>
 									<td>
+										@if ($gameServer->getAssignedMatchServer()["count"] == 0)									
+										<p>None</p>
+										@endif
+										@if ($gameServer->getAssignedMatchServer()["count"] == 1)
+
+											@if (get_class($gameServer->getAssignedMatchServer()["match"]) == 'App\MatchMakingServer')
+												<a href="/admin/matchmaking/{{ $gameServer->getAssignedMatchServer()["match"]->match->id }}">
+													MM {{ $gameServer->getAssignedMatchServer()["match"]->match->id }}
+												</a>
+											@endif
+
+											@if (get_class($gameServer->getAssignedMatchServer()["match"]) == 'App\EventTournamentMatchServer')
+												<a href="/admin/events/{{ $gameServer->getAssignedMatchServer()["match"]->eventTournament->event->slug }}/tournaments/{{ $gameServer->getAssignedMatchServer()["match"]->eventTournament->slug }}/">
+													EVT {{ $gameServer->getAssignedMatchServer()["match"]->eventTournament->name }} Match  
+													
+													@php 
+														$matchCounter = 1;
+														$matches = $gameServer->getAssignedMatchServer()["match"]->eventTournament->getMatches();
+													@endphp
+
+													@foreach ($matches as $roundNumber => $round)
+														@foreach ($round as $match)
+
+															
+															@if ($match->id == $gameServer->getAssignedMatchServer()["match"]->challonge_match_id)
+
+																{{ $matchCounter }}
+
+															@endif
+																@php 
+																	$matchCounter++
+																@endphp
+
+														@endforeach
+
+													@endforeach
+												
+												
+													<small>({{ $gameServer->getAssignedMatchServer()["match"]->challonge_match_id }})</small>
+												</a>												
+											@endif
+
+										@endif
+										@if ($gameServer->getAssignedMatchServer()["count"] > 1)
+										
+										
+										<a href="/admin/games/{{ $gameServer->game->slug }}/gameservers/{{ $gameServer->slug }}">
+										<p style="color:red">{{$gameServer->getAssignedMatchServer()["count"]}} Matches assigned! This should never happen! Please klick here to fix it manually</p>
+										</a>
+										@endif
+
+									</td>
+									<td>
 										@if($gameServer->isenabled)
 											@if($game->gamecommandhandler != "0")
 												<script>
@@ -149,6 +215,7 @@
 									<td width="15%">
 
 										<div>
+											<a href="/admin/games/{{$game->slug}}/gameservers/{{$gameServer->slug}}" class="btn btn-primary btn-sm btn-block">Details</a>
 											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug . '/updatetoken', 'onsubmit' => 'return ConfirmSubmit()')) }}
 												{{ Form::hidden('_method', 'POST') }}

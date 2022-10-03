@@ -13,7 +13,9 @@
 			<div class="float-right">
 
 				<div>
-
+					@if (isset($match->matchReplays) && count($match->matchReplays) > 0)
+						<span class="badge badge-primary">@lang('matchmaking.replayavailable')</span>
+					@endif 
 					@if ($match->status == 'COMPLETE')
 						<span class="badge badge-success">@lang('matchmaking.ended')</span>
 					@endif
@@ -207,6 +209,7 @@
 		</div>
 	@endif
 
+	
 		{{-- TODO --}}
 		@if ( !$match->getMatchTeamPlayer(Auth::id()) && $match->teams()->count() < $match->team_count )
 
@@ -348,7 +351,7 @@
 													@if($teamplayer->user->id == $match->owner_id)
 														@lang('matchmaking.matchowner')
 													@endif
-													@if($teamplayer->user->id != $team->team_owner_id && $teamplayer->user->id != $match->owner_id && $team->match->status != "LIVE" &&  $team->match->status != "COMPLETE"&&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
+													@if($teamplayer->user->id != $team->team_owner_id && $teamplayer->user->id != $match->owner_id && $team->match->status != "LIVE" && $team->match->status != "WAITFORPLAYERS" &&  $team->match->status != "COMPLETE"&&  $team->match->status != "PENDING" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()) )
 														{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $team->id . '/teamplayer/'. $teamplayer->id .'/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 															{{ Form::hidden('_method', 'DELETE') }}
 															<button type="submit" class="btn btn-danger btn-sm btn-block">@lang('matchmaking.removefrommatch')</button>
@@ -375,6 +378,48 @@
 
 	@endif
 
+	@if (isset($match->matchReplays) && count($match->matchReplays) > 0)
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-info-circle fa-fw"></i> @lang('matchmaking.Replays')
+				</div>
+				<div class="card-body">
+
+
+
+					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
+						<thead>
+							<tr>
+								<th>@lang('matchmaking.ReplayName')</th>
+								<th>@lang('matchmaking.ReplaySize')</th>
+								<th>@lang('matchmaking.ReplayCreated')</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($match->matchReplays as $matchReplay)
+								<tr>
+									<td>
+										<a href="/storage{{ App\MatchReplay::getReplayPath($match->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
+									</td>
+									
+									<td>
+										{{ App\MatchReplay::getReplaySize($match->game, $matchReplay->name) }}
+									</td>
+									<td>
+										{{ $matchReplay->created_at }}
+									</td>
+								</tr>
+							@endforeach
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		
+	@endif
 
 </div>
 
@@ -527,6 +572,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 @endsection
 

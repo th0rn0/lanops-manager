@@ -48,6 +48,7 @@ interface IGameMatchApiHandler
     public function updateplayer(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber, string $player);
     public function finalizemap(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid, int $mapnumber);
     public function finalize(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid);
+    public function freeserver(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid);
 }
 
 class Get5MatchApiHandler implements IGameMatchApiHandler
@@ -127,7 +128,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 
     public function getconfig($matchid, $nummaps, $players_per_team, $apiurl, $apikey)
     {
-        $this->result->matchid = "Match $matchid";
+        $this->result->matchid = "$matchid";
         $this->result->num_maps = intval ($nummaps);
         $this->result->players_per_team = intval($players_per_team);
         $this->result->min_players_to_ready = intval($players_per_team);
@@ -136,8 +137,11 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
             $this->result->cvars = new \stdClass();
             $this->result->cvars->get5_eventula_apistats_key = $apikey;
             $this->result->cvars->get5_eventula_apistats_url = $apiurl;
-        }
 
+            $this->result->cvars->get5_demo_upload_header_key = "Authorization";
+            $this->result->cvars->get5_demo_upload_header_value = "Bearer ".$apikey;
+            $this->result->cvars->get5_demo_upload_url = $apiurl . "demo";
+        }
 
         return $this->result;
 
@@ -257,6 +261,36 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
         {
             //tournament stuff
 
+        }
+        return false;
+
+    }
+
+    public function freeserver(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid)
+    {
+        if($match != null && $tournament == null)
+        {
+
+            if (!$match->matchMakingServer->delete())
+            {
+                return false;
+            }
+            return true;
+
+        }
+        if($match == null && $tournament != null && $challongematchid != null)
+        {
+
+            $evtms= EventTournamentMatchServer::where(['challonge_match_id' => $challongematchid])->first();
+
+            if(isset($evtms))
+            {
+                if (!$evtms->delete())
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         return false;
 

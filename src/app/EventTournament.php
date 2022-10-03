@@ -8,8 +8,11 @@ use Session;
 use Helpers;
 
 use App\EventTournamentParticipant;
+use App\EventTournamentMatchServer;
+use App\Jobs\GameServerAsign;
 
 use Illuminate\Database\Eloquent\Model;
+
 
 use GuzzleHttp;
 // use Lanops\Challonge\Challonge;
@@ -283,6 +286,10 @@ class EventTournament extends Model
     {
         return $this->hasMany('App\EventTournamentTeam');
     }
+    public function eventTournamentMatchServer()
+    {
+        return $this->hasMany('App\EventTournamentMatchServer');
+    }
     public function game()
     {
         return $this->belongsTo('App\Game');
@@ -462,7 +469,7 @@ class EventTournament extends Model
     }
 
     /**
-     * Get Matches
+     * Get single Match
      * @param int $challongeMatchId
      * @param boolean $obj
      * @return Array|Object
@@ -499,6 +506,18 @@ class EventTournament extends Model
 
         return false;
     }
+
+    /**
+     * Get Matches
+     * @param int $challongeMatchId
+     * @param boolean $obj
+     * @return Array|Object
+     */
+    public function getMatchReplays(int $challongeMatchId, $obj = false)
+    {            
+        return MatchReplay::where('challonge_match_id', $challongeMatchId)->get();
+    }
+
 
     /**
      * Get Standings
@@ -664,6 +683,22 @@ class EventTournament extends Model
             Cache::forget($this->challonge_tournament_id . "_standings");
             $this->getMatches();
             $this->getStandings();
+
+            # queue next matches
+            if (isset($this->game) && $this->match_autostart)
+            {
+                
+                $nextmatches = $this->getNextMatches();
+    
+                foreach ($nextmatches as $nextmatch)
+                {
+                    $matchserver = EventTournamentMatchServer::getTournamentMatchServer($nextmatch->id);
+                    if (!isset($matchserver)) {
+                        GameServerAsign::dispatch(null,$this,$nextmatch->id)->onQueue('gameserver');
+                    }
+                }
+            }
+
             return $response;
         } catch (\Throwable $e) {
             Helpers::rethrowIfDebug($e);

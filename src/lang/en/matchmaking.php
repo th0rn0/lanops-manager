@@ -137,8 +137,11 @@ return [
     'scramble' => 'Scramble Teams',
     'cannotjointhirdparty' => 'you cannot join this match because the nessecary third party account link on your user is missing. Check the single sign-on section of your profile.',
     'cannotcreatethirdparty' => 'you cannot create a match with this game because the nessecary third party account link on your user is missing. Check the single sign-on section of your profile.',
-
-
+    'replayavailable' => 'Replay available',
+    'Replays' => 'Replays',
+    'ReplayName' => 'Name',
+    'ReplaySize' => 'Size',
+    'ReplayCreated' => 'Created',
 
 
 ];
