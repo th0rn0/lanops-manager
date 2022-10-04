@@ -106,7 +106,7 @@ You can edit all your Event informations in the detailed event view when you cli
 
 
 
-Event Annauncements
+Event Announcements
 --------------------
 You can create, edit and delete Announcements on every event, wich will be displayed on the event live page, to get quick messages out to your attandees.
 
