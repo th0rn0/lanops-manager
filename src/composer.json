@@ -48,7 +48,7 @@
         "laravel/sanctum": "3.0.1",
         "propaganistas/laravel-phone": "4.3.8",
         "symfony/mailgun-mailer": "6.1.0",
-        "symfony/http-client": "6.1.5",
+        "symfony/http-client": "6.1.6",
         "spatie/backtrace": "1.2.1"
     },
     "require-dev": {
