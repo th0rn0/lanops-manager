@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c29f2f5cf7e27e98540e464e11edde76",
+    "content-hash": "203154a2e45478acb3a1edc5e0c38973",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -8489,16 +8489,16 @@
         },
         {
             "name": "team-reflex/challonge-php",
-            "version": "4.1",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/teamreflex/ChallongePHP.git",
-                "reference": "349577c49af25fd9ad4a0167c83e4bd6df529891"
+                "reference": "cf07f16347f1fb79db3536621ec169abbc0930bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/teamreflex/ChallongePHP/zipball/349577c49af25fd9ad4a0167c83e4bd6df529891",
-                "reference": "349577c49af25fd9ad4a0167c83e4bd6df529891",
+                "url": "https://api.github.com/repos/teamreflex/ChallongePHP/zipball/cf07f16347f1fb79db3536621ec169abbc0930bb",
+                "reference": "cf07f16347f1fb79db3536621ec169abbc0930bb",
                 "shasum": ""
             },
             "require": {
@@ -8535,9 +8535,9 @@
             "description": "PSR-18 compatible library to interface with the bracket generator Challonge.",
             "support": {
                 "issues": "https://github.com/teamreflex/ChallongePHP/issues",
-                "source": "https://github.com/teamreflex/ChallongePHP/tree/4.1"
+                "source": "https://github.com/teamreflex/ChallongePHP/tree/4.1.1"
             },
-            "time": "2022-08-04T01:33:33+00:00"
+            "time": "2022-10-21T14:04:50+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
