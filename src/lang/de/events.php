@@ -86,7 +86,7 @@ return [
     'format' => 'Format',
     'nextmatch' => 'Nächste Begegnung',
     'registration' => 'Registrierung',
-    'jointeam' => 'Team wählen',
+    'join_a_team' => 'Team wählen',
     'createateam' => 'Ein Team anlegen',
     'createteam' => 'Team anlegen',
     'signinaspug' => 'Als PUG anmelden',

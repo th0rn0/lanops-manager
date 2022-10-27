@@ -178,7 +178,7 @@
 						@if ($tournament->team_size != '1v1' && !$tournament->getParticipant($user->active_event_participant->id))
 							<div class="row border-between">
 								<div class="col-12 col-sm-6">
-									<label>@lang('events.jointeam')</label>
+									<label>@lang('events.join_a_team')</label>
 									<div class="row">
 										@foreach ($tournament->tournamentTeams as $tournamentTeam)
 											<div class="col-6 col-sm-6">
