@@ -474,6 +474,9 @@ class Setting extends Model
                 break;
             case 'EUR':
                 $symbol = '€';
+                break;            
+            case 'DKK':
+                $symbol = 'kr.';
                 break;
             default:
                 $symbol = '£';
