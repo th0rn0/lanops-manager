@@ -21,7 +21,7 @@ return [
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
     'matchowner' => 'Match owner',
-    'notsignedup' => 'not signed up',
+    'notsignedup' => 'Not signed up',
     'ownedmatches' => 'Your owned matches',
     'ownedteams' => 'Matches with teams of which you are joined',
     'publicmatches' => 'Open public matches',
