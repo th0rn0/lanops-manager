@@ -25,7 +25,7 @@ return [
     'noannouncements' => 'Keine Ankündigungen',
     'timetable' => 'Zeitplan',
     'tournaments' => 'Wettkämpfe',
-    'ended' => 'Beendet',
+    'ended' => 'beendet',
     'live' => 'Live',
     'signupsclosed' => 'Anmeldung geschlossen',
     'signups' => 'Anmeldungen',
