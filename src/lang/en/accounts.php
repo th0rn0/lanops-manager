@@ -68,7 +68,7 @@ return [
     'ssochangeemailmessage' => 'If this email adress is not right anymore, you can change your email adress here!',
     'ssodontemailmessage' => 'Your email adress can not be changed. If thats a problem contact an administrator please!',
     'ssopasswordmessage' => 'To remove your single sign on, you have to enter a password here!',
-    'ssochangpasswordmessage' => 'If you dont remember your password, you can change it here!',
+    'ssochangpasswordmessage' => 'If you dont remember your password, you can change it here.',
     'tokens' => 'Tokens',
     'token_id' => 'Token ID',
     'token_name' => 'Token name',
