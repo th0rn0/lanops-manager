@@ -64,7 +64,7 @@ return [
     'row' => 'Row',
     'empty' => 'Empty',
     'venueinformation' => 'Venue information',
-    'therismore' => 'And there\'s more...',
+    'therismore' => 'And there\'s more…',
     'haveyoursay' => 'Have your say…',
     'mytickets' => 'My tickets',
     'purchaseticketopickseat' => 'Please purchase a ticket to pick a seat',
