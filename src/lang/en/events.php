@@ -22,7 +22,7 @@ return [
     'timetable' => 'Timetable',
     'tournaments' => 'Tournaments',
     'ended' => 'has ended',
-    'live' => 'Live',
+    'live' => 'is live',
     'signupsclosed' => 'Signups closed',
     'signups' => 'Signups',
     'steamname' => 'Steam name',
