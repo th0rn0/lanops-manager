@@ -27,16 +27,16 @@
 				<div id="shipping" class="d-none">
 					<div class="row">
 						<div class="form-group col-sm-6 col-12">
-							{{ Form::label('shipping_first_name', __('payments.firstname'), array('id'=>'','class'=>'')) }}
+							{{ Form::label('shipping_first_name', __('payments.firstname').' *', array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_first_name', '', array('id'=>'shipping_first_name','class'=>'form-control')) }}
 						</div>
 						<div class="form-group col-sm-6 col-12">
-							{{ Form::label('shipping_last_name', __('payments.lastname'), array('id'=>'','class'=>'')) }}
+							{{ Form::label('shipping_last_name', __('payments.lastname').' *', array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_last_name', '', array('id'=>'shipping_last_name','class'=>'form-control')) }}
 						</div>
 					</div>
 					<div class="form-group">
-						{{ Form::label('shipping_address_1', __('payments.shipping_address_1'), array('id'=>'','class'=>'')) }}
+						{{ Form::label('shipping_address_1', __('payments.shipping_address_1').' *', array('id'=>'','class'=>'')) }}
 						{{ Form::text('shipping_address_1', '', array('id'=>'shipping_address_1','class'=>'form-control')) }}
 					</div>
 					<div class="form-group">
@@ -49,7 +49,7 @@
 					</div>
 					<div class="row">
 						<div class="form-group col-sm-6 col-12">
-							{{ Form::label('shipping_postcode', __('payments.shipping_postcode'), array('id'=>'','class'=>'')) }}
+							{{ Form::label('shipping_postcode', __('payments.shipping_postcode').' *', array('id'=>'','class'=>'')) }}
 							{{ Form::text('shipping_postcode', '', array('id'=>'shipping_postcode','class'=>'form-control')) }}
 						</div>
 						<div class="form-group col-sm-6 col-12">
