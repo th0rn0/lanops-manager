@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,12 +10,10 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     /* Big */
     'time' => 'Time',
     'game' => 'Game',
     'description' => 'Description',
-
     /* Home */
     'eventsponsoredby' => ':event is sponsored by',
     'essentialinfo' => 'Essential information',
@@ -44,12 +40,10 @@ return [
     'plslogintopurchaseticket' => 'Please log in to purchase a ticket',
     'imageuploader' => 'Image uploader',
     'server' => 'Server',
-
     /* Index */
     'start' => 'Start',
     'end' => 'End',
     'seatingcapacity' => 'Seating capacity',
-
     /* Show */
     'eventinfo' => 'Event information',
     'tickets' => 'Tickets',
@@ -70,8 +64,8 @@ return [
     'row' => 'Row',
     'empty' => 'Empty',
     'venueinformation' => 'Venue information',
-    'therismore' => 'And there\'s more...',
-    'haveyoursay' => 'Have your say...',
+    'therismore' => 'And there\'s more…',
+    'haveyoursay' => 'Have your say…',
     'mytickets' => 'My tickets',
     'purchaseticketopickseat' => 'Please purchase a ticket to pick a seat',
     'user' => 'User',
@@ -83,13 +77,8 @@ return [
     'buy' => 'Buy',
     'noseatableticket' => 'You own no seatable ticket.',
     'noseatableticketlist' => 'No seatable Ticket owned.',
-
-
-
     /* Big */
     'plssignin' => 'Please sign in at the main desk',
-    
-
     /* Tournaments show*/
     'notsignedup' => 'Not signed up',
     'signedup' => 'Signed up',
@@ -111,9 +100,7 @@ return [
     'participants' => 'Participants',
     'rules' => 'Rules',
     'purchaseticketosignup' => 'Purchase a ticket to signup',
-
     /*Tournaments Controller*/
-
     'tournament_signups_not_permitted' => 'Signups not permitted at this time.',
     'tournament_not_signed_in' => 'You are not signed in to this event.',
     'tournament_already_signed_up' => 'You are already signed up to this tournament.',
@@ -127,8 +114,6 @@ return [
     'tournament_cannot_remove' => 'Cannot remove. Please try again.',
     'tournament_sucessfully_removed' => 'You have been successfully removed from the Tournament.',
     'tournament_cannot_join_thirdparty' => 'you cannot sign up for this tournament because the nessecary third party account link on your user is missing. Please check your signle sign-on settings in your profile.',
-
     /* Ticket Partial*/
     'remove_seating' => 'Remove Seating',
-
 ];

@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,12 +10,10 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     /* Big */
     'time' => 'Zeit',
     'game' => 'Spiel',
     'description' => 'Beschreibung',
-
     /* Home */
     'eventsponsoredby' => ':event wird gesponsort von',
     'essentialinfo' => 'Allgemeine Informationen',
@@ -44,12 +40,10 @@ return [
     'plslogintopurchaseticket' => 'Bitte anmelden um ein Ticket zu kaufen',
     'imageuploader' => 'Bild hochladen',
     'server' => 'Server',
-
     /* Index */
     'start' => 'Start',
     'end' => 'Ende',
     'seatingcapacity' => 'Sitzplatz Kapazitäten',
-
     /* Show */
     'eventinfo' => 'Event Informationen',
     'tickets' => 'Tickets',
@@ -57,7 +51,7 @@ return [
     'seating' => 'Sitzplätze',
     'attendees' => 'Teilnehmer',
     'yourtickets' => 'Deine Tickets',
-    'haveyoursay' => 'Nehmen Sie Stellung',
+    'haveyoursay' => 'Nehmen Sie Stellung…',
     'ticketsavailable' => 'Tickets Verfügbar',
     'purchased' => 'Gekauft',
     'available' => 'Verfügbar',
@@ -71,7 +65,7 @@ return [
     'row' => 'Reihe',
     'empty' => 'Leer',
     'venueinformation' => 'Information zum Veranstaltungsort',
-    'therismore' => 'Und es gibt noch mehr...',
+    'therismore' => 'Und es gibt noch mehr…',
     'mytickets' => 'Meine Tickets',
     'purchaseticketopickseat' => 'Bitte kaufe ein Ticket um einen Sitzplatz zu wählen',
     'user' => 'Benutzer',
@@ -83,13 +77,8 @@ return [
     'buy' => 'Kaufen',
     'noseatableticket' => 'Kein Ticket mit Sitzplatz in Besitz',
     'noseatableticketlist' => 'Kein Ticket mit Sitzplatz in Besitz',
-
-
-
     /* Big */
     'plssignin' => 'Bitte melden Sie sich auf der Hauptseite an',
-    
-
     /* Tournaments show*/
     'notsignedup' => 'Nicht Angemeldet',
     'signedup' => 'Angemeldet',
@@ -111,27 +100,20 @@ return [
     'participants' => 'Teilnehmer',
     'rules' => 'Regeln',
     'purchaseticketosignup' => 'Kaufe ein Ticket um dich anzumelden',
-
     /*Tournaments Controller*/
-  
     'tournament_signups_not_permitted' => 'Anmeldungen sind im Moment nicht erlaubt.',
     'tournament_not_signed_in' => 'Du bist bei dem zugehörigen event nicht angemeldet.',
     'tournament_already_signed_up' => 'Du bist bereits zu diesem Turnier angemeldet.',
     'tournament_team_full' => 'Dieses Team ist bereits voll.',
-    'tournament_cannot_add_participant' => 'Konnte Teilnahme nicht hinzufügen. Bitte versuche es erneut!',
+    'tournament_cannot_add_participant' => 'Konnte Teilnahme nicht hinzufügen. Bitte versuche es erneut.',
     'tournament_sucessfully_registered' => 'Erfolgreich angemeldet!',
     'tournament_can_not_add_team' => 'Konnte das Team nicht hinzufügen. Bitte versuche es erneut.',
     'tournament_team_created' => 'Team erfolgreich erstellt!',
-    'tournament_cannot_add_pug' => 'Konnte PUG nicht hinzufügen. Bitte versuch es erneut!',
+    'tournament_cannot_add_pug' => 'Konnte PUG nicht hinzufügen. Bitte versuch es erneut.',
     'tournament_not_signed_up' => 'Du bist nicht angemeldet.',
-    'tournament_cannot_remove' => 'Löschvorgang konnte nicht abgeschlossen werden. Bitte versuch es erneut!',
+    'tournament_cannot_remove' => 'Löschvorgang konnte nicht abgeschlossen werden. Bitte versuch es erneut.',
     'tournament_sucessfully_removed' => 'Du wurdest erfolgreich vom Turnier abgemeldet.',
     'tournament_cannot_join_thirdparty' => 'Du kannst dich für dieses Turnier nicht anmelden, da die notwendige Authentifizierung zu einem Drittherstellerdienst in deinem Konto nicht hergestellt ist. Prüfe die Single Sign-On Einstellungen in deinem Profil',
-    
-   
     /* Ticket Partial*/
     'remove_seating' => 'Sitzplatz entfernen',
-
-
-
 ];
