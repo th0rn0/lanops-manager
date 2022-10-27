@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -45,7 +43,7 @@ return [
     'events_navi_future_events' => 'Zukünftige Events',
     'events_navi_no_future_events' => 'keine zukünftigen Events',
     'events_all_events' => 'Alle Events',
-    'read_more' => 'Mehr lesen...',
+    'read_more' => 'Mehr lesen…',
     'share' => 'Teilen',
     'comments' => 'Kommentar',
     'tags' => 'Tags',
@@ -68,5 +66,4 @@ return [
     'events_weve_hosted' => 'Veranstaltungen',
     'players_weve_entertained' => 'Teilnehmer',
     'a_lot' => 'A LOT',
-
 ];
