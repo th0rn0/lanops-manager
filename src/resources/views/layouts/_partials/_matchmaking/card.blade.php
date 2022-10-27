@@ -45,7 +45,7 @@
     <div class="card-body">
         @if ($match->status != 'COMPLETE' && !($match->status == 'LIVE' && $match->game->matchmaking_autoapi))
             <div>
-                <strong>@lang('matchmaking.teamsizes') {{ $match->team_size }}</strong>
+                <strong>@lang('matchmaking.teamsizes'): {{ $match->team_size }}</strong>
             </div>
             @if ($match->game)
                 <div>
@@ -53,7 +53,7 @@
                 </div>
             @endif
             <div>
-                <strong>@lang('matchmaking.teamcount') {{ $match->teams->count() }}</strong>
+                <strong>@lang('matchmaking.teamcount'): {{ $match->teams->count() }}</strong>
             </div>
         @endif
         @if ($match->status == 'COMPLETE' || ($match->status == 'LIVE' && $match->game->matchmaking_autoapi))
@@ -65,7 +65,7 @@
                 <h5 class="m-0">{{ $loop->iteration }} - {{ $teamsentry->name }} - {{ $teamsentry->team_score }}</h5>
             @endforeach
             <strong class="m-0 mt-1">
-                @lang('matchmaking.teamcount') {{ $match->teams->count() }}
+                @lang('matchmaking.teamcount'): {{ $match->teams->count() }}
             </strong>
             @if ($match->status == 'COMPLETE')
                 <h5 class="m-0 mt-1">@lang('matchmaking.ended')</h5>
