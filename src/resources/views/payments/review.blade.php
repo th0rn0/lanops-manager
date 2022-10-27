@@ -20,7 +20,7 @@
 				</div>
 			@endif
 			<div class="alert alert-warning">
-				<h5>@lang('payments.purchase_future_event') {!! Settings::getOrgName() !!}</h5>
+				<h5>@lang('payments.terms_accept') {!! Settings::getOrgName() !!}</h5>
 			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				{{ Form::hidden('gateway', $paymentGateway) }}

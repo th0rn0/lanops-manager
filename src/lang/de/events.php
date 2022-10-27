@@ -67,7 +67,6 @@ return [
     'limitedavailability' => 'Begrenzte Verfügbarkeit',
     'availablefrom' => 'Dieses Ticket steht am :date ab :time zum Verauf bereit',
     'ticketnolongavailable' => 'Dieses Ticket steht nicht mehr zum Verkauf bereit.',
-    'seatingplans' => 'Sitzpläne',
     'seatsremaining' => 'Sitzplätze verbleibend',
     'row' => 'Reihe',
     'empty' => 'Leer',
@@ -94,7 +93,6 @@ return [
     /* Tournaments show*/
     'notsignedup' => 'Nicht Angemeldet',
     'signedup' => 'Angemeldet',
-    'game' => 'Spiel',
     'teamsizes' => 'Teamgröße',
     'format' => 'Format',
     'nextmatch' => 'Nächste Begegnung',
@@ -106,7 +104,6 @@ return [
     'signup' => 'Anmelden',
     'signedupaspugteamassignedshortly' => 'Sie sind als PUG angemeldet. Ihnen wird in Kürze ein Team zugewiesen.',
     'signedupwithteam' => 'Sie sind mit :team angemeldet',
-    'signedup' => 'Sie sind angemeldet',
     'removesignup' => 'Abmelden',
     'signuponlywhenlive' => 'Anmelden erst am Event möglich',
     'brackets' => 'Gruppe',
