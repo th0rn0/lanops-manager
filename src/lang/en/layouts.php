@@ -47,7 +47,6 @@ return [
     'events_navi_future_events' => 'Future events',
     'events_navi_no_future_events' => 'No future events',
     'events_all_events' => 'All Events',
-    'events_navi_no_future_events' => 'No events',
     'read_more' => 'Read more...',
     'share' => 'Share:',
     'comments' => 'Comments:',

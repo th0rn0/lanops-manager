@@ -12,7 +12,6 @@ return [
 
     'book_now' => 'Jetzt buchen',
     'next_event' => 'Nächstes Event',
-    'payment_cancelled' => 'Bezahlung abgebrochen!',
     'payment_cancelled_info1' => 'Die Bezahlung wurde abgebrochen!',
     'payment_cancelled_info2' => 'Dir wurde nichts abgebucht.',
     'checkout' => 'Auschecken',
@@ -54,7 +53,7 @@ return [
     'review_terms' => 'Nutztungsbedingungen',
     'review_terms_long' => 'Nutztungsbedingungen des Kaufs',
     'purchase_future_event' => 'Beachte dass du aktuell keine Tickets für die nächste stattfindende Veranstaltung kaufst sondern für eine spätere.',
-    'purchase_future_event' => 'Beim klick auf Fortfahren akzeptierst du die Nutzungsbedingungen von',
+    'terms_accept' => 'Beim klick auf Fortfahren akzeptierst du die Nutzungsbedingungen von',
     'payment_successful' => 'Bezahlung erfolgreich!',
     'thank_you' => 'Vielen Dank für deine Bestellung!',
     'tickets_active' => 'Deine Tickets sind nun aktiv',
