@@ -469,6 +469,11 @@ class Helpers
      */
     public static function getEventulaEventTags()
     {
+        if (config('eventula.url') == "DISABLE")
+        {
+            return false;
+        }
+        
         $client = new Client();
         try {
             $response = $client->get(config('eventula.url') . '/api/tags/events');
