@@ -11,6 +11,11 @@ If you are using this please consider signing up to eventula for event mapping.
 > **Warning**
 > This fork of eventula manager is not 100% update compatible to the current upstream. We have intended to merge it someday, but currently there are to many changes and there is not enough time to do so. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade.
 
+## Tanslation
+
+[![Translation status](https://translate.lan2play.de/widgets/eventula-manager/-/multi-auto.svg)](https://translate.lan2play.de/engage/eventula-manager/)
+
+## Screenshots
 ##### Home Page:
 
 ![Manager front page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/home-page.png)
@@ -27,7 +32,7 @@ If you are using this please consider signing up to eventula for event mapping.
 ##### Tournament Brakcets
 ![Tournament Brackets](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tournaments-brackets-page.png)
 
-##### Features
+## Features
 
 - White Label
 - Event Management
@@ -103,7 +108,7 @@ If you are using this please consider signing up to eventula for event mapping.
 
 Hop over to our [Documentation](https://eventula.lan2play.de/user/getting_started.html) to see how to run and use eventula.
 
-##### To Do
+## To Do
 
 - Refunds
 - Unit Tests
