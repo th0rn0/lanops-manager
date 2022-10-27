@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Text/Messages Lines
@@ -16,8 +14,8 @@ return [
     'emailmessage' => 'To finish your registration, you have to enter addition information!',
     'firstname' => 'Firstname',
     'surname' => 'Surname',
-    'username' => 'User name',
-    'steamname' => 'Steam username',
+    'username' => 'Username',
+    'steamname' => 'Steam name',
     'email' => 'Email adress',
     'phonenumber' => 'Phone number',
     'password' => 'Password',
@@ -48,7 +46,7 @@ return [
     'confirm_remove_account' => 'Are you sure you want to delete your account?',
     'remove_account_all' => 'All',
     'remove_account_not' => 'not',
-    'remove_account_line1' => 'Once it is gone... It is s gone, puff... Aaaannnd it is gone!',
+    'remove_account_line1' => 'Once it is gone… It is s gone, puff… Aaaannnd it is gone!',
     'remove_account_line2' => 'user records will be deleted.',
     'remove_account_line3' => 'tickets for upcoming events will be forfeit.',
     'remove_account_line4' => 'tickets gifted to you for upcoming will be forfeit.',
@@ -94,7 +92,4 @@ return [
     'new_token_wizzard_del_failed' => 'Deletion of the old token failed. Please try again.',
     'new_token_wizzard_creation_failed' => 'Creation of the token failed. Please try again.',
     'new_token_wizzard_clickoncallback' => 'You can now click on the connect back button or you can copy the token manually to your application.',
-
-
-
 ];
