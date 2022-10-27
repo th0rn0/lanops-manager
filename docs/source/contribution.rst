@@ -132,6 +132,24 @@ Todo!
 
 Eventula localisation
 .....................
+
+translation status
+'''''''''''''''''''''
+.. image:: https://translate.lan2play.de/widgets/eventula-manager/-/multi-auto.svg
+    :alt: Translation status
+    :target: https://translate.lan2play.de/engage/eventula-manager/
+
+translate with weblate
+'''''''''''''''''''''''
+
+You can find the client translation on our `Weblate project`_
+
+.. _Weblate project: https://translate.lan2play.de/engage/eventula-manager/
+
+
+translate without weblate 
+'''''''''''''''''''''''''''
+
 You can find the localisation files in ``src/resources/lang/``. If you want to fix mistakes, you can find the files for every translated language in the corresponding subfolder.
 If you want to add a whole language, copy the whole en folder and rename it to the Language code you want to add. The language files are Key - Value pair files, just edit the Value in there.
 
