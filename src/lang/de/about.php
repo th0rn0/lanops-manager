@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,10 +10,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     'aboutus' => 'Über uns',
     'whoeweare' => 'Wer wir sind',
     'ouraim' => 'Unser Ziel',
-    'whoswho' => 'Wer ist wer?',
-
+    'whoswho' => 'Wer ist wer',
 ];
