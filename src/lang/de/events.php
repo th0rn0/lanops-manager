@@ -26,7 +26,7 @@ return [
     'timetable' => 'Zeitplan',
     'tournaments' => 'Wettkämpfe',
     'ended' => 'beendet',
-    'live' => 'Live',
+    'live' => 'live',
     'signupsclosed' => 'Anmeldung geschlossen',
     'signups' => 'Anmeldungen',
     'steamname' => 'Steam Name',
