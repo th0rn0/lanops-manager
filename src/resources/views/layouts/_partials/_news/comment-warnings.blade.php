@@ -11,7 +11,7 @@
 	@endif
 	@if (!$comment->approved && $comment->reviewed)
 		<div class="alert alert-danger">
-			@lang('layouts.comment_rejected')
+			@lang('layouts.comment_has_been_rejected')
 			<span class="float-right">
 				<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/approve">@lang('layouts.comment_approve')</a> /
 				<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/delete">@lang('layouts.comment_delete')</a>
@@ -20,7 +20,7 @@
 	@endif
 	@if ($comment->hasReports())
 		<div class="alert alert-danger">
-			@lang('layouts.comment_reported')
+			@lang('layouts.comment_has_been_reported')
 			<span class="float-right">
 				<a href="/admin/news/">@lang('layouts.comment_view')</a>
 			</span>
