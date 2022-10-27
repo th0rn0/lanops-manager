@@ -25,7 +25,7 @@ return [
     'noannouncements' => 'No announcements',
     'timetable' => 'Timetable',
     'tournaments' => 'Tournaments',
-    'ended' => 'Ended',
+    'ended' => 'has ended',
     'live' => 'Live',
     'signupsclosed' => 'Signups closed',
     'signups' => 'Signups',
