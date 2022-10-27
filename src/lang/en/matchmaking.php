@@ -27,7 +27,7 @@ return [
     'publicmatches' => 'Open public matches',
     'closedpublicmatches' => 'Live/Closed public matches',
     'signedup' => 'signed up',
-    'signupsclosed' => 'signeups closed',
+    'signupsclosed' => 'Signups closed',
     'teamcount' => 'Team count:',
     'teamowner' => 'Team owner',
     'teamsizes' => 'Team size:',

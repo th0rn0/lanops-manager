@@ -27,7 +27,7 @@ return [
     'publicmatches' => 'Offene öffentliche Matches',
     'closedpublicmatches' => 'Aktive/Vergangene öffentliche Matches',
     'signedup' => 'angemeldet',
-    'signupsclosed' => 'anmeldung geschlossen',
+    'signupsclosed' => 'Anmeldung geschlossen',
     'teamcount' => 'Teamanzahl:',
     'teamowner' => 'Teameigentümer',
     'teamsizes' => 'Teamgröße:',
