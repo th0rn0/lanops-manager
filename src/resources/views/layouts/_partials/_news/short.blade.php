@@ -9,7 +9,7 @@
 		<div class="col-12 col-sm-6">
 			<div class="row">
 				<div class="col-12">
-					@lang('layouts.share')
+					@lang('layouts.share'):
 					<a href="https://www.facebook.com/sharer/sharer.php?u={{ url('/news') }}/{{ $newsArticle->slug }}&t={{ $newsArticle->title }}" target="_blank" rel="noreferrer">
 						<i class="fab fa-facebook-f"></i>
 					</a>
@@ -18,7 +18,7 @@
 					</a>
 				</div>
 				<div class="col-12">
-					@lang('layouts.tags')
+					@lang('layouts.tags'):
 					@foreach ($newsArticle->tags as $tag)
 						<small><a href="{{ url('/news/tags')}}/{{ $tag->slug }}">{{ $tag->tag }}</a>,</small>
 					@endforeach
@@ -36,7 +36,7 @@
 				@endif
 				
 				
-				<span class="d-none d-sm-block"> | @lang('layouts.comments') {{ $newsArticle->comments->count() }}</span></p>
+				<span class="d-none d-sm-block"> | @lang('layouts.comments'): {{ $newsArticle->comments->count() }}</span></p>
 		</div>
 	</div>
 </div><br>

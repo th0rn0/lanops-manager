@@ -5,7 +5,7 @@
 	</div>
 	<div class="col-10">
 		<p>{{ $comment->comment }}</p>
-		<span class="text-muted"><small>@lang('layouts.posted_on') {{ $comment->created_at }}</small></span>
+		<span class="text-muted"><small>@lang('layouts.posted_on'): {{ $comment->created_at }}</small></span>
 		@if (Auth::user() && Auth::id() == $comment->user_id)
 			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-toggle="modal" data-target="#editCommentModal">@lang('layouts.edit_comment')</a> /
 		@endif
