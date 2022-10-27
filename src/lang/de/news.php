@@ -29,7 +29,7 @@ return [
     'comment_cannot_delete' => 'Der Kommentar konnte nicht gelöscht werden. Bitte versuche es erneut.',
     'comment_deleted' => 'Der Kommentar wurde gelöscht!',
     'comment_edit_not_your' => 'Der Kommentar den du versuchst zu bearbeiten wurde nicht von dir gepostet!',
-    'comment_cannot_edit' => 'Der Kommentar den du versuchst zu bearbeiten wurde nicht von dir gepostet!',
+    'comment_cannot_edit' => 'Der Kommentar konnte nicht bearbeitet werden. Bitte versuche es erneut.',
     'comment_edited' => 'Der Kommentar wurde bearbeitet!',
     'unknownuser'  => 'Unbekannter Benutzer',
 
