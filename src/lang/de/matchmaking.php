@@ -31,7 +31,7 @@ return [
     'teamcount' => 'Teamanzahl:',
     'teamowner' => 'Teameigentümer',
     'teamsizes' => 'Teamgröße:',
-    'game' => 'Spiel:',
+    'game' => 'Spiel',
     'add' => 'Hinzufügen',
     'addteam' => 'Team hinzufügen',
     'addmatch' => 'Match hinzufügen',

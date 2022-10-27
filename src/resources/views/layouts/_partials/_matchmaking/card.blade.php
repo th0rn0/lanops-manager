@@ -49,7 +49,7 @@
             </div>
             @if ($match->game)
                 <div>
-                    <strong>@lang('matchmaking.game') {{ $match->game->name }}</strong>
+                    <strong>@lang('matchmaking.game'): {{ $match->game->name }}</strong>
                 </div>
             @endif
             <div>

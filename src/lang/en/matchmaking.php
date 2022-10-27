@@ -31,7 +31,7 @@ return [
     'teamcount' => 'Team count:',
     'teamowner' => 'Team owner',
     'teamsizes' => 'Team size:',
-    'game' => 'Game:',
+    'game' => 'Game',
     'add' => 'Add',
     'addteam' => 'Add team',
     'addmatch' => 'Add match',

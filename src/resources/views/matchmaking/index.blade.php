@@ -139,7 +139,7 @@
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/' )) }}
 					<div class="form-group">
-						{{ Form::label('game_id',__('matchmaking.game'),array('id'=>'','class'=>'')) }}
+						{{ Form::label('game_id',__('matchmaking.game').':',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
 								'game_id',
