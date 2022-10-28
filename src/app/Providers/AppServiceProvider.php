@@ -37,8 +37,8 @@ class AppServiceProvider extends ServiceProvider
             @\Config::set('laravel-omnipay.gateways.paypal_express.credentials.password', env('PAYPAL_PASSWORD'));
             @\Config::set('laravel-omnipay.gateways.paypal_express.credentials.signature', env('PAYPAL_SIGNATURE'));
             // Stripe
-            @\Config::set('laravel-omnipay.gateways.stripe.credentials.public', env('STRIPE_SECRET_KEY'));
-            @\Config::set('laravel-omnipay.gateways.stripe.credentials.secret', env('STRIPE_PUBLIC_KEY'));
+            @\Config::set('laravel-omnipay.gateways.stripe.credentials.public', env('STRIPE_PUBLIC_KEY'));
+            @\Config::set('laravel-omnipay.gateways.stripe.credentials.secret', env('STRIPE_SECRET_KEY'));
             // Facebook
             @\Config::set('services.facebook.client_id', env('FACEBOOK_APP_ID'));
             @\Config::set('facebook.config.app_id', env('FACEBOOK_APP_ID'));
