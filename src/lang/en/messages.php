@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Text/Messages Lines
@@ -9,8 +7,6 @@ return [
     |
     |
     */
-
-    'book_now' => 'Book Now',
-    'next_event' => 'Next Event',
-
+    'book_now' => 'Book now',
+    'next_event' => 'Next event',
 ];

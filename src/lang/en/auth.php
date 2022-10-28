@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,7 +10,6 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'login_to_continue' => 'Login to continue',
@@ -31,7 +28,7 @@ return [
     'firstname' => 'Firstname',
     'surname' => 'Surname',
     'username' => 'Username',
-    'steamname' => 'Steam username',
+    'steamname' => 'Steam name',
     'email' => 'Email adress',
     'phonenumber' => 'Phone number',
     'confirm_password' => 'Confirm password',
@@ -44,5 +41,4 @@ return [
     'request_verification' => 'click here to request another',
     'reset_password' => 'Reset password',
     'send_password_link' => 'Send password reset link',
-
 ];

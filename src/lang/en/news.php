@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Text/Messages Lines
@@ -9,7 +7,6 @@ return [
     |
     |
     */
-
     'news' => 'News',
     'comments' => 'Comments',
     'comment_reported' => 'You have reported this comment!',
@@ -17,7 +14,7 @@ return [
     'login_to_post_comment' => 'Please log in to post a comment',
     'news_tag' => 'News tag:',
     'tagged_news' => 'Tagged news:',
-    'please_login' => 'Please login.',
+    'please_login' => 'Please login',
     'submit' => 'Submit',
     'comment_required' => 'A Comment is required',
     'comment_cannot_be_empty' => 'Comment cannot be empty',
@@ -32,7 +29,5 @@ return [
     'comment_edit_not_your' => 'This is not your comment to edit!',
     'comment_cannot_edit' => 'Cannot edit comment. Please try again.',
     'comment_edited' => 'Comment edited!',
-    'unknownuser'  => 'unknown user',
-
-
+    'unknownuser' => 'unknown user',
 ];

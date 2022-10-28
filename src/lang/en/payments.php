@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Text/Messages Lines
@@ -9,7 +7,6 @@ return [
     |
     |
     */
-
     'book_now' => 'Book now',
     'next_event' => 'Next event',
     'payment_cancelled_info1' => 'The payment has been cancelled!',

@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Text/Messages Lines
@@ -9,7 +7,6 @@ return [
     |
     |
     */
-
     'book_now' => 'Jetzt buchen',
     'next_event' => 'Nächstes Event',
     'payment_cancelled_info1' => 'Die Bezahlung wurde abgebrochen!',
@@ -84,7 +81,7 @@ return [
     'payment_cancelled' => 'Bezahlung wurde abgebrochen!',
     'payment_unsuccessful_basic' => 'Bezahlung nicht erfolgreich!',
     'payment_gateways_required' => 'Mindestens eine Bezahlmethode muss ausgewählt sein: :paymentGateways',
-    'payment_no_basket' => 'Kein Warenkorb gefunden.  Bitte erneut versuchen.',
+    'payment_no_basket' => 'Kein Warenkorb gefunden. Bitte erneut versuchen.',
     'payment_credit_not_enabled' => 'Credit System ist nicht aktiviert.',
     'payment_credit_not_allowed' => 'Sie können keine Credits verwenden um diesen Warenkorb zu bezahlen!',
     'payment_method_not_allowed' => 'Sie können diese Bezahlmethode nicht verwenden um diesen Warenkorb zu bezahlen!',

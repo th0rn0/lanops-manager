@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,8 +10,6 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
-
     'default_links' => 'Links',
     'default_contact_us' => 'Contact us',
     'default_news' => 'News',
@@ -36,7 +32,7 @@ return [
     'navi_matchmaking' => 'Matchmaking',
     'navi_help' => 'Help',
     'navi_shop' => 'Shop',
-    'navi_login' => 'Login', 
+    'navi_login' => 'Login',
     'events_navi_information' => 'Information',
     'events_navi_tickets' => 'Tickets',
     'events_navi_timetable' => 'Timetable',
@@ -47,7 +43,7 @@ return [
     'events_navi_future_events' => 'Future events',
     'events_navi_no_future_events' => 'No future events',
     'events_all_events' => 'All Events',
-    'read_more' => 'Read more...',
+    'read_more' => 'Read more…',
     'share' => 'Share',
     'comments' => 'Comments',
     'tags' => 'Tags',
@@ -70,5 +66,4 @@ return [
     'events_weve_hosted' => 'EVENTs we\'ve hosted',
     'players_weve_entertained' => 'PLAYERs we\'ve entertained',
     'a_lot' => 'A LOT',
-
 ];
