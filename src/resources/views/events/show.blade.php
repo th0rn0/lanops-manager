@@ -54,7 +54,7 @@
 		<div class="row">
 			<div class="col-12">
 				<h3>
-					<strong>{{ max($event->capacity - $event->eventParticipants->count(), 0) }}/{{ $event->capacity }}</strong>@lang('events.ticketsavailable')
+					<strong>{{ max($event->capacity - $event->eventParticipants->count(), 0) }}/{{ $event->capacity }}</strong> @lang('events.ticketsavailable')
 				</h3>
 			</div>
 			@if ($event->capacity > 0)
