@@ -10,8 +10,8 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'aboutus' => 'About us',
-    'whoeweare' => 'Who we are',
-    'ouraim' => 'Our aim',
-    'whoswho' => 'The who\'s who',
+    'aboutus' => 'Om os',
+    'whoeweare' => 'Hvem er vi',
+    'ouraim' => 'Vores mål',
+    'whoswho' => 'Hvem er',
 ];
