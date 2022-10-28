@@ -10,6 +10,6 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'message' => 'Your experience on this site will be improved by allowing cookies. You can find more information on',
-    'agree' => 'Agree',
+    'message' => 'Din oplevelse på denne side vil blive forbedret ved at tillade cookies. Du kan finde mere information vedr',
+    'agree' => 'Enig',
 ];
