@@ -52,7 +52,7 @@ class HomeController extends Controller
                 if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
                     (date('Y-m-d H:i:s') <= $participant->event->end) &&
                     ($participant->signed_in || $participant->event->online_event) &&
-                    ($participant->purchase->status == "Success"))
+                    ($participant->free || $participant->staff || $participant->purchase->status == "Success"))
                 {
                     Debugbar::addMessage("Participant gets event", 'Event');
 
