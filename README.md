@@ -389,3 +389,4 @@ You can also change base variables and ad your own in the appearance page.
 - LanOps - https://lanops.co.uk
 - TheLanProject - https://thelanproject.co.uk
 - IronLan - https://ironlan.co.uk
+- Sund-Xplosion - https://sxlan.de
