@@ -231,7 +231,7 @@ npm-install:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
     --user 82:82 \
-	node:14.20 /bin/bash -ci "npm install --no-audit && npm run production"
+	node:14.21 /bin/bash -ci "npm install --no-audit && npm run production"
 
 
 # Install JS Dependencies via NPM
@@ -240,7 +240,7 @@ npm-install-gh:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
     --user 0 \
-	node:14.20 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(shell id -u):$(shell id -g) /usr/src/app"
+	node:14.21 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(shell id -u):$(shell id -g) /usr/src/app"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
@@ -248,7 +248,7 @@ npm-install-dev:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm install --no-audit && npm run dev"
+	node:14.21 /bin/bash -ci "npm install --no-audit && npm run dev"
 
 #list npm package - usage make npm-ls module=module
 npm-ls:
@@ -256,7 +256,7 @@ npm-ls:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm ls $(module)"
+	node:14.21 /bin/bash -ci "npm ls $(module)"
 
 #update npm packages - usage make npm-update
 npm-update:
@@ -264,7 +264,7 @@ npm-update:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm update"
+	node:14.21 /bin/bash -ci "npm update"
 
 #audit npm packages - usage make npm-audit
 npm-audit:
@@ -272,7 +272,7 @@ npm-audit:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm audit"
+	node:14.21 /bin/bash -ci "npm audit"
 
 #audit fix npm packages - usage make npm-audit-fix
 npm-audit-fix:
@@ -280,7 +280,7 @@ npm-audit-fix:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm audit fix"
+	node:14.21 /bin/bash -ci "npm audit fix"
 
 
 #list outdated npm packages
@@ -289,7 +289,7 @@ npm-outdated:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm outdated"
+	node:14.21 /bin/bash -ci "npm outdated"
 
 #rebuild node
 npm-rebuild:
@@ -297,7 +297,7 @@ npm-rebuild:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm rebuild"
+	node:14.21 /bin/bash -ci "npm rebuild"
 
 # npm mix Runner
 mix:
@@ -305,14 +305,14 @@ mix:
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
     --user 82:82 \
-	node:14.20 /bin/bash -ci "npm run production"
+	node:14.21 /bin/bash -ci "npm run production"
 
 mix-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
 	-w /usr/src/app \
 	--user $(shell id -u):$(shell id -g) \
-	node:14.20 /bin/bash -ci "npm run development"
+	node:14.21 /bin/bash -ci "npm run development"
 
 # Purge Containers
 purge-containers:
