@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e4e8f8aa9d5341280333314d3c50a35",
+    "content-hash": "9891030c4cbcde09a959794d970f76a1",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -9197,16 +9197,16 @@
         },
         {
             "name": "kitloong/laravel-migrations-generator",
-            "version": "v6.4.3",
+            "version": "v6.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kitloong/laravel-migrations-generator.git",
-                "reference": "fc37c5edbea8c4693424a9c92eb6b4bd45d5e811"
+                "reference": "c9ba8a2b2879c0c625288163f04f99b60f87966f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/fc37c5edbea8c4693424a9c92eb6b4bd45d5e811",
-                "reference": "fc37c5edbea8c4693424a9c92eb6b4bd45d5e811",
+                "url": "https://api.github.com/repos/kitloong/laravel-migrations-generator/zipball/c9ba8a2b2879c0c625288163f04f99b60f87966f",
+                "reference": "c9ba8a2b2879c0c625288163f04f99b60f87966f",
                 "shasum": ""
             },
             "require": {
@@ -9223,6 +9223,7 @@
                 "nunomaduro/larastan": "^0.4|^0.5|^0.6|^0.7|^1.0|^2.0",
                 "orchestra/testbench": "^3.6|^4.0|^5.0|^6.0|^7.0",
                 "phpmd/phpmd": "^2.10",
+                "slevomat/coding-standard": "^6.0|^7.0|^8.5",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -9259,7 +9260,7 @@
             ],
             "support": {
                 "issues": "https://github.com/kitloong/laravel-migrations-generator/issues",
-                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v6.4.3"
+                "source": "https://github.com/kitloong/laravel-migrations-generator/tree/v6.5.1"
             },
             "funding": [
                 {
@@ -9267,7 +9268,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-10-09T11:50:08+00:00"
+            "time": "2022-11-02T14:06:15+00:00"
         },
         {
             "name": "masterminds/html5",
