@@ -27,7 +27,7 @@ return [
     'credit_item' => 'Elemento',
     'credit_reason' => 'Razón',
     'credit_timestamp' => 'Marca de tiempo',
-    'tickets' => 'Entradas',
+    'tickets' => 'Tickets',
     'no_tickets' => 'Actualmente no tienes tickets.',
     'purchases' => 'Compras',
     'purchases_id' => 'ID',
