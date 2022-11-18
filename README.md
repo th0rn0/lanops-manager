@@ -119,3 +119,4 @@ Hop over to our [Documentation](https://eventula.lan2play.de/user/getting_starte
 - TheLanProject - https://thelanproject.co.uk
 - IronLan - https://ironlan.co.uk
 - Lan2Play - https://lan2play.de
+- Sund-Xplosion - https://sxlan.de
