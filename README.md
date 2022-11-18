@@ -6,6 +6,11 @@ https://eventula.com
 
 You can find the full documentation on https://eventula.lan2play.de .
 
+If you need help with setting up or using eventula or you want to help developing or translating, join our discord:
+
+
+[![Discord](https://discordapp.com/api/guilds/748086853449810013/widget.png?style=banner3)](https://discord.gg/zF5C9WPWFq)
+
 If you are using this please consider signing up to eventula for event mapping.
 
 > **Warning**

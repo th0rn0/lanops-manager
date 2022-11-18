@@ -17,6 +17,10 @@ https://eventula.com
 
 If you are using this please consider signing up to eventula for event mapping.
 
+If you need help with setting up or using eventula, join our discord:
+
+.. image:: https://discordapp.com/api/guilds/748086853449810013/widget.png?style=banner3
+   :target: https://discord.gg/zF5C9WPWFq
 
 
 .. toctree::

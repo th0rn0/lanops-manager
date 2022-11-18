@@ -8,6 +8,12 @@ If you encounter serious errors while using eventula and you are not able to fix
 
 If you plan to add a feature to eventula, please open an issue as well so no one has to do work when someone already working on something.
 
+You can also join our discord to get in contact with us and the other contributors:
+
+
+.. image:: https://discordapp.com/api/guilds/748086853449810013/widget.png?style=banner3
+   :target: https://discord.gg/zF5C9WPWFq
+
 
 Documentation
 --------------
