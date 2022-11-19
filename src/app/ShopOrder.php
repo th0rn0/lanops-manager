@@ -96,7 +96,6 @@ class ShopOrder extends Model
         return $orders;
     }
 
-
     /**
      * Check if Order has Shipping Details
      * @return Boolean
