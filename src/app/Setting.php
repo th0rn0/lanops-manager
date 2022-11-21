@@ -474,7 +474,7 @@ class Setting extends Model
                 break;
             case 'EUR':
                 $symbol = '€';
-                break;            
+                break;
             case 'DKK':
                 $symbol = 'kr.';
                 break;
@@ -964,7 +964,6 @@ class Setting extends Model
         }
         return true;
     }
-
 
     /**
      * Get Shop Status
