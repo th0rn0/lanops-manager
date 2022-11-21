@@ -48,7 +48,7 @@ class EventTournamentMatchServer extends Model
     {
         return $this->belongsTo('App\GameServer');
     }
-    
+
     public function eventTournament()
     {
         return $this->belongsTo('App\EventTournament', 'event_tournament_id', 'id');
@@ -67,7 +67,7 @@ class EventTournamentMatchServer extends Model
             ]
         ];
     }
-    
+
     /**
      * Get the route key for the model.
      *
@@ -87,6 +87,4 @@ class EventTournamentMatchServer extends Model
     {
         return EventTournamentMatchServer::where('challonge_match_id', $challongeMatchId)->first();
     }
-
-
 }
