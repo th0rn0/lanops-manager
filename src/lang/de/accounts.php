@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Text/Messages Lines
@@ -48,14 +46,14 @@ return [
     'confirm_remove_account' => 'Bist du sicher dass du deinen Account löschen möchtest?',
     'remove_account_all' => 'Alle',
     'remove_account_not' => 'nicht',
-    'remove_account_line1' => 'Once it is gone... It is s gone, puff... Aaaannnd it is gone!',
+    'remove_account_line1' => 'Wenn es weg ist... Dann ist es weg, puff... Uuuund es it weg!',
     'remove_account_line2' => 'Benutzereinträge werden gelöscht.',
-    'remove_account_line3' => 'Tickets für kommende Veranstaltungen werden nichtig',
-    'remove_account_line4' => 'Tickets die dir geschenkt wurden werden nichtig',
-    'remove_account_line5_1' => 'Tickets die dir geschenkt wurden werden',
-    'remove_account_line5_2' => 'an den schenkenden zurück gegeben',
+    'remove_account_line3' => 'Tickets für kommende Veranstaltungen werden nichtig.',
+    'remove_account_line4' => 'Tickets die dir geschenkt wurden werden nichtig.',
+    'remove_account_line5_1' => 'Tickets die dir geschenkt wurden, werden',
+    'remove_account_line5_2' => 'an den Schenkenden zurück gegeben',
     'remove_account_line6_1' => 'Rückerstattungen für verfallene Tickets gibt es',
-    'remove_account_line6_2' => '',
+    'remove_account_line6_2' => 'wird gegeben für alle verfallenen Tickets.',
     'remove_account_line7' => 'Beim klick auf Bestätigen erklärst du dich mit diesen Umständen einverstanden.',
     'remove_account_accept' => 'Bestätigen',
     'remove_account_cancel' => 'Abbrechen',
@@ -68,7 +66,7 @@ return [
     'ssochangeemailmessage' => 'Wenn diese Email Adresse nicht mehr korrekt ist, kannst du sie hier ändern!',
     'ssodontemailmessage' => 'Deine eingetragene Email kann nicht geändert werden, sollte das Probleme verursachen, kontaktiere bitte einen Administrator!',
     'ssopasswordmessage' => 'Um diese Authentifizierungsmöglichkeit zu entfernen, setze bitte ein Kennwort!',
-    'ssochangpasswordmessage' => 'Wenn du dich an dein gesetztes Passwort nicht erinnern kannst, kannst du es hier ändern.',
+    'ssochangpasswordmessage' => 'Wenn du dich an dein Passwort nicht erinnern kannst, kannst du es hier ändern.',
     'tokens' => 'Tokens',
     'token_id' => 'Token ID',
     'token_name' => 'Token Name',
@@ -93,4 +91,5 @@ return [
     'new_token_wizzard_success_3' => 'Er wird nur einmal angezeigt, also bewahre ihn sicher auf.',
     'new_token_wizzard_del_failed' => 'Das Löschen des alten Tokens ist fehlgeschlagen. Bitte versuche es noch einmal.',
     'new_token_wizzard_creation_failed' => 'Das Erstellen des Tokens ist fehlgeschlagen. Bitte versuche es noch einmal.',
+    'new_token_wizzard_clickoncallback' => 'Du kannst auf Zurück verbinden klicken oder den Token manuell kopieren.',
 ];
