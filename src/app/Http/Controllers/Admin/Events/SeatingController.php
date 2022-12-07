@@ -162,7 +162,12 @@ class SeatingController extends Controller
         }
 
         if ($request->file('image') !== null) {
-            Storage::delete($seatingPlan->image_path);
+            
+            if (isset($seatingPlan->image_path) && $seatingPlan->image_path != "")
+            {
+                Storage::delete($seatingPlan->image_path);
+            }
+
             $seatingPlan->image_path = str_replace(
                 'public/',
                 '/storage/',
