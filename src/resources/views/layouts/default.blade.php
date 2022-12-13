@@ -152,7 +152,7 @@
 						</div>
 					</div>
 					<div class="col-lg-12 text-center">
-						<p>Powered By <a href="https://eventula.com">Eventula Event Manager</a></p>
+						<p>Powered By <a href="https://github.com/Lan2Play/eventula-manager">Eventula Event Manager</a></p>
 					</div>
 				</div>
 			</div>
