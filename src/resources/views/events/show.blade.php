@@ -646,7 +646,7 @@
 	</div>
 	@endif
 
-	@if (!$event->private_participants || !$user->getAllTickets($event->id)->isEmpty() )
+	@if (!$event->private_participants || ($user && !$user->getAllTickets($event->id)->isEmpty() ))
 		<!-- ATTENDEES -->
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="attendees"></a>
