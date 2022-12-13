@@ -124,6 +124,13 @@
 									{{ Form::checkbox('online_event', null, $event->online_event, array('id'=>'online_event')) }} Online Event (allow tournament registration and home redirection without being signed in to the event)
 								</label>
 						</div>
+					</div>						
+					<div class="form-group">
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('private_participants', null, $event->private_participants, array('id'=>'private_participants')) }} Private participants (show participants only to participants)
+								</label>
+						</div>
 					</div>					
 					<div class="form-group">
 						<div class="form-check">
