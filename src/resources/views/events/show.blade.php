@@ -33,7 +33,7 @@
 						@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())) )
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#seating">@lang('events.seating')</a></li>
 						@endif
-						@if (!$event->private_participants || !$user->getAllTickets($event->id)->isEmpty() )
+						@if (!$event->private_participants || ($user && !$user->getAllTickets($event->id)->isEmpty()) )
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#attendees">@lang('events.attendees')</a></li>
 						@endif
 						@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
