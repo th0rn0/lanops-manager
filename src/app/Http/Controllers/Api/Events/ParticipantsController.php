@@ -34,7 +34,13 @@ class ParticipantsController extends Controller
             abort(404);
         }
 
+        if ($event->private_participants)
+        {
+            abort(403); 
+        }
+
         $return = array();
+
         foreach ($event->eventParticipants as $participant) {
             // $x["id"] = $participant->id;
             // $x["user_id"] = $participant->user_id;

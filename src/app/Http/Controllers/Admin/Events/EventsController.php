@@ -96,6 +96,7 @@ class EventsController extends Controller
         $event->event_venue_id              = @$request->venue;
         $event->capacity                    = $request->capacity;
         $event->online_event  = ($request->online_event ? true : false);
+        $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
 
         if (!$event->save()) {
@@ -190,6 +191,7 @@ class EventsController extends Controller
         }
 
         $event->online_event  = ($request->online_event ? true : false);
+        $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
 
         if (isset($request->capacity)) {
