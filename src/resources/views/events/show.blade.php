@@ -33,7 +33,9 @@
 						@if (!$event->seatingPlans->isEmpty() && (in_array('PUBLISHED', $event->seatingPlans->pluck('status')->toArray()) || in_array('PREVIEW', $event->seatingPlans->pluck('status')->toArray())) )
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#seating">@lang('events.seating')</a></li>
 						@endif
+						@if (!$event->private_participants || !$user->getAllTickets($event->id)->isEmpty() )
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#attendees">@lang('events.attendees')</a></li>
+						@endif
 						@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 						<li class="nav-item" style="font-size:15px; font-weight:bold;"><a class="nav-link" href="#tournaments">@lang('events.tournaments')</a></li>
 						@endif
@@ -644,55 +646,59 @@
 	</div>
 	@endif
 
-	<!-- ATTENDEES -->
-	<div class="pb-2 mt-4 mb-4 border-bottom">
-		<a name="attendees"></a>
-		<h3><i class="fas fa-users mr-3"></i>@lang('events.attendees')</h3>
-	</div>
-	<table class="table table-striped">
-		<thead>
-			<th width="15%">
-			</th>
-			<th>
-				@lang('events.user')
-			</th>
-			<th>
-				@lang('events.name')
-			</th>
-			<th>
-				@lang('events.seat')
-			</th>
-		</thead>
-		<tbody>
-			@foreach ($event->eventParticipants as $participant)
-			<tr>
-				<td>
-					<img class="img-fluid rounded img-small" style="max-width: 30%;" alt="{{ $participant->user->username}}'s Avatar" src="{{ $participant->user->avatar }}">
-				</td>
-				<td style="vertical-align: middle;">
-					{{ $participant->user->username }}
-					@if ($participant->user->steamid)
-					- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
-					@endif
-				</td>
-				<td style="vertical-align: middle;">
-					{{$participant->user->firstname}}
-				</td>
-				<td style="vertical-align: middle;">
-					@if ($participant->user->hasSeatableTicket($event->id))
-					@if ($participant->seat)
-					{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
-					@else
-					@lang('events.notseated')
-					@endif
-					@else
-					@lang('events.noseatableticketlist')
-					@endif
-				</td>
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
+	@if (!$event->private_participants || !$user->getAllTickets($event->id)->isEmpty() )
+		<!-- ATTENDEES -->
+		<div class="pb-2 mt-4 mb-4 border-bottom">
+			<a name="attendees"></a>
+			<h3><i class="fas fa-users mr-3"></i>@lang('events.attendees')</h3>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<th width="15%">
+				</th>
+				<th>
+					@lang('events.user')
+				</th>
+				<th>
+					@lang('events.name')
+				</th>
+				<th>
+					@lang('events.seat')
+				</th>
+			</thead>
+			<tbody>
+				@foreach ($event->eventParticipants as $participant)
+				<tr>
+					<td>
+						<img class="img-fluid rounded img-small" style="max-width: 30%;" alt="{{ $participant->user->username}}'s Avatar" src="{{ $participant->user->avatar }}">
+					</td>
+					<td style="vertical-align: middle;">
+						{{ $participant->user->username }}
+						@if ($participant->user->steamid)
+						- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+						@endif
+					</td>
+					<td style="vertical-align: middle;">
+						{{$participant->user->firstname}}
+					</td>
+					<td style="vertical-align: middle;">
+						@if ($participant->user->hasSeatableTicket($event->id))
+						@if ($participant->seat)
+						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
+						@else
+						@lang('events.notseated')
+						@endif
+						@else
+						@lang('events.noseatableticketlist')
+						@endif
+					</td>
+				</tr>
+				@endforeach
+			</tbody>
+		</table>
+	@endif
+
+
 </div>
 
 <!-- Seat Modal -->

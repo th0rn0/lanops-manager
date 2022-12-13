@@ -6,7 +6,9 @@
 		@if (isset($event) && !$event->timetables->isEmpty())
 			<a class="dropdown-item" href="/events/{{ Helpers::getNextEventSlug() }}#timetable">@lang('layouts.events_navi_timetable')</a>
 		@endif
+		@if (!$event->private_participants || !$user->getAllTickets($event->id)->isEmpty() )
 		<a class="dropdown-item" href="/events/{{ Helpers::getNextEventSlug() }}#attendees">@lang('layouts.events_navi_attendees')</a>
+		@endif
 		@if (isset($event) && !$event->tournaments->isEmpty() && config('challonge.api_key') != null)
 			<a class="dropdown-item" href="/events/{{ Helpers::getNextEventSlug() }}#tournaments">@lang('layouts.events_navi_tournaments')</a>
 		@endif
