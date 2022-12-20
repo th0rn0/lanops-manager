@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a006cf03204eb09db98fe39fc36f859a",
+    "content-hash": "ae7f3f1cd134e71184ba67ffff923982",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -6522,16 +6522,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v6.2.0",
+            "version": "v6.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "153540b6ed72eecdcb42dc847f8d8cf2e2516e8e"
+                "reference": "7054ad466f836309aef511789b9c697bc986d8ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/153540b6ed72eecdcb42dc847f8d8cf2e2516e8e",
-                "reference": "153540b6ed72eecdcb42dc847f8d8cf2e2516e8e",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/7054ad466f836309aef511789b9c697bc986d8ce",
+                "reference": "7054ad466f836309aef511789b9c697bc986d8ce",
                 "shasum": ""
             },
             "require": {
@@ -6587,7 +6587,7 @@
             "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v6.2.0"
+                "source": "https://github.com/symfony/http-client/tree/v6.2.2"
             },
             "funding": [
                 {
@@ -6603,7 +6603,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-11-14T10:13:36+00:00"
+            "time": "2022-12-14T16:11:27+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
