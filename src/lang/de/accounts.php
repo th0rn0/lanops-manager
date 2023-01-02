@@ -53,7 +53,7 @@ return [
     'remove_account_line5_1' => 'Tickets die dir geschenkt wurden, werden',
     'remove_account_line5_2' => 'an den Schenkenden zurück gegeben',
     'remove_account_line6_1' => 'Rückerstattungen für verfallene Tickets gibt es',
-    'remove_account_line6_2' => 'wird gegeben für alle verfallenen Tickets.',
+    'remove_account_line6_2' => '',
     'remove_account_line7' => 'Beim klick auf Bestätigen erklärst du dich mit diesen Umständen einverstanden.',
     'remove_account_accept' => 'Bestätigen',
     'remove_account_cancel' => 'Abbrechen',
