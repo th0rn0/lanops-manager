@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d970602ca7ad645525d1692634ab1ed2",
+    "content-hash": "3a1d16a19279fa1cb06172ef90650dc4",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1314,16 +1314,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.13.3",
+            "version": "8.13.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "f40e7696c207ec37465a9e841dd9d3b0a8e9c781"
+                "reference": "b2cebcf2b8d3e194b692d8bae2a5b79f5366674c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/f40e7696c207ec37465a9e841dd9d3b0a8e9c781",
-                "reference": "f40e7696c207ec37465a9e841dd9d3b0a8e9c781",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/b2cebcf2b8d3e194b692d8bae2a5b79f5366674c",
+                "reference": "b2cebcf2b8d3e194b692d8bae2a5b79f5366674c",
                 "shasum": ""
             },
             "require": {
@@ -1382,7 +1382,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2022-12-22T08:56:17+00:00"
+            "time": "2023-01-09T09:44:18+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -2948,63 +2948,6 @@
                 }
             ],
             "time": "2023-01-06T16:34:48+00:00"
-        },
-        {
-            "name": "league/iso3166",
-            "version": "4.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/iso3166.git",
-                "reference": "a0dd2a1d956f85811f9c667a1744d822fb2c63d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/iso3166/zipball/a0dd2a1d956f85811f9c667a1744d822fb2c63d8",
-                "reference": "a0dd2a1d956f85811f9c667a1744d822fb2c63d8",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\ISO3166\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Bast",
-                    "email": "rob.bast@gmail.com"
-                }
-            ],
-            "description": "ISO 3166-1 PHP Library",
-            "homepage": "https://github.com/thephpleague/iso3166",
-            "keywords": [
-                "3166",
-                "3166-1",
-                "ISO 3166",
-                "countries",
-                "iso",
-                "library"
-            ],
-            "support": {
-                "issues": "https://github.com/thephpleague/iso3166/issues",
-                "source": "https://github.com/thephpleague/iso3166"
-            },
-            "time": "2022-09-07T09:14:19+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -4637,16 +4580,16 @@
         },
         {
             "name": "propaganistas/laravel-phone",
-            "version": "4.4.0",
+            "version": "4.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Propaganistas/Laravel-Phone.git",
-                "reference": "ba5aa49226793faf4bd37b38bd627d49269611d9"
+                "reference": "945c34de77d5a80d01506e7f2220de4a769b8d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/ba5aa49226793faf4bd37b38bd627d49269611d9",
-                "reference": "ba5aa49226793faf4bd37b38bd627d49269611d9",
+                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/945c34de77d5a80d01506e7f2220de4a769b8d75",
+                "reference": "945c34de77d5a80d01506e7f2220de4a769b8d75",
                 "shasum": ""
             },
             "require": {
@@ -4654,7 +4597,6 @@
                 "illuminate/contracts": "^8.9|^9.0",
                 "illuminate/support": "^8.0|^9.0",
                 "illuminate/validation": "^8.0|^9.0",
-                "league/iso3166": "^2.0|^3.0|^4.0",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
@@ -4697,9 +4639,15 @@
             ],
             "support": {
                 "issues": "https://github.com/Propaganistas/Laravel-Phone/issues",
-                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/4.4.0"
+                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/4.4.1"
             },
-            "time": "2022-11-10T09:52:44+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/Propaganistas",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-09T10:06:12+00:00"
         },
         {
             "name": "psr/cache",
