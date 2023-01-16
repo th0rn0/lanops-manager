@@ -40,7 +40,7 @@
         "symfony/routing": "6.2.3",
         "sirprize/postal-code-validator": "1.3.10",
         "artesaos/seotools": "1.0.0",
-        "spatie/laravel-cookie-consent": "3.2.2",
+        "spatie/laravel-cookie-consent": "3.2.3",
         "xpaw/php-source-query-class": "2.1.0",
         "maniaplanet/dedicated-server-api": "dev-master",
         "laravel/ui": "4.2.0",
