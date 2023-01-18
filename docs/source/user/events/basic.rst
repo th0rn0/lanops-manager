@@ -79,7 +79,7 @@ It will look something like that:
 
 
 
-The Online event setting is to control the sign up policy for the tournaments  and the redirection to the events live homepage for attabdees once the event is live.
+The Online event setting is to control the sign up policy for the tournaments  and the redirection to the events live homepage for attandees once the event is live.
 If you dont enable online event, you have to check in all attandees before they are redirected to the events live page and before they can register for tournaments.
 If you enable Online Event the tournament registration can be done immediatly after a Ticket for the event is bought and the redirection to the events live page is only based on the starting time of the event. 
 
