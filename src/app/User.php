@@ -113,8 +113,31 @@ class User extends Authenticatable implements MustVerifyEmail
         {
             $clauses = ['user_id' => $this->id, 'signed_in' => true];
         }
-        $this->active_event_participant = EventParticipant::whereRelation('purchase', 'status', '=', 'Success')->where($clauses)->orderBy('updated_at', 'DESC')->first();
-        Debugbar::addMessage("active_event_participant: ", 'setActiveEventParticipant');
+
+        $payedparticipant = EventParticipant::whereRelation('purchase', 'status', '=', 'Success')->where($clauses)->orderBy('updated_at', 'DESC')->first();
+        $freeparticipant = EventParticipant::where('free', true)->where($clauses)->orderBy('updated_at', 'DESC')->first();
+
+
+        if (isset($payedparticipant) && isset($freeparticipant))
+        {
+            if ($payedparticipant->updated_at->greaterThan($freeparticipant->updated_at))
+            {
+                $this->active_event_participant = $payedparticipant;
+            }
+            else
+            {
+                $this->active_event_participant = $freeparticipant;
+            }
+        }
+        if (!isset($payedparticipant) && isset($freeparticipant))
+        {
+            $this->active_event_participant = $freeparticipant;
+        }        
+        if (isset($payedparticipant) && !isset($freeparticipant))
+        {
+            $this->active_event_participant = $payedparticipant;
+        }
+
         Debugbar::addMessage("active_event_participant: " . json_encode($this->active_event_participant), 'setActiveEventParticipant');
 
     }
