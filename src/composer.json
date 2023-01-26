@@ -44,7 +44,7 @@
         "xpaw/php-source-query-class": "2.1.0",
         "maniaplanet/dedicated-server-api": "dev-master",
         "laravel/ui": "4.2.0",
-        "spatie/laravel-database-mail-templates": "3.5.0",
+        "spatie/laravel-database-mail-templates": "3.5.1",
         "laravel/sanctum": "3.2.1",
         "propaganistas/laravel-phone": "4.4.3",
         "symfony/mailgun-mailer": "6.2.5",
