@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "911ba3eb7b46892b9ed7be2e8c2aa073",
+    "content-hash": "aee674e55515db3d8921ca8706d6bd2a",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -4581,16 +4581,16 @@
         },
         {
             "name": "propaganistas/laravel-phone",
-            "version": "4.4.3",
+            "version": "4.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Propaganistas/Laravel-Phone.git",
-                "reference": "8debcc57037c21e7e45d9f4c9439079e6b80a15d"
+                "reference": "fd6dcd3b6368045af31bd1cc4d311d8f812b6522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/8debcc57037c21e7e45d9f4c9439079e6b80a15d",
-                "reference": "8debcc57037c21e7e45d9f4c9439079e6b80a15d",
+                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/fd6dcd3b6368045af31bd1cc4d311d8f812b6522",
+                "reference": "fd6dcd3b6368045af31bd1cc4d311d8f812b6522",
                 "shasum": ""
             },
             "require": {
@@ -4640,7 +4640,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Propaganistas/Laravel-Phone/issues",
-                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/4.4.3"
+                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/4.4.4"
             },
             "funding": [
                 {
@@ -4648,7 +4648,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-26T13:02:08+00:00"
+            "time": "2023-01-27T07:39:03+00:00"
         },
         {
             "name": "psr/cache",
