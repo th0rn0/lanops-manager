@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e1902bddd7754aa6e01a6047fa5753a",
+    "content-hash": "2b6344233eec966412aa02fab7d0b645",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -4582,28 +4582,28 @@
         },
         {
             "name": "propaganistas/laravel-phone",
-            "version": "5.0.2",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Propaganistas/Laravel-Phone.git",
-                "reference": "aa95167a23c080ca98020fae32b4c7978113f7af"
+                "reference": "32aa5ed857a9a6c1a80a0ebdbff4676f2f8e37cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/aa95167a23c080ca98020fae32b4c7978113f7af",
-                "reference": "aa95167a23c080ca98020fae32b4c7978113f7af",
+                "url": "https://api.github.com/repos/Propaganistas/Laravel-Phone/zipball/32aa5ed857a9a6c1a80a0ebdbff4676f2f8e37cc",
+                "reference": "32aa5ed857a9a6c1a80a0ebdbff4676f2f8e37cc",
                 "shasum": ""
             },
             "require": {
                 "giggsey/libphonenumber-for-php": "^7.0|^8.0",
-                "illuminate/contracts": "^9.0",
-                "illuminate/support": "^9.0",
-                "illuminate/validation": "^9.0",
+                "illuminate/contracts": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "illuminate/validation": "^9.0|^10.0",
                 "php": "^8.0"
             },
             "require-dev": {
                 "laravel/pint": "^1.4",
-                "nunomaduro/larastan": "^1.0",
+                "nunomaduro/larastan": "^2.4",
                 "orchestra/testbench": "*",
                 "phpunit/phpunit": "^9.5.10"
             },
@@ -4642,7 +4642,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Propaganistas/Laravel-Phone/issues",
-                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/5.0.2"
+                "source": "https://github.com/Propaganistas/Laravel-Phone/tree/5.0.3"
             },
             "funding": [
                 {
@@ -4650,7 +4650,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-01T15:21:51+00:00"
+            "time": "2023-02-04T16:13:42+00:00"
         },
         {
             "name": "psr/cache",
