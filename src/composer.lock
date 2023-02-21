@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "01d2b99d4a902396e7499997dc5d6e3c",
+    "content-hash": "f8d79c4b191570fc14bbbe330083c948",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -5612,20 +5612,20 @@
         },
         {
             "name": "sirprize/postal-code-validator",
-            "version": "1.3.10",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirprize/postal-code-validator.git",
-                "reference": "cea6941a7453047992e7cce7084ec7b98e9aec95"
+                "reference": "7f730fd8d4d30a669ed7ac157bee91c00cd06f26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirprize/postal-code-validator/zipball/cea6941a7453047992e7cce7084ec7b98e9aec95",
-                "reference": "cea6941a7453047992e7cce7084ec7b98e9aec95",
+                "url": "https://api.github.com/repos/sirprize/postal-code-validator/zipball/7f730fd8d4d30a669ed7ac157bee91c00cd06f26",
+                "reference": "7f730fd8d4d30a669ed7ac157bee91c00cd06f26",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.0"
@@ -5633,7 +5633,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.5.x-dev"
                 }
             },
             "autoload": {
@@ -5660,9 +5660,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sirprize/postal-code-validator/issues",
-                "source": "https://github.com/sirprize/postal-code-validator/tree/1.3.10"
+                "source": "https://github.com/sirprize/postal-code-validator/tree/1.4.0"
             },
-            "time": "2022-12-24T16:56:21+00:00"
+            "time": "2023-02-18T15:20:58+00:00"
         },
         {
             "name": "spatie/backtrace",
