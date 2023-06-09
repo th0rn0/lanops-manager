@@ -1,6 +1,7 @@
 *.sublime-project
 *.sublime-workspace
 resources/certs/*
+resources/wait
 
 \.env
 
