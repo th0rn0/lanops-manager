@@ -259,7 +259,7 @@ npm-install:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
     --user 82:82 \
-	node:20.2 /bin/bash -ci "npm install --no-audit && npm run production"
+	node:20.3 /bin/bash -ci "npm install --no-audit && npm run production"
 
 # Install JS Dependencies via NPM
 npm-install-gh:
@@ -267,7 +267,7 @@ npm-install-gh:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
     --user 0 \
-	node:20.2 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(userId):$(groupId) /usr/src/app"
+	node:20.3 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(userId):$(groupId) /usr/src/app"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
@@ -275,7 +275,7 @@ npm-install-dev:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm install --no-audit && npm run dev"
+	node:20.3 /bin/bash -ci "npm install --no-audit && npm run dev"
 
 #list npm package - usage make npm-ls module=module
 npm-ls:
@@ -283,7 +283,7 @@ npm-ls:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm ls $(module)"
+	node:20.3 /bin/bash -ci "npm ls $(module)"
 
 #update npm packages - usage make npm-update
 npm-update:
@@ -291,7 +291,7 @@ npm-update:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm update"
+	node:20.3 /bin/bash -ci "npm update"
 
 #audit npm packages - usage make npm-audit
 npm-audit:
@@ -299,7 +299,7 @@ npm-audit:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm audit"
+	node:20.3 /bin/bash -ci "npm audit"
 
 #audit fix npm packages - usage make npm-audit-fix
 npm-audit-fix:
@@ -307,7 +307,7 @@ npm-audit-fix:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm audit fix"
+	node:20.3 /bin/bash -ci "npm audit fix"
 
 
 #list outdated npm packages
@@ -316,7 +316,7 @@ npm-outdated:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm outdated"
+	node:20.3 /bin/bash -ci "npm outdated"
 
 #rebuild node
 npm-rebuild:
@@ -324,7 +324,7 @@ npm-rebuild:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm rebuild"
+	node:20.3 /bin/bash -ci "npm rebuild"
 
 # npm mix Runner
 mix:
@@ -332,14 +332,14 @@ mix:
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
     --user 82:82 \
-	node:20.2 /bin/bash -ci "npm run production"
+	node:20.3 /bin/bash -ci "npm run production"
 
 mix-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
 	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
 	$(user) \
-	node:20.2 /bin/bash -ci "npm run development"
+	node:20.3 /bin/bash -ci "npm run development"
 
 # Purge Containers
 purge-containers:
