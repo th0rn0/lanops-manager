@@ -108,7 +108,7 @@ database-rollback:
 
 # show newly generated Application Key
 generate-key-show-newkey:
-	docker run --rm composer /bin/bash -c "echo 'generating key..' && composer create-project laravel/laravel example-app >/dev/null 2>/dev/null && cd example-app && php artisan key:generate >/dev/null 2>/dev/null && cat .env | grep APP_KEY=b"
+	docker run --rm composer:2.0 /bin/bash -c "echo 'generating key..' && composer create-project laravel/laravel example-app >/dev/null 2>/dev/null && cd example-app && php artisan key:generate >/dev/null 2>/dev/null && cat .env | grep APP_KEY=b"
 
 # Generate Application key
 generate-key-prd:
@@ -188,42 +188,42 @@ composer-install:
 	docker run --rm --name compose-maintainence --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user 82:82 \
-    composer install --ignore-platform-reqs --no-scripts
+    composer:2.0 install --ignore-platform-reqs --no-scripts
 
 # Install Dev PHP Dependencies via Composer
 composer-install-dev:
 	docker run --rm --name compose-maintainence-dev --interactive \
     -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(shell id -u):$(shell id -g) \
-    composer install --ignore-platform-reqs --no-scripts --dev
+    composer:2.0 install --ignore-platform-reqs --no-scripts --dev
 
 # Update Dev PHP Dependencies via Composer
 composer-update:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(shell id -u):$(shell id -g) \
-    composer update --ignore-platform-reqs --no-scripts
+    composer:2.0 update --ignore-platform-reqs --no-scripts
 
 # list Composer outdated
 composer-outdated:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(shell id -u):$(shell id -g) \
-    composer outdated
+    composer:2.0 outdated
 
 # add PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(shell id -u):$(shell id -g) \
-    composer require $(module) --ignore-platform-reqs --no-scripts
+    composer:2.0 require $(module) --ignore-platform-reqs --no-scripts
 
 # add Dev PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep-dev:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
     --user $(shell id -u):$(shell id -g) \
-    composer require $(module) --ignore-platform-reqs --no-scripts --dev
+    composer:2.0 require $(module) --ignore-platform-reqs --no-scripts --dev
 
 # Install JS Dependencies via NPM
 npm-install:
