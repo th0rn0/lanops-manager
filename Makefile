@@ -1,37 +1,52 @@
-# Run local dev
-start-local-dev: env-file-dev app-build-clean-dev interactive
+# Initialize variables
+ifeq ($(OS),Windows_NT)
+currentDir = $(patsubst %/,%, $(subst /mnt, ,$(shell wsl wslpath -u $(strip $(dir $(realpath $(lastword $(MAKEFILE_LIST))))))))
+userId = $(shell wsl id -u)
+groupId = $(shell wsl id -g)
+else
+currentDir = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+userId = $(shell id -u)
+groupId = $(shell id -g)
+endif
 
-switch-database: purge-containers dev-database wait database-import stop interactive
+user = --user $(userId):$(groupId)
+
+ifeq ($(OS),Windows_NT)
+  DOCKER_COMPOSE=docker compose
+else
+ifneq ($(shell docker compose version 2>/dev/null),)
+  DOCKER_COMPOSE=docker compose
+else
+  DOCKER_COMPOSE=docker-compose
+endif
+endif
+
+
+# Run local dev
+start-local-dev: env-file-dev docker-lan app-build-clean-dev interactive
+
+switch-database: purge-containers dev-database wait-mysql database-import stop interactive
 
 dev:
-	docker-compose -f docker-compose-dev.yml up -d --build
-dev-local:
-	docker-compose -f docker-compose-dev.local.yml up -d --build
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml up -d --build
 
 dev-database:
-	docker-compose -f docker-compose-dev.yml up -d eventula_manager_database
-dev-database-local:
-	docker-compose -f docker-compose-dev.local.yml up -d eventula_manager_database
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml up -d eventula_manager_database
 
 # Debug
 interactive:
-	docker-compose -f docker-compose-dev.yml up
-interactive-local:
-	docker-compose -f docker-compose-dev.local.yml up
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml up
 
 # Stop all Containers
 stop:
-	docker-compose -f docker-compose-dev.yml stop
-stop-local:
-	docker-compose -f docker-compose-dev.local.yml stop
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop
 
 # Build from clean
-app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait database-migrate database-seed stop
-app-build-clean-local: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev-local wait database-migrate database-seed stop-local
+app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait-mysql database-migrate database-seed stop
 
 # Build dev from clean
-app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait database-migrate database-seed stop
-app-build-clean-local-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev-local wait database-migrate database-seed stop-local
+# app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait-mysql database-migrate database-seed stop
+app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait-mysql stop
 
 # Build Dependencies
 app-build-dep: composer-install npm-install mix
@@ -41,27 +56,40 @@ app-build-dep-dev: composer-install-dev npm-install-dev mix-dev
 
 # Make Documentation
 docs-html:
-	docker run --rm -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/docs:/docs lan2play/docker-sphinxbuild:latest
+	docker run --rm -v $(currentDir)/docs:/docs lan2play/docker-sphinxbuild:latest
 
 ###########
 # HELPERS #
 ###########
 
+docker-lan:
+ifeq ($(OS),Windows_NT)
+#not tested!
+ifeq ($(shell docker network ls --filter=NAME=lan | Measure-Object –Line),1)
+	docker network create lan
+endif
+else
+ifeq ($(shell docker network ls --filter=NAME=lan | wc -l),1)
+	docker network create lan
+endif
+endif
+
+
 # Make .env
 logs:
-	docker-compose logs -f
+	$(DOCKER_COMPOSE) logs -f
 
 # Make .env
 env-file-dev:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/localdir \
-    --user $(shell id -u):$(shell id -g) php:8-fpm-alpine /bin/sh -c " \
-	[ ! -f /localdir/src/.env ] && cp /localdir/.env.example /localdir/src/.env && sed -i \"s|UUID=82|UUID=$(shell id -u)|g\" /localdir/src/.env && sed -i \"s|GUID=82|GUID=$(shell id -g)|g\" /localdir/src/.env; exit 0"
+	-v $(currentDir):/localdir \
+    $(user) php:8-fpm-alpine /bin/sh -c " \
+	[ ! -f /localdir/src/.env ] && cp /localdir/.env.example /localdir/src/.env && sed -i \"s#UUID=82#UUID=$(userId)#g\" /localdir/src/.env && sed -i \"s#GUID=82#GUID=$(groupId)# g\" /localdir/src/.env; exit 0"
 
 # Make .env
 env-file-prd:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/localdir \
+	-v $(currentDir):/localdir \
     --user 82:82 php:8-fpm-alpine /bin/sh -c " \
 	[ ! -f /localdir/src/.env ] && cp /localdir/.env.example /localdir/src/.env; exit 0"
 
@@ -73,7 +101,7 @@ env-file-blank:
 # Move default images to Storage
 layout-images-prd:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
+	-v $(currentDir)/src:/app \
     --user 82:82 php:8-fpm-alpine /bin/sh -c " \
 	cp -r /app/resources/assets/images/* /app/storage/app/public/images/main/ && \
 	mv /app/storage/app/public/images/main/shop/* /app/storage/app/public/images/shop/"
@@ -81,8 +109,8 @@ layout-images-prd:
 # Move default images to Storage
 layout-images-dev:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) php:8-fpm-alpine /bin/sh -c " \
+	-v $(currentDir)/src:/app \
+    $(user) php:8-fpm-alpine /bin/sh -c " \
 	cp -r /app/resources/assets/images/* /app/storage/app/public/images/main/ && \
 	mv /app/storage/app/public/images/main/shop/* /app/storage/app/public/images/shop/"
 
@@ -113,14 +141,14 @@ generate-key-show-newkey:
 # Generate Application key
 generate-key-prd:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
+	-v $(currentDir)/src:/app \
     --user 82:82 -e DB_CONNECTION=sqlite php:8-fpm-alpine /bin/sh -c "touch /app/database/database.sqlite; cd /app && php artisan key:generate; rm -rf /app/database/database.sqlite"
 
 # Generate Application key
 generate-key-dev:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) -e DB_CONNECTION=sqlite php:8-fpm-alpine /bin/sh -c "touch /app/database/database.sqlite; cd /app && php artisan key:generate; rm -rf /app/database/database.sqlite"
+	-v $(currentDir)/src:/app \
+    $(user) -e DB_CONNECTION=sqlite php:8-fpm-alpine /bin/sh -c "touch /app/database/database.sqlite; cd /app && php artisan key:generate; rm -rf /app/database/database.sqlite"
 
 # Generate Settings - This will erase your current settings!
 generate-settings:
@@ -159,7 +187,7 @@ clear-cache:
 # Create Default Folder structure
 folder-structure-prd:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/src \
+	-v $(currentDir)/src:/src \
     --user 82:82 php:8-fpm-alpine /bin/sh -c " \
 	mkdir -p /src/storage/app/public/images/gallery/ && \
 	mkdir -p /src/storage/app/public/images/events/ && \
@@ -170,8 +198,8 @@ folder-structure-prd:
 
 folder-structure-dev:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/src \
-    --user $(shell id -u):$(shell id -g) php:8-fpm-alpine /bin/sh -c " \
+	-v $(currentDir)/src:/src \
+    $(user) php:8-fpm-alpine /bin/sh -c " \
 	mkdir -p /src/storage/app/public/images/gallery/ && \
 	mkdir -p /src/storage/app/public/images/events/ && \
 	mkdir -p /src/storage/app/public/images/venues/ && \
@@ -180,55 +208,55 @@ folder-structure-dev:
 	mkdir -p /src/storage/app/public/attachments/help/ "
 
 # Create SSL Keypair for Development
-ssh-keygen:
+ssl-keygen:
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout resources/certs/eventula_manager.key -out resources/certs/eventula_manager.crt
 
 # Install PHP Dependencies via Composer
 composer-install:
 	docker run --rm --name compose-maintainence --interactive \
-    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
+    --volume $(currentDir)/src:/app \
     --user 82:82 \
     composer:2.0 install --ignore-platform-reqs --no-scripts
 
 # Install Dev PHP Dependencies via Composer
 composer-install-dev:
 	docker run --rm --name compose-maintainence-dev --interactive \
-    -v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) \
+    -v $(currentDir)/src:/app \
+    $(user) \
     composer:2.0 install --ignore-platform-reqs --no-scripts --dev
 
 # Update Dev PHP Dependencies via Composer
 composer-update:
 	docker run --rm --name compose-maintainence-update --interactive \
-    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) \
+    --volume $(currentDir)/src:/app \
+    $(user) \
     composer:2.0 update --ignore-platform-reqs --no-scripts
 
 # list Composer outdated
 composer-outdated:
 	docker run --rm --name compose-maintainence-update --interactive \
-    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) \
+    --volume $(currentDir)/src:/app \
+    $(user) \
     composer:2.0 outdated
 
 # add PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep:
 	docker run --rm --name compose-maintainence-update --interactive \
-    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) \
+    --volume $(currentDir)/src:/app \
+    $(user) \
     composer:2.0 require $(module) --ignore-platform-reqs --no-scripts
 
 # add Dev PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep-dev:
 	docker run --rm --name compose-maintainence-update --interactive \
-    --volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/app \
-    --user $(shell id -u):$(shell id -g) \
+    --volume $(currentDir)/src:/app \
+    $(user) \
     composer:2.0 require $(module) --ignore-platform-reqs --no-scripts --dev
 
 # Install JS Dependencies via NPM
 npm-install:
 	docker run --rm --name js-maintainence --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
     --user 82:82 \
 	node:14.21 /bin/bash -ci "npm install --no-audit && npm run production"
@@ -237,87 +265,87 @@ npm-install:
 # Install JS Dependencies via NPM
 npm-install-gh:
 	docker run --rm --name js-maintainence --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
     --user 0 \
-	node:14.21 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(shell id -u):$(shell id -g) /usr/src/app"
+	node:14.21 /bin/bash -ci "npm install --no-audit && npm run production && chown -R $(userId):$(groupId) /usr/src/app"
 
 # Install Dev JS Dependencies via NPM
 npm-install-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm install --no-audit && npm run dev"
 
 #list npm package - usage make npm-ls module=module
 npm-ls:
 	docker run --rm --name js-maintainence-list --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm ls $(module)"
 
 #update npm packages - usage make npm-update
 npm-update:
 	docker run --rm --name js-maintainence-list --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm update"
 
 #audit npm packages - usage make npm-audit
 npm-audit:
 	docker run --rm --name js-maintainence-list --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm audit"
 
 #audit fix npm packages - usage make npm-audit-fix
 npm-audit-fix:
 	docker run --rm --name js-maintainence-list --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm audit fix"
 
 
 #list outdated npm packages
 npm-outdated:
 	docker run --rm --name js-maintainence-outdated --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm outdated"
 
 #rebuild node
 npm-rebuild:
 	docker run --rm --name js-maintainence-outdated --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm rebuild"
 
 # npm mix Runner
 mix:
 	docker run --rm --name js-maintainence-dev --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
     --user 82:82 \
 	node:14.21 /bin/bash -ci "npm run production"
 
 mix-dev:
 	docker run --rm --name js-maintainence-dev --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/usr/src/app \
+	-v $(currentDir)/src:/usr/src/app \
 	-w /usr/src/app \
-	--user $(shell id -u):$(shell id -g) \
+	$(user) \
 	node:14.21 /bin/bash -ci "npm run development"
 
 # Purge Containers
 purge-containers:
-	docker-compose -f docker-compose-dev.yml -p eventula_manager stop || true
-	docker-compose -f docker-compose-dev.yml -p eventula_manager rm -vf || true
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml -p eventula_manager stop || true
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml -p eventula_manager rm -vf || true
 	docker rm eventula_manager_app || true
 	docker rm eventula_manager_database || true
 	docker volume rm eventula_manager_database || true
@@ -325,8 +353,8 @@ purge-containers:
 # Purge Caches
 purge-cache:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/src \
-    --user $(shell id -u):$(shell id -g) php:8-fpm-alpine /bin/sh -c " \
+	-v $(currentDir)/src:/src \
+    $(user) php:8-fpm-alpine /bin/sh -c " \
 	rm -rf /src/storage/framework/cache/* && \
 	rm -rf /src/storage/framework/views/* && \
 	rm -rf /src/storage/framework/sessions/* && \
@@ -336,8 +364,8 @@ purge-cache:
 # Purge Caches
 purge-files:
 	docker run --rm --name compkeygen --interactive \
-	-v $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/src:/src \
-    --user $(shell id -u):$(shell id -g) php:8-fpm-alpine /bin/sh -c " \
+	-v $(currentDir)/src:/src \
+    $(user) php:8-fpm-alpine /bin/sh -c " \
 	rm -rf /src/vendor/ ; \
 	rm -rf /src/node_modules/ ; \
 	rm -rf /src/public/css/* ; \
@@ -381,7 +409,11 @@ database-show-foreign:
 
 # get @lang from blade usage make get-blade-lang blade=pathtoblade prefix=langprefix
 get-lang-blade:
-	cat $(blade) | grep -o "'$(prefix)\..*'" | sed "s|'||g" | sort | uniq | sed "s|.*\.|'|g" | sed -e "s/$$/' => '',/"
+	docker run --rm --name mysqlwaiter --interactive --network="lan" \
+	-e WAIT_HOSTS="eventula_manager_database:3306" \
+    $(user) php:8-fpm-alpine /bin/sh -c " \
+	cat $(blade) | grep -o \"'$(prefix)\..*'\" | sed \"s|'||g\" | sort | uniq | sed \"s|.*\.|'|g\" | sed -e \"s/$$/' => '',/\""
+
 
 # set installed in database
 set-installed:
@@ -391,10 +423,27 @@ set-installed:
 set-not-installed:
 	make database-command command="update settings set value=0 where setting='installed';"
 
-# Wait for containers to initialize
-wait:
-	sleep 30
+get-wait:
+ifneq ("$(wildcard $(currentDir)/resources/wait)","")
+	echo "wait exists"
+else
+	docker run --rm --name mysqlwaiter --interactive --network="lan" \
+	-e WAIT_HOSTS="eventula_manager_database:3306" \
+	-v $(currentDir):/usr/src/app \
+	$(user) php:8-fpm-alpine /bin/sh -c " \
+	wget -O /usr/src/app/resources/wait https://github.com/ufoscout/docker-compose-wait/releases/latest/download/wait && \
+	chmod +x /usr/src/app/resources/wait"
+endif
 
+# Wait for mysql to initialize
+wait-mysql: get-wait
+	docker run --rm --name mysqlwaiter --interactive --network="lan" \
+	-e WAIT_HOSTS="eventula_manager_database:3306" \
+	-v $(currentDir):/usr/src/app \
+	$(user) php:8-fpm-alpine /bin/sh -c " \
+	/usr/src/app/resources/wait &&\
+	sleep 45"
+	
 
 
 ###############
