@@ -232,6 +232,13 @@ composer-update:
     $(user) \
     composer:2.0 update --ignore-platform-reqs --no-scripts
 
+# list Composer outdated direct
+composer-outdated-direct:
+	docker run --rm --name compose-maintainence-update --interactive \
+    --volume $(currentDir)/src:/app \
+    $(user) \
+    composer:2.0 outdated -D
+
 # list Composer outdated
 composer-outdated:
 	docker run --rm --name compose-maintainence-update --interactive \
