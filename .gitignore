@@ -18,6 +18,9 @@ src/public/css/app\.css\.map
 src/public/css/font/*
 src/public/uploads/gallery/*
 src/public/storage
+src/public/css/*.css
+src/public/css/images/*
+src/public/js/*.js
 
 docs/build
 docker-compose.local.yml
