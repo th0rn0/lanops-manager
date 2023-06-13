@@ -365,11 +365,11 @@ class PaymentsController extends Controller
                 return Redirect::back();
             }
             $responseStripe = $response->getData();
-
+            
             $purchaseParams = [
                 'user_id'           => Auth::id(),
                 'type'              => 'Stripe',
-                'transaction_id'    => $response->getTransactionReference(),
+                'transaction_id'    => $response->getTransactionReference() ?? $response->getPaymentIntentReference(),
                 'token'             => $response->getPaymentIntentReference(),
                 'status'            => 'Success'
             ];
@@ -435,7 +435,7 @@ class PaymentsController extends Controller
                     $purchaseParams = [
                         'user_id'           => Auth::id(),
                         'type'              => 'Stripe',
-                        'transaction_id'    => $response->getTransactionReference(),
+                        'transaction_id'    => $response->getTransactionReference() ?? $response->getPaymentIntentReference(),
                         'token'             => $response->getPaymentIntentReference(),
                         'status'            => 'Success'
                     ];
