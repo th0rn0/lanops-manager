@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fac6d38902b1c99bb4d829e155da04e8",
+    "content-hash": "be95abdc8ba2efada6dfbc2dc348b48d",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -8552,16 +8552,16 @@
         },
         {
             "name": "team-reflex/challonge-php",
-            "version": "dev-master",
+            "version": "5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Lan2Play/ChallongePHP",
-                "reference": "973b1e888db90bd01c11c0d7c89fb5c471106b94"
+                "url": "https://github.com/teamreflex/ChallongePHP.git",
+                "reference": "397102b2a6f5708e299c0cbe2f217ef5adc43d9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lan2Play/ChallongePHP/zipball/973b1e888db90bd01c11c0d7c89fb5c471106b94",
-                "reference": "973b1e888db90bd01c11c0d7c89fb5c471106b94",
+                "url": "https://api.github.com/repos/teamreflex/ChallongePHP/zipball/397102b2a6f5708e299c0cbe2f217ef5adc43d9b",
+                "reference": "397102b2a6f5708e299c0cbe2f217ef5adc43d9b",
                 "shasum": ""
             },
             "require": {
@@ -8579,23 +8579,13 @@
                 "phpunit/phpunit": "^9.4",
                 "symfony/http-client": "^5.3"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Reflex\\Challonge\\": "src/Challonge"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -8606,7 +8596,11 @@
                 }
             ],
             "description": "PSR-18 compatible library to interface with the bracket generator Challonge.",
-            "time": "2023-06-13T16:34:34+00:00"
+            "support": {
+                "issues": "https://github.com/teamreflex/ChallongePHP/issues",
+                "source": "https://github.com/teamreflex/ChallongePHP/tree/5.0"
+            },
+            "time": "2023-06-13T18:31:51+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -11225,7 +11219,6 @@
     "stability-flags": {
         "webonyx/graphql-php": 20,
         "invisnik/laravel-steam-auth": 20,
-        "team-reflex/challonge-php": 20,
         "maniaplanet/dedicated-server-api": 20
     },
     "prefer-stable": false,
