@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f37415b8baed2346339edf3000d6108",
+    "content-hash": "fac6d38902b1c99bb4d829e155da04e8",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1320,16 +1320,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.13.13",
+            "version": "8.13.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "a8996558d694b1437678d27de80e37620367b8de"
+                "reference": "31b94ef2aa349b76bb725f375e9cfa2e398a1620"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/a8996558d694b1437678d27de80e37620367b8de",
-                "reference": "a8996558d694b1437678d27de80e37620367b8de",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/31b94ef2aa349b76bb725f375e9cfa2e398a1620",
+                "reference": "31b94ef2aa349b76bb725f375e9cfa2e398a1620",
                 "shasum": ""
             },
             "require": {
@@ -1388,7 +1388,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2023-06-05T07:39:05+00:00"
+            "time": "2023-06-13T08:08:40+00:00"
         },
         {
             "name": "giggsey/locale",
@@ -6069,66 +6069,6 @@
             "time": "2023-04-27T08:09:01+00:00"
         },
         {
-            "name": "stripe/stripe-php",
-            "version": "v8.12.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "1b7b1ea75c744b8a9f55a0942112f8e822a6a482"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/1b7b1ea75c744b8a9f55a0942112f8e822a6a482",
-                "reference": "1b7b1ea75c744b8a9f55a0942112f8e822a6a482",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "php": ">=5.6.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "3.5.0",
-                "phpstan/phpstan": "^1.2",
-                "phpunit/phpunit": "^5.7 || ^9.0",
-                "squizlabs/php_codesniffer": "^3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Stripe\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Stripe and contributors",
-                    "homepage": "https://github.com/stripe/stripe-php/contributors"
-                }
-            ],
-            "description": "Stripe PHP Library",
-            "homepage": "https://stripe.com/",
-            "keywords": [
-                "api",
-                "payment processing",
-                "stripe"
-            ],
-            "support": {
-                "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v8.12.0"
-            },
-            "time": "2022-07-25T14:42:34+00:00"
-        },
-        {
             "name": "symfony/console",
             "version": "v6.3.0",
             "source": {
@@ -8616,19 +8556,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Lan2Play/ChallongePHP",
-                "reference": "04861cca188ef5d40708490872ebf9e4b373bddd"
+                "reference": "973b1e888db90bd01c11c0d7c89fb5c471106b94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Lan2Play/ChallongePHP/zipball/04861cca188ef5d40708490872ebf9e4b373bddd",
-                "reference": "04861cca188ef5d40708490872ebf9e4b373bddd",
+                "url": "https://api.github.com/repos/Lan2Play/ChallongePHP/zipball/973b1e888db90bd01c11c0d7c89fb5c471106b94",
+                "reference": "973b1e888db90bd01c11c0d7c89fb5c471106b94",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "illuminate/collections": "~9| ~10",
                 "nyholm/psr7": "^1.6.1",
-                "php": "^8.0 | ^8.1 | ^8.2",
+                "php": "^8.1 | ^8.2",
                 "psr/http-client": "^1.0",
                 "psr/log": "^3.0",
                 "spatie/data-transfer-object": "^2.5"
@@ -8666,7 +8606,7 @@
                 }
             ],
             "description": "PSR-18 compatible library to interface with the bracket generator Challonge.",
-            "time": "2023-06-12T18:37:45+00:00"
+            "time": "2023-06-13T16:34:34+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
