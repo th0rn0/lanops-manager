@@ -204,6 +204,7 @@ class PaymentsController extends Controller
                 }
                 Session::put(Settings::getOrgName() . '-basket', $basket);
                 Session::save();
+                Session::reflash();
             }
         }
         // If Credit Redirect Straight to details page
@@ -286,6 +287,7 @@ class PaymentsController extends Controller
         }
         Session::put('params', $params);
         Session::save();
+        Session::reflash();
         if (!$processPaymentSkip) {
 
             if (config('app.debug')) {
