@@ -26,7 +26,7 @@ class PurchasesController extends Controller
     public function index()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::paginate(20));
+            ->withPurchases(Purchase::orderBy('created_at', 'asc')->paginate(20));
     }
 
     /**
@@ -36,7 +36,7 @@ class PurchasesController extends Controller
     public function showShop()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::has('order')->paginate(20));
+            ->withPurchases(Purchase::has('order')->orderBy('created_at', 'asc')->paginate(20));
     }
 
     /**
@@ -46,7 +46,7 @@ class PurchasesController extends Controller
     public function showEvent()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::has('participants')->paginate(20));
+            ->withPurchases(Purchase::has('participants')->orderBy('created_at', 'asc')->paginate(20));
     }
 
     /**

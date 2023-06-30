@@ -109,7 +109,7 @@
 						@endforeach
 					</tbody>
 				</table>
-				{{ $purchases->appends(['sort' => 'created_at'])->links() }}
+				{{ $purchases->links() }}
 			</div>
 		</div>
 	</div>
