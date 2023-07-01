@@ -25,11 +25,27 @@ class UsersController extends Controller
      * Show Users Index Page
      * @return View
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->searchquery != "")
+        {
+            return view('admin.users.index')
+            ->withUser(Auth::user())
+            ->withUsers(User::where('username', 'LIKE', '%'.$request->searchquery.'%')
+                ->orWhere('firstname', 'LIKE', '%'.$request->searchquery.'%')
+                ->orWhere('surname', 'LIKE', '%'.$request->searchquery.'%')
+                ->orWhere('username_nice', 'LIKE', '%'.$request->searchquery.'%')
+                ->orWhere('steamname', 'LIKE', '%'.$request->searchquery.'%')
+                ->orWhere('email', 'LIKE', '%'.$request->searchquery.'%')
+                ->orWhere('phonenumber', 'LIKE', '%'.$request->searchquery.'%')
+                ->paginate(20)->appends(['searchquery' =>  $request->searchquery])
+        
+        );            
+        }
+
         return view('admin.users.index')
             ->withUser(Auth::user())
-            ->withUsers(User::paginate(20));
+            ->withUsers(User::paginate(20)->appends(['searchquery' =>  $request->searchquery]));
     }
 
     /**
