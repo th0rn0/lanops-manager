@@ -54,7 +54,15 @@ class Helpers
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        return new LengthAwarePaginator(
+            $items->forPage($page, $perPage),
+            $items->count(),
+            $perPage,
+            $page,
+            [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+            ]
+        );
     }
 
 
@@ -63,13 +71,24 @@ class Helpers
      * @param  string  $order
      * @param  integer $limit
      * @param  boolean $obj   Return as Object
+     * @param  string $pagename
      * @return Array|Object
      */
-    public static function getEvents($order = 'DESC', $limit = 0, $obj = false)
+    public static function getEvents($order = 'DESC', $limit = 0, $obj = false, $pagename = "")
     {
         $return = array();
         if ($limit != 0) {
-            $events = \App\Event::orderBy('start', $order)->paginate($limit);
+
+            if ($pagename != "")
+            {
+                $events = \App\Event::orderBy('start', $order)->paginate($limit, ['*'], $pagename);
+            }
+            else
+            {
+                $events = \App\Event::orderBy('start', $order)->paginate($limit);
+            }
+
+
         } else {
             $events = \App\Event::orderBy('start', 'DESC')->get();
         }

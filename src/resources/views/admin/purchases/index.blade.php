@@ -71,7 +71,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($purchases->reverse() as $purchase)
+						@foreach ($purchases as $purchase)
 							@php
 								$statusColor = 'warning';
 								if ($purchase->status == 'Success') {
