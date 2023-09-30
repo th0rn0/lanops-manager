@@ -15,6 +15,9 @@
 		@if ($album->event)
 			<h4>From {{ $album->event->display_name }}</h4>
 		@endif
+		@if ($album->description)
+			<p>{{ $album->description }}</p>
+		@endif
 	</div>
 	<div class="center-align fotorama" data-nav="thumbs" data-allowfullscreen="full">
 		@foreach ($album->images as $image)
