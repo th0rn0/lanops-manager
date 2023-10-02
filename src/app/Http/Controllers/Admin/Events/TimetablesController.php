@@ -47,6 +47,7 @@ class TimetablesController extends Controller
      */
     public function show(Event $event, EventTimetable $timetable)
     {
+        $timetable->data = $timetable->data->sortBy('start_time');
         return view('admin.events.timetables.show')
             ->withEvent($event)
             ->withTimetable($timetable);

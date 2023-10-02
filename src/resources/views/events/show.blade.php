@@ -431,11 +431,26 @@
 		<a name="timetable"></a>
 		<h3><i class="fas fa-calendar-alt mr-3"></i>@lang('events.timetable')</h3>
 	</div>
-	@foreach ($event->timetables as $timetable)
+	@foreach ($event->timetables->sortByDesc('primary') as $timetable)
 	@if (strtoupper($timetable->status) == 'DRAFT')
 	<h4>DRAFT</h4>
 	@endif
-	<h4>{{ $timetable->name }}</h4>
+	@if ($timetable->primary == '1')
+    <div class="d-flex align-items-center">
+        <h4 class="mb-1">{{ $timetable->name }} </h4>
+        <span class="badge bg-primary ms-3">@lang('events.timetable-primary-pill')</span>
+    </div>
+@else
+    <h4>{{ $timetable->name }}</h4>
+@endif
+	
+	<p>
+    @lang('events.timetable-created-at')
+    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }}, 
+    @lang('events.timetable-updated-at')
+    {{ $timetable->updated_at->toDateString() == now()->toDateString() ? $timetable->updated_at->format('M d, H:i') : ($timetable->updated_at->year == now()->year ? $timetable->updated_at->format('M d') : $timetable->updated_at->format('M d, Y')) }}
+	</p>
+
 	<table class="table table-striped">
 		<thead>
 			<th>
