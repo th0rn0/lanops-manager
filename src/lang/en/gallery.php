@@ -12,5 +12,7 @@ return [
 
     'gallery' => 'Gallery',
     'event' => 'Event:',
+    'view_album' => 'View album',
+    'date' => 'Date:'
 
 ];
