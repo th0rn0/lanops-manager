@@ -340,6 +340,8 @@ Route::group(['middleware' => ['installed']], function () {
                 '/admin/events/{event}/timetables/{timetable}/data/{data}',
                 'Admin\Events\TimetableDataController@update'
             );
+            Route::delete('/admin/events/{event}/timetables/{timetable}/data/{data}', 'Admin\Events\TimetableDataController@destroy');
+
 
             /**
              * Tournaments
