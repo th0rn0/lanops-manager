@@ -431,7 +431,7 @@
 		<a name="timetable"></a>
 		<h3><i class="fas fa-calendar-alt mr-3"></i>@lang('events.timetable')</h3>
 	</div>
-	@foreach ($event->timetables as $timetable)
+	@foreach ($event->timetables->sortByDesc('primary') as $timetable)
 	@if (strtoupper($timetable->status) == 'DRAFT')
 	<h4>DRAFT</h4>
 	@endif
