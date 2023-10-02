@@ -77,6 +77,9 @@ return [
     'buy' => 'Buy',
     'noseatableticket' => 'You own no seatable ticket.',
     'noseatableticketlist' => 'No seatable Ticket owned.',
+    'timetable-primary-pill' => 'Primary Timetable',
+    'timetable-created-at' => 'Created At:',
+    'timetable-updated-at' => 'updated At:',
     /* Big */
     'plssignin' => 'Please sign in at the main desk',
     /* Tournaments show*/

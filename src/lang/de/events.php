@@ -77,6 +77,9 @@ return [
     'buy' => 'Kaufen',
     'noseatableticket' => 'Kein Ticket mit Sitzplatz in Besitz',
     'noseatableticketlist' => 'Kein Ticket mit Sitzplatz in Besitz',
+    'timetable-primary-pill' => 'Hauptzeitplan',
+    'timetable-created-at' => 'Erstellt:',
+    'timetable-updated-at' => 'Aktualisiert:',
     /* Big */
     'plssignin' => 'Bitte melden Sie sich auf der Hauptseite an',
     /* Tournaments show*/
