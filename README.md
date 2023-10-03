@@ -105,7 +105,7 @@ If you are using this please consider signing up to eventula for event mapping.
 - EU cookie consent
 - Imprint / Dataprotection page
 - Fully Encapsulated in Docker Containers
-- Built on Laravel 8x
+- Built on Laravel 9x
 - Easily Expandable
 - NGINX, MYSQL & PHP Docker stack
 
@@ -113,15 +113,8 @@ If you are using this please consider signing up to eventula for event mapping.
 
 Hop over to our [Documentation](https://eventula.lan2play.de/user/getting_started.html) to see how to run and use eventula.
 
-## To Do
 
-- Refunds
-- Unit Tests
+## Sites that use the Lan2play Eventula Manager
 
-## Sites that use the Lan Manager
-
-- LanOps - https://lanops.co.uk
-- TheLanProject - https://thelanproject.co.uk
-- IronLan - https://ironlan.co.uk
 - Lan2Play - https://lan2play.de
 - Sund-Xplosion - https://sxlan.de
