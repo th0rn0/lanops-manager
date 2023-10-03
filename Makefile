@@ -268,6 +268,14 @@ npm-install:
     --user 82:82 \
 	node:20.3 /bin/bash -ci "npm install --no-audit && npm run production"
 
+# Install PRD JS Dependencies via NPM locally
+npm-install-local:
+	docker run --rm --name js-maintainence-dev --interactive \
+	-v $(currentDir)/src:/usr/src/app \
+	-w /usr/src/app \
+	$(user) \
+	node:20.3 /bin/bash -ci "npm install --no-audit && npm run production"
+
 # Install JS Dependencies via NPM
 npm-install-gh:
 	docker run --rm --name js-maintainence --interactive \
