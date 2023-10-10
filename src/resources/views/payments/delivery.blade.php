@@ -60,13 +60,13 @@
 					<p><small>@lang('payments.delivery_required_fields)</small></p>
 				</div>
 				{{ Form::hidden('gateway', $paymentGateway) }}
-				<button id="continue" class="btn btn-primary btn-block d-none">@lang('payments.delivery_continue)</button>
+				<button id="continue" class="btn btn-primary btn-block d-none">@lang('payments.delivery_continue')</button>
 			{{ Form::close() }}
 		</div>
 		<div class="col-12 col-md-4">
 			<div class="card mb-3">
 				<div class="card-header ">
-					<h3 class="card-title">@lang('payments.order_details)</h3>
+					<h3 class="card-title">@lang('payments.order_details')</h3>
 				</div>
 				<div class="card-body">
 					@include ('layouts._partials._shop.basket-preview')
