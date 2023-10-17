@@ -383,6 +383,10 @@ purge-files:
 	rm -rf /src/vendor/ ; \
 	rm -rf /src/node_modules/ ; \
 	rm -rf /src/public/css/* ; \
+	mkdir -p /src/public/css/font; \
+	mkdir -p /src/public/css/images; \
+	touch /src/public/css/font/.gitkeep; \
+	touch /src/public/css/images/.gitkeep; \
 	rm -rf /src/storage/app/public/images/gallery ; \
 	rm -rf /src/storage/app/public/images/events ; \
 	rm -rf /src/storage/app/public/images/venues ; \
