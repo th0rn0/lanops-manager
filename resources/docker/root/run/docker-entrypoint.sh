@@ -276,6 +276,7 @@ if [[ $(stat -c "%u" $NGINX_DOCUMENT_ROOT/storage) != $UUID ]]; then
 	echo "---------------"
     echo "Changing ownership of $NGINX_DOCUMENT_ROOT/storage to $UUID ..."
     chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
+    chown -R -h $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage
 fi
 
 # Make Symlink for images if it doesn't already exist
@@ -307,9 +308,9 @@ if [[ "$UUID" != "82" || "$GUID" != "82" ]]; then
 	find $NGINX_DOCUMENT_ROOT ! -user $USERNAME -print0 | xargs -0 -r chown $UUID:$GUID
 fi
 echo "set file permissions..."
-find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -print0 | xargs -0 -r chmod 664 
+find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -print0 | xargs -0 -r chmod 664
 echo "set folder permissions..."
-find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -print0 | xargs -0 -r chmod 775 
+find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -print0 | xargs -0 -r chmod 775
 echo "set storage and cache permissions..."
 chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
