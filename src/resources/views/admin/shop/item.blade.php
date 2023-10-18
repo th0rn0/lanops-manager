@@ -122,7 +122,6 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images', 'files' => 'true')) }}
-						{{ csrf_field() }}
 						<div class="form-group">
 							{{ Form::label('images','Upload Images',array('id'=>'','class'=>'')) }}
 							{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}

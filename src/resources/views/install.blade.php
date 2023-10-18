@@ -11,7 +11,6 @@
 			<p>Before you can start planning and adding events we need do a litte setup...</p>
 			<p>Please Fill out the form below. Once this is done you will be redirected to the Admin Panel.</p>
 			{{ Form::open(array('url'=>'/install' )) }}
-	            {{ csrf_field() }}
 				<h2>Step 1: Create Admin User</h2>
 				<hr>
                 <div class="row">

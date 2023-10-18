@@ -24,7 +24,6 @@
             <div class="col-sm-12 col-md-6">
                 @if (in_array('standard', $activeLoginMethods))
                     <form method="POST" action="/login/standard">
-                        @csrf
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 col-form-label">@lang('auth.email_short')</label>
                             <div class="col-sm-10 @error('email') is-invalid @enderror">
