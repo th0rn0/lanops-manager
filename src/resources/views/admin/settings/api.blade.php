@@ -34,7 +34,6 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
-				{{ csrf_field() }}
 					<div class="row">
 						<div class="col-12 col-md-6">
 							<div class="form-group">

@@ -91,7 +91,6 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/add',)) }}
-					{{ csrf_field() }}
 					<div class="form-group">
 						{{ Form::label('name','Entry Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
@@ -199,7 +198,6 @@
 							</tbody>
 						</table>
 						{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/upload', 'files' => 'true')) }}
-							{{ csrf_field() }}
 							<div class="form-group">
 								{{ Form::label('attachments','Upload new attachments',array('id'=>'','class'=>'')) }}
 								{{ Form::file('attachments[]',array('id'=>'attachments','class'=>'form-control', 'multiple'=>true)) }}

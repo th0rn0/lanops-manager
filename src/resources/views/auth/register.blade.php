@@ -10,7 +10,6 @@
     </div>
     <div class="row">
         {{ Form::open(array('url'=>'/register/' . $loginMethod )) }}
-        {{ csrf_field() }}
         {{ Form::hidden('method', $loginMethod, array('id'=>'method','class'=>'form-control')) }}
         @if ($loginMethod == "steam")
         {{ Form::hidden('avatar', $avatar, array('id'=>'avatar','class'=>'form-control')) }}

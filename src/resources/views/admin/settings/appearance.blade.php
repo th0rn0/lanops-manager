@@ -114,7 +114,6 @@
 			<div class="card-body">
 				<span class="text-muted"><small>Images must be the same dimensions for the slider to function properly!</small></span>
 				{{ Form::open(array('url'=>'/admin/settings/appearance/slider/images', 'files' => 'true')) }}
-					{{ csrf_field() }}
 					<input type="hidden" name="slider" value="frontpage">
 					<div class="form-group">
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
