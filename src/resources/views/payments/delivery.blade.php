@@ -57,7 +57,7 @@
 							{{ Form::text('shipping_state', '', array('id'=>'shipping_state','class'=>'form-control')) }}
 						</div>
 					</div>
-					<p><small>@lang('payments.delivery_required_fields)</small></p>
+					<p><small>@lang('payments.delivery_required_fields')</small></p>
 				</div>
 				{{ Form::hidden('gateway', $paymentGateway) }}
 				<button id="continue" class="btn btn-primary btn-block d-none">@lang('payments.delivery_continue')</button>
