@@ -86,4 +86,23 @@ class TimetableDataController extends Controller
         Session::flash('alert-success', 'Successfully updated Timetable Slot!');
         return Redirect::back();
     }
+
+    /**
+     * Destroy Timetable Data
+     * @param  Event              $event
+     * @param  EventTimetable     $timetable
+     * @param  EventTimetableData $data
+     */
+    public function destroy(Event $event, EventTimetable $timetable, EventTimetableData $data)
+    {
+        try {
+            $data->delete();
+            Session::flash('alert-success', 'Successfully deleted Timetable Slot!');
+        } catch (\Exception $e) {
+            // Log the exception message
+            \Log::error('Error deleting Timetable Slot: ' . $e->getMessage());
+            Session::flash('alert-danger', 'Cannot delete Timetable Slot!');
+        }
+        return Redirect::back();
+    }
 }

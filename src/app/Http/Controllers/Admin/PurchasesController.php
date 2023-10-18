@@ -6,7 +6,7 @@ use DB;
 use Auth;
 use Session;
 use Mail;
-
+use Helpers;
 use App\User;
 use App\Purchase;
 
@@ -26,7 +26,7 @@ class PurchasesController extends Controller
     public function index()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::paginate(20));
+            ->withPurchases(Helpers::paginate(Purchase::get()->sortByDesc('created_at'), 20));
     }
 
     /**
@@ -36,7 +36,7 @@ class PurchasesController extends Controller
     public function showShop()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::has('order')->paginate(20));
+            ->withPurchases(Helpers::paginate(Purchase::has('order')->get()->sortByDesc('created_at'), 20));
     }
 
     /**
@@ -46,7 +46,7 @@ class PurchasesController extends Controller
     public function showEvent()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::has('participants')->paginate(20));
+            ->withPurchases(Helpers::paginate(Purchase::has('participants')->get()->sortByDesc('created_at'), 20));
     }
 
     /**

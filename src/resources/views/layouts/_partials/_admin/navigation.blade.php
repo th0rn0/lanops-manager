@@ -17,7 +17,7 @@
 			<li class="nav-item {{ Request::is('admin/events') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin/events"><i class="fa fa-book fa-fw"></i> Events</a>
 				<ul class="navbar-nav nav-second-level">
-					@foreach (Helpers::getEvents('DESC', 5, true) as $event)
+					@foreach (Helpers::getEvents('DESC', 5, true, "events_page") as $event)
 						<li class="nav-item">
 							<a class="nav-link" href="/admin/events/{{ $event->slug }}">
 								{{ $event->display_name }}

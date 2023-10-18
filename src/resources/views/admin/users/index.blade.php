@@ -21,6 +21,25 @@
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fa fa-users fa-fw"></i> Users
+
+					<div class="row">
+					  <div class="col-sm">
+					  </div>
+					  <div class="col-sm">
+						
+					  </div>
+					  <div class="col-sm">
+							{{ Form::open(array('url'=>'/admin/users/')) }}
+							{{ Form::hidden('_method', 'GET') }}
+							<div class="form-group">
+								{{ Form::text('searchquery', request()->get('searchquery') ?? null , array('id'=>'searchquery','class'=>'form-control')) }}
+								{{ Form::submit('Search', array('class' => 'btn float-right btn-primary btn-sm btn-block', 'style' => 'margin-top:-2px;')) }}
+							</div>
+							{{ Form::close() }}
+					  </div>
+					</div>
+
+
 			</div>
 			<div class="card-body">
 				<table class="table table-striped table-hover table-responsive">

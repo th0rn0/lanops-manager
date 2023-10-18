@@ -89,3 +89,12 @@ h6 {
     border-color: $color_primary !important;
     background-color: $color_primary !important;
 }
+
+.card-deck .card {
+    flex-basis: 250px;
+}
+
+.custom-gallery-col {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}

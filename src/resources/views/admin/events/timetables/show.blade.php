@@ -57,6 +57,12 @@
 								<td width="10%">
 									<button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" onclick="editTimeSlot('{{ $slot->id }}', '{{ $slot->start_time }}', '{{ $slot->name }}', '{{ $slot->desc }}')" data-target="#editTimeSlotModal">Edit</button>
 								</td>
+								<td>
+								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data/' . $slot->id, 'onsubmit' => 'return ConfirmDelete()')) }}
+								{{ Form::hidden('_method', 'DELETE') }}
+								<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
+								{{ Form::close() }}
+								</td>
 							</tr>
 						@endforeach
 					</tbody>

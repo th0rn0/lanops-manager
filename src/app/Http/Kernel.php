@@ -66,7 +66,7 @@ class Kernel extends HttpKernel
         'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'language'      => \App\Http\Middleware\LanguageSwitcher::class,    
-        'gameserver'      => \App\Http\Middleware\Gameserver::class,    
+        'language'      => \App\Http\Middleware\LanguageSwitcher::class,
+        'gameserver'      => \App\Http\Middleware\Gameserver::class,
     ];
 }

@@ -14,6 +14,9 @@ use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 use GrahamCampbell\ResultType\Result;
 use Throwable;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Helpers
 {
@@ -40,17 +43,52 @@ class Helpers
     }
 
     /**
+     * Paginate
+     * @param  Collection  $items
+     * @param  integer $perPage
+     * @param  integer $page
+     * @param  Array|Object $options
+     * @return LengthAwarePaginator
+     */
+    public static function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator(
+            $items->forPage($page, $perPage),
+            $items->count(),
+            $perPage,
+            $page,
+            [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+            ]
+        );
+    }
+
+
+    /**
      * Get Events
      * @param  string  $order
      * @param  integer $limit
      * @param  boolean $obj   Return as Object
+     * @param  string $pagename
      * @return Array|Object
      */
-    public static function getEvents($order = 'DESC', $limit = 0, $obj = false)
+    public static function getEvents($order = 'DESC', $limit = 0, $obj = false, $pagename = "")
     {
         $return = array();
         if ($limit != 0) {
-            $events = \App\Event::orderBy('start', $order)->paginate($limit);
+
+            if ($pagename != "")
+            {
+                $events = \App\Event::orderBy('start', $order)->paginate($limit, ['*'], $pagename);
+            }
+            else
+            {
+                $events = \App\Event::orderBy('start', $order)->paginate($limit);
+            }
+
+
         } else {
             $events = \App\Event::orderBy('start', 'DESC')->get();
         }
