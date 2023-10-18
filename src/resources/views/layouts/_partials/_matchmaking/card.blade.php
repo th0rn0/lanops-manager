@@ -11,34 +11,34 @@
         <h3>@lang('matchmaking.match'){{ $match->id }}</h3>
         <span class="small">
             @if (isset($match->matchReplays) && count($match->matchReplays) > 0)
-                <span class="badge badge-primary">@lang('matchmaking.replayavailable')</span>
+                <span class="badge text-bg-primary">@lang('matchmaking.replayavailable')</span>
             @endif           
             @if ($match->status == 'COMPLETE')
-                <span class="badge badge-success">@lang('matchmaking.ended')</span>
+                <span class="badge text-bg-success">@lang('matchmaking.ended')</span>
             @endif
             @if ($match->status == 'LIVE')
-                <span class="badge badge-success">@lang('matchmaking.live')</span>
+                <span class="badge text-bg-success">@lang('matchmaking.live')</span>
             @endif
             @if ($match->status == 'PENDING')
-                <span class="badge badge-light">@lang('matchmaking.pending')</span>
+                <span class="badge text-bg-light">@lang('matchmaking.pending')</span>
             @endif
             @if ($match->status == 'WAITFORPLAYERS')
-                <span class="badge badge-light">@lang('matchmaking.waitforplayers')</span>
+                <span class="badge text-bg-light">@lang('matchmaking.waitforplayers')</span>
             @endif
             @if ($match->status == 'DRAFT')
-                <span class="badge badge-success">@lang('matchmaking.draft')</span>
+                <span class="badge text-bg-success">@lang('matchmaking.draft')</span>
             @endif
             @if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
-                <span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
+                <span class="badge text-bg-danger">@lang('matchmaking.notsignedup')</span>
             @endif
             @if ($match->status != 'COMPLETE' && $match->getMatchTeamPlayer(Auth::id()))
-                <span class="badge badge-success">@lang('matchmaking.signedup')</span>
+                <span class="badge text-bg-success">@lang('matchmaking.signedup')</span>
             @endif
             @if ( $match->owner_id == Auth::id())
-            <span class="badge badge-info">@lang('matchmaking.matchowner')</span>
+            <span class="badge text-bg-info">@lang('matchmaking.matchowner')</span>
             @endif
             @if ( $match->getMatchTeamOwner(Auth::id()))
-            <span class="badge badge-info">@lang('matchmaking.teamowner')</span>
+            <span class="badge text-bg-info">@lang('matchmaking.teamowner')</span>
             @endif
         </span>
     </div>
@@ -106,7 +106,7 @@
 
                         <div class="mb-3" id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}">
                             <div><i class="fas fa-map-marked-alt"></i><strong > Map: </strong><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_{{ $scope }}_map"></span></div>
-                            <div><i class="fas fa-users"></i><span class ="ml-2"><strong class ="ml-2" > Players: </strong></span><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_{{ $scope }}_players"></span></div>
+                            <div><i class="fas fa-users"></i><span class ="ms-2"><strong class ="ms-2" > Players: </strong></span><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_{{ $scope }}_players"></span></div>
                         </div>
                         @if($match->matchMakingServer->gameServer->game->connect_stream_url && $match->matchMakingServer->gameServer->stream_port != 0)
                         <a class="btn btn-primary btn-block" href="{{ Helpers::resolveServerCommandParameters($match->matchMakingServer->gameServer->game->connect_stream_url, NULL, $availableParameters) }}" role="button">Join Stream</a>

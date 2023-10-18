@@ -62,16 +62,16 @@
 									?>
 									@endforeach
 									@if($status == 'ACTIVE' && isset($seat->eventParticipant))
-									<button class="btn btn-success btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
+									<button class="btn btn-success btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }}')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">
 										{{ ucwords($headers[$row]) . $column }} - {{ $username }}
 									</button>
 									@else
-									<button class="btn btn-danger btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', null, null, '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
+									<button class="btn btn-danger btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', null, null, '{{ $status }}')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">
 										{{ ucwords($headers[$row]) . $column }} - Inactive
 									</button>
 									@endif
 									@else
-									<button class="btn btn-primary btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', null, null, 'ACTIVE')" data-toggle="modal" data-target="#editSeatingModal">
+									<button class="btn btn-primary btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', null, null, 'ACTIVE')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">
 										{{ ucwords($headers[$row]) . $column }} - Empty
 									</button>
 									@endif
@@ -128,7 +128,7 @@
 									@endif
 								</td>
 								<td width="10%">
-									<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
+									<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">Edit</button>
 								</td>
 							</tr>
 							@endif
@@ -150,11 +150,11 @@
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug, 'files' => 'true')) }}
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 form-group">
+					<div class="col-lg-12 col-sm-12 mb-3">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', $seatingPlan->name ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
-					<div class="col-lg-12 col-sm-12 form-group">
+					<div class="col-lg-12 col-sm-12 mb-3">
 						{{ Form::label('name_short','Short Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name_short', $seatingPlan->name_short ,array('id'=>'name_short','class'=>'form-control')) }}
 						<small>For display on Attendance Lists</small>
@@ -162,7 +162,7 @@
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 form-group">
+					<div class="col-lg-12 col-sm-12 mb-3">
 						{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
 						{{
 									Form::select(
@@ -182,20 +182,20 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-sm-12 form-group">
+					<div class="col-lg-6 col-sm-12 mb-3">
 						{{ Form::label('columns','Columns',array('id'=>'','class'=>'')) }}
 						{{ Form::text('columns', $seatingPlan->columns ,array('id'=>'columns','class'=>'form-control')) }}
 					</div>
-					<div class="col-lg-6 col-sm-12 form-group">
+					<div class="col-lg-6 col-sm-12 mb-3">
 						{{ Form::label('rows','Rows',array('id'=>'','class'=>'')) }}
 						{{ Form::text('rows', $seatingPlan->rows ,array('id'=>'rows','class'=>'form-control')) }}
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('image','Seating Plan Image',array('id'=>'','class'=>'')) }}
 					{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<div class="form-check">
 						<label class="form-check-label">
 							@if ($seatingPlan->locked)
@@ -229,19 +229,19 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editSeatingModalLabel">Edit Seating</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat')) }}
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('seat_number_modal','Seat Number',array('id'=>'','class'=>'')) }}
 					{{ Form::text('seat_number_modal', null, array('id'=>'seat_number_modal','class'=>'form-control')) }}
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('participant_select_modal','Participant',array('id'=>'','class'=>'')) }}
 					{{ Form::select('participant_select_modal', $event->getParticipants(), null, array('id'=>'participant_select_modal','class'=>'form-control')) }}
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('seat_status_select_modal','Seat status',array('id'=>'','class'=>'')) }}
 					{{ Form::select(
 							'seat_status_select_modal',

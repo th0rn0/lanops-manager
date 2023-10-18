@@ -1,16 +1,16 @@
 <nav class="navbar navbar-dark custom-header navbar-expand-md fixed-top" role="navigation">
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<!-- <div class="navbar-header"> -->
-		<button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+		<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-ex1-collapse">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand ml-3" href="/">{{ Settings::getOrgName() }} Admin</a>
+		<a class="navbar-brand ms-3" href="/">{{ Settings::getOrgName() }} Admin</a>
 	<!-- </div> -->
 	<!-- Top Menu Items -->
 
 	<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
-		<ul class="navbar-nav side-nav pl-2">
+		<ul class="navbar-nav side-nav ps-2">
 			<li class="nav-item {{ Request::is('admin') ? 'active' : '' }}">
 				<a class="nav-link" href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 			</li>
@@ -79,9 +79,9 @@
 	</div>
 	<!-- /.navbar-collapse -->
 
-	<ul class="nav ml-auto top-nav">
+	<ul class="nav ms-auto top-nav">
 		<li class="dropdown">
-			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ $user->username }}</a>
+			<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user"></i> {{ $user->username }}</a>
 			<div class="dropdown-menu">
 				<a class="dropdown-item" href="/account"><i class="fa fa-fw fa-user"></i> Profile</a>
 				<div class="divider"></div>

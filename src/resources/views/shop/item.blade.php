@@ -56,7 +56,7 @@
 			@if (Settings::getShopStatus() == 'OPEN')
 				@if ($item->hasStockByItemId($item->id))
 					{{ Form::open(array('url'=>'/shop/basket/')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
 							{{ Form::number('quantity', 1, array('id'=>'quantity','class'=>'form-control')) }}
 						</div>

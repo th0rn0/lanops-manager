@@ -27,38 +27,38 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('name','Venue Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', $venue->display_name,array('id'=>'name','class'=>'form-control')) }}
 					</div>
 					<div class="row">
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('address_1','Address Line 1',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address_1', $venue->address_1,array('id'=>'address_1','class'=>'form-control')) }}
 						</div>
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('address_2','Address Line 2',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address_2', $venue->address_2,array('id'=>'address_2','class'=>'form-control')) }}
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('address_street','Address Street',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address_street', $venue->address_street,array('id'=>'address_street','class'=>'form-control')) }}
 						</div>
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('address_city','Address City',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address_city', $venue->address_city,array('id'=>'address_city','class'=>'form-control')) }}
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('address_postcode','Address Postcode',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address_postcode', $venue->address_postcode,array('id'=>'address_postcode','class'=>'form-control')) }}
 						</div>
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('address_country','Address Country',array('id'=>'','class'=>'')) }}
-                            <select class="form-control @error('address_country') is-invalid @enderror" name="address_country" id="address_country" aria-describedby="address_country" value="{{ old('address_country', 'GB') }}">
+                            <select class="form-select @error("address_country') is-invalid @enderror" name="address_country" id="address_country" aria-describedby="address_country" value="{{ old('address_country', 'GB') }}">
                                 @foreach (Helpers::getSelectCountries() as $country)
                                     <option value="{{ $country }}" {{ ( $country == $venue->address_country) ? 'selected' : '' }}>
                                         {{ $country }}
@@ -86,7 +86,7 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug, 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('images','Venue Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images[]','class'=>'form-control', 'multiple'=>'multiple')) }}
 					</div>
@@ -108,7 +108,7 @@
 						<div class="col-lg-12 col-sm-12">
 							<br>
 							{{ Form::open(array('url'=>'/admin/venues/' . $venue->slug . '/' . $image->id, 'files' => 'true')) }}
-								<div class="form-group">
+								<div class="mb-3">
 									{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 									{{ Form::textarea('description', $image->description,array('id'=>'description','class'=>'form-control', 'rows'=>'1')) }}
 								</div>

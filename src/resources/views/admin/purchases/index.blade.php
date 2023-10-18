@@ -26,8 +26,8 @@
 						<div class="card border-secondary">
 							<a href="/admin/purchases" class="text-secondary">
 								<div class="card-footer">
-									<span class="float-left">All Purchases</span>
-									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
+									<span class="float-start">All Purchases</span>
+									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>
 							</a>
@@ -37,8 +37,8 @@
 						<div class="card border-secondary">
 							<a href="/admin/purchases/shop" class="text-secondary">
 								<div class="card-footer">
-									<span class="float-left">Shop Purchases</span>
-									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
+									<span class="float-start">Shop Purchases</span>
+									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>
 							</a>
@@ -48,8 +48,8 @@
 						<div class="card border-secondary">
 							<a href="/admin/purchases/event" class="text-secondary">
 								<div class="card-footer">
-									<span class="float-left">Event Purchases</span>
-									<span class="float-right"><i class="fa fa-arrow-circle-right"></i></span>
+									<span class="float-start">Event Purchases</span>
+									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>
 							</a>

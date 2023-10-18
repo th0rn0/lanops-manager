@@ -1,5 +1,5 @@
-<div class="form-group" id="poll_options">
-	<div class="form-group">
+<div class="mb-3" id="poll_options">
+	<div class="mb-3">
 		{{ Form::text('options[]', '', array('id'=>'', 'class'=>'form-control')) }}
 	</div>
 </div>
@@ -16,7 +16,7 @@
 	        e.preventDefault();
 	        if (x < max_fields) {
 	            x++;
-	            jQuery(wrapper).append('<div class="form-group">{{ Form::text("options[]", "", array("id"=>"", "class"=>"form-control")) }}</div>'); //add input box
+	            jQuery(wrapper).append('<div class="mb-3">{{ Form::text("options[]", "", array("id"=>"", "class"=>"form-control")) }}</div>'); //add input box
 	        } else {
 	            alert('You Reached the limits')
 	        }

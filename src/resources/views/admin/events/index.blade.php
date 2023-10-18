@@ -72,52 +72,52 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/events/')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('event_name','Event Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('event_name', '',array('id'=>'event_name','class'=>'form-control')) }}
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('start_date','Start Date',array('id'=>'','class'=>'')) }}
 								{{ Form::text('start_date', '',array('id'=>'start_date','class'=>'form-control')) }}
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('start_time','Start  Time',array('id'=>'','class'=>'')) }}
 								{{ Form::text('start_time', '16:00',array('id'=>'start_time','class'=>'form-control')) }}
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('end_date','End Date',array('id'=>'','class'=>'')) }}
 								{{ Form::text('end_date', '',array('id'=>'end_date','class'=>'form-control')) }}
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('end_time','End Time',array('id'=>'','class'=>'')) }}
 								{{ Form::text('end_time', '18:00',array('id'=>'end_time','class'=>'form-control')) }}
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('desc_short', '',array('id'=>'desc_short','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('desc_long', '',array('id'=>'desc_long','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('essential_info','Essential Info',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('essential_info', '',array('id'=>'essential_info','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('event_live_info','Event Live Info',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('event_live_info', '',array('id'=>'event_live_info','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('capacity','Capacity',array('id'=>'','class'=>'')) }}
 								{{ Form::text('capacity', '',array('id'=>'capacity','class'=>'form-control')) }}
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('venue','Venue',array('id'=>'','class'=>'')) }}
 								{{ Form::select('venue', Helpers::getVenues(), null, array('id'=>'venue','class'=>'form-control')) }}
 							</div>
@@ -137,7 +137,7 @@
 									{{ Form::checkbox('private_participants', null, false, array('id'=>'private_participants')) }} Private participants (show participants only to participants)
 								</label>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="form-check">
 									<label class="form-check-label">
 										{{ Form::checkbox('matchmaking_enabled', null, false, array('id'=>'matchmaking_enabled')) }} Show Matchmaking (on the redirected home of the event)
@@ -146,7 +146,7 @@
 						</div>
 
 						@if ($eventTags)
-							<div class="form-group">
+							<div class="mb-3">
 								<label>Eventula Tags</label>
 								<p><small>These are used and edited on the Eventula Hub site</small></p>
 								<div class="row">

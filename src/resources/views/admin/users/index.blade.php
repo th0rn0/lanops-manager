@@ -31,7 +31,7 @@
 					  <div class="col-sm">
 							{{ Form::open(array('url'=>'/admin/users/')) }}
 							{{ Form::hidden('_method', 'GET') }}
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::text('searchquery', request()->get('searchquery') ?? null , array('id'=>'searchquery','class'=>'form-control')) }}
 								{{ Form::submit('Search', array('class' => 'btn float-right btn-primary btn-sm btn-block', 'style' => 'margin-top:-2px;')) }}
 							</div>

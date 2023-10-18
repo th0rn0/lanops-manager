@@ -24,19 +24,19 @@
             <div class="col-sm-12 col-md-6">
                 @if (in_array('standard', $activeLoginMethods))
                     <form method="POST" action="/login/standard">
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label for="email" class="col-sm-2 col-form-label">@lang('auth.email_short')</label>
                             <div class="col-sm-10 @error('email') is-invalid @enderror">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="@lang('auth.email')" required autofocus>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             <label for="password" class="col-sm-2 col-form-label">@lang('auth.password')</label>
                             <div class="col-sm-10 @error('password') is-invalid @enderror">
                                 <input type="password" id="password" name="password" class="form-control" placeholder="@lang('auth.password')" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="offset-sm-2 col-sm-10">
                                 <div class="form-check">
                                     <label class="form-check-label">
@@ -45,12 +45,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="offset-sm-2 col-sm-10">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">@lang('auth.signin')</button>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="coffset-sm-2 col-sm-10">
                                 <a class="btn btn-link" href="/login/forgot">
                                 @lang('auth.forgot_password')

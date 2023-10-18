@@ -15,14 +15,14 @@
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h1>
 				{{ $tournament->name }}
-				<span class="float-right">
+				<span class="float-end">
 					<small>
-						<span class="badge badge-success">{{ $tournament->status }}</span>
+						<span class="badge text-bg-success">{{ $tournament->status }}</span>
 						@if ((!$user || !$user->active_event_participant || !$tournament->getParticipant($user->active_event_participant->id)) && $tournament->status != 'COMPLETE')
-							<span class="badge badge-danger">@lang('events.notsignedup')</span>
+							<span class="badge text-bg-danger">@lang('events.notsignedup')</span>
 						@endif
 						@if ($user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id) && $tournament->status != 'COMPLETE')
-							<span class="badge badge-success">@lang('events.signedup')</span>
+							<span class="badge text-bg-success">@lang('events.signedup')</span>
 						@endif
 					</small>
 				</span>
@@ -197,10 +197,10 @@
 										<label>@lang('events.createateam')</label>
 										{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
 											<div class="row">
-												<div class="form-group col-sm-6 col-12">
+												<div class="mb-3 col-sm-6 col-12">
 													{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required', 'placeholder' => 'Team Name')) }}
 												</div>
-												<div class="form-group col-sm-6 col-12">
+												<div class="mb-3 col-sm-6 col-12">
 													<button type="submit" class="btn btn-primary btn-block">@lang('events.createteam')</button>
 												</div>
 											</div>

@@ -67,7 +67,7 @@
 										<td>{{ $match->updated_at }}</td>
 										<td width="15%">
 											@if(isset($match->game))
-												<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+												<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#selectServerModal{{ $match->id }}">Select Server</button>
 											@else
 												{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/start' )) }}
 												<button type="submit" class="btn btn-primary btn-sm btn-block">Start Match</button>
@@ -153,28 +153,28 @@
 										</td>
 										<td>
 											@if(isset($match->game) && isset($match->matchMakingServer))
-												<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Execute Command</button>
+												<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#executeServerCommandModal{{ $match->id }}">Execute Command</button>
 											@endif
 										</td>									
 										<td>
 											@if(isset($match->game) && isset($match->matchMakingServer))
 												@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
-													<button class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Change Server</button>
+													<button class="btn btn-danger btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#selectServerModal{{ $match->id }}">Change Server</button>
 												@else
-													<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Change Server</button>
+													<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#selectServerModal{{ $match->id }}">Change Server</button>
 												@endif
 
 											@endif
 											@if(isset($match->game) && !isset($match->matchMakingServer))
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+											<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#selectServerModal{{ $match->id }}">Select Server</button>
 											@endif
 
 										</td>
 										<td>
 											@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
-												<button class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#finalizeModal{{ $match->id }}">finalize Match Manually</button>
+												<button class="btn btn-danger btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#finalizeModal{{ $match->id }}">finalize Match Manually</button>
 											@else
-												<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#finalizeModal{{ $match->id }}">finalize Match</button>
+												<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#finalizeModal{{ $match->id }}">finalize Match</button>
 											@endif
 										</td>
 										<td>
@@ -205,7 +205,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match #{{ $match->id }}</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 						</div>
 						{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . ((isset($match->matchMakingServer)) ? '/serverupdate':'/serverstore') , 'id'=>'selectServerModal')) }}
 
@@ -218,14 +218,14 @@
 							@if (isset($match->matchMakingServer))
 							<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
 							@endif
-								<div class="form-group">
+								<div class="mb-3">
 									{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 									{{ Form::select('gameServer', $match->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
 								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-success">Select</button>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 							</div>
 						{{ Form::close() }}
 					</div>
@@ -242,7 +242,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match #{{ $match->id }}</h4>
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 						</div>
 						{{ Form::open(array('url'=>'/admin/matchmaking/' . $match->id . ((isset($match->matchMakingServer)) ? '/serverupdate':'/serverstore') , 'id'=>'selectServerModal')) }}
 
@@ -256,14 +256,14 @@
 							@if (isset($match->matchMakingServer))
 							<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$match->game->slug}}/gameservers/{{$match->matchMakingServer->gameServer->slug}}">gameservers detail page</a></small></p>
 							@endif
-								<div class="form-group">
+								<div class="mb-3">
 									{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 									{{ Form::select('gameServer', $match->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
 								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-success">Select</button>
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+								<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 							</div>
 						{{ Form::close() }}
 					</div>
@@ -277,10 +277,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="finalizeModalLabel{{ $match->id }}">Select Server for Match #{{ $match->id }}</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::open(array('url'=>'/admin/matchmaking/'.$match->id.'/finalize' )) }}
 						@foreach ($match->teams as $team)
 		
@@ -312,7 +312,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match #{{ $match->id }}</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						@if (isset($match->game->matchmaking_autoapi) && $match->game->matchmaking_autoapi)
@@ -339,7 +339,7 @@
 									<div class="col-12 col-md-6">
 										<div class="row">
 											@foreach(App\GameServerCommandParameter::getParameters($matchCommand->command) as $gameServerCommandParameter)
-												<div class="form-group col-sm-12  col-md-6">
+												<div class="mb-3 col-sm-12  col-md-6">
 													{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
 													{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
 												</div>
@@ -354,7 +354,7 @@
 						@endforeach
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 					</div>
 				</div>
 			</div>
@@ -471,7 +471,7 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/matchmaking/' )) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -485,11 +485,11 @@
 								)
 							}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('team1name','Team 1 Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('team1owner','Team 1 Owner',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -503,7 +503,7 @@
 								)
 							}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -524,7 +524,7 @@
 								)
 							}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('team_count','Team count',array('id'=>'','class'=>'')) }}
 							{{
 								Form::number('team_count',
@@ -535,7 +535,7 @@
 									))
 							}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('ownerid','Match Owner',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -549,7 +549,7 @@
 								)
 							}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="form-check">
 									<label class="form-check-label">
 										{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} is public (show match publicly for signup)

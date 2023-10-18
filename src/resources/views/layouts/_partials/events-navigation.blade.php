@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('messages.next_event'): {{ Helpers::getNextEventName() }} </a>
+	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('messages.next_event'): {{ Helpers::getNextEventName() }} </a>
 	<div class="dropdown-menu">
 		<a class="dropdown-item" href="/events/{{ Helpers::getNextEventSlug() }}">@lang('layouts.events_navi_information')</a>
 		<a class="dropdown-item" href="/events/{{ Helpers::getNextEventSlug() }}#purchaseTickets">@lang('layouts.events_navi_tickets')</a>
@@ -21,7 +21,7 @@
 	</div>
 </li>
 <li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_navi_future_events') </a>
+	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_navi_future_events') </a>
 	<div class="dropdown-menu">
 		@if ( count($events) > 0 )
 			@foreach ( $events->reverse() as $event )
@@ -40,7 +40,7 @@
 	</div>
 </li>
 <li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_all_events') </a>
+	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_all_events') </a>
 	<div class="dropdown-menu">
 		@if ( count($events) > 0 )
 			@foreach ( $events as $event )

@@ -21,16 +21,16 @@
 
 				@foreach ($helpCategory->entrys as $entry)
 					<div class="card @if(Colors::isBodyDarkMode()) border-light @endif">
-						<a role="button" data-toggle="collapse" class="accordion-toggle accordion-arrow-toggle @if(!$loop->first) collapsed @endif" data-parent="#helpentries" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false" aria-controls="collapse_{{ $entry->nice_name }}">
+						<a role="button" data-bs-toggle="collapse" class="accordion-toggle accordion-arrow-toggle @if(!$loop->first) collapsed @endif" data-parent="#helpentries" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false" aria-controls="collapse_{{ $entry->nice_name }}">
 							<div class="card-header " role="tab" id="{{ $entry->nice_name }}">
 								<span>
 									<h4 class="card-title m-0 d-inline">
 										{{ $entry->display_name }}
 									</h4>
-									<span class="float-right">
-										<span class="badge badge-info">{{ $helpCategory->name }}</span>
+									<span class="float-end">
+										<span class="badge text-bg-info">{{ $helpCategory->name }}</span>
 										@if ($entry->hasAttachment())
-											<span class="badge badge-info">@lang('help.attachment')</span>
+											<span class="badge text-bg-info">@lang('help.attachment')</span>
 										@endif
 									</span>
 								</span>

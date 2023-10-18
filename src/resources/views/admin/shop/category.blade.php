@@ -86,15 +86,15 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/shop/' . $category->slug )) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $category->name, array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('order','Order',array('id'=>'','class'=>'')) }}
 							{{ Form::number('order', $category->order, array('id'=>'order','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(

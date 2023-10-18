@@ -31,7 +31,7 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug, 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('event_name','Name',array('id'=>'','class'=>'')) }}
 								{{ Form::text('event_name',$event->display_name,array('id'=>'event_name','class'=>'form-control')) }}
 							</div>
@@ -39,13 +39,13 @@
 								<div class="col-md-6 col-12">
 									<div class="row">
 										<div class="col-md-6 col-12">
-											<div class="form-group">
+											<div class="mb-3">
 												{{ Form::label('capacity','Capacity',array('id'=>'','class'=>'')) }}
 												{{ Form::text('capacity',$event->capacity,array('id'=>'capacity','class'=>'form-control')) }}
 											</div>
 										</div>
 										<div class="col-md-6 col-12">
-											<div class="form-group">
+											<div class="mb-3">
 												{{ Form::label('seating_cap','Seating',array('id'=>'','class'=>'')) }}
 												{{ Form::text('seating_cap',$event->getSeatingCapacity(),array('id'=>'seating_cap','class'=>'form-control', 'disabled'=>'true')) }}
 											</div>
@@ -53,7 +53,7 @@
 									</div>
 								</div>
 								<div class="col-md-6 col-12">
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
 										{{
 											Form::select(
@@ -79,21 +79,21 @@
 						<div class="col-md-6 col-sm-12">
 							<div class="row">
 								<div class="col-md-6 col-sm-12">
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('start_date','Start Date',array('id'=>'','class'=>'')) }}
 										{{ Form::text('start_date', date('m/d/Y', strtotime($event->start)),array('id'=>'start_date','class'=>'form-control')) }}
 									</div>
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('end_date','End Date',array('id'=>'','class'=>'')) }}
 										{{ Form::text('end_date', date('m/d/Y', strtotime($event->end)),array('id'=>'end_date','class'=>'form-control')) }}
 									</div>
 								</div>
 								<div class="col-md-6 col-sm-12">
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('start_time','Start Time',array('id'=>'','class'=>'')) }}
 										{{ Form::text('start_time', date('H:i', strtotime($event->start)),array('id'=>'start_time','class'=>'form-control')) }}
 									</div>
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('end_time','End Time',array('id'=>'','class'=>'')) }}
 										{{ Form::text('end_time', date('H:i', strtotime($event->end)),array('id'=>'end_time','class'=>'form-control')) }}
 									</div>
@@ -118,21 +118,21 @@
 
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('online_event', null, $event->online_event, array('id'=>'online_event')) }} Online Event (allow tournament registration and home redirection without being signed in to the event)
 								</label>
 						</div>
 					</div>						
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('private_participants', null, $event->private_participants, array('id'=>'private_participants')) }} Private participants (show participants only to participants)
 								</label>
 						</div>
 					</div>					
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('matchmaking_enabled', null, $event->matchmaking_enabled, array('id'=>'matchmaking_enabled')) }} Show Matchmaking (on the redirected home of the event)
@@ -141,20 +141,20 @@
 					</div>
 					<div class="row">
 						<div class="col-12">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('desc_short','Short Description',array('id'=>'','class'=>'')) }}
 								{{ Form::textarea('desc_short', $event->desc_short,array('id'=>'desc_short','class'=>'form-control wysiwyg-editor')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('desc_long','Long Description',array('id'=>'','class'=>'')) }}
 								<label>Long Description <span class="text-muted"><small>This will show on the events own page</small></span></label>
 								{{ Form::textarea('desc_long',$event->desc_long,array('id'=>'desc_long','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								<label>Essential Info <span class="text-muted"><small>This will show on the all events and the index page when the Event is not live / the participant is not signed in to the event</small></span></label>
 								{{ Form::textarea('essential_info',$event->essential_info,array('id'=>'essential_info','class'=>'form-control wysiwyg-editor')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								<label>Event Live Info <span class="text-muted"><small>This will show on the home page if the event is Live and the Participant is signed in to the event</small></span></label>
 								{{ Form::textarea('event_live_info',$event->event_live_info,array('id'=>'event_live_info','class'=>'form-control wysiwyg-editor')) }}
 							</div>
@@ -170,7 +170,7 @@
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fa fa-info fa-fw"></i> Event Information
-				<a href="#" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addEventInformationModal">Add Event Information</a>
+				<a href="#" class="btn btn-info btn-sm float-end" data-bs-toggle="modal" data-bs-target="#addEventInformationModal">Add Event Information</a>
 			</div>
 			<div class="card-body">
 				@if ($event->information->count() != 0)
@@ -178,8 +178,8 @@
 						<div class="card mb-3">
 							<div class="card-header">
 								<h4 class="card-title">
-									<a data-toggle="collapse" href="#collaspe-{{ $section->id }}" aria-expanded="false" class="collapsed" aria-controls="collaspe-{{ $section->id }}">{{ $section->title }}</a>
-									<div class="float-right">
+									<a data-bs-toggle="collapse" href="#collaspe-{{ $section->id }}" aria-expanded="false" class="collapsed" aria-controls="collaspe-{{ $section->id }}">{{ $section->title }}</a>
+									<div class="float-end">
 										{{ Form::open(array('url' => '/admin/information/' . $section->id)) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											{{ Form::submit('Delete', array('class' => 'btn btn-danger btn-xs float-right', 'style' => 'margin-top:-2px;')) }}
@@ -192,29 +192,29 @@
 									{{ Form::open(array('url'=>'/admin/information/' . $section->id, 'files' => 'true')) }}
 										<div class="row">
 											<div class="col-md-6 col-sm-12">
-												<div class="form-group">
+												<div class="mb-3">
 													{{ Form::label('title','Title',array('id'=>'','class'=>'')) }}
 													{{ Form::text('title', $section->title,array('id'=>'title','class'=>'form-control')) }}
 												</div>
 											</div>
 											<div class="col-md-6 col-sm-12">
-												<div class="form-group">
+												<div class="mb-3">
 													{{ Form::label('image','Image',array('id'=>'','class'=>'')) }}
 													{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 												</div>
 											</div>
-											<div class="form-group col-lg-6 col-sm-12">
+											<div class="mb-3 col-lg-6 col-sm-12">
 												{{ Form::label('order','Order',array('id'=>'')) }}
 												{{ Form::number('order', $section->order, array('id'=>'order', 'name' => 'order', 'class'=>'form-control')) }}
 											</div>
 										</div>
-										<div class="form-group">
+										<div class="mb-3">
 											{{ Form::label('text','Text',array('id'=>'','class'=>'')) }}
 											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 										</div>
 										@if(isset($section->image_path))
 											<div class="row">
-												<div class="form-group col-lg-6">
+												<div class="mb-3 col-lg-6">
 													{{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
 													<center>
 														<img class="img-fluid img-thumbnail" src="{{ $section->image_path }}" />
@@ -240,13 +240,13 @@
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fa fa-bullhorn fa-fw"></i> Announcements
-				<a href="#" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addAnnouncementModal">Add Announcement</a>
+				<a href="#" class="btn btn-info btn-sm float-end" data-bs-toggle="modal" data-bs-target="#addAnnouncementModal">Add Announcement</a>
 			</div>
 			<div class="card-body">
 				@if ($announcements->count() != 0)
 					<div class="list-group">
 						@foreach ($announcements as $announcement)
-							<a href="#" class="list-group-item-action" data-toggle="modal" onclick="editAnnouncement('{{$announcement->id}}', '{{$announcement->message}}')" data-target="#editAnnouncementModal">
+							<a href="#" class="list-group-item-action" data-bs-toggle="modal" onclick="editAnnouncement('{{$announcement->id}}', '{{$announcement->message}}')" data-bs-target="#editAnnouncementModal">
 								<i class="fa fa-comment fa-fw"></i> {{ $announcement->message }}
 							</a>
 						@endforeach
@@ -262,7 +262,7 @@
 			<div class="card-header">
 				<i class="fa fa-ticket fa-fw"></i> Tickets
 				<a href="/admin/events/{{ $event->slug }}/tickets" style="margin-left:3px;" class="btn btn-info btn-sm float-right">All Tickets</a>
-				<a href="#" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addTicketModal">Add Ticket</a>
+				<a href="#" class="btn btn-info btn-sm float-end" data-bs-toggle="modal" data-bs-target="#addTicketModal">Add Ticket</a>
 			</div>
 			<div class="card-body">
 				@if ($event->tickets->count() != 0)
@@ -270,7 +270,7 @@
 						@foreach ($event->tickets as $ticket)
 							<a href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}" class="list-group-item-action">
 								<i class="fa fa-pencil fa-fw"></i> {{ $ticket->name }} - {{ Settings::getCurrencySymbol() }}{{ $ticket->price }}
-								<span class="float-right text-muted small">
+								<span class="float-end text-muted small">
 									@if($ticket->quantity != 0)
 										<em>{{ $ticket->participants()->count() }} / {{ $ticket->quantity }}</em>
 									@else
@@ -320,7 +320,7 @@
 								@if ($participant->user->steamid)
 									- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
 								@endif
-								<span class="float-right text-muted small">
+								<span class="float-end text-muted small">
 									<em>{{ date('d-m-y H:i', strtotime($participant->created_at)) }}</em>
 								</span>
 							</a>
@@ -336,13 +336,13 @@
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fa fa-suitcase fa-fw"></i> Sponsors
-				<a href="#" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addSponsorModal">Add Sponsor</a>
+				<a href="#" class="btn btn-info btn-sm float-end" data-bs-toggle="modal" data-bs-target="#addSponsorModal">Add Sponsor</a>
 			</div>
 			<div class="card-body">
 				@if (!$event->sponsors->isEmpty())
 					<div class="list-group">
 						@foreach ($event->sponsors as $sponsor)
-							<a href="#" class="list-group-item-action" data-toggle="modal" onclick="editSponsor('{{$sponsor->id}}', '{{$sponsor->name}}', '{{$sponsor->website}}', '{{$sponsor->image_path}}')" data-target="#editSponsorModal">
+							<a href="#" class="list-group-item-action" data-bs-toggle="modal" onclick="editSponsor('{{$sponsor->id}}', '{{$sponsor->name}}', '{{$sponsor->website}}', '{{$sponsor->image_path}}')" data-bs-target="#editSponsorModal">
 								<i class="fa fa-pencil fa-fw"></i> {{ $sponsor->name }} - {{ ucwords($sponsor->website) }}
 								<img class="img-fluid img-thumbnail" src="{{ $sponsor->image_path }}" />
 							</a>
@@ -376,7 +376,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="addTicketModalLabel">Add Ticket</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets')) }}
@@ -392,19 +392,19 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="addSponsorModalLabel">Add Sponsor</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/sponsors', 'files' => 'true')) }}
 				<div class="modal-body">
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('sponsor_name','Sponsor Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('sponsor_name',NULL,array('id'=>'sponsor_name','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('sponsor_website','Sponsor Website',array('id'=>'','class'=>'')) }} <small>should start with http(s)://</small>
 						{{ Form::text('sponsor_website',NULL,array('id'=>'sponsor_website','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('sponsor_image','Sponsor Image',array('id'=>'','class'=>'')) }}
 						{{ Form::file('sponsor_image',array('id'=>'sponsor_image','class'=>'form-control')) }}
 					</div>
@@ -421,23 +421,23 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editSponsorModalLabel">Edit Sponsor</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/sponsors', 'files' => 'true', 'id' => 'editSponsorForm')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('sponsor_name','Sponsor Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('sponsor_name',NULL,array('id'=>'sponsor_name_id','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('sponsor_website','Sponsor Website',array('id'=>'','class'=>'')) }} <small>should start with http(s)://</small>
 						{{ Form::text('sponsor_website',NULL,array('id'=>'sponsor_website_id','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('curr_sponsor_image','Current Sponsor Image',array('id'=>'','class'=>'')) }}
 						<img class="img-fluid img-thumbnail" id='sponsor_image_preview' src=""/>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('sponsor_image','New Sponsor Image',array('id'=>'','class'=>'')) }}
 						{{ Form::file('sponsor_image',array('id'=>'sponsor_image_id','class'=>'form-control')) }}
 					</div>
@@ -472,11 +472,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="announcementModalLabel">Add Announcement</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('message', NULL,array('id'=>'message','class'=>'form-control', 'rows' => '2')) }}
 					</div>
@@ -492,15 +492,15 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editAnnouncementModalLabel">Edit Announcement</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true', 'id' => 'editAnnouncementForm')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('message', NULL,array('id'=>'edit_announcement','class'=>'form-control', 'rows' => '2')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<button type="submit" class="btn btn-secondary btn-block">Submit</button>
 					</div>
 				{{ Form::close() }}
@@ -525,25 +525,25 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="addEventInformationModal">Add Event Information</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/information', 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-md-6 col-sm-12">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('title','Title',array('id'=>'','class'=>'')) }}
 								{{ Form::text('title',NULL,array('id'=>'title','class'=>'form-control')) }}
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-12">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('image','Image',array('id'=>'','class'=>'')) }}
 								{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('text','Text',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('text', NULL,array('id'=>'text','class'=>'form-control', 'rows' => '4')) }}
 					</div>

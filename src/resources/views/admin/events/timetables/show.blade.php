@@ -55,7 +55,7 @@
 									<td>{{ $slot->desc }}</td>
 								@endif
 								<td width="10%">
-									<button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" onclick="editTimeSlot('{{ $slot->id }}', '{{ $slot->start_time }}', '{{ $slot->name }}', '{{ $slot->desc }}')" data-target="#editTimeSlotModal">Edit</button>
+									<button type="button" class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" onclick="editTimeSlot('{{ $slot->id }}', '{{ $slot->start_time }}', '{{ $slot->name }}', '{{ $slot->desc }}')" data-bs-target="#editTimeSlotModal">Edit</button>
 								</td>
 								<td>
 								{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data/' . $slot->id, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -81,15 +81,15 @@
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data')) }}
 					<div class="row">
-						<div class="form-group col-lg-6">
+						<div class="mb-3 col-lg-6">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						 <div class="form-group col-lg-6">
+						 <div class="mb-3 col-lg-6">
 							{{ Form::label('start_time','Start',array('id'=>'','class'=>'')) }}
 							{{ Form::select('start_time', $timetable->getAvailableTimes(), null, array('id'=>'start_time','class'=>'form-control')) }}
 						</div>
-						<div class="form-group col-lg-12">
+						<div class="mb-3 col-lg-12">
 							{{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::text('desc', NULL ,array('id'=>'desc','class'=>'form-control')) }}
 						</div>
@@ -105,11 +105,11 @@
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug)) }}
 					<div class="row">
-						<div class="form-group col-lg-6">
+						<div class="mb-3 col-lg-6">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $timetable->name ,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group col-lg-6">
+						<div class="mb-3 col-lg-6">
 							{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -127,7 +127,7 @@
 							}}
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 							<label class="form-check-label">
 								@if ($timetable->primary)
@@ -158,20 +158,20 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editTimeSlotModal">Edit Time Slot</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables/' . $timetable->slug . '/data', 'id'=>'editTimeSlotForm')) }}
 					<div class="row">
-						<div class="form-group col-lg-6">
+						<div class="mb-3 col-lg-6">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL ,array('id'=>'editTimetableGame','class'=>'form-control')) }}
 						</div>
-						 <div class="form-group col-lg-6">
+						 <div class="mb-3 col-lg-6">
 							{{ Form::label('start_time','Start',array('id'=>'','class'=>'')) }}
 							{{ Form::select('start_time', $timetable->getAvailableTimes(), null, array('id'=>'editTimetableStart','class'=>'form-control')) }}
 						</div>
-						<div class="form-group col-lg-12">
+						<div class="mb-3 col-lg-12">
 							{{ Form::label('desc','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::text('desc', NULL ,array('id'=>'editTimetableDesc','class'=>'form-control')) }}
 						</div>

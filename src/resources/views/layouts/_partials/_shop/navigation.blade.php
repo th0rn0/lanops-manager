@@ -11,7 +11,7 @@
 				@endforeach
 			</ul>
 			</ul>
-			<ul class="nav navbar-nav ml-auto">
+			<ul class="nav navbar-nav ms-auto">
 			  <li class="nav-item"><a class="nav-link" href="/shop/basket">Basket</a></li>
 			  <li class="nav-item"><a class="nav-link" href="/payment/checkout">Checkout</a></li>
 			  <li class="nav-item"><a class="nav-link" href="/shop/orders">Orders</a></li>

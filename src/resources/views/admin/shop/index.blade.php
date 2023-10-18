@@ -44,16 +44,16 @@
 						<div class="card-body">
 							<div class="list-group">
 								{{ Form::open(array('url'=>'/admin/shop/item' )) }}
-										<div class="form-group">
+										<div class="mb-3">
 											{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 											{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}
 										</div>
 									<div class="row">
-										<div class="form-group col-12 col-sm-6">
+										<div class="mb-3 col-12 col-sm-6">
 											{{ Form::label('stock','Stock',array('id'=>'','class'=>'')) }}
 											{{ Form::number('stock',NULL,array('id'=>'stock','class'=>'form-control')) }}
 										</div>
-										<div class="form-group col-12 col-sm-6">
+										<div class="mb-3 col-12 col-sm-6">
 											{{ Form::label('category_id','Category',array('id'=>'','class'=>'')) }}
 											{{
 												Form::select(
@@ -69,16 +69,16 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="form-group col-12 col-sm-6">
+										<div class="mb-3 col-12 col-sm-6">
 											{{ Form::label('price','Price (Real)',array('id'=>'','class'=>'')) }}
 											{{ Form::text('price',NULL,array('id'=>'price','class'=>'form-control')) }}
 										</div>
-										<div class="form-group col-12 col-sm-6">
+										<div class="mb-3 col-12 col-sm-6">
 											{{ Form::label('price_credit','Price Credit',array('id'=>'','class'=>'')) }}
 											{{ Form::text('price_credit',NULL,array('id'=>'price_credit','class'=>'form-control')) }}
 										</div>
 									</div>
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 										{{ Form::textarea('description', NULL,array('id'=>'description','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
 									</div>
@@ -129,12 +129,12 @@
 						</div>
 						<div class="card-body">
 							{{ Form::open(array('url'=>'/admin/settings' )) }}
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('shop_welcome_message','Welcome Message',array('id'=>'','class'=>'')) }}
 										{{ Form::text('shop_welcome_message', Settings::getShopWelcomeMessage(), array('id'=>'shop_welcome_message','class'=>'form-control')) }}
 										<small>Displayed at the top of the index page of the shop.</small>
 									</div>
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('shop_open','Shop Status',array('id'=>'','class'=>'')) }}
 										{{
 											Form::select(
@@ -151,7 +151,7 @@
 											)
 										}}
 									</div>
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('shop_closed_message','Closed Message',array('id'=>'','class'=>'')) }}
 										{{ Form::text('shop_closed_message', Settings::getShopClosedMessage(), array('id'=>'shop_closed_message','class'=>'form-control')) }}
 										<small>Displayed at the top of the index page when the shop is closed.</small>
@@ -188,7 +188,7 @@
 				<div class="card-body">
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/shop/category' )) }}
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 								{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}
 							</div>

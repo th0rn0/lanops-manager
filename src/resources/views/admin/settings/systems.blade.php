@@ -38,14 +38,14 @@
 					{{ Form::open(array('url'=>'/admin/settings/systems', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 						<div class="row">
 							<div class="col-12 col-md-6">
-								<div class="form-group">
+								<div class="mb-3">
 									<div class="form-check">
 											<label class="form-check-label">
 												{{ Form::checkbox('publicuse', null, $isSystemsMatchMakingPublicuseEnabled, array('id'=>'publicuse')) }} Public use enabled (show Matchmaking in main Navigation)
 											</label>
 									</div>
 								</div>														
-								<div class="form-group">
+								<div class="mb-3">
 									<div class="form-check">
 											<label class="form-check-label">
 												{{ Form::label('maxopenperuser','Maximal Open matches per user (0 unlimited)',array('id'=>'','class'=>'')) }}

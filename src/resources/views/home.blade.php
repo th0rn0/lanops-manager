@@ -2,7 +2,7 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel slide carousel-fade" style="margin-top: -20px;" data-ride="carousel" data-interval="8000">
+<div id="hero-carousel" class="carousel slide carousel-fade" style="margin-top: -20px;" data-bs-ride="carousel" data-bs-interval="8000">
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner">
 		@foreach ($sliderImages as $image)
@@ -70,7 +70,7 @@
 										</a>
 									</td>
 									<td>
-										<span class="float-right">
+										<span class="float-end">
 											{{ date('dS', strtotime($event->start)) }} - {{ date('dS', strtotime($event->end)) }} {{ date('F', strtotime($event->end)) }} {{ date('Y', strtotime($event->end)) }}
 										</span>
 									</td>

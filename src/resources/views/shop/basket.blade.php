@@ -21,10 +21,10 @@
 								<td>
 									<strong>{{ $item->name }}</strong>
 								</td>
-								<td class="text-right">
+								<td class="text-end">
 									x {{ $item->quantity }}
 								</td>
-								<td class="text-right">
+								<td class="text-end">
 									@if ($item->price != null && $item->price != 0)
 										{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
 										@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
@@ -36,7 +36,7 @@
 									@endif
 									Each
 								</td>
-								<td class="text-right">
+								<td class="text-end">
 									@if ($item->price != null && $item->price != 0)
 										{{ Settings::getCurrencySymbol() }}{{ number_format($item->price * $item->quantity, 2) }}
 										@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
@@ -60,7 +60,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td class="text-right">
+							<td class="text-end">
 								<strong>Total:</strong>
 								@if ($basket->total != 0)
 									{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}

@@ -36,7 +36,7 @@
 					<h3>Primary Colors</h3>
 					@foreach ($cssVariables['primary'] as $cssVariable)
 						<div class="row">
-							<div class="form-group col-10 col-sm-8">
+							<div class="mb-3 col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
 								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
@@ -49,7 +49,7 @@
 					<h3>Secondary / Footer Colors</h3>
 					@foreach ($cssVariables['secondary'] as $cssVariable)
 						<div class="row">
-							<div class="form-group col-10 col-sm-8">
+							<div class="mb-3 col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
 								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
@@ -62,7 +62,7 @@
 					<h3>Body Colors</h3>
 					@foreach ($cssVariables['body'] as $cssVariable)
 						<div class="row">
-							<div class="form-group col-10 col-sm-8">
+							<div class="mb-3 col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
 								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
@@ -75,7 +75,7 @@
 					<h3>Header Colors</h3>
 					@foreach ($cssVariables['header'] as $cssVariable)
 						<div class="row">
-							<div class="form-group col-10 col-sm-8">
+							<div class="mb-3 col-10 col-sm-8">
 								{{ Form::label('css_variables[' . $cssVariable->key . ']',ucwords(str_replace('color', '', str_replace('_', ' ', $cssVariable->key))),array('id'=>'','class'=>'')) }}
 								{{ Form::text('css_variables[' . $cssVariable->key . ']', $cssVariable->value,array('id'=>'css_variables[' . $cssVariable->key . ']','class'=>'form-control')) }}
 							</div>
@@ -96,7 +96,7 @@
 			<div class="card-body">
 				@if ($userOverrideCss)
 					{{ Form::open(array('url'=>'/admin/settings/appearance/css/override', 'onsubmit' => 'return ConfirmSubmit()')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::textarea('css', $userOverrideCss ,array('id'=>'','class'=>'form-control', 'rows'=>'30')) }}
 						</div>
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
@@ -115,7 +115,7 @@
 				<span class="text-muted"><small>Images must be the same dimensions for the slider to function properly!</small></span>
 				{{ Form::open(array('url'=>'/admin/settings/appearance/slider/images', 'files' => 'true')) }}
 					<input type="hidden" name="slider" value="frontpage">
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
 					</div>
 					<button type="submit" class="btn btn-block btn-success">Upload</button>
@@ -134,7 +134,7 @@
 						<!-- <input type="hidden" name="slider" value="frontpage"> -->
 						<div class="row">
 							<div class="col">
-								<div class="form-group">
+								<div class="mb-3">
 									{{ Form::label('order','Order',array('id'=>'')) }}
 									{{ Form::number('order', $image->order, array('id'=>'order' . $key, 'name' => 'order', 'class'=>'form-control')) }}
 								</div>

@@ -46,17 +46,17 @@
 						@foreach ($standings->history as $game)
 							@if ($game == 'W')
 								<div class="col-1">
-									<span class="badge badge-success">W</span>
+									<span class="badge text-bg-success">W</span>
 								</div>
 							@endif
 							@if ($game == 'L')
 								<div class="col-1">
-									<span class="badge badge-danger">L</span>
+									<span class="badge text-bg-danger">L</span>
 								</div>
 							@endif
 							@if ($game == 'T')
 								<div class="col-1">
-									<span class="badge badge-light">T</span>
+									<span class="badge text-bg-light">T</span>
 								</div>
 							@endif
 						@endforeach
@@ -112,17 +112,17 @@
 							@foreach ($standings->history as $game)
 								@if ($game == 'W')
 									<div class="col-1">
-										<span class="badge badge-success">W</span>
+										<span class="badge text-bg-success">W</span>
 									</div>
 								@endif
 								@if ($game == 'L')
 									<div class="col-1">
-										<span class="badge badge-danger">L</span>
+										<span class="badge text-bg-danger">L</span>
 									</div>
 								@endif
 								@if ($game == 'T')
 									<div class="col-1">
-										<span class="badge badge-light">T</span>
+										<span class="badge text-bg-light">T</span>
 									</div>
 								@endif
 							@endforeach

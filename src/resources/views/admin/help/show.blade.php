@@ -43,12 +43,12 @@
 								<tr>
 									{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id, 'files' => true )) }}
 										<td>
-											<div class="form-group">
+											<div class="mb-3">
 												{{ Form::text('name', $entry->display_name,array('id'=>'name','class'=>'form-control')) }}
 											</div>
 										</td>
 										<td>
-											<div class="form-group">
+											<div class="mb-3">
 												{{ Form::textarea('content', $entry->content,array('id'=>'content','class'=>'form-control wysiwyg-editor-small', 'rows'=>'2')) }}
 											</div>
 										</td>
@@ -60,8 +60,8 @@
 												{{ Form::close() }}
 												<button
 												class="btn btn-primary btn-sm btn-block"
-												data-toggle="modal"
-												data-target="#attachmentManagerModal{{$entry->id}}"
+											 data-bs-toggle="modal"
+											 data-bs-target="#attachmentManagerModal{{$entry->id}}"
 											>
 												@lang('help.showattachmentmanager')
 											</button>
@@ -91,11 +91,11 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/add',)) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('name','Entry Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('content','Entry Content',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('content', NULL ,array('id'=>'content','class'=>'form-control wysiwyg-editor', 'rows'=>'2')) }}
 					</div>
@@ -110,16 +110,16 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug)) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Album Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',$helpCategory->name,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('description','Content',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $helpCategory->description,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -136,7 +136,7 @@
 									)
 								}}
 							</div>
-							 <div class="col-lg-6 col-sm-12 form-group">
+							 <div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('event_id','Event',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -171,10 +171,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="attachmentManagerModalLabel{{$entry->id}}">@lang('help.attachmentmanager')</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
-					<div class="form-group">
+					<div class="mb-3">
 						<table width="100%" class="table" id="dataTables-example">
 							<thead>
 								<tr>
@@ -198,7 +198,7 @@
 							</tbody>
 						</table>
 						{{ Form::open(array('url'=>'/admin/help/' . $helpCategory->slug . '/' . $entry->id . '/upload', 'files' => 'true')) }}
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('attachments','Upload new attachments',array('id'=>'','class'=>'')) }}
 								{{ Form::file('attachments[]',array('id'=>'attachments','class'=>'form-control', 'multiple'=>true)) }}
 							</div>

@@ -26,15 +26,15 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/news/' . $newsArticle->slug, 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('title','Title',array('id'=>'','class'=>'')) }}
 						{{ Form::text('title', $newsArticle->title ,array('id'=>'title','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('article','Article',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('article', $newsArticle->article, array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
 						{{ Form::text('tags', $newsArticle->getTags(), array('id'=>'', 'class'=>'form-control')) }}
 					</div>

@@ -22,7 +22,7 @@
 						<div class="col-md-10 col-sm-12">
 
 							@if (Settings::isAuthAllowEmailChangeEnabled() || (!$user->email && Settings::isAuthSteamRequireEmailEnabled()))
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
 								<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="@lang('accounts.email')">
 								@error('email')
@@ -34,7 +34,7 @@
 							@endif
 
 							@if (Settings::isAuthRequirePhonenumberEnabled())
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('phonenumber',__('accounts.phonenumber'),array('id'=>'','class'=>'')) }}
 								<input type="phonenumber" class="form-control" name="phonenumber" id="phonenumber @error('phonenumber') is-invalid @enderror" aria-describedby="phonenumber" value="{{ $user->phonenumber }}" placeholder="@lang('accounts.phonenumber')">
 								@error('phonenumber')

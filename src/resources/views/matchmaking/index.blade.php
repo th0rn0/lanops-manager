@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-sm mt-4">
 				@if(Settings::getSystemsMatchMakingMaxopenperuser() == 0 || count($currentUserOpenLivePendingDraftMatches) < Settings::getSystemsMatchMakingMaxopenperuser())
-				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">@lang('matchmaking.addmatch')</a>
+				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-end" data-bs-toggle="modal" data-bs-target="#addMatchModal">@lang('matchmaking.addmatch')</a>
 				@endif
 			</div>
 		</div>
@@ -134,11 +134,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="addMatchModal">@lang('matchmaking.addmatch')</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/' )) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('game_id',__('matchmaking.game').':',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -152,12 +152,12 @@
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team1name',__('matchmaking.firstteamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
 						<small>@lang('matchmaking.thisisyourteam')</small>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team_size',__('matchmaking.teamsize'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -178,7 +178,7 @@
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::number('team_count',
@@ -189,7 +189,7 @@
 								))
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} @lang('matchmaking.ispublic')

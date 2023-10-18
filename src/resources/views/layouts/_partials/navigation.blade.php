@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md @if(Colors::isNavbarDark()) navbar-dark @else navbar-light @endif fixed-top custom-header">
 	<div class="container">
-		<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#topbar-navigation" aria-expanded="false">
+		<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#topbar-navigation" aria-expanded="false">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<a class="navbar-brand" href="/">
@@ -13,7 +13,7 @@
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="topbar-navigation">
-			<ul class="navbar-nav ml-auto">
+			<ul class="navbar-nav ms-auto">
 				@include ('layouts._partials._tournaments.navigation')
 				@include ('layouts._partials.events-navigation')
 				@if (Settings::isMatchMakingEnabled() && Settings::isSystemsMatchMakingPublicuseEnabled() && Auth::check())

@@ -16,11 +16,11 @@
 
 				{{ Form::open(array('url'=>'/payment/post', 'id'=>'payment-form')) }}
 					<div class="row">
-						<div class="form-group col-sm-6 col-12">
+						<div class="mb-3 col-sm-6 col-12">
 							{{ Form::label('card_first_name', __('payments.firstname').' *' , array('id'=>'','class'=>'')) }}
 							{{ Form::text('card_first_name', '', array('id'=>'card_first_name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group col-sm-6 col-12">
+						<div class="mb-3 col-sm-6 col-12">
 							{{ Form::label('card_last_name', __('payments.lastname').' *' , array('id'=>'','class'=>'')) }}
 							{{ Form::text('card_last_name', '', array('id'=>'card_last_name','class'=>'form-control')) }}
 						</div>

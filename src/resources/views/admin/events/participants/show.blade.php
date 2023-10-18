@@ -106,7 +106,7 @@
 				@endif
 				@if ((!$participant->signed_in) && ((!$participant->ticket) || ($participant->purchase->status == "Success") ))
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/transfer')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('event_id','Transfer to event',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -120,23 +120,23 @@
 								)
 							}}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<button type="submit" class="btn btn-success btn-block">Transfer</button>
 						</div>
 					{{ Form::close() }}
 					<hr>
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							<button type="submit" class="btn btn-success btn-block">Sign in</button>
 						</div>
 					{{ Form::close() }}
 					<hr>
-					<div class="form-group">
+					<div class="mb-3">
 						<button type="submit" class="btn btn-danger btn-block" disabled>Refund - <small>Coming soon</small></button>
 					</div>
 				@endif
 				@if ((!$participant->signed_in) && ($participant->ticket) && ($participant->purchase->status != "Success"))
-				<div class="form-group">
+				<div class="mb-3">
 					complete payment to transfer or sign in the user
 				</div>
 				@endif
