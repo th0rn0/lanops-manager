@@ -457,10 +457,10 @@ endif
 wait-mysql: get-wait
 	docker run --rm --name mysqlwaiter --interactive --network="lan" \
 	-e WAIT_HOSTS="eventula_manager_database:3306" \
+	-e WAIT_AFTER="45" \
 	-v $(currentDir):/usr/src/app \
 	$(user) php:8-fpm-alpine /bin/sh -c " \
-	/usr/src/app/resources/wait &&\
-	sleep 45"
+	/usr/src/app/resources/wait"
 
 
 
