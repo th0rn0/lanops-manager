@@ -4,5 +4,12 @@
     "config:base"
   ],
   "lockFileMaintenance": { "enabled": true },
-  "forkProcessing": "enabled"
+  "forkProcessing": "enabled",
+  "baseBranches": ["dev", "master"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
+  ]
 }
