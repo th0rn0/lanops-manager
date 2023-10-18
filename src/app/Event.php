@@ -21,7 +21,7 @@ class Event extends Model
      */
     protected $table = 'events';
 
-    protected $dates = ['deleted_at'];
+    protected $casts = ['deleted_at' => 'datetime'];
 
     /**
      * The attributes that are mass assignable.

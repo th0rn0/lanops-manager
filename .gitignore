@@ -16,8 +16,12 @@ src/public/css/app\.css
 src/public/css/admin\.css\.map
 src/public/css/app\.css\.map
 src/public/css/font/*
+!src/public/css/font/.gitkeep
 src/public/uploads/gallery/*
 src/public/storage
+src/public/css/*.css
+src/public/css/images/*.png
+src/public/js/*.js
 
 docs/build
 docker-compose.local.yml
