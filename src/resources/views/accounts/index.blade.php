@@ -56,12 +56,12 @@
 							</div>
 							<div class="mb-3">
 								{{ Form::label('Username',__('accounts.username'),array('id'=>'','class'=>'')) }}
-								{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
+								{{ Form::text('name', $user->username, array('id'=>'name', 'class'=>'form-control', 'disabled' => 'disabled')) }}
 							</div>
 							@if ($user->steamid && $user->steamname)
 							<div class="mb-3">
 								{{ Form::label('steamname',__('accounts.steamname'),array('id'=>'','class'=>'')) }}
-								{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+								{{ Form::text('steamname', $user->steamname, array('id'=>'steamname', 'class'=>'form-control', 'disabled'=>'true')) }}
 							</div>
 							@endif
 							@if ($user->password)
@@ -407,7 +407,7 @@
 						@else
 						<a href="/account/sso/remove/steam" type="button" name="" value="" class="btn btn-danger">@lang('accounts.remove_steam_account')</a>
 						@endif
-						
+
 					@endif
 
 					<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_second_steam_account')</button>

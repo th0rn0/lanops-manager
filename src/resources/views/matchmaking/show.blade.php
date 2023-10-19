@@ -15,7 +15,7 @@
 				<div>
 					@if (isset($match->matchReplays) && count($match->matchReplays) > 0)
 						<span class="badge text-bg-primary">@lang('matchmaking.replayavailable')</span>
-					@endif 
+					@endif
 					@if ($match->status == 'COMPLETE')
 						<span class="badge text-bg-success">@lang('matchmaking.ended')</span>
 					@endif
@@ -64,9 +64,7 @@
 					<p class="mb-0">@lang('matchmaking.matchinviteurl')</p>
 					<div class="input-group mb-3 mt-0" style="width: 100%">
 						<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
-						</div>
+						<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
 					</div>
 				@endif
 				<div class="row">
@@ -209,7 +207,7 @@
 		</div>
 	@endif
 
-	
+
 		{{-- TODO --}}
 		@if ( !$match->getMatchTeamPlayer(Auth::id()) && $match->teams()->count() < $match->team_count )
 
@@ -305,9 +303,7 @@
 									<p class="mb-0 mt-2">@lang('matchmaking.inviteurl')</p>
 									<div class="input-group mb-3 mt-0" style="width: 100%">
 										<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
-										<div class="input-group-append">
-											<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
-										</div>
+										<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
 									</div>
 								</div>
 							@endif
@@ -403,7 +399,7 @@
 									<td>
 										<a href="/storage{{ App\MatchReplay::getReplayPath($match->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
 									</td>
-									
+
 									<td>
 										{{ App\MatchReplay::getReplaySize($match->game, $matchReplay->name) }}
 									</td>
@@ -418,7 +414,7 @@
 
 				</div>
 			</div>
-		
+
 	@endif
 
 </div>
@@ -608,8 +604,8 @@
 			return false;
 		}
 
-	}	
-	
+	}
+
 	jQuery( function()
 	{
 		$('#autoReload').change(function()

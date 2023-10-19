@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="full-height">
+<html lang="en" class="full-height" data-bs-theme="dark">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -164,14 +164,14 @@
 					@foreach ($errors->all() as $error)
 						<li>{{ $error }}</li>
 					@endforeach
-			
+
 			</ul>
 			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-				
+
 			</button>
 		</div>
 		@endif
-		
+
 		@yield ('scripts')
 	</body>
 </html>

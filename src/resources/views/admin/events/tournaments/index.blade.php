@@ -178,9 +178,9 @@
 										)
 									)
 								}}
-							</div>						
-						</div>						
-					
+							</div>
+						</div>
+
 
 						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
@@ -214,7 +214,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="" form-group">
+						<div>
 							<label class="form-check-label">
 								{{ Form::checkbox('match_autostart', null, null, array('id'=>'match_autostart')) }} Enable Match Autostart for this Tournament
 							</label>

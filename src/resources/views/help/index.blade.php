@@ -10,9 +10,7 @@
 		<h1>@lang('help.help')</h1>
 	</div>
 		<div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<span class="input-group-text" id="search-addon"><i class="fas fa-search"></i></span>
-			</div>
+			<span class="input-group-text" id="search-addon"><i class="fas fa-search"></i></span>
 			<input id="searchtext" type="text" class="form-control" placeholder="@lang('help.search')" aria-label="searchtext" aria-describedby="search-addon">
 		</div>
 
@@ -47,12 +45,12 @@
 											</tr>
 										</thead>
 										<tbody>
-											@foreach ($entry->attachments as $attachment)										
+											@foreach ($entry->attachments as $attachment)
 												<tr>
 													<td>
 														<a href="{{ $attachment->path }}">{{ $attachment->display_name }}</a>
 													</td>
-												</tr>	
+												</tr>
 											@endforeach
 										</tbody>
 									</table>

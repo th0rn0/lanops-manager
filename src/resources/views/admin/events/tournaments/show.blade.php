@@ -127,7 +127,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('bestof','Best of',array('id'=>'','class'=>'')) }}
-							@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')							
+							@if ($tournament->status == 'LIVE' || $tournament->status == 'COMPLETE')
 								{{
 									Form::select(
 										'bestof',
@@ -170,7 +170,7 @@
 									)
 								)
 							}}
-						</div>								
+						</div>
 					</div>
 
 					<div class="mb-3">
@@ -216,7 +216,7 @@
 							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
 						</div>
-										 
+
 					@else
 						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
@@ -227,12 +227,12 @@
 							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('rules', $tournament->rules,array('id'=>'rules','class'=>'form-control wysiwyg-editor','disabled'	=> 'true')) }}
 						</div>
-					 
+
 
 					@endif
 
 					@if ($tournament->status != 'COMPLETE')
-						<div class="" form-group">
+						<div>
 							<label class="form-check-label">
 								{{ Form::checkbox('match_autostart',  null,$tournament->match_autostart, array('id'=>'match_autostart')) }} Enable Match Autostart for this Tournament
 							</label>
@@ -295,7 +295,7 @@
 				</div>
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug. '/addteam' )) }}
-						
+
 
 							<div class="mb-3">
 								{{ Form::label('team_name','Teamname',array('id'=>'','class'=>'')) }}
@@ -303,9 +303,9 @@
 								<button type="submit" class="btn btn-success btn-block mt-3">Add team</button>
 									{{ Form::close() }}
 							</div>
-						
-						
-					
+
+
+
 				</div>
 			</div>
 		@endif

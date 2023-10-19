@@ -130,7 +130,7 @@
 					</picture>
 
 					<!-- <br> -->
-					{{ Form::open(array('url'=>'/admin/settings/appearance/slider/images/' . $image->id, 'files' => 'true', 'class' => "form-inline")) }}
+					{{ Form::open(array('url'=>'/admin/settings/appearance/slider/images/' . $image->id, 'files' => 'true', 'class' => "d-inline-block w-auto")) }}
 						<!-- <input type="hidden" name="slider" value="frontpage"> -->
 						<div class="row">
 							<div class="col">
