@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="dark">
+<html data-bs-theme="{{Colors::getTheme()}}">
     <head>
         <title>Be right back.</title>
 

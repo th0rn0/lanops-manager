@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="full-height" data-bs-theme="dark">
+<html lang="en" class="full-height" data-bs-theme="{{Colors::getTheme()}}">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">

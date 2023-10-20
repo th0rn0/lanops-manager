@@ -1,8 +1,7 @@
-<div class="sidebar border border-left col-md-3 col-lg-2 p-0 bg-body-tertiary">
+<div class="sidebar col-md-3 col-lg-2 p-0 bg-body-tertiary">
 	<div class="offcanvas-md offcanvas-start bg-body-tertiary" id="sidebarMenu">
-		<div>
 
-			<ul class="navbar-nav side-nav ps-2">
+		<ul class="navbar-nav side-nav ps-2">
 				<li class="nav-item {{ Request::is('admin') ? 'active' : '' }}"> <a class="nav-link" href="/admin"><i
 							class="fa fa-dashboard fa-fw"></i> Dashboard</a>
 				</li>
@@ -68,9 +67,6 @@
 						Orders (Beta)</a>
 				</li>
 				@endif
-			</ul>
-		</div>
-		<!-- /.navbar-collapse -->
-
+		</ul>
 	</div>
 </div>
