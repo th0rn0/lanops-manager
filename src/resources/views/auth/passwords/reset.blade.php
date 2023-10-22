@@ -15,12 +15,11 @@
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('password.update') }}">
+                        {{ Form::open(array('url'=> route('password.update') )) }}
 
-                            <input type="hidden" name="token" value="{{ $token }}">
 
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">@lang('auth.email')</label>
+								{{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-right')) }}
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
@@ -34,7 +33,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">@lang('auth.password')</label>
+								{{ Form::label('password',__('auth.password'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-right')) }}
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -48,7 +47,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">@lang('auth.confirm_password')</label>
+								{{ Form::label('password-confirm',__('auth.confirm_password'),array('id'=>'','class'=>'')) }}
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -62,7 +61,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
