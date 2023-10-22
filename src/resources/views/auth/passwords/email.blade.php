@@ -20,11 +20,11 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
-                        <form method="POST" action="{{ route('password.email') }}">
+                        {{ Form::open(array('url'=>route('password.email') )) }}
+                        
 
                             <div class="mb-3 row">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">@lang('auth.email')</label>
+								{{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-end')) }}
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -44,7 +44,7 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
+                            {{ Form::close() }}
                     </div>
                 </div>
             </div>
