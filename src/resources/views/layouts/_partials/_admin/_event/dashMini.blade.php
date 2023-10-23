@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row card-deck">
 
 	@if ($event->status == 'PUBLISHED')
 		@php
@@ -26,13 +26,13 @@
 			$eventStatusIcon = 'fa-question-circle ';
 		@endphp
 	@endif
-	<div class="col">
+	<div class="col d-flex align-items-stretch">
 		<div class="card event-card panel-{{ $eventStatusColor }} mb-3 d-flex">
 			<div class="card-header d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa {{ $eventStatusIcon }} fa-5x"></i>
 				</div>
-				<div class="ms-auto text-end">
+				<div class="ms-auto text-end align-self-end">
 					<div class="huge ms-auto">
 						@if ($event->status == 'PUBLISHED')
 							<small>Live</small>
@@ -58,13 +58,13 @@
 			</a>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col d-flex align-items-stretch">
 		<div class="card event-card mb-3">
 			<div class="card-header d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa fa-wheelchair fa-5x"></i>
 				</div>
-				<div class="col-auto ms-auto text-end ps-0">
+				<div class="col-auto ms-auto text-end ps-0 align-self-end">
 					<div class="huge ms-auto">{{ $event->getSeatedCount() }}</div>
 					<div>Seated Participants</div>
 				</div>
@@ -76,13 +76,13 @@
 			</a>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col d-flex align-items-stretch">
 		<div class="card event-card mb-3">
 			<div class="card-header d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa fa-list-ol fa-5x"></i>
 				</div>
-				<div class="col-auto ms-auto text-end ps-0">
+				<div class="col-auto ms-auto text-end ps-0 align-self-end">
 					<div class="huge ms-auto">{{ $event->tournaments->count() }}</div>
 					<div>Tournaments</div>
 				</div>
@@ -94,13 +94,13 @@
 			</a>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col d-flex align-items-stretch">
 		<div class="card event-card mb-3">
 			<div class="card-header d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa fa-user fa-5x"></i>
 				</div>
-				<div class="col-auto ms-auto text-end ps-0">
+				<div class="col-auto ms-auto text-end ps-0 align-self-end">
 					<div class="huge ms-auto">{{ $event->eventParticipants->count() }}</div>
 					<div>Attendees</div>
 				</div>
@@ -112,13 +112,13 @@
 			</a>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col d-flex align-items-stretch">
 		<div class="card event-card mb-3">
 			<div class="card-header d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa fa-ticket fa-5x"></i>
 				</div>
-				<div class="col-auto ms-auto text-end ps-0">
+				<div class="col-auto ms-auto text-end ps-0 align-self-end">
 					<div class="huge ms-auto">{{ Settings::getCurrencySymbol() }}{{ $event->getTicketSalesCount() }}</div>
 					<div>Ticket Sales</div>
 				</div>
@@ -130,13 +130,13 @@
 			</a>
 		</div>
 	</div>
-	<div class="col">
+	<div class="col d-flex align-items-stretch">
 		<div class="card event-card mb-3">
 			<div class="card-header d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa fa-calendar fa-5x"></i>
 				</div>
-				<div class="col-auto ms-auto text-end ps-0">
+				<div class="col-auto ms-auto text-end ps-0 align-self-end">
 					<div class="huge ms-auto">{{ $event->getTimetableDataCount() }}</div>
 					<div>Scheduled Slots</div>
 				</div>
