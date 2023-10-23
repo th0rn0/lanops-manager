@@ -24,10 +24,13 @@ if (mix.inProduction()) {
 
 mix.scripts([
         './node_modules/jquery/dist/jquery.js',
+        './node_modules/jquery-ui-dist/jquery-ui.min.js',
         './node_modules/@popperjs/core/dist/umd/popper.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/summernote/dist/summernote-bs5.js',
     ], 'public/js/vendor.js')
+    .copy('./node_modules/jquery-ui-dist/jquery-ui.min.css', 'public/css')
+    .copyDirectory('./node_modules/jquery-ui-dist/images', 'public/css/images')
     .copyDirectory('./node_modules/summernote/dist/font', 'public/css/font')
     .copyDirectory('./node_modules/@fortawesome/fontawesome-free/webfonts', 'public/css/font');
 
