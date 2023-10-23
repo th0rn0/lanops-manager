@@ -17,10 +17,10 @@
                     <div class="card-body">
                         {{ Form::open(array('url'=> route('password.update') )) }}
 
+                        {{ Form::hidden('token', $token) }}
 
                             <div class="form-group row">
 								{{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-right')) }}
-
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
