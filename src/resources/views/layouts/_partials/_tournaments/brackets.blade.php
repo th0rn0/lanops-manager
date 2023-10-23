@@ -29,10 +29,10 @@
 			$isFinalsBracket = false;
 
 			$roundTitle = "Round $roundNumber";
-			
+
 			// Matches are grouped by round, therefor we can use the first match for checks
 			$firstMatchInRound = reset($round);
-			
+
 			if($tournament->format == 'single elimination' || $tournament->format == 'double elimination')
 			{
 				if($tournament->isFinalMatch($firstMatchInRound->id))
@@ -97,7 +97,7 @@
 						@endphp
 						<tr>
 							<td rowspan="2" class="text-center" width="10%">
-								{{ $matchCounter }} 
+								{{ $matchCounter }}
 								<p><small>({{ $match->id }})</small> </p>
 								<p><small>{{ $match->state }}</small></p>
 							</td>
@@ -310,7 +310,7 @@
 								</tr>
 							@endif
 							@endif
-						
+
 							@php
 								$matchReplays = $tournament->getMatchReplays($match->id);
 							@endphp
@@ -318,7 +318,7 @@
 
 								<tr>
 									<td colspan="3">
-					
+
 											Replays
 											<table width="100%" class="table table-striped table-hover mt-3" id="dataTables-example">
 												<thead>
@@ -337,7 +337,7 @@
 															<td>
 																<a href="/storage{{ App\MatchReplay::getReplayPath($tournament->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
 															</td>
-															
+
 															<td>
 																{{ App\MatchReplay::getReplaySize($tournament->game, $matchReplay->name) }}
 															</td>
@@ -350,20 +350,20 @@
 																			{{ Form::hidden('_method', 'DELETE') }}
 																			<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
 																		{{ Form::close() }}
-						
+
 															</td>
 															@endif
 														</tr>
 													@endforeach
-						
+
 												</tbody>
-											</table>	
+											</table>
 									</td>
-								</tr>			
-									
-						
+								</tr>
+
+
 							@endif
-						
+
 					</tbody>
 				</table>
 				@php
@@ -389,14 +389,14 @@
 					@endif
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/match', 'class'=>'form-horizontal')) }}
 						<div class="mb-3">
-							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}
+							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-6 col-sm-9 text-start')) }}
 							<div class="col-6 col-sm-3 text-start">
 								{{ Form::number('player1_score', 0, array('id'=>'player1_score','class'=>'form-control')) }}
 							</div>
 						</div>
 						<hr>
 						<div class="mb-3">
-							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}
+							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-6 col-sm-9 text-start')) }}
 							<div class="col-6 col-sm-3 text-start">
 								{{ Form::number('player2_score', 0, array('id'=>'player2_score','class'=>'form-control')) }}
 							</div>
