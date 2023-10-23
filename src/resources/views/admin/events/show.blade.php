@@ -54,7 +54,7 @@
 								</div>
 								<div class="col-md-6 col-12">
 									<div class="mb-3">
-										{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
+										{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 										{{
 											Form::select(
 												'status',
@@ -124,14 +124,14 @@
 									{{ Form::checkbox('online_event', null, $event->online_event, array('id'=>'online_event')) }} Online Event (allow tournament registration and home redirection without being signed in to the event)
 								</label>
 						</div>
-					</div>						
+					</div>
 					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('private_participants', null, $event->private_participants, array('id'=>'private_participants')) }} Private participants (show participants only to participants)
 								</label>
 						</div>
-					</div>					
+					</div>
 					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
@@ -186,7 +186,7 @@
 										{{ Form::close() }}
 									</div>
 								</h4>
-							</div>						
+							</div>
 							<div id="collaspe-{{ $section->id }}" class="collapse">
 								<div class="card-body">
 									{{ Form::open(array('url'=>'/admin/information/' . $section->id, 'files' => 'true')) }}
@@ -434,7 +434,7 @@
 						{{ Form::text('sponsor_website',NULL,array('id'=>'sponsor_website_id','class'=>'form-control')) }}
 					</div>
 					<div class="mb-3">
-						{{ Form::label('curr_sponsor_image','Current Sponsor Image',array('id'=>'','class'=>'')) }}
+						{{ Form::label('sponsor_image_id','Current Sponsor Image',array('id'=>'','class'=>'')) }}
 						<img class="img-fluid img-thumbnail" id='sponsor_image_preview' src=""/>
 					</div>
 					<div class="mb-3">
