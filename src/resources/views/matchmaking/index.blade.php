@@ -43,9 +43,11 @@
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.ownedmatches')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($ownedMatches as $match)
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 
 		</div>
@@ -65,12 +67,14 @@
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.ownedteams')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($memberedTeams as $team)
-				@php
-					$match = $team->match;
-				@endphp
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@php
+						$match = $team->match;
+					@endphp
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 		</div>
 		@if($memberedTeams->count())
@@ -89,9 +93,11 @@
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.publicmatches')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($openPublicMatches as $match)
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 		</div>
 		@if($openPublicMatches->count())
@@ -99,8 +105,8 @@
 				{{ $openPublicMatches->links() }}
 		</div>
 		@endif
-	@endif		
-	
+	@endif
+
 	<!-- live closed public matches -->
 	@if (!$liveClosedPublicMatches->isEmpty())
 	@php
@@ -110,9 +116,11 @@
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.closedpublicmatches')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($liveClosedPublicMatches as $match)
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 		</div>
 		@if($liveClosedPublicMatches->count())
@@ -123,7 +131,7 @@
 	@endif
 
 
-	
+
 </div>
 
 

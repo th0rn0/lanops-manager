@@ -231,7 +231,7 @@
 
 		@endif
 
-		<div class="card-deck">
+		<div class="row card-deck">
 
 			@php
 

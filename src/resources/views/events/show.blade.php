@@ -103,74 +103,74 @@
 				<a name="purchaseTickets"></a>
 				<h3><i class="fas fa-ticket-alt me-3"></i>@lang('events.purchasetickets')</h3>
 			</div>
-			<div class="card-deck">
+			<div class="row card-deck">
 				@foreach ($event->tickets as $ticket)
-				{{-- <div class="col-12 col-sm-4"> --}}
-				<div class="card mb-3" disabled>
-					<div class="card-body d-flex flex-column">
-						<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
-						@if ($ticket->quantity != 0)
-						<small>
-							@lang('events.limitedavailability')
-						</small>
-						@endif
-						<div class="row mt-auto">
-							<div class="col-sm-12 col-12">
-								<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
-									@if ($ticket->quantity != 0)
-									<small>
-										{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} @lang('events.available')
-									</small>
-									@endif
-								</h3>
-								@if ($user)
-								{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
-								@if (
-								$event->capacity <= $event->eventParticipants->count()
-									|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
-									)
-									<div class="row">
-										<div class="mb-3 col-sm-6 col-12">
-											{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-											{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
-										</div>
-										<div class="mb-3 col-sm-6 col-12 d-flex">
-											<button class="btn btn-md btn-primary btn-block mt-auto" disabled>@lang('events.soldout')</button>
-										</div>
-									</div>
-									@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
-									<h5>
-										@lang('events.availablefrom', ['time' => date('H:i', strtotime($ticket->sale_start)), 'date'=> date ('d-m-Y', strtotime($ticket->sale_start))])
-									</h5>
-									@elseif(
-									$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s') || date('Y-m-d H:i:s')>= $event->end
+				<div class="col-12 col-sm-4">
+					<div class="card mb-3" disabled>
+						<div class="card-body d-flex flex-column">
+							<h3 class="card-title">{{$ticket->name}} @if ($event->capacity <= $event->eventParticipants->count()) - <strong>@lang('events.soldout')</strong> @endif</h3>
+							@if ($ticket->quantity != 0)
+							<small>
+								@lang('events.limitedavailability')
+							</small>
+							@endif
+							<div class="row mt-auto">
+								<div class="col-sm-12 col-12">
+									<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
+										@if ($ticket->quantity != 0)
+										<small>
+											{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} @lang('events.available')
+										</small>
+										@endif
+									</h3>
+									@if ($user)
+									{{ Form::open(array('url'=>'/tickets/purchase/' . $ticket->id)) }}
+									@if (
+									$event->capacity <= $event->eventParticipants->count()
+										|| ($ticket->participants()->count() >= $ticket->quantity && $ticket->quantity != 0)
 										)
-										<h5>
-											@lang('events.ticketnolongavailable')
-										</h5>
-										@else
 										<div class="row">
-											<div class="mb-3 col-sm-6 col-12 ">
+											<div class="mb-3 col-sm-6 col-12">
 												{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
-												{{ Form::select('quantity', Helpers::getTicketQuantitySelection($ticket, $ticket->quantity - $ticket->participants()->count()), null, array('id'=>'quantity','class'=>'form-control')) }}
+												{{ Form::select('quantity', array(1 => 1), null, array('id'=>'quantity','class'=>'form-control', 'disabled' => true)) }}
 											</div>
 											<div class="mb-3 col-sm-6 col-12 d-flex">
-												{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-												<button class="btn btn-md btn-primary btn-block mt-auto"><i class="fas fa-shopping-cart"></i> @lang('events.buy')</button>
+												<button class="btn btn-md btn-primary btn-block mt-auto" disabled>@lang('events.soldout')</button>
 											</div>
 										</div>
-										@endif
-										{{ Form::close() }}
-										@else
-										<div class="alert alert-info">
-											<h5>@lang('events.plslogintopurchaseticket')</h5>
-										</div>
-										@endif
+										@elseif($ticket->sale_start && $ticket->sale_start >= date('Y-m-d H:i:s'))
+										<h5>
+											@lang('events.availablefrom', ['time' => date('H:i', strtotime($ticket->sale_start)), 'date'=> date ('d-m-Y', strtotime($ticket->sale_start))])
+										</h5>
+										@elseif(
+										$ticket->sale_end && $ticket->sale_end <= date('Y-m-d H:i:s') || date('Y-m-d H:i:s')>= $event->end
+											)
+											<h5>
+												@lang('events.ticketnolongavailable')
+											</h5>
+											@else
+											<div class="row">
+												<div class="mb-3 col-sm-6 col-12 ">
+													{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
+													{{ Form::select('quantity', Helpers::getTicketQuantitySelection($ticket, $ticket->quantity - $ticket->participants()->count()), null, array('id'=>'quantity','class'=>'form-control')) }}
+												</div>
+												<div class="mb-3 col-sm-6 col-12 d-flex">
+													{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+													<button class="btn btn-md btn-primary btn-block mt-auto"><i class="fas fa-shopping-cart"></i> @lang('events.buy')</button>
+												</div>
+											</div>
+											@endif
+											{{ Form::close() }}
+											@else
+											<div class="alert alert-info">
+												<h5>@lang('events.plslogintopurchaseticket')</h5>
+											</div>
+											@endif
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				{{-- </div> --}}
 				@endforeach
 			</div>
 			@endif
@@ -443,10 +443,10 @@
 @else
     <h4>{{ $timetable->name }}</h4>
 @endif
-	
+
 	<p>
     @lang('events.timetable-created-at')
-    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }}, 
+    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }},
     @lang('events.timetable-updated-at')
     {{ $timetable->updated_at->toDateString() == now()->toDateString() ? $timetable->updated_at->format('M d, H:i') : ($timetable->updated_at->year == now()->year ? $timetable->updated_at->format('M d') : $timetable->updated_at->format('M d, Y')) }}
 	</p>

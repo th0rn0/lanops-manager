@@ -102,10 +102,10 @@ use Debugbar;
 @else
     <h4>{{ $timetable->name }}</h4>
 @endif
-	
+
 	<p>
     @lang('events.timetable-created-at')
-    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }}, 
+    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }},
     @lang('events.timetable-updated-at')
     {{ $timetable->updated_at->toDateString() == now()->toDateString() ? $timetable->updated_at->format('M d, H:i') : ($timetable->updated_at->year == now()->year ? $timetable->updated_at->format('M d') : $timetable->updated_at->format('M d, Y')) }}
 	</p>
@@ -480,9 +480,11 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.ownedmatches')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($ownedMatches as $match)
-		@include ('layouts._partials._matchmaking.card')
+			<div class="col">
+				@include ('layouts._partials._matchmaking.card')
+			</div>
 		@endforeach
 
 	</div>
@@ -502,12 +504,14 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.ownedteams')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($memberedTeams as $team)
 		@php
 		$match = $team->match;
 		@endphp
-		@include ('layouts._partials._matchmaking.card')
+		<div class="col">
+			@include ('layouts._partials._matchmaking.card')
+		</div>
 		@endforeach
 	</div>
 	@if($memberedTeams->count())
@@ -526,9 +530,11 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.publicmatches')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($openPublicMatches as $match)
-		@include ('layouts._partials._matchmaking.card')
+			<div class="col">
+				@include ('layouts._partials._matchmaking.card')
+			</div>
 		@endforeach
 	</div>
 	@if($openPublicMatches->count())
@@ -547,9 +553,11 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.closedpublicmatches')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($liveClosedPublicMatches as $match)
-		@include ('layouts._partials._matchmaking.card')
+			<div class="col">
+				@include ('layouts._partials._matchmaking.card')
+			</div>
 		@endforeach
 	</div>
 	@if($liveClosedPublicMatches->count())
@@ -719,7 +727,7 @@ use Debugbar;
 					<div class="card-body">
 						<div class="table-responsive text-center">
 							<table class="table">
-	
+
 								<?php
 								$headers = explode(',', $seatingPlan->headers);
 								$headers = array_combine(range(1, count($headers)), $headers);
@@ -731,7 +739,7 @@ use Debugbar;
 												<h4><strong>{{ucwords($headers[$row])}}</strong></h4>
 											</td>
 											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-	
+
 												<td style="padding-top:14px;">
 													@if ($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
 													@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column)->status == 'ACTIVE')

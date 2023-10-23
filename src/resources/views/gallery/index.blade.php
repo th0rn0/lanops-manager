@@ -9,7 +9,7 @@
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>@lang('gallery.gallery')</h1>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
     @foreach ($albums as $album)
         <div class="align-items-stretch mb-4 col-sm-4 col-12 custom-gallery-col">
             <div class="card h-100 d-flex flex-column">
