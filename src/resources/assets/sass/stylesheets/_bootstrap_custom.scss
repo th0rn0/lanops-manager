@@ -21,7 +21,16 @@ body {
         &:hover>.nav-link {
             border-bottom: 4px solid $color_primary !important;
             padding-bottom: 4px;
-            color: $color_secondary_text;
+            color: $color_primary;
+            background-color: transparent;
+        }
+    }
+
+    >.nav-item.active {
+        >.nav-link {
+            border-bottom: 4px solid $color_primary !important;
+            padding-bottom: 4px;
+            color: $color_primary;
             background-color: transparent;
         }
     }
