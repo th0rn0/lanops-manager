@@ -20,10 +20,11 @@
 		@endif
 	</div>
 </li>
-<li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_navi_future_events') </a>
-	<div class="dropdown-menu">
-		@if ( count($events) > 0 )
+
+@if ( count($events) > 0 )
+	<li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_navi_future_events') </a>
+		<div class="dropdown-menu">
 			@foreach ( $events->reverse() as $event )
 				@if ($event->start > \Carbon\Carbon::today() )
 					<a class="dropdown-item" href="/events/{{ $event->slug }}">
@@ -34,11 +35,9 @@
 					</a>
 				@endif
 			@endforeach
-		@else
-			<li><a href="#">@lang('layouts.events_navi_no_future_events')</a></li>
-		@endif
-	</div>
-</li>
+		</div>
+	</li>
+@endif
 <li class="nav-item dropdown">
 	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@lang('layouts.events_all_events') </a>
 	<div class="dropdown-menu">
