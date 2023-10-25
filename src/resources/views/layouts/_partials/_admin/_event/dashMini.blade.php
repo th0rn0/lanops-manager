@@ -2,33 +2,33 @@
 
 	@if ($event->status == 'PUBLISHED')
 		@php
-			$eventStatusColor = 'green';
+			$eventStatusColor = 'success';
 			$eventStatusIcon = 'fa-check-circle-o';
 		@endphp
 	@elseif ($event->status == 'REGISTEREDONLY')
 		@php
-			$eventStatusColor = 'blue';
+			$eventStatusColor = 'info';
 			$eventStatusIcon = 'fa-check-circle-o';
 		@endphp
 	@elseif ($event->status == 'DRAFT')
 		@php
-			$eventStatusColor = 'red';
+			$eventStatusColor = 'danger';
 			$eventStatusIcon = 'fa-times-circle-o';
 		@endphp
 	@elseif ($event->status == 'PREVIEW' || $event->status == 'PRIVATE')
 		@php
-			$eventStatusColor = 'yellow';
+			$eventStatusColor = 'warning';
 			$eventStatusIcon = 'fa-ban';
 		@endphp
 	@else
 		@php
-			$eventStatusColor = 'green';
+			$eventStatusColor = 'success';
 			$eventStatusIcon = 'fa-question-circle ';
 		@endphp
 	@endif
 	<div class="col d-flex align-items-stretch">
-		<div class="card event-card panel-{{ $eventStatusColor }} mb-3 d-flex">
-			<div class="card-header d-flex flex-wrap flex-grow-1">
+		<div class="card event-card mb-3 d-flex">
+			<div class="card-header text-bg-{{ $eventStatusColor }} d-flex flex-wrap flex-grow-1">
 				<div class="icon-large pe-0">
 					<i class="fa {{ $eventStatusIcon }} fa-5x"></i>
 				</div>
