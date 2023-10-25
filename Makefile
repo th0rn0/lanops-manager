@@ -166,6 +166,14 @@ generate-images:
 generate-testuser:
 	docker exec eventula_manager_app php artisan db:seed --class=TestUserSeeder
 
+# Generate testusers - This will spam 50 testuser to the Database!
+generate-event:
+	docker exec eventula_manager_app php artisan db:seed --class=EventsSeeder
+
+# Generate testusers - This will spam 50 testuser to the Database!
+generate-default-installation:
+	docker exec eventula_manager_app php artisan db:seed --class=DefaultInstallationSeeder
+
 # Generate requireddatabase - This will erase your current settings!
 generate-requireddatabase:
 	docker exec eventula_manager_app php artisan db:seed --class=RequiredDatabaseSeeder --force
