@@ -132,7 +132,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title" id="sendMailModalLabel{{ $mailTemplate->id }}">Send Mail {{ $mailTemplate->subject }}</h4>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 					</div>
 					<div class="modal-body">
 							<small>(preview with your data)</small>
@@ -209,7 +209,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title" id="previewMailModalLabel{{ $mailTemplate->id }}">Preview Mail {{ $mailTemplate->static }}</h4>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 					</div>
 					<div class="modal-body">
 							<small>(preview with your data)</small>

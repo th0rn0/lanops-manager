@@ -24,7 +24,7 @@
 	<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
 		<h4 mt-0>Errors occured</h4>
 		<ul>At least one of youre servers have more than one match assigned. This should never happen! Please look through the list and fix the error manually.</ul>
-		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+		<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="alert" aria-label="Close">
 			
 		</button>
 	</div>
@@ -266,7 +266,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer</h4>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+												<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer->slug )) }}
 												<div class="modal-body">
@@ -413,7 +413,7 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h4 class="modal-title" id="editGameServerCommandModalLabel{{$gameServerCommand->id}}">Edit GameServer Command</h4>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+												<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' . '/' . $gameServerCommand->slug )) }}
 												<div class="modal-body">
@@ -494,7 +494,7 @@
 											<div class="modal-content">
 												<div class="modal-header">
 													<h4 class="modal-title" id="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}">Edit GameServer Command Parameter</h4>
-													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+													<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 												</div>
 												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' . '/' . $gameServerCommandParameter->slug )) }}
 													<div class="modal-body">

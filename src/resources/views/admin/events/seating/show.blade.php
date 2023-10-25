@@ -229,7 +229,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editSeatingModalLabel">Edit Seating</h4>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat')) }}

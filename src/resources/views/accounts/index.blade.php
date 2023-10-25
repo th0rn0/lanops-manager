@@ -438,7 +438,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="confirmDeleteModalLabel">@lang('accounts.confirm_remove_account')</h4>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			{{ Form::open(array('url'=>'/account/delete/', 'id'=>'confirmDeleteFormModal')) }}
 			<div class="modal-body">

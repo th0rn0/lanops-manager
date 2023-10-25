@@ -32,8 +32,8 @@
 				@foreach ($poll->options as $option)
 					@if ($option->hasVoted())
 						<p>
-							<a href="/polls/{{ $poll->slug }}/options/{{ $option->id }}/abstain">
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">×</button>
+							<a href="/polls/{{ $poll->slug }}/options/{{ $option->id }}/abstain" class="text-decoration-none">
+								<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 							</a>
 							{{ $option->name }}
 						</p>

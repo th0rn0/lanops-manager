@@ -157,7 +157,7 @@
 													<div class="modal-content">
 														<div class="modal-header">
 															<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match {{ $matchCounter }}</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+															<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 														</div>
 														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . ((isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'') , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
@@ -190,7 +190,7 @@
 													<div class="modal-content">
 														<div class="modal-header">
 															<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match {{ $matchCounter }}</h4>
-															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+															<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 														</div>
 														<div class="modal-body">
 															@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )
@@ -381,7 +381,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="submitScoresModalLabel">Submit Scores</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body">
 					@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )

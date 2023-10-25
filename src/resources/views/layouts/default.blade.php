@@ -55,7 +55,7 @@
 			@foreach (['danger', 'warning', 'success', 'info'] as $msg)
 				@if (Session::has('alert-' . $msg))
 					<p class="alert  alert-{{ $msg }} alert-dismissible fade show">
-						<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="btn-close" data-bs-dismiss="alert" aria-label="close">&times;</a>
+						<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="btn-close text-decoration-none" data-bs-dismiss="alert" aria-label="close"></a>
 					</p>
 				@endif
 			@endforeach
@@ -166,7 +166,7 @@
 					@endforeach
 
 			</ul>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+			<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="alert" aria-label="Close">
 
 			</button>
 		</div>
