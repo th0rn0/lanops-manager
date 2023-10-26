@@ -59,10 +59,46 @@
 		@if ($isCreditEnabled)
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-wrench fa-fw"></i> Credit System
+					<i class="fa fa-credit-card fa-fw"></i> Automated Credit Awards
 				</div>
 				<div class="card-body">
-
+					{{ Form::open(array('url'=>'/admin/settings/systems')) }}
+						<h4>Tournament Credit Allocation Settings</h4>
+						<hr>
+						<div class="row">
+							<div class="col-12 col-sm-6">
+								<div class="mb-3">
+									{{ Form::label('tournament_participation','Participation') }}
+									{{ Form::number('tournament_participation', $creditAwardTournamentParticipation, array('id'=>'tournament_participation','class'=>'form-control'))}}
+								</div>
+								<div class="mb-3">
+									{{ Form::label('tournament_second','Second Place') }}
+									{{ Form::number('tournament_second', $creditAwardTournamentSecond, array('id'=>'tournament_second','class'=>'form-control'))}}
+								</div>
+							</div>
+							<div class="col-12 col-sm-6">
+								<div class="mb-3">
+									{{ Form::label('tournament_first','First Place') }}
+									{{ Form::number('tournament_first', $creditAwardTournamentFirst, array('id'=>'tournament_first','class'=>'form-control'))}}
+								</div>
+								<div class="mb-3">
+									{{ Form::label('tournament_third','Third Place') }}
+									{{ Form::number('tournament_third', $creditAwardTournamentThird, array('id'=>'tournament_third','class'=>'form-control'))}}
+								</div>
+							</div>
+						</div>
+						<h4>Registration Credit Allocation Settings</h4>
+						<hr>
+						<div class="mb-3">
+							{{ Form::label('registration_event','Event') }}
+							{{ Form::number('registration_event', $creditAwardRegistrationEvent, array('id'=>'registration_event','class'=>'form-control'))}}
+						</div>
+						<div class="mb-3">
+							{{ Form::label('registration_site','Site') }}
+							{{ Form::number('registration_site', $creditAwardRegistrationSite, array('id'=>'registration_site','class'=>'form-control'))}}
+						</div>
+						<button type="submit" class="btn btn-block btn-success">Submit</button>
+					{{ Form::close() }}
 				</div>
 			</div>
 		@endif
