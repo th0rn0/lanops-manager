@@ -309,7 +309,8 @@
 
     </div>
 
-    <script>
+    {{-- TODO: Replace Morris --}}
+    {{-- <script>
         Morris.Bar({
             element: 'ticket-breakdown',
             data: [
@@ -346,6 +347,6 @@
             // chart.
             labels: ['Number of Orders']
         });
-    </script>
+    </script> --}}
 
 @endsection
