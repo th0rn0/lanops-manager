@@ -3,11 +3,11 @@
 		<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#topbar-navigation" aria-expanded="false">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="/">
+		<a class="navbar-brand" style="padding:3px 0px; "href="/">
 			<picture>
 				<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
 				<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
-				<img class="img-fluid" style="width:200px; height: auto; margin-top:-46px;" src="{{ Settings::getOrgLogo() }}"/>
+				<img style="height:100% " src="{{ Settings::getOrgLogo() }}"/>
 			</picture>
 		</a>
 
