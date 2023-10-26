@@ -24,7 +24,7 @@
 				<div class="row">
 					<div class="col-12 col-md-4">
 						<div class="card border-secondary">
-							<a href="/admin/purchases" class="text-secondary">
+							<a href="/admin/purchases">
 								<div class="card-footer">
 									<span class="float-start">All Purchases</span>
 									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
@@ -35,7 +35,7 @@
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="card border-secondary">
-							<a href="/admin/purchases/shop" class="text-secondary">
+							<a href="/admin/purchases/shop">
 								<div class="card-footer">
 									<span class="float-start">Shop Purchases</span>
 									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
@@ -46,7 +46,7 @@
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="card border-secondary">
-							<a href="/admin/purchases/event" class="text-secondary">
+							<a href="/admin/purchases/event">
 								<div class="card-footer">
 									<span class="float-start">Event Purchases</span>
 									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
