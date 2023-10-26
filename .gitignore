@@ -22,6 +22,7 @@ src/public/storage
 src/public/css/*.css
 src/public/css/images/*.png
 src/public/js/*.js
+src/public/js/*.js.map
 
 docs/build
 docker-compose.local.yml

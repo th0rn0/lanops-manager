@@ -5,4 +5,7 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "stylesheets/bootstrap_custom";
 @import "stylesheets/bootstrap_custom_admin";
-@import "node_modules/summernote/src/styles/bs5/summernote-bs5";
+@import "node_modules/summernote/src/styles/lite/summernote-lite";
+@import "stylesheets/app/components/summernote_custom";
+
+

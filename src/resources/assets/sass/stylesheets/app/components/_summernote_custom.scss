@@ -1,0 +1,53 @@
+.note-toolbar {
+    background-color: $color_body_background;
+  }
+
+.note-btn {
+    color: $color_body_text;
+    background-color: $color_body_background;
+    border-color: $color_body_text;
+}
+
+.note-btn:hover {
+    color: $color_body_background;
+    background-color: $color_body_text;
+    border-color: $color_body_background;
+}
+.note-btn:active {
+    color: $color_body_background;
+    background-color: $color_body_text;
+    border-color: $color_body_background;
+}
+
+.note-dropdown-menu {
+    color: $color_body_text;
+    background-color: $color_body_background;
+    border-color: $color_body_text;
+}
+
+.note-modal-content {
+    background: $color_body_background;
+    color: $color_body_text;
+}
+
+.note-modal-title {
+    color: $color_body_text;
+}
+
+.note-form-label {
+    color: $color_body_text;
+}
+
+.note-modal-header {
+    padding: 10px 20px;
+    border: 1px solid $color_body_background;
+}
+
+.note-input {
+    border: 1px solid $color_body_text;
+    background: $color_body_background;
+}
+
+.close {
+    color: $color_body_text;
+}
