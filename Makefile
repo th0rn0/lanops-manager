@@ -74,6 +74,8 @@ ifeq ($(shell docker network ls --filter=NAME=lan | wc -l),1)
 endif
 endif
 
+docker-build:
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml build
 
 # Make .env
 logs:
@@ -371,6 +373,7 @@ purge-containers:
 	docker rm eventula_manager_app || true
 	docker rm eventula_manager_database || true
 	docker volume rm eventula_manager_database || true
+	docker volume rm eventula_manager_storage || true
 
 # Purge Caches
 purge-cache:
