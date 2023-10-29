@@ -123,43 +123,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="card mb-3">
-						<div class="card-header">
-							<i class="fa fa-wrench fa-fw"></i> Settings
-						</div>
-						<div class="card-body">
-							{{ Form::open(array('url'=>'/admin/settings' )) }}
-									<div class="mb-3">
-										{{ Form::label('shop_welcome_message','Welcome Message',array('id'=>'','class'=>'')) }}
-										{{ Form::text('shop_welcome_message', Settings::getShopWelcomeMessage(), array('id'=>'shop_welcome_message','class'=>'form-control')) }}
-										<small>Displayed at the top of the index page of the shop.</small>
-									</div>
-									<div class="mb-3">
-										{{ Form::label('shop_open','Shop Status',array('id'=>'','class'=>'')) }}
-										{{
-											Form::select(
-												'shop_status',
-												array(
-													'OPEN'=>'Open',
-													'CLOSED'=>'Closed'
-												),
-												Settings::getShopStatus(),
-												array(
-													'id'=>'shop_status',
-													'class'=>'form-control'
-												)
-											)
-										}}
-									</div>
-									<div class="mb-3">
-										{{ Form::label('shop_closed_message','Closed Message',array('id'=>'','class'=>'')) }}
-										{{ Form::text('shop_closed_message', Settings::getShopClosedMessage(), array('id'=>'shop_closed_message','class'=>'form-control')) }}
-										<small>Displayed at the top of the index page when the shop is closed.</small>
-									</div>
-									<button type="submit" class="btn btn-block btn-success">Submit</button>
-							{{ Form::close() }}
-						</div>
-					</div>
+					
 				</div>
 			</div>
 			<div class="card mb-3">
@@ -195,6 +159,14 @@
 							<button type="submit" class="btn btn-block btn-success">Submit</button>
 						{{ Form::close() }}
 					</div>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-info-circle fa-fw"></i> Settings
+				</div>
+				<div class="card-body">
+					<p>The Shop settings has ben moved to the <a href="/admin/settings/systems">Opt System settings</a> </p>
 				</div>
 			</div>
 			<div class="card mb-3">

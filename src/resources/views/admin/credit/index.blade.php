@@ -135,6 +135,14 @@
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
+					<i class="fa fa-info-circle fa-fw"></i> Settings
+				</div>
+				<div class="card-body">
+					<p>The Credit settings has ben moved to the <a href="/admin/settings/systems">Opt System settings</a> </p>
+				</div>
+			</div>
+			<div class="card mb-3">
+				<div class="card-header">
 					<i class="fa fa-info-circle fa-fw"></i> Enable/Disable
 				</div>
 				<div class="card-body">

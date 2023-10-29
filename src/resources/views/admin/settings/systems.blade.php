@@ -55,6 +55,48 @@
                     </div>
                 </div>
             @endif
+            @if ($isShopEnabled)
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-wrench fa-fw"></i> Shop System
+                </div>
+                <div class="card-body">
+                    {{ Form::open(array('url'=>'/admin/settings/systems' )) }}
+                            <div class="mb-3">
+                                {{ Form::label('shop_welcome_message','Welcome Message',array('id'=>'','class'=>'')) }}
+                                {{ Form::text('shop_welcome_message', $shopWelcomeMessage, array('id'=>'shop_welcome_message','class'=>'form-control')) }}
+                                <small>Displayed at the top of the index page of the shop.</small>
+                            </div>
+                            <div class="mb-3">
+                                {{ Form::label('shop_open','Shop Status',array('id'=>'','class'=>'')) }}
+                                {{
+                                    Form::select(
+                                        'shop_status',
+                                        array(
+                                            'OPEN'=>'Open',
+                                            'CLOSED'=>'Closed'
+                                        ),
+                                        $shopStatus,
+                                        array(
+                                            'id'=>'shop_status',
+                                            'class'=>'form-control'
+                                        )
+                                    )
+                                }}
+                            </div>
+                            <div class="mb-3">
+                                {{ Form::label('shop_closed_message','Closed Message',array('id'=>'','class'=>'')) }}
+                                {{ Form::text('shop_closed_message', $shopClosedMessage, array('id'=>'shop_closed_message','class'=>'form-control')) }}
+                                <small>Displayed at the top of the index page when the shop is closed.</small>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-success">Submit</button>
+                    {{ Form::close() }}
+                </div>
+            </div>
+            @endif
+
+
+
         </div>
         <div class="col-12 col-md-6">
             @if ($isCreditEnabled)
