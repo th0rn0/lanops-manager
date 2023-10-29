@@ -22,7 +22,7 @@
                 $("#helpentries .accordion-item").filter(function() {
                     $(this).toggle($(this).html().toLowerCase().indexOf(value) > -1)
                 });
-                // fix automatic borders with bootstrap 5 accordeon
+                // fix automatic borders with bootstrap 5 accordion
                 $('#helpentries').find('.accordion-item:visible:first').css("border-top",
                     "var(--bs-accordion-border-width) solid var(--bs-accordion-border-color)").css(
                     "border-top-left-radius", "var(--bs-accordion-border-radius)").css(
@@ -50,7 +50,7 @@
                 aria-describedby="search-addon">
         </div>
 
-        <div class="accordion" id="helpentries">
+        <div class="accordion " id="helpentries">
             @foreach ($helpCategorys as $helpCategory)
                 @foreach ($helpCategory->entrys as $entry)
                     <div class="accordion-item @if (Colors::isBodyDarkMode()) border-light @endif">
@@ -61,9 +61,10 @@
                                     onclick="copyTextToClipBoard('{{ url()->full() }}#{{ $entry->nice_name }}')"
                                     title="@lang('help.copylink')"><i class="far fa-clipboard"></i></a>
                             </div>
-                            <a role="button" data-bs-toggle="collapse"
-                                class="accordion-button accordion-arrow-toggle @if (($loop->parent->first && !$loop->first) || !$loop->parent->first) ) collapsed @endif"
-                                data-parent="#helpentries" href="#collapse_{{ $entry->nice_name }}" aria-expanded="false"
+                            <a class="accordion-button accordion-arrow-toggle @if (($loop->parent->first && !$loop->first) || !$loop->parent->first) ) collapsed @endif"
+                                role="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ $entry->nice_name }}"
+                                href="#collapse_{{ $entry->nice_name }}"
+                                aria-expanded=@if (($loop->parent->first && !$loop->first) || !$loop->parent->first) ) "false" @else "true" @endif
                                 aria-controls="collapse_{{ $entry->nice_name }}">
                                 <h4 class="card-title m-0 d-inline flex-grow-1">
                                     {{ $entry->display_name }}
@@ -78,8 +79,8 @@
                         </div>
 
                         <div id="collapse_{{ $entry->nice_name }}"
-                            class="accordion-collapse @if (($loop->parent->first && !$loop->first) || !$loop->parent->first) ) collapse @endif" role="tabpanel"
-                            aria-labelledby="{{ $entry->nice_name }}" data-parent="#helpentries">
+                            class="accordion-collapse @if (($loop->parent->first && !$loop->first) || !$loop->parent->first) ) collapse @endif"
+                            data-bs-parent="#helpentries">
                             <div class="accordion-body">
                                 {!! $entry->content !!}
                                 <div>
