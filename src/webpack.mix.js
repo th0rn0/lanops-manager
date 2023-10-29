@@ -28,11 +28,14 @@ mix.scripts([
         './node_modules/@popperjs/core/dist/umd/popper.min.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/summernote/dist/summernote-lite.js',
+        './node_modules/slick-carousel/slick/slick.js',
     ], 'public/js/vendor.js')
     .copy('./node_modules/jquery-ui-dist/jquery-ui.min.css', 'public/css')
     .copy('./node_modules/summernote/dist/summernote-lite.js.map', 'public/js')
+    .copy('./node_modules/slick-carousel/slick/ajax-loader.gif', 'public/css/images')
     .copyDirectory('./node_modules/jquery-ui-dist/images', 'public/css/images')
     .copyDirectory('./node_modules/summernote/dist/font', 'public/css/font')
+    .copyDirectory('./node_modules/slick-carousel/slick/fonts', 'public/css/font')
     .copyDirectory('./node_modules/@fortawesome/fontawesome-free/webfonts', 'public/css/font');
 
 mix.minify('public/js/vendor.js');

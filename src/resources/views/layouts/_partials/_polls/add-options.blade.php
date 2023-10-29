@@ -4,7 +4,6 @@
 	</div>
 </div>
 <button type="button" id="poll_options_add" class="btn btn-success btn-block">Add Extra Option</button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
  	jQuery(document).ready(function() {
 	    var max_fields = 20;

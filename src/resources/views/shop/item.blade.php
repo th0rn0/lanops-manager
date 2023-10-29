@@ -2,11 +2,9 @@
 
 @section ('page_title', Settings::getOrgName() . ' Shop | ' . $item->name)
 
-@section ('content')
+@include ('layouts._partials.slick_loader')
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
+@section ('content')
 
 <div class="container">
 	<div class="pb-2 mt-4 mb-4 border-bottom">
@@ -17,7 +15,7 @@
 	@include ('layouts._partials._shop.navigation')
 	<div class="row">
 		<div class="col-12 col-sm-4">
-			<div class="fotorama" data-nav="thumbs" data-allowfullscreen="full">
+			<div class="slider-for">
 				@if ($item->getDefaultImageUrl())
 					<picture>
 						<source srcset="{{ $item->getDefaultImageUrl() }}.webp" type="image/webp">
