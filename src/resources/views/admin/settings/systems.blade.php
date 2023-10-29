@@ -105,7 +105,7 @@
                         <i class="fa fa-credit-card fa-fw"></i> Credit System
                     </div>
                     <div class="card-body">
-                        <h4>Automatic credit rewards</h4>
+                        <h4>Automatic Credit Rewards</h4>
                         <hr>
                         {{ Form::open(['url' => '/admin/settings/systems']) }}
                         <h5>Tournament Credit Allocation Settings</h4>
