@@ -79,16 +79,11 @@ class Helpers
         $return = array();
         if ($limit != 0) {
 
-            if ($pagename != "")
-            {
+            if ($pagename != "") {
                 $events = \App\Event::orderBy('start', $order)->paginate($limit, ['*'], $pagename);
-            }
-            else
-            {
+            } else {
                 $events = \App\Event::orderBy('start', $order)->paginate($limit);
             }
-
-
         } else {
             $events = \App\Event::orderBy('start', 'DESC')->get();
         }
@@ -507,11 +502,10 @@ class Helpers
      */
     public static function getEventulaEventTags()
     {
-        if (config('eventula.url') == "DISABLE")
-        {
+        if (config('eventula.url') == "DISABLE") {
             return false;
         }
-        
+
         $client = new Client();
         try {
             $response = $client->get(config('eventula.url') . '/api/tags/events');
@@ -784,8 +778,7 @@ class Helpers
     {
         $ticketCount = min($remainingcapacity > 0 ? $remainingcapacity : 10, $ticket->quantity > 0 ? $ticket->quantity : 10);
 
-        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0)
-        {
+        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0) {
             $ticketCount = min($ticket->no_tickets_per_user, $ticketCount);
         }
 
@@ -844,8 +837,7 @@ class Helpers
                         if (isset($commandPartValue) && !empty($commandPartValue)) {
                             $result = $result . $commandPartValue;
                         } else {
-                            if($secondChar)
-                            {
+                            if ($secondChar) {
                                 Session::flash('alert-danger', "Can not resolve command parameter \"$commandPart\"!");
                             }
                         }
@@ -853,11 +845,9 @@ class Helpers
                         unset($commandPartValue);
                     }
                 } catch (Exception $e) {
-                    if($secondChar)
-                    {
+                    if ($secondChar) {
                         Session::flash('alert-danger', 'error while resolving command!' . $command . ' ' . var_export($e->getMessage(), true));
                     }
-
                 }
             }
         }
@@ -895,24 +885,21 @@ class Helpers
 
     public static function rethrowIfDebug(\Throwable $e)
     {
-        if (env('APP_DEBUG'))
-        {
+        if (env('APP_DEBUG')) {
             throw $e;
         }
     }
 
-    public static function checkUserFields(User $user, Array $properties)
+    public static function checkUserFields(User $user, array $properties)
     {
         $result = true;
         foreach ($properties as $property) {
-            
-            if (!$user->$property || $user->$property == "" )
-            {
+
+            if (!$user->$property || $user->$property == "") {
                 $result = false;
             }
         }
         return $result;
-
     }
 
     public static function bytesToHuman($bytes)
@@ -924,5 +911,31 @@ class Helpers
         }
 
         return round($bytes, 2) . ' ' . $units[$i];
+    }
+
+    public static function getLatinAlphabetLetterIndex($alphabetLetter)
+    {
+        $latinAlphabetUpper = range('A', 'Z');
+
+        foreach ($latinAlphabetUpper as $key => $value) {
+            if ($value == $alphabetLetter) {
+                return $key + 1;
+            }
+        }
+
+        $latinAlphabetLower = range('a', 'z');
+
+        foreach ($latinAlphabetLower as $key => $value) {
+            if ($value == $alphabetLetter) {
+                return $key + 1;
+            }
+        }
+
+        return -1;
+    }
+
+    public static function getLatinAlphabetUpperLetterByIndex($index)
+    {
+        return range('A', 'Z')[$index];
     }
 }
