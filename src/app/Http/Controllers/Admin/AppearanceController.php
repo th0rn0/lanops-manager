@@ -62,12 +62,36 @@ class AppearanceController extends Controller
     }
 
     /**
+     * Update SCSS user database variables from file
+     * @return Redirect
+     */
+    public function cssUpdateDatabaseFromFile()
+    {
+        if (!Appearance::updateDatabaseCssVariablesFromFile()) {
+            Session::flash('alert-danger', 'Could update database values. Do you maybe have a variable in your file that does not belong there? Please try again.');
+            return Redirect::back();
+        }
+        if (!Appearance::cssRecompile()) {
+            Session::flash('alert-danger', 'Could recompile CSS. Please try again.');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully updated the database values!');
+        return Redirect::back();
+    }
+
+    /**
      * Add Additional CSS Override
      * @param Request $request
      * @return Redirect
      */
     public function cssOverride(Request $request)
     {
+        if (config('appearance.disable_admin_appearance_css_settings') == "true")
+        {
+            Session::flash('alert-danger', 'Could not save CSS because it is disabled by the APPEAR_DISABLE_ADMIN_APPEARANCE_CSS_SETTINGS environment variable. Contact your hoster!');
+            return Redirect::back();
+        }
+
         $rules = [
             'css'   => 'required',
         ];
@@ -94,6 +118,11 @@ class AppearanceController extends Controller
      */
     public function cssVariables(Request $request)
     {
+        if (config('appearance.disable_admin_appearance_css_settings') == "true")
+        {
+            Session::flash('alert-danger', 'Could not save CSS because it is disabled by the APPEAR_DISABLE_ADMIN_APPEARANCE_CSS_SETTINGS environment variable. Contact your hoster!');
+            return Redirect::back();
+        }
         if (!Appearance::saveCssVariables($request->css_variables)) {
             Session::flash('alert-danger', 'Could not save CSS Variables. Please try again.');
             return Redirect::back();

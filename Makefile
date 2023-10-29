@@ -74,8 +74,14 @@ ifeq ($(shell docker network ls --filter=NAME=lan | wc -l),1)
 endif
 endif
 
-docker-build:
-	$(DOCKER_COMPOSE) -f docker-compose-dev.yml build
+local-prd-build-up:
+	$(DOCKER_COMPOSE) -f docker-compose-local-prd.yml up --build
+
+local-prd-up:
+	$(DOCKER_COMPOSE) -f docker-compose-local-prd.yml up
+
+local-prd-stop:
+	$(DOCKER_COMPOSE) -f docker-compose-local-prd.yml stop
 
 # Make .env
 logs:
@@ -168,13 +174,9 @@ generate-images:
 generate-testuser:
 	docker exec eventula_manager_app php artisan db:seed --class=TestUserSeeder
 
-# Generate testusers - This will spam 50 testuser to the Database!
+# Generate event - This will generate a sample event!
 generate-event:
 	docker exec eventula_manager_app php artisan db:seed --class=EventsSeeder
-
-# Generate testusers - This will spam 50 testuser to the Database!
-generate-default-installation:
-	docker exec eventula_manager_app php artisan db:seed --class=DefaultInstallationSeeder
 
 # Generate requireddatabase - This will erase your current settings!
 generate-requireddatabase:
@@ -204,7 +206,7 @@ folder-structure-prd:
 	mkdir -p /src/storage/app/public/images/venues/ && \
 	mkdir -p /src/storage/app/public/images/main/ && \
 	mkdir -p /src/storage/app/public/images/shop/ && \
-	mkdir -p /src/storage/app/public/attachments/help/ "
+	mkdir -p /src/storage/app/public/attachments/help/"
 
 folder-structure-dev:
 	docker run --rm --name compkeygen --interactive \
@@ -215,7 +217,7 @@ folder-structure-dev:
 	mkdir -p /src/storage/app/public/images/venues/ && \
 	mkdir -p /src/storage/app/public/images/main/ && \
 	mkdir -p /src/storage/app/public/images/shop/ && \
-	mkdir -p /src/storage/app/public/attachments/help/ "
+	mkdir -p /src/storage/app/public/attachments/help/"
 
 # Create SSL Keypair for Development
 ssl-keygen:
@@ -402,6 +404,8 @@ purge-files:
 	rm -rf /src/storage/app/public/images/events ; \
 	rm -rf /src/storage/app/public/images/venues ; \
 	rm -rf /src/storage/app/public/images/main ; \
+	rm -rf /src/storage/user/scss/*.css ; \
+	rm -rf /src/storage/user/scss/*.scss ; \
 	rm -rf /src/storage/logs/* ; \
 	rm -rf /src/public/storage || true"
 

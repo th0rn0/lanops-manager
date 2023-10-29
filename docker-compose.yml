@@ -1,3 +1,4 @@
+# !!!!!!!!!!!!! DONT USE THIS EXAMPLE FOR PRODUCTION! GO TO https://eventula.lan2play.de/admin/getting_started.html#create-your-docker-compose-yml-file AND GET THE FILES THERE !!!!!!!!!!!!!
 version: "3.4"
 services:
   eventula_manager_app:

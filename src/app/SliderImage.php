@@ -5,8 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-use ScssPhp\ScssPhp\Compiler;
-use Illuminate\Support\Facades\Storage;
 
 class SliderImage extends Model
 {

@@ -1,12 +1,12 @@
 # !!!!!!!!!!!!! DONT USE THIS EXAMPLE FOR PRODUCTION! GO TO https://eventula.lan2play.de/admin/getting_started.html#create-your-docker-compose-yml-file AND GET THE FILES THERE !!!!!!!!!!!!!
+
 version: "3.4"
 services:
   eventula_manager_app:
     build:
       context: .
-    working_dir: /web/html/
     volumes:
-      - $PWD/src/:/web/html/
+      - eventula_manager_storage:/web/html/storage
       - $PWD/resources/certs:/etc/nginx/certs
       - $PWD/resources/secrets:/run/secrets
     env_file: $PWD/src/.env
@@ -30,7 +30,9 @@ services:
     restart: unless-stopped
 volumes:
   eventula_manager_database:
-    name: eventula_manager_database
+    name: eventula_manager_database  
+  eventula_manager_storage:
+    name: eventula_manager_storage
 networks:
   lan:
     external: true
