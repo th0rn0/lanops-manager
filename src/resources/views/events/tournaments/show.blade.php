@@ -3,7 +3,7 @@
 @section ('page_title', $event->display_name . ' - ' . $tournament->display_name)
 
 @section ('content')
-	<div class="container">
+	<div class="container pt-1">
 		@if (isset($tournament->game) && $tournament->game->image_header_path != null)
 			<picture>
 				<source srcset="{{ $tournament->game->image_header_path }}.webp" type="image/webp">

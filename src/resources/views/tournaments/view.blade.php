@@ -3,7 +3,7 @@
 @section ('page_title', $event->display_name . ' - ' . $tournament->display_name)
 
 @section ('content')
-	<div class="container">
+	<div class="container pt-1">
 		<div class="row">
 			<div class="card mb-3">
 				<div class="row">

@@ -3,7 +3,7 @@
 @section ('page_title', Settings::getOrgName() . ' - ' . __('auth.verify_email'))
 
 @section ('content')
-<div class="container">
+<div class="container pt-1">
     <div class="pb-2 mt-4 mb-4 border-bottom">
         <h1>@lang('auth.verify_email')</h1>
     </div>

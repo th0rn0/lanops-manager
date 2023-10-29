@@ -4,7 +4,7 @@
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			Shop - Basket

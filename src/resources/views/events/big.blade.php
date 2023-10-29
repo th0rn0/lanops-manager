@@ -6,7 +6,7 @@
 	
 <meta http-equiv="refresh" content="15">
 
-<div class="container">
+<div class="container pt-1">
 	@foreach ($event->announcements as $announcement)
 		<h3><center>{{ $announcement->message }}</center></h3>
 	@endforeach
