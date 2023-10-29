@@ -22,6 +22,16 @@
                 $("#helpentries .accordion-item").filter(function() {
                     $(this).toggle($(this).html().toLowerCase().indexOf(value) > -1)
                 });
+                // fix automatic borders with bootstrap 5 accordeon
+                $('#helpentries').find('.accordion-item:visible:first').css("border-top",
+                    "var(--bs-accordion-border-width) solid var(--bs-accordion-border-color)").css(
+                    "border-top-left-radius", "var(--bs-accordion-border-radius)").css(
+                    "border-top-right-radius", "var(--bs-accordion-border-radius)");
+                $('#helpentries').find('.accordion-item:visible:not(:first)').css("border-top",
+                    "0").css(
+                    "border-top-left-radius", "0").css(
+                    "border-top-right-radius", "0");
+
             });
         });
     </script>
