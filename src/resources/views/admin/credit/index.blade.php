@@ -114,23 +114,44 @@
 		<div class="col-12 col-sm-2">
 			<div class="card mb-3" >
 				<div class="card-header">
-					<i class="fa fa-credit-card fa-fw"></i> Add Credit
+					<i class="fa fa-credit-card fa-fw"></i> Add/Subtract Credit
 				</div>
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
 						<div class="mb-3">
-							{{ Form::label('user','User',array('id'=>'','class'=>'')) }}
-							{{ Form::text('user', '',array('id'=>'user','class'=>'form-control typeahead')) }}
+							{{ Form::label('user_id','User',array('id'=>'','class'=>'')) }}
+							{{-- {{ Form::text('user', '',array('id'=>'user','class'=>'form-control typeahead')) }} --}}
+							{!! Form::select('user_id', $users, null, ['multiple' => false, 'class' => 'form-control margin', 'id' => 'user_id']) !!}
+
 						</div>
 						<div class="mb-3">
 							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
 							{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}
+							<small>to subtract the amount, just use a negative number</small>
 						</div>
 						<button class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				</div>
 			</div>
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fa fa-info-circle fa-fw"></i> Enable/Disable
+				</div>
+				<div class="card-body">
+					<p>The Credit System is used to award participants with credit they can use to buy things from the shop and events. It can be award for buying tickets, attending events, participanting/winning tournaments or manually assigned.</p>
+					@if ($isCreditEnabled)
+						{{ Form::open(array('url'=>'/admin/settings/credit/disable')) }}
+							<button type="submit" class="btn btn-block btn-danger">Disable</button>
+						{{ Form::close() }}
+					@else
+						{{ Form::open(array('url'=>'/admin/settings/credit/enable')) }}
+							<button type="submit" class="btn btn-block btn-success">Enable</button>
+						{{ Form::close() }}
+					@endif
+				</div>
+			</div>
 		</div>
+		
 	@endif
 </div>
 

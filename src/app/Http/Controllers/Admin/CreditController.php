@@ -25,16 +25,15 @@ class CreditController extends Controller
      */
     public function index()
     {
+        $users = User::get();
+        $selectallusers = array();
+        foreach ($users as $user) {
+            $selectallusers[$user->id] = $user->username;
+        }
         return view('admin.credit.index')
             ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withCreditLogs(CreditLog::paginate(10, ['*'], 'cl'))
-            ->withCreditAwardTournamentParticipation(Settings::getCreditTournamentParticipation())
-            ->withCreditAwardTournamentFirst(Settings::getCreditTournamentFirst())
-            ->withCreditAwardTournamentSecond(Settings::getCreditTournamentSecond())
-            ->withCreditAwardTournamentThird(Settings::getCreditTournamentThird())
-            ->withCreditAwardRegistrationEvent(Settings::getCreditRegistrationEvent())
-            ->withCreditAwardRegistrationSite(Settings::getCreditRegistrationSite())
-        ;
+            ->withUsers($selectallusers);
     }
 
     /**
