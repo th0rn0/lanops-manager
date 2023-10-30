@@ -1,4 +1,7 @@
-<nav class="navbar navbar-expand-md @if(Colors::isNavbarDark()) navbar-dark @else navbar-light @endif fixed-top custom-header">
+<nav class="navbar navbar-expand-md fixed-top custom-header" @if(Colors::isNavbarDark())data-bs-theme="dark" @else data-bs-theme="light" @endif>
+
+	
+
 	<div class="container">
 		<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#topbar-navigation" aria-expanded="false">
 			<span class="navbar-toggler-icon"></span>

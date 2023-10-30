@@ -4,7 +4,9 @@ $brand-primary: $color_primary;
 $primary: $color_primary;
 $secondary: $color_secondary;
 $body-bg: $color_body_background;
+$body-bg-dark: $color_body_background;
 $body-color: $color_body_text;
+$body-color-dark: $color_body_text;
 $modal-content-bg: $color_body_background;
 $close-color: $color_body_text;
 $success-light: #dff0d8;
@@ -29,3 +31,6 @@ $font-weight-normal: 300;
 $card-cap-bg: transparentize(invert($body-bg), 0.97);
 $card-bg: $body-bg;
 $card-border-color: invert($body-bg);
+
+$link-color: $color_body_links;
+$link-color-dark: $color_body_links;

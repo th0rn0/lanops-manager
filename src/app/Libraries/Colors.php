@@ -242,7 +242,7 @@ class Colors
     $rgb = Colors::HTMLToRGB($color);
     $hsl = Colors::RGBToHSL($rgb);
 
-    return $hsl->lightness < 200;
+    return $hsl->lightness < 165;
   }
 
   public static function getTheme()
