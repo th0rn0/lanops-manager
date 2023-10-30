@@ -676,7 +676,7 @@ use Debugbar;
 				<td style="vertical-align: middle;">
 					@if ( $participant->user->hasSeatableTicket($event->id) )
 					@if ( $participant->seat )
-					{{ $participant->seat->seat }}
+					{{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }}
 					@else
 					@lang( 'events.notseated' )
 					@endif
@@ -754,7 +754,7 @@ use Debugbar;
 													@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
-																					'{{ ucwords($headers[$row]) . $column }}'
+																					'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
 																				)" data-toggle="modal" data-target="#pickSeatModal">
 														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
 													</button>
@@ -790,10 +790,12 @@ use Debugbar;
 								{{ Form::hidden('_method', 'DELETE') }}
 								{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
 								{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-								{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
+								{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
+								{{ Form::hidden('seat_column', $participant->seat->column, array('id'=>'seat_column','class'=>'form-control')) }}
+								{{ Form::hidden('seat_row', $participant->seat->row, array('id'=>'seat_row','class'=>'form-control')) }}
 								<h5>
 									<button class="btn btn-success btn-block">
-										{{ $participant->seat->seat }} - @lang('events.remove')
+									{{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} - @lang('events.remove')
 									</button>
 								</h5>
 								{{ Form::close() }}
@@ -863,10 +865,11 @@ use Debugbar;
 	</div>
 
 <script>
-	function pickSeat(seating_plan_slug, seat) {
-		jQuery("#seat_number_modal").val(seat);
-		jQuery("#seat_modal").val(seat);
-		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
+	function pickSeat(seating_plan_slug, seatColumn, seatRow, seatDisplay) {
+		jQuery("#seat_column").val(seatColumn);
+		jQuery("#seat_row").val(seatRow);
+		jQuery("#seat_number_modal").val(seatDisplay);
+		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seatDisplay);
 		jQuery("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
 	}
 </script>

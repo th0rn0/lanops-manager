@@ -936,6 +936,6 @@ class Helpers
 
     public static function getLatinAlphabetUpperLetterByIndex($index)
     {
-        return range('A', 'Z')[$index];
+        return range('A', 'Z')[$index - 1];
     }
 }

@@ -50,7 +50,7 @@ return new class extends Migration
 
         foreach ($seatings as $seating) {
 
-            $header = Helpers::getLatinAlphabetUpperLetterByIndex($seating->column - 1 );
+            $header = Helpers::getLatinAlphabetUpperLetterByIndex($seating->column);
 
             $seating->seat = $header.$seating->row;
             if (!$seating->save()) {
