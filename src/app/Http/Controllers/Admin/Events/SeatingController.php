@@ -214,9 +214,6 @@ class SeatingController extends Controller
     public function storeSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
 
-        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Column: $request->seat_column",0);
-        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Row: $request->seat_row",0);
-
         if (
             $request->seat_column <= 0 ||
             $request->seat_column > $seatingPlan->columns ||
@@ -279,8 +276,6 @@ class SeatingController extends Controller
             return Redirect::back();
         }
 
-        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Participant: $request->participant_select_modal",0);
-        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Seating Plan: $seatingPlan->id",0);
         $newSeat                            = new EventSeating();
         $newSeat->column                    = $request->seat_column;
         $newSeat->row                       = $request->seat_row;
@@ -306,10 +301,12 @@ class SeatingController extends Controller
      */
     public function destroySeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
-        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Column: $request->seat_column",0);
-        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Row: $request->seat_row",0);
         
-        if (!$seat = $seatingPlan->seats()->where('column', $request->seat_column)->where('row', $request->seat_row)->first()) {
+        $clauses = [
+            'column'    => $request->seat_column_delete, 
+            'row'       => $request->seat_row_delete
+        ];
+        if (!$seat = $seatingPlan->seats()->where($clauses)->first()) {
             Session::flash('alert-danger', 'Could not find seat!');
             return Redirect::back();
         }

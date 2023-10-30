@@ -260,9 +260,9 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat', 'id'=>'clear_seat_form')) }}
 				<hr>
 				{{ Form::hidden('_method', 'DELETE') }}
-				{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
-				{{ Form::hidden('seat_row', null, array('id'=>'seat_row','class'=>'form-control')) }}
 				<button type="submit" class="btn btn-danger btn-block">Clear Seat</button>
+				{{ Form::hidden('seat_column_delete', null, array('id'=>'seat_column_delete','class'=>'form-control')) }}
+				{{ Form::hidden('seat_row_delete', null, array('id'=>'seat_row_delete','class'=>'form-control')) }}
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -275,6 +275,8 @@
 		seat = seatColumn + "" + seatRow;
 		jQuery("#seat_column").val(seatColumn);
 		jQuery("#seat_row").val(seatRow);
+		jQuery("#seat_column_delete").val(seatColumn);
+		jQuery("#seat_row_delete").val(seatRow);
 		jQuery("#seat_number_modal").val(seatDisplay);
 		jQuery("#seat_status_select_modal").val(seat_status);
 		var orginal_participant_id = jQuery("#participant_id_modal").val();

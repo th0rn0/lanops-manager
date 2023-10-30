@@ -37,18 +37,19 @@
 				{{ Form::close() }}
 				@endif
 				@if ($participant->seat)
-				<hr>
-				{{ Form::open(array('url'=>'/events/' . $participant->event->slug . '/seating/' . $participant->seat->seatingPlan->slug)) }}
-				{{ Form::hidden('_method', 'DELETE') }}
-				{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-				{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-				{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
-				<h5>
-					<button class="btn btn-danger btn-block">
-						@lang('events.remove_seating')
-					</button>
-				</h5>
-				{{ Form::close() }}
+					<hr>
+						{{ Form::open(array('url'=>'/events/' . $participant->event->slug . '/seating/' . $participant->seat->seatingPlan->slug)) }}
+							{{ Form::hidden('_method', 'DELETE') }}
+							{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+							{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
+							{{ Form::hidden('seat_column', $participant->seat->column, array('id'=>'seat_column','class'=>'form-control')) }}
+							{{ Form::hidden('seat_row', $participant->seat->row, array('id'=>'seat_row','class'=>'form-control')) }}
+						<h5>
+						<button class="btn btn-danger btn-block">
+							@lang('events.remove_seating')
+						</button>
+						</h5>
+						{{ Form::close() }}
 				@endif
 			</div>
 			<div class="offset-md-2 col-md-2 offset-sm-2 col-sm-4 col-12">

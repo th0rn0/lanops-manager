@@ -238,6 +238,8 @@
 												@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
 												<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																				'{{ $seatingPlan->slug }}',
+																				'{{ $column }}',
+																				'{{ $row }}',
 																				'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
 																			)" data-toggle="modal" data-target="#pickSeatModal">
 													{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
@@ -511,15 +513,15 @@
 		<h3><i class="fas fa-ticket-alt mr-3"></i>@lang('events.mytickets')</h3>
 	</div>
 	@if (Auth::user())
-	@if (!$user->getAllTickets($event->id)->isEmpty())
-	@foreach ($user->getAllTickets($event->id) as $participant)
-	@include('layouts._partials._tickets.index')
-	@endforeach
+		@if (!$user->getAllTickets($event->id)->isEmpty())
+			@foreach ($user->getAllTickets($event->id) as $participant)
+				@include('layouts._partials._tickets.index')
+			@endforeach
+		@else
+			<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
+		@endif
 	@else
-	<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
-	@endif
-	@else
-	<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
+		<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
 	@endif
 
 	<!-- TOURNAMENTS -->
@@ -759,6 +761,8 @@
 	function pickSeat(seating_plan_slug, seatColumn, seatRow, seatDisplay) {
 		jQuery("#seat_column").val(seatColumn);
 		jQuery("#seat_row").val(seatRow);
+		jQuery("#seat_column_delete").val(seatColumn);
+		jQuery("#seat_row_delete").val(seatRow);
 		jQuery("#seat_number_modal").val(seatDisplay);
 		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seatDisplay);
 		jQuery("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);

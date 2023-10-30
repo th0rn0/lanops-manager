@@ -719,48 +719,46 @@ use Debugbar;
 					<div class="card-body">
 						<div class="table-responsive text-center">
 							<table class="table">
-	
-								<?php
-								$headers = explode(',', $seatingPlan->headers);
-								$headers = array_combine(range(1, count($headers)), $headers);
-								?>
-								<tbody>
+
+								<tbody>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}
 									@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 										<tr>
 											<td>
-												<h4><strong>{{ucwords($headers[$row])}}</strong></h4>
+												<h4><strong>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) }}</strong></h4>
 											</td>
 											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 	
 												<td style="padding-top:14px;">
-													@if ($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
-													@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column)->status == 'ACTIVE')
+													@if ($event->getSeat($seatingPlan->id, $column, $row))
+													@if($event->getSeat($seatingPlan->id,  $column, $row)->status == 'ACTIVE')
 													@if ($seatingPlan->locked)
 													<button class="btn btn-success btn-sm" disabled>
-														{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row))->eventParticipant->user->username }}
 													</button>
 													@else
 													<button class="btn btn-success btn-sm" disabled>
-														{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row))->eventParticipant->user->username }}
 													</button>
 													@endif
 													@endif
 													@else
 													@if ($seatingPlan->locked)
 													<button class="btn btn-primary btn-sm" disabled>
-														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 													</button>
 													@else
 													@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
+																					'{{ $column }}',
+																					'{{ $row }},
 																					'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
 																				)" data-toggle="modal" data-target="#pickSeatModal">
-														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 													</button>
 													@else
 													<button class="btn btn-primary btn-sm" disabled>
-														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 													</button>
 													@endif
 													@endif
@@ -785,21 +783,21 @@ use Debugbar;
 								@if ($user && !$user->getAllTickets($event->id)->isEmpty() && $user->hasSeatableTicket($event->id))
 								<h5>@lang('events.yourseats')</h5>
 								@foreach ($user->getAllTickets($event->id) as $participant)
-								@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
-								{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
-								{{ Form::hidden('_method', 'DELETE') }}
-								{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-								{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-								{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
-								{{ Form::hidden('seat_column', $participant->seat->column, array('id'=>'seat_column','class'=>'form-control')) }}
-								{{ Form::hidden('seat_row', $participant->seat->row, array('id'=>'seat_row','class'=>'form-control')) }}
-								<h5>
-									<button class="btn btn-success btn-block">
-									{{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} - @lang('events.remove')
-									</button>
-								</h5>
-								{{ Form::close() }}
-								@endif
+									@if ($participant->seat && $participant->seat->event_seating_plan_id == $seatingPlan->id)
+										{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/' . $seatingPlan->slug)) }}
+											{{ Form::hidden('_method', 'DELETE') }}
+											{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
+											{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
+											{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
+											{{ Form::hidden('seat_column', $participant->seat->column, array('id'=>'seat_column','class'=>'form-control')) }}
+											{{ Form::hidden('seat_row', $participant->seat->row, array('id'=>'seat_row','class'=>'form-control')) }}
+											<h5>
+												<button class="btn btn-success btn-block">
+													{{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} - @lang('events.remove')
+												</button>
+											</h5>
+										{{ Form::close() }}
+									@endif
 								@endforeach
 								@elseif($user && !$user->hasSeatableTicket($event->id))
 								<div class="alert alert-info">
@@ -868,6 +866,8 @@ use Debugbar;
 	function pickSeat(seating_plan_slug, seatColumn, seatRow, seatDisplay) {
 		jQuery("#seat_column").val(seatColumn);
 		jQuery("#seat_row").val(seatRow);
+		jQuery("#seat_column_delete").val(seatColumn);
+		jQuery("#seat_row_delete").val(seatRow);
 		jQuery("#seat_number_modal").val(seatDisplay);
 		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seatDisplay);
 		jQuery("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
