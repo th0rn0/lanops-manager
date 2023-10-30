@@ -68,12 +68,13 @@ class SeatingController extends Controller
             $participant->seat()->delete();
         }
         //Unseated ticket found
-        if (!$event->getSeat($seatingPlan->id, $request->seat)) {
+        if (!$event->getSeat($seatingPlan->id, $request->seatColumn, $request->seatRow)) {
             //Seat does not Exists
-            $seat                         = new EventSeating();
-            $seat->seat                   = $request->seat;
-            $seat->event_participant_id   = $participant->id;
-            $seat->event_seating_plan_id  = $seatingPlan->id;
+            $seat                           = new EventSeating();
+            $seat->column                   = $request->seatColumn; 
+            $seat->row                      = $request->seatRow;
+            $seat->event_participant_id     = $participant->id;
+            $seat->event_seating_plan_id    = $seatingPlan->id;
             $seat->save();
             $request->session()->flash(
                 'alert-success',
@@ -96,7 +97,8 @@ class SeatingController extends Controller
     {
         $clauses = [
             'event_participant_id'  => $request->participant_id,
-            'seat'                  => $request->seat_number,
+            'column'                => $event->seat_column,    
+            'row'                   => $request->seat_row,
             'event_seating_plan_id' => $seatingPlan->id
         ];
         if (!$seat = $seatingPlan->seats()->where($clauses)->first()) {

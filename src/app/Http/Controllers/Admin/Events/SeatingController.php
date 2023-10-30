@@ -214,11 +214,16 @@ class SeatingController extends Controller
     public function storeSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
 
+        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Column: $request->seat_column",0);
+        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Row: $request->seat_row",0);
+
         if (
-            !in_array(substr($request->seat_number_modal, 0, 1), explode(',', $seatingPlan->headers)) ||
-            substr($request->seat_number_modal, 1, 1) <= 0 ||
-            substr($request->seat_number_modal, 1, 1) > $seatingPlan->rows
+            $request->seat_column <= 0 ||
+            $request->seat_column > $seatingPlan->columns ||
+            $request->seat_row <= 0 ||
+            $request->seat_row > $seatingPlan->rows
         ) {
+            
             Session::flash('alert-danger', 'Invalid seat selection!');
             return Redirect::back();
         }
@@ -251,7 +256,7 @@ class SeatingController extends Controller
             $previousSeat->delete();
         }
 
-        $clauses = ['seat' => $request->seat_number_modal, 'event_seating_plan_id' => $seatingPlan->id];
+        $clauses = ['column' => $request->seat_column, 'row' => $request->seat_row, 'event_seating_plan_id' => $seatingPlan->id];
         $seat = EventSeating::where($clauses)->first();
         if ($seat != null) {
             Session::flash('alert-danger', 'Seat is still occupied. Please try again!');
@@ -274,11 +279,14 @@ class SeatingController extends Controller
             return Redirect::back();
         }
 
-        $newSeat                         = new EventSeating();
-        $newSeat->seat                   = $request->seat_number_modal;
-        $newSeat->event_participant_id   = $request->participant_select_modal;
-        $newSeat->event_seating_plan_id  = $seatingPlan->id;
-        $newSeat->status                 = $request->seat_status_select_modal;
+        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Participant: $request->participant_select_modal",0);
+        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Seating Plan: $seatingPlan->id",0);
+        $newSeat                            = new EventSeating();
+        $newSeat->column                    = $request->seat_column;
+        $newSeat->row                       = $request->seat_row;
+        $newSeat->event_participant_id      = $request->participant_select_modal;
+        $newSeat->event_seating_plan_id     = $seatingPlan->id;
+        $newSeat->status                    = $request->seat_status_select_modal;
 
         if (!$newSeat->save()) {
             Session::flash('alert-danger', 'Could not update Seat!');
@@ -298,7 +306,10 @@ class SeatingController extends Controller
      */
     public function destroySeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
-        if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number)->first()) {
+        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Column: $request->seat_column",0);
+        error_log("=====MUDDER WIR BRAUCHEN LOG ZUHAUSE===== Row: $request->seat_row",0);
+        
+        if (!$seat = $seatingPlan->seats()->where('column', $request->seat_column)->where('row', $request->seat_row)->first()) {
             Session::flash('alert-danger', 'Could not find seat!');
             return Redirect::back();
         }
