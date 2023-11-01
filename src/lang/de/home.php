@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,11 +10,10 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     'comingsoon' => 'Bald mehr',
     'about' => 'Über',
     'eventcalendar' => "Veranstaltungskalender",
-    'seatsremaining' => "Sitze verbleibend",
+    'seatsremaining' => "Sitzplätze verbleibend",
     'ticketsremaining' => "Tickets verbleibend",
     'when' => "Wann",
     'where' => "Wo",
