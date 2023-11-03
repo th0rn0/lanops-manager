@@ -17,7 +17,7 @@ class GameMatchApiHandler
         $return = array(
             "0" => "None",
             "1" => "Get5",
-            "2" => "SharpTournament",
+            "2" => "PugSharp",
         );
         return $return;
     }
@@ -28,7 +28,7 @@ class GameMatchApiHandler
             case "1":
                 return new Get5MatchApiHandler();
             case "2":
-                return new SharpTournamentMatchApiHandler();
+                return new PugSharpMatchApiHandler();
             default:
                 throw new Exception("MatchApiHandler \"" . GameMatchApiHandler::getGameMatchApiHandlerSelectArray()[$matchApiHandlerId] . "\" is not able to execute commands.");
         }
@@ -302,7 +302,7 @@ class Get5MatchApiHandler implements IGameMatchApiHandler
 }
 
 
-class SharpTournamentMatchApiHandler implements IGameMatchApiHandler
+class PugSharpMatchApiHandler implements IGameMatchApiHandler
 {
     private $result;
 
@@ -340,7 +340,7 @@ class SharpTournamentMatchApiHandler implements IGameMatchApiHandler
             $this->result->team2->name = $name;
             $this->result->team2->tag = $name;
         } else {
-            throw new Exception("MatchApiHandler for SharpTournament does not support more than 2 Teams!");
+            throw new Exception("MatchApiHandler for PugSharp does not support more than 2 Teams!");
         }
     }
 
@@ -497,7 +497,7 @@ class SharpTournamentMatchApiHandler implements IGameMatchApiHandler
 
     public function uploaddemo(Request $request, MatchMaking $match = null, EventTournament $tournament = null, ?int $challongematchid)
     {
-        $demoname = str_replace(' ', '_', $request->headers->get('SharpTournament-DemoName'));
+        $demoname = str_replace(' ', '_', $request->headers->get('PugSharp-DemoName'));
 
         if ($match != null && $tournament == null) {
             $destinationPathDemo =  MatchReplay::createReplayPath($match->game, $demoname);
