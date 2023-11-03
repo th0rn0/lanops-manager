@@ -100,7 +100,7 @@
 							@if (isset($seat->eventParticipant))
 							<tr class="odd gradeX">
 								<td></td>
-								<td>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $seat->column }}</td>
+								<td>{{ Helpers::getLatinAlphabetUpperLetterByIndex($seat->row) . $seat->column }} AAAA</td>
 								<td>
 									{{ $seat->eventParticipant->user->username }}
 									@if ($seat->eventParticipant->user->steamid)
