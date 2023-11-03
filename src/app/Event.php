@@ -170,7 +170,11 @@ class Event extends Model
     public function getSeat($seatingPlanId, $seatColumn, $seatRow)
     {
         $seatingPlan = $this->seatingPlans()->find($seatingPlanId);
-        return $seatingPlan->seats()->where('column', ucwords($seatColumn))->where('row', ucwords($seatRow))->first();
+        $clauses = [
+            'column'    => $seatColumn,
+            'row'       => $seatRow,
+        ];
+        return $seatingPlan->seats()->where($clauses)->first();
     }
 
     /**

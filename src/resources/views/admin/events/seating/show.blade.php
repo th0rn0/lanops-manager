@@ -4,6 +4,8 @@
 
 @section ('content')
 
+
+
 <div class="row">
 	<div class="col-lg-12">
 		<h3 class="pb-2 mt-4 mb-4 border-bottom">Seating Plans - {{ $seatingPlan->name }}</h3>
@@ -45,35 +47,33 @@
 							@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 								<td style="padding-top:14px;">
 									@if($event->getSeat($seatingPlan->id, $column, $row))
-									@foreach($seatingPlan->seats as $seat)
-									<?php
-									if ($seat->column == $column && $seat->row == $row) {
-										$status = $seat->status;
-									}
-									if (($seat->column == $column && $seat->row == $row) && isset($seat->eventParticipant)) {
-										$username = $seat->eventParticipant->user->username;
-										$participant_id = $seat->eventParticipant->id;
-									}
-									?>
-									@endforeach
-									@if($status == 'ACTIVE' && isset($seat->eventParticipant))
-									<button class="btn btn-success btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
-										{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $username }}
-									</button>
+										<?php
+											//seat found, get info
+											$seat = $event->getSeat($seatingPlan->id, $column, $row);
+											$status = $seat->status;
+											if (isset($seat->eventParticipant)) {
+												$username = $seat->eventParticipant->user->username;
+												$participant_id = $seat->eventParticipant->id;
+											}
+										?>
+										@if($status == 'ACTIVE' && isset($seat->event_participant_id))
+											<button class="btn btn-success btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
+												{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $username }}
+											</button>
+										@else
+											<button class="btn btn-danger btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', null, null, '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
+												{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - Inactive
+											</button>
+										@endif
 									@else
-									<button class="btn btn-danger btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', null, null, '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
-										{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - Inactive
-									</button>
-									@endif
-									@else
-									<button class="btn btn-primary btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', null, null, 'ACTIVE')" data-toggle="modal" data-target="#editSeatingModal">
-										{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - Empty
-									</button>
+										<button class="btn btn-primary btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', null, null, 'ACTIVE')" data-toggle="modal" data-target="#editSeatingModal">
+											{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - Empty
+										</button>
 									@endif
 								</td>
-								@endfor
+							@endfor
 						</tr>
-						@endfor
+					@endfor
 				</table>
 			</div>
 		</div>
