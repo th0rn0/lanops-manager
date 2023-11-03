@@ -4,8 +4,6 @@
 
 @section ('content')
 
-
-
 <div class="row">
 	<div class="col-lg-12">
 		<h3 class="pb-2 mt-4 mb-4 border-bottom">Seating Plans - {{ $seatingPlan->name }}</h3>
@@ -100,7 +98,7 @@
 							@if (isset($seat->eventParticipant))
 							<tr class="odd gradeX">
 								<td></td>
-								<td>{{ Helpers::getLatinAlphabetUpperLetterByIndex($seat->row) . $seat->column }} AAAA</td>
+								<td>{{ Helpers::getLatinAlphabetUpperLetterByIndex($seat->row) . $seat->column }}</td>
 								<td>
 									{{ $seat->eventParticipant->user->username }}
 									@if ($seat->eventParticipant->user->steamid)
