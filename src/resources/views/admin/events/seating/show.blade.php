@@ -123,7 +123,7 @@
 									@endif
 								</td>
 								<td width="10%">
-									<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ $seat->column }}','{{ $seat->row }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
+									<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ $seat->column }}','{{ $seat->row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
 								</td>
 							</tr>
 							@endif
