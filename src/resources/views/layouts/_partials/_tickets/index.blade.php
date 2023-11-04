@@ -3,7 +3,7 @@
 		@if ($participant->ticket)
 		<strong>{{ $participant->ticket->name }} 
 			@if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): 
-				@if ($participant->seat) {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} 
+				@if ($participant->seat) {{ $participant->seat->getSeatName() }} 
 					<small>in {{$participant->seat->seatingPlan->name}}</small> 
 				@else @lang('events.notseated') 
 				@endif 
@@ -11,9 +11,9 @@
 		</strong>
 		@else
 			@if ($participant->staff)
-				<strong>@lang('tickets.staff_ticket') @if ($participant->seat) - @lang('events.seat'): {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} @endif</strong>
+				<strong>@lang('tickets.staff_ticket') @if ($participant->seat) - @lang('events.seat'): {{ $participant->seat->getSeatName() }} @endif</strong>
 			@else
-				<strong>@lang('tickets.free_ticket') @if ($participant->seat) - @lang('events.seat'): {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} @endif</strong>
+				<strong>@lang('tickets.free_ticket') @if ($participant->seat) - @lang('events.seat'): {{ $participant->seat->getSeatName() }} @endif</strong>
 			@endif
 		@endif
 		@if ($participant->gift == 1 && $participant->gift_accepted != 1)

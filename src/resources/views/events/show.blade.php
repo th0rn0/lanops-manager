@@ -287,7 +287,7 @@
 
 							<h5>
 								<button class="btn btn-success btn-block">
-									@lang('events.remove') - {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }}
+									@lang('events.remove') - {{ $participant->seat->getSeatName() }}
 								</button>
 							</h5>
 							{{ Form::close() }}
@@ -705,7 +705,7 @@
 					<td style="vertical-align: middle;">
 						@if ($participant->user->hasSeatableTicket($event->id))
 						@if ($participant->seat)
-						{{ $participant->seat->seatingPlan->getShortName() }} | {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }}
+						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->getSeatName() }}
 						@else
 						@lang('events.notseated')
 						@endif

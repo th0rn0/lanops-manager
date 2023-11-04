@@ -676,7 +676,7 @@ use Debugbar;
 				<td style="vertical-align: middle;">
 					@if ( $participant->user->hasSeatableTicket($event->id) )
 					@if ( $participant->seat )
-					{{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }}
+					{{ $participant->seat->getSeatName() }}
 					@else
 					@lang( 'events.notseated' )
 					@endif
@@ -798,7 +798,7 @@ use Debugbar;
 											{{ Form::hidden('seat_row_delete', $participant->seat->row, array('id'=>'seat_row_delete','class'=>'form-control')) }}
 											<h5>
 												<button class="btn btn-success btn-block">
-													@lang('events.remove') - {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }}
+													@lang('events.remove') - {{ $participant->seat->getSeatName() }}
 												</button>
 											</h5>
 										{{ Form::close() }}

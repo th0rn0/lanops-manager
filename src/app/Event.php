@@ -241,16 +241,20 @@ class Event extends Model
         $return = array();
         foreach ($this->eventParticipants as $participant) {
             if (($participant->staff || $participant->free) || @$participant->ticket->seatable) {
-                $seat = 'NOT SEATED';
+                $seat = 'Not Seated';
+                $seatingPlanName = "";
                 if (!empty($participant->seat)) {
-                    $seat = $participant->seat->seat;
+                    if ($participant->seat->seatingPlan) {
+                        $seatingPlanName = $participant->seat->seatingPlan->getName();
+                    }
+                    $seat = $participant->seat->getSeatName();
                 }
-                $text = $participant->user->username . ' - ' . $seat;
+                $text = $participant->user->username . ' - ' . $participant->ticket->name . ' - ' . $seatingPlanName . ' - ' . $seat;
                 if ($participant->staff) {
-                    $text = $participant->user->username . ' - ' . $seat . ' - Staff Ticket';
+                    $text = $participant->user->username . ' - ' . 'Staff Ticket - ' . $seatingPlanName . ' - ' . $seat;
                 }
                 if ($participant->free) {
-                    $text = $participant->user->username . ' - ' . $seat . ' - Free Ticket';
+                    $text = $participant->user->username . ' - ' . 'Free Ticket - ' . $seatingPlanName . ' - ' . $seat;
                 }
                 $return[$participant->id] = $text;
             }

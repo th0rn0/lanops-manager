@@ -82,7 +82,7 @@ class SeatingController extends Controller
             $seat->save();
             $request->session()->flash(
                 'alert-success',
-                'You have been successfully assigned to seat ' . Helpers::getLatinAlphabetUpperLetterByIndex($seat->row) . $seat->column . ' in plan ' . $seatingPlan->name . '!'
+                'You have been successfully assigned to seat ' . $seat->getSeatName() . ' in plan ' . $seatingPlan->name . '!'
             );
             return Redirect::to('events/' . $event->slug);
         }

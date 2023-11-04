@@ -3,6 +3,7 @@
 namespace App;
 
 use DB;
+use Helpers;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,4 +37,21 @@ class EventSeating extends Model
     {
         return $this->belongsTo('App\EventParticipant');
     }
+
+    /**
+     * Get Staff Tickets for current User
+     * @return string
+     */
+    public function getSeatName()
+    {
+        
+        if($this->row && $this->column){
+            return Helpers::getLatinAlphabetUpperLetterByIndex($this->row) . $this->column;
+        }
+        
+        return "";
+
+    }
+
+    
 }
