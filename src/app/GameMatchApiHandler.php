@@ -318,6 +318,8 @@ class PugSharpMatchApiHandler implements IGameMatchApiHandler
             "de_overpass",
             "de_ancient"
         );
+        $this->result->max_rounds = 5;
+        $this->result->max_overtime_rounds = 2;
     }
 
     public function getuserthirdpartyrequirements()
@@ -370,7 +372,7 @@ class PugSharpMatchApiHandler implements IGameMatchApiHandler
 
         if ($apikey != null && $apiurl != null) {
             $this->result->eventula_apistats_url = $apiurl;
-            $this->result->cvars->get5_demo_upload_url = $apiurl . "demo";
+            $this->result->eventula_demo_upload_url = $apiurl . "demo";
         }
 
         return $this->result;
