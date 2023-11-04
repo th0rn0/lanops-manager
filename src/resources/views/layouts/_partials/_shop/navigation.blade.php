@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md @if(Colors::isBodyDarkmode()) navbar-dark @else navbar-light @endif">
+<nav class="subnavbar navbar navbar-expand-md @if(Colors::isBodyDarkmode()) navbar-dark @else navbar-light @endif">
 	<div class="container-fluid">
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">

@@ -16,7 +16,7 @@
 		<h4>{!! $event->desc_short !!}</h4>
 	</div>
 	<div class="text-center">
-		<nav class="navbar navbar-expand-md bg-primary navbar-events" style="z-index: 1;">
+		<nav class="subnavbar navbar navbar-expand-md bg-primary navbar-events" style="z-index: 1;">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-controls="navbar">

@@ -24,11 +24,13 @@ body {
         >.nav-link {
             color: $color_header_links;
         }
+
         >.dropdown-menu {
             background-color: $color_header_background;
 
             >.dropdown-item {
                 color: $color_header_links;
+
                 &:hover {
                     color: $color_header_links_hover;
                 }
@@ -133,3 +135,28 @@ h6 {
 }
 
 
+.subnavbar {
+    color: $color_body_text;
+}
+
+
+.subnavbar {
+    >.container-fluid {
+        >.navbar-collapse {
+            >.navbar-nav {
+
+                color: $color_body_text;
+
+                >.nav-item {
+                    >.nav-link {
+                        color: $color_body_text;
+
+                        &:hover {
+                            color: $color_body_links;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
