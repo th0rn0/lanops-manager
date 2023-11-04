@@ -212,7 +212,7 @@ class User extends Authenticatable implements MustVerifyEmail
                     if ($eventParticipant->seat->seatingPlan) {
                         $seatingPlanName = $eventParticipant->seat->seatingPlan->getName();
                     }                    
-                    $seat = $eventParticipant->seat->getSeatName();
+                    $seat = $eventParticipant->seat->getName();
                 }
                 $return[$eventParticipant->id] = 'Participant ID: ' . $eventParticipant->id . $seat;
                 if (!$eventParticipant->ticket && $eventParticipant->staff) {

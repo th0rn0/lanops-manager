@@ -98,7 +98,7 @@
 							@if (isset($seat->eventParticipant))
 							<tr class="odd gradeX">
 								<td></td>
-								<td>{{ $seat->getSeatName() }}</td>
+								<td>{{ $seat->getName() }}</td>
 								<td>
 									{{ $seat->eventParticipant->user->username }}
 									@if ($seat->eventParticipant->user->steamid)

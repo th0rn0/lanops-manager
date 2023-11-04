@@ -247,9 +247,15 @@ class Event extends Model
                     if ($participant->seat->seatingPlan) {
                         $seatingPlanName = $participant->seat->seatingPlan->getName();
                     }
-                    $seat = $participant->seat->getSeatName();
+                    $seat = $participant->seat->getName();
+                }                
+                
+                if(!empty($participant->ticket->name)) {
+                    $text = $participant->user->username . ' - ' . $participant->ticket->name . ' - ' . $seatingPlanName . ' - ' . $seat;
+                } else {
+                    $text = $participant->user->username . ' - ' . $seatingPlanName . ' - ' . $seat;
                 }
-                $text = $participant->user->username . ' - ' . $participant->ticket->name . ' - ' . $seatingPlanName . ' - ' . $seat;
+
                 if ($participant->staff) {
                     $text = $participant->user->username . ' - ' . 'Staff Ticket - ' . $seatingPlanName . ' - ' . $seat;
                 }

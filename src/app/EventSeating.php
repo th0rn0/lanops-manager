@@ -42,7 +42,7 @@ class EventSeating extends Model
      * Get Staff Tickets for current User
      * @return string
      */
-    public function getSeatName()
+    public function getName()
     {
         
         if($this->row && $this->column){

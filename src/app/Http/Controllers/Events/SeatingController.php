@@ -49,16 +49,20 @@ class SeatingController extends Controller
         $rules = [
             'participant_id'    => 'required',
             'user_id'           => 'required',
-            'seat_column'       => 'required',
-            'seat_row'          => 'required',
+            "seat_column"       => "required|integer",
+            "seat_row"          => "required|integer|max:26",
         ];
         $messages = [
-            'participant_id|required'   => 'A participant_id is required',
-            'user_id|required'          => 'A user_id is required',
-            'seat_column|required'      => 'A seat column is required',
-            'seat_row|required'         => 'A seat row is required',
+            'participant_id.required'   => 'A participant_id is required',
+            'user_id.required'          => 'A user_id is required',
+            'seat_column.required'      => 'A column is required',
+            'seat_column.integer'       => 'Columns must be a number',
+            'seat_row.required'         => 'A row is required',
+            'seat_row.integer'          => 'Rows must be a number',
+            'seat_row.max'              => 'Max. 26 Rows are allowed',
             
         ];
+        
         $this->validate($request, $rules, $messages);
         
         $participant = $event->EventParticipants()->where('id', $request->participant_id)->first();
@@ -74,19 +78,20 @@ class SeatingController extends Controller
         //Unseated ticket found
         if (!$event->getSeat($seatingPlan->id, $request->seat_column, $request->seat_row)) {
             //Seat does not Exists
-            $seat                           = new EventSeating();
-            $seat->column                   = $request->seat_column; 
-            $seat->row                      = $request->seat_row;
-            $seat->event_participant_id     = $participant->id;
-            $seat->event_seating_plan_id    = $seatingPlan->id;
-            $seat->save();
+            $newSeat                           = new EventSeating();
+            $newSeat->column                   = $request->seat_column; 
+            $newSeat->row                      = $request->seat_row;
+            $newSeat->event_participant_id     = $participant->id;
+            $newSeat->event_seating_plan_id    = $seatingPlan->id;
+            $newSeat->save();
             $request->session()->flash(
                 'alert-success',
-                'You have been successfully assigned to seat ' . $seat->getSeatName() . ' in plan ' . $seatingPlan->name . '!'
+                'You have been successfully assigned to seat ' . $newSeat->getName() . ' in plan ' . $seatingPlan->name . '!'
             );
             return Redirect::to('events/' . $event->slug);
         }
-        $request->session()->flash('alert-danger', 'That seat is alredy taken');
+        $seat = $event->getSeat($seatingPlan->id, $request->seat_column, $request->seat_row);
+        $request->session()->flash('alert-danger', 'Seat ' . $seat->getName() . ' in plan ' . $seatingPlan->name . ' is alredy taken');
         return Redirect::to('events/' . $event->slug);
     }
 
@@ -124,11 +129,15 @@ class SeatingController extends Controller
             Session::flash('alert-danger', 'Could not find seating');
             return Redirect::back();
         }
+        
+        $seatName = $seat->getName();
+        $seatingPlanName = $seatingPlan->name;
+        
         if (!$seat->delete()) {
-            Session::flash('alert-danger', 'Could not remove seating');
+            Session::flash('alert-danger', 'Could not remove seating ' . $seatName . ' from plan ' . $seatingPlanName . '!');
             return Redirect::back();
         }
-        Session::flash('alert-success', 'Successfully removed seating');
+        Session::flash('alert-success', 'Successfully removed seating '. $seatName . ' from plan ' . $seatingPlanName . '!');
         return Redirect::back();
     }
 }
