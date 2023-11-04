@@ -74,5 +74,23 @@ class AppearanceTableSeeder extends Seeder
             'type'  => 'CSS_VAR',
         ]);
 
+        factory(Appearance::class)->create([
+            'key'   => 'color_header_links',
+            'value' => '#fff',
+            'type'  => 'CSS_VAR',
+        ]);
+
+        factory(Appearance::class)->create([
+            'key'   => 'color_header_links_hover',
+            'value' => 'orange',
+            'type'  => 'CSS_VAR',
+        ]);        
+        
+        factory(Appearance::class)->create([
+            'key'   => 'color_header_line',
+            'value' => 'orange',
+            'type'  => 'CSS_VAR',
+        ]);
+
     }
 }

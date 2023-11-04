@@ -1,5 +1,5 @@
-<div class="sidebar col-md-3 col-lg-2 p-0 bg-body-tertiary">
-	<div class="offcanvas-md offcanvas-start bg-body-tertiary" id="sidebarMenu">
+<div class="sidebar col-md-3 col-lg-2 p-0">
+	<div class="offcanvas-md offcanvas-start" id="sidebarMenu">
 
 		<ul class="navbar-nav side-nav ps-2">
 				<li class="nav-item {{ Request::is('admin') ? 'active' : '' }}"> <a class="nav-link" href="/admin"><i
