@@ -24,8 +24,8 @@
 	<div class="alert alert-fixed alert-danger alert-dismissible fade show" role="alert">
 		<h4 mt-0>Errors occured</h4>
 		<ul>At least one of youre servers have more than one match assigned. This should never happen! Please look through the list and fix the error manually.</ul>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
+		<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="alert" aria-label="Close">
+			
 		</button>
 	</div>
 @endif
@@ -90,7 +90,7 @@
 										$context = 'danger';
 									}
 								@endphp
-								<tr class="{{ $context }} clickable" data-toggle="collapse" data-target="#collapse_row{{ $gameServer->id }}" @if ($gameServer->getAssignedMatchServer()["count"] > 1) style="border:2px solid red;"@endif>
+								<tr class="{{ $context }} clickable" data-bs-toggle="collapse" data-bs-target="#collapse_row{{ $gameServer->id }}" @if ($gameServer->getAssignedMatchServer()["count"] > 1) style="border:2px solid red;"@endif>
 									<td>
 										@if ($gameServer->isenabled)
 										<i class="fa fa-check-circle-o fa-1x" style="color:green"></i>
@@ -216,7 +216,7 @@
 
 										<div>
 											<a href="/admin/games/{{$game->slug}}/gameservers/{{$gameServer->slug}}" class="btn btn-primary btn-sm btn-block">Details</a>
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
+											<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#editGameServerModal{{$gameServer->id}}">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers/' . $gameServer->slug . '/updatetoken', 'onsubmit' => 'return ConfirmSubmit()')) }}
 												{{ Form::hidden('_method', 'POST') }}
 												<button type="submit" class="btn btn-primary btn-sm btn-block">Regenerate token</button>
@@ -244,7 +244,7 @@
 														<div class="col-12 col-md-6">
 															<div class="row">
 																@foreach(App\GameServerCommandParameter::getParameters($gameServerCommand->command) as $gameServerCommandParameter)
-																	<div class="form-group col-sm-12  col-md-6">
+																	<div class="mb-3 col-sm-12  col-md-6">
 																		{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
 																		{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
 																	</div>
@@ -266,55 +266,55 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h4 class="modal-title" id="editGameServerModalLabel{{$gameServer->id}}">Edit GameServer</h4>
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' . '/' . $gameServer->slug )) }}
 												<div class="modal-body">
 													<div class="list-group">
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 															{{ Form::text('name', $gameServer->name, array('id'=>'name','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
 															{{ Form::text('address', $gameServer->address, array('id'=>'address','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('type','Type',array('id'=>'','class'=>'')) }}
 															{{ Form::select('type', ['Casual' => 'Casual', 'Match' => 'Match'],  $gameServer->type, array('id'=>'type','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
 															{{ Form::number('game_port', $gameServer->game_port, array('id'=>'game_port','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
 															{{ Form::text('game_password', $gameServer->game_password, array('id'=>'game_password','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('stream_port','Stream Port',array('id'=>'','class'=>'')) }}
 															{{ Form::number('stream_port', $gameServer->stream_port, array('id'=>'stream_port','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('rcon_address','RCON Address (optional)',array('id'=>'','class'=>'')) }}
 															{{ Form::text('rcon_address', $gameServer->rcon_address, array('id'=>'rcon_address','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
 															{{ Form::number('rcon_port', $gameServer->rcon_port, array('id'=>'rcon_port','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
 															{{ Form::text('rcon_password', $gameServer->rcon_password, array('id'=>'rcon_password','class'=>'form-control')) }}
 														</div>
-														<div class="form-group">
+														<div class="mb-3">
 															<div class="checkbox">
 																	<label>
 																		{{ Form::checkbox('ispublic', null, $gameServer->ispublic, array('id'=>'ispublic')) }}Server is Public
 																	</label>
 															</div>
 														</div>														
-														<div class="form-group">
+														<div class="mb-3">
 															<div class="checkbox">
 																	<label>
 																		{{ Form::checkbox('isenabled', null, $gameServer->isenabled, array('id'=>'isenabled')) }}Server is Enabled
@@ -325,7 +325,7 @@
 												</div>
 												<div class="modal-footer">
 													<button type="submit" class="btn btn-success">Submit</button>
-													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 												</div>
 											{{ Form::close() }}
 										</div>
@@ -400,7 +400,7 @@
 										{{ Helpers::getGameServerCommandScopeSelectArray()[$gameServerCommand->scope] }}
 									</td>
 									<td width="15%">
-										<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerCommandModal{{$gameServerCommand->id}}">Edit</button>
+										<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#editGameServerCommandModal{{$gameServerCommand->id}}">Edit</button>
 										{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands/' . $gameServerCommand->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 											{{ Form::hidden('_method', 'DELETE') }}
 											<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -413,21 +413,21 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<h4 class="modal-title" id="editGameServerCommandModalLabel{{$gameServerCommand->id}}">Edit GameServer Command</h4>
-												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 											</div>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' . '/' . $gameServerCommand->slug )) }}
 												<div class="modal-body">
 													<div class="list-group">
 														<div class="row">
-															<div class="form-group col-12 col-sm-6">
+															<div class="mb-3 col-12 col-sm-6">
 																{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 																{{ Form::text('name', $gameServerCommand->name, array('id'=>'name','class'=>'form-control')) }}
 															</div>
-															<div class="form-group col-12 col-sm-6">
+															<div class="mb-3 col-12 col-sm-6">
 																	{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
 																	{{ Form::select('scope', Helpers::getGameServerCommandScopeSelectArray(), $gameServerCommand->scope, array('id'=>'scope','class'=>'form-control')) }}
 															</div>
-															<div class="form-group col-12">
+															<div class="mb-3 col-12">
 																{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 																{{ Form::text('command', $gameServerCommand->command, array('id'=>'command','class'=>'form-control')) }}
 															</div>
@@ -436,7 +436,7 @@
 												</div>
 												<div class="modal-footer">
 													<button type="submit" class="btn btn-success">Submit</button>
-													<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 												</div>
 											{{ Form::close() }}
 										</div>
@@ -482,7 +482,7 @@
 											{{ $gameServerCommandParameter->options }}
 										</td>
 										<td width="15%">
-											<button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#editGameServerCommandParameterModal{{$gameServerCommandParameter->id}}">Edit</button>
+											<button class="btn btn-primary btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#editGameServerCommandParameterModal{{$gameServerCommandParameter->id}}">Edit</button>
 											{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters/' . $gameServerCommandParameter->slug, 'onsubmit' => 'return ConfirmDelete()')) }}
 												{{ Form::hidden('_method', 'DELETE') }}
 												<button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
@@ -494,17 +494,17 @@
 											<div class="modal-content">
 												<div class="modal-header">
 													<h4 class="modal-title" id="editGameServerCommandParameterModalLabel{{$gameServerCommandParameter->id}}">Edit GameServer Command Parameter</h4>
-													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+													<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 												</div>
 												{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' . '/' . $gameServerCommandParameter->slug )) }}
 													<div class="modal-body">
 														<div class="list-group">
 															<div class="row">
-																<div class="form-group col-12">
+																<div class="mb-3 col-12">
 																	{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 																	{{ Form::text('name', $gameServerCommandParameter->name, array('id'=>'name','class'=>'form-control')) }}
 																</div>
-																<div class="form-group col-12">
+																<div class="mb-3 col-12">
 																	{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
 																	{{ Form::text('options', $gameServerCommandParameter->options, array('id'=>'options','class'=>'form-control')) }}
 																</div>
@@ -513,7 +513,7 @@
 													</div>
 													<div class="modal-footer">
 														<button type="submit" class="btn btn-success">Submit</button>
-														<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+														<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 													</div>
 												{{ Form::close() }}
 											</div>
@@ -535,25 +535,25 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug, 'files' => true )) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $game->name, array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $game->description, array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('version','Version',array('id'=>'','class'=>'')) }}
 								{{ Form::text('version', $game->version, array('id'=>'version','class'=>'form-control')) }}
 							</div>
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('public','Show Publicly',array('id'=>'','class'=>'')) }}
 								{{ Form::select('public', [0 => 'No', 1 => 'Yes'], $game->public, array('id'=>'public','class'=>'form-control')) }}
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							@if ($game->image_thumbnail_path != '')
 								<h5>Preview:</h5>
 								<picture>
@@ -565,7 +565,7 @@
 							{{ Form::label('image_thumbnail','Thumbnail Image - 300x400',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							@if ($game->image_header_path != '')
 								<h5>Preview:</h5>
 								<picture>
@@ -577,41 +577,41 @@
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 						{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
 						{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), $game->gamecommandhandler, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>						
-						<div class="form-group">
+						<div class="mb-3">
 						{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
 						{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), $game->gamematchapihandler, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('matchstartgameservercommand','Match start command',array('id'=>'','class'=>'')) }}
 							{{ Form::select('matchstartgameservercommand', $allCommands, $game->matchStartgameServerCommand, array('id'=>'matchstartgameservercommand','class'=>'form-control')) }}
 						<small>if match autostarting is enabled in either the Tournament or the Matchmaking settings this gameservercommand would be executed on match start</small>
 						</div>
 						
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', $game->connect_game_url, array('id'=>'connect_game_url','class'=>'form-control')) }}
 							<small>Hint: use variables like in the  Game Commands for the Match Scope</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_command', $game->connect_game_command, array('id'=>'connect_game_command','class'=>'form-control')) }}
 							<small>Hint: use variables like in the Game Commands the Match Scope</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('connect_stream_url','Connect Stream URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_stream_url', $game->connect_stream_url, array('id'=>'connect_stream_url','class'=>'form-control')) }}
 							<small>Hint: use variables like in the Game Commands the Match Scope</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_enabled', null, $game->matchmaking_enabled, array('id'=>'matchmaking_enabled')) }} Enabled for Matchmaking
 							</label>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_autostart', null, $game->matchmaking_autostart, array('id'=>'matchmaking_autostart')) }} Enable Match Autostart for Matchmaking
 							</label>
@@ -619,7 +619,7 @@
 								<small>Make sure the gamecommandhandler and a matchstartgameservercommand is selected! </small>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_autoapi', null, $game->matchmaking_autoapi, array('id'=>'matchmaking_autoapi')) }} Enable Match Auto Api for Matchmaking
 							</label>
@@ -627,12 +627,12 @@
 								<small>Make sure the selected gamematchapihandler supports the Autoapi feature! (Get5,PugSharp)</small>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
 							{{ Form::number('min_team_count', $game->min_team_count, array('id'=>'min_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('max_team_count','Max Team Count',array('id'=>'','class'=>'')) }}
 							{{ Form::number('max_team_count', $game->max_team_count, array('id'=>'max_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>
@@ -655,39 +655,39 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservers' )) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('type','Type',array('id'=>'','class'=>'')) }}
 							{{ Form::select('type', ['Casual' => 'Casual', 'Match' => 'Match'], NULL, array('id'=>'type','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('address','Address',array('id'=>'','class'=>'')) }}
 							{{ Form::text('address', NULL, array('id'=>'address','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('game_port','Game Port',array('id'=>'','class'=>'')) }}
 							{{ Form::number('game_port', NULL, array('id'=>'game_port','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('game_password','Game Password',array('id'=>'','class'=>'')) }}
 							{{ Form::text('game_password', NULL, array('id'=>'game_password','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('stream_port','Stream Port',array('id'=>'','class'=>'')) }}
 							{{ Form::number('stream_port', NULL, array('id'=>'stream_port','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('rcon_address','RCON Address (optional)',array('id'=>'','class'=>'')) }}
 							{{ Form::text('rcon_address', NULL, array('id'=>'rcon_address','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('rcon_port','RCON Port',array('id'=>'','class'=>'')) }}
 							{{ Form::number('rcon_port', NULL, array('id'=>'rcon_port','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('rcon_password','RCON Password',array('id'=>'','class'=>'')) }}
 							{{ Form::text('rcon_password', NULL, array('id'=>'rcon_password','class'=>'form-control')) }}
 						</div>
@@ -716,15 +716,15 @@
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommands' )) }}
 							<div class="row">
-								<div class="form-group col-12 col-sm-6">
+								<div class="mb-3 col-12 col-sm-6">
 									{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 									{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
 								</div>
-								<div class="form-group col-12 col-sm-6">
+								<div class="mb-3 col-12 col-sm-6">
 										{{ Form::label('scope','Scope',array('id'=>'','class'=>'')) }}
 										{{ Form::select('scope', Helpers::getGameServerCommandScopeSelectArray(), null, array('id'=>'scope','class'=>'form-control')) }}
 								</div>
-								<div class="form-group col-12">
+								<div class="mb-3 col-12">
 									{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 									{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
 								</div>
@@ -744,11 +744,11 @@
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/admin/games/' . $game->slug . '/gameservercommandparameters' )) }}
 							<div class="row">
-								<div class="form-group col-12 col-sm-6">
+								<div class="mb-3 col-12 col-sm-6">
 									{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 									{{ Form::text('name', NULL, array('id'=>'name','class'=>'form-control')) }}
 								</div>
-								<div class="form-group col-12">
+								<div class="mb-3 col-12">
 									{{ Form::label('options','Parameter options',array('id'=>'','class'=>'')) }}
 									{{ Form::text('options', NULL, array('id'=>'options','class'=>'form-control')) }}
 								</div>

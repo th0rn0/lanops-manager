@@ -57,7 +57,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/auth/general', 'onsubmit' => '', 'files' => 'true')) }}
 				<div class="row">
 					<div class="col-12 col-md-6">
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('auth_allow_email_change', null, $isAuthAllowEmailChangeEnabled, array('id'=>'auth_allow_email_change')) }} Allow changing the Email Adress after registration
@@ -67,7 +67,7 @@
 					</div>
 
 					<div class="col-12 col-md-6">
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('auth_require_phonenumber', null, $isAuthRequirePhonenumberEnabled, array('id'=>'auth_require_phonenumber')) }} Require Phonenumber (all registered users will be forced to set it on the next login)
@@ -92,7 +92,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/auth/steam', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 				<div class="row">
 					<div class="col-12 col-md-6">
-						<div class="form-group">
+						<div class="mb-3">
 							<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('auth_steam_require_email', null, $isAuthSteamRequireEmailEnabled, array('id'=>'auth_steam_require_email')) }} Require Email Adress on Steam registration (all registered users will be forced to set it on the next login)
@@ -117,7 +117,7 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
 					{{ Form::textarea('registration_terms_and_conditions', Settings::getRegistrationTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 				</div>

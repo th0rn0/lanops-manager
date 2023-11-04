@@ -8,7 +8,7 @@
   	</div>
 @endif
 <div class="row">
-	<div class="form-group col-sm-6 col-12">
+	<div class="mb-3 col-sm-6 col-12">
 		{{ Form::label('name','Ticket Name',array('id'=>'','class'=>'')) }}
 		{{
 			Form::text(
@@ -18,7 +18,7 @@
 			)
 		}}
 	</div>
-	<div class="form-group col-sm-6 col-12">
+	<div class="mb-3 col-sm-6 col-12">
 		{{ Form::label('price','Ticket Price',array('id'=>'','class'=>'')) }}
 		<div class="input-group">
 			<div class="input-group-addon">{{ Settings::getCurrencySymbol() }}</div>
@@ -46,7 +46,7 @@
 </div>
 <div class="row">
 
-	<div class="form-group col-md-6 col-sm-6 col-12">
+	<div class="mb-3 col-md-6 col-sm-6 col-12">
 		{{ Form::label('quantity','Quantity',array('id'=>'','class'=>'')) }}
 		{{
 			Form::text(
@@ -57,11 +57,11 @@
 		}}
 		<small>If unlimited, leave blank</small>
 	</div>
-	<div class="form-group col-md-6 col-sm-6 col-12">
+	<div class="mb-3 col-md-6 col-sm-6 col-12">
 		{{ Form::label('type','Ticket Type',array('id'=>'','class'=>'')) }}
 		{{ Form::select('type', array('participant' => 'Participant', 'spectator' => 'Spectator'), @$ticket->type, array('id'=>'type','class'=>'form-control')) }}
 	</div>
-	<div class="form-group col-md-6 col-sm-6 col-12">
+	<div class="mb-3 col-md-6 col-sm-6 col-12">
 		{{ Form::label('no_tickets_per_user','No. of Tickets per User',array('id'=>'','class'=>'')) }}
 		{{
 			Form::text(
@@ -72,7 +72,7 @@
 		}}
 		<small>If unlimited, leave blank</small>
 	</div>
-	<div class="form-group col-12">
+	<div class="mb-3 col-12">
 		<div class="form-check">
 			<label class="form-check-label">
 				@if (@$ticket->seatable || @$empty)
@@ -89,7 +89,7 @@
 <hr>
 <h3>Purchase Period</h3>
 <div class="row">
-	<div class="form-group col-sm-6 col-12">
+	<div class="mb-3 col-sm-6 col-12">
 		{{ Form::label('sale_start_date','Start Date',array('id'=>'','class'=>'')) }}
 		@if (@$empty)
 			{{ Form::text(
@@ -108,7 +108,7 @@
 		@endif
 		<small>If no start leave blank</small>
 	</div>
-	<div class="form-group col-sm-6 col-12">
+	<div class="mb-3 col-sm-6 col-12">
 		{{ Form::label('sale_start_time','Start Time',array('id'=>'','class'=>'')) }}
 		@if (@$empty)
 			{{
@@ -129,7 +129,7 @@
 		@endif
 		<small>If no start leave blank</small>
 	</div>
-	<div class="form-group col-sm-6 col-12">
+	<div class="mb-3 col-sm-6 col-12">
 		{{ Form::label('sale_end_date','End Date',array('id'=>'','class'=>'')) }}
 		@if(@$empty)
 			{{
@@ -150,7 +150,7 @@
 		@endif
 		<small>If no end leave blank</small>
 	</div>
-	<div class="form-group col-sm-6 col-12">
+	<div class="mb-3 col-sm-6 col-12">
 		{{ Form::label('sale_end_time','End Time',array('id'=>'','class'=>'')) }}
 		@if (@$empty)
 			{{

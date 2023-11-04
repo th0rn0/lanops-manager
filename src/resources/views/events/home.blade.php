@@ -6,7 +6,7 @@ use Debugbar;
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>Welcome to {{ $event->display_name }}!</h1>
@@ -15,7 +15,7 @@ use Debugbar;
 		<nav class="navbar navbar-expand-md bg-primary navbar-events" style="z-index: 1;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 				</div>
@@ -102,10 +102,10 @@ use Debugbar;
 @else
     <h4>{{ $timetable->name }}</h4>
 @endif
-	
+
 	<p>
     @lang('events.timetable-created-at')
-    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }}, 
+    {{ $timetable->created_at->toDateString() == now()->toDateString() ? $timetable->created_at->format('M d, H:i') : ($timetable->created_at->year == now()->year ? $timetable->created_at->format('M d') : $timetable->created_at->format('M d, Y')) }},
     @lang('events.timetable-updated-at')
     {{ $timetable->updated_at->toDateString() == now()->toDateString() ? $timetable->updated_at->format('M d, H:i') : ($timetable->updated_at->year == now()->year ? $timetable->updated_at->format('M d') : $timetable->updated_at->format('M d, Y')) }}
 	</p>
@@ -342,22 +342,22 @@ use Debugbar;
 							<div class="caption">
 								<span class="small">
 									@if ($tournament->status == 'COMPLETE')
-									<span class="badge badge-success">@lang('events.ended')</span>
+									<span class="badge text-bg-success">@lang('events.ended')</span>
 									@endif
 									@if ($tournament->status == 'LIVE')
-									<span class="badge badge-success">@lang('events.live')</span>
+									<span class="badge text-bg-success">@lang('events.live')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && !$tournament->getParticipant($user->active_event_participant->id))
-									<span class="badge badge-danger">@lang('events.notsignedup')</span>
+									<span class="badge text-bg-danger">@lang('events.notsignedup')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
-									<span class="badge badge-success">@lang('events.signedup')</span>
+									<span class="badge text-bg-success">@lang('events.signedup')</span>
 									@endif
 									@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && $user->getAllTickets($event->id)->isEmpty())
-									<span class="badge badge-info">@lang('events.purchaseticketosignup')</span>
+									<span class="badge text-bg-info">@lang('events.purchaseticketosignup')</span>
 									@else
 									@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
-									<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
+									<span class="badge text-bg-info">@lang('events.signuponlywhenlive')</span>
 									@endif
 									@endif
 								</span>
@@ -465,7 +465,7 @@ use Debugbar;
 				</h3>
 			</div>
 			<div class="col-sm mt-4">
-				@if(Settings::getSystemsMatchMakingMaxopenperuser() == 0 || count($currentUserOpenLivePendingDraftMatches) < Settings::getSystemsMatchMakingMaxopenperuser()) <a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">Add Match</a>
+				@if(Settings::getSystemsMatchMakingMaxopenperuser() == 0 || count($currentUserOpenLivePendingDraftMatches) < Settings::getSystemsMatchMakingMaxopenperuser()) <a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-end" data-bs-toggle="modal" data-bs-target="#addMatchModal">Add Match</a>
 					@endif
 			</div>
 		</div>
@@ -480,9 +480,11 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.ownedmatches')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($ownedMatches as $match)
-		@include ('layouts._partials._matchmaking.card')
+			<div class="col">
+				@include ('layouts._partials._matchmaking.card')
+			</div>
 		@endforeach
 
 	</div>
@@ -502,12 +504,14 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.ownedteams')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($memberedTeams as $team)
 		@php
 		$match = $team->match;
 		@endphp
-		@include ('layouts._partials._matchmaking.card')
+		<div class="col">
+			@include ('layouts._partials._matchmaking.card')
+		</div>
 		@endforeach
 	</div>
 	@if($memberedTeams->count())
@@ -526,9 +530,11 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.publicmatches')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($openPublicMatches as $match)
-		@include ('layouts._partials._matchmaking.card')
+			<div class="col">
+				@include ('layouts._partials._matchmaking.card')
+			</div>
 		@endforeach
 	</div>
 	@if($openPublicMatches->count())
@@ -547,9 +553,11 @@ use Debugbar;
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h3>@lang('matchmaking.closedpublicmatches')</h3>
 	</div>
-	<div class="card-deck">
+	<div class="row card-deck">
 		@foreach ($liveClosedPublicMatches as $match)
-		@include ('layouts._partials._matchmaking.card')
+			<div class="col">
+				@include ('layouts._partials._matchmaking.card')
+			</div>
 		@endforeach
 	</div>
 	@if($liveClosedPublicMatches->count())
@@ -568,11 +576,11 @@ use Debugbar;
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="addMatchModal">Add Match</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/' )) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('game_id',__('matchmaking.game').':',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -586,12 +594,12 @@ use Debugbar;
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team1name',__('matchmaking.firstteamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
 						<small>@lang('matchmaking.thisisyourteam')</small>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team_size',__('matchmaking.teamsize'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -612,7 +620,7 @@ use Debugbar;
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::number('team_count',
@@ -623,7 +631,7 @@ use Debugbar;
 								))
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 							<label class="form-check-label">
 								{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} is public (show match publicly for signup)
@@ -699,13 +707,13 @@ use Debugbar;
 		)
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="seating"></a>
-			<h3><i class="fas fa-chair mr-3"></i>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
+			<h3><i class="fas fa-chair me-3"></i>@lang('events.seatingplans') <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} @lang('events.seatsremaining')</small></h3>
 		</div>
 		<div class="card-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
 			@if ($seatingPlan->status != 'DRAFT')
 			<div class="card mb-3">
-				<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
+				<a class="collapsed" role="button" data-bs-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
 					<div class="card-header  bg-success-light" role="tab" id="headingOne">
 						<h4 class="card-title m-0">
 							{{ $seatingPlan->name }} <small>- {{ $seatingPlan->getSeatingCapacity() - $seatingPlan->getSeatedCount() }} / {{ $seatingPlan->getSeatingCapacity() }} @lang('events.available')</small>
@@ -719,7 +727,7 @@ use Debugbar;
 					<div class="card-body">
 						<div class="table-responsive text-center">
 							<table class="table">
-	
+
 								<?php
 								$headers = explode(',', $seatingPlan->headers);
 								$headers = array_combine(range(1, count($headers)), $headers);
@@ -731,7 +739,7 @@ use Debugbar;
 												<h4><strong>{{ucwords($headers[$row])}}</strong></h4>
 											</td>
 											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-	
+
 												<td style="padding-top:14px;">
 													@if ($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
 													@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column)->status == 'ACTIVE')
@@ -755,7 +763,7 @@ use Debugbar;
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
 																					'{{ ucwords($headers[$row]) . $column }}'
-																				)" data-toggle="modal" data-target="#pickSeatModal">
+																				)" data-bs-toggle="modal" data-bs-target="#pickSeatModal">
 														{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
 													</button>
 													@else
@@ -828,12 +836,12 @@ use Debugbar;
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="pickSeatModalLabel"></h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				@if (Auth::user())
 				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
 				<div class="modal-body">
-					<div class="form-group">
+					<div class="mb-3">
 						<h4>@lang('events.wichtickettoseat')</h4>
 						{{
 									Form::select(
@@ -854,7 +862,7 @@ use Debugbar;
 				{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-success">@lang('events.yes')</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('events.no')</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">@lang('events.no')</button>
 				</div>
 				{{ Form::close() }}
 				@endif

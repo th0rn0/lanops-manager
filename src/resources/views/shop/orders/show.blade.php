@@ -4,7 +4,7 @@
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
 			Shop - Order # {{ $order->id }}
@@ -125,18 +125,18 @@
 								$statusColor = 'success';
 							}
 						@endphp
-						<li class="list-group-item list-group-item-{{ $statusColor }}"><strong>Order Status: <span class="float-right">{{ $order->status }}</span></strong></li>
-						<li class="list-group-item @if (strtolower($order->purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Payment Status: <span class="float-right">{{ $order->purchase->status }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Order ID: <span class="float-right">{{ $order->id }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-right">{{ $order->purchase->transaction_id }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-right">{{ $order->purchase->id }}</span></strong></li>
+						<li class="list-group-item list-group-item-{{ $statusColor }}"><strong>Order Status: <span class="float-end">{{ $order->status }}</span></strong></li>
+						<li class="list-group-item @if (strtolower($order->purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Payment Status: <span class="float-end">{{ $order->purchase->status }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Order ID: <span class="float-end">{{ $order->id }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-end">{{ $order->purchase->transaction_id }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-end">{{ $order->purchase->id }}</span></strong></li>
 						@if ($order->purchase->paypal_email != null)
 							<li class="list-group-item list-group-item-info">
-								<strong>Paypal Email: <span class="float-right">{{ $order->purchase->paypal_email }}</span></strong>
+								<strong>Paypal Email: <span class="float-end">{{ $order->purchase->paypal_email }}</span></strong>
 							</li>
 						@endif
-						<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="float-right">{{ $order->purchase->type }}</span></strong></li>
-						<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="float-right">{{ $order->created_at }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="float-end">{{ $order->purchase->type }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="float-end">{{ $order->created_at }}</span></strong></li>
 					</ul>
 				</div>
 			</div>

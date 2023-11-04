@@ -107,55 +107,55 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/games/', 'files' => true )) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', NULL,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('version','Version',array('id'=>'','class'=>'')) }}
 							{{ Form::text('version',NULL, array('id'=>'version','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('image_thumbnail','Thumbnail Image - 500x500',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_thumbnail',array('id'=>'image_thumbnail','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('image_header','Header Image - 1600x300',array('id'=>'','class'=>'')) }}
 							{{ Form::file('image_header',array('id'=>'image_header','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('gamecommandhandler','Game Commandhandler',array('id'=>'','class'=>'')) }}
 							{{ Form::select('gamecommandhandler', Helpers::getGameCommandHandlerSelectArray(), null, array('id'=>'gamecommandhandler','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('gamematchapihandler','Game Match Api handler',array('id'=>'','class'=>'')) }}
 							{{ Form::select('gamematchapihandler', Helpers::getGameMatchApiHandlerSelectArray(), null, array('id'=>'gamematchapihandler','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('connect_game_url','Connect Game URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_url', NULL, array('id'=>'connect_game_url','class'=>'form-control')) }}
 							<small>Hint: use variables like Game Commands for Matches</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('connect_game_command','Connect Game Command',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_game_command', NULL, array('id'=>'connect_game_command','class'=>'form-control')) }}
 							<small>Hint: use variables like Game Commands for Matches</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('connect_stream_url','Connect Stream URL',array('id'=>'','class'=>'')) }}
 							{{ Form::text('connect_stream_url', NULL, array('id'=>'connect_stream_url','class'=>'form-control')) }}
 							<small>Hint: use variables like Game Commands for Matches</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_enabled', null, null, array('id'=>'matchmaking_enabled')) }} Enabled for Matchmaking
 							</label>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_autostart', null, null, array('id'=>'matchmaking_autostart')) }} Enable Match Autostart for Matchmaking
 							</label>
@@ -163,7 +163,7 @@
 						<div>
 							<small>Make sure the gamecommandhandler and a matchstartgameservercommand is selected! </small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('matchmaking_autoapi', null, null, array('id'=>'matchmaking_autoapi')) }} Enable Match Auto Api for Matchmaking
 							</label>
@@ -171,12 +171,12 @@
 								<small>Make sure the selected gamematchapihandler supports the Autoapi feature! (Get5,PugSharp)</small>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('min_team_count','Min Team Count',array('id'=>'','class'=>'')) }}
 							{{ Form::number('min_team_count', 2, array('id'=>'min_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('max_team_count','Max Team Count',array('id'=>'','class'=>'')) }}
 							{{ Form::number('max_team_count', 2, array('id'=>'max_team_count','class'=>'form-control')) }}
 							<small>This is used for the Matchmaking feature (0 for no limit)</small>

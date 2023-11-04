@@ -3,7 +3,7 @@
 resources/certs/*
 resources/wait
 
-\.env
+\.env*
 
 src/vendor
 src/node_modules
@@ -21,7 +21,11 @@ src/public/uploads/gallery/*
 src/public/storage
 src/public/css/*.css
 src/public/css/images/*.png
+src/public/css/images/*.gif
 src/public/js/*.js
+src/public/js/*.js.map
+src/storage/user/scss/*.scss
+src/storage/user/scss/*.css
 
 docs/build
 docker-compose.local.yml

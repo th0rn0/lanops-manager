@@ -25,15 +25,15 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/mailing/' . $mailTemplate->id, 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('subject','Subject',array('id'=>'','class'=>'')) }}
 						{{ Form::text('subject', $mailTemplate->subject ,array('id'=>'subject','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('html_template','HTML Template',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('html_template', $mailTemplate->html_template, array('id'=>'html_template','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('text_template','Text Template',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('text_template', $mailTemplate->text_template, array('id'=>'text_template','class'=>'form-control')) }}
 					</div>

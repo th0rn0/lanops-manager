@@ -24,6 +24,12 @@ class WebpController extends Controller
 
             $imgData = $this->imagecreatefromfile($orgImageName);
 
+            if(!imagepalettetotruecolor($imgData))
+            {
+                imagedestroy($imgData);
+                return redirect($orgImageName);
+            }
+
             if(!imagewebp($imgData, $image, 90))
             {
                 imagedestroy($imgData);

@@ -112,19 +112,22 @@
 			</div>
 		</div>
 		<div class="col-12 col-sm-2">
-			<div class="card d-none" >
+			<div class="card mb-3" >
 				<div class="card-header">
-					<i class="fa fa-credit-card fa-fw"></i> Add Credit
+					<i class="fa fa-credit-card fa-fw"></i> Add/Subtract Credit
 				</div>
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
-						<div class="form-group">
-							{{ Form::label('user','User',array('id'=>'','class'=>'')) }}
-							{{ Form::text('user', '',array('id'=>'user','class'=>'form-control typeahead')) }}
+						<div class="mb-3">
+							{{ Form::label('user_id','User',array('id'=>'','class'=>'')) }}
+							{{-- {{ Form::text('user', '',array('id'=>'user','class'=>'form-control typeahead')) }} --}}
+							{!! Form::select('user_id', $users, null, ['multiple' => false, 'class' => 'form-control margin', 'id' => 'user_id']) !!}
+
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
 							{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}
+							<small>to subtract the amount, just use a negative number</small>
 						</div>
 						<button class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
@@ -132,46 +135,10 @@
 			</div>
 			<div class="card mb-3">
 				<div class="card-header">
-					<i class="fa fa-credit-card fa-fw"></i> Automated Awards
+					<i class="fa fa-info-circle fa-fw"></i> Settings
 				</div>
 				<div class="card-body">
-					{{ Form::open(array('url'=>'/admin/credit/settings/')) }}
-						<h4>Tournaments</h4>
-						<hr>
-						<div class="row">
-							<div class="col-12 col-sm-6">
-								<div class="form-group">
-									{{ Form::label('tournament_participation','Participation') }}
-									{{ Form::number('tournament_participation', $creditAwardTournamentParticipation, array('id'=>'tournament_participation','class'=>'form-control'))}}
-								</div>
-								<div class="form-group">
-									{{ Form::label('tournament_second','Second Place') }}
-									{{ Form::number('tournament_second', $creditAwardTournamentSecond, array('id'=>'tournament_second','class'=>'form-control'))}}
-								</div>
-							</div>
-							<div class="col-12 col-sm-6">
-								<div class="form-group">
-									{{ Form::label('tournament_first','First Place') }}
-									{{ Form::number('tournament_first', $creditAwardTournamentFirst, array('id'=>'tournament_first','class'=>'form-control'))}}
-								</div>
-								<div class="form-group">
-									{{ Form::label('tournament_third','Third Place') }}
-									{{ Form::number('tournament_third', $creditAwardTournamentThird, array('id'=>'tournament_third','class'=>'form-control'))}}
-								</div>
-							</div>
-						</div>
-						<h4>Registration</h4>
-						<hr>
-						<div class="form-group">
-							{{ Form::label('registration_event','Event') }}
-							{{ Form::number('registration_event', $creditAwardRegistrationEvent, array('id'=>'registration_event','class'=>'form-control'))}}
-						</div>
-						<div class="form-group">
-							{{ Form::label('registration_site','Site') }}
-							{{ Form::number('registration_site', $creditAwardRegistrationSite, array('id'=>'registration_site','class'=>'form-control'))}}
-						</div>
-						<button type="submit" class="btn btn-block btn-success">Submit</button>
-					{{ Form::close() }}
+					<p>The Credit settings has ben moved to the <a href="/admin/settings/systems">Opt System settings</a> </p>
 				</div>
 			</div>
 			<div class="card mb-3">
@@ -192,6 +159,7 @@
 				</div>
 			</div>
 		</div>
+		
 	@endif
 </div>
 

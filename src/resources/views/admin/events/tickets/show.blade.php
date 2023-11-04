@@ -77,7 +77,7 @@
 								@if ($participant->user->steamid)
 									- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
 								@endif
-								<span class="float-right text-muted small">
+								<span class="float-end text-muted small">
 									<em>
 										{{ date('d-m-Y H:i', strtotime($participant->created_at)) }}
 									</em>

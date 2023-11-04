@@ -82,18 +82,18 @@
 			<div class="card-body">
 				<div class="row">
 					@if (in_array($order->status, ['SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
-						<div class="col-12 form-group">
+						<div class="col-12 mb-3">
 							<h4>Order is {{ $order->status }}</h4>
 						</div>
 					@endif
 					@if (in_array($order->status, ['SHIPPED']))
-						<div class="col-12 form-group">
+						<div class="col-12 mb-3">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/tracking')) }}
-								<div class="form-group">
+								<div class="mb-3">
 									{{ Form::label('shipping_tracking','Add Tracking Number',array('id'=>'','class'=>'')) }}
 									{{ Form::text('shipping_tracking',$order->shipping_tracking,array('id'=>'event_name','class'=>'form-control')) }}
 								</div>
-								<div class="form-group">
+								<div class="mb-3">
 									{{ Form::label('shipping_note','Add Shipping Note',array('id'=>'','class'=>'')) }}
 									{{ Form::text('shipping_note',$order->shipping_note,array('id'=>'event_name','class'=>'form-control')) }}
 									<small>For Example; Courier used</small>
@@ -104,21 +104,21 @@
 						</div>
 					@endif
 					@if (!in_array($order->status, ['PROCESSING', 'SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
-						<div class="col-12 form-group">
+						<div class="col-12 mb-3">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/processing')) }}
 								<button type="submit" class="btn btn-block btn-success">Mark as Processing</button>
 							{{ Form::close() }}
 						</div>
 					@endif
 					@if (!in_array($order->status, ['SHIPPED', 'ERROR', 'CANCELLED', 'COMPLETE']))
-						<div class="col-12 form-group">
+						<div class="col-12 mb-3">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/shipped')) }}
 								<button type="submit" class="btn btn-block btn-success">Mark as Shipped</button>
 							{{ Form::close() }}
 						</div>
 					@endif
 					@if (!in_array($order->status, ['ERROR', 'CANCELLED', 'COMPLETE']))
-						<div class="col-12 form-group">
+						<div class="col-12 mb-3">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/complete')) }}
 								<button type="submit" class="btn btn-block btn-success">Mark as Complete</button>
 							{{ Form::close() }}
@@ -126,13 +126,13 @@
 					@endif
 				</div>
 				<div class="row">
-					<div class="col-sm-6 col-12 form-group">
+					<div class="col-sm-6 col-12 mb-3">
 						{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/refund')) }}
 							<button type="submit" class="btn btn-block btn-danger" disabled='true'>Refund Order (TBC)</button>
 						{{ Form::close() }}
 					</div>
 					@if (!in_array($order->status, ['COMPLETE', 'CANCELLED']))
-						<div class="col-sm-6 col-12 form-group">
+						<div class="col-sm-6 col-12 mb-3">
 							{{ Form::open(array('url'=>'/admin/orders/' . $order->id . '/cancel')) }}
 								<button type="submit" class="btn btn-block btn-danger">Cancel Order</button>
 							{{ Form::close() }}
@@ -191,22 +191,22 @@
 							$statusColor = 'success';
 						}
 					@endphp
-					<li class="list-group-item list-group-item-{{ $statusColor }}"><strong>Order Status: <span class="float-right">{{ $order->status }}</span></strong></li>
-					<li class="list-group-item @if (strtolower($order->purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Payment Status: <span class="float-right">{{ $order->purchase->status }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>Order ID: <span class="float-right">{{ $order->id }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-right">{{ $order->purchase->transaction_id }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-right">{{ $order->purchase->id }}</span></strong></li>
+					<li class="list-group-item list-group-item-{{ $statusColor }}"><strong>Order Status: <span class="float-end">{{ $order->status }}</span></strong></li>
+					<li class="list-group-item @if (strtolower($order->purchase->status) != 'success') list-group-item-danger @else list-group-item-success @endif"><strong>Payment Status: <span class="float-end">{{ $order->purchase->status }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Order ID: <span class="float-end">{{ $order->id }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="float-end">{{ $order->purchase->transaction_id }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="float-end">{{ $order->purchase->id }}</span></strong></li>
 					@if ($order->purchase->paypal_email != null)
 						<li class="list-group-item list-group-item-info">
-							<strong>Paypal Email: <span class="float-right">{{ $order->purchase->paypal_email }}</span></strong>
+							<strong>Paypal Email: <span class="float-end">{{ $order->purchase->paypal_email }}</span></strong>
 						</li>
 					@endif
 					@if(isset($order->purchase->user)) 
-						<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-right">{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</span></strong></li>
+						<li class="list-group-item list-group-item-info"><strong>Name: <span class="float-end">{{ $order->purchase->user->firstname }} {{ $order->purchase->user->surname }}</span></strong></li>
 						<li class="list-group-item list-group-item-info">
 							<strong>
 								User:
-								<span class="float-right">
+								<span class="float-end">
 									{{ $order->purchase->user->username }}
 									@if ($order->purchase->user->steamid)
 										- <span class="text-muted"><small>Steam: {{ $order->purchase->user->steamname }}</small></span>
@@ -219,8 +219,8 @@
 					@endif	
 
 
-					<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="float-right">{{ $order->purchase->type }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="float-right">{{ $order->created_at }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Payment Type: <span class="float-end">{{ $order->purchase->type }}</span></strong></li>
+					<li class="list-group-item list-group-item-info"><strong>Ordered at: <span class="float-end">{{ $order->created_at }}</span></strong></li>
 				</ul>
 			</div>
 		</div>

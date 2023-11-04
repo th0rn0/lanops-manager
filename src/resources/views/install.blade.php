@@ -2,7 +2,7 @@
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 	<div class="row">
 		<div class="col-12 col-sm-12 col-md-12">
 			<div class="pb-2 mt-4 mb-4 border-bottom">
@@ -17,31 +17,31 @@
                 	<div class="col-sm-12 col-md-6">
 		                <div class="row">
 		                    <div class="col-12 col-md-6">
-		                        <div class="form-group @error('firstname') is-invalid @enderror">
+		                        <div class="mb-3 @error('firstname') is-invalid @enderror">
 		                            {{ Form::label('firstname','Firstname',array('id'=>'','class'=>'')) }}
 		                            <input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname">
 		                        </div>
 		                    </div>
 		                    <div class="col-12 col-md-6">
-		                        <div class="form-group  @error('surname') is-invalid @enderror">
+		                        <div class="mb-3  @error('surname') is-invalid @enderror">
 		                            {{ Form::label('surname','Surname',array('id'=>'','class'=>'')) }}
 		                            <input id="surname" type="surname" class="form-control" name="surname" value="{{ old('surname') }}" required autocomplete="surname">
 		                        </div>
 		                    </div>
 		                    <div class="col-12">
-				                <div class="form-group @error('username') is-invalid @enderror">
+				                <div class="mb-3 @error('username') is-invalid @enderror">
 				                    {{ Form::label('username','Username',array('id'=>'','class'=>'')) }}
 				                    <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username">
 				                </div>
-			                    <div class="form-group @error('email') is-invalid @enderror">
+			                    <div class="mb-3 @error('email') is-invalid @enderror">
 			                        {{ Form::label('email','E-Mail',array('id'=>'','class'=>'')) }}
 			                        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
 			                    </div>
-			                    <div class="form-group @error('password1') is-invalid @enderror">
+			                    <div class="mb-3 @error('password1') is-invalid @enderror">
 			                        {{ Form::label('password1','Password',array('id'=>'','class'=>'')) }}
 			                         <input id="password1" type="password" class="form-control" name="password1" required autocomplete="new-password">
 			                    </div>
-			                    <div class="form-group @error('password2') is-invalid @enderror">
+			                    <div class="mb-3 @error('password2') is-invalid @enderror">
 			                        {{ Form::label('password2','Confirm Password',array('id'=>'','class'=>'')) }}
 			                        <input id="password2" type="password" class="form-control" name="password2" required autocomplete="new-password">
 			                    </div>
@@ -58,11 +58,11 @@
 				<hr>
 				<div class="row">
 					<div class="col-12 col-md-6">
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('org_name', Settings::getOrgName() ,array('id'=>'','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('org_tagline','Tagline/Title',array('id'=>'','class'=>'')) }}
 							{{ Form::text('org_tagline', Settings::getOrgTagline() ,array('id'=>'','class'=>'form-control')) }}
 						</div>
@@ -76,24 +76,24 @@
 				<div class="row">
 					<div class="col-12 col-md-6">
 				        <h4>Paypal</h4>
-			        	<div class="form-group">
+			        	<div class="mb-3">
 							{{ Form::label('paypal_username','Username',array('id'=>'','class'=>'')) }}
 							{{ Form::text('paypal_username', '',array('id'=>'','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('paypal_password','Password',array('id'=>'','class'=>'')) }}
 							 <input id="paypal_password" type="password" class="form-control" name="paypal_password">
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('paypal_signature','Signature',array('id'=>'','class'=>'')) }}
 							{{ Form::text('paypal_signature', '',array('id'=>'','class'=>'form-control')) }}
 						</div>
 				        <h4>Stripe</h4>
-				        <div class="form-group">
+				        <div class="mb-3">
 							{{ Form::label('stripe_public','Public Key',array('id'=>'','class'=>'')) }}
 							{{ Form::text('stripe_public', '',array('id'=>'','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('stripe_secret','Secret Key',array('id'=>'','class'=>'')) }}
 							{{ Form::text('stripe_secret', '',array('id'=>'','class'=>'form-control')) }}
 						</div>

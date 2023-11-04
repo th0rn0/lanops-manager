@@ -87,11 +87,11 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/help/')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Category Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',NULL,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', NULL,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>

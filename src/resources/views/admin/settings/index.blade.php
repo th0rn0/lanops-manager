@@ -245,16 +245,16 @@
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="row">
-						<div class="form-group col-12">
+						<div class="mb-3 col-12">
 							{{ Form::label('seo_keywords', "SEO Keywords" ,array('id'=>'','class'=>'')) }}
 							{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting_seo_keywords','class'=>'form-control')) }}
 							<small>Separate each keyword with a Comma.</small>
 						</div>
-						<div class="form-group col-12 col-md-6">
+						<div class="mb-3 col-12 col-md-6">
 							{{ Form::label('analytics_google_id', "Google Analyics ID" ,array('id'=>'','class'=>'')) }}
 							{{ Form::text("analytics_google_id", config('analytics.configurations.GoogleAnalytics.tracking_id') ,array('id'=>'setting_analytics_google_id','class'=>'form-control')) }}
 						</div>
-						<div class="form-group col-12 col-md-6">
+						<div class="mb-3 col-12 col-md-6">
 							{{ Form::label('analytics_facebook_pixel', "Facebook Pixel ID" ,array('id'=>'','class'=>'')) }}
 							{{ Form::text("analytics_facebook_pixel", config('facebook-pixel.facebook_pixel_id') ,array('id'=>'setting_analytics_facebook_pixel','class'=>'form-control')) }}
 						</div>

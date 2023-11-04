@@ -36,7 +36,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-12 col-md-6">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('challonge_api_key','API Key',array('id'=>'','class'=>'')) }}
 								{{ Form::text('challonge_api_key', $challongeApiKey, array('id'=>'challonge_api_key','class'=>'form-control')) }}
 							</div>
@@ -60,7 +60,7 @@
 				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-12 col-md-6">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('steam_api_key','API Key',array('id'=>'','class'=>'')) }}
 								{{ Form::text('steam_api_key', $steamApiKey, array('id'=>'steam_api_key','class'=>'form-control')) }}
 							</div>
@@ -84,11 +84,11 @@
 				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-12 col-md-6">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('facebook_app_id','App Id',array('id'=>'','class'=>'')) }}
 								{{ Form::text('facebook_app_id', $facebookAppId, array('id'=>'facebook_app_id','class'=>'form-control')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('facebook_app_secret','App Secret',array('id'=>'','class'=>'')) }}
 								{{ Form::text('facebook_app_secret', $facebookAppSecret, array('id'=>'','class'=>'form-control')) }}
 							</div>
@@ -113,15 +113,15 @@
 				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-12 col-md-6">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('paypal_username','Username',array('id'=>'','class'=>'')) }}
 								{{ Form::text('paypal_username', $paypalUsername, array('id'=>'paypal_username','class'=>'form-control')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('paypal_password','Password',array('id'=>'','class'=>'')) }}
 								{{ Form::text('paypal_password', $paypalPassword, array('id'=>'paypal_password','class'=>'form-control')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('paypal_signature','Signature',array('id'=>'','class'=>'')) }}
 								{{ Form::text('paypal_signature', $paypalSignature, array('id'=>'paypal_signature','class'=>'form-control')) }}
 							</div>
@@ -144,11 +144,11 @@
 				{{ Form::open(array('url'=>'/admin/settings/api', 'onsubmit' => 'return ConfirmSubmit()', 'files' => 'true')) }}
 					<div class="row">
 						<div class="col-12 col-md-6">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('stripe_public_key','Public Key',array('id'=>'','class'=>'')) }}
 								{{ Form::text('stripe_public_key', $stripePublicKey, array('id'=>'stripe_public_key','class'=>'form-control')) }}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('stripe_secret_key','Secret Key',array('id'=>'','class'=>'')) }}
 								{{ Form::text('stripe_secret_key', $stripeSecretKey, array('id'=>'stripe_secret_key','class'=>'form-control')) }}
 							</div>

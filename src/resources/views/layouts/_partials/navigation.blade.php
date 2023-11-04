@@ -1,19 +1,22 @@
-<nav class="navbar navbar-expand-md @if(Colors::isNavbarDark()) navbar-dark @else navbar-light @endif fixed-top custom-header">
+<nav class="navbar navbar-expand-md fixed-top custom-header" @if(Colors::isNavbarDark())data-bs-theme="dark" @else data-bs-theme="light" @endif>
+
+	
+
 	<div class="container">
-		<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#topbar-navigation" aria-expanded="false">
+		<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#topbar-navigation" aria-expanded="false">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<a class="navbar-brand" href="/">
+		<a class="navbar-brand" style="padding:3px 0px; "href="/">
 			<picture>
 				<source srcset="{{ Settings::getOrgLogo() }}.webp" type="image/webp">
 				<source srcset="{{ Settings::getOrgLogo() }}" type="image/jpeg">
-				<img class="img-fluid" style="width:200px; height: auto; margin-top:-46px;" src="{{ Settings::getOrgLogo() }}"/>
+				<img style="height:100% " src="{{ Settings::getOrgLogo() }}"/>
 			</picture>
 		</a>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="topbar-navigation">
-			<ul class="navbar-nav ml-auto">
+			<ul class="navbar-nav ms-auto">
 				@include ('layouts._partials._tournaments.navigation')
 				@include ('layouts._partials.events-navigation')
 				@if (Settings::isMatchMakingEnabled() && Settings::isSystemsMatchMakingPublicuseEnabled() && Auth::check())

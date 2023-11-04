@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="full-height">
+<html lang="en" class="full-height" data-bs-theme="{{Colors::getTheme()}}">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,7 @@
 		<link href="/css/app.css" rel=stylesheet />
 	</head>
 	<body class="full-height">
-		<div class="container">
+		<div class="container pt-1">
 			<div class="row">
 				<div class="col-12">
 					<picture>

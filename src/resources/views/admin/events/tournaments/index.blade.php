@@ -90,11 +90,11 @@
 			<div class="card-body">
 				@if (config('challonge.api_key') != null)
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments', 'files' => 'true')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('game_id','Game',array('id'=>'','class'=>'')) }}
 							{{
 								Form::select(
@@ -109,7 +109,7 @@
 							}}
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('format','Format',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -128,7 +128,7 @@
 									)
 								}}
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('team_size','Team Size',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -151,7 +151,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('bestof','Best of',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -165,7 +165,7 @@
 									)
 								}}
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('grand_finals_modifier','Grand finals',array('id'=>'','class'=>'')) }} <small> setting only for double elim </small>
 								{{
 									Form::select(
@@ -178,34 +178,34 @@
 										)
 									)
 								}}
-							</div>						
-						</div>						
-					
+							</div>
+						</div>
 
-						<div class="form-group">
+
+						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', NULL,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('rules','Rules',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('rules', NULL,array('id'=>'rules','class'=>'form-control wysiwyg-editor')) }}
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								<div class="form-check">
 									<label class="form-check-label">
 										{{ Form::checkbox('allow_bronze', null, true, array('id'=>'allow_bronze')) }} Match for 3rd Place? <small> setting only for single elim </small>
 									</label>
 								</div>
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								<div class="form-check">
 									<label class="form-check-label">
 										{{ Form::checkbox('allow_player_teams', null, true, array('id'=>'allow_player_teams')) }} Allow Player Teams?
 									</label>
 								</div>
 							</div>
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								<div class="form-check">
 									<label class="form-check-label">
 										{{ Form::checkbox('random_teams', null, false, array('id'=>'random_teams')) }} Random Teams
@@ -214,7 +214,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="" form-group">
+						<div>
 							<label class="form-check-label">
 								{{ Form::checkbox('match_autostart', null, null, array('id'=>'match_autostart')) }} Enable Match Autostart for this Tournament
 							</label>
@@ -222,7 +222,7 @@
 						<div>
 							<small>Make sure to select a game where the gamecommandhandler and a matchstartgameservercommand is selected in the <a href="/admin/games">game settings</a>! </small>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							<label class="form-check-label">
 								{{ Form::checkbox('match_autoapi', null, null, array('id'=>'match_autoapi')) }} Enable Match Auto Api for this Tournament
 							</label>
