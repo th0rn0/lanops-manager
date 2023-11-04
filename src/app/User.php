@@ -207,6 +207,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ($eventParticipant->free || $eventParticipant->staff)
             ) {
                 $seat = 'Not Seated';
+                $seatingPlanName = "";
                 if ($eventParticipant->seat) {                    
                     if ($eventParticipant->seat->seatingPlan) {
                         $seatingPlanName = $eventParticipant->seat->seatingPlan->getName();
