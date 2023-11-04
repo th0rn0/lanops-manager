@@ -73,15 +73,15 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/polls/', 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('description', '', array('id'=>'','class'=>'form-control', 'rows'=>'3')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('event_id','Link to Event',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -98,14 +98,14 @@
 					{{ Form::label('options','Options',array('id'=>'','class'=>'')) }}
 					@include ('layouts._partials._polls.add-options')
 					<div class="row mt-3">
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('allow_options_user', null, true, array('id'=>'allow_options_user')) }} Allow users to add their own options?
 								</label>
 							</div>
 						</div>
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('allow_options_multi', null, true, array('id'=>'allow_options_multi')) }} Allow multiple options?

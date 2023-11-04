@@ -120,7 +120,7 @@
 								@if ($tournamentTeam->tournamentParticipants)
 									@foreach ($tournamentTeam->tournamentParticipants as $participant)
 										<img alt="{{ $participant->eventParticipant->user->username }}'s Avatar" class="rounded" style="max-width: 8%;" src="{{ $participant->eventParticipant->user->avatar }}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $participant->eventParticipant->user->username }}
-										<span class="float-right">
+										<span class="float-end">
 											@if ($participant->eventParticipant->seat)
 												{{ $participant->eventParticipant->seat->seat }}
 											@else
@@ -223,10 +223,10 @@
 
 										@if (count($tournament->getTeams()) != 0)
 										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/participants/' . $participant->id . '/addsingle')) }}
-										<div class="form-group col-12 col-sm-8">
+										<div class="mb-3 col-12 col-sm-8">
 												{{ Form::select('event_tournament_team_id', $tournament->getTeams(), NULL, array('id'=>'name','class'=>'form-control')) }}
 										</div>
-										<div class="form-group col-12 col-sm-4">
+										<div class="mb-3 col-12 col-sm-4">
 												<button type="submit" class="btn btn-default btn-sm btn-block">Add to Team</button>
 										</div>
 										{{ Form::close() }}

@@ -5,7 +5,7 @@
 				<td>
 					<strong>{{ $item->name }}</strong>
 				</td>
-				<td class="text-right">
+				<td class="text-end">
 					x {{ $item->quantity }}
 				</td>
 				<td>
@@ -23,7 +23,7 @@
 		@endforeach
 		<tr>
 			<td></td>
-			<td class="text-right">
+			<td class="text-end">
 				<strong>Total:</strong>
 			</td>
 			<td>

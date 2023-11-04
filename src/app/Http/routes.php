@@ -32,7 +32,7 @@ Route::group(['middleware' => ['installed']], function () {
         /**
          * API
          */
-        Route::group(['middleware' => ['api']], function () {
+        Route::group(['middleware' => ['api', 'nodebugbar']], function () {
             Route::get('/api/events/', 'Api\Events\EventsController@index');
             Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
             Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
@@ -629,6 +629,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/settings/appearance/slider/images/{image}', 'Admin\AppearanceController@sliderUpdate');
             Route::delete('/admin/settings/appearance/slider/images/{image}', 'Admin\AppearanceController@sliderDelete');
             Route::get('/admin/settings/appearance/css/recompile', 'Admin\AppearanceController@cssRecompile');
+            Route::get('/admin/settings/appearance/css/updatedatabasefromfile', 'Admin\AppearanceController@cssUpdateDatabaseFromFile');
             Route::post('/admin/settings/appearance/css/override', 'Admin\AppearanceController@cssOverride');
             Route::post('/admin/settings/appearance/css/variables', 'Admin\AppearanceController@cssVariables');
 

@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="giftTicketLabel">Are you sure you want to set this ticket as a gift?</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			{{ Form::open(array('url'=>'/gift/', 'id'=>'giftTicketForm')) }}
 				<div class="modal-body">
@@ -31,7 +31,7 @@
 					</div>
 					<div class="col-lg-3">
 						<button type="submit" class="btn btn-success">Yes</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
 					</div>
 				</div>
 			{{ Form::close() }}

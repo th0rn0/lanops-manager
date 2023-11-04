@@ -29,10 +29,10 @@
 			$isFinalsBracket = false;
 
 			$roundTitle = "Round $roundNumber";
-			
+
 			// Matches are grouped by round, therefor we can use the first match for checks
 			$firstMatchInRound = reset($round);
-			
+
 			if($tournament->format == 'single elimination' || $tournament->format == 'double elimination')
 			{
 				if($tournament->isFinalMatch($firstMatchInRound->id))
@@ -97,7 +97,7 @@
 						@endphp
 						<tr>
 							<td rowspan="2" class="text-center" width="10%">
-								{{ $matchCounter }} 
+								{{ $matchCounter }}
 								<p><small>({{ $match->id }})</small> </p>
 								<p><small>{{ $match->state }}</small></p>
 							</td>
@@ -111,7 +111,7 @@
 									@else
 										{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}
 									@endif
-									<span class="badge badge-pill float-right">{{ $scores[0] }}</span>
+									<span class="badge rounded-pill float-end">{{ $scores[0] }}</span>
 								@endif
 								@if ($match->player1_is_prereq_match_loser && !$match->player1_id)
 									<small><i>Loser of {{ $matchNumbers[$match->player1_prereq_match_id] }}</i></small>
@@ -130,8 +130,8 @@
 										 			'{{ ($tournament->getTeamByChallongeId($match->player1_id))->name }}',
 										 			'{{ ($tournament->getTeamByChallongeId($match->player2_id))->name }}'
 									 			)"
-									 			data-toggle="modal"
-									 			data-target="#submitScoresModal"
+									 		 data-bs-toggle="modal"
+									 		 data-bs-target="#submitScoresModal"
 								 			>
 								 				Submit Scores
 								 			</button>
@@ -143,21 +143,21 @@
 										 			'{{ ($tournament->getParticipantByChallongeId($match->player1_id))->eventParticipant->user->username }}',
 										 			'{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}'
 									 			)"
-									 			data-toggle="modal"
-									 			data-target="#submitScoresModal"
+									 		 data-bs-toggle="modal"
+									 		 data-bs-target="#submitScoresModal"
 								 			>
 								 				Submit Scores
 								 			</button>
 							 			@endif
 										@if(isset($tournament->game))
-											<button class="btn @if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 ) btn-danger @else btn-primary @endif btn-sm btn-block rounded-0" data-toggle="modal" data-target="#selectServerModal{{ $match->id }}">Select Server</button>
+											<button class="btn @if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 ) btn-danger @else btn-primary @endif btn-sm btn-block rounded-0" data-bs-toggle="modal" data-bs-target="#selectServerModal{{ $match->id }}">Select Server</button>
 											<!-- Select Server Modal -->
 											<div class="modal fade" id="selectServerModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="selectServerModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<h4 class="modal-title" id="selectServerModalLabel{{ $match->id }}">Select Server for Match {{ $matchCounter }}</h4>
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 														</div>
 														{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug .'/match/' . $match->id . ((isset($matchserver) && isset($matchserver->gameServer)) ? '/update':'') , 'id'=>'selectServerModal')) }}
 														<div class="modal-body">
@@ -167,14 +167,14 @@
 															@if (isset($matchserver) && isset($matchserver->gameServer))
 																<br><br><p><small style="color: red">If you need to delete the current assignment, you can do that on the <a href="/admin/games/{{$matchserver->gameServer->game->slug}}/gameservers/{{$matchserver->gameServer->slug}}">gameservers detail page</a></small></p>
 															@endif
-																<div class="form-group">
+																<div class="mb-3">
 																	{{ Form::label('gameServer','Server',array('id'=>'','class'=>'')) }}
 																	{{ Form::select('gameServer', $tournament->game->getGameServerSelectArray(), null, array('id'=>'gameServer','class'=>'form-control')) }}
 																</div>
 															</div>
 															<div class="modal-footer">
 																<button type="submit" class="btn btn-success">Select Server</button>
-																<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+																<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 															</div>
 														{{ Form::close() }}
 													</div>
@@ -183,14 +183,14 @@
 										@endif
 
 										@if ( isset($matchserver) && isset($matchserver->gameServer) )
-											<button class="btn btn-primary btn-sm btn-block rounded-0" data-toggle="modal" data-target="#executeServerCommandModal{{ $match->id }}">Commands</button>
+											<button class="btn btn-primary btn-sm btn-block rounded-0" data-bs-toggle="modal" data-bs-target="#executeServerCommandModal{{ $match->id }}">Commands</button>
 											<!-- execute Command Modal -->
 											<div class="modal fade" id="executeServerCommandModal{{ $match->id }}" tabindex="-1" role="dialog" aria-labelledby="executeServerCommandModalLabel{{ $match->id }}" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<h4 class="modal-title" id="executeServerCommandModalLabel{{ $match->id }}">Execute Server Command for Match {{ $matchCounter }}</h4>
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 														</div>
 														<div class="modal-body">
 															@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )
@@ -219,7 +219,7 @@
 																		<div class="col-12 col-md-6">
 																			<div class="row">
 																				@foreach(App\GameServerCommandParameter::getParameters($matchCommand->command) as $gameServerCommandParameter)
-																					<div class="form-group col-sm-12  col-md-6">
+																					<div class="mb-3 col-sm-12  col-md-6">
 																						{{ Form::label($gameServerCommandParameter->slug, $gameServerCommandParameter->name, array('id'=>'','class'=>'')) }}
 																						{{ Form::select($gameServerCommandParameter->slug, $gameServerCommandParameter->getParameterSelectArray(), null, array('id'=>$gameServerCommandParameter->slug,'class'=>'form-control')) }}
 																					</div>
@@ -234,7 +234,7 @@
 															@endforeach
 														</div>
 														<div class="modal-footer">
-															<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+															<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 														</div>
 													</div>
 												</div>
@@ -255,7 +255,7 @@
 									@else
 										{{ ($tournament->getParticipantByChallongeId($match->player2_id))->eventParticipant->user->username }}
 									@endif
-									<span class="badge badge-pill float-right">{{ $scores[1] }}</span>
+									<span class="badge rounded-pill float-end">{{ $scores[1] }}</span>
 								@endif
 								@if ($match->player2_is_prereq_match_loser && !$match->player2_id)
 									<small><i>Loser of {{ $matchNumbers[$match->player2_prereq_match_id] }}</i></small>
@@ -310,7 +310,7 @@
 								</tr>
 							@endif
 							@endif
-						
+
 							@php
 								$matchReplays = $tournament->getMatchReplays($match->id);
 							@endphp
@@ -318,7 +318,7 @@
 
 								<tr>
 									<td colspan="3">
-					
+
 											Replays
 											<table width="100%" class="table table-striped table-hover mt-3" id="dataTables-example">
 												<thead>
@@ -337,7 +337,7 @@
 															<td>
 																<a href="/storage{{ App\MatchReplay::getReplayPath($tournament->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
 															</td>
-															
+
 															<td>
 																{{ App\MatchReplay::getReplaySize($tournament->game, $matchReplay->name) }}
 															</td>
@@ -350,20 +350,20 @@
 																			{{ Form::hidden('_method', 'DELETE') }}
 																			<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
 																		{{ Form::close() }}
-						
+
 															</td>
 															@endif
 														</tr>
 													@endforeach
-						
+
 												</tbody>
-											</table>	
+											</table>
 									</td>
-								</tr>			
-									
-						
+								</tr>
+
+
 							@endif
-						
+
 					</tbody>
 				</table>
 				@php
@@ -381,23 +381,23 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="submitScoresModalLabel">Submit Scores</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body">
 					@if (isset($tournament->match_autoapi) && $tournament->match_autoapi && isset($tournament->game->gamematchapihandler) && $tournament->game->gamematchapihandler != 0 )
 					<small style="color: red">You have the tournament autoapi enabled on this tournament. This means, you should never have to finish the game here if everything works like intended. This also does not end the match remotely on the currently assigned server. You have to make sure that its manually ended and the server is free before finalizing the match manually.</small>
 					@endif
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/match', 'class'=>'form-horizontal')) }}
-						<div class="form-group">
-							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}
-							<div class="col-6 col-sm-3 text-left">
+						<div class="mb-3">
+							{{ Form::label('player1_score','',array('id'=>'player1_score_lbl','class'=>'col-6 col-sm-9 text-start')) }}
+							<div class="col-6 col-sm-3 text-start">
 								{{ Form::number('player1_score', 0, array('id'=>'player1_score','class'=>'form-control')) }}
 							</div>
 						</div>
 						<hr>
-						<div class="form-group">
-							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-6 col-sm-9 text-left')) }}
-							<div class="col-6 col-sm-3 text-left">
+						<div class="mb-3">
+							{{ Form::label('player2_score','',array('id'=>'player2_score_lbl','class'=>'col-6 col-sm-9 text-start')) }}
+							<div class="col-6 col-sm-3 text-start">
 								{{ Form::number('player2_score', 0, array('id'=>'player2_score','class'=>'form-control')) }}
 							</div>
 						</div>

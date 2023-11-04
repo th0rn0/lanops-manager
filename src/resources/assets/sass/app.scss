@@ -4,11 +4,17 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "stylesheets/bootstrap_custom";
 
-@import "stylesheets/app/modules/variables", "stylesheets/app/components/helper",
-  "stylesheets/app/components/hero", "stylesheets/app/components/events",
-  "stylesheets/app/components/shop", "stylesheets/app/components/book-now",
-  "stylesheets/app/components/stats", "stylesheets/app/components/news",
-  "stylesheets/app/components/misc", "stylesheets/app/components/iconcolors",
-  "stylesheets/app/components/cookie-consent",
-  "stylesheets/app/components/user-navigation",
-  "stylesheets/app/components/user-override";
+@import "stylesheets/app/modules/variables",
+        "stylesheets/app/components/helper",
+        "stylesheets/app/components/hero",
+        "stylesheets/app/components/events",
+        "stylesheets/app/components/shop",
+        "stylesheets/app/components/book-now",
+        "stylesheets/app/components/stats",
+        "stylesheets/app/components/news",
+        "stylesheets/app/components/misc",
+        "stylesheets/app/components/iconcolors",
+        "stylesheets/app/components/cookie-consent",
+        "stylesheets/app/components/slick",
+        "stylesheets/app/components/user-navigation",
+        "stylesheets/app/components/user-override";

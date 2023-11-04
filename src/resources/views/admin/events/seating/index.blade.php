@@ -80,26 +80,26 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating', 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', NULL ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 							{{ Form::label('name_short','Short Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name_short', NULL,array('id'=>'name_short','class'=>'form-control')) }}
 							<small>For display on Attendance Lists</small>
 						</div>
 					<div class="row">
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('columns','Columns',array('id'=>'','class'=>'')) }}
 							{{ Form::text('columns', NULL ,array('id'=>'columns','class'=>'form-control')) }}
 						</div>
-						<div class="col-lg-6 col-sm-12 form-group">
+						<div class="col-lg-6 col-sm-12 mb-3">
 							{{ Form::label('rows','Rows',array('id'=>'','class'=>'')) }}
 							{{ Form::text('rows', NULL ,array('id'=>'rows','class'=>'form-control')) }}
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('image','Seating Plan Image',array('id'=>'','class'=>'')) }}
 						{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 					</div>

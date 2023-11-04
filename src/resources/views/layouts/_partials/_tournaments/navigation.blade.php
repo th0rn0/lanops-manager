@@ -1,6 +1,6 @@
 @if (isset($event) && isset($user->eventParticipants) && isset($signed_in))
 	<li class="nav-item dropdown">
-		<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Tournaments <span class="badge badge-pill">{{ Helpers::getUserActiveTournaments($event->id) }}</span></a>
+		<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Tournaments <span class="badge rounded-pill">{{ Helpers::getUserActiveTournaments($event->id) }}</span></a>
 		<div class="dropdown-menu">
 			@if ( count($user->eventParticipants) > 0 && Helpers::getUserActiveTournaments($event->id) != 0)
 				<a class="dropdown-item d-none" href="/events/{{$event->slug}}/tournaments">All Tournaments</a>

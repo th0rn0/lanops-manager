@@ -37,6 +37,9 @@
 						@foreach ($orders as $order)
 							@php
 								$statusColor = '';
+
+								
+								
 								if ($order->status == 'CANCELLED') {
 									$statusColor = 'warning';
 								}elseif($order->status == 'EVENT') {
@@ -46,6 +49,10 @@
 								}elseif($order->status == 'COMPLETE') {
 									$statusColor = 'success';
 								}elseif($order->status == 'PENDING') {
+									$statusColor = 'info';
+								}elseif($order->status == 'SHIPPED') {
+									$statusColor = 'info';
+								}elseif($order->status == 'PROCESSING') {
 									$statusColor = 'info';
 								}
 							@endphp

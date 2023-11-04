@@ -4,7 +4,7 @@
 
 @section ('content')
 
-    <div class="container">
+    <div class="container pt-1">
         <div class="pb-2 mt-4 mb-4 border-bottom">
             <h1>@lang('auth.please_login')</h1>
         </div>
@@ -25,19 +25,19 @@
                 @if (in_array('standard', $activeLoginMethods))
                     {{ Form::open(array('url'=>route('login.standard') )) }}
 
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             {{ Form::label('email',__('auth.email_short'),array('id'=>'','class'=>'col-sm-2 col-form-label')) }}
                             <div class="col-sm-10 @error('email') is-invalid @enderror">
                                 <input type="email" id="email" name="email" class="form-control" placeholder="@lang('auth.email')" required autofocus>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="mb-3 row">
                             {{ Form::label('password',__('auth.password'),array('id'=>'','class'=>'col-sm-2 col-form-label')) }}
                             <div class="col-sm-10 @error('password') is-invalid @enderror">
                                 <input type="password" id="password" name="password" class="form-control" placeholder="@lang('auth.password')" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="offset-sm-2 col-sm-10">
                                 <div class="form-check">
                                     <label class="form-check-label">
@@ -46,12 +46,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="offset-sm-2 col-sm-10">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">@lang('auth.signin')</button>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="coffset-sm-2 col-sm-10">
                                 <a class="btn btn-link" href="/login/forgot">
                                 @lang('auth.forgot_password')

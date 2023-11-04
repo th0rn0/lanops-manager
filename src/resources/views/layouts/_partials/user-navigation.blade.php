@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-	<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $user->username }} @if (Settings::isCreditEnabled()) ({{ $user->credit_total }}) @endif</a>
+	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $user->username }} @if (Settings::isCreditEnabled()) ({{ $user->credit_total }}) @endif</a>
 	<div class="dropdown-menu">
 		@if ( $user->admin == 1 )
 			<a class="dropdown-item" href="/admin">@lang('layouts.user_navi_admin')</a>

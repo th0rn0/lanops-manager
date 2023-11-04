@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="full-height">
+<html lang="en" class="full-height" data-bs-theme="{{Colors::getTheme()}}">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,7 +55,7 @@
 			@foreach (['danger', 'warning', 'success', 'info'] as $msg)
 				@if (Session::has('alert-' . $msg))
 					<p class="alert  alert-{{ $msg }} alert-dismissible fade show">
-						<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						<b>{{ Session::get('alert-' . $msg) }}</b> <a href="#" class="btn-close text-decoration-none" data-bs-dismiss="alert" aria-label="close"></a>
 					</p>
 				@endif
 			@endforeach
@@ -64,7 +64,7 @@
 		<script src="/js/vendor.js"></script>
 		<script>
 			jQuery(function () {
-				jQuery('[data-toggle="tooltip"]').tooltip();
+				jQuery('[data-bs-toggle="tooltip"]').tooltip();
 			});
 		</script>
 		<br>
@@ -164,14 +164,14 @@
 					@foreach ($errors->all() as $error)
 						<li>{{ $error }}</li>
 					@endforeach
-			
+
 			</ul>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+			<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="alert" aria-label="Close">
+
 			</button>
 		</div>
 		@endif
-		
+
 		@yield ('scripts')
 	</body>
 </html>

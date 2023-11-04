@@ -4,49 +4,49 @@
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 
 		<span>
 			<h1 class="d-inline">@lang('matchmaking.match') {{ $match->id }} </h1>
-			<div class="float-right">
+			<div class="float-end">
 
 				<div>
 					@if (isset($match->matchReplays) && count($match->matchReplays) > 0)
-						<span class="badge badge-primary">@lang('matchmaking.replayavailable')</span>
-					@endif 
+						<span class="badge text-bg-primary">@lang('matchmaking.replayavailable')</span>
+					@endif
 					@if ($match->status == 'COMPLETE')
-						<span class="badge badge-success">@lang('matchmaking.ended')</span>
+						<span class="badge text-bg-success">@lang('matchmaking.ended')</span>
 					@endif
 					@if ($match->status == 'OPEN')
-						<span class="badge badge-success"><i class="fas fa-wifi"></i></span>
+						<span class="badge text-bg-success"><i class="fas fa-wifi"></i></span>
 					@endif
 					@if ($match->status == 'LIVE')
-						<span class="badge badge-success">@lang('matchmaking.live')</span>
+						<span class="badge text-bg-success">@lang('matchmaking.live')</span>
 					@endif
 					@if ($match->status == 'PENDING')
-						<span class="badge badge-light">@lang('matchmaking.pending')</span>
+						<span class="badge text-bg-light">@lang('matchmaking.pending')</span>
 					@endif
 					@if ($match->status == 'WAITFORPLAYERS')
-						<span class="badge badge-light">@lang('matchmaking.waitforplayers')</span>
+						<span class="badge text-bg-light">@lang('matchmaking.waitforplayers')</span>
 					@endif
 					@if ($match->status != 'COMPLETE' && !$match->getMatchTeamPlayer(Auth::id()))
-						<span class="badge badge-danger">@lang('matchmaking.notsignedup')</span>
+						<span class="badge text-bg-danger">@lang('matchmaking.notsignedup')</span>
 					@endif
 					@if ($match->status != 'COMPLETE' && $match->getMatchTeamPlayer(Auth::id()))
-						<span class="badge badge-success">@lang('matchmaking.signedup')</span>
+						<span class="badge text-bg-success">@lang('matchmaking.signedup')</span>
 					@endif
 					@if ( $match->owner_id == Auth::id())
-						<span class="badge badge-info">@lang('matchmaking.matchowner')</span>
+						<span class="badge text-bg-info">@lang('matchmaking.matchowner')</span>
 					@endif
 					@if ( $match->getMatchTeamOwner(Auth::id()))
-						<span class="badge badge-info">@lang('matchmaking.teamowner')</span>
+						<span class="badge text-bg-info">@lang('matchmaking.teamowner')</span>
 					@endif
 				</div>
-				<div class="custom-control custom-checkbox">
-					<input class="custom-control-input" type="checkbox" value="" id="autoReload">
-					<label class="custom-control-label" for="autoReload">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="autoReload">
+					<label class="form-check-label" for="autoReload">
 					  Auto Reload
 					</label>
 				</div>
@@ -64,16 +64,14 @@
 					<p class="mb-0">@lang('matchmaking.matchinviteurl')</p>
 					<div class="input-group mb-3 mt-0" style="width: 100%">
 						<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
-						</div>
+						<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
 					</div>
 				@endif
 				<div class="row">
 				{{-- Open, Start, Finalize --}}
 				@if($match->status == "DRAFT")
 					<div class="col">
-						<div class="form-group">
+						<div class="mb-3">
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/open' )) }}
 							<button type="submit" class="btn btn-success btn-block"><i class="fas fa-wifi"></i> @lang('matchmaking.openmatch')</button>
 						{{ Form::close() }}
@@ -82,7 +80,7 @@
 				@endif
 				@if($match->status == "OPEN")
 					<div class="col">
-						<div class="form-group">
+						<div class="mb-3">
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/start' )) }}
 							<button type="submit" class="btn btn-success btn-block"><i class="fas fa-play"></i> @lang('matchmaking.startmatch')</button>
 						{{ Form::close() }}
@@ -95,7 +93,7 @@
 							<div class="row">
 								@foreach ($match->teams as $team)
 									<div class="col">
-										<div class="form-group">
+										<div class="mb-3">
 											{{ Form::label('teamscore_'. $team->id, 'Score of '.$team->name ,array('id'=>'','class'=>'')) }}
 											@if ($match->game->matchmaking_autoapi)
 												{{ Form::number('teamscore_'. $team->id, $team->team_score, array('id'=>'teamscore_'. $team->id,'class'=>'form-control mb-3', 'disabled' => 'disabled')) }}
@@ -120,7 +118,7 @@
 						{{ Form::close() }}
 					</div>
 					<div class="col">
-						<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-toggle="modal" data-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
+						<a href="#" class="btn btn-warning btn-block mb-3 text-nowrap" data-bs-toggle="modal" data-bs-target="#editMatchModal"><i class="fas fa-edit"></i> @lang('matchmaking.editmatch')</a>
 					</div>
 					<div class="col">
 						{{ Form::open(array('url'=>'/matchmaking/' . $match->id, 'onsubmit' => 'return ConfirmDelete()')) }}
@@ -186,7 +184,7 @@
 
 					<div class="mb-3" id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}">
 						<div><i class="fas fa-map-marked-alt"></i><strong > Map: </strong><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_map"></span></div>
-						<div><i class="fas fa-users"></i><span class ="ml-2"><strong class ="ml-2" > Players: </strong></span><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_players"></span></div>
+						<div><i class="fas fa-users"></i><span class ="ms-2"><strong class ="ms-2" > Players: </strong></span><span id="serverstatus_{{ $match->matchMakingServer->gameServer->id }}_players"></span></div>
 					</div>
 		</div>
 		<div class="col-sm">
@@ -209,7 +207,7 @@
 		</div>
 	@endif
 
-	
+
 		{{-- TODO --}}
 		@if ( !$match->getMatchTeamPlayer(Auth::id()) && $match->teams()->count() < $match->team_count )
 
@@ -220,7 +218,7 @@
 				<div class="card-body">
 					<div class="list-group">
 						{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/add' )) }}
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('teamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
 								{{ Form::text('teamname',NULL,array('id'=>'teamname','class'=>'form-control')) }}
 							</div>
@@ -233,7 +231,7 @@
 
 		@endif
 
-		<div class="card-deck">
+		<div class="row card-deck">
 
 			@php
 
@@ -256,7 +254,7 @@
 
 			@foreach ($match->teams as $team)
 				<div class="col">
-					<div class="card mr-0 ml-0 mb-3">
+					<div class="card me-0 ms-0 mb-3">
 						<div class="card-header @if(Colors::isBodyDarkMode()) border-light  @endif">
 							<div class="row">
 								<div class="col">
@@ -266,14 +264,14 @@
 									@if($team->match->status != "LIVE" && $team->match->status != "COMPLETE" && $team->match->status != "PENDING" && $team->match->status != "WAITFORPLAYERS" && ($team->match->owner_id == Auth::id() || $team->team_owner_id == Auth::id()))
 										<div class="row">
 											<div class="col">
-												<button class="btn btn-warning btn-sm btn-block float-right text-nowrap" data-toggle="modal" data-target="#editTeamModal_{{ $team->id }}"><i class="fas fa-user-edit"></i> @lang('matchmaking.editteam')</button>
+												<button class="btn btn-warning btn-sm btn-block float-end text-nowrap" data-bs-toggle="modal" data-bs-target="#editTeamModal_{{ $team->id }}"><i class="fas fa-user-edit"></i> @lang('matchmaking.editteam')</button>
 											</div>
 
 											@if($team->id != $team->match->oldestTeam->id )
 												<div class="col">
 													{{ Form::open(array('url'=>'/matchmaking/' . $match->id . '/team/'. $team->id . '/delete', 'onsubmit' => 'return ConfirmDelete()')) }}
 													{{ Form::hidden('_method', 'DELETE') }}
-													<button type="submit" class="btn btn-danger btn-sm btn-block float-right text-nowrap"><i class="fas fa-trash"></i> @lang('matchmaking.deleteteam')</button>
+													<button type="submit" class="btn btn-danger btn-sm btn-block float-end text-nowrap"><i class="fas fa-trash"></i> @lang('matchmaking.deleteteam')</button>
 													{{ Form::close() }}
 												</div>
 											@endif
@@ -282,17 +280,17 @@
 									@if (!$team->match->getMatchTeamPlayer(Auth::id()) && $team->players->count() < $match->team_size )
 
 										{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'. $team->id .'/teamplayer/add' )) }}
-										<button type="submit" class="btn btn-success btn-sm btn-block float-right"><i class="fas fa-user-plus"></i> @lang('matchmaking.jointeam')</button>
+										<button type="submit" class="btn btn-success btn-sm btn-block float-end"><i class="fas fa-user-plus"></i> @lang('matchmaking.jointeam')</button>
 										{{ Form::close() }}
 
 									@endif
 									@if ($team->match->getMatchTeamPlayer(Auth::id()) && !$match->getMatchTeamOwner(Auth::id()) && $team->players->count() < $match->team_size && $team->match->getMatchTeamPlayer(Auth::id())->team->id != $team->id)
 									{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'. $team->id .'/teamplayer/'. $team->match->getMatchTeamPlayer(Auth::id())->id .'/change' )) }}
-										<button type="submit" class="btn btn-success btn-sm btn-block float-right"><i class="fas fa-user-plus"></i> @lang('matchmaking.switchteam')</button>
+										<button type="submit" class="btn btn-success btn-sm btn-block float-end"><i class="fas fa-user-plus"></i> @lang('matchmaking.switchteam')</button>
 									{{ Form::close() }}
 									@endif
 									@if($match->status == "COMPLETE" || ($match->status == "LIVE" && isset($match->game) && isset ($match->game->gamematchapihandler) && $match->game->matchmaking_autoapi))
-										<div class="text-center float-right">
+										<div class="text-center float-end">
 											<h4 style="width:50px;" class="border p-2 @if($winnerTeam->id == $team->id) border-success bg-success-light text-success @else border-danger bg-danger-light text-danger @endif">{{ $team->team_score }}</h4>
 										</div>
 									@endif
@@ -305,9 +303,7 @@
 									<p class="mb-0 mt-2">@lang('matchmaking.inviteurl')</p>
 									<div class="input-group mb-3 mt-0" style="width: 100%">
 										<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
-										<div class="input-group-append">
-											<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
-										</div>
+										<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
 									</div>
 								</div>
 							@endif
@@ -403,7 +399,7 @@
 									<td>
 										<a href="/storage{{ App\MatchReplay::getReplayPath($match->game, $matchReplay->name) }}"> {{$matchReplay->name}}</a>
 									</td>
-									
+
 									<td>
 										{{ App\MatchReplay::getReplaySize($match->game, $matchReplay->name) }}
 									</td>
@@ -418,7 +414,7 @@
 
 				</div>
 			</div>
-		
+
 	@endif
 
 </div>
@@ -432,11 +428,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="editTeamModalLabel_{{ $team->id }}"><i class="fas fa-user-edit"></i> @lang('matchmaking.editteam')</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/team/'.$team->id.'/update' )) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('editteamname',__('matchmaking.teamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('editteamname',$team->name,array('id'=>'editteamname','class'=>'form-control')) }}
 					</div>
@@ -453,11 +449,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editMatchModalLabel">@lang('matchmaking.editmatch')</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/matchmaking/'.$match->id.'/update' )) }}
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('game_id',__('matchmaking.games'),array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -471,7 +467,7 @@
 									)
 								}}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('team_size',__('matchmaking.teamsize'),array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -492,7 +488,7 @@
 									)
 								}}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 								{{
 									Form::number('team_count',
@@ -503,7 +499,7 @@
 										))
 								}}
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								<div class="form-check">
 										<label class="form-check-label">
 											{{ Form::checkbox('ispublic', null, $match->ispublic, array('id'=>'ispublic')) }} is public (show match publicly for signup)
@@ -526,7 +522,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="jointeamModallabel">@lang('matchmaking.jointeam')</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body">
 					@if(!$match->getMatchTeamPlayer(Auth::Id()))
@@ -561,7 +557,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="showMatchErrorModallabel">@lang('matchmaking.error')</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			<div class="modal-body">
 					@lang('matchmaking.nopermissions')
@@ -608,8 +604,8 @@
 			return false;
 		}
 
-	}	
-	
+	}
+
 	jQuery( function()
 	{
 		$('#autoReload').change(function()

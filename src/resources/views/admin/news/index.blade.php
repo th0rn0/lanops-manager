@@ -22,20 +22,20 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/news/', 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('title','Title',array('id'=>'','class'=>'')) }}
 						{{ Form::text('title', NULL ,array('id'=>'title','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('article','Article',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('article', NULL,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
 						{{ Form::text('tags', '', array('id'=>'', 'class'=>'form-control')) }}
 					</div>
 					@if ($facebookLinked)
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::checkbox('post_to_facebook', null, true, array('id'=>'post_to_facebook')) }} Post to facebook?
 						</div>
 					@endif
@@ -54,7 +54,7 @@
 						@if (!$comment->reviewed && !$comment->approved)
 							<div class="alert alert-warning">
 								{{ $comment->comment }}
-								<span class="float-right">
+								<span class="float-end">
 									<small>{{ $comment->user->username }} </small>
 									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/approve">Approve</a> /
 									<a href="/admin/news/{{ $comment->newsArticle->slug }}/comments/{{ $comment->id }}/reject">Reject</a>
@@ -72,7 +72,7 @@
 					@foreach ($commentsReported->reverse() as $report)
 						<div class="alert alert-danger">
 							{{ $report->newsComment->comment }} - Reported by: {{ $report->user->username }}
-							<span class="float-right">
+							<span class="float-end">
 								<a href="/admin/news/{{ $report->newsComment->newsArticle->slug }}/comments/{{ $report->newsComment->id }}/reports/{{ $report->id }}/delete">Ignore</a> /
 								<a href="/admin/news/{{ $report->newsComment->newsArticle->slug }}/comments/{{ $report->newsComment->id }}/delete">Delete</a>
 							</span>

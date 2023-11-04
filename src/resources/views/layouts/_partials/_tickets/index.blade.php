@@ -34,10 +34,10 @@
 			@endif
 		@endif
 		@if ($participant->gift == 1 && $participant->gift_accepted != 1)
-			<span class="badge badge-info float-right" style="margin-left: 3px; margin-top:2px;">@lang('tickets.has_been_gifted')</span>
+			<span class="badge text-bg-info float-end" style="margin-left: 3px; margin-top:2px;">@lang('tickets.has_been_gifted')</span>
 		@endif
 		@if ($participant->ticket && !$participant->ticket->seatable)
-			<span class="badge badge-info float-right" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
+			<span class="badge text-bg-info float-end" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
 		@endif
 	</div>
 	<div class="card-body">
@@ -45,7 +45,7 @@
 			<div class="col-md-8 col-sm-8 col-12">
 
 				<!-- @if ($participant->gift != 1 && $participant->gift_accepted != 1 && !$participant->event->online_event)
-					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{ $participant->id }}')" data-toggle="modal" data-target="#giftTicketModal">
+					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{ $participant->id }}')" data-bs-toggle="modal" data-bs-target="#giftTicketModal">
 						@lang('tickets.gift_ticket')
 					</button>
 				@endif -->

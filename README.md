@@ -1,8 +1,9 @@
-# Eventula Event Manager - ECO System
+![Eventula Logo](resources/images/eventula_sample_logo.png)
 
 The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. The only prerequisite is `docker and/or docker-compose`. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management.
 
-https://eventula.com
+<!-- commented out because of the downtimes -->
+<!-- https://eventula.com -->
 
 You can find the full documentation on https://eventula.lan2play.de .
 
@@ -11,10 +12,25 @@ If you need help with setting up or using eventula or you want to help developin
 
 [![Discord](https://discordapp.com/api/guilds/748086853449810013/widget.png?style=banner3)](https://discord.gg/zF5C9WPWFq)
 
-If you are using this please consider signing up to eventula for event mapping.
+<!-- commented out because of the downtimes -->
+<!-- If you are using this please consider signing up to eventula for event mapping. -->
 
 > **Warning**
 > This fork of eventula manager is not 100% update compatible to the current upstream. We have intended to merge it someday, but currently there are to many changes and there is not enough time to do so. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade.
+
+
+## Usage
+
+> **Warning**
+> Don't use any of the the ``docker-compose.yml`` or ``env.example`` from the repositorys root to run eventula in Production! You can find everything in the [Documentation](https://eventula.lan2play.de/admin/getting_started.html).
+
+
+### local test or development
+Hop over to our [developer documentation](https://eventula.lan2play.de/dev/getting_started.html) to see how to run eventula locally.
+
+### production use
+Hop over to our [admin documentation](https://eventula.lan2play.de/admin/getting_started.html) to see how to run and use eventula.
+
 
 ## Tanslation
 
@@ -84,7 +100,7 @@ If you are using this please consider signing up to eventula for event mapping.
 - Admin Interface
 - Web based CSS Editor
 - Light and Dark Theme out of the Box
-- Expandable templating and CSS System based on Bootstrap 4
+- Expandable templating and CSS System based on Bootstrap
 - API Endpoints
   - Events
   - Participants
@@ -105,13 +121,10 @@ If you are using this please consider signing up to eventula for event mapping.
 - EU cookie consent
 - Imprint / Dataprotection page
 - Fully Encapsulated in Docker Containers
-- Built on Laravel 9x
+- Built on Laravel
 - Easily Expandable
 - NGINX, MYSQL & PHP Docker stack
 
-## Usage
-
-Hop over to our [Documentation](https://eventula.lan2play.de/user/getting_started.html) to see how to run and use eventula.
 
 
 ## Sites that use the Lan2play Eventula Manager

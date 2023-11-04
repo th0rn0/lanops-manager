@@ -44,7 +44,8 @@
 			</div>
 		</div>
 
-		<script>
+    {{-- TODO: Replace Morris --}}
+		{{-- <script>
 			Morris.Donut({
 				element: 'ticket-purchase-breakdown',
 				data: [
@@ -64,7 +65,7 @@
 				ykeys: ['a'],
 				labels: ['Pounds']
 			});
-		</script>
+		</script> --}}
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fa fa-ticket fa-fw"></i> Tickets

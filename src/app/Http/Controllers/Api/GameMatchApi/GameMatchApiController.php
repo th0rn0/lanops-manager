@@ -19,7 +19,7 @@ use App\GameMatchApiHandler;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\MatchMaking;
-use App\MatchReplay;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Response;
@@ -124,25 +124,27 @@ class GameMatchApiController extends Controller
     public function tournamentMatchDemo(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
 
-        $demoname = str_replace(' ', '_', $request->headers->get('Get5-DemoName'));
-        $matchId = $request->headers->get('Get5-MatchId');
-        $mapNumber = $request->headers->get('Get5-MapNumber');
-        $serverId = $request->headers->get('Get5-ServerId');
-        $destinationPathDemo =  MatchReplay::createReplayPath($tournament->game, $demoname);
-
-        if(Storage::disk('public')->put($destinationPathDemo, $request->getContent()) == false)
-        {
-            return response('Error saving uploaded demo!', 500);
+        // maybe reenable, check if possible 
+        // $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
+        // if (!isset($gameserver)) {
+        //     return "Error: No GameServer setuped for this match!";
+        // }
+        if (!isset($tournament->game->gamematchapihandler)) {
+            return "Error: No gamematchapihandler setuped for this match!";
+        } else {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        $replay = new MatchReplay();
-        $replay->name = $demoname;
-        $replay->challonge_match_id = $challongeMatchId;
-        if(!$replay->save())
-        {
-            return response('Error uploading demo!', 500);
+        // maybe reenable, check if possible 
+        // if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
+        //     return "Error: Gameserver Secret Key is wrong!";
+        // }
+
+        if (!$gamematchapihandler->uploaddemo($request, null, $tournament, $challongeMatchId)) {
+            return response('Error: demo uploading failed!', 500);
         }
 
+        return response('uploaded demo successfully!', 200);
     }
 
     /**
@@ -177,44 +179,34 @@ class GameMatchApiController extends Controller
     }
 
     /**
-    * tournamentMatchFreeServer
-    * @param Event $event
-    * @param EventTournament $tournament
-    * @param int $challongeMatchId
-    * @param Request $request
-    * @return View
-    */
+     * tournamentMatchFreeServer
+     * @param Event $event
+     * @param EventTournament $tournament
+     * @param int $challongeMatchId
+     * @param Request $request
+     * @return View
+     */
     public function tournamentMatchFreeServer(Event $event, EventTournament $tournament, int $challongeMatchId, Request $request)
     {
         $gameserver = EventTournamentMatchServer::getTournamentMatchServer($challongeMatchId);
-        if(!isset($gameserver))
-        {
+        if (!isset($gameserver)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($tournament->game->gamematchapihandler)) 
-        {
+        if (!isset($tournament->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($tournament->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $gameserver->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if (!$gamematchapihandler->freeserver($request, null, $tournament, $challongeMatchId))
-        {
+        if (!$gamematchapihandler->freeserver($request, null, $tournament, $challongeMatchId)) {
             return "Error: Freeing server failed!";
-        }
-        else
-        {
+        } else {
             return "Success: Server freed!";
         }
-
-
     }
 
 
@@ -407,24 +399,25 @@ class GameMatchApiController extends Controller
      */
     public function matchMakingMatchDemo(Request $request, MatchMaking $match)
     {
-        $demoname = str_replace(' ', '_', $request->headers->get('Get5-DemoName'));
-        $matchId = $request->headers->get('Get5-MatchId');
-        $mapNumber = $request->headers->get('Get5-MapNumber');
-        $serverId = $request->headers->get('Get5-ServerId');
-        $destinationPathDemo =  MatchReplay::createReplayPath($match->game, $demoname);
+        // maybe reenable, check if possible 
+        // if (!isset($match->matchMakingServer->gameServer)) {
+        //     return "Error: No GameServer setuped for this match!";
+        // }
+        if (!isset($match->game->gamematchapihandler)) {
+            return "Error: No gamematchapihandler setuped for this match!";
+        } else {
+            $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
+        }
+        // maybe reenable, check if possible 
+        // if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
+        //     return "Error: Gameserver Secret Key is wrong!";
+        // }
 
-        if(Storage::disk('public')->put($destinationPathDemo, $request->getContent()) == false)
-        {
-            return response('Error saving uploaded demo!', 500);
+        if (!$gamematchapihandler->uploaddemo($request, $match, null, null)) {
+            return response('Error: demo uploading failed!', 500);
         }
 
-        $replay = new MatchReplay();
-        $replay->name = $demoname;
-        $replay->matchmaking_id = $match->id;
-        if(!$replay->save())
-        {
-            return response('Error uploading demo!', 500);
-        }
+        return response('uploaded demo successfully!', 200);
     }
 
     /**
@@ -456,37 +449,29 @@ class GameMatchApiController extends Controller
     }
 
     /**
-    * matchMakingMatchFreeServer
-    * @param Request $request
-    * @param MatchMaking $match
-    * @return View
-    */
+     * matchMakingMatchFreeServer
+     * @param Request $request
+     * @param MatchMaking $match
+     * @return View
+     */
     public function matchMakingMatchFreeServer(Request $request, MatchMaking $match)
     {
-        if(!isset($match->matchMakingServer->gameServer))
-        {
+        if (!isset($match->matchMakingServer->gameServer)) {
             return "Error: No GameServer setuped for this match!";
         }
-        if (!isset($match->game->gamematchapihandler)) 
-        {
+        if (!isset($match->game->gamematchapihandler)) {
             return "Error: No gamematchapihandler setuped for this match!";
-        }
-        else
-        {
+        } else {
             $gamematchapihandler = (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler);
         }
 
-        if(!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer))
-        {
+        if (!$gamematchapihandler->authorizeserver($request, $match->matchMakingServer->gameServer)) {
             return "Error: Gameserver Secret Key is wrong!";
         }
 
-        if (!$gamematchapihandler->freeserver($request, $match, null, null))
-        {
+        if (!$gamematchapihandler->freeserver($request, $match, null, null)) {
             return "Error: Freeing server failed!";
-        }
-        else
-        {
+        } else {
             return "Success: Server freed!";
         }
     }

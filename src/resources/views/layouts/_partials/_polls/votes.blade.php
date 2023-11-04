@@ -32,8 +32,8 @@
 				@foreach ($poll->options as $option)
 					@if ($option->hasVoted())
 						<p>
-							<a href="/polls/{{ $poll->slug }}/options/{{ $option->id }}/abstain">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<a href="/polls/{{ $poll->slug }}/options/{{ $option->id }}/abstain" class="text-decoration-none">
+								<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 							</a>
 							{{ $option->name }}
 						</p>
@@ -41,7 +41,7 @@
 				@endforeach
 				@if (!$poll->hasEnded() && $poll->allow_options_user)
 					{{ Form::open(array('url'=>'/polls/' . $poll->slug . '/options', 'files' => 'true')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Add Options',array('id'=>'','class'=>'')) }}
 							@include ('layouts._partials._polls.add-options')
 						</div>

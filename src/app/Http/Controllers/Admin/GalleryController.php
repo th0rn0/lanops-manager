@@ -151,19 +151,23 @@ class GalleryController extends Controller
     public function uploadFile(GalleryAlbum $album, Request $request)
     {
 
-        $rules = [
-            'images.*'   => 'required|max:20000',
-
-        ];
-        $messages = [
-            'images.*.required' => 'Please upload an image',
-            'images.*.max' => 'Sorry! Maximum allowed size for an image is 20MB',
-        ];
-        $this->validate($request, $rules, $messages);
+        $request->validate([
+            'images'            => 'required|array|min:1',
+            'images.*'          => 'file|max:20000|mimes:jpg,jpeg,bmp,png,webp',
+        ], [
+            'images.required'   => 'Please upload at least one image.',
+            'images.array'      => 'The images must be an array.',
+            'images.min'        => 'Please upload at least one image.',
+            'images.*.file'     => 'Each image must be a file.',
+            'images.*.max'      => 'Each image may not be greater than 20MB.',
+            'images.*.mimes'    => 'Only jpg, jpeg, bmp, png, webp images are allowed.',
+        ]);
 
         $files = $request->file('images');
+        
         //Keep a count of uploaded files
         $fileCount = count($files);
+
         //Counter for uploaded files
         $uploadcount = 0;
         $destinationPathFiles = '/images/gallery/' . $album->slug . '/';

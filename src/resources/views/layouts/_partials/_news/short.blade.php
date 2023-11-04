@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-12 col-sm-6">
 			<!-- // TODO - add user account public pages -->
-			<p class="news-post-meta float-right">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by 
+			<p class="news-post-meta float-end">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by 
 				
 				@if(isset($newsArticle->user->username))
 					<a href="#">{{ $newsArticle->user->username }}</a>

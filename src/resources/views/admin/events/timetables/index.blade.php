@@ -76,7 +76,7 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/timetables')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('timetable_name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', NULL ,array('id'=>'timetable_name','class'=>'form-control')) }}
 					</div>

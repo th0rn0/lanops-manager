@@ -221,6 +221,36 @@ else
 	echo 'OK'
 fi
 
+file_env 'APPEAR_DISABLE_CUSTOM_CSS_LINKING'
+if [ -z "$APPEAR_DISABLE_CUSTOM_CSS_LINKING" ];
+then
+	echo 'NOT SET, DEFAULTING TO FALSE'
+	export APPEAR_DISABLE_CUSTOM_CSS_LINKING=false
+fi
+	
+if [ "$APPEAR_DISABLE_CUSTOM_CSS_LINKING" = 'true' ];
+then
+	echo 'CUSTOM_CSS_LINKING IS DISABLED, THIS IS THE RIGHT SETTING WHEN YOUR SRC FOLDER IS MOUNTED !! DONT USE THIS IN PRODUCTION !!! '
+else
+	echo 'CUSTOM_CSS_LINKING IS ENABLED,THIS IS THE RIGHT SETTING IN PRODUCTION '
+fi
+
+
+file_env 'APPEAR_DISABLE_ADMIN_APPEARANCE_CSS_SETTINGS'
+if [ -z "$APPEAR_DISABLE_ADMIN_APPEARANCE_CSS_SETTINGS" ];
+then
+	echo 'NOT SET, DEFAULTING TO FALSE'
+	export APPEAR_DISABLE_ADMIN_APPEARANCE_CSS_SETTINGS=false
+fi
+	
+if [ "$APPEAR_DISABLE_ADMIN_APPEARANCE_CSS_SETTINGS" = 'true' ];
+then
+	echo 'THE CSS APPEARANCE SETTINGS IN THE ADMIN MENU ARE DISABLED. THIS IS ONLY INTENDED IF YOU MOUNT YOUR CUSTOM SCSS (SEE DOCUMENTATION)'
+fi
+
+
+
+file_env 'ENV_OVERRIDE'
 if [ -n "$ENV_OVERRIDE" ] && [ "$ENV_OVERRIDE" = 'true' ];
 then
 	echo 'WARNING!'
@@ -272,6 +302,46 @@ if [ -z "$(ls -A $NGINX_DOCUMENT_ROOT/storage)" ]; then
  	cp -a /tmp/storage $NGINX_DOCUMENT_ROOT
 fi
 
+# APPEAR_DISABLE_CUSTOM_CSS_LINKING
+if [ "$APPEAR_DISABLE_CUSTOM_CSS_LINKING" = 'false' ]; then
+
+	echo "---------------"
+    echo "CUSTOM_CSS_LINKING ..."
+
+	mkdir -p $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage/user/scss
+	chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage/user/scss
+
+	# Copy _user-override.scss and create symlink for it
+	if [ ! -f "$NGINX_DOCUMENT_ROOT/storage/user/scss/_user-override.scss" ]; then
+    	echo "_user-override.scss not available in storage/user/scss, copy default file"
+		cp -rf $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/components/_user-override.scss $NGINX_DOCUMENT_ROOT/storage/user/scss/_user-override.scss
+		chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage/user/scss/_user-override.scss
+	fi
+
+	if [ -f "$NGINX_DOCUMENT_ROOT/storage/user/scss/_user-override.scss" ]; then
+    	echo "_user-override.scss available in storage/user/scss, remove internal one and symlink to it"
+		rm -rf $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/components/_user-override.scss
+		ln -s  $NGINX_DOCUMENT_ROOT/storage/user/scss/_user-override.scss $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/components/_user-override.scss
+		chown -R -h $UUID:$GUID $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/components/_user-override.scss
+	fi
+
+	# Copy _user-variables.scss and create symlink for it
+	if [ ! -f "$NGINX_DOCUMENT_ROOT/storage/user/scss/_user-variables.scss" ]; then
+    	echo "_user-variables.scss not available in storage/user/scss, copy default file"
+		cp -rf $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/modules/_user-variables.scss $NGINX_DOCUMENT_ROOT/storage/user/scss/_user-variables.scss
+		chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage/user/scss/_user-variables.scss
+	fi
+
+	if [ -f "$NGINX_DOCUMENT_ROOT/storage/user/scss/_user-variables.scss" ]; then
+    	echo "_user-variables.scss available in storage/user/scss, remove internal one and symlink to it"
+		rm -rf $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/modules/_user-variables.scss
+		ln -s $NGINX_DOCUMENT_ROOT/storage/user/scss/_user-variables.scss $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/modules/_user-variables.scss 
+		chown -R -h $UUID:$GUID $NGINX_DOCUMENT_ROOT/resources/assets/sass/stylesheets/app/modules/_user-variables.scss
+	fi
+
+fi
+
+#permissions
 if [[ $(stat -c "%u" $NGINX_DOCUMENT_ROOT/storage) != $UUID ]]; then
 	echo "---------------"
     echo "Changing ownership of $NGINX_DOCUMENT_ROOT/storage to $UUID ..."
@@ -283,6 +353,9 @@ fi
 if [ ! -L "$NGINX_DOCUMENT_ROOT/public/storage" ]; then
 	php artisan storage:link
 fi
+
+
+  
 
 # Set Timezone
 if [ "$TIMEZONE" != "UTC" ]; then
