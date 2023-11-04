@@ -1,19 +1,26 @@
 <div class="card mb-3">
 	<div class="card-header  bg-success-light text-success">
 		@if ($participant->ticket)
-		<strong>{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else @lang('events.notseated') @endif @endif</strong>
+		<strong>{{ $participant->ticket->name }} 
+			@if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): 
+				@if ($participant->seat) {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} 
+					<small>in {{$participant->seat->seatingPlan->name}}</small> 
+				@else @lang('events.notseated') 
+				@endif 
+			@endif
+		</strong>
 		@else
-		@if ($participant->staff)
-		<strong>@lang('tickets.staff_ticket') @if ($participant->seat) - @lang('events.seat'): {{$participant->seat->seat}} @endif</strong>
-		@else
-		<strong>@lang('tickets.free_ticket') @if ($participant->seat) - @lang('events.seat'): {{$participant->seat->seat}} @endif</strong>
-		@endif
+			@if ($participant->staff)
+				<strong>@lang('tickets.staff_ticket') @if ($participant->seat) - @lang('events.seat'): {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} @endif</strong>
+			@else
+				<strong>@lang('tickets.free_ticket') @if ($participant->seat) - @lang('events.seat'): {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} @endif</strong>
+			@endif
 		@endif
 		@if ($participant->gift == 1 && $participant->gift_accepted != 1)
-		<span class="badge badge-info float-right" style="margin-left: 3px; margin-top:2px;">@lang('tickets.has_been_gifted')</span>
+			<span class="badge badge-info float-right" style="margin-left: 3px; margin-top:2px;">@lang('tickets.has_been_gifted')</span>
 		@endif
 		@if ($participant->ticket && !$participant->ticket->seatable)
-		<span class="badge badge-info float-right" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
+			<span class="badge badge-info float-right" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
 		@endif
 	</div>
 	<div class="card-body">
@@ -42,8 +49,8 @@
 							{{ Form::hidden('_method', 'DELETE') }}
 							{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
 							{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-							{{ Form::hidden('seat_column', $participant->seat->column, array('id'=>'seat_column','class'=>'form-control')) }}
-							{{ Form::hidden('seat_row', $participant->seat->row, array('id'=>'seat_row','class'=>'form-control')) }}
+							{{ Form::hidden('seat_column_delete', $participant->seat->column, array('id'=>'seat_column_delete','class'=>'form-control')) }}
+							{{ Form::hidden('seat_row_delete', $participant->seat->row, array('id'=>'seat_row_delete','class'=>'form-control')) }}
 						<h5>
 						<button class="btn btn-danger btn-block">
 							@lang('events.remove_seating')

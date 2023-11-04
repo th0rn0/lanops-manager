@@ -747,7 +747,13 @@ use Debugbar;
 														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 													</button>
 													@else
-													@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
+													@if (Auth::user() 
+															&& $event->getEventParticipant() 
+															&& ($event->getEventParticipant()->staff 
+																|| $event->getEventParticipant()->free 
+																|| $event->getEventParticipant()->ticket->seatable
+															)
+														)
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
 																					'{{ $column }}',
@@ -788,12 +794,11 @@ use Debugbar;
 											{{ Form::hidden('_method', 'DELETE') }}
 											{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
 											{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-											{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
-											{{ Form::hidden('seat_column', $participant->seat->column, array('id'=>'seat_column','class'=>'form-control')) }}
-											{{ Form::hidden('seat_row', $participant->seat->row, array('id'=>'seat_row','class'=>'form-control')) }}
+											{{ Form::hidden('seat_column_delete', $participant->seat->column, array('id'=>'seat_column_delete','class'=>'form-control')) }}
+											{{ Form::hidden('seat_row_delete', $participant->seat->row, array('id'=>'seat_row_delete','class'=>'form-control')) }}
 											<h5>
 												<button class="btn btn-success btn-block">
-													{{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }} - @lang('events.remove')
+													@lang('events.remove') - {{ Helpers::getLatinAlphabetUpperLetterByIndex($participant->seat->row) . $participant->seat->column }}
 												</button>
 											</h5>
 										{{ Form::close() }}
@@ -846,12 +851,13 @@ use Debugbar;
 										)
 									)
 								}}
-						<p>>@lang('events.wantthisseat')</p>
+						<p class="pt-2">@lang('events.wantthisseat')</p>
 						<p>@lang('events.removeitanytime')</p>
 					</div>
 				</div>
 				{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-				{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
+				{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
+				{{ Form::hidden('seat_row', null, array('id'=>'seat_row','class'=>'form-control')) }}
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-success">@lang('events.yes')</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('events.no')</button>
