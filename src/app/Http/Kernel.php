@@ -54,19 +54,20 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareAliases = [
-        'auth'          => \App\Http\Middleware\Authenticate::class,
-        'auth.basic'    => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest'         => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'installed'     => \App\Http\Middleware\Installed::class,
+        'auth'              => \App\Http\Middleware\Authenticate::class,
+        'auth.basic'        => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'guest'             => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'installed'         => \App\Http\Middleware\Installed::class,
         'nophonenumber'     => \App\Http\Middleware\NoPhoneNumber::class,
-        'notInstalled'  => \App\Http\Middleware\NotInstalled::class,
-        'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin'         => \App\Http\Middleware\Admin::class,
-        'banned'        => \App\Http\Middleware\Banned::class,
-        'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'bindings'      => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'signed'        => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'language'      => \App\Http\Middleware\LanguageSwitcher::class,
-        'gameserver'      => \App\Http\Middleware\Gameserver::class,
+        'nodebugbar'        => \App\Http\Middleware\NoDebugBar::class,
+        'notInstalled'      => \App\Http\Middleware\NotInstalled::class,
+        'throttle'          => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin'             => \App\Http\Middleware\Admin::class,
+        'banned'            => \App\Http\Middleware\Banned::class,
+        'verified'          => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'bindings'          => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'signed'            => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'language'          => \App\Http\Middleware\LanguageSwitcher::class,
+        'gameserver'        => \App\Http\Middleware\Gameserver::class,
     ];
 }
