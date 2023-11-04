@@ -208,47 +208,51 @@
 					<div class="table-responsive text-center">
 						<table class="table">
 
-							<?php
-							$headers = explode(',', $seatingPlan->headers);
-							$headers = array_combine(range(1, count($headers)), $headers);
-							?>
 							<tbody>
 								@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 									<tr>
 										<td>
-											<h4><strong>{{ucwords($headers[$row])}}</strong></h4>
+											<h4><strong>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) }}</strong></h4>
 										</td>
 										@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 
 											<td style="padding-top:14px;">
-												@if ($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
-												@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column)->status == 'ACTIVE')
+												@if ($event->getSeat($seatingPlan->id, $column, $row))
+												@if($event->getSeat($seatingPlan->id, $column, $row)->status == 'ACTIVE')
 												@if ($seatingPlan->locked)
 												<button class="btn btn-success btn-sm" disabled>
-													{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+													{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row)->eventParticipant->user->username }}
 												</button>
 												@else
 												<button class="btn btn-success btn-sm" disabled>
-													{{ ucwords($headers[$row]) . $column }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$row] . $column))->eventParticipant->user->username }}
+													{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row)->eventParticipant->user->username }}
 												</button>
 												@endif
 												@endif
 												@else
 												@if ($seatingPlan->locked)
 												<button class="btn btn-primary btn-sm" disabled>
-													{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+													{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 												</button>
 												@else
-												@if (Auth::user() && $event->getEventParticipant() && ($event->getEventParticipant()->staff || $event->getEventParticipant()->free || $event->getEventParticipant()->ticket->seatable))
+												@if (Auth::user() 
+														&& $event->getEventParticipant() 
+														&& ($event->getEventParticipant()->staff 
+															|| $event->getEventParticipant()->free 
+															|| $event->getEventParticipant()->ticket->seatable
+														)
+													)
 												<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																				'{{ $seatingPlan->slug }}',
-																				'{{ ucwords($headers[$row]) . $column }}'
+																				'{{ $column }}',
+																				'{{ $row }}',
+																				'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
 																			)" data-bs-toggle="modal" data-bs-target="#pickSeatModal">
-													{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+													{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 												</button>
 												@else
 												<button class="btn btn-primary btn-sm" disabled>
-													{{ ucwords($headers[$row]) . $column }} - @lang('events.empty')
+													{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 												</button>
 												@endif
 												@endif
@@ -278,10 +282,12 @@
 							{{ Form::hidden('_method', 'DELETE') }}
 							{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
 							{{ Form::hidden('participant_id', $participant->id, array('id'=>'participant_id','class'=>'form-control')) }}
-							{{ Form::hidden('seat_number', $participant->seat->seat, array('id'=>'seat_number','class'=>'form-control')) }}
+							{{ Form::hidden('seat_column_delete', $participant->seat->column, array('id'=>'seat_column_delete','class'=>'form-control')) }}
+							{{ Form::hidden('seat_row_delete', $participant->seat->row, array('id'=>'seat_row_delete','class'=>'form-control')) }}
+
 							<h5>
 								<button class="btn btn-success btn-block">
-									{{ $participant->seat->seat }} - @lang('events.remove')
+									@lang('events.remove') - {{ $participant->seat->getName() }}
 								</button>
 							</h5>
 							{{ Form::close() }}
@@ -513,15 +519,15 @@
 		<h3><i class="fas fa-ticket-alt me-3"></i>@lang('events.mytickets')</h3>
 	</div>
 	@if (Auth::user())
-	@if (!$user->getAllTickets($event->id)->isEmpty())
-	@foreach ($user->getAllTickets($event->id) as $participant)
-	@include('layouts._partials._tickets.index')
-	@endforeach
+		@if (!$user->getAllTickets($event->id)->isEmpty())
+			@foreach ($user->getAllTickets($event->id) as $participant)
+				@include('layouts._partials._tickets.index')
+			@endforeach
+		@else
+			<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
+		@endif
 	@else
-	<div class="alert alert-info">@lang('events.purchaseticketopickseat')</div>
-	@endif
-	@else
-	<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
+		<div class="alert alert-info">@lang('events.plslogintopurchaseticket')</div>
 	@endif
 
 	<!-- TOURNAMENTS -->
@@ -699,7 +705,7 @@
 					<td style="vertical-align: middle;">
 						@if ($participant->user->hasSeatableTicket($event->id))
 						@if ($participant->seat)
-						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->seat }}
+						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->getName() }}
 						@else
 						@lang('events.notseated')
 						@endif
@@ -740,12 +746,13 @@
 									)
 								)
 							}}
-					<p>>@lang('events.wantthisseat')</p>
+					<p class="pt-2">@lang('events.wantthisseat')</p>
 					<p>@lang('events.removeitanytime')</p>
 				</div>
 			</div>
 			{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-			{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
+			{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
+			{{ Form::hidden('seat_row', null, array('id'=>'seat_row','class'=>'form-control')) }}
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-success">@lang('events.yes')</button>
 				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">@lang('events.no')</button>
@@ -757,10 +764,13 @@
 </div>
 
 <script>
-	function pickSeat(seating_plan_slug, seat) {
-		jQuery("#seat_number_modal").val(seat);
-		jQuery("#seat_modal").val(seat);
-		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
+	function pickSeat(seating_plan_slug, seatColumn, seatRow, seatDisplay) {
+		jQuery("#seat_column").val(seatColumn);
+		jQuery("#seat_row").val(seatRow);
+		jQuery("#seat_column_delete").val(seatColumn);
+		jQuery("#seat_row_delete").val(seatRow);
+		jQuery("#seat_number_modal").val(seatDisplay);
+		jQuery("#pickSeatModalLabel").html('Do you what to choose seat ' + seatDisplay);
 		jQuery("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
 	}
 </script>

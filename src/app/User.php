@@ -6,6 +6,7 @@ use DB;
 use Auth;
 use Settings;
 use Colors;
+use Helpers;
 use App\CreditLog;
 use App\EventTournament;
 
@@ -206,18 +207,22 @@ class User extends Authenticatable implements MustVerifyEmail
                 ($eventParticipant->free || $eventParticipant->staff)
             ) {
                 $seat = 'Not Seated';
-                if ($eventParticipant->seat) {
-                    $seat = strtoupper($eventParticipant->seat->seat);
+                $seatingPlanName = "";
+                if ($eventParticipant->seat) {                    
+                    if ($eventParticipant->seat->seatingPlan) {
+                        $seatingPlanName = $eventParticipant->seat->seatingPlan->getName();
+                    }                    
+                    $seat = $eventParticipant->seat->getName();
                 }
                 $return[$eventParticipant->id] = 'Participant ID: ' . $eventParticipant->id . $seat;
                 if (!$eventParticipant->ticket && $eventParticipant->staff) {
-                    $return[$eventParticipant->id] = 'Staff Ticket - Seat: ' . $seat;
+                    $return[$eventParticipant->id] = 'Staff Ticket - ' . $seatingPlanName . ' - ' . $seat;
                 }
                 if (!$eventParticipant->ticket && $eventParticipant->free) {
-                    $return[$eventParticipant->id] = 'Free Ticket - Seat: ' . $seat;
+                    $return[$eventParticipant->id] = 'Free Ticket - ' . $seatingPlanName . ' - ' . $seat;
                 }
                 if ($eventParticipant->ticket) {
-                    $return[$eventParticipant->id] = $eventParticipant->ticket->name . ' - Seat: ' . $seat;
+                    $return[$eventParticipant->id] = $eventParticipant->ticket->name . ' - ' . $seatingPlanName . ' - ' . $seat;
                 }
             }
         }
