@@ -168,7 +168,7 @@
 								{{ Form::checkbox('matchmaking_autoapi', null, null, array('id'=>'matchmaking_autoapi')) }} Enable Match Auto Api for Matchmaking
 							</label>
 							<div>
-								<small>Make sure the selected gamematchapihandler supports the Autoapi feature! (Get5,)</small>
+								<small>Make sure the selected gamematchapihandler supports the Autoapi feature! (Get5,PugSharp)</small>
 							</div>
 						</div>
 						<div class="form-group">

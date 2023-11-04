@@ -245,7 +245,7 @@
 								{{ Form::checkbox('match_autoapi', null, $tournament->match_autoapi, array('id'=>'match_autoapi')) }} Enable Match Auto Api for this Tournament
 							</label>
 							<div>
-								<small>Make sure to select a game where the in the <a href="/admin/games">settings</a> selected gamematchapihandler supports the Autoapi feature! (Get5,)</small>
+								<small>Make sure to select a game where the in the <a href="/admin/games">settings</a> selected gamematchapihandler supports the Autoapi feature! (Get5,PugSharp)</small>
 							</div>
 						</div>
 						<div class="form-group">

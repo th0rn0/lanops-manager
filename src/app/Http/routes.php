@@ -32,7 +32,7 @@ Route::group(['middleware' => ['installed']], function () {
         /**
          * API
          */
-        Route::group(['middleware' => ['api']], function () {
+        Route::group(['middleware' => ['api', 'nodebugbar']], function () {
             Route::get('/api/events/', 'Api\Events\EventsController@index');
             Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
             Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
