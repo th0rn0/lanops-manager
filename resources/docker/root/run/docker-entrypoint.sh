@@ -308,7 +308,7 @@ if [ "$APPEAR_DISABLE_CUSTOM_CSS_LINKING" = 'false' ]; then
 	echo "---------------"
     echo "CUSTOM_CSS_LINKING ..."
 
-	mkdir -p $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage/user/scss
+	mkdir -p $NGINX_DOCUMENT_ROOT/storage/user/scss
 	chown -R $UUID:$GUID $NGINX_DOCUMENT_ROOT/storage/user/scss
 
 	# Copy _user-override.scss and create symlink for it
