@@ -30,16 +30,16 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug )) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name', $item->name, array('id'=>'name','class'=>'form-control')) }}
 						</div>
 						<div class="row">
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('stock','Stock',array('id'=>'','class'=>'')) }}
 								{{ Form::number('stock', $item->stock, array('id'=>'stock','class'=>'form-control')) }}
 							</div>
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('category_id','Category',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -55,17 +55,17 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('price','Price (Real)',array('id'=>'','class'=>'')) }}
 								{{ Form::text('price', $item->price, array('id'=>'price','class'=>'form-control')) }}
 							</div>
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('price_credit','Price Credit',array('id'=>'','class'=>'')) }}
 								{{ Form::text('price_credit', $item->price_credit, array('id'=>'price_credit','class'=>'form-control')) }}
 							</div>
 						</div>
 						<div class="row">
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -83,7 +83,7 @@
 									)
 								}}
 							</div>
-							<div class="form-group col-12 col-sm-6">
+							<div class="mb-3 col-12 col-sm-6">
 								{{ Form::label('featured','Featured',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -101,7 +101,7 @@
 								}}
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $item->description, array('id'=>'description','class'=>'form-control wysiwyg-editor', 'rows'=>'4')) }}
 						</div>
@@ -122,7 +122,7 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/shop/' . $item->category->slug . '/' . $item->slug . '/images', 'files' => 'true')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('images','Upload Images',array('id'=>'','class'=>'')) }}
 							{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>false)) }}
 						</div>

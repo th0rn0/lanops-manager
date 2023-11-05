@@ -1,0 +1,8 @@
+$slick-loader-path: "./images/";
+$slick-font-path: "./font/" ;
+
+$slick-arrow-color: $color_body_text;
+$slick-dot-color: $color_body_text;
+
+@import "node_modules/slick-carousel/slick/slick-theme";
+@import "node_modules/slick-carousel/slick/slick";

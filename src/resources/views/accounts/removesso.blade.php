@@ -4,7 +4,7 @@
 
 @section ('content')
 
-	<div class="container">
+	<div class="container pt-1">
 
 		<div class="row">
 			
@@ -57,7 +57,7 @@
 								<div class="col-md-10 col-sm-12">
 
 									@if ($user->email)
-										<div class="form-group">
+										<div class="mb-3">
 											{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
 											@if(Settings::isAuthAllowEmailChangeEnabled())
 												<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="@lang('accounts.email')">
@@ -73,7 +73,7 @@
 											@enderror
 										</div>
 									@else
-									<div class="form-group">
+									<div class="mb-3">
 										{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
 											<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" placeholder="@lang('accounts.email')">
 										@error('email')
@@ -95,9 +95,9 @@
 
 								</div>
 								<div class="col-md-10 col-sm-12 mb-4">
-									<div class="form-group">
+									<div class="mb-3">
 
-										<div class="form-group">
+										<div class="mb-3">
 											<label for="password1">@lang('accounts.change_password')</label>
 											<input type="password" name="password1" class="form-control @error('password1') is-invalid @enderror" id="password1" placeholder="@lang('accounts.password')">
 											@error('password1')
@@ -106,7 +106,7 @@
 												</span>
 											@enderror
 										</div>
-										<div class="form-group">
+										<div class="mb-3">
 											<label for="password2">@lang('accounts.confirm_password')</label>
 											<input type="password" name="password2" class="form-control @error('password2') is-invalid @enderror" id="password2" placeholder="@lang('accounts.password')">
 											@error('password2')

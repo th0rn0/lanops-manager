@@ -53,7 +53,7 @@ A poll on an events page will look like this:
    :align: center
 
 Edit poll / View poll results / End poll 
-----------
+--------------------------------------------------
 To edit a poll klick on the edit button of your poll entry in the ``Polls`` area.
 
 .. image:: ../images/polls_05.png

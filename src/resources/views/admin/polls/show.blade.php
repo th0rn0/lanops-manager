@@ -79,15 +79,15 @@
 					{{ $_SERVER['REQUEST_SCHEME'] }}://{{ $_SERVER['HTTP_HOST'] }}/polls/{{ $poll->slug }}
 				</a>
 				{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug, 'files' => 'true')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', $poll->name, array('id'=>'name','class'=>'form-control')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('description', $poll->description, array('id'=>'','class'=>'form-control', 'rows'=>'3')) }}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -105,7 +105,7 @@
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('event_id','Link to Event',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -119,17 +119,17 @@
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('allow_options_users','Allow User to Add Options',array('id'=>'','class'=>'')) }} @if ($poll->allow_options_user) True @else False @endif
 						<br>
 						{{ Form::label('allow_options_multi','Allow User to Select Multiple Options',array('id'=>'','class'=>'')) }} @if ($poll->allow_options_multi) True @else False @endif
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					</div>
 				{{ Form::close() }}
 				@if (!$poll->hasEnded())
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/end')) }}
 							<button type="submit" class="btn btn-primary btn-block">End Poll</button>
 						{{ Form::close() }}
@@ -149,7 +149,7 @@
 				</div>
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/polls/' . $poll->slug . '/options', 'files' => 'true')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							@include ('layouts._partials._polls.add-options')
 						</div>
 						<button type="submit" class="btn btn-secondary btn-block">Submit</button>

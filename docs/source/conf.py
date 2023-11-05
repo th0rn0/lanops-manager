@@ -34,7 +34,11 @@ release = '2.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx.ext.autosectionlabel",
 ]
+
+# Make sure the target is unique
+autosectionlabel_prefix_document = True
 #extensions.append("guzzle_sphinx_theme")
 extensions.append("sphinx_rtd_theme")
 

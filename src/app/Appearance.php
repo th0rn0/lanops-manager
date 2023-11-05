@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use ScssPhp\ScssPhp\Compiler;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 class Appearance extends Model
 {
     /**
@@ -128,7 +128,6 @@ class Appearance extends Model
     public static function saveCssVariables($variables)
     {
         @Cache::forget("css_version");
-        @Storage::disk('assets')->delete('sass/stylesheets/app/modules/_user-variables.scss');
         Storage::disk('assets')->put('sass/stylesheets/app/modules/_user-variables.scss', '// User Variable Overrides');
         foreach ($variables as $key => $value) {
             if (!self::saveCssVariableToDatabase($key, $value)) {
@@ -149,6 +148,10 @@ class Appearance extends Model
     {
         @Cache::forget("css_version");
         $variable = self::where('key', $key)->first();
+        if (!isset($variable))
+        {
+            return false;
+        }
         $variable->value = $value;
         if (!$variable->save()) {
             return false;
@@ -170,4 +173,31 @@ class Appearance extends Model
         }
         return true;
     }
+
+    /**
+     * update the css variables in the database from the file
+     * @return Var
+     */
+    public static function updateDatabaseCssVariablesFromFile()
+    {
+        $user_variables_file = Storage::disk('assets')->get('sass/stylesheets/app/modules/_user-variables.scss');
+        $user_variables_file_lines = explode("\n", $user_variables_file);
+
+        foreach ($user_variables_file_lines as $line){
+            if (Str::of($line)->isMatch('/^\$.*:.*;$/'))
+            {
+                $key = Str::of($line)->match('/(?<=\$).*?(?=:)/')->rtrim();
+                $value = Str::of($line)->match('/(?<=:).*?(?=;)/')->ltrim();
+                if (!self::saveCssVariableToDatabase($key, $value)) {
+                    return false;
+                }
+            }
+
+            
+        }
+        return true;
+        
+    }
+
+
 }

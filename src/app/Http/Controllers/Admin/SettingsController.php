@@ -16,11 +16,11 @@ use App\Setting;
 use App\Event;
 use App\EventParticipant;
 use App\EventTicket;
+use App\CreditLog;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Leafo\ScssPhp\Compiler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -88,7 +88,20 @@ class SettingsController extends Controller
             ->withIsSystemsMatchMakingPublicuseEnabled(Settings::isSystemsMatchMakingPublicuseEnabled())
             ->withMaxOpenPerUser(Settings::getSystemsMatchMakingMaxopenperuser())
             ->withIsMatchMakingEnabled(Settings::isMatchMakingEnabled())
-            ->withIsCreditEnabled(Settings::isCreditEnabled());
+            ->withIsCreditEnabled(Settings::isCreditEnabled())
+            ->withCreditAwardTournamentParticipation(Settings::getCreditTournamentParticipation())
+            ->withCreditAwardTournamentFirst(Settings::getCreditTournamentFirst())
+            ->withCreditAwardTournamentSecond(Settings::getCreditTournamentSecond())
+            ->withCreditAwardTournamentThird(Settings::getCreditTournamentThird())
+            ->withCreditAwardRegistrationEvent(Settings::getCreditRegistrationEvent())
+            ->withCreditAwardRegistrationSite(Settings::getCreditRegistrationSite())
+
+
+
+            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->withShopWelcomeMessage(Settings::getShopWelcomeMessage())
+            ->withShopStatus(Settings::getShopStatus())
+            ->withShopClosedMessage(Settings::getShopClosedMessage());
     }
 
     /**
@@ -182,15 +195,33 @@ class SettingsController extends Controller
     {
 
         $rules = [
-            'publicuse'               => 'in:on,off',
-            'maxopenperuser'  => 'numeric',
-
+            'publicuse'                 => 'in:on,off',
+            'maxopenperuser'            => 'numeric',
+            'tournament_participation'    => 'filled|integer',
+            'tournament_first'            => 'filled|integer',
+            'tournament_second'            => 'filled|integer',
+            'tournament_third'            => 'filled|integer',
+            'registration_event'        => 'filled|integer',
+            'registration_site'            => 'filled|integer',
+            'shop_status'               => 'in:OPEN,CLOSED',
         ];
         $messages = [
-            'publicuse.in'                    => 'Publicuse must be true or false',
-            'autostart.in'                    => 'autostart must be true or false',
-            'maxopenperuser.numeric'  => 'maxopenperuser must be a number',
-
+            'publicuse.in'                      => 'Publicuse must be true or false',
+            'autostart.in'                      => 'autostart must be true or false',
+            'maxopenperuser.numeric'            => 'maxopenperuser must be a number',
+            'tournament_participation.filled'    => 'Tournament Participantion cannot be empty',
+            'tournament_participation.integer'  => 'Tournament Participantion must be a number',
+            'tournament_first.filled'             => 'Tournament First cannot be empty',
+            'tournament_first.integer'          => 'Tournament First must be a number',
+            'tournament_second.filled'             => 'Tournament Second cannot be empty',
+            'tournament_second.integer'          => 'Tournament Second must be a number',
+            'tournament_third.filled'             => 'Tournament Third cannot be empty',
+            'tournament_third.integer'          => 'Tournament Third must be a number',
+            'registration_event.filled'         => 'Event Registration cannot be empty',
+            'registration_event.integer'          => 'Event Registration must be a number',
+            'registration_site.filled'             => 'Site Registration cannot be empty',
+            'registration_site.integer'          => 'Site Registration must be a number',
+            'shop_status.in'                    => 'Shop Status must be OPEN or CLOSED',
         ];
         $this->validate($request, $rules, $messages);
 
@@ -213,10 +244,44 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+
+        if (
+            (isset($request->shop_status) && !Settings::setShopStatus($request->shop_status))
+            ||
+            (isset($request->shop_welcome_message) && !Settings::setShopWelcomeMessage($request->shop_welcome_message))
+            ||
+            (isset($request->shop_closed_message) && !Settings::setShopClosedMessage($request->shop_closed_message))
+        ) {
+            Session::flash('alert-danger', 'Could not update Shop settings fully!');
+            return Redirect::back();
+        }
+
+
+
+
+
+        if (
+            (isset($request->tournament_participation) &&
+                !Settings::setCreditTournamentParticipation($request->tournament_participation)
+            ) || (isset($request->tournament_first) &&
+                !Settings::setCreditTournamentFirst($request->tournament_first)
+            ) || (isset($request->tournament_second) &&
+                !Settings::setCreditTournamentSecond($request->tournament_second)
+            ) || (isset($request->tournament_third) &&
+                !Settings::setCreditTournamentThird($request->tournament_third)
+            ) || (isset($request->registration_event) &&
+                !Settings::setCreditRegistrationEvent($request->registration_event)
+            ) || (isset($request->registration_site) &&
+                !Settings::setCreditRegistrationSite($request->registration_site)
+            )
+        ) {
+            Session::flash('alert-danger', 'Could not apply credit system settings. Please try again.');
+            return Redirect::back();
+        }
+
         Session::flash('alert-success', "Successfully Saved OptSystems Settings!");
         return Redirect::back();
     }
-
 
     /**
      * Update Settings
@@ -237,7 +302,6 @@ class SettingsController extends Controller
             'privacy_policy'            => 'filled',
             'seo_keywords'              => 'filled',
             'currency'                  => 'in:GBP,USD,EUR,DKK',
-            'shop_status'               => 'in:OPEN,CLOSED',
             'participant_count_offset'  => 'numeric',
             'event_count_offset'        => 'numeric',
             'org_logo'                  => 'image',
@@ -255,7 +319,6 @@ class SettingsController extends Controller
             'privacy_policy.filled'             => 'PrivacyPolicy is required in Germany',
             'seo_keywords.filled'               => 'SEO Keywords cannot be empty',
             'currency.in'                       => 'Currency must be GBP, USD, DKK or EUR',
-            'shop_status.in'                    => 'Shop Status must be OPEN or CLOSED',
             'participant_count_offset.numeric'  => 'Participant Count Offset must be a number',
             'event_count_offset.numeric'        => 'Lan Count Offset must be a number',
             'org_logo.image'                    => 'Org Logo must be a Image',
@@ -382,20 +445,6 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->shop_status) && !Settings::setShopStatus($request->shop_status)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->shop_welcome_message) && !Settings::setShopWelcomeMessage($request->shop_welcome_message)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->shop_closed_message) && !Settings::setShopClosedMessage($request->shop_closed_message)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
         if (isset($request->seo_keywords) && !Settings::setSeoKeywords($request->seo_keywords)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
@@ -668,8 +717,7 @@ class SettingsController extends Controller
      */
     public function enableLoginMethod($method)
     {
-        if ($method == "steam" &&  Str::of(ApiKey::where('key', 'steam_api_key')->first()->value)->trim()->isEmpty())
-        {
+        if ($method == "steam" &&  Str::of(ApiKey::where('key', 'steam_api_key')->first()->value)->trim()->isEmpty()) {
             Session::flash('alert-danger', "Could not Enable {$method} because of missing api key!");
             return Redirect::back();
         }

@@ -503,6 +503,30 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
 
+        Appearance::firstOrCreate(
+            ['key'   => 'color_header_links'],
+            [
+                'value' => '#fff',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        Appearance::firstOrCreate(
+            ['key'   => 'color_header_links_hover'],
+            [
+                'value' => 'orange',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
+        Appearance::firstOrCreate(
+            ['key'   => 'color_header_line'],
+            [
+                'value' => 'orange',
+                'type'  => 'CSS_VAR',
+            ]
+        );
+
         ## Slider Images
         SliderImage::firstOrCreate(
             ['slider_name'   => 'frontpage'],

@@ -42,9 +42,9 @@
 									<td>{{ $mailTemplate->id }}</td>
 									<td width="15%">
 									@if ($mailTemplate->mailable == "App\Mail\EventulaMailingMail")
-					 						<button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#sendMailModal{{ $mailTemplate->id }}">Send</button>
+					 						<button class="btn btn-success btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#sendMailModal{{ $mailTemplate->id }}">Send</button>
 									@else
-											<button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#previewMailModal{{ $mailTemplate->id }}">Preview</button>
+											<button class="btn btn-success btn-sm btn-block" data-bs-toggle="modal" data-bs-target="#previewMailModal{{ $mailTemplate->id }}">Preview</button>
 									@endif
 									</td>
 									<td width="15%">
@@ -79,11 +79,11 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/mailing/')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('subject','Subject',array('id'=>'','class'=>'')) }}
 							{{ Form::text('subject',NULL,array('id'=>'subject','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('html_template','HTML Template',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('html_template', NULL, array('id'=>'html_template','class'=>'form-control wysiwyg-editor')) }}
 						</div>
@@ -97,7 +97,7 @@
 							?>
 						   @endforeach
 						</small>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('text_template','Text Template',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('text_template', NULL, array('id'=>'text_template','class'=>'form-control')) }}
 						</div>
@@ -132,7 +132,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title" id="sendMailModalLabel{{ $mailTemplate->id }}">Send Mail {{ $mailTemplate->subject }}</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 					</div>
 					<div class="modal-body">
 							<small>(preview with your data)</small>
@@ -163,7 +163,7 @@
 						<div class="modal-footer">
 							
 							<button type="submit" class="btn btn-warning">Send Mail to all selected Users</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
 						</div>
 					{{ Form::close() }}
 				</div>
@@ -209,7 +209,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h4 class="modal-title" id="previewMailModalLabel{{ $mailTemplate->id }}">Preview Mail {{ $mailTemplate->static }}</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 					</div>
 					<div class="modal-body">
 							<small>(preview with your data)</small>

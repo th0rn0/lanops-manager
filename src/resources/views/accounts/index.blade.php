@@ -4,7 +4,7 @@
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 
 	@if(session()->has('message'))
 	<div class="alert alert-success">
@@ -42,30 +42,30 @@
 						<div class="col-md-10 col-sm-12">
 							<div class="row">
 								<div class="col-12 col-md-6">
-									<div class="form-group @error('firstname') is-invalid @enderror">
+									<div class="mb-3 @error('firstname') is-invalid @enderror">
 										{{ Form::label('firstname',__('accounts.firstname'),array('id'=>'','class'=>'')) }}
 										<input id="firstname" type="firstname" class="form-control" name="firstname" value="{{ $user->firstname }}" required autocomplete="firstname">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
-									<div class="form-group  @error('surname') is-invalid @enderror">
+									<div class="mb-3  @error('surname') is-invalid @enderror">
 										{{ Form::label('surname',__('accounts.surname'),array('id'=>'','class'=>'')) }}
 										<input id="surname" type="surname" class="form-control" name="surname" value="{{ $user->surname }}" required autocomplete="surname">
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('Username',__('accounts.username'),array('id'=>'','class'=>'')) }}
-								{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
+								{{ Form::text('name', $user->username, array('id'=>'name', 'class'=>'form-control', 'disabled' => 'disabled')) }}
 							</div>
 							@if ($user->steamid && $user->steamname)
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('steamname',__('accounts.steamname'),array('id'=>'','class'=>'')) }}
-								{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+								{{ Form::text('steamname', $user->steamname, array('id'=>'steamname', 'class'=>'form-control', 'disabled'=>'true')) }}
 							</div>
 							@endif
 							@if ($user->password)
-							<div class="form-group">
+							<div class="mb-3">
 								<label for="password1">@lang('accounts.change_password')</label>
 								<input type="password" name="password1" class="form-control @error('password1') is-invalid @enderror" id="password1" placeholder="@lang('accounts.password')">
 								@error('password1')
@@ -74,7 +74,7 @@
 								</span>
 								@enderror
 							</div>
-							<div class="form-group">
+							<div class="mb-3">
 								<label for="password2">@lang('accounts.confirm_password')</label>
 								<input type="password" name="password2" class="form-control @error('password2') is-invalid @enderror" id="password2" placeholder="@lang('accounts.password')">
 								@error('password2')
@@ -103,7 +103,7 @@
 
 						</div>
 						<div class="col-md-10 col-sm-12">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('email',__('accounts.email'),array('id'=>'','class'=>'')) }}
 								<input type="email" class="form-control" name="email" id="email @error('email') is-invalid @enderror" aria-describedby="email" value="{{ $user->email }}" @if(!Settings::isAuthAllowEmailChangeEnabled()) readonly @endif placeholder="@lang('accounts.email')">
 								@error('email')
@@ -114,7 +114,7 @@
 							</div>
 
 							@if (Settings::isAuthRequirePhonenumberEnabled())
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('phonenumber',__('accounts.phonenumber'),array('id'=>'','class'=>'')) }}
 								<input type="phonenumber" class="form-control" name="phonenumber" id="phonenumber @error('phonenumber') is-invalid @enderror" aria-describedby="phonenumber" value="{{ $user->phonenumber }}" placeholder="@lang('accounts.phonenumber')">
 								@error('phonenumber')
@@ -376,7 +376,7 @@
 
 						</div>
 						<div class="col-md-10 col-sm-12">
-							<div class="form-group">
+							<div class="mb-3">
 								{{ Form::label('token_name',__('accounts.token_name'),array('id'=>'','class'=>'')) }}
 								{{ Form::text('token_name', null ,array('id'=>'token_name','class'=>'form-control')) }}
 							</div>
@@ -407,7 +407,7 @@
 						@else
 						<a href="/account/sso/remove/steam" type="button" name="" value="" class="btn btn-danger">@lang('accounts.remove_steam_account')</a>
 						@endif
-						
+
 					@endif
 
 					<button type="button" name="" value="" class="btn btn-danger d-none">@lang('accounts.add_second_steam_account')</button>
@@ -424,7 +424,7 @@
 					<h3 class="card-title">@lang('accounts.danger_zone')</h3>
 				</div>
 				<div class="card-body">
-					<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">@lang('accounts.remove_account')</button>
+					<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">@lang('accounts.remove_account')</button>
 				</div>
 			</div>
 		</div>
@@ -438,11 +438,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="confirmDeleteModalLabel">@lang('accounts.confirm_remove_account')</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			{{ Form::open(array('url'=>'/account/delete/', 'id'=>'confirmDeleteFormModal')) }}
 			<div class="modal-body">
-				<div class="form-group">
+				<div class="mb-3">
 					<p>@lang('accounts.remove_account_line1')</p>
 					<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line2')</p>
 					<p><strong>@lang('accounts.remove_account_all')</strong> @lang('accounts.remove_account_line3')</p>
@@ -454,7 +454,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-success">@lang('accounts.remove_account_accept')Accept</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">@lang('accounts.remove_account_cancel')Cancel</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">@lang('accounts.remove_account_cancel')Cancel</button>
 			</div>
 			{{ Form::close() }}
 		</div>

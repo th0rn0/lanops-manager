@@ -57,12 +57,12 @@
 											@endif
 										</td>
 										<td>
-											<div class="form-group">
+											<div class="mb-3">
 												{{ Form::text('name', $image->nice_name,array('id'=>'name','class'=>'form-control')) }}
 											</div>
 										</td>
 										<td>
-											<div class="form-group">
+											<div class="mb-3">
 												{{ Form::textarea('desc', $image->desc,array('id'=>'desc','class'=>'form-control', 'rows'=>'2')) }}
 											</div>
 										</td>
@@ -113,7 +113,7 @@
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/upload', 'files' => 'true')) }}
 					{{ csrf_field() }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
 						{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}
 					</div>
@@ -128,16 +128,16 @@
 			<div class="card-body">
 				<div class="list-group">
 					{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug)) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('name','Album Name',array('id'=>'','class'=>'')) }}
 							{{ Form::text('name',$album->name,array('id'=>'name','class'=>'form-control')) }}
 						</div>
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::label('description','Description',array('id'=>'','class'=>'')) }}
 							{{ Form::textarea('description', $album->description,array('id'=>'description','class'=>'form-control', 'rows'=>'2')) }}
 						</div>
 						<div class="row">
-							<div class="col-lg-6 col-sm-12 form-group">
+							<div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('status','Status',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(
@@ -154,7 +154,7 @@
 									)
 								}}
 							</div>
-							 <div class="col-lg-6 col-sm-12 form-group">
+							 <div class="col-lg-6 col-sm-12 mb-3">
 								{{ Form::label('event_id','Event',array('id'=>'','class'=>'')) }}
 								{{
 									Form::select(

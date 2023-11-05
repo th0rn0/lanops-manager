@@ -130,21 +130,18 @@ You can use variables in these fields which get resolved for the end user.
 
 The available variables are:
 
-- {>gameServer->address}
-- {>gameServer->game_port}
-- {>§gameServer->game_password}
-- {>gameServer->stream_port}
+- ``{>gameServer->address}``
+- ``{>gameServer->game_port}``
+- ``{>§gameServer->game_password}``
+- ``{>gameServer->stream_port}``
 
 Examples:
 
-- So for example your ``Connect Game URL`` for a steam game could look something like that:
-``steam://connect/{>gameServer->address}:{>gameServer->game_port}/{>§gameServer->game_password}``
+- So for example your ``Connect Game URL`` for a steam game could look something like that: ``steam://connect/{>gameServer->address}:{>gameServer->game_port}/{>§gameServer->game_password}``
 
-- Also for example your ``Connect Game Command`` for a steam game could look something like that:
-``password {>§gameServer->game_password}; connect {>gameServer->address}:{>gameServer->game_port}``
+- Also for example your ``Connect Game Command`` for a steam game could look something like that: ``password {>§gameServer->game_password}; connect {>gameServer->address}:{>gameServer->game_port}``
 
-- Also for example your ``Connect Stream URL`` for a steam game could look something like that:
-``steam://connect/{>gameServer->address}:{>gameServer->stream_port}``
+- Also for example your ``Connect Stream URL`` for a steam game could look something like that: ``steam://connect/{>gameServer->address}:{>gameServer->stream_port}``
 
 
 If you set everything, your Server looks like this in the event live view:

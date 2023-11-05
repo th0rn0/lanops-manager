@@ -7,7 +7,7 @@
 		<p>{{ $comment->comment }}</p>
 		<span class="text-muted"><small>@lang('layouts.posted_on'): {{ $comment->created_at }}</small></span>
 		@if (Auth::user() && Auth::id() == $comment->user_id)
-			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-toggle="modal" data-target="#editCommentModal">@lang('layouts.edit_comment')</a> /
+			<a href="" onclick="editComment('{{ $comment->comment }}', '{{ $comment->id }}')" data-bs-toggle="modal" data-bs-target="#editCommentModal">@lang('layouts.edit_comment')</a> /
 		@endif
 		@if (Auth::user() && (Auth::user()->getAdmin() || $comment->user_id == Auth::id()))
 			@php
@@ -42,12 +42,12 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editCommentModalLabel">@lang('layouts.edit_comment')</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments', 'id'=>'edit_comment_modal_form')) }}
 					<div class="modal-body">
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::textarea('comment_modal', '',array('id'=>'comment_modal','class'=>'form-control', 'rows'=>'4', 'placeholder'=>__('layouts.post_a_comment'))) }}
 						</div>
 						<div class="modal-footer">

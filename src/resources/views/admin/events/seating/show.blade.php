@@ -36,49 +36,42 @@
 			<div class="card-body">
 				<table class="table table-responsive">
 
-					<?php
-					$headers = explode(',', $seatingPlan->headers);
-					$headers = array_combine(range(1, count($headers)), $headers);
-					?>
-
 					@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 
 						<tr>
 							<td>
-								<h4><strong>ROW {{ucwords($headers[$row])}}</strong></h4>
+								<h4><strong>ROW {{ Helpers::getLatinAlphabetUpperLetterByIndex($row) }}</strong></h4>
 							</td>
 							@for ($column = 1; $column <= $seatingPlan->columns; $column++)
 								<td style="padding-top:14px;">
-									@if($event->getSeat($seatingPlan->id, ucwords($headers[$row]) . $column))
-									@foreach($seatingPlan->seats as $seat)
-									<?php
-									if ($seat->seat == (ucwords($headers[$row]) . $column)) {
-										$status = $seat->status;
-									}
-									if ($seat->seat == (ucwords($headers[$row]) . $column) && isset($seat->eventParticipant)) {
-										$username = $seat->eventParticipant->user->username;
-										$participant_id = $seat->eventParticipant->id;
-									}
-									?>
-									@endforeach
-									@if($status == 'ACTIVE' && isset($seat->eventParticipant))
-									<button class="btn btn-success btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
-										{{ ucwords($headers[$row]) . $column }} - {{ $username }}
-									</button>
+									@if($event->getSeat($seatingPlan->id, $column, $row))
+										<?php
+											//seat found, get info
+											$seat = $event->getSeat($seatingPlan->id, $column, $row);
+											$status = $seat->status;
+											if (isset($seat->eventParticipant)) {
+												$username = $seat->eventParticipant->user->username;
+												$participant_id = $seat->eventParticipant->id;
+											}
+										?>
+										@if($status == 'ACTIVE' && isset($seat->event_participant_id))
+											<button class="btn btn-success btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', '{{ $username }}', '{{ $participant_id }}', '{{ $status }}')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">
+												{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $username }}
+											</button>
+										@else
+											<button class="btn btn-danger btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', null, null, '{{ $status }}')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">
+												{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - Inactive
+											</button>
+										@endif
 									@else
-									<button class="btn btn-danger btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', null, null, '{{ $status }}')" data-toggle="modal" data-target="#editSeatingModal">
-										{{ ucwords($headers[$row]) . $column }} - Inactive
-									</button>
-									@endif
-									@else
-									<button class="btn btn-primary btn-sm" onclick="editSeating('{{ ucwords($headers[$row]) . $column }}', null, null, 'ACTIVE')" data-toggle="modal" data-target="#editSeatingModal">
-										{{ ucwords($headers[$row]) . $column }} - Empty
-									</button>
+										<button class="btn btn-primary btn-sm" onclick="editSeating('{{ $column }}','{{ $row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', null, null, 'ACTIVE')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">
+											{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - Empty
+										</button>
 									@endif
 								</td>
-								@endfor
+							@endfor
 						</tr>
-						@endfor
+					@endfor
 				</table>
 			</div>
 		</div>
@@ -105,7 +98,7 @@
 							@if (isset($seat->eventParticipant))
 							<tr class="odd gradeX">
 								<td></td>
-								<td>{{ ucwords($seat->seat) }}</td>
+								<td>{{ $seat->getName() }}</td>
 								<td>
 									{{ $seat->eventParticipant->user->username }}
 									@if ($seat->eventParticipant->user->steamid)
@@ -128,7 +121,7 @@
 									@endif
 								</td>
 								<td width="10%">
-									<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
+									<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ $seat->column }}','{{ $seat->row }}', '{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}', '{{ $seat->status }}')" data-bs-toggle="modal" data-bs-target="#editSeatingModal">Edit</button>
 								</td>
 							</tr>
 							@endif
@@ -150,11 +143,11 @@
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug, 'files' => 'true')) }}
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 form-group">
+					<div class="col-lg-12 col-sm-12 mb-3">
 						{{ Form::label('name','Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name', $seatingPlan->name ,array('id'=>'name','class'=>'form-control')) }}
 					</div>
-					<div class="col-lg-12 col-sm-12 form-group">
+					<div class="col-lg-12 col-sm-12 mb-3">
 						{{ Form::label('name_short','Short Name',array('id'=>'','class'=>'')) }}
 						{{ Form::text('name_short', $seatingPlan->name_short ,array('id'=>'name_short','class'=>'form-control')) }}
 						<small>For display on Attendance Lists</small>
@@ -162,7 +155,7 @@
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-lg-12 col-sm-12 form-group">
+					<div class="col-lg-12 col-sm-12 mb-3">
 						{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
 						{{
 									Form::select(
@@ -182,20 +175,20 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-sm-12 form-group">
+					<div class="col-lg-6 col-sm-12 mb-3">
 						{{ Form::label('columns','Columns',array('id'=>'','class'=>'')) }}
 						{{ Form::text('columns', $seatingPlan->columns ,array('id'=>'columns','class'=>'form-control')) }}
 					</div>
-					<div class="col-lg-6 col-sm-12 form-group">
+					<div class="col-lg-6 col-sm-12 mb-3">
 						{{ Form::label('rows','Rows',array('id'=>'','class'=>'')) }}
 						{{ Form::text('rows', $seatingPlan->rows ,array('id'=>'rows','class'=>'form-control')) }}
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('image','Seating Plan Image',array('id'=>'','class'=>'')) }}
 					{{ Form::file('image',array('id'=>'image','class'=>'form-control')) }}
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<div class="form-check">
 						<label class="form-check-label">
 							@if ($seatingPlan->locked)
@@ -229,19 +222,19 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="editSeatingModalLabel">Edit Seating</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 			</div>
 			<div class="modal-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat')) }}
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('seat_number_modal','Seat Number',array('id'=>'','class'=>'')) }}
 					{{ Form::text('seat_number_modal', null, array('id'=>'seat_number_modal','class'=>'form-control')) }}
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('participant_select_modal','Participant',array('id'=>'','class'=>'')) }}
 					{{ Form::select('participant_select_modal', $event->getParticipants(), null, array('id'=>'participant_select_modal','class'=>'form-control')) }}
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('seat_status_select_modal','Seat status',array('id'=>'','class'=>'')) }}
 					{{ Form::select(
 							'seat_status_select_modal',
@@ -253,6 +246,8 @@
 				</div>
 				{{ Form::hidden('participant_id_modal', null, array('id'=>'participant_id_modal','class'=>'form-control')) }}
 				{{ Form::hidden('event_id_modal', null, array('id'=>'event_id_modal','class'=>'form-control')) }}
+				{{ Form::hidden('seat_column', null, array('id'=>'seat_column','class'=>'form-control')) }}
+				{{ Form::hidden('seat_row', null, array('id'=>'seat_row','class'=>'form-control')) }}
 
 				<a href="" id="participant_link">
 					<button type="button" class="btn btn-secondary btn-block">Go to Participant</button>
@@ -263,8 +258,9 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat', 'id'=>'clear_seat_form')) }}
 				<hr>
 				{{ Form::hidden('_method', 'DELETE') }}
-				{{ Form::hidden('seat_number', null, array('id'=>'seat_number')) }}
 				<button type="submit" class="btn btn-danger btn-block">Clear Seat</button>
+				{{ Form::hidden('seat_column_delete', null, array('id'=>'seat_column_delete','class'=>'form-control')) }}
+				{{ Form::hidden('seat_row_delete', null, array('id'=>'seat_row_delete','class'=>'form-control')) }}
 				{{ Form::close() }}
 			</div>
 		</div>
@@ -273,10 +269,13 @@
 
 <!-- JavaScript-->
 <script>
-	function editSeating(seat, username = null, participant_id = null, seat_status = null) {
-		seat = seat.trim();
-		jQuery("#seat_number_modal").val(seat);
-		jQuery("#seat_number").val(seat);
+	function editSeating(seatColumn, seatRow, seatDisplay, username = null, participant_id = null, seat_status = null) {
+		seat = seatColumn + "" + seatRow;
+		jQuery("#seat_column").val(seatColumn);
+		jQuery("#seat_row").val(seatRow);
+		jQuery("#seat_column_delete").val(seatColumn);
+		jQuery("#seat_row_delete").val(seatRow);
+		jQuery("#seat_number_modal").val(seatDisplay);
 		jQuery("#seat_status_select_modal").val(seat_status);
 		var orginal_participant_id = jQuery("#participant_id_modal").val();
 		//Reset all inputs

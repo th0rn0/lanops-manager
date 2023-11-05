@@ -3,7 +3,7 @@
 @section ('page_title', $event->display_name . ' - ' . $tournament->display_name)
 
 @section ('content')
-	<div class="container">
+	<div class="container pt-1">
 		<div class="row">
 			<div class="card mb-3">
 				<div class="row">
@@ -47,7 +47,7 @@
 					<h4>Complete!</h4>
 					<div class="progress">
 						<div class="progress-bar bg-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-							<span class="sr-only">Complete!</span>
+							<span class="visually-hidden">Complete!</span>
 						</div>
 					</div>
 				@endif
@@ -55,7 +55,7 @@
 					<h4>Signups Open!</h4>
 					<div class="progress">
 						<div class="progress-bar bg-success progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-							<span class="sr-only">Signups Open!</span>
+							<span class="visually-hidden">Signups Open!</span>
 						</div>
 					</div>
 				@endif
@@ -63,7 +63,7 @@
 					<h4>Live!</h4>
 					<div class="progress">
 						<div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
-							<span class="sr-only">LIVE!</span>
+							<span class="visually-hidden">LIVE!</span>
 						</div>
 					</div>
 				@endif
@@ -82,7 +82,7 @@
 				<button type="submit" name="action" value="sign_up" class="btn btn-secondary">PUG</button>
 			{{ Form::close() }}
 			{{ Form::open(array('url'=>'/events/' . $event->slug . '/tournaments/' . $tournament->slug . '/register/team', 'files' => true )) }}
-				<div class="form-group">
+				<div class="mb-3">
 					{{ Form::label('team_name','Team Name',array('id'=>'','class'=>'')) }}
 					{{ Form::text('team_name', '',array('id'=>'team_name','class'=>'form-control', 'required' => 'required')) }}
 				</div>

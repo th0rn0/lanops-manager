@@ -27,11 +27,11 @@
 				@if ($userShow->banned)
 					<div class="alert alert-danger">This User has been banned!</div>
 				@endif
-				<div class="media">
-  					<div class="media-left">
-						<img class="media-object" src="{{ $userShow->avatar }}">
+				<div class="d-flex">
+  					<div class="d-flex-left">
+						<img class="d-flex-object" src="{{ $userShow->avatar }}">
 			  		</div>
-  					<div class="media-body">
+  					<div class="flex-grow-1">
 						<ul class="list-group">
 							<li class="list-group-item">Username: {{ $userShow->username }}</li>
 							@if ($userShow->steamid) <li class="list-group-item">Steam: {{ $userShow->steamname }}</li> @endif
@@ -227,7 +227,7 @@
 				</div>
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
-						<div class="form-group">
+						<div class="mb-3">
 							{{ Form::hidden('user_id', $userShow->id) }}
 							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
 							{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}

@@ -29,8 +29,8 @@ To build the documentation locally to the ``docs/build`` subfolder you have two 
 Building with docker and the make file
 .......................................
 
-Windows
-'''''''
+Makefile & docker - Windows
+''''''''''''''''''''''''''''''''''''''''''
 Prereqirements: 
 
 - Docker for Windows with wsl2 backend (https://docs.docker.com/docker-for-windows/wsl/ Follow the Prerequisites, the Download and the Install part!)
@@ -43,8 +43,8 @@ Prereqirements:
 To build the documentation just enter yor wsl2 distribution and follow the Linux part below!
 
 
-Linux
-'''''''
+Makefile & docker  -Linux
+''''''''''''''''''''''''''''''''''''''''''
 Prereqirements: 
 
 - Docker (https://docs.docker.com/engine/install)
@@ -60,8 +60,8 @@ In order to build the documentation run
 Building with docker
 .......................................
 
-Windows
-'''''''
+Docker Windows
+'''''''''''''''''''''
 Prereqirements: 
 
 - Docker for Windows with wsl2 backend (https://docs.docker.com/docker-for-windows/wsl/ Follow the Prerequisites, the Download and the Install part!)
@@ -74,8 +74,8 @@ Prereqirements:
 To build the documentation just enter yor wsl2 distribution and follow the Linux part below!
 
 
-Linux
-'''''''
+Docker Linux
+''''''''''''''''''''''''''''
 Prereqirements: 
 
 - Docker (https://docs.docker.com/engine/install)
@@ -89,8 +89,8 @@ In order to build the documentation run the following command inside the root of
 Building manually with the sphinx make file
 ............................................
 
-Windows
-'''''''
+Manual Windows
+'''''''''''''''''''''
 Prereqirements: 
 
 - python 3 (https://docs.python.org/3/using/index.html) with pip
@@ -101,7 +101,7 @@ open a cmd or powershell and change your folder to the ``docs/`` subfolder and r
 
 CMD
 
-.. code-block:: cmd
+.. code-block:: batch
 
    make.bat html
 
@@ -112,8 +112,8 @@ Psh
    ./make.bat html
 
 
-Linux
-'''''''
+Manual Linux
+'''''''''''''''''''''
 Prereqirements: 
 
 - python 3 (https://docs.python.org/3/using/index.html) with pip
@@ -175,7 +175,7 @@ or within blade files (Views):
 
 Code
 -----
-If you want to get into coding for eventula, check out the developer documentation, there you can find an introduction into how to setup your development environment and some specific parts of eventula where we would love to see adaption for more usecases.
+If you want to get into coding for eventula, check out the :ref:`dev/getting_started:Getting Started` developer documentation, there you can find an introduction into how to setup your development environment and some specific parts of eventula where we would love to see adaption for more usecases.
 
 Some things you should think of before starting out implementing new features:
 
@@ -185,10 +185,13 @@ Some things you should think of before starting out implementing new features:
 - Have i started an issue to announce that im working on a feature/change to get thoughts from the other developers and to prevent incompatibillities? No? Go for it! :)
 - Why i shouldn't join the eventula discord developer channel for discussion?  
 
-Before you want to PR changes to master you should ask yourself some questions:
+Before you want to PR changes you should ask yourself some questions:
 
 - Have i tried to update a running version from eventula with data to the one with my changes? Are the changes update proof?
 - Have i implemented all strings with localised variables? See Localisation!
 - Have i changed the documentation (at least the english on!) on the affected parts?
 - Have i changed the readme.md on the affected parts?
 
+.. note::
+   Please open your pull requests against our ``dev`` branch. 
+   We will not merge to master directly!

@@ -3,19 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Eventula Event Manager's documentation!
+.. image:: images/eventula_sample_logo.png
+   :scale: 50 %
+   :alt: eventula logo
+   :align: center
+
+Welcome to Eventula's documentation!
 ==================================================
 
-    .. warning::
+.. warning::
 
-        This fork of eventula manager is not 100% update compatible to the current upstream. We have intended to merge it someday, but currently there are to many changes and there is not enough time to do so. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade. Also this documentation is not fully up to date and not finished, so if you find something that is not right, consider contributing to it or open an issue. 
+   This documentation is not fully up to date and not finished, so if you find something that is not right, consider contributing to it or open an issue. 
+
+.. warning::
+
+   This fork of eventula manager is not 100% update compatible to the current upstream. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade.
 
 
-The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. The only prerequisite is docker and/or docker-compose. Everything is self contained. The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management.
+The Eventula Event Manager / ECO System is a fully featured White labeled Event Management system. 
 
-https://eventula.com
+The only prerequisite is docker and/or docker-compose. Everything is self contained. 
 
-If you are using this please consider signing up to eventula for event mapping.
+The purpose of this application is to unify Event Management (Venue, attendees, seating), Ticket Sales, Tournament Management, Shop Management and Credit Management.
+
+.. commented out because of the downtimes
+.. https://eventula.com
+
+.. If you are using this please consider signing up to eventula for event mapping.
 
 If you need help with setting up or using eventula, join our discord:
 
@@ -32,25 +46,25 @@ If you need help with setting up or using eventula, join our discord:
 
 
 .. toctree::
-   :caption: User Documentation
+   :caption: Admin Documentation
    :maxdepth: 2
 
-   user/getting_started
-   user/events/basic
-   user/news
-   user/usermanagement
-   user/polls
-   user/venues
-   user/gallery
-   user/help
-   user/games/basic
-   user/matchmaking
-   user/purchases
-   user/settings/basic
-   user/mailing
-   user/credit
-   user/shop
-   user/tutorials/basic
+   admin/getting_started
+   admin/events/basic
+   admin/news
+   admin/usermanagement
+   admin/polls
+   admin/venues
+   admin/gallery
+   admin/help
+   admin/games/basic
+   admin/matchmaking
+   admin/purchases
+   admin/settings/basic
+   admin/mailing
+   admin/credit
+   admin/shop
+   admin/tutorials/basic
 
    
 .. toctree::

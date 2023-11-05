@@ -4,7 +4,7 @@
 
 @section ('content')
 
-<div class="container">
+<div class="container pt-1">
 
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<h1>
@@ -42,7 +42,7 @@
 			</div>
 			@if (Auth::user())
 				{{ Form::open(array('url'=>'/news/' . $newsArticle->slug . '/comments')) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::textarea('comment', '',array('id'=>'comment','class'=>'form-control', 'rows'=>'4', 'placeholder'=>__('news.post_comment'))) }}
 					</div>
 					<button type="submit" class="btn btn-secondary">@lang('news.submit')</button>

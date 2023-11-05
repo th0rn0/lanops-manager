@@ -4,7 +4,7 @@
 
 @section ('content')
 
-    <div class="container">
+    <div class="container pt-1">
 
         <div class="pb-2 mt-4 mb-4 border-bottom">
             <h1>
@@ -19,8 +19,8 @@
 
                         {{ Form::hidden('token', $token) }}
 
-                            <div class="form-group row">
-								{{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-right')) }}
+                            <div class="mb-3 row">
+								{{ Form::label('email',__('auth.email'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-end')) }}
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
@@ -32,8 +32,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-								{{ Form::label('password',__('auth.password'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-right')) }}
+                            <div class="mb-3 row">
+								{{ Form::label('password',__('auth.password'),array('id'=>'','class'=>'col-md-4 col-form-label text-md-end')) }}
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="mb-3 row">
 								{{ Form::label('password-confirm',__('auth.confirm_password'),array('id'=>'','class'=>'')) }}
 
                                 <div class="col-md-6">
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row mb-0">
+                            <div class="mb-3 row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         @lang('auth.reset_password')

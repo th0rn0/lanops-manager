@@ -1,11 +1,12 @@
 @import "stylesheets/fontawesome";
 @import "stylesheets/app/modules/user-variables";
+@import "stylesheets/app/components/cookie-consent";
 @import "stylesheets/bootstrap_variables";
-@import "stylesheets/bootstrap_variables_admin";
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "stylesheets/bootstrap_custom";
 @import "stylesheets/bootstrap_custom_admin";
-@import "node_modules/summernote/src/styles/bs4/summernote-bs4";
+@import "node_modules/summernote/src/styles/lite/summernote-lite";
+@import "stylesheets/app/components/summernote_custom";
+@import "stylesheets/app/components/helper"
 
-// @import "stylesheets/app/vendor/bootstrap";
-@import "stylesheets/admin/sb-admin", "stylesheets/admin/modules/morris";
+

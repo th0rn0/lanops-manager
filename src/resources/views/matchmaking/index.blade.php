@@ -17,9 +17,9 @@
 		}
 	}
 </script>
-<div class="container">
+<div class="container pt-1">
 
-	<div class="pb-2 mt-4 mb-4 border-bottom">
+	<div class="pb-2 mb-4 border-bottom">
 		<div class="row">
 			<div class="col-sm">
 				<h1>
@@ -28,7 +28,7 @@
 			</div>
 			<div class="col-sm mt-4">
 				@if(Settings::getSystemsMatchMakingMaxopenperuser() == 0 || count($currentUserOpenLivePendingDraftMatches) < Settings::getSystemsMatchMakingMaxopenperuser())
-				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-right" data-toggle="modal" data-target="#addMatchModal">@lang('matchmaking.addmatch')</a>
+				<a href="/matchmaking/" class="btn btn-success btn-sm btn-block float-end" data-bs-toggle="modal" data-bs-target="#addMatchModal">@lang('matchmaking.addmatch')</a>
 				@endif
 			</div>
 		</div>
@@ -43,9 +43,11 @@
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.ownedmatches')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($ownedMatches as $match)
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 
 		</div>
@@ -65,12 +67,14 @@
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.ownedteams')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($memberedTeams as $team)
-				@php
-					$match = $team->match;
-				@endphp
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@php
+						$match = $team->match;
+					@endphp
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 		</div>
 		@if($memberedTeams->count())
@@ -89,9 +93,11 @@
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.publicmatches')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($openPublicMatches as $match)
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 		</div>
 		@if($openPublicMatches->count())
@@ -99,8 +105,8 @@
 				{{ $openPublicMatches->links() }}
 		</div>
 		@endif
-	@endif		
-	
+	@endif
+
 	<!-- live closed public matches -->
 	@if (!$liveClosedPublicMatches->isEmpty())
 	@php
@@ -110,9 +116,11 @@
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 			<h3>@lang('matchmaking.closedpublicmatches')</h3>
 		</div>
-		<div class="card-deck">
+		<div class="row card-deck">
 			@foreach ($liveClosedPublicMatches as $match)
-				@include ('layouts._partials._matchmaking.card')
+				<div class="col">
+					@include ('layouts._partials._matchmaking.card')
+				</div>
 			@endforeach
 		</div>
 		@if($liveClosedPublicMatches->count())
@@ -123,7 +131,7 @@
 	@endif
 
 
-	
+
 </div>
 
 
@@ -134,11 +142,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="addMatchModal">@lang('matchmaking.addmatch')</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="btn-close text-decoration-none" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body">
 					{{ Form::open(array('url'=>'/matchmaking/' )) }}
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('game_id',__('matchmaking.game').':',array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -152,12 +160,12 @@
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team1name',__('matchmaking.firstteamname'),array('id'=>'','class'=>'')) }}
 						{{ Form::text('team1name',NULL,array('id'=>'team1name','class'=>'form-control')) }}
 						<small>@lang('matchmaking.thisisyourteam')</small>
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team_size',__('matchmaking.teamsize'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::select(
@@ -178,7 +186,7 @@
 							)
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						{{ Form::label('team_count',__('matchmaking.teamcounts'),array('id'=>'','class'=>'')) }}
 						{{
 							Form::number('team_count',
@@ -189,7 +197,7 @@
 								))
 						}}
 					</div>
-					<div class="form-group">
+					<div class="mb-3">
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('ispublic', null, null, array('id'=>'ispublic')) }} @lang('matchmaking.ispublic')
