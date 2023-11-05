@@ -29,7 +29,7 @@
 <div class="row">
 	<div class="col-lg-8">
 
-		<div class="card mb-3">
+		<div class="card mb-3 overflow-x-scroll">
 			<div class="card-header">
 				<i class="fa fa-desktop fa-fw"></i> Seating Plan Preview
 			</div>
