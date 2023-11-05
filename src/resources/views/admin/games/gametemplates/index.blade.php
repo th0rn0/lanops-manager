@@ -6,10 +6,10 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="pb-2 mt-4 mb-4 border-bottom">Games</h3>
+		<h3 class="pb-2 mt-4 mb-4 border-bottom">Game Templates</h3>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item active">
-				Games
+				Game Templates
 			</li>
 		</ol>
 	</div>
@@ -20,7 +20,7 @@
 
 		<div class="card mb-3">
 			<div class="card-header">
-				<i class="fa fa-th-list fa-fw"></i> Games
+				<i class="fa fa-th-list fa-fw"></i> Game Templates
 			</div>
 			<div class="card-body">
 				<table class="table table-hover table-responsive">
@@ -107,9 +107,16 @@
 			<div class="card-body">
 				<div class="col-lg-6 col-sm-12 mb-3">
 					<div class="list-group">
-						<a href="/admin/games/gametemplates">
-							<button class="btn btn-success btn-sm btn-block">Add Game from Template</button>
-						</a>
+						{{ Form::open(array('url'=>'/admin/games/', 'files' => true )) }}
+							<div class="mb-3">
+								{{ Form::label('venue','Venue',array('id'=>'','class'=>'')) }}
+								{{ Form::select('venue', Helpers::getVenues(), null, array('id'=>'venue','class'=>'form-control')) }}
+							</div>
+							<button type="submit" class="btn btn-success btn-block">Add Game from Template</button>
+						{{ Form::close() }}
+						{{ Form::open(array('url'=>'/admin/games/', 'files' => true )) }}
+						<button type="submit" class="btn btn-success btn-block">Add all available Templates</button>
+						{{ Form::close() }}
 					</div>
 				</div>
 			</div>
