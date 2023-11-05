@@ -410,6 +410,13 @@ Route::group(['middleware' => ['installed']], function () {
 
 
             /**
+             * GameTemplates
+             */
+            Route::get('/admin/games/gametemplates', 'Admin\GameTemplatesController@index');
+            Route::post('/admin/games/gametemplates', 'Admin\GameTemplatesController@store');
+            Route::get('/admin/games/gametemplates/{game}', 'Admin\GameTemplatesController@show');
+
+            /**
              * Games
              */
             Route::get('/admin/games', 'Admin\GamesController@index');
@@ -447,12 +454,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@update');
             Route::delete('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@destroy');
 
-            /**
-             * GameTemplates
-             */
-            Route::get('/admin/games/gametemplates', 'Admin\GameTemplatesController@index');
-            Route::post('/admin/games/gametemplates', 'Admin\GameTemplatesController@store');
-            Route::get('/admin/games/gametemplates/{game}', 'Admin\GameTemplatesController@show');
+
 
             /**
              * MatchReplays
