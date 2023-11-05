@@ -728,7 +728,7 @@ use Debugbar;
 						<div class="table-responsive text-center">
 							<table class="table">
 
-								<tbody>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}
+								<tbody>
 									@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 										<tr>
 											<td>
@@ -765,7 +765,7 @@ use Debugbar;
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
 																					'{{ $column }}',
-																					'{{ $row }},
+																					'{{ $row }}',
 																					'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
 																				)" data-bs-toggle="modal" data-bs-target="#pickSeatModal">
 														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
