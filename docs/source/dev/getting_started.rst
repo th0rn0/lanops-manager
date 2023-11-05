@@ -12,6 +12,7 @@ Prerequisites
 - Docker-compose v1.18+
 - API Keys for one of the Payment Providers
 - you need ``make`` installed
+- your default user needs access to the docker daemon (https://docs.docker.com/engine/install/linux-postinstall/)
 
 
 Initial setup
@@ -23,6 +24,15 @@ You need the whole source code cloned for running this!
 Its worth checking out the Makefile, there are many useful commands implemented that you can use to make your life easier. 
 
 This Makefile will be documented fully soon.
+
+    .. warning::
+
+        Do not use your root user to run this commands or clone the repository! 
+        
+        Do not use any commands from the make file that include ``--user 82:82`` or ``--user 0`` (like ``npm-install-gh`` or ``composer-install``). 
+        
+        **In both cases you will have permission problems!**
+
 
 1. Clone Repository
 ^^^^^^^^^^^^^^^^^^^^^^^^^
