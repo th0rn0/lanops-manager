@@ -10,6 +10,11 @@ if (config('app.debug') === true) {
 }
 
 /**
+ * Image Converter
+ */
+Route::get('{image}', 'Api\Images\WebpController@convert')->where('image', '.*\.webp');
+
+/**
  * Install
  */
 Route::group(['middleware' => ['web', 'notInstalled']], function () {
@@ -24,10 +29,7 @@ Route::group(['middleware' => ['installed']], function () {
 
 
 
-        /**
-         * Image Converter
-         */
-        Route::get('{image}', 'Api\Images\WebpController@convert')->where('image', '.*\.webp');
+
 
         /**
          * API
