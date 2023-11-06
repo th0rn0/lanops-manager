@@ -68,7 +68,7 @@ class CS2Seeder extends Seeder
      */
     public function run()
     {
-
+        
         $game = Game::firstOrCreate(
             [
                 'name' => $this->name

@@ -8,6 +8,9 @@
 	<div class="col-lg-12">
 		<h3 class="pb-2 mt-4 mb-4 border-bottom">Game Templates</h3>
 		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="/admin/games/">Games</a>
+			</li>
 			<li class="breadcrumb-item active">
 				Game Templates
 			</li>
@@ -89,7 +92,7 @@
 									{{ Form::open(array('url'=>'/admin/games/gametemplates', 'onsubmit' => 'return ConfirmSubmit()' )) }}
 										{{ Form::hidden('_method', 'POST') }}
 										{{ Form::hidden('gameTemplateClass', get_class($gameTemplate), array('id'=>'gameTemplateClass','class'=>'form-control')) }}
-									<button type="submit" class="btn btn-success btn-block">Submit</button>
+									<button type="submit" class="btn btn-success btn-block">Deploy</button>
 								{{ Form::close() }}
 								</td>
 							</tr>

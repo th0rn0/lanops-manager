@@ -100,19 +100,10 @@
 	</div>
 
 	<div class="col-lg-4">
-		<div class="card mb-3">
-			<div class="card-header">
-				<i class="fa fa-plus fa-fw"></i> Add Game with Templates
-			</div>
-			<div class="card-body">
-				<div class="col-lg-6 col-sm-12 mb-3">
-					<div class="list-group">
-						<a href="/admin/games/gametemplates">
-							<button class="btn btn-success btn-sm btn-block">Add Game from Template</button>
-						</a>
-					</div>
-				</div>
-			</div>
+		<div class="mb-3 row">
+			<a href="/admin/games/gametemplates">
+				<button class="btn btn-success w-100"><i class="fa fa-plus fa-fw"></i>Add Game from Template</button>
+			</a>
 		</div>
 		<div class="card mb-3">
 			<div class="card-header">

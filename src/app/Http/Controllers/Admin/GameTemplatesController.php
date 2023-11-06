@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Auth;
+use Error;
+use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Session;
 use Storage;
 use Image;
@@ -48,12 +51,33 @@ class GameTemplatesController extends Controller
      */
     public function deploy(Request $request)
     {
-        dd($request->gameTemplateClass);
+        if(!Helpers::getGameTemplates()->has($request->gameTemplateClass))
+        {
+            Session::flash('alert-danger', 'Seeder class not found!');
+            return Redirect::to('admin/games/gametemplates');
+        }
 
-        //
+        try {
+            DB::beginTransaction();    
 
+            Artisan::call('db:seed', ['class'=> $request->gameTemplateClass]);
+            $artisanOutput = Artisan::output();
+        
+            if (in_array("Error", str_split($artisanOutput, 5))) {
+                throw new Exception($artisanOutput);
+            }
+        
+            DB::commit();
+            
+            Session::flash('alert-success', 'Game template successfully deployed!');
+            return Redirect::to('admin/games/gametemplates');
 
-        Session::flash('alert-success', 'Successfully deleted Game!');
-        return Redirect::to('admin/games/gametemplates');
+        }
+        catch(\Exception | Error $e) {
+            DB::rollback();
+
+            Session::flash('alert-danger', 'Template seeding aborted with message: '. $e->getMessage() . '!');
+            return Redirect::to('admin/games/gametemplates');
+        }
     }
 }
