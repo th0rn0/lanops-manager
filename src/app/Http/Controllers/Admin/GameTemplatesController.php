@@ -19,7 +19,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-use HaydenPierce\ClassFinder\ClassFinder;
 
 class GameTemplatesController extends Controller
 {
@@ -29,16 +28,8 @@ class GameTemplatesController extends Controller
      */
     public function index()
     {
-        $classenames = ClassFinder::getClassesInNamespace('Database\Seeders\GameTemplates');
-        $gameTemplates = collect();
-
-        foreach ($classenames as $classname)
-        {
-            $gameTemplates->push(new $classname);
-        }
-
         return view('admin.games.gametemplates.index')
-            ->withGameTemplates($gameTemplates);
+            ->withGameTemplates(Helpers::getGameTemplates());
     }
 
     /**

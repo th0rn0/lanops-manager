@@ -10,10 +10,10 @@ use App\GameServerCommand;
 use App\GameServerCommandParameter;
 use App\GameServer;
 
-class CS2Seeder extends Seeder
+class CSGOSeeder extends Seeder
 {
 
-    public string $name = 'Counter-Strike 2';
+    public string $name = 'Counter-Strike: Global Offensive';
     public string $description = 'Best game ever';
     public string $version = "latest";
     public bool $public = false;
@@ -23,13 +23,13 @@ class CS2Seeder extends Seeder
     public string $connect_stream_url = 'steam://connect/{>gameServer->address}:{>gameServer->stream_port}';
     public int $min_team_count = 2;
     public int $max_team_count = 2;
-    public int $gamematchapihandler = 2;
+    public int $gamematchapihandler = 1;
     public bool $matchmaking_enabled = true;
     public bool $matchmaking_autostart = true;
     public bool $matchmaking_autoapi = true;
 
-    public string $matchstart_name = 'Load Match Pugsharp';
-    public string $matchstart_command = 'ps_loadconfig "{>gamematchapiurl->matchconfigapi}" "Bearer {>gameServer->gameserver_secret}"';
+    public string $matchstart_name = 'Load Match Get5';
+    public string $matchstart_command = 'get5_loadmatch_url "{>gamematchapiurl->matchconfigapi}" Authorization "Bearer {>gameServer->gameserver_secret}"';
 
     public array $game_command_parameters = [
         [
@@ -40,12 +40,24 @@ class CS2Seeder extends Seeder
 
     public array $additional_match_commands = [
         [
-            'name' => 'ps dump match',
-            'command' => 'ps_dumpmatch'
+            'name' => 'get5 match status',
+            'command' => 'get5_status'
+        ],
+        [
+            'name' => 'get5 end match',
+            'command' => 'get5_endmatch'
+        ],
+        [
+            'name' => 'get5 force ready',
+            'command' => 'get5_forceready'
         ]
     ];
 
     public array $additional_gameserver_commands = [
+        [
+            'name' => 'unban all',
+            'command' => 'removeallids'
+        ],
         [
             'name' => 'skip warmup',
             'command' => 'mp_warmup 0'
