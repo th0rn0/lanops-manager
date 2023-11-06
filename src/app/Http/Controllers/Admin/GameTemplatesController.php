@@ -36,16 +36,6 @@ class GameTemplatesController extends Controller
     }
 
     /**
-     * Show Game Page
-     * @return Redirect
-     */
-    public function show(Game $game)
-    {
-        return view('admin.games.gametemplates.show')
-            ->withGame($game);
-    }
-
-    /**
      * Delete Game from Database
      * @return Redirect
      */
