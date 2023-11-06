@@ -17,7 +17,8 @@ use Throwable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use HaydenPierce\ClassFinder\ClassFinder;
+ 
 class Helpers
 {
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
@@ -937,5 +938,17 @@ class Helpers
     public static function getLatinAlphabetUpperLetterByIndex($index)
     {
         return range('A', 'Z')[$index - 1];
+    }
+
+    public static function getGameTemplates()
+    {
+        $classenames = ClassFinder::getClassesInNamespace('Database\Seeders\GameTemplates');
+
+        $gameTemplates = collect();
+
+        foreach ($classenames as $classname) {
+            $gameTemplates->put($classname, new $classname);
+        }
+        return $gameTemplates;
     }
 }
