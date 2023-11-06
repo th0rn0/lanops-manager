@@ -178,6 +178,10 @@ generate-testuser:
 generate-event:
 	docker exec eventula_manager_app php artisan db:seed --class=EventsSeeder
 
+# Generate event - This will generate a sample event!
+generate-games:
+	docker exec eventula_manager_app php artisan db:seed --class=GamesTableSeeder
+
 # Generate requireddatabase - This will erase your current settings!
 generate-requireddatabase:
 	docker exec eventula_manager_app php artisan db:seed --class=RequiredDatabaseSeeder --force
