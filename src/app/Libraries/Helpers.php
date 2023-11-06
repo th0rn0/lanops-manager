@@ -947,7 +947,7 @@ class Helpers
         $gameTemplates = collect();
 
         foreach ($classenames as $classname) {
-            $gameTemplates->push(new $classname);
+            $gameTemplates->put($classname, new $classname);
         }
         return $gameTemplates;
     }
