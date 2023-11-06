@@ -68,7 +68,7 @@ class CS2Seeder extends Seeder
      */
     public function run()
     {
-        
+
         $game = Game::firstOrCreate(
             [
                 'name' => $this->name
@@ -95,9 +95,11 @@ class CS2Seeder extends Seeder
         }
 
         foreach ($this->game_command_parameters as $parameter) {
-            $createdparameter = $game->gameServerCommandParameters()->create(
+            $createdparameter = $game->gameServerCommandParameters()->firstOrCreate(
                 [
-                    'name' => $parameter['name'],
+                    'name' => $parameter['name']
+                ],
+                [
                     'options' => $parameter['options']
                 ]
             );
@@ -108,9 +110,11 @@ class CS2Seeder extends Seeder
 
 
         foreach ($this->additional_match_commands as $additional_match_command) {
-            $createdcommand = $game->gameServerCommands()->create(
+            $createdcommand = $game->gameServerCommands()->firstOrCreate(
                 [
-                    'name' => $additional_match_command['name'],
+                    'name' => $additional_match_command['name']
+                ],
+                [
                     'command' => $additional_match_command['command'],
                     'scope' => 1
                 ]
@@ -121,9 +125,12 @@ class CS2Seeder extends Seeder
         }
 
         foreach ($this->additional_gameserver_commands as $additional_gameserver_command) {
-            $createdcommand = $game->gameServerCommands()->create(
+            $createdcommand = $game->gameServerCommands()->firstOrCreate(
                 [
-                    'name' => $additional_gameserver_command['name'],
+                    'name' => $additional_gameserver_command['name']
+
+                ],
+                [
                     'command' => $additional_gameserver_command['command'],
                     'scope' => 0
                 ]
@@ -135,9 +142,12 @@ class CS2Seeder extends Seeder
 
 
 
-        $command = $game->gameServerCommands()->create(
+        $command = $game->gameServerCommands()->firstOrCreate(
             [
-                'name' => $this->matchstart_name,
+                'name' => $this->matchstart_name
+
+            ],
+            [
                 'command' => $this->matchstart_command,
                 'scope' => 1
             ]

@@ -50,7 +50,7 @@ class GameTemplatesController extends Controller
         try {
             DB::beginTransaction();    
 
-            Artisan::call('db:seed', ['class'=> $request->gameTemplateClass]);
+            Artisan::call('db:seed', ['class'=> $request->gameTemplateClass, '--force' => true]);
             $artisanOutput = Artisan::output();
         
             if (in_array("Error", str_split($artisanOutput, 5))) {
