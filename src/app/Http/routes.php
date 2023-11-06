@@ -413,7 +413,7 @@ Route::group(['middleware' => ['installed']], function () {
              * GameTemplates
              */
             Route::get('/admin/games/gametemplates', 'Admin\GameTemplatesController@index');
-            Route::post('/admin/games/gametemplates', 'Admin\GameTemplatesController@store');
+            Route::post('/admin/games/gametemplates', 'Admin\GameTemplatesController@deploy');
             Route::get('/admin/games/gametemplates/{game}', 'Admin\GameTemplatesController@show');
 
             /**

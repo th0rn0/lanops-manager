@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Auth;
+use Illuminate\Database\Seeder;
 use Session;
 use Storage;
 use Image;
@@ -43,11 +44,15 @@ class GameTemplatesController extends Controller
 
     /**
      * Delete Game from Database
-     * @param  Game  $game
      * @return Redirect
      */
-    public function createFromTemplate(Game $game)
+    public function deploy(Request $request)
     {
+        dd($request->gameTemplateClass);
+
+        //
+
+
         Session::flash('alert-success', 'Successfully deleted Game!');
         return Redirect::to('admin/games/gametemplates');
     }
