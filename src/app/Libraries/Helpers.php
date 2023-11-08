@@ -951,4 +951,23 @@ class Helpers
         }
         return $gameTemplates;
     }
+
+    public static function getPoweredByLine()
+    {
+        return ' | powered by Lan2Play Eventula Manager';
+    }
+    public static function getSeoKeywords()
+    {
+        return explode(',',config('settings.seo_keywords'). ',Lan2Play Eventula Manager');
+    }    
+    
+    public static function getSeoDescription()
+    {
+        return config('settings.org_tagline'). Helpers::getPoweredByLine();
+    }
+
+    public static function getSeoCustomDescription($description)
+    {
+        return $description. Helpers::getPoweredByLine();
+    }
 }

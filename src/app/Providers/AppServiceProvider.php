@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
+use Helpers;
 use View;
 use Auth;
 use URL;
@@ -94,11 +95,11 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Set SEO Defaults
-        @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
+        @\Config::set('seotools.meta.defaults.description', Helpers::getSeoDescription());
         if (config('settings.seo_keywords') != null) {
-            @\Config::set('seotools.meta.defaults.keywords', explode(',',config('settings.seo_keywords')));
+            @\Config::set('seotools.meta.defaults.keywords', Helpers::getSeoKeywords());
         }
-        @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
+        @\Config::set('seotools.opengraph.defaults.description', Helpers::getSeoDescription());
         @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
 
         // Foce HTTPS if required

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Auth;
+use Helpers;
 
 use App\NewsArticle;
 use App\NewsComment;
@@ -29,7 +30,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
+        $seoKeywords = Helpers::getSeoKeywords();
         $seoKeywords[] = "News";
         SEOMeta::addKeyword($seoKeywords);
         OpenGraph::addProperty('type', 'article');
@@ -44,14 +45,14 @@ class NewsController extends Controller
      */
     public function show(NewsArticle $newsArticle)
     {
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
+        $seoKeywords = Helpers::getSeoKeywords();
         $seoKeywords[] = $newsArticle->title;
         foreach ($newsArticle->tags as $tag) {
             $seoKeywords[] = $tag->tag;
         }
-        SEOMeta::setDescription($newsArticle->title);
+        SEOMeta::setDescription(Helpers::getSeoCustomDescription($newsArticle->title));
         SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::setDescription($newsArticle->title);
+        OpenGraph::setDescription(Helpers::getSeoCustomDescription($newsArticle->title));
         OpenGraph::addProperty('type', 'article');
         return view('news.show')
             ->withNewsArticle($newsArticle);
@@ -64,11 +65,11 @@ class NewsController extends Controller
      */
     public function showTag(NewsTag $newsTag)
     {
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
+        $seoKeywords = Helpers::getSeoKeywords();
         $seoKeywords[] = $newsTag->tag;
-        SEOMeta::setDescription($newsTag->tag);
+        SEOMeta::setDescription(Helpers::getSeoCustomDescription($newsTag->tag));
         SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::setDescription($newsTag->tag);
+        OpenGraph::setDescription(Helpers::getSeoCustomDescription($newsTag->tag));
         OpenGraph::addProperty('type', 'article');
         foreach (NewsTag::where('tag', $newsTag->tag)->get()->reverse() as $newsTag) {
             $newsArticles[] = $newsTag->newsArticle;

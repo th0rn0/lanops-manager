@@ -33,6 +33,8 @@
 							<th>Description</th>
 							<th>Version</th>
 							<th>Public</th>
+							<th>Game Cmd Handler</th>
+							<th>Match API Handler</th>
 							<th>Has Game URL</th>
 							<th>Has Game Command</th>
 							<th>Has Stream URL</th>
@@ -59,6 +61,12 @@
 									@else
 										No
 									@endif
+								</td>
+								<td>
+									{{ App\GameCommandHandler::getGameCommandHandlerSelectArray()[$gameTemplate->gamecommandhandler] }}
+								</td>								
+								<td>
+									{{ App\GameMatchApiHandler::getGameMatchApiHandlerSelectArray()[$gameTemplate->gamematchapihandler] }}
 								</td>
 								<td>
 									@if ($gameTemplate->connect_game_url)
