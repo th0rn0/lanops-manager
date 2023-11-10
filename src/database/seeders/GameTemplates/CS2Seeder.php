@@ -33,7 +33,7 @@ class CS2Seeder extends Seeder
 
     public array $game_command_parameters = [
         [
-            'name' => 'mapCasual',
+            'name' => 'mapcasualcs2',
             'options' => 'de_dust2;de_mirage;de_inferno;de_overpass;de_vertigo;de_train'
         ],
     ];
@@ -60,7 +60,7 @@ class CS2Seeder extends Seeder
         ],
         [
             'name' => 'changelevel casual',
-            'command' => 'changelevel {>mapcasual}'
+            'command' => 'changelevel {>mapcasualcs2}'
         ]
     ];
 
