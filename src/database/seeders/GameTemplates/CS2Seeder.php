@@ -42,6 +42,10 @@ class CS2Seeder extends Seeder
         [
             'name' => 'ps dump match',
             'command' => 'ps_dumpmatch'
+        ],
+        [
+            'name' => 'ps stop match',
+            'command' => 'ps_stopmatch'
         ]
     ];
 
