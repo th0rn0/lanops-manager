@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use DB;
 use Auth;
 use Dompdf\Dompdf;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 use Settings;
 use Session;
 use Colors;
@@ -358,7 +360,12 @@ class AccountController extends Controller
         $user = Auth::user();
         $participant = EventParticipant::where('id', $ticketId)->first();
         if ($user->id != $participant->user_id) {
-            return response()->view('errors.403', [], Response::HTTP_FORBIDDEN);
+            $viewErrorBag = (new ViewErrorBag())->put('default',
+                new MessageBag([
+                    0 => [__('tickets.not_allowed')]
+                ])
+            );
+            return response()->view('errors.403', ['errors' => $viewErrorBag], Response::HTTP_FORBIDDEN);
         }
 
         $event = Event::where('id', $participant->event_id)->first();
