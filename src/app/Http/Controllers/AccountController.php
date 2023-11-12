@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
-use Settings;
-use Session;
-use Colors;
-
-
-use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
+use Session;
+use Settings;
+
 
 class AccountController extends Controller
 {
