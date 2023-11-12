@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\Events;
 
-use DB;
-use Auth;
-use Session;
-use App\User;
-use App\Event;
 use App\EventParticipant;
 use App\EventTicket;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Redirect;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
-
-use Debugbar;
+use Illuminate\Support\ViewErrorBag;
+use Session;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ParticipantsController extends Controller
 {
@@ -121,5 +118,40 @@ class ParticipantsController extends Controller
         }
         $request->session()->flash('alert-danger', 'Please Login.');
         return Redirect::to('login');
+    }
+
+    public function exportParticipantAsFile(EventParticipant $participant, string $fileType): Response|StreamedResponse {
+        $user = Auth::user();
+        if ($user->id != $participant->user_id) {
+            $viewErrorBag = (new ViewErrorBag())->put('default',
+                new MessageBag([
+                    0 => [__('tickets.not_allowed')]
+                ])
+            );
+            return response()->view('errors.403', ['errors' => $viewErrorBag], Response::HTTP_FORBIDDEN);
+        }
+
+        /** @var ResponseFactory $response */
+        switch (strtolower($fileType)) {
+            case 'pdf':
+                $response = response()->stream(
+                    function () use ($participant) {
+                        echo $participant->getPdf();
+                    },
+                    Response::HTTP_OK,
+                    [
+                        'Content-Type' => 'application/pdf'
+                    ]
+                );
+                break;
+            default:
+                $viewErrorBag = (new ViewErrorBag())->put('default',
+                    new MessageBag([
+                        0 => [__('tickets.wrong_file_format')]
+                    ])
+                );
+                $response = response()->view('errors.404', ['errors' => $viewErrorBag], Response::HTTP_NOT_FOUND);
+        }
+        return $response;
     }
 }
