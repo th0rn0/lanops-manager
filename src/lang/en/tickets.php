@@ -39,4 +39,5 @@ return [
 
     /* Ticket PDF views */
     'not_allowed' => 'You are not allowed to view this ticket',
+    'wrong_file_format' => 'Unsupported file type',
 ];
