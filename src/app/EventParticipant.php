@@ -203,43 +203,31 @@ class EventParticipant extends Model
         return $particpants;
     }
 
-    public function getPdf(string $ticketId): Response {
+    public function getPdf(): string {
         $user = Auth::user();
-        $participant = EventParticipant::where('id', $ticketId)->first();
-        if ($user->id != $participant->user_id) {
-            $viewErrorBag = (new ViewErrorBag())->put('default',
-                new MessageBag([
-                    0 => [__('tickets.not_allowed')]
-                ])
-            );
-            return response()->view('errors.403', ['errors' => $viewErrorBag], Response::HTTP_FORBIDDEN);
-        }
-
-        $event = Event::where('id', $participant->event_id)->first();
-
         $data = new \stdClass();
         // TODO: Probably don't use str_replace
-        $qrfile = base64_encode(\Storage::read(str_replace('storage', 'public', $participant->qrcode)));
+        $qrfile = base64_encode(\Storage::read(str_replace('storage', 'public', $this->qrcode)));
         $now = Carbon::now();
 
-        if ($participant->ticket) {
-            $data->ticket_name = $participant->ticket->name;
-        } elseif ($participant->staff) {
+        if ($this->ticket) {
+            $data->ticket_name = $this->ticket->name;
+        } elseif ($this->staff) {
             $data->ticket_name = __('tickets.staff_ticket');
         } else {
             $data->ticket_name = __('tickets.free_ticket');
         }
 
-        if ($participant->seat) {
-            $data->seat = $participant->seat->getName();
-            $data->seating_plan = $participant->seat->seatingPlan->name;
+        if ($this->seat) {
+            $data->seat = $this->seat->getName();
+            $data->seating_plan = $this->seat->seatingPlan->name;
         } else {
             $data->seat = __('events.notseated');
             $data->seating_plan = $data->seat;
         }
 
         $data->qr_image = "data:image/png;base64,{$qrfile}";
-        $data->event_name = $event->display_name;
+        $data->event_name = $this->event->display_name;
         $data->firstname = $user->firstname;
         $data->surname = $user->surname;
         $data->username = $user->username;
@@ -256,8 +244,6 @@ class EventParticipant extends Model
         $pdf->loadHtml($pdfView);
         $pdf->render();
 
-        $res = \Response::make($pdf->output());
-        $res->header('Content-Type', 'application/pdf');
-        return $res;
+        return $pdf->output();
     }
 }
