@@ -3,6 +3,11 @@
 namespace App;
 
 use Auth;
+use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Illuminate\Http\Response;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 use QrCode;
 use Settings;
 use Colors;
@@ -196,5 +201,49 @@ class EventParticipant extends Model
                 break;
         }
         return $particpants;
+    }
+
+    public function getPdf(): string {
+        $user = Auth::user();
+        $data = new \stdClass();
+        // TODO: Probably don't use str_replace
+        $qrfile = base64_encode(\Storage::read(str_replace('storage', 'public', $this->qrcode)));
+        $now = Carbon::now();
+
+        if ($this->ticket) {
+            $data->ticket_name = $this->ticket->name;
+        } elseif ($this->staff) {
+            $data->ticket_name = __('tickets.staff_ticket');
+        } else {
+            $data->ticket_name = __('tickets.free_ticket');
+        }
+
+        if ($this->seat) {
+            $data->seat = $this->seat->getName();
+            $data->seating_plan = $this->seat->seatingPlan->name;
+        } else {
+            $data->seat = __('events.notseated');
+            $data->seating_plan = $data->seat;
+        }
+
+        $data->qr_image = "data:image/png;base64,{$qrfile}";
+        $data->event_name = $this->event->display_name;
+        $data->firstname = $user->firstname;
+        $data->surname = $user->surname;
+        $data->username = $user->username;
+        $data->date = $now->toDateString();    //TODO: Date/time format does not seem to heed locale
+        $data->time = $now->toTimeString();
+
+
+        $pdfView = view('ticket.pdf')
+            ->with('data', $data)
+            ->render();
+
+        $pdf = new Dompdf();
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->loadHtml($pdfView);
+        $pdf->render();
+
+        return $pdf->output();
     }
 }

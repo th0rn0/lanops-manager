@@ -162,6 +162,9 @@ Route::group(['middleware' => ['installed']], function () {
              * Events
              */
             Route::get('/events', 'Events\EventsController@index');
+            Route::group(['middleware' => ['auth', 'banned', 'verified', 'nophonenumber']], function() {
+                Route::get('/events/participants/{participant}/{fileType}', 'Events\ParticipantsController@exportParticipantAsFile');
+            });
             Route::get('/events/{event}', 'Events\EventsController@show');
             Route::get('/events/{event}/big', 'HomeController@bigScreen');
 

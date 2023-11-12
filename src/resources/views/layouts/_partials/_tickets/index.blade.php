@@ -81,6 +81,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="card-footer">
+		<div class="btn-group">
+			<a href="/events/participants/{{ $participant->id }}/pdf" class="btn btn-primary">@lang('tickets.download_pdf')</a>
+		</div>
+	</div>
 </div>
 
 @include ('layouts._partials._gifts.modal')
