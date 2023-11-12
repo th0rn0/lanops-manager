@@ -10,6 +10,11 @@ if (config('app.debug') === true) {
 }
 
 /**
+ * Image Converter
+ */
+Route::get('{image}', 'Api\Images\WebpController@convert')->where('image', '.*\.webp');
+
+/**
  * Install
  */
 Route::group(['middleware' => ['web', 'notInstalled']], function () {
@@ -24,10 +29,7 @@ Route::group(['middleware' => ['installed']], function () {
 
 
 
-        /**
-         * Image Converter
-         */
-        Route::get('{image}', 'Api\Images\WebpController@convert')->where('image', '.*\.webp');
+
 
         /**
          * API
@@ -414,6 +416,12 @@ Route::group(['middleware' => ['installed']], function () {
 
 
             /**
+             * GameTemplates
+             */
+            Route::get('/admin/games/gametemplates', 'Admin\GameTemplatesController@index');
+            Route::post('/admin/games/gametemplates', 'Admin\GameTemplatesController@deploy');
+
+            /**
              * Games
              */
             Route::get('/admin/games', 'Admin\GamesController@index');
@@ -450,6 +458,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::post('/admin/games/{game}/gameservercommandparameters', 'Admin\GameServerCommandParametersController@store');
             Route::post('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@update');
             Route::delete('/admin/games/{game}/gameservercommandparameters/{gameServerCommandParameter}', 'Admin\GameServerCommandParametersController@destroy');
+
 
 
             /**

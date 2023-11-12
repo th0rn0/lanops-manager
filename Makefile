@@ -23,7 +23,7 @@ endif
 
 
 # Run local dev
-start-local-dev: env-file-dev docker-lan app-build-clean-dev interactive
+start-local-dev: env-file-dev docker-lan app-build-clean-dev logs
 
 switch-database: purge-containers dev-database wait-mysql database-import stop interactive
 
@@ -39,14 +39,14 @@ interactive:
 
 # Stop all Containers
 stop:
-	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop || true
 
 # Build from clean
 app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait-mysql database-migrate database-seed stop
 
 # Build dev from clean
 # app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait-mysql database-migrate database-seed stop
-app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait-mysql stop
+app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev #wait-mysql stop
 
 # Build Dependencies
 app-build-dep: composer-install npm-install mix
@@ -177,6 +177,10 @@ generate-testuser:
 # Generate event - This will generate a sample event!
 generate-event:
 	docker exec eventula_manager_app php artisan db:seed --class=EventsSeeder
+
+# Generate event - This will generate a sample event!
+generate-games:
+	docker exec eventula_manager_app php artisan db:seed --class=GamesTableSeeder
 
 # Generate requireddatabase - This will erase your current settings!
 generate-requireddatabase:

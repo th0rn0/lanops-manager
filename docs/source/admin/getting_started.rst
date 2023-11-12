@@ -6,7 +6,11 @@ Getting Started
 
         This fork of eventula manager is not 100% update compatible to the current upstream. If you migrate from the upstream to our fork, please backup youre database and storage before doing so and please report any issues you encounter with the upgrade. Also this documentation is not fully up to date and not finished, so if you find something that is not right, consider contributing to it or open an issue. 
 
+    .. note::
+        If you want to try eventula locally instead of installing it directly in the production way, please go to :ref:`dev/getting_started:Getting Started` instead! 
+
 We are glad that you want to try or use the eventula event manager.
+
 
 Prerequisites
 ..............

@@ -17,7 +17,8 @@ use Throwable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use HaydenPierce\ClassFinder\ClassFinder;
+ 
 class Helpers
 {
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
@@ -937,5 +938,36 @@ class Helpers
     public static function getLatinAlphabetUpperLetterByIndex($index)
     {
         return range('A', 'Z')[$index - 1];
+    }
+
+    public static function getGameTemplates()
+    {
+        $classenames = ClassFinder::getClassesInNamespace('Database\Seeders\GameTemplates');
+
+        $gameTemplates = collect();
+
+        foreach ($classenames as $classname) {
+            $gameTemplates->put($classname, new $classname);
+        }
+        return $gameTemplates;
+    }
+
+    public static function getPoweredByLine()
+    {
+        return ' | powered by Lan2Play Eventula Manager';
+    }
+    public static function getSeoKeywords()
+    {
+        return explode(',',config('settings.seo_keywords'). ',Lan2Play Eventula Manager');
+    }    
+    
+    public static function getSeoDescription()
+    {
+        return config('settings.org_tagline'). Helpers::getPoweredByLine();
+    }
+
+    public static function getSeoCustomDescription($description)
+    {
+        return $description. Helpers::getPoweredByLine();
     }
 }

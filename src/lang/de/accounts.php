@@ -15,7 +15,7 @@ return [
     'firstname' => 'Vorname',
     'surname' => 'Nachname',
     'username' => 'Benutzername',
-    'steamname' => 'Steam Benutzername',
+    'steamname' => 'Steam Name',
     'email' => 'Email Adresse',
     'phonenumber' => 'Handy/Tel.',
     'change_password' => 'Passwort ändern',

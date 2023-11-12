@@ -12,7 +12,7 @@ use Debugbar;
 		<h1>Welcome to {{ $event->display_name }}!</h1>
 	</div>
 	<div class="text-center">
-		<nav class="navbar navbar-expand-md bg-primary navbar-events" style="z-index: 1;">
+		<nav class="subnavbar navbar navbar-expand-md bg-primary navbar-events" style="z-index: 1;">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -728,7 +728,7 @@ use Debugbar;
 						<div class="table-responsive text-center">
 							<table class="table">
 
-								<tbody>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}
+								<tbody>
 									@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 										<tr>
 											<td>
@@ -765,7 +765,7 @@ use Debugbar;
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
 																					'{{ $column }}',
-																					'{{ $row }},
+																					'{{ $row }}',
 																					'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
 																				)" data-bs-toggle="modal" data-bs-target="#pickSeatModal">
 														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')

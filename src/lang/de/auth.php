@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -12,7 +10,6 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-
     'failed' => 'Die Anmeldedaten konnten nicht gefunden werden.',
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuche es in :seconds sekunden erneut.',
     'login_to_continue' => 'Anmelden um fortzufahren',
@@ -31,7 +28,7 @@ return [
     'firstname' => 'Vorname',
     'surname' => 'Nachname',
     'username' => 'Benutzername',
-    'steamname' => 'Steam Benutzername',
+    'steamname' => 'Steam Name',
     'email' => 'Email Adresse',
     'phonenumber' => 'Handy/Tel.',
     'change_password' => 'Passwort ändern',
@@ -45,6 +42,4 @@ return [
     'request_verification' => 'klicke hier um eine neue anzufordern.',
     'reset_password' => 'Passwort zurücksetzen',
     'send_password_link' => 'Passwortrücksetzungslink Anfordern',
-
-
 ];

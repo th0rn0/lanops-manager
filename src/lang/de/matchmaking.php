@@ -1,7 +1,5 @@
 <?php
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Matchmaking Language Lines
@@ -21,12 +19,12 @@ return [
     'match' => 'Match',
     'matchmaking' => 'Matchmaking',
     'matchowner' => 'Matcheigentümer',
-    'notsignedup' => 'nicht angemeldet',
+    'notsignedup' => 'Nicht Angemeldet',
     'ownedmatches' => 'meine Matches',
     'ownedteams' => 'Matches mit Teams deren Mitglied ich bin',
     'publicmatches' => 'Offene öffentliche Matches',
     'closedpublicmatches' => 'Aktive/Vergangene öffentliche Matches',
-    'signedup' => 'angemeldet',
+    'signedup' => 'Angemeldet',
     'signupsclosed' => 'Anmeldung geschlossen',
     'teamcount' => 'Teamanzahl',
     'teamowner' => 'Teameigentümer',
@@ -61,17 +59,17 @@ return [
     'teamcounts' => 'Anzahl der Teams',
     'teamname' => 'Team Name',
     'games' => 'Spiel',
-    'scoreof' =>'Punktezahl von',
+    'scoreof' => 'Punktezahl von',
     'thisisyourteam' => 'Das ist dein Team!',
     'nopermissions' => 'Du hast keine Berechtigungen dieses Match anzuzeigen! Du benötigst entweder einen Einladungslink des Matcheigentümers oder eines Teameigentümers oder das Match muss vom Eigentümer als öffentlich markiert werden!',
     'matchmakinghome' => 'Klicke hier um andere Matches finden.',
     'maxopened' => 'Du hast schon mehr matches gleichzeitig offen als erlaubt! Finalisiere erst alte matches!',
     'error' => 'Fehler',
-    'team_size_required'    => 'Teamgröße darf nicht leer sein',
-    'team_size_mustbeoneof'    => 'Teamgröße muss eine der folgenden sein: 1v1,2v2,3v3,4v4,5v5,6v6',
-    'team_count_required'    => 'Teamanzahl darf nicht leer sein',
-    'team_count_integer'    => 'Teamanzahl muss eine zahl sein',
-    'teamname_required'    => 'Teamname darf nicht leer sein',
+    'team_size_required' => 'Teamgröße darf nicht leer sein',
+    'team_size_mustbeoneof' => 'Teamgröße muss eine der folgenden sein: 1v1,2v2,3v3,4v4,5v5,6v6',
+    'team_count_required' => 'Teamanzahl darf nicht leer sein',
+    'team_count_integer' => 'Teamanzahl muss eine zahl sein',
+    'teamname_required' => 'Teamname darf nicht leer sein',
     'teamcount_smallerthangamesmin' => 'Teamanzahl ist kleiner als die minimale Teamanzahl des ausgewählten Spiels! Minimum ist ',
     'teamcount_biggerthangamesmax' => 'Teamanzahl ist größer als die maximale Teamanzahl des ausgewählten Spiels! Maximum ist ',
     'cannotcreatematch' => 'Match kann nicht angelegt werden!',
@@ -101,7 +99,7 @@ return [
     'cannotdeleteteamplayers' => 'Konnte Teamplayer nicht löschen!',
     'cannotdeleteteam' => 'Konnte Team nicht löschen!',
     'deletedteam' => 'Team wurde gelöscht!',
-    'cannnotjoinstatus'=> 'Du kannst dem Team nicht beitreten während das Match live oder completed ist!',
+    'cannnotjoinstatus' => 'Du kannst dem Team nicht beitreten während das Match live oder completed ist!',
     'cannotjoinalreadyfull' => 'Das Team ist bereits voll!',
     'cannotcreateteamplayer' => 'Teamplayer konnte nicht erstellt werden!',
     'successfiullyaddedteamplayer' => 'Du bist dem Team erfolgreich beigetreten!',

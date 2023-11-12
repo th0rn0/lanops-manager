@@ -76,7 +76,7 @@ return [
     'no' => 'Nein',
     'buy' => 'Kaufen',
     'noseatableticket' => 'Kein Ticket mit Sitzplatz in Besitz',
-    'noseatableticketlist' => 'Kein Ticket mit Sitzplatz in Besitz',
+    'noseatableticketlist' => 'Kein Ticket mit Sitzplatz in Besitz.',
     'timetable-primary-pill' => 'Hauptzeitplan',
     'timetable-created-at' => 'Erstellt:',
     'timetable-updated-at' => 'Aktualisiert:',
