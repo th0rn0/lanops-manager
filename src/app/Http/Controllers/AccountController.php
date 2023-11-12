@@ -2,25 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\EventParticipant;
-use App\Event;
-use Carbon\Carbon;
-use DB;
 use Auth;
-use Dompdf\Dompdf;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
-use Settings;
-use Session;
-use Colors;
-
-
-use App\Http\Requests;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
+use Session;
+use Settings;
+
 
 class AccountController extends Controller
 {
@@ -354,63 +342,5 @@ class AccountController extends Controller
             return redirect($request->session()->get('eventula_req_url'));
         }
         return redirect('/');
-    }
-
-    public function pdfTicket(string $ticketId): Response {
-        $user = Auth::user();
-        $participant = EventParticipant::where('id', $ticketId)->first();
-        if ($user->id != $participant->user_id) {
-            $viewErrorBag = (new ViewErrorBag())->put('default',
-                new MessageBag([
-                    0 => [__('tickets.not_allowed')]
-                ])
-            );
-            return response()->view('errors.403', ['errors' => $viewErrorBag], Response::HTTP_FORBIDDEN);
-        }
-
-        $event = Event::where('id', $participant->event_id)->first();
-
-        $data = new \stdClass();
-        // TODO: Probably don't use str_replace
-        $qrfile = base64_encode(\Storage::read(str_replace('storage', 'public', $participant->qrcode)));
-        $now = Carbon::now();
-
-        if ($participant->ticket) {
-            $data->ticket_name = $participant->ticket->name;
-        } elseif ($participant->staff) {
-            $data->ticket_name = __('tickets.staff_ticket');
-        } else {
-            $data->ticket_name = __('tickets.free_ticket');
-        }
-
-        if ($participant->seat) {
-            $data->seat = $participant->seat->getName();
-            $data->seating_plan = $participant->seat->seatingPlan->name;
-        } else {
-            $data->seat = __('events.notseated');
-            $data->seating_plan = $data->seat;
-        }
-
-        $data->qr_image = "data:image/png;base64,{$qrfile}";
-        $data->event_name = $event->display_name;
-        $data->firstname = $user->firstname;
-        $data->surname = $user->surname;
-        $data->username = $user->username;
-        $data->date = $now->toDateString();    //TODO: Date/time format does not seem to heed locale
-        $data->time = $now->toTimeString();
-
-
-        $pdfView = view('ticket.pdf')
-            ->with('data', $data)
-            ->render();
-
-        $pdf = new Dompdf();
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->loadHtml($pdfView);
-        $pdf->render();
-
-        $res = \Response::make($pdf->output());
-        $res->header('Content-Type', 'application/pdf');
-        return $res;
     }
 }
