@@ -36,6 +36,7 @@ return [
     'realname_format' => ':firstname :lastname',
     'present_qr_code' => 'Bitte zeige den QR Code am Einlass for.',
     'generated_at' => 'Dieses Dokument wurde erstellt am :date um :time',
-    
 
+    /* Ticket PDF views */
+    'not_allowed' => 'Du bist nicht berechtigt dieses Ticket anzusehen',
 ];
