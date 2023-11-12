@@ -40,4 +40,5 @@ return [
     /* Ticket PDF views */
     'not_allowed' => 'Du bist nicht berechtigt dieses Ticket anzusehen',
     'wrong_file_format' => 'Nicht unterstützter Dateityp',
+    'download_pdf' => 'PDF herunterladen',
 ];

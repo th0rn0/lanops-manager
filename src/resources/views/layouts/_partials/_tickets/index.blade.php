@@ -83,7 +83,7 @@
 	</div>
 	<div class="card-footer">
 		<div class="btn-group">
-			<a href="/account/ticket/pdf/{{ $participant->id }}" class="btn btn-primary">PDF</a>
+			<a href="/events/participants/{{ $participant->id }}/pdf" class="btn btn-primary">@lang('tickets.download_pdf')</a>
 		</div>
 	</div>
 </div>
