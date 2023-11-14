@@ -34,7 +34,7 @@ return [
     'username' => 'Username',
     'realname' => 'Name',
     'realname_format' => ':firstname :lastname',
-    'present_qr_code' => 'Bitte zeige den QR Code am Einlass for.',
+    'present_qr_code' => 'Bitte zeige den QR Code am Einlass vor.',
     'generated_at' => 'Dieses Dokument wurde erstellt am :date um :time',
 
     /* Ticket PDF views */
