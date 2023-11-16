@@ -366,14 +366,20 @@
 							</li>
 						</ul>
 					</div>
+					<div>
+						<h4>Verification</h4>
+							This field is used to compare the output of the command execution to the entered string with PHPs preg_match. <br>
+							This only works if the selected GameCommandHandler supports it.<br>
+							You have to enter it with the surrounding slashes.
+					</div>
 
-
-					<table width="100%" class="table table-hover" id="dataTables-example">
+					<table width="100%" class="table table-hover mt-4" id="dataTables-example">
 						<thead>
 							<tr>
 								<th>Name</th>
 								<th>Slug</th>
 								<th>Command</th>
+								<th>verification</th>
 								<th>Scope</th>
 								<th><th>
 							</tr>
@@ -396,7 +402,15 @@
 									</td>
 									<td>
 										{{ $gameServerCommand->command }}
-									</td><td>
+									</td>
+									<td>
+										@if (isset($gameServerCommand->verification) && $gameServerCommand->verification != "")
+											{{ $gameServerCommand->verification }}
+										@else
+											None
+										@endif
+									</td>
+									<td>
 										{{ Helpers::getGameServerCommandScopeSelectArray()[$gameServerCommand->scope] }}
 									</td>
 									<td width="15%">
@@ -430,6 +444,10 @@
 															<div class="mb-3 col-12">
 																{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
 																{{ Form::text('command', $gameServerCommand->command, array('id'=>'command','class'=>'form-control')) }}
+															</div>
+															<div class="mb-3 col-12">
+																{{ Form::label('verification','Verification',array('id'=>'','class'=>'')) }}
+																{{ Form::text('verification', $gameServerCommand->verification, array('id'=>'verification','class'=>'form-control')) }}
 															</div>
 														</div>
 													</div>
@@ -726,7 +744,11 @@
 								</div>
 								<div class="mb-3 col-12">
 									{{ Form::label('command','Command',array('id'=>'','class'=>'')) }}
-									{{ Form::text('command', NULL, array('id'=>'name','class'=>'form-control')) }}
+									{{ Form::text('command', NULL, array('id'=>'command','class'=>'form-control')) }}
+								</div>
+								<div class="mb-3 col-12">
+									{{ Form::label('verification','Verification',array('id'=>'','class'=>'')) }}
+									{{ Form::text('verification', NULL, array('id'=>'verification','class'=>'form-control')) }}
 								</div>
 
 								<button type="submit" class="btn btn-success btn-block">Submit</button>

@@ -39,7 +39,7 @@ class GameCommandHandler
 interface IGameCommandHandler
 {
     public function init($address, $rconPort, $password);
-    public function execute($command);
+    public function execute($command, $verification);
     public function status();
     public function dispose();
 }
@@ -73,7 +73,7 @@ class SourceQueryCommandHandler implements IGameCommandHandler
         return $result;
     }
 
-    public function execute($command)
+    public function execute($command, $verification)
     {
         // return $this->query->GetInfo();
         $result = $this->query->Rcon($command);
@@ -81,6 +81,14 @@ class SourceQueryCommandHandler implements IGameCommandHandler
         if($result == false)
         {
             throw new Exception("No Connection possible");
+        }
+
+        if(isset($verification) && !empty($verification))
+        {
+            if (preg_match($verification, $result) !== 1)
+            {
+                throw new Exception("Verification failed! |Verification string: $verification | Server Output: $result |");
+            }
         }
 
         return $result;
@@ -119,7 +127,7 @@ class ManiaplanetXrpcCommandHandler implements IGameCommandHandler
         return $result;
     }
 
-    public function execute($command)
+    public function execute($command, $verification)
     {
         return $this->maniaConnection->execute($command);
     }
