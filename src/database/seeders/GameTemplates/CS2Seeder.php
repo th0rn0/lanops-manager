@@ -30,6 +30,7 @@ class CS2Seeder extends Seeder
 
     public string $matchstart_name = 'Load Match Pugsharp';
     public string $matchstart_command = 'ps_loadconfig "{>gamematchapiurl->matchconfigapi}" "Bearer {>gameServer->gameserver_secret}"';
+    public string $matchstart_verification = null;
 
     public array $game_command_parameters = [
         [
@@ -41,26 +42,31 @@ class CS2Seeder extends Seeder
     public array $additional_match_commands = [
         [
             'name' => 'ps dump match',
-            'command' => 'ps_dumpmatch'
+            'command' => 'ps_dumpmatch',
+            'verification' => null
         ],
         [
             'name' => 'ps stop match',
-            'command' => 'ps_stopmatch'
+            'command' => 'ps_stopmatch',
+            'verification' => null
         ]
     ];
 
     public array $additional_gameserver_commands = [
         [
             'name' => 'skip warmup',
-            'command' => 'mp_warmup 0'
+            'command' => 'mp_warmup 0',
+            'verification' => null
         ],
         [
             'name' => 'end warmup',
-            'command' => 'mp_warmup_end'
+            'command' => 'mp_warmup_end',
+            'verification' => null
         ],
         [
             'name' => 'changelevel casual',
-            'command' => 'changelevel {>mapcasualcs2}'
+            'command' => 'changelevel {>mapcasualcs2}',
+            'verification' => null
         ]
     ];
 
@@ -78,19 +84,19 @@ class CS2Seeder extends Seeder
                 'name' => $this->name
             ],
             [
-                'description'               => $this->description,
-                'version'                   => $this->version,
-                'public'                    => $this->public,
-                'gamecommandhandler'        => $this->gamecommandhandler,
-                'connect_game_url'          => $this->connect_game_url,
-                'connect_game_command'          => $this->connect_game_command,
-                'connect_stream_url'          => $this->connect_stream_url,
-                'min_team_count'          => $this->min_team_count,
-                'max_team_count'          => $this->max_team_count,
-                'gamematchapihandler'          => $this->gamematchapihandler,
-                'matchmaking_enabled'          => $this->matchmaking_enabled,
-                'matchmaking_autostart'          => $this->matchmaking_autostart,
-                'matchmaking_autoapi'          => $this->matchmaking_autoapi
+                'description' => $this->description,
+                'version' => $this->version,
+                'public' => $this->public,
+                'gamecommandhandler' => $this->gamecommandhandler,
+                'connect_game_url' => $this->connect_game_url,
+                'connect_game_command' => $this->connect_game_command,
+                'connect_stream_url' => $this->connect_stream_url,
+                'min_team_count' => $this->min_team_count,
+                'max_team_count' => $this->max_team_count,
+                'gamematchapihandler' => $this->gamematchapihandler,
+                'matchmaking_enabled' => $this->matchmaking_enabled,
+                'matchmaking_autostart' => $this->matchmaking_autostart,
+                'matchmaking_autoapi' => $this->matchmaking_autoapi
             ]
         );
 
@@ -120,6 +126,7 @@ class CS2Seeder extends Seeder
                 ],
                 [
                     'command' => $additional_match_command['command'],
+                    'verification' => $additional_match_command['verification'],
                     'scope' => 1
                 ]
             );
@@ -136,6 +143,7 @@ class CS2Seeder extends Seeder
                 ],
                 [
                     'command' => $additional_gameserver_command['command'],
+                    'verification' => $additional_gameserver_command['verification'],
                     'scope' => 0
                 ]
             );
@@ -153,6 +161,7 @@ class CS2Seeder extends Seeder
             ],
             [
                 'command' => $this->matchstart_command,
+                'verification' => $this->matchstart_verification,
                 'scope' => 1
             ]
         );
