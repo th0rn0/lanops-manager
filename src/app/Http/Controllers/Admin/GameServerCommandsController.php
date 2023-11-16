@@ -36,23 +36,24 @@ class GameServerCommandsController extends Controller
     public function store(Game $game, Request $request)
     {
         $rules = [
-            'name'              => 'required',
-            'command'           => 'required',
-            'scope'             => 'required'
+            'name' => 'required',
+            'command' => 'required',
+            'scope' => 'required'
         ];
         $messages = [
-            'name.required'           => 'Command name is required',
-            'command.required'        => 'Command is required',
-            'scope.required'          => 'Command scope is required',
+            'name.required' => 'Command name is required',
+            'command.required' => 'Command is required',
+            'scope.required' => 'Command scope is required',
         ];
 
         $this->validate($request, $rules, $messages);
 
-        $gameServerCommand                 = new GameServerCommand();
-        $gameServerCommand->name           = $request->name;
-        $gameServerCommand->game_id        = $game->id;
-        $gameServerCommand->command        = $request->command;
-        $gameServerCommand->scope          = $request->scope;
+        $gameServerCommand = new GameServerCommand();
+        $gameServerCommand->name = $request->name;
+        $gameServerCommand->game_id = $game->id;
+        $gameServerCommand->command = $request->command;
+        $gameServerCommand->verification = (isset($request->verification) && !empty($request->verification)) ? $request->verification : null;
+        $gameServerCommand->scope = $request->scope;
 
         if (!$gameServerCommand->save()) {
             Session::flash('alert-danger', 'Could not save GameServerCommand!');
@@ -72,22 +73,23 @@ class GameServerCommandsController extends Controller
     public function update(Game $game, GameServerCommand $gameServerCommand, Request $request)
     {
         $rules = [
-            'name'              => 'required',
-            'command'           => 'required',
-            'scope'             => 'required'
+            'name' => 'required',
+            'command' => 'required',
+            'scope' => 'required'
         ];
         $messages = [
-            'name.required'           => 'Command name is required',
-            'command.required'        => 'Command is required',
-            'scope.required'          => 'Command scope is required',
+            'name.required' => 'Command name is required',
+            'command.required' => 'Command is required',
+            'scope.required' => 'Command scope is required',
         ];
 
 
         $this->validate($request, $rules, $messages);
 
-        $gameServerCommand->name           = $request->name;
-        $gameServerCommand->command        = $request->command;
-        $gameServerCommand->scope          = $request->scope;
+        $gameServerCommand->name = $request->name;
+        $gameServerCommand->command = $request->command;
+        $gameServerCommand->verification = (isset($request->verification) && !empty($request->verification)) ? $request->verification : null;
+        $gameServerCommand->scope = $request->scope;
 
         if (!$gameServerCommand->save()) {
             Session::flash('alert-danger', 'Could not save Game Server Command!');
@@ -126,58 +128,48 @@ class GameServerCommandsController extends Controller
 
     }
 
-    private function executeCommand(GameServer $gameServer, string $command)
+    private function executeCommand(GameServer $gameServer, string $command, ?string $verification)
     {
 
-        $validator = Validator::make(['gameServer' => $gameServer, 'command' => $command], [
-            'gameServer'              => 'required',
-            'command'           => 'required',
-        ],
-        ['gameServer.required'           => 'gameServer is required',
-        'command.required'        => 'Command is required',
-        ]);
+        $validator = Validator::make(
+            ['gameServer' => $gameServer, 'command' => $command],
+            [
+                'gameServer' => 'required',
+                'command' => 'required',
+            ],
+            [
+                'gameServer.required' => 'gameServer is required',
+                'command.required' => 'Command is required',
+            ]
+        );
         if ($validator->fails())
             print_r($validator);
 
         $result = false;
 
-        try
-        {
+        try {
             $commandHandler = (new GameCommandHandler())->getGameCommandHandler($gameServer->game->gamecommandhandler);
             $commandHandler->init($gameServer->rcon_address ?? $gameServer->address, $gameServer->rcon_port, $gameServer->rcon_password);
-            $result = $commandHandler->execute($command);
-            if($result == false)
-            {
-                $error ="Unexpected Error occured.";
+            $result = $commandHandler->execute($command, $verification);
+            if ($result == false) {
+                $error = "Unexpected Error occured.";
             }
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $error = $e->getMessage();
-        }
-        catch(Throwable $e)
-        {
+        } catch (Throwable $e) {
             $error = $e->getMessage();
-        }
-        catch (TimeoutException $e)
-        {
+        } catch (TimeoutException $e) {
             $error = $e->getMessage();
-        }
-        finally
-        {
-            if(isset($commandHandler))
-            {
+        } finally {
+            if (isset($commandHandler)) {
                 $commandHandler->dispose();
             }
         }
 
-        if (isset($error) || $result == false)
-        {
+        if (isset($error) || $result == false) {
             Session::flash('alert-danger', 'Error while executing command "' . $command . '" with connector ' . Helpers::getGameCommandHandlerSelectArray()[$gameServer->game->gamecommandhandler] . ' Error:' . var_export($error, true) . ' Result:' . var_export($result, true));
             return false;
-        }
-         else
-        {
+        } else {
             Session::flash('alert-success', 'Successfully executed command "' . $command . '" with connector ' . Helpers::getGameCommandHandlerSelectArray()[$gameServer->game->gamecommandhandler] . ' Result:' . var_export($result, true));
             return true;
         }
@@ -193,7 +185,7 @@ class GameServerCommandsController extends Controller
     public function executeGameServerCommand(Game $game, GameServer $gameServer, Request $request)
     {
         $rules = [
-            'command'           => 'filled'
+            'command' => 'filled'
         ];
         $messages = [
             'command.required' => 'Command is required'
@@ -208,14 +200,14 @@ class GameServerCommandsController extends Controller
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
 
 
-        $this->executeCommand($gameServer, $command);
+        $this->executeCommand($gameServer, $command, $gameServerCommand->verification);
 
         return Redirect::back();
     }
 
 
 
-      /**
+    /**
      * execute gameServerMatchCommand
      * @param  Game  $game
      * @param  GameServer  $gameServer
@@ -239,7 +231,7 @@ class GameServerCommandsController extends Controller
     public function internalExecuteGameServerTournamentMatchCommand(Game $game, GameServer $gameServer, EventTournament $tournament, Request $request)
     {
         $rules = [
-            'command'           => 'filled'
+            'command' => 'filled'
         ];
         $messages = [
             'command.required' => 'Command is required'
@@ -247,7 +239,7 @@ class GameServerCommandsController extends Controller
         $this->validate($request, $rules, $messages);
 
         $challongeMatch = $tournament->getMatch($request->challonge_match_id);
-        
+
 
         $gameServerCommand = GameServerCommand::find($request->command);
         $availableParameters = new \stdClass();
@@ -257,19 +249,19 @@ class GameServerCommandsController extends Controller
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $challongeMatch;
         $availableParameters->gamematchapiurl = new \stdClass();
-        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatch->id."/configure/".$tournament->getnummaps($request->challonge_match_id);
-        $availableParameters->gamematchapiurl->matchapibase = config('app.url')."/api/events/".$tournament->event->slug."/tournaments/".$tournament->slug."/".$challongeMatch->id;
-     
+        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatch->id . "/configure/" . $tournament->getnummaps($request->challonge_match_id);
+        $availableParameters->gamematchapiurl->matchapibase = config('app.url') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatch->id;
+
 
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
 
-        return $this->executeCommand($gameServer, $command);
+        return $this->executeCommand($gameServer, $command, $gameServerCommand->verification);
 
     }
 
 
 
- 
+
 
     /**
      * execute executeGameServerTournamentMatchMakingCommand
@@ -286,7 +278,7 @@ class GameServerCommandsController extends Controller
         return Redirect::back();
     }
 
-        /**
+    /**
      * execute executeGameServerTournamentMatchMakingCommand
      * @param  Game  $game
      * @param  GameServer  $gameServer
@@ -297,7 +289,7 @@ class GameServerCommandsController extends Controller
     public function internalExecuteGameServerMatchMakingCommand(Game $game, GameServer $gameServer, MatchMaking $match, Request $request)
     {
         $rules = [
-            'command'           => 'filled'
+            'command' => 'filled'
         ];
         $messages = [
             'command.required' => 'Command is required'
@@ -310,13 +302,13 @@ class GameServerCommandsController extends Controller
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $match;
         $availableParameters->gamematchapiurl = new \stdClass();
-        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url')."/api/matchmaking/".$match->id."/configure/1";
-        $availableParameters->gamematchapiurl->matchapibase = config('app.url')."/api/matchmaking/".$match->id;
+        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url') . "/api/matchmaking/" . $match->id . "/configure/1";
+        $availableParameters->gamematchapiurl->matchapibase = config('app.url') . "/api/matchmaking/" . $match->id;
 
 
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
 
-        return $this->executeCommand($gameServer, $command);
+        return $this->executeCommand($gameServer, $command, $gameServerCommand->verification);
 
         //return Redirect::back();
     }

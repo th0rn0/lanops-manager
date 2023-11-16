@@ -30,6 +30,7 @@ class CSGOSeeder extends Seeder
 
     public string $matchstart_name = 'Load Match Get5';
     public string $matchstart_command = 'get5_loadmatch_url "{>gamematchapiurl->matchconfigapi}" Authorization "Bearer {>gameServer->gameserver_secret}"';
+    public string $matchstart_verification = null;
 
     public array $game_command_parameters = [
         [
@@ -41,36 +42,44 @@ class CSGOSeeder extends Seeder
     public array $additional_match_commands = [
         [
             'name' => 'get5 match status',
-            'command' => 'get5_status'
+            'command' => 'get5_status',
+            'verification' => null
         ],
         [
             'name' => 'get5 end match',
-            'command' => 'get5_endmatch'
+            'command' => 'get5_endmatch',
+            'verification' => null
         ],
         [
             'name' => 'get5 force ready',
-            'command' => 'get5_forceready'
+            'command' => 'get5_forceready',
+            'verification' => null
         ]
     ];
 
     public array $additional_gameserver_commands = [
         [
             'name' => 'unban all',
-            'command' => 'removeallids'
+            'command' => 'removeallids',
+            'verification' => null
         ],
         [
             'name' => 'skip warmup',
-            'command' => 'mp_warmup 0'
+            'command' => 'mp_warmup 0',
+            'verification' => null
         ],
         [
             'name' => 'end warmup',
-            'command' => 'mp_warmup_end'
+            'command' => 'mp_warmup_end',
+            'verification' => null
         ],
         [
             'name' => 'changelevel casual',
-            'command' => 'changelevel {>mapcasual}'
+            'command' => 'changelevel {>mapcasual}',
+            'verification' => null
         ]
     ];
+
 
 
     /**
@@ -86,19 +95,19 @@ class CSGOSeeder extends Seeder
                 'name' => $this->name
             ],
             [
-                'description'               => $this->description,
-                'version'                   => $this->version,
-                'public'                    => $this->public,
-                'gamecommandhandler'        => $this->gamecommandhandler,
-                'connect_game_url'          => $this->connect_game_url,
-                'connect_game_command'          => $this->connect_game_command,
-                'connect_stream_url'          => $this->connect_stream_url,
-                'min_team_count'          => $this->min_team_count,
-                'max_team_count'          => $this->max_team_count,
-                'gamematchapihandler'          => $this->gamematchapihandler,
-                'matchmaking_enabled'          => $this->matchmaking_enabled,
-                'matchmaking_autostart'          => $this->matchmaking_autostart,
-                'matchmaking_autoapi'          => $this->matchmaking_autoapi
+                'description' => $this->description,
+                'version' => $this->version,
+                'public' => $this->public,
+                'gamecommandhandler' => $this->gamecommandhandler,
+                'connect_game_url' => $this->connect_game_url,
+                'connect_game_command' => $this->connect_game_command,
+                'connect_stream_url' => $this->connect_stream_url,
+                'min_team_count' => $this->min_team_count,
+                'max_team_count' => $this->max_team_count,
+                'gamematchapihandler' => $this->gamematchapihandler,
+                'matchmaking_enabled' => $this->matchmaking_enabled,
+                'matchmaking_autostart' => $this->matchmaking_autostart,
+                'matchmaking_autoapi' => $this->matchmaking_autoapi
             ]
         );
 
@@ -128,6 +137,7 @@ class CSGOSeeder extends Seeder
                 ],
                 [
                     'command' => $additional_match_command['command'],
+                    'verification' => $additional_match_command['verification'],
                     'scope' => 1
                 ]
             );
@@ -144,6 +154,7 @@ class CSGOSeeder extends Seeder
                 ],
                 [
                     'command' => $additional_gameserver_command['command'],
+                    'verification' => $additional_gameserver_command['verification'],
                     'scope' => 0
                 ]
             );
@@ -161,6 +172,7 @@ class CSGOSeeder extends Seeder
             ],
             [
                 'command' => $this->matchstart_command,
+                'verification' => $this->matchstart_verification,
                 'scope' => 1
             ]
         );
