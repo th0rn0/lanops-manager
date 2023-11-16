@@ -30,7 +30,7 @@ class CS2Seeder extends Seeder
 
     public string $matchstart_name = 'Load Match Pugsharp';
     public string $matchstart_command = 'ps_loadconfig "{>gamematchapiurl->matchconfigapi}" "Bearer {>gameServer->gameserver_secret}"';
-    public string $matchstart_verification = null;
+    public ?string $matchstart_verification = null;
 
     public array $game_command_parameters = [
         [
