@@ -30,7 +30,7 @@ class CSGOSeeder extends Seeder
 
     public string $matchstart_name = 'Load Match Get5';
     public string $matchstart_command = 'get5_loadmatch_url "{>gamematchapiurl->matchconfigapi}" Authorization "Bearer {>gameServer->gameserver_secret}"';
-    public string $matchstart_verification = null;
+    public ?string $matchstart_verification = null;
 
     public array $game_command_parameters = [
         [
