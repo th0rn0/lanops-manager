@@ -182,16 +182,35 @@ Some things you should think of before starting out implementing new features:
 - Can another feature thats already implemented be expanded? yes? then go for that instead of Building complete new stuff!
 - Does the addition / change might affect other usecases than your own? Build your changes with legacy support in mind!
 - Try to follow the coding Style which is used within eventula, just look around in our features to see which case is handled mostly in which manner
-- Have i started an issue to announce that im working on a feature/change to get thoughts from the other developers and to prevent incompatibillities? No? Go for it! :)
 - Why i shouldn't join the eventula discord developer channel for discussion?  
+
+
+To start a new code contribution please:
+
+- open an issue to announce that you are working on a feature/change to get thoughts from the other developers and to prevent incompatibillities
+- make your fork PugSharp (if you are not already a acknowledged developer who can create branches on our repository)
+- make a new branch based on ``dev`` with the Name ``feature/examplefeature`` 
+- as soon as you have code, please open a draft pull request against the ``dev`` branch. 
 
 Before you want to PR changes you should ask yourself some questions:
 
+
 - Have i tried to update a running version from eventula with data to the one with my changes? Are the changes update proof?
-- Have i implemented all strings with localised variables? See Localisation!
-- Have i changed the documentation (at least the english on!) on the affected parts?
+- Have i changed the admin documentation on the affected parts?
+- Have i implemented all strings with localized variables? See Localisation!
+- Have i changed the developer documentation on the affected parts?
 - Have i changed the readme.md on the affected parts?
+- Does my pull request have a good speaking name that represents my changes in the changelog?
+- Do i have merged the current ``dev`` branch into my feature branch?
 
 .. note::
    Please open your pull requests against our ``dev`` branch. 
    We will not merge to master directly!
+
+What will happen after you have converted to the finalized pull request:
+
+.. - Someone of the core developer team assigns a specific label to your pull request, then our sonarcloud code analysis will run on your code. Afterwards please fix the things sonarcloud complains about.
+.. - When your code passes the sonarcloud analysis, someone of the core developer team will review your code and will help you to find missing things or bugs.
+
+- Someone of the core developer team will review your code and will help you to find missing things or bugs.
+- As soon as the review is done, your code will be merged to dev (where can be tested for a few days) and will get merged to main as soon as possible. Currently we make releases in a rolling manner.

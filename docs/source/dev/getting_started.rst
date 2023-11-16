@@ -8,6 +8,7 @@ To develop eventula, you should use the Makefile the repository.
 Prerequisites
 ..............
 
+- Linux or inside WSL (please clone your repo already in WSL)
 - Docker v17+
 - Docker-compose v1.18+
 - API Keys for one of the Payment Providers
