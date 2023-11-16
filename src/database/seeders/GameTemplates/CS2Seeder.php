@@ -30,7 +30,7 @@ class CS2Seeder extends Seeder
 
     public string $matchstart_name = 'Load Match Pugsharp';
     public string $matchstart_command = 'ps_loadconfig "{>gamematchapiurl->matchconfigapi}" "Bearer {>gameServer->gameserver_secret}"';
-    public ?string $matchstart_verification = null;
+    public ?string $matchstart_verification = '/Matchconfig loaded!/';
 
     public array $game_command_parameters = [
         [
@@ -48,16 +48,11 @@ class CS2Seeder extends Seeder
         [
             'name' => 'ps stop match',
             'command' => 'ps_stopmatch',
-            'verification' => null
+            'verification' => '/Match stopped!/'
         ]
     ];
 
     public array $additional_gameserver_commands = [
-        [
-            'name' => 'skip warmup',
-            'command' => 'mp_warmup 0',
-            'verification' => null
-        ],
         [
             'name' => 'end warmup',
             'command' => 'mp_warmup_end',
