@@ -318,8 +318,8 @@ class PugSharpMatchApiHandler implements IGameMatchApiHandler
             "de_overpass",
             "de_ancient"
         );
-        $this->result->max_rounds = 5;
-        $this->result->max_overtime_rounds = 2;
+        $this->result->max_rounds = 24;
+        $this->result->max_overtime_rounds = 6;
     }
 
     public function getuserthirdpartyrequirements()
