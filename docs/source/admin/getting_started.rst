@@ -49,7 +49,7 @@ create a folder where you put your .environment and your docker compose file in.
 
 Then create the ``.env`` file. 
 
-Fill in the APP_KEY from the last step and all other empty Variables (if not optional ones).
+Fill in the APP_KEY from the last step and all other empty Variables (if not optional ones). By default you have to set your API keys in your Admin interface, so you don't have to insert them here. If you want that instead, you have to set ``ENV_OVERRIDE=true`` in your App Settings below.
 
 .. code-block:: bash
 
@@ -79,8 +79,8 @@ Fill in the APP_KEY from the last step and all other empty Variables (if not opt
     FORCE_APP_HTTPS=true
     # HTTPS Only Cookies - By setting this option to true, session cookies will only be sent back to the server if the browser has a HTTPS connection. This will keep the cookie from being sent to you if it can not be done securely.
     SESSION_SECURE_COOKIE=true
-    # ENV Overide If set to true, the App will take its API Keys from the ENV instead of the database. This includes Paypal, Stripe, Facebook, Challonge, Google Analytics, Facebook Analytics and Steam. With the default setting, you have to configure those credentials below.
-    ENV_OVERRIDE=true
+    # ENV Overide If set to true, the App will take its API Keys from the ENV instead of the database. This includes Paypal, Stripe, Facebook, Challonge, Google Analytics, Facebook Analytics and Steam. With the default setting, you have to configure those credentials in the admin menu.
+    ENV_OVERRIDE=false
 
 
     #######################
@@ -171,6 +171,12 @@ Fill in the APP_KEY from the last step and all other empty Variables (if not opt
     TIMEZONE=Europe/Berlin
     TZ=Europe/Berlin
 
+
+    #################################################################################################################################
+    #################################################################################################################################
+    ## Warning: if you want to configure any API credentials below, you have to set ENV_OVERRIDE=true under the App Settings above ##
+    #################################################################################################################################
+    #################################################################################################################################
 
     #######################
     ## Payment Providers ##
