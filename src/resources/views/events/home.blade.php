@@ -741,11 +741,11 @@ use Debugbar;
 													@if($event->getSeat($seatingPlan->id,  $column, $row)->status == 'ACTIVE')
 													@if ($seatingPlan->locked)
 													<button class="btn btn-success btn-sm" disabled>
-														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row))->eventParticipant->user->username }}
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row)->eventParticipant->user->username }}
 													</button>
 													@else
 													<button class="btn btn-success btn-sm" disabled>
-														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row))->eventParticipant->user->username }}
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row)->eventParticipant->user->username }}
 													</button>
 													@endif
 													@endif
