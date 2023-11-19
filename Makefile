@@ -178,6 +178,14 @@ generate-testuser:
 generate-event:
 	docker exec eventula_manager_app php artisan db:seed --class=EventsSeeder
 
+# Generate test cs2 matchmaking match with a demo - This will generate a sample cs2 matchmaking match with a demo (needs the generate-games command before running)! example: make generate-cs2mm playeroneid=useridhere playertwoid=useridhere democount=democounthere status=statushere
+generate-cs2mm:
+	docker exec -e playeroneid=$(playeroneid) -e playertwoid=$(playertwoid) -e democount=$(democount) -e status=$(status) eventula_manager_app php artisan db:seed --class=TestCs2MatchMakingSeeder
+
+# Generate demo(s) into existing challonge matches  (needs the generate-games command before running)! example: make generate-demos-tournament democount=democounthere challongematchid=challongematchidhere
+generate-demos-tournament:
+	docker exec -e democount=$(democount) -e challongematchid=$(challongematchid) eventula_manager_app php artisan db:seed --class=TestTournamentDemoSeeder
+
 # Generate event - This will generate a sample event!
 generate-games:
 	docker exec eventula_manager_app php artisan db:seed --class=GamesTableSeeder

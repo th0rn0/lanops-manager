@@ -90,4 +90,30 @@ class MatchReplay extends Model
         return Helpers::bytesToHuman(Storage::disk('public')->size(MatchReplay::getReplayPath($game, $demoname)));
     }
 
+    public function deleteReplayFile(?Game $game = null)
+    {
+        if(isset($this->matchMakingMatch))
+        {
+            if(!Storage::disk('public')->delete(MatchReplay::getReplayPath($this->matchMakingMatch->game, $this->name)))
+            {
+                return false;
+            }
+            return true;
+        }
+        else
+        {
+            if (!isset($game))
+            {
+                return false;
+            }
+            if(!Storage::disk('public')->delete(MatchReplay::getReplayPath($game, $this->name)))
+            {
+                return false;
+            }
+            return true;
+        }
+
+    }
+
+
 }

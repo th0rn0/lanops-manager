@@ -113,6 +113,8 @@ return [
     'cannotdeletematchnotowner' => 'Cannot delete Match because you are not the owner!',
     'cannotdeleteplayers' => 'Cannot delete Players!',
     'cannotdeleteteams' => 'Cannot delete Teams!',
+    'cannotdeletereplays' => 'Cannot delete Replays!',
+    'cannotdeletereplayfiles' => 'Cannot delete Replay files!',
     'cannotdeletematch' => 'Cannot delete Match!',
     'successfullydeletedmatch' => 'Successfully deleted Match!',
     'cannotstartmatchnotowner' => 'Cannot start Match because you are not the owner!',
