@@ -109,6 +109,8 @@ return [
     'cannotdeletematchnotowner' => 'Du kannst das Match nicht löschen da du nicht der Eigentümer bist!',
     'cannotdeleteplayers' => 'Teamplayer konnten nicht gelöscht werden!',
     'cannotdeleteteams' => 'Teams konnten nicht gelöscht werden!',
+    'cannotdeletereplays' => 'Repalys konnten nicht gelöscht werden!',
+    'cannotdeletereplayfiles' => 'Repaly Dateien konnten nicht gelöscht werden!',
     'cannotdeletematch' => 'Match konnte nicht gelöscht werden!',
     'successfullydeletedmatch' => 'Das Match wurde erfolgreich gelöscht!',
     'cannotstartmatchnotowner' => 'Du kannst das Match nicht starten da du nicht der Eigentümer bist!',

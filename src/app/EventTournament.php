@@ -253,6 +253,14 @@ class EventTournament extends Model
                             }
                         }
 
+                        foreach ($matches as $key => $match) {
+                            $replays = MatchReplay::where('challonge_match_id', $match->id)->get();
+                            foreach ($replays as $matchReplay) {
+                                $matchReplay->deleteReplayFile($model->game);
+                                $matchReplay->delete();
+                            }
+                        }
+
                         $response = retry(5, function () use ($challonge, $model) {
                             return $challonge->fetchTournament($model->challonge_tournament_id);
                         }, 100);
@@ -514,7 +522,7 @@ class EventTournament extends Model
      * @return Array|Object
      */
     public function getMatchReplays(int $challongeMatchId, $obj = false)
-    {            
+    {
         return MatchReplay::where('challonge_match_id', $challongeMatchId)->get();
     }
 
@@ -644,8 +652,7 @@ class EventTournament extends Model
      */
     public function updateMatch($matchId, $player1Score, $player2Score, $playerWinnerVerify = null)
     {
-        if ($player1Score == 0 && $player2Score == 0)
-        {
+        if ($player1Score == 0 && $player2Score == 0) {
             return false;
         }
 
@@ -685,16 +692,12 @@ class EventTournament extends Model
             $this->getStandings();
 
             # queue next matches
-            if (isset($this->game) && $this->match_autostart)
-            {
-                
+            if (isset($this->game) && $this->match_autostart) {
                 $nextmatches = $this->getNextMatches();
-    
-                foreach ($nextmatches as $nextmatch)
-                {
+                foreach ($nextmatches as $nextmatch) {
                     $matchserver = EventTournamentMatchServer::getTournamentMatchServer($nextmatch->id);
                     if (!isset($matchserver)) {
-                        GameServerAsign::dispatch(null,$this,$nextmatch->id)->onQueue('gameserver');
+                        GameServerAsign::dispatch(null, $this, $nextmatch->id)->onQueue('gameserver');
                     }
                 }
             }

@@ -607,7 +607,19 @@ class MatchMakingController extends Controller
      */
     public function destroy(MatchMaking $match)
     {
-
+        foreach ($match->matchReplays as $matchReplay)
+        {
+            if(!$matchReplay->deleteReplayFile())
+            {
+                Session::flash('alert-danger', 'Cannot delete Replay files!');
+                return Redirect::back(); 
+            }
+            if(!$matchReplay->delete())
+            {
+                Session::flash('alert-danger', 'Cannot delete Replays!');
+                return Redirect::back(); 
+            }
+        }
         if (!$match->players()->delete()) {
             Session::flash('alert-danger', 'Cannot delete Players!');
             return Redirect::back();

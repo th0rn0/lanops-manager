@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Game;
 use DB;
 use Auth;
 use Session;
@@ -24,8 +25,22 @@ class MatchReplayController extends Controller
      * @param  MatchReplay $matchReplay
      * @return Redirect
      */
-    public function destroy(MatchReplay $matchReplay)
+    public function destroy(Request $request, MatchReplay $matchReplay)
     {
+        if (isset($request->game) && intval($request->game) > 0)
+        {
+            if (!$matchReplay->deleteReplayFile(Game::where('id', intval($request->game))->first())) {
+                Session::flash('alert-danger', 'Cannot delete matchReplay file!');
+                return Redirect::back();
+            }   
+        }
+        else
+        {
+            if (!$matchReplay->deleteReplayFile()) {
+                Session::flash('alert-danger', 'Cannot delete matchReplay file!');
+                return Redirect::back();
+            }   
+        }
         if (!$matchReplay->delete()) {
             Session::flash('alert-danger', 'Cannot delete matchReplay!');
             return Redirect::back();
