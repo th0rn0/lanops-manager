@@ -348,6 +348,7 @@
 															<td width="15%">
 																		{{ Form::open(array('url'=>'/admin/replays/'. $matchReplay->id , 'onsubmit' => 'return ConfirmDelete()')) }}
 																			{{ Form::hidden('_method', 'DELETE') }}
+																			{{ Form::hidden('game', $tournament->game->id) }}
 																			<button type="submit" class="btn btn-danger btn-sm btn-block">Remove</button>
 																		{{ Form::close() }}
 
