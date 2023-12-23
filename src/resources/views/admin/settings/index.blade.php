@@ -84,43 +84,6 @@
 		</div>
 	</div>
 	<div class="col-lg-6 col-xs-12">
-		<!-- Shop System -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Shop System
-			</div>
-			<div class="panel-body">
-				<p>The Shop can be used for buying merch, consumables etc.</p>
-				@if ($isShopEnabled)
-					{{ Form::open(array('url'=>'/admin/settings/shop/disable')) }}
-						<button type="submit" class="btn btn-block btn-danger">Disable</button>
-					{{ Form::close() }}
-				@else
-					{{ Form::open(array('url'=>'/admin/settings/shop/enable')) }}
-						<button type="submit" class="btn btn-block btn-success">Enable</button>
-					{{ Form::close() }}
-				@endif
-			</div>
-		</div>
-		<!-- Credit System -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Credit System
-			</div>
-			<div class="panel-body">
-				<p>The Credit System is used to award participants with credit they can use to buy things from the shop and events. It can be award for buying tickets, attending events, participanting/winning tournaments or manually assigned.</p>
-				@if ($isCreditEnabled)
-					{{ Form::open(array('url'=>'/admin/settings/credit/disable')) }}
-						<button type="submit" class="btn btn-block btn-danger">Disable</button>
-					{{ Form::close() }}
-				@else
-					{{ Form::open(array('url'=>'/admin/settings/credit/enable')) }}
-						<button type="submit" class="btn btn-block btn-success">Enable</button>
-					{{ Form::close() }}
-				@endif
-			</div>
-		</div>
-
 		<!-- Social Media -->
 		<div class="panel panel-default">
 			<div class="panel-heading">

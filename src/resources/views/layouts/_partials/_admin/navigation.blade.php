@@ -71,17 +71,6 @@
 			<li>
 				<a href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
 			</li>
-			<li>
-				<a href="/admin/credit"><i class="fa fa-refresh fa-fw" aria-hidden="true"></i> Credit System (Beta)</a> 
-			</li>
-			<li>
-				<a href="/admin/shop"><i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i> Shop (Beta)</a> 
-			</li>
-			@if (Settings::isShopEnabled())
-				<li>
-					<a href="/admin/orders"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> Orders (Beta)</a> 
-				</li>
-			@endif
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->

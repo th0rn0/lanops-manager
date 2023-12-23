@@ -101,12 +101,6 @@
 												 <br>
 											 	@if ($item->price != null)
 													{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-													@if ($item->price_credit != null && Settings::isCreditEnabled())
-														/
-													@endif
-												@endif
-												@if ($item->price_credit != null && Settings::isCreditEnabled())
-													{{ $item->price_credit * $item->quantity }} Credits
 												@endif
 												@if (!$loop->last)
 													<hr>
@@ -243,12 +237,6 @@
 												 <br>
 											 	@if ($item->price != null)
 													{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-													@if ($item->price_credit != null && Settings::isCreditEnabled())
-														/
-													@endif
-												@endif
-												@if ($item->price_credit != null && Settings::isCreditEnabled())
-													{{ $item->price_credit * $item->quantity }} Credits
 												@endif
 												@if (!$loop->last)
 													<hr>

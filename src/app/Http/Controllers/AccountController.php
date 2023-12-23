@@ -22,15 +22,10 @@ class AccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $creditLogs = false;
-        if (Settings::isCreditEnabled()) {
-            $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'cl');
-        }
         $purchases = $user->purchases()->paginate(5, ['*'], 'pu');
         $tickets = $user->eventParticipants()->paginate(5, ['*'], 'ti');
         return view("accounts.index")
             ->withUser($user)
-            ->withCreditLogs($creditLogs)
             ->withPurchases($purchases)
             ->withEventParticipants($tickets)
         ;

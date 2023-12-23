@@ -11,7 +11,6 @@ use \Carbon\Carbon as Carbon;
 
 use App\User;
 use App\Event;
-use App\ShopOrder;
 use App\Poll;
 use App\PollOptionVote;
 use App\EventParticipant;
@@ -36,7 +35,6 @@ class AdminController extends Controller
         $user = Auth::user();
         $users = User::all();
         $events = Event::all();
-        $orders = ShopOrder::getNewOrders('login');
         $participants = EventParticipant::getNewParticipants('login');
         $participantCount = EventParticipant::all()->count();
         $tournamentCount = EventTournament::all()->count();
@@ -63,10 +61,6 @@ class AdminController extends Controller
             }
             $userLoginMethodCount[$gateway] = $count;
         }
-        $orderBreakdown = array();
-        foreach (ShopOrder::where('created_at', '>=', Carbon::now()->subMonths(12)->month)->get() as $order) {
-            $orderBreakdown[date_format($order->created_at, 'm')][] = $order;
-        }
         $ticketBreakdown = array();
         foreach (EventParticipant::where('created_at', '>=', Carbon::now()->subMonths(12)->month)->get() as $participant) {
             $ticketBreakdown[date_format($participant->created_at, 'm')][] = $participant;
@@ -74,14 +68,11 @@ class AdminController extends Controller
         return view('admin.index')
             ->withUser($user)
             ->withEvents($events)
-            ->withOrders($orders)
             ->withParticipants($participants)
             ->withVotes($votes)
             ->withComments($comments)
             ->withTickets($tickets)
             ->withActivePolls($activePolls)
-            ->withShopEnabled(Settings::isShopEnabled())
-            ->withCreditEnabled(Settings::isCreditEnabled())
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
             ->withSupportedPaymentGateways($loginSupportedGateways)
@@ -94,7 +85,6 @@ class AdminController extends Controller
             ->withNextEvent(Helpers::getNextEventName())
             ->withTournamentCount($tournamentCount)
             ->withTournamentParticipantCount($tournamentParticipantCount)
-            ->withOrderBreakdown($orderBreakdown)
             ->withTicketBreakdown($ticketBreakdown);
     }
 }

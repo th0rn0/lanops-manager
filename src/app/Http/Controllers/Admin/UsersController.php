@@ -37,13 +37,8 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        $creditLogs = false;
-        if (Settings::isCreditEnabled()) {
-            $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'cl');
-        }
         return view('admin.users.show')
             ->withUserShow($user)
-            ->withCreditLogs($creditLogs)
             ->withPurchases($user->purchases()->paginate(10, ['*'], 'pu'));
     }
 

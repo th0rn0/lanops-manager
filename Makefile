@@ -1,13 +1,13 @@
 dev:
-	docker-compose -f docker-compose.yml up -d --build 
+	docker compose -f docker-compose.yml up -d --build 
 
 # Debug
 interactive:
-	docker-compose -f docker-compose.yml up --build
+	docker compose -f docker-compose.yml up --build
 
 # Stop all Containers
 stop:
-	docker-compose -f docker-compose.yml stop
+	docker compose -f docker-compose.yml stop
 
 # Build from clean
 app-build-clean: folder-structure layout-images dev app-build-dep wait database-migrate database-seed generate-key stop ssh-keygen
@@ -147,8 +147,8 @@ gulp:
 
 # Purge Containers
 purge-containers:
-	docker-compose -f docker-compose.yml -p eventula_manager stop
-	docker-compose -f docker-compose.yml -p eventula_manager rm -vf
+	docker compose -f docker-compose.yml -p eventula_manager stop
+	docker compose -f docker-compose.yml -p eventula_manager rm -vf
 	docker rm eventula_manager_app
 	docker rm eventula_manager_database
 	docker volume rm eventula_manager_db

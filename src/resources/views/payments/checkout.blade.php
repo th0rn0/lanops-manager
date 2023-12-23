@@ -31,24 +31,12 @@
 										<td class="text-right">
 											@if ($item->price != null && $item->price != 0)
 												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
-												@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-													/
-												@endif
-											@endif
-											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-												{{ number_format($item->price_credit, 2) }} Credits
 											@endif
 											Each
 										</td>
 										<td class="text-right">
 											@if ($item->price != null && $item->price != 0)
 												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price * $item->quantity, 2) }}
-												@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-													/
-												@endif
-											@endif
-											@if ($item->price_credit != null && Settings::isCreditEnabled() && $item->price_credit != 0)
-												{{ number_format($item->price_credit * $item->quantity, 2) }} Credits
 											@endif
 										</td>
 									</tr>
@@ -61,12 +49,6 @@
 										<strong>Total:</strong>
 										@if ($basket->total != null)
 											{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
-											@if ($basket->total_credit != null && Settings::isCreditEnabled())
-												/
-											@endif
-										@endif
-										@if ($basket->total_credit != null && Settings::isCreditEnabled())
-											{{ number_format($basket->total_credit, 2) }} Credits
 										@endif
 									</td>
 								</tr>
@@ -97,22 +79,6 @@
 								<p><small>{{ Settings::getPaymentGatewayNote($gateway) }}</small></p>
 							</div>
 						@endforeach
-						@if (Settings::isCreditEnabled())
-							<div class="col-xs-12 col-md-6">
-								<div class="section-header">
-									<h4>
-										Credit
-									</h4>
-									<hr>
-								</div>
-								<a href="/payment/review/credit">
-									<button type="button" class="btn btn-primary btn-block">
-										Pay With Credit
-									</button>
-								</a>
-								<p><small>Credit purchases are non refundable.</small></p>
-							</div>
-						@endif
 					</div>
 				</div>
 			</div>

@@ -27,7 +27,6 @@ Route::group(['middleware' => ['installed']], function () {
      * Front End
      */
     Route::group(['middleware' => ['web']], function () {
-        
         /**
          * Login & Register
          */
@@ -165,20 +164,6 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
             Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
         });
-
-        /**
-         * Shop
-         */
-        Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
-            Route::get('/shop/orders', 'ShopController@showAllOrders');
-            Route::get('/shop/orders/{order}', 'ShopController@showOrder');
-        });
-        Route::get('/shop', 'ShopController@index');
-        Route::get('/shop/basket', 'ShopController@showBasket');
-        Route::post('/shop/basket', 'ShopController@updateBasket');
-        Route::get('/shop/{category}', 'ShopController@showCategory');
-        Route::get('/shop/{category}/{item}', 'ShopController@showItem');
-
     });
 
     /**
@@ -360,8 +345,6 @@ Route::group(['middleware' => ['installed']], function () {
         Route::get('/admin/settings/org', 'Admin\SettingsController@showOrg');
         Route::get('/admin/settings/payments', 'Admin\SettingsController@showPayments');
         Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
-        Route::get('/admin/settings/api', 'Admin\SettingsController@showApi');
-        Route::post('/admin/settings/api', 'Admin\SettingsController@updateApi');
         Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
         Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
         Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
@@ -422,29 +405,6 @@ Route::group(['middleware' => ['installed']], function () {
         Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
 
         /**
-         * Credit System
-         */
-        Route::get('/admin/credit', 'Admin\CreditController@index');
-        Route::post('/admin/credit/edit', 'Admin\CreditController@edit');
-        Route::post('/admin/credit/settings', 'Admin\CreditController@settings');
-
-        /**
-         * Shop
-         */
-        Route::get('/admin/shop', 'Admin\ShopController@index');
-        Route::post('/admin/shop/item', 'Admin\ShopController@storeItem');
-        Route::post('/admin/shop/category', 'Admin\ShopController@storeCategory');
-        Route::get('/admin/shop/{category}', 'Admin\ShopController@showCategory');
-        Route::post('/admin/shop/{category}', 'Admin\ShopController@updateCategory');
-        Route::delete('/admin/shop/{category}', 'Admin\ShopController@deleteCategory');
-        Route::get('/admin/shop/{category}/{item}', 'Admin\ShopController@showItem');
-        Route::post('/admin/shop/{category}/{item}', 'Admin\ShopController@updateItem');
-        Route::delete('/admin/shop/{category}/{item}', 'Admin\ShopController@deleteItem');
-        Route::post('/admin/shop/{category}/{item}/images', 'Admin\ShopController@uploadItemImage');
-        Route::post('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@updateItemImage');
-        Route::delete('/admin/shop/{category}/{item}/images/{image}', 'Admin\ShopController@deleteItemImage');
-
-        /**
          * Orders
          */
         Route::get('/admin/orders', 'Admin\OrdersController@index');
@@ -454,6 +414,5 @@ Route::group(['middleware' => ['installed']], function () {
         Route::post('/admin/orders/{order}/tracking', 'Admin\OrdersController@updateTrackingDetails');
         Route::post('/admin/orders/{order}/complete', 'Admin\OrdersController@setAsComplete');
         Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');
-
     });
 });

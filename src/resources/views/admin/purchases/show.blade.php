@@ -45,22 +45,10 @@
 									<td>
 										@if ($item->price != null)
 											{{ Settings::getCurrencySymbol() }}{{ $item->price }}
-											@if ($item->price_credit != null && Settings::isCreditEnabled())
-												/
-											@endif
-										@endif
-										@if ($item->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit }} Credits 
 										@endif
 										Each | 
 										@if ($item->price != null)
 											{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-											@if ($item->price_credit != null && Settings::isCreditEnabled())
-												/
-											@endif
-										@endif
-										@if ($item->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit * $item->quantity }} Credits 
 										@endif
 										Total
 									</td>
@@ -78,12 +66,6 @@
 									<td>
 										@if ($participant->ticket->price != null)
 											{{ Settings::getCurrencySymbol() }}{{ $participant->ticket->price }}
-											@if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
-												/
-											@endif
-										@endif
-										@if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit }} Credits 
 										@endif
 									</td>
 								</tr>

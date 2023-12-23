@@ -40,7 +40,6 @@ class SettingsController extends Controller
         return view('admin.settings.index')
             ->withSettings(Setting::all())
             ->withIsShopEnabled(Settings::isShopEnabled())
-            ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withFacebookCallback($facebookCallback)
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
@@ -68,7 +67,6 @@ class SettingsController extends Controller
         return view('admin.settings.payments')
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
-            ->withIsCreditEnabled(Settings::isCreditEnabled())
             ->withIsShopEnabled(Settings::isShopEnabled())
         ;
     }
@@ -85,75 +83,7 @@ class SettingsController extends Controller
             ->withActiveLoginMethods(Settings::getLoginMethods())
         ;
     }
-
-    /**
-     * Show API Index Page
-     * @return Redirect
-     */
-    public function showApi()
-    {
-        return view('admin.settings.api')
-            ->withApiKeys(ApiKey::all())
-            ->withPaypalUsername(ApiKey::where('key', 'paypal_username')->first()->value)
-            ->withPaypalPassword(ApiKey::where('key', 'paypal_password')->first()->value)
-            ->withPaypalSignature(ApiKey::where('key', 'paypal_signature')->first()->value)
-            ->withStripePublicKey(ApiKey::where('key', 'stripe_public_key')->first()->value)
-            ->withStripeSecretKey(ApiKey::where('key', 'stripe_secret_key')->first()->value)
-            ->withFacebookAppId(ApiKey::where('key', 'facebook_app_id')->first()->value)
-            ->withFacebookAppSecret(ApiKey::where('key', 'facebook_app_secret')->first()->value)
-            ->withChallongeApiKey(ApiKey::where('key', 'challonge_api_key')->first()->value)
-            ->withGoogleAnalyticsTrackingId(ApiKey::where('key', 'google_analytics_tracking_id')->first()->value)
-            ->withSteamApiKey(ApiKey::where('key', 'steam_api_key')->first()->value)
-        ;
-    }
     
-     /**
-     * Update API
-     * @param  Request $request
-     * @return Redirect
-     */
-    public function updateApi(Request $request)
-    {
-        if (isset($request->challonge_api_key) && !ApiKey::setChallongeApiKey($request->challonge_api_key)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->steam_api_key) && !ApiKey::setSteamApiKey($request->steam_api_key)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->facebook_app_id) && !ApiKey::setFacebookAppId($request->facebook_app_id)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->facebook_app_secret) && !ApiKey::setFacebookAppSecret($request->facebook_app_secret)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->paypal_username) && !ApiKey::setPaypalUsername($request->paypal_username)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->paypal_password) && !ApiKey::setPaypalPassword($request->paypal_password)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->paypal_signature) && !ApiKey::setPaypalSignature($request->paypal_signature)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->stripe_public_key) && !ApiKey::setStripePublicKey($request->stripe_public_key)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        if (isset($request->stripe_secret_key) && !ApiKey::setStripeSecretKey($request->stripe_secret_key)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        Session::flash('alert-success', 'Successfully updated!');
-        return Redirect::back();
-    }
-
     /**
      * Update Settings
      * @param  Request $request
@@ -424,62 +354,6 @@ class SettingsController extends Controller
         return Redirect::back();
     }
     
-    /**
-     * Enable Credit System
-     * @return Redirect
-     */
-    public function enableCreditSystem()
-    {
-        if (!Settings::enableCreditSystem()) {
-            Session::flash('alert-danger', "Could not Enable the Credit System!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Enabled the Credit System!");
-        return Redirect::back();
-    }
-
-    /**
-     * Disable Credit System
-     * @return Redirect
-     */
-    public function disableCreditSystem()
-    {
-        if (!Settings::disableCreditSystem()) {
-            Session::flash('alert-danger', "Could not Disable the Credit System!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Disabled the Credit System!");
-        return Redirect::back();
-    }
-    
-    /**
-     * Enable Shop System
-     * @return Redirect
-     */
-    public function enableShopSystem()
-    {
-        if (!Settings::enableShopSystem()) {
-            Session::flash('alert-danger', "Could not Enable the Shop System!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Enabled the Shop System!");
-        return Redirect::back();
-    }
-
-    /**
-     * Disable Shop System
-     * @return Redirect
-     */
-    public function disableShopSystem()
-    {
-        if (!Settings::disableShopSystem()) {
-            Session::flash('alert-danger', "Could not Disable the Shop System!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Disabled the Shop System!");
-        return Redirect::back();
-    }
-
     /**
      * Enable Login Method
      * @param  String $gateway

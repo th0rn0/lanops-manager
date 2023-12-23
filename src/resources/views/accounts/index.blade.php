@@ -88,71 +88,6 @@
 						{{ Form::close() }}
 					</div>
 				</div>
-				@if ($creditLogs)
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">Credit - {{ $user->credit_total }}</h3>
-						</div>
-						<div class="panel-body">
-							<table width="100%" class="table table-striped table-hover" id="dataTables-example">
-								<thead>
-									<tr>
-										<th>Action</th>
-										<th>Amount</th>
-										<th>Item</th>
-										<th>Reason</th>
-										<th>Timestamp</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach ($creditLogs->reverse() as $creditLog)
-									<tr class="table-row" class="odd gradeX">
-										<td>{{ $creditLog->action }}</td>
-										<td>{{ $creditLog->amount }}</td>
-										<td>
-											@if (strtolower($creditLog->action) == 'buy')
-												@if (!$creditLog->purchase->participants->isEmpty())
-													@foreach ($creditLog->purchase->participants as $participant)
-														{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
-														@if (!$loop->last)
-															<hr>
-														@endif
-													@endforeach
-												@elseif ($creditLog->purchase->order != null)
-													@foreach ($creditLog->purchase->order->items as $item)
-														@if ($item->item)
-															{{ $item->item->name }}
-														@endif 
-														 - x {{ $item->quantity }}
-														 <br>
-													 	@if ($item->price != null)
-															{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-															@if ($item->price_credit != null && Settings::isCreditEnabled())
-																/
-															@endif
-														@endif
-														@if ($item->price_credit != null && Settings::isCreditEnabled())
-															{{ $item->price_credit * $item->quantity }} Credits
-														@endif
-														@if (!$loop->last)
-															<hr>
-														@endif
-													@endforeach
-												@endif
-											@endif
-										</td>
-										<td>{{ $creditLog->reason }}</td>
-										<td>
-											{{ $creditLog->updated_at }}
-										</td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
-							{{ $creditLogs->links() }}
-						</div>
-					</div>
-				@endif
 			</div>
 
 			<!-- TICKETS -->
@@ -227,12 +162,6 @@
 														 <br>
 													 	@if ($item->price != null)
 															{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-															@if ($item->price_credit != null && Settings::isCreditEnabled())
-																/
-															@endif
-														@endif
-														@if ($item->price_credit != null && Settings::isCreditEnabled())
-															{{ $item->price_credit * $item->quantity }} Credits
 														@endif
 														@if (!$loop->last)
 															<hr>
@@ -248,11 +177,6 @@
 						@else
 							You have no purchases
 						@endif
-						@if (Settings::isShopEnabled())
-							<a href="/shop/orders">
-								<button class="btn btn-success">View Shop Orders</button>
-							</a>
-						@endif
 					</div>
 				</div>
 			</div>
@@ -264,10 +188,7 @@
 						<h3 class="panel-title">Danger Zone</h3>
 					</div>
 					<div class="panel-body">
-						<button type="button" name="" value="" class="btn btn-danger hidden">Remove Steam Account</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">Add Secondary Steam Account</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">Add Twitch Account</button>
-						<button type="button" name="" value="" class="btn btn-danger hidden">Remove Twitch Account</button>
+						{{-- <button type="button" name="" value="" class="btn btn-danger hidden">Remove Steam Account</button> --}}
 						<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">Delete Account</button>
 					</div>
 				</div>

@@ -32,30 +32,6 @@
 					{{ Form::hidden('gateway', $paymentGateway) }}
 					<button type="button" id="checkout_btn" class="btn btn-primary btn-block">Confirm Order</button>
 				{{ Form::close() }}
-			@else ($paymentGateway == 'credit' && Settings::isCreditEnabled())
-				<h5>Credit: {{ $user->credit_total }}</h5>
-				<h5>Credit After Purchase: {{ $user->credit_total - $basket->total_credit }}</h5>
-				@if ($user->checkCredit(-1 * abs($basket->total_credit)) && $basket->allow_credit)
-					<hr>
-					<div class="alert alert-warning">
-						<h5>You have enough credit to make this purchase. Please not Credit Purchases are non refundable!</h5>
-					</div>
-					{{ Form::open(array('url'=>'/payment/post')) }}
-					{{ Form::hidden('gateway', $paymentGateway) }}
-					{{ Form::hidden('confirm', true) }}
-						<button class="btn btn-primary btn-block">Confirm Order</button>
-					{{ Form::close() }}
-				@elseif (!$basket->allow_credit)
-					<hr>
-					<div class="alert alert-warning">
-						<h5>You cannot use credit to purchase this basket! Please go <a href="/payment/checkout">back</a> and try another method</h5>
-					</div>
-				@else
-					<hr>
-					<div class="alert alert-warning">
-						<h5>You do not have enough credit to make this purchase on your account! Please go <a href="/payment/checkout">back</a> and try another method</h5>
-					</div>
-				@endif
 			@endif
 		</div>
 		<div class="col-xs-12 col-md-4">

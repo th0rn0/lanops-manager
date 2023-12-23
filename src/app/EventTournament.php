@@ -120,23 +120,6 @@ class EventTournament extends Model
                             array_push($finalHistory, $game);
                         }
                         $tournamentParticipant->finalHistory = serialize($finalHistory);
-                        $creditAmount = 0;
-                        if (Settings::isCreditEnabled() && !$tournamentParticipant->credit_applied) {
-                            $creditAmount += Settings::getCreditTournamentParticipation();
-                            switch ($tournamentParticipant->final_rank) {
-                                case '1':
-                                    $creditAmount += Settings::getCreditTournamentFirst();
-                                    break;
-                                case '2':
-                                    $creditAmount += Settings::getCreditTournamentSecond();
-                                    break;
-                                case '3':
-                                    $creditAmount += Settings::getCreditTournamentThird();
-                                    break;                                
-                            }
-                            $tournamentParticipant->user->editCredit($creditAmount, false, 'Tournament ' . $model->name . ' 1st Place');
-                        }
-                        $tournamentParticipant->credit_applied = true;
                         $tournamentParticipant->save();
                     }
                     if ($model->team_size != '1v1') {
@@ -158,28 +141,6 @@ class EventTournament extends Model
                             array_push($finalHistory, $game);
                         }
                         $tournamentTeam->finalHistory = serialize($finalHistory);
-                        if (Settings::isCreditEnabled()) {
-                            foreach ($tournamentTeam->tournamentParticipants as $tournamentParticipant) {
-                                $creditAmount = 0;
-                                if (!$tournamentParticipant->credit_applied) {
-                                    $creditAmount += Settings::getCreditTournamentParticipation();
-                                    switch ($tournamentParticipant->final_rank) {
-                                        case '1':
-                                            $creditAmount += Settings::getCreditTournamentFirst();
-                                            break;
-                                        case '2':
-                                            $creditAmount += Settings::getCreditTournamentSecond();
-                                            break;
-                                        case '3':
-                                            $creditAmount += Settings::getCreditTournamentThird();
-                                            break;                                
-                                    }
-                                    $tournamentParticipant->user->editCredit($creditAmount, false, 'Tournament ' . $model->name . ' 1st Place');
-                                }
-                                $tournamentParticipant->credit_applied = true;
-                                $tournamentParticipant->save();
-                            }
-                        }
                         $tournamentTeam->save();
                     }
                     $model->api_complete = true;

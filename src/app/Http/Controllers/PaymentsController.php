@@ -556,7 +556,8 @@ class PaymentsController extends Controller
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return false;
         }
-        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
+        // TODO - remove these
+        if ($paymentGateway == 'credit') {
             Session::flash('alert-danger', 'Credit is not enabled.');
             return false;
         }

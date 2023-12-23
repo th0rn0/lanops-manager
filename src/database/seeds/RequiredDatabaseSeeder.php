@@ -41,7 +41,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'seo_keywords'],
             [
-                'value'         => env('SEO_KEYWORDS', "Events,Eventula,Th0rn0"),
+                'value'         => env('SEO_KEYWORDS', "Events,Eventula,LanOps,Th0rn0"),
                 'default'       => true,
                 'description'   => 'Keywords for the Organization SEO'
             ]
@@ -208,55 +208,6 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
-            ['setting'          => 'credit_enabled'],
-            [
-                'value'         => false,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'credit_award_tournament_participation'],
-            [
-                'value'         => 0,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'credit_award_tournament_first'],
-            [
-                'value'         => 0,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'credit_award_tournament_second'],
-            [
-                'value'         => 0,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'credit_award_tournament_third'],
-            [
-                'value'         => 0,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'credit_award_registration_event'],
-            [
-                'value'         => 0,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'credit_award_registration_site'],
-            [
-                'value'         => 0,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
             ['setting'          => 'login_standard'],
             [
                 'value'         => true,
@@ -265,34 +216,6 @@ class RequiredDatabaseSeeder extends Seeder
         );
         App\Setting::firstOrCreate(
             ['setting'          => 'login_steam'],
-            [
-                'value'         => false,
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'shop_status'],
-            [
-                'value'         => 'OPEN',
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'shop_welcome_message'],
-            [
-                'value'         => "Welcome to the Shop!",
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'shop_closed_message'],
-            [
-                'value'         => "Shop is currently closed!",
-                'default'       => true,
-            ]
-        );
-        App\Setting::firstOrCreate(
-            ['setting'          => 'shop_enabled'],
             [
                 'value'         => false,
                 'default'       => true,
@@ -419,79 +342,5 @@ class RequiredDatabaseSeeder extends Seeder
                 'order' => '3',
             ]
         );
-
-        ## Api Keys
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'paypal_username'],
-            [
-                'value'         => env('PAYPAL_USERNAME', null),
-            ]
-        );
-        
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'paypal_password'],
-            [
-                'value'         => env('PAYPAL_PASSWORD', null),
-            ]
-        );
-        
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'paypal_signature'],
-            [
-                'value'         => env('PAYPAL_SIGNATURE', null),
-            ]
-        );
-        
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'stripe_public_key'],
-            [
-                'value'         => env('STRIPE_PUBLIC_KEY', null),
-            ]
-        );
-        
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'stripe_secret_key'],
-            [
-                'value'         => env('STRIPE_SECRET_KEY', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'facebook_app_id'],
-            [
-                'value'         => env('FACEBOOK_APP_ID', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'facebook_app_secret'],
-            [
-                'value'         => env('FACEBOOK_APP_SECRET', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'challonge_api_key'],
-            [
-                'value'         => env('CHALLONGE_API_KEY', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'google_analytics_tracking_id'],
-            [
-                'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'facebook_pixel_id'],
-            [
-                'value'         => env('FACEBOOK_PIXEL_ID', null),
-            ]
-        );
-        App\ApiKey::firstOrCreate(
-            ['key'          => 'steam_api_key'],
-            [
-                'value'         => env('STEAM_API_KEY', null),
-            ]
-        );
     }
 }
-
-
