@@ -482,24 +482,6 @@ class Settings
     }
 
     /**
-     * Is the App Installed
-     * @return Boolean
-     */
-    public static function isInstalled()
-    {
-        return \App\Setting::isInstalled();
-    }
-
-    /**
-     * Set the App as Installed
-     * @return Boolean
-     */
-    public static function setInstalled()
-    {
-        return \App\Setting::setInstalled();
-    }
-
-    /**
      * Get SEO Keywords
      * @return Integer $amount
      */

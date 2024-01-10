@@ -3,12 +3,12 @@
 /**
  * Install
  */
-Route::group(['middleware' => ['web', 'notInstalled']], function () {
-    Route::get('/install', 'InstallController@installation');
-    Route::post('/install', 'InstallController@install');
-});
+// Route::group(['middleware' => ['web', 'notInstalled']], function () {
+//     Route::get('/install', 'InstallController@installation');
+//     Route::post('/install', 'InstallController@install');
+// });
 
-Route::group(['middleware' => ['installed']], function () {
+Route::group([], function () {
     /**
      * API
      */
