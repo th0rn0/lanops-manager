@@ -39,7 +39,6 @@ class SettingsController extends Controller
         }
         return view('admin.settings.index')
             ->withSettings(Setting::all())
-            ->withIsShopEnabled(Settings::isShopEnabled())
             ->withFacebookCallback($facebookCallback)
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
             ->withActiveLoginMethods(Settings::getLoginMethods())
@@ -67,7 +66,6 @@ class SettingsController extends Controller
         return view('admin.settings.payments')
             ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
             ->withActivePaymentGateways(Settings::getPaymentGateways())
-            ->withIsShopEnabled(Settings::isShopEnabled())
         ;
     }
 

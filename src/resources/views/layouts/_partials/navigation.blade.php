@@ -19,9 +19,6 @@
 				@include ('layouts._partials.events-navigation')
 
 				<li><a href="/gallery">Gallery</a></li>
-				@if (Settings::isShopEnabled())
-					<li><a href="/shop">Shop</a></li>
-				@endif
 				@if (Auth::check())
 					@include ('layouts._partials.user-navigation')
 				@else
