@@ -106,22 +106,6 @@ class PaymentsController extends Controller
     }
 
     /**
-     * Delivery Details Page
-     * @param  $paymentGateway
-     * @return View
-     */
-    public function showDelivery($paymentGateway)
-    {
-        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
-            return Redirect::back();
-        }
-        return view('payments.delivery')
-            ->withPaymentGateway($paymentGateway)
-            ->withBasket(Helpers::formatBasket($basket, true))
-        ;
-    }
-
-    /**
      * Post Payment to Gateway
      * @param  Request $request
      * @return Redirect
@@ -505,6 +489,7 @@ class PaymentsController extends Controller
                 }
             }
         } elseif(array_key_exists('shop', $basket)) {
+            # TODO: REMOVE THIS
             $status = 'EVENT';
             $deliverToEvent = true;
             if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
@@ -554,19 +539,6 @@ class PaymentsController extends Controller
         }
         if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
-            return false;
-        }
-        // TODO - remove these
-        if ($paymentGateway == 'credit') {
-            Session::flash('alert-danger', 'Credit is not enabled.');
-            return false;
-        }
-        if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
-            Session::flash('alert-danger', 'You cannot use credit to purchase this Basket!');
-            return false;
-        }
-        if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
-            Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
             return false;
         }
 

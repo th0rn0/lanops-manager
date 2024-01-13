@@ -64,10 +64,6 @@ class EventParticipant extends Model
     {
         return $this->belongsTo('App\Purchase', 'purchase_id');
     }
-    public function tournamentParticipants()
-    {
-        return $this->hasMany('App\EventTournamentParticipant');
-    }
     public function seat()
     {
         return $this->hasOne('App\EventSeating');

@@ -87,10 +87,6 @@ class Event extends Model
     {
         return $this->hasMany('App\EventSeatingPlan');
     }
-    public function tournaments()
-    {
-        return $this->hasMany('App\EventTournament');
-    }
     public function sponsors()
     {
         return $this->hasMany('App\EventSponsor');

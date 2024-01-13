@@ -14,10 +14,8 @@ use App\Event;
 use App\Poll;
 use App\PollOptionVote;
 use App\EventParticipant;
-use App\EventTournament;
 use App\NewsComment;
 use App\EventTicket;
-use App\EventTournamentParticipant;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -37,8 +35,6 @@ class AdminController extends Controller
         $events = Event::all();
         $participants = EventParticipant::getNewParticipants('login');
         $participantCount = EventParticipant::all()->count();
-        $tournamentCount = EventTournament::all()->count();
-        $tournamentParticipantCount = EventTournamentParticipant::all()->count();
         $votes = PollOptionVote::getNewVotes('login');
         $comments = NewsComment::getNewComments('login');
         $tickets = EventTicket::all();
@@ -83,8 +79,6 @@ class AdminController extends Controller
             ->withUserLoginMethodCount($userLoginMethodCount)
             ->withParticipantCount($participantCount)
             ->withNextEvent(Helpers::getNextEventName())
-            ->withTournamentCount($tournamentCount)
-            ->withTournamentParticipantCount($tournamentParticipantCount)
             ->withTicketBreakdown($ticketBreakdown);
     }
 }

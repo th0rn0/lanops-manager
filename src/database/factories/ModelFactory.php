@@ -115,12 +115,6 @@ $factory->define(App\SliderImage::class, function (Faker\Generator $faker) {
     ];
 });
 
-## Games
-$factory->define(App\Game::class, function (Faker\Generator $faker) {
-    return [
-    ];
-});
-
 ## News Article
 $factory->define(App\NewsArticle::class, function (Faker\Generator $faker) {
     return [

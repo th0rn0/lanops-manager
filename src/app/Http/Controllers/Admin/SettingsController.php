@@ -99,7 +99,6 @@ class SettingsController extends Controller
             'about_who'                 => 'filled',
             'seo_keywords'              => 'filled',
             'currency'                  => 'in:GBP,USD,EUR',
-            'shop_status'               => 'in:OPEN,CLOSED',
             'participant_count_offset'  => 'numeric',
             'event_count_offset'        => 'numeric',
             'org_logo'                  => 'image',
@@ -115,7 +114,6 @@ class SettingsController extends Controller
             'about_who.filled'                  => 'About Whos who cannot be empty',
             'seo_keywords.filled'               => 'SEO Keywords cannot be empty',
             'currency.in'                       => 'Currency must be GBP, USD or EUR',
-            'shop_status.in'                    => 'Shop Status must be OPEN or CLOSED',
             'participant_count_offset.numeric'  => 'Participant Count Offset must be a number',
             'event_count_offset.numeric'        => 'Lan Count Offset must be a number',
             'org_logo.image'                    => 'Org Logo must be a Image',
@@ -219,20 +217,6 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->shop_status) && !Settings::setShopStatus($request->shop_status)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->shop_welcome_message) && !Settings::setShopWelcomeMessage($request->shop_welcome_message)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->shop_closed_message) && !Settings::setShopClosedMessage($request->shop_closed_message)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
         if (isset($request->seo_keywords) && !Settings::setSeoKeywords($request->seo_keywords)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();

@@ -89,7 +89,6 @@ Route::group([], function () {
         Route::get('/contact', 'HomeController@contact');
         Route::get('/terms', 'HomeController@terms');
 
-
         /**
          * Tickets
          */
@@ -113,17 +112,18 @@ Route::group([], function () {
         Route::get('/gallery', 'GalleryController@index');
         Route::get('/gallery/{album}', 'GalleryController@show');
 
-        /**
-         * Tournaments
-         */
-        Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
-        Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
-        Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
-            Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
-            Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
-            Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
-            Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
-        });
+        // TODO - REMOVE ME
+        // /**
+        //  * Tournaments
+        //  */
+        // Route::get('/events/{event}/tournaments', 'Events\TournamentsController@index');
+        // Route::get('/events/{event}/tournaments/{tournament}', 'Events\TournamentsController@show');
+        // Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+        //     Route::post('/events/{event}/tournaments/{tournament}/register', 'Events\TournamentsController@registerSingle');
+        //     Route::post('/events/{event}/tournaments/{tournament}/register/team', 'Events\TournamentsController@registerTeam');
+        //     Route::post('/events/{event}/tournaments/{tournament}/register/pug', 'Events\TournamentsController@registerPug');
+        //     Route::post('/events/{event}/tournaments/{tournament}/register/remove', 'Events\TournamentsController@unregister');
+        // });
 
         /**
          * Payments
@@ -132,8 +132,6 @@ Route::group([], function () {
             Route::get('/payment/checkout', 'PaymentsController@showCheckout');
             Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
             Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
-            Route::post('/payment/delivery', 'PaymentsController@delivery');
-            Route::get('/payment/delivery/{paymentGateway}', 'PaymentsController@showDelivery');
             Route::get('/payment/callback', 'PaymentsController@process');
             Route::post('/payment/post', 'PaymentsController@post');
             Route::get('/payment/failed', 'PaymentsController@showFailed');
@@ -212,47 +210,38 @@ Route::group([], function () {
             'Admin\Events\TimetableDataController@update'
         );
 
+        # TODO: Remove me
         /**
          * Tournaments
          */
-        Route::get('/admin/events/{event}/tournaments', 'Admin\Events\TournamentsController@index');
-        Route::post('/admin/events/{event}/tournaments', 'Admin\Events\TournamentsController@store');
-        Route::get('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@show');
-        Route::post('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@update');
-        Route::delete('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@destroy');
-        Route::post('/admin/events/{event}/tournaments/{tournament}/start', 'Admin\Events\TournamentsController@start');
-        Route::post(
-            '/admin/events/{event}/tournaments/{tournament}/finalize',
-            'Admin\Events\TournamentsController@finalize'
-        );
-        Route::post(
-            '/admin/events/{event}/tournaments/{tournament}/match',
-            'Admin\Events\TournamentsController@updateMatch'
-        );
-        Route::post(
-            '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team',
-            'Admin\Events\TournamentsController@updateParticipantTeam'
-        );
-        Route::post(
-            '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/remove',
-            'Admin\Events\TournamentsController@unregisterParticipant'
-        );
+        // Route::get('/admin/events/{event}/tournaments', 'Admin\Events\TournamentsController@index');
+        // Route::post('/admin/events/{event}/tournaments', 'Admin\Events\TournamentsController@store');
+        // Route::get('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@show');
+        // Route::post('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@update');
+        // Route::delete('/admin/events/{event}/tournaments/{tournament}', 'Admin\Events\TournamentsController@destroy');
+        // Route::post('/admin/events/{event}/tournaments/{tournament}/start', 'Admin\Events\TournamentsController@start');
+        // Route::post(
+        //     '/admin/events/{event}/tournaments/{tournament}/finalize',
+        //     'Admin\Events\TournamentsController@finalize'
+        // );
+        // Route::post(
+        //     '/admin/events/{event}/tournaments/{tournament}/match',
+        //     'Admin\Events\TournamentsController@updateMatch'
+        // );
+        // Route::post(
+        //     '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/team',
+        //     'Admin\Events\TournamentsController@updateParticipantTeam'
+        // );
+        // Route::post(
+        //     '/admin/events/{event}/tournaments/{tournament}/participants/{participant}/remove',
+        //     'Admin\Events\TournamentsController@unregisterParticipant'
+        // );
 
-        // TODO - REMOVE THIS AND ALL LIKE IT
-        /**
-         * Legacy
-         */
-        Route::get('/admin/events/tournaments/fix', 'Admin\Events\TournamentsController@fixScores');
-
-
-        /**
-         * Games
-         */
-        Route::get('/admin/games', 'Admin\GamesController@index');
-        Route::post('/admin/games', 'Admin\GamesController@store');
-        Route::get('/admin/games/{game}', 'Admin\GamesController@show');
-        Route::post('/admin/games/{game}', 'Admin\GamesController@update');
-        Route::delete('/admin/games/{game}', 'Admin\GamesController@destroy');
+        // // TODO - REMOVE THIS AND ALL LIKE IT
+        // /**
+        //  * Legacy
+        //  */
+        // Route::get('/admin/events/tournaments/fix', 'Admin\Events\TournamentsController@fixScores');
 
         /**
          * Participants
@@ -335,8 +324,6 @@ Route::group([], function () {
         Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');
         Route::post('/admin/users/{user}/unban', 'Admin\UsersController@unban');
 
-
-
         /**
          * Settings
          */
@@ -351,10 +338,6 @@ Route::group([], function () {
         Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
         Route::post('/admin/settings/login/{method}/disable', 'Admin\SettingsController@disableLoginMethod');
         Route::post('/admin/settings/login/{method}/enable', 'Admin\SettingsController@enableLoginMethod');
-        Route::post('/admin/settings/credit/enable', 'Admin\SettingsController@enableCreditSystem');
-        Route::post('/admin/settings/credit/disable', 'Admin\SettingsController@disableCreditSystem');
-        Route::post('/admin/settings/shop/enable', 'Admin\SettingsController@enableShopSystem');
-        Route::post('/admin/settings/shop/disable', 'Admin\SettingsController@disableShopSystem');
         Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
         /**
@@ -403,16 +386,5 @@ Route::group([], function () {
         Route::get('/admin/purchases/shop', 'Admin\PurchasesController@showShop');
         Route::get('/admin/purchases/event', 'Admin\PurchasesController@showEvent');
         Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
-
-        /**
-         * Orders
-         */
-        Route::get('/admin/orders', 'Admin\OrdersController@index');
-        Route::get('/admin/orders/{order}', 'Admin\OrdersController@show');
-        Route::post('/admin/orders/{order}/processing', 'Admin\OrdersController@setAsProcessing');
-        Route::post('/admin/orders/{order}/shipped', 'Admin\OrdersController@setAsShipped');
-        Route::post('/admin/orders/{order}/tracking', 'Admin\OrdersController@updateTrackingDetails');
-        Route::post('/admin/orders/{order}/complete', 'Admin\OrdersController@setAsComplete');
-        Route::post('/admin/orders/{order}/cancel', 'Admin\OrdersController@setAsCancelled');
     });
 });

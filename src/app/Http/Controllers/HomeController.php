@@ -12,8 +12,6 @@ use App\NewsArticle;
 use App\EventTimetable;
 use App\EventTimetableData;
 use App\EventParticipant;
-use App\EventTournamentTeam;
-use App\EventTournamentParticipant;
 
 use App\Http\Requests;
 
@@ -76,30 +74,31 @@ class HomeController extends Controller
         });
 
         $topWinners = array();
-        foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
-            $recent = false;
-            foreach ($winner_team->tournamentParticipants as $winner) {
-                if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
-                    $topWinners[$winner->eventParticipant->user->id]->win_count++;
-                    $recent = true;
-                }
-                if (!$recent) {
-                    $winner->eventParticipant->user->win_count = 1;
-                    $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
-                }
-            }
-        }
-        foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
-            $recent = false;
-            if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
-                $topWinners[$winner->eventParticipant->user->id]->win_count++;
-                $recent = true;
-            }
-            if (!$recent) {
-                $winner->eventParticipant->user->win_count = 1;
-                $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
-            }
-        }
+        // TODO - REMOVE ME
+        // foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
+        //     $recent = false;
+        //     foreach ($winner_team->tournamentParticipants as $winner) {
+        //         if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
+        //             $topWinners[$winner->eventParticipant->user->id]->win_count++;
+        //             $recent = true;
+        //         }
+        //         if (!$recent) {
+        //             $winner->eventParticipant->user->win_count = 1;
+        //             $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
+        //         }
+        //     }
+        // }
+        // foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
+        //     $recent = false;
+        //     if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
+        //         $topWinners[$winner->eventParticipant->user->id]->win_count++;
+        //         $recent = true;
+        //     }
+        //     if (!$recent) {
+        //         $winner->eventParticipant->user->win_count = 1;
+        //         $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
+        //     }
+        // }
         usort($topWinners, function ($a, $b) {
             return $b['win_count'] <=> $a['win_count'];
         });

@@ -139,8 +139,6 @@
 					<li class="list-group-item list-group-item-info"><strong>Next Event: <span class="pull-right">{{ $nextEvent }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>No of Events: <span class="pull-right">{{ $events->count() }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>No of Attendees: <span class="pull-right">{{ $participantCount }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>No of Tournaments: <span class="pull-right">{{ $tournamentCount }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>No of Tournament Participants: <span class="pull-right">{{ $tournamentParticipantCount }}</span></strong></li>
 				</ul>
 			</div>
 		</div>	
