@@ -142,7 +142,7 @@
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">
-					<p class="">Powered By <a href="https://eventula.com">Eventula Event Manager</a></p>
+					<p class="">Th0rn0 - Created with Vodka & Hatred</p>
 				</div>
 			</div>
 		</footer>
