@@ -68,12 +68,12 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // Set SEO Defaults
-        @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
-        if (config('settings.seo_keywords') != null) {
-            @\Config::set('seotools.meta.defaults.keywords', explode(',',config('settings.seo_keywords')));
-        }
-        @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
-        @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
+        // @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
+        // if (config('settings.seo_keywords') != null) {
+        //     @\Config::set('seotools.meta.defaults.keywords', explode(',',config('settings.seo_keywords')));
+        // }
+        // @\Config::set('seotools.opengraph.defaults.description', config('settings.org_tagline'));
+        // @\Config::set('seotools.opengraph.defaults.site_name', config('settings.org_name'));
         
     }
 
@@ -85,7 +85,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         if (config('app.debug') === true) {
-            $this->app->register(\Way\Generators\GeneratorsServiceProvider::class);
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
             $this->app->register(\Orangehill\Iseed\IseedServiceProvider::class);
         }

@@ -8,10 +8,10 @@
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />
 		<link href="/css/app.css?v={{ Helpers::getCssVersion() }}" rel=stylesheet />
     	
-    	    {!! SEOMeta::generate() !!}
-		    {!! OpenGraph::generate() !!}
+		{{-- {!! SEOMeta::generate() !!} --}}
+		{{-- {!! OpenGraph::generate() !!} --}}
 
-		{!! Analytics::render() !!}
+		{{-- {!! Analytics::render() !!} --}}
 		
 		@if(config('facebook-pixel.enabled'))
 		    <!-- Facebook Pixel Code -->

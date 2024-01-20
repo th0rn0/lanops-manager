@@ -17,11 +17,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
-use Artesaos\SEOTools\Facades\SEOTools;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\OpenGraph;
-use Artesaos\SEOTools\Facades\TwitterCard;
-use Artesaos\SEOTools\Facades\JsonLd;
+// use Artesaos\SEOTools\Facades\SEOTools;
+// use Artesaos\SEOTools\Facades\SEOMeta;
+// use Artesaos\SEOTools\Facades\OpenGraph;
+// use Artesaos\SEOTools\Facades\TwitterCard;
+// use Artesaos\SEOTools\Facades\JsonLd;
 
 class EventsController extends Controller
 {
@@ -65,10 +65,10 @@ class EventsController extends Controller
         $seoKeywords = explode(',',config('settings.seo_keywords'));
         $seoKeywords[] = $event->display_name;
         $seoKeywords[] = "Start Date: " . $event->start;
-        SEOMeta::setDescription($event->desc_short);
-        SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::setDescription($event->desc_short);
-        OpenGraph::addProperty('type', 'article');
+        // SEOMeta::setDescription($event->desc_short);
+        // SEOMeta::addKeyword($seoKeywords);
+        // OpenGraph::setDescription($event->desc_short);
+        // OpenGraph::addProperty('type', 'article');
         return view('events.show')->withEvent($event);
     }
 }
