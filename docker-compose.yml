@@ -1,33 +1,37 @@
-version: "3.4"
+version: '3.9'
+
 services:
-  eventula_manager_app:
+  nginx:
+    image: nginx:latest
+    ports:
+      - '8080:80'
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - internal
+  php:
+    # image: php:7-fpm
     build:
       context: .
-    working_dir: /web/html/
+      dockerfile: docker/php/Dockerfile
     volumes:
-      - $PWD/src/:/web/html/
-      - $PWD/resources/certs:/etc/nginx/certs
-      - $PWD/resources/secrets:/run/secrets
+      - ./src:/var/www/html
     env_file: $PWD/src/.env
-    container_name: eventula_manager_app
     networks:
-      - lan
-    ports:
-      - 80:80
-      - 443:443
-  eventula_manager_database:
+      - internal
+  db:
     image: mysql:5.6
     volumes:
-      - eventula_manager_database:/var/lib/mysql
+      - db:/var/lib/mysql
     env_file: $PWD/src/.env
     ports:
       - 3306:3306
-    container_name: eventula_manager_database
     networks:
-      - lan
+      - internal
 volumes:
-  eventula_manager_database:
-    name: eventula_manager_database
+  db:
+    name: db
 networks:
-  lan:
-    external: true
+  internal:
+    driver: bridge
