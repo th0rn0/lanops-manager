@@ -51,7 +51,6 @@ return [
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelServiceProvider::class,
         /*
          * Application Service Providers...
          */

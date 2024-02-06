@@ -1,4 +1,4 @@
-FROM php:7-fpm
+FROM php:8-fpm
 LABEL maintainer="Thornton Phillis (dev@th0rn0.co.uk)"
 
 RUN apt-get update && apt-get install -y \
