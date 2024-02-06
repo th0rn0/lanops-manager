@@ -1,10 +1,12 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 use Faker\Factory as Faker;
 
-class RequiredDatabaseSeeder extends Seeder
+class SettingsTableSeeder extends Seeder
 {
     private $settings = [
 
@@ -19,7 +21,7 @@ class RequiredDatabaseSeeder extends Seeder
         $faker = Faker::create();
 
         ## House Cleaning
-        // DB::table('settings')->truncate();
+        \DB::table('settings')->truncate();
 
         ## Settings
         App\Setting::firstOrCreate(
@@ -41,7 +43,7 @@ class RequiredDatabaseSeeder extends Seeder
         App\Setting::firstOrCreate(
             ['setting'          => 'seo_keywords'],
             [
-                'value'         => env('SEO_KEYWORDS', "Events,Eventula,LanOps,Th0rn0"),
+                'value'         => env('SEO_KEYWORDS', "Events,OrgNameHere,Tagline Here"),
                 'default'       => true,
                 'description'   => 'Keywords for the Organization SEO'
             ]
@@ -208,6 +210,55 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'credit_enabled'],
+            [
+                'value'         => true,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'credit_award_tournament_participation'],
+            [
+                'value'         => 0,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'credit_award_tournament_first'],
+            [
+                'value'         => 0,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'credit_award_tournament_second'],
+            [
+                'value'         => 0,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'credit_award_tournament_third'],
+            [
+                'value'         => 0,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'credit_award_registration_event'],
+            [
+                'value'         => 0,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'credit_award_registration_site'],
+            [
+                'value'         => 0,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'login_standard'],
             [
                 'value'         => true,
@@ -222,125 +273,41 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         App\Setting::firstOrCreate(
+            ['setting'          => 'shop_status'],
+            [
+                'value'         => 'OPEN',
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_welcome_message'],
+            [
+                'value'         => "Welcome to the Shop!",
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_closed_message'],
+            [
+                'value'         => "Shop is currently closed!",
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
+            ['setting'          => 'shop_enabled'],
+            [
+                'value'         => false,
+                'default'       => true,
+            ]
+        );
+        App\Setting::firstOrCreate(
             ['setting'          => 'installed'],
             [
                 'value'         => false,
                 'default'       => true,
             ]
         );
-
-        ## Apperance
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_primary'],
-            [
-                'value' => 'orange',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_primary_text'],
-            [
-                'value' => 'white',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_secondary'],
-            [
-                'value' => '#333',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_secondary_text'],
-            [
-                'value' => 'white',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_body_links'],
-            [
-                'value' => 'orange',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_body_background'],
-            [
-                'value' => '#fff',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_body_text'],
-            [
-                'value' => '#333',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_header_background'],
-            [
-                'value' => '#333',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        App\Appearance::firstOrCreate(
-            ['key'   => 'color_header_text'],
-            [
-                'value' => '#9d9d9d',
-                'type'  => 'CSS_VAR',
-            ]
-        );
-
-        ## Slider Images
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/1.jpg',
-                'order' => '4',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/2.jpg',
-                'order' => '1',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/3.jpg',
-                'order' => '2',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/4.jpg',
-                'order' => '5',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/5.jpg',
-                'order' => '3',
-            ]
-        );
     }
 }
+
+

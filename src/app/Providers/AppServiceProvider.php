@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 use View;
 use Auth;
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $view->with('user', Auth::user());
         });
+
+        Paginator::useBootstrap();
 
         // Pull API Keys
         // TODO - move these to config files?
