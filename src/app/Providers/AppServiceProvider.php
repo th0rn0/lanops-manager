@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
         // Pull API Keys
         // TODO - move these to config files?
-        if (env('ENV_OVERRIDE')) {
+        // if (env('ENV_OVERRIDE')) {
             // From ENV File
             // Paypal
             @\Config::set('laravel-omnipay.gateways.paypal_express.credentials.username', env('PAYPAL_USERNAME'));
@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
             @\Config::set('facebook-pixel.facebook_pixel_id', env('FACEBOOK_PIXEL_ID', null));
             // Steam
             @\Config::set('steam-auth.api_key', env('STEAM_API_KEY'));
-        }
+        // }
        
         // Google Analytics Cannot accept 'null' fix
         if (config('analytics.configurations.GoogleAnalytics.tracking_id') == null) {
