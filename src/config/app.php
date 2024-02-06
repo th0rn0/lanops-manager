@@ -114,7 +114,6 @@ return [
         'Helpers'               => App\Libraries\Helpers::class,
         'FacebookPageWrapper'   => App\Libraries\Facebook\FacebookPageWrapper::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
-        'LaravelFacebookPixel'  => WebLAgence\LaravelFacebookPixel\LaravelFacebookPixelFacade::class,
     ],
 
 ];
