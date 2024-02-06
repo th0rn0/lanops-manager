@@ -16,7 +16,6 @@
         "simplesoftwareio/simple-qrcode": "~1",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.3",
-        "fideloper/proxy": "^4.0",
         "laravel/tinker": "^2.0",
         "leafo/scssphp": "^0.7.7",
         "omnipay/paypal": "^3.0",
