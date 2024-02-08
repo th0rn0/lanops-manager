@@ -18,6 +18,5 @@ class DatabaseSeeder extends Seeder
         $this->call(AppearanceTableSeeder::class);
         $this->call(EventsSeeder::class);
         $this->call(SettingsTableSeeder::class);
-        $this->call(SliderImagesTableSeeder::class);
     }
 }

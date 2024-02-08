@@ -303,46 +303,5 @@ class RequiredDatabaseSeeder extends Seeder
                 'type'  => 'CSS_VAR',
             ]
         );
-
-        ## Slider Images
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/1.jpg',
-                'order' => '4',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/2.jpg',
-                'order' => '1',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/3.jpg',
-                'order' => '2',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/4.jpg',
-                'order' => '5',
-            ]
-        );
-
-        App\SliderImage::firstOrCreate(
-            ['slider_name'   => 'frontpage'],
-            [
-                'path'  => '/storage/images/main/slider/frontpage/5.jpg',
-                'order' => '3',
-            ]
-        );
     }
 }

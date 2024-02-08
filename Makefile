@@ -64,10 +64,6 @@ generate-settings:
 generate-appearance:
 	docker exec eventula_manager_app php artisan db:seed --class=AppearanceTableSeeder
 
-# Generate Images - This will erase your current settings!
-generate-images:
-	docker exec eventula_manager_app php artisan db:seed --class=SliderImageTableSeeder
-
 # Create Default Folder structure
 folder-structure:
 	mkdir -p src/storage/app/public/images/gallery/
