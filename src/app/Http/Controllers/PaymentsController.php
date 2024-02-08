@@ -274,23 +274,23 @@ class PaymentsController extends Controller
 
         // Process Response
         // Credit
-        if ($processPaymentSkip && $paymentGateway == 'credit') {
-            if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
-                Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
-                return Redirect::to('/payment/failed');
-            }
-            $purchaseParams = [
-                'user_id'           => Auth::id(),
-                'type'              => 'Credit',
-                'transaction_id'    => '',
-                'token'             => '',
-                'status'            => 'Success'
-            ];
-            $purchase = Purchase::create($purchaseParams);
-            $this->processBasket($basket, $purchase->id);
-            Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
-            return Redirect::to('/payment/successful/' . $purchase->id);
-        }
+        // if ($processPaymentSkip && $paymentGateway == 'credit') {
+        //     if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
+        //         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
+        //         return Redirect::to('/payment/failed');
+        //     }
+        //     $purchaseParams = [
+        //         'user_id'           => Auth::id(),
+        //         'type'              => 'Credit',
+        //         'transaction_id'    => '',
+        //         'token'             => '',
+        //         'status'            => 'Success'
+        //     ];
+        //     $purchase = Purchase::create($purchaseParams);
+        //     $this->processBasket($basket, $purchase->id);
+        //     Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
+        //     return Redirect::to('/payment/successful/' . $purchase->id);
+        // }
 
 
         if ($response->isSuccessful()) {

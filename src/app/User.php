@@ -63,10 +63,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Purchase');
     }
-    public function creditLogs()
-    {
-        return $this->hasMany('App\CreditLog');
-    }
 
     /**
      * Check if Admin
@@ -147,73 +143,59 @@ class User extends Authenticatable implements MustVerifyEmail
         return $return;
     }
 
-    /**
-     * Check Credit amount for current user
-     * @param  $amount
-     * @return Boolean
-     */
-    public function checkCredit($amount)
-    {
-        if (($this->credit_total + $amount) < 0) {
-            return false;
-        }
-        return true;
-    }
+    // To Re introduce with new credit sytem
+    // /**
+    //  * Check Credit amount for current user
+    //  * @param  $amount
+    //  * @return Boolean
+    //  */
+    // public function checkCredit($amount)
+    // {
+    //     if (($this->credit_total + $amount) < 0) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
-    /**
-     * Edit Credit for current User
-     * @param  $amount
-     * @param  Boolean $manual
-     * @param  $reason
-     * @param  Boolean $buy
-     * @param  $purchaseId
-     * @return Boolean
-     */
-    public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false, $purchaseId = null)
-    {
-        $this->credit_total += $amount;
-        $admin_id = null;
-        if ($manual) {
-            $admin_id = Auth::id();
-            $reason = 'Manual Edit';
-        }
-        $action = 'ADD';
-        if ($amount < 0) {
-            $action = 'SUB';
-        }
-        if ($buy) {
-            $action = 'BUY';
-        }
-        if ($amount != 0) {
-            CreditLog::create([
-                'user_id'       => $this->id,
-                'action'        => $action,
-                'amount'        => $amount,
-                'reason'        => $reason,
-                'purchase_id'   => $purchaseId,
-                'admin_id'      => $admin_id
-            ]);
-        }
-        if (!$this->save()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Get Orders for Current User
-     * @return ShopOrder
-     */
-    public function getOrders()
-    {
-        $return = collect();
-        foreach ($this->purchases as $purchase) {
-            if ($purchase->order) {
-                $return->prepend($purchase->order);
-            }
-        }
-        return $return;
-    }
+    // /**
+    //  * Edit Credit for current User
+    //  * @param  $amount
+    //  * @param  Boolean $manual
+    //  * @param  $reason
+    //  * @param  Boolean $buy
+    //  * @param  $purchaseId
+    //  * @return Boolean
+    //  */
+    // public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false, $purchaseId = null)
+    // {
+    //     $this->credit_total += $amount;
+    //     $admin_id = null;
+    //     if ($manual) {
+    //         $admin_id = Auth::id();
+    //         $reason = 'Manual Edit';
+    //     }
+    //     $action = 'ADD';
+    //     if ($amount < 0) {
+    //         $action = 'SUB';
+    //     }
+    //     if ($buy) {
+    //         $action = 'BUY';
+    //     }
+    //     if ($amount != 0) {
+    //         CreditLog::create([
+    //             'user_id'       => $this->id,
+    //             'action'        => $action,
+    //             'amount'        => $amount,
+    //             'reason'        => $reason,
+    //             'purchase_id'   => $purchaseId,
+    //             'admin_id'      => $admin_id
+    //         ]);
+    //     }
+    //     if (!$this->save()) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     /**
      * Send the password reset notification.

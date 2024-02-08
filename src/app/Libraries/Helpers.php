@@ -244,6 +244,7 @@ class Helpers
      */
     public static function formatBasket($basket)
     {
+        // TODO - REMOVE ME
         if (array_key_exists('shop', $basket)) {
             $formattedBasket = \App\ShopItem::whereIn('id', array_keys($basket['shop']))->get();
         }
@@ -283,15 +284,6 @@ class Helpers
 
     }
 
-    /**
-     * Get CSS Version Number for Cache Busting
-     * @return integer
-     */
-    public static function getCssVersion()
-    {
-        return \App\Appearance::getCssVersion();
-    }
-    
     /**
      * Get Card Expiry Month Dates
      * @return array

@@ -112,7 +112,6 @@ return [
         'QrCode'                => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Settings'              => App\Libraries\Settings::class,
         'Helpers'               => App\Libraries\Helpers::class,
-        'FacebookPageWrapper'   => App\Libraries\Facebook\FacebookPageWrapper::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
     ],
 

@@ -65,6 +65,7 @@ class EventsController extends Controller
         $seoKeywords = explode(',',config('settings.seo_keywords'));
         $seoKeywords[] = $event->display_name;
         $seoKeywords[] = "Start Date: " . $event->start;
+        // TODO - REPLACE ME
         // SEOMeta::setDescription($event->desc_short);
         // SEOMeta::addKeyword($seoKeywords);
         // OpenGraph::setDescription($event->desc_short);
