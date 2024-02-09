@@ -63,7 +63,7 @@ class TicketsController extends Controller
                 $ticket->id => $request->quantity,
             ],
         ];
-        Session::put(Settings::getOrgName() . '-basket', $params);
+        Session::put(config('app.basket_name'), $params);
         Session::save();
         return Redirect::to('/payment/checkout');
     }

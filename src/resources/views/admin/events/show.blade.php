@@ -249,7 +249,7 @@
 					<div class="list-group">
 						@foreach ($event->tickets as $ticket)
 							<a href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}" class="list-group-item">
-								<i class="fa fa-pencil fa-fw"></i> {{ $ticket->name }} - {{ Settings::getCurrencySymbol() }}{{ $ticket->price }}
+								<i class="fa fa-pencil fa-fw"></i> {{ $ticket->name }} - {{ config('app.currency_symbol') }}{{ $ticket->price }}
 								<span class="pull-right text-muted small">
 									@if($ticket->quantity != 0)
 										<em>{{ $ticket->participants()->count() }} / {{ $ticket->quantity }}</em>

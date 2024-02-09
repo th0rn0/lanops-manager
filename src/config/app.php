@@ -1,6 +1,8 @@
 <?php
 return [
 
+    'name'              => env('APP_NAME', 'LanOps'),
+    'tagline'           => env('APP_TAGLINE','Lans in South Yorkshire!'),
     'env'               => env('APP_ENV', 'production'),
     'debug'             => env('APP_DEBUG', false),
     'url'               => env('APP_URL', 'localhost'),
@@ -10,6 +12,20 @@ return [
     'key'               => env('APP_KEY'),
     'cipher'            => 'AES-256-CBC',
     'log'               => env('APP_LOG', 'errorlog'),
+
+    'logo'              => '/images/logo_main.png',
+    'favicon'           => '/images/favicon.ico',
+    'basket_name'       => str_replace(" ", "_", strtolower(env('APP_NAME', 'LanOps'))) . '-basket',
+
+    'discord_link'      => env('DISCORD_LINK', ""),
+    'discord_id'        => env('DISCORD_ID', ""),
+
+    'facebook_link'     => env('FACEBOOK_LINK',''),
+
+    'steam_link'        => env('STEAM_LINK',''),
+
+    'currency'          => env('APP_CURRENCY','GBP'),
+    'currency_symbol'   => env('APP_CURRENCY','£'),
 
     /*
     |--------------------------------------------------------------------------

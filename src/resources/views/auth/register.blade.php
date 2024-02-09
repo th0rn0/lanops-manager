@@ -60,8 +60,8 @@
                 @endif
             </div>
             <div class="col-xs-12 col-md-6">
-                {!! Settings::getRegistrationTermsAndConditions() !!}
-                <h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+                @include ('layouts._partials._terms.registration')
+                <h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! config('app.name') !!}</h5>
                 <button type="submit" class="btn btn-block btn-primary">Register</button>
             </div>
         {{ Form::close() }}

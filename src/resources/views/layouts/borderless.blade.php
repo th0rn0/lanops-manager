@@ -7,9 +7,9 @@
 		
 		<title>
 			@hasSection ('page_title')
-				@yield('page_title') | {{ Settings::getOrgName() }}
+				@yield('page_title') | {{ config('app.name') }}
 			@else
-				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
+				{{ config('app.tagline') }} | {{ config('app.name') }}
 			@endif
 		</title>
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />
@@ -19,7 +19,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
-					<img class="img-responsive" style="margin-top:-211px; margin-bottom:-259px;" src="{{ Settings::getOrgLogo() }}"/>
+					<img class="img-responsive" style="margin-top:-211px; margin-bottom:-259px;" src="{{ config('app.logo') }}"/>
 				</div>
 			</div>
 		</div>

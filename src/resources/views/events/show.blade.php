@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title',  Settings::getOrgName() . ' - ' . $event->display_name)
+@section ('page_title',  config('app.name') . ' - ' . $event->display_name)
 
 @section ('content')
 			
@@ -110,7 +110,7 @@
 								@endif
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-sm-12 col-xs-12">
-										<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
+										<h3>{{ config('app.currency_symbol') }}{{$ticket->price}}
 											@if ($ticket->quantity != 0)
 												<small>
 													{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available

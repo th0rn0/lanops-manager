@@ -107,7 +107,8 @@ class Helpers
     public static function getEventTotal()
     {
         $events = \App\Event::count();
-        return Settings::getEventCountOffset() + $events;
+        // Historical before this site
+        return 23 + $events;
     }
 
     // TODO - move to model
@@ -207,7 +208,8 @@ class Helpers
     public static function getEventParticipantTotal()
     {
         $participants = \App\EventParticipant::count();
-        return Settings::getParticipantCountOffset() + $participants;
+        // Historical before this site
+        return 686 + $participants;
     }
 
     /**

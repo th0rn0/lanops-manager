@@ -9,13 +9,13 @@
 
 		<title>
 			@hasSection ('page_title')
-				@yield('page_title') | {{ Settings::getOrgName() }}
+				@yield('page_title') | {{ config('app.name') }}
 			@else
-				{{ Settings::getOrgName() }} Admin
+				{{ config('app.name') }} Admin
 			@endif
 		</title>
 
-		<link rel="icon" type="image/png" sizes="32x32" href="{{ Settings::getOrgFavicon() }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ config('app.favicon') }}">
 		
 		<!-- Admin CSS -->
 		<link href="/css/admin.css" rel="stylesheet">

@@ -121,98 +121,7 @@ class SettingsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if (isset($request->steam_link) && !Settings::setSteamLink($request->steam_link)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->teamspeak_link) && !Settings::setTeamspeakLink($request->teamspeak_link)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->discord_link) && !Settings::setDiscordLink($request->discord_link)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->discord_id) && !Settings::setDiscordId($request->discord_id)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->reddit_link) && !Settings::setRedditLink($request->reddit_link)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->facebook_link) && !Settings::setFacebookLink($request->facebook_link)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-        
-        if (isset($request->participant_count_offset) &&
-            !Settings::setParticipantCountOffset($request->participant_count_offset)
-        ) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->event_count_offset) && !Settings::setEventCountOffset($request->event_count_offset)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->about_main) && !Settings::setAboutMain($request->about_main)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->frontpage_alot_tagline) && !Settings::setFrontpageAlotTagline($request->frontpage_alot_tagline)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->about_short) && !Settings::setAboutShort($request->about_short)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->about_our_aim) && !Settings::setAboutOurAim($request->about_our_aim)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
         if (isset($request->about_who) && !Settings::setAboutWho($request->about_who)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->purchase_terms_and_conditions) &&
-            !Settings::setPurchaseTermsAndConditions($request->purchase_terms_and_conditions)
-        ) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->registration_terms_and_conditions) &&
-            !Settings::setRegistrationTermsAndConditions($request->registration_terms_and_conditions)
-        ) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->currency) && !Settings::setCurrency($request->currency)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->org_name) && !Settings::setOrgName($request->org_name)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->org_tagline) && !Settings::setOrgTagline($request->org_tagline)) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
@@ -227,16 +136,6 @@ class SettingsController extends Controller
             return Redirect::back();
         }
         if (isset($request->analytics_facebook_pixel) && !ApiKey::setFacebookPixelId($request->analytics_facebook_pixel)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (Input::file('org_logo') && !Settings::setOrgLogo(Input::file('org_logo'))) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (Input::file('org_favicon') && !Settings::setOrgFavicon(Input::file('org_favicon'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
         }
@@ -279,30 +178,8 @@ class SettingsController extends Controller
                 Session::flash('alert-danger', "Facebook: Error getting long-lived access token");
                 return Redirect::back();
             }
-            if (!Settings::setSocialFacebookPageAccessTokens($pageAccessToken)) {
-                Session::flash('alert-danger', "Could not Link {$social}!");
-                return Redirect::back();
-            }
         }
         Session::flash('alert-success', "Successfully Linked {$social}!");
-        return Redirect::back();
-    }
-
-    /**
-     * Unlink Social Platform
-     * @param  String $social
-     * @return Redirect
-     */
-    public function unlinkSocial($social)
-    {
-        if (!Settings::setSocialFacebookPageAccessTokens(null)) {
-            Session::flash('alert-danger', "Could not Unlink {$social}!");
-            return Redirect::back();
-        }
-        Session::flash(
-            'alert-success',
-            "Successfully Uninked {$social}. You will still need to remove the app access on Facebook!"
-        );
         return Redirect::back();
     }
 

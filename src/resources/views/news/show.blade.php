@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' ' . $newsArticle->title)
+@section ('page_title', config('app.name') . ' ' . $newsArticle->title)
 
 @section ('content')
 			

@@ -12,7 +12,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
-			{!! Settings::getPurchaseTermsAndConditions() !!}
+			@include ('layouts._partials._terms.purchase')
 			<hr>
 			@if (!$nextEventFlag)
 				<div class="alert alert-warning">
@@ -20,7 +20,7 @@
 				</div>
 			@endif
 			<div class="alert alert-warning">
-				<h5>By Clicking on Continue you are agreeing to the Terms and Conditions as set by {!! Settings::getOrgName() !!}</h5>
+				<h5>By Clicking on Continue you are agreeing to the Terms and Conditions as set by {!! config('app.name') !!}</h5>
 			</div>
 			{{ Form::open(array('url'=>'/payment/post')) }}
 				{{ Form::hidden('gateway', $paymentGateway) }}

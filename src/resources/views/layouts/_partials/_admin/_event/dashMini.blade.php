@@ -107,7 +107,7 @@
 						<i class="fa fa-ticket fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">{{ Settings::getCurrencySymbol() }}{{ $event->getTicketSalesCount() }}</div>
+						<div class="huge">{{ config('app.currency_symbol') }}{{ $event->getTicketSalesCount() }}</div>
 						<div>Ticket Sales</div>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - Reset Password')
+@section ('page_title', config('app.name') . ' - Reset Password')
 
 @section ('content')
 

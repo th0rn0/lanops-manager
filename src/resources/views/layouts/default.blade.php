@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="icon" type="image/png" sizes="32x32" href="{{ Settings::getOrgFavicon() }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ config('app.favicon') }}">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />
 		<link href="/css/app.css" rel=stylesheet />
     	
@@ -30,9 +30,9 @@
 		
 		<title>
 			@hasSection ('page_title')
-				@yield ('page_title') | {{ Settings::getOrgName() }}
+				@yield ('page_title') | {{ config('app.name') }}
 			@else
-				{{ Settings::getOrgTagline() }} | {{ Settings::getOrgName() }}
+				{{ config('app.tagline') }} | {{ config('app.name') }}
 			@endif
 		</title>
 	</head>
@@ -96,7 +96,7 @@
 						</div>
 						<hr />
 						<div class="stats-title">
-							{{ Settings::getFrontpageAlotTagline() }}
+							Pizzas We've Ordered
 						</div>
 					</div>
 				</div>
@@ -108,7 +108,7 @@
 					<br><br>
 				</div>
 				<div class="col-lg-4 hidden-md hidden-sm hidden-xs">
-					<img class="img-responsive" src="{{ Settings::getOrgLogo() }}">
+					<img class="img-responsive" src="{{ config('app.logo') }}">
 				</div>
 				<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 					<div class="col-lg-6 col-md-6">
@@ -122,18 +122,18 @@
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<h2 class="">Connect</h2>
-						@if (Settings::getFacebookLink() != "")
-							<p class=""><a target="_blank" href="{{ Settings::getFacebookLink() }}">Facebook</a></p>
+						@if (config('app.facebook_link') != "")
+							<p class=""><a target="_blank" href="{{ config('app.facebook_link') }}">Facebook</a></p>
 						@endif
-						@if (Settings::getDiscordLink() != "")
-							<p class=""><a target="_blank" href="{{ Settings::getDiscordLink() }}">Discord</a></p>
+						@if (config('app.discord_link') != "")
+							<p class=""><a target="_blank" href="{{ config('app.discord_link') }}">Discord</a></p>
 						@endif
-						@if (Settings::getDiscordLink() != "")
-							<p class=""><a target="_blank" href="{{ Settings::getSteamLink() }}">Steam</a></p>
+						@if (config('app.steam_link') != "")
+							<p class=""><a target="_blank" href="{{ config('app.steam_link') }}">Steam</a></p>
 						@endif
 					</div>
 					<div class="col-lg-12">
-						<p class="">© {{ Settings::getOrgName() }} {{ date("Y") }}. All rights reserved.</p>
+						<p class="">© {{ config('app.name') }} {{ date("Y") }}. All rights reserved.</p>
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">

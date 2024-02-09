@@ -56,7 +56,7 @@
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
-						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], Settings::getCurrency(), array('id'=>'venue','class'=>'form-control')) }}
+						{{ Form::select('currency', ['GBP' => 'GBP', 'USD' => 'USD', 'EUR' => 'EUR'], config('app.currency'), array('id'=>'venue','class'=>'form-control')) }}
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
@@ -70,13 +70,7 @@
 				<i class="fa fa-info-circle fa-fw"></i> Terms and Conditions
 			</div>
 			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('purchase_terms_and_conditions','Purchase',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('purchase_terms_and_conditions', Settings::getPurchaseTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-success btn-block">Submit</button>
-				{{ Form::close() }}
+
 			</div>
 		</div>
 	</div>

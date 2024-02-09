@@ -34,11 +34,11 @@
 
 							<div class="form-group">
 								{{ Form::label('org_name','Name',array('id'=>'','class'=>'')) }}
-								{{ Form::text('org_name', Settings::getOrgName() ,array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('org_name', config('app.name') ,array('id'=>'','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('org_tagline','Tagline/Title',array('id'=>'','class'=>'')) }}
-								{{ Form::text('org_tagline', Settings::getOrgTagline() ,array('id'=>'','class'=>'form-control')) }}
+								{{ Form::text('org_tagline', config('app.tagline') ,array('id'=>'','class'=>'form-control')) }}
 							</div>
 							<div class="form-group">
 								{{ Form::label('org_logo','Logo',array('id'=>'','class'=>'')) }}
@@ -52,13 +52,13 @@
 						</div>
 						<div class="col-xs-12 col-md-6">
 							<div class="form-group">
-								@if (trim(Settings::getOrgFavicon()) != '')
-									<img class="img img-responsive" src="{{ Settings::getOrgFavicon() }}" />
+								@if (trim(config('app.favicon')) != '')
+									<img class="img img-responsive" src="{{ config('app.favicon') }}" />
 								@else
 									No Favicon uploaded
 								@endif
-								@if (trim(Settings::getOrgLogo()) != '')
-									<img class="img img-responsive" src="{{ Settings::getOrgLogo() }}" />
+								@if (trim(config('app.logo')) != '')
+									<img class="img img-responsive" src="{{ config('app.logo') }}" />
 								@else
 									No Logo uploaded
 								@endif
@@ -77,18 +77,6 @@
 			</div>
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('about_main','Main',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_main', Settings::getAboutMain() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_short','Short',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_short', Settings::getAboutShort() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('about_our_aim','Our Aim',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_our_aim', Settings::getAboutOurAim() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
 					<div class="form-group">
 						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
 						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}

@@ -175,6 +175,10 @@ class AuthController extends Controller
         $user->username         = $request->username;
         $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
 
+        if (User::Count() == 0) {
+            $user->admin = true;
+        }
+
         if (!$user->save()) {
             Auth::logout();
             return Redirect('/')->withError('Something went wrong. Please Try again later');

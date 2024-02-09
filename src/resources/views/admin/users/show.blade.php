@@ -100,7 +100,7 @@
 												 - x {{ $item->quantity }}
 												 <br>
 											 	@if ($item->price != null)
-													{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
+													{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
 												@endif
 												@if (!$loop->last)
 													<hr>
@@ -236,7 +236,7 @@
 												 - x {{ $item->quantity }}
 												 <br>
 											 	@if ($item->price != null)
-													{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
+													{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
 												@endif
 												@if (!$loop->last)
 													<hr>

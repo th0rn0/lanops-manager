@@ -30,13 +30,13 @@
 										</td>
 										<td class="text-right">
 											@if ($item->price != null && $item->price != 0)
-												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price, 2) }}
+												{{ config('app.currency_symbol') }}{{ number_format($item->price, 2) }}
 											@endif
 											Each
 										</td>
 										<td class="text-right">
 											@if ($item->price != null && $item->price != 0)
-												{{ Settings::getCurrencySymbol() }}{{ number_format($item->price * $item->quantity, 2) }}
+												{{ config('app.currency_symbol') }}{{ number_format($item->price * $item->quantity, 2) }}
 											@endif
 										</td>
 									</tr>
@@ -48,7 +48,7 @@
 									<td class="text-right">
 										<strong>Total:</strong>
 										@if ($basket->total != null)
-											{{ Settings::getCurrencySymbol() }}{{ number_format($basket->total, 2) }}
+											{{ config('app.currency_symbol') }}{{ number_format($basket->total, 2) }}
 										@endif
 									</td>
 								</tr>

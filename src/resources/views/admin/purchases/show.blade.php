@@ -44,11 +44,11 @@
 									</td>
 									<td>
 										@if ($item->price != null)
-											{{ Settings::getCurrencySymbol() }}{{ $item->price }}
+											{{ config('app.currency_symbol') }}{{ $item->price }}
 										@endif
 										Each | 
 										@if ($item->price != null)
-											{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
+											{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
 										@endif
 										Total
 									</td>
@@ -65,7 +65,7 @@
 									</td>
 									<td>
 										@if ($participant->ticket->price != null)
-											{{ Settings::getCurrencySymbol() }}{{ $participant->ticket->price }}
+											{{ config('app.currency_symbol') }}{{ $participant->ticket->price }}
 										@endif
 									</td>
 								</tr>

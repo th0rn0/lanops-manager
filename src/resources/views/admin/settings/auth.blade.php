@@ -44,21 +44,6 @@
 				@endforeach
 			</div>
 		</div>
-		<!-- Terms & Conditions -->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-info-circle fa-fw"></i> Terms and Conditions
-			</div>
-			<div class="panel-body">
-				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
-					<div class="form-group">
-						{{ Form::label('registration_terms_and_conditions','Registration',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('registration_terms_and_conditions', Settings::getRegistrationTermsAndConditions() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
-					</div>
-					<button type="submit" class="btn btn-success btn-block">Submit</button>
-				{{ Form::close() }}
-			</div>
-		</div>
 	</div>
 </div>
  

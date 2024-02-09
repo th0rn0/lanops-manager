@@ -48,7 +48,7 @@
 												x {{ $item->quantity }}
 											</td>
 											<td>
-												{{ Settings::getCurrencySymbol() }}{{ $item->price }}
+												{{ config('app.currency_symbol') }}{{ $item->price }}
 											</td>
 										</tr>
 									@endforeach
@@ -58,7 +58,7 @@
 											<strong>Total:</strong>
 										</td>
 										<td>
-											{{ Settings::getCurrencySymbol() }}{{ $basket->total }}
+											{{ config('app.currency_symbol') }}{{ $basket->total }}
 										</td>
 									</tr>
 								</tbody>
@@ -82,7 +82,7 @@
 							<h5>Quantity: {{ $item->quantity }}</h5>
 							<h5>
 								@if ($item->price != null && $item->price != 0)
-									{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
+									{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
 								@endif
 							</h5>
 							<img class="img img-responsive img-rounded" src="{{ $item->getDefaultImageUrl() }}"/>
