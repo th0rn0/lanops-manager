@@ -14,10 +14,10 @@ class RemoveTournamentTables extends Migration
     public function up()
     {
         Schema::table('event_tournaments', function (Blueprint $table) {
-            // $table->dropForeign('event_tournaments_event_id_foreign');
-            // $table->dropForeign('event_tournaments_game_id_foreign');
-            // $table->dropColumn('event_id');
-            // $table->dropColumn('game_id');
+            $table->dropForeign('event_tournaments_event_id_foreign');
+            $table->dropForeign('event_tournaments_game_id_foreign');
+            $table->dropColumn('event_id');
+            $table->dropColumn('game_id');
         });
 
         Schema::table('event_tournament_teams', function (Blueprint $table) {
