@@ -11,10 +11,10 @@ services:
     networks:
       - internal
   php:
-    # image: php:7-fpm
     build:
       context: .
       dockerfile: docker/php/Dockerfile
+      target: php-base
     volumes:
       - ./src:/var/www/html
     env_file: $PWD/src/.env
@@ -29,9 +29,47 @@ services:
       - 3306:3306
     networks:
       - internal
+
+  composer:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: php-composer
+    entrypoint: [ "composer" ]
+    command: [ "--version" ]
+    # user: "1000"
+    volumes:
+      - ./src:/var/www/html
+
+  npm:
+    image: node:8
+    # build:
+    #   context: .
+    #   dockerfile: docker/npm/Dockerfile
+    #   target: npm-base
+    entrypoint: [ "npm" ]
+    command: [ "-v" ]
+    # user: "1000"
+    volumes:
+      - ./src:/app
+
+  artisan:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: php-base
+    entrypoint: [ "php", "artisan" ]
+    command: [ "--version" ]
+    # user: "1000"
+    volumes:
+      - ./src:/var/www/html
+    env_file: $PWD/src/.env
+    networks:
+      - internal
+    
 volumes:
   db:
-    name: db
+
 networks:
   internal:
     driver: bridge

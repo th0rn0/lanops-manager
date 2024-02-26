@@ -126,7 +126,7 @@ return [
         'Socialize'             => Laravel\Socialite\Facades\Socialite::class,
         'Omnipay'               => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
         'QrCode'                => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        'Settings'              => App\Libraries\Settings::class,
+        // 'Settings'              => App\Libraries\Settings::class,
         'Helpers'               => App\Libraries\Helpers::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
     ],

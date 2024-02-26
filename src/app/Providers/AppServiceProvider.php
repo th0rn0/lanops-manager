@@ -42,11 +42,11 @@ class AppServiceProvider extends ServiceProvider
             // @\Config::set('steam-auth.api_key', env('STEAM_API_KEY'));
         // }
        
-        if (\Schema::hasTable('settings')) {
-            foreach (\App\Setting::all() as $setting) {
-                @\Config::set('settings.'.$setting->setting, $setting->value);
-            }
-        }
+        // if (\Schema::hasTable('settings')) {
+        //     foreach (\App\Setting::all() as $setting) {
+        //         @\Config::set('settings.'.$setting->setting, $setting->value);
+        //     }
+        // }
 
         // Set SEO Defaults
         // @\Config::set('seotools.meta.defaults.description', config('settings.org_tagline'));
