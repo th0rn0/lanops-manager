@@ -1,4 +1,4 @@
-build: docker-build docker-build-init-up composer-install npm-install artisan-key-generate artisan-db-migrate docker-build-init-down
+build: docker-build docker-build-init-up composer-install npm-install npm-gulp artisan-key-generate artisan-db-migrate docker-build-init-down
 
 docker-build:
 	docker compose build
@@ -15,6 +15,9 @@ composer-install:
 
 npm-install:
 	docker compose run --rm npm install
+
+npm-gulp:
+	docker compose run --rm gulp --production
 
 artisan-key-generate:
 	docker compose run --rm artisan key:generate

@@ -78,15 +78,6 @@ class Settings
     }
 
     /**
-     * Get Active Login Methods
-     * @return Array
-     */
-    public static function getLoginMethods()
-    {
-        return \App\Setting::getLoginMethods();
-    }
-
-    /**
      * Get Supported Login Methods
      * @return Array
      */

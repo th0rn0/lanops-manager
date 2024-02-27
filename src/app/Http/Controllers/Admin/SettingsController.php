@@ -41,7 +41,6 @@ class SettingsController extends Controller
             ->withSettings(Setting::all())
             ->withFacebookCallback($facebookCallback)
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
-            ->withActiveLoginMethods(Settings::getLoginMethods())
         ;
     }
 
@@ -78,7 +77,6 @@ class SettingsController extends Controller
         
         return view('admin.settings.auth')
             ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
-            ->withActiveLoginMethods(Settings::getLoginMethods())
         ;
     }
     
@@ -225,25 +223,6 @@ class SettingsController extends Controller
             return Redirect::back();
         }
         Session::flash('alert-success', "Successfully Enabled {$method}!");
-        return Redirect::back();
-    }
-
-    /**
-     * Disable Login Method
-     * @param  String $gateway
-     * @return Redirect
-     */
-    public function disableLoginMethod($method)
-    {
-        if (count(Settings::getLoginMethods()) <= 1) {
-            Session::flash('alert-danger', "You must have at least one Login Method enabled!");
-            return Redirect::back();
-        }
-        if (!Settings::disableLoginMethod($method)) {
-            Session::flash('alert-danger', "Could not Disable {$method}!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Disabled {$method}!");
         return Redirect::back();
     }
 

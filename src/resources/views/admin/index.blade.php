@@ -120,10 +120,6 @@
 						<li class="list-group-item list-group-item-info"><strong>Last Logged In: <span class="pull-right">{{ $userLastLoggedIn->username }} on {{ $userLastLoggedIn->last_login }}</span></strong></li>
 					@endif
 					<li class="list-group-item list-group-item-info"><strong>No. of Users: <span class="pull-right">{{ $userCount }}</span></strong></li>
-					<li class="list-group-item list-group-item-info"><strong>No. of Active Login Methods: <span class="pull-right">{{ count($activeLoginMethods) }}</span></strong></li>
-					@foreach ($supportedLoginMethods as $method)
-						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif"><strong>No. of {{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Accounts: <span class="pull-right">{{ $userLoginMethodCount[$method] }}</span></strong></li>
-					@endforeach
 				</ul>
 			</div>
 		</div>	
@@ -170,13 +166,7 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
-					@foreach ($supportedLoginMethods as $method)
-						<li class="list-group-item @if (in_array($method, $activeLoginMethods)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $method)))) }} Login: <span class="pull-right"> @if (in_array($method, $activeLoginMethods)) Enabled @else Disabled @endif </span></strong></li>
-					@endforeach
-					<li class="list-group-item @if ($facebookCallback != null) list-group-item-success @else list-group-item-danger @endif"><strong>Facebook News Link: <span class="pull-right"> @if ($facebookCallback != null) Active @else Inactive @endif </span></strong></li>
-					@foreach ($supportedPaymentGateways as $gateway)
-						<li class="list-group-item @if (in_array($gateway, $activePaymentGateways)) list-group-item-success @else list-group-item-danger @endif"><strong>{{ ucwords(str_replace('-', ' ', (str_replace('_', ' ' , $gateway)))) }} Payment Gateway: <span class="pull-right"> @if (in_array($gateway, $activePaymentGateways)) Enabled @else Disabled @endif </span></strong></li>
-					@endforeach
+
 				</ul>
 			</div>
 		</div>	

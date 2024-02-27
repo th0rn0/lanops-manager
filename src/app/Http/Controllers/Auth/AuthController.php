@@ -77,8 +77,7 @@ class AuthController extends Controller
      */
     public function prompt()
     {
-        return view('auth.login')
-            ->withActiveLoginMethods(Settings::getLoginMethods());
+        return view('auth.login');
     }
 
     /**
@@ -87,10 +86,6 @@ class AuthController extends Controller
      */
     public function showRegister($method)
     {
-        if (!in_array($method, Settings::getLoginMethods())) {
-            Session::flash('alert-danger', 'Login Method is not supported.');
-            return Redirect::back();
-        }
         switch ($method) {
             case 'steam':
                 if (!Session::has('user')) {
@@ -121,10 +116,6 @@ class AuthController extends Controller
      */
     public function register($method, Request $request, User $user)
     {
-        if (!in_array($method, Settings::getLoginMethods())) {
-            Session::flash('alert-danger', 'Login Method is not supported.');
-            return Redirect::back();
-        }
         if (isset($request->url) && $request->url != '') {
             return Redirect::back();
         }
@@ -144,7 +135,6 @@ class AuthController extends Controller
                 // No email Verification needed - just add the email_verified_at
                 $user->email_verified_at    = new \DateTime('NOW');
                 break;
-            
             default:
                 $rules = [
                     'email'         => 'required|filled|email|unique:users,email',
@@ -175,7 +165,7 @@ class AuthController extends Controller
         $user->username         = $request->username;
         $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
 
-        if (User::Count() == 0) {
+        if (User::count() == 0) {
             $user->admin = true;
         }
 
@@ -185,33 +175,30 @@ class AuthController extends Controller
         }
         Session::forget('user');
         Auth::login($user, true);
-        if ($method == 'standard') {
-            $user->sendEmailVerificationNotification();
-        }
         return Redirect('/account');
       
     }
 
-    public function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
+    // public function redirectToProvider($provider)
+    // {
+    //     return Socialite::driver($provider)->redirect();
+    // }
     
-    public function handleProviderCallback($provider)
-    {
-     //notice we are not doing any validation, you should do it
+    // public function handleProviderCallback($provider)
+    // {
+    //  //notice we are not doing any validation, you should do it
 
-        $user = Socialite::driver($provider)->user();
+    //     $user = Socialite::driver($provider)->user();
          
-        // stroing data to our use table and logging them in
-        $data = [
-           'name' => $user->getName(),
-           'email' => $user->getEmail()
-        ];
+    //     // stroing data to our use table and logging them in
+    //     $data = [
+    //        'name' => $user->getName(),
+    //        'email' => $user->getEmail()
+    //     ];
      
-        Auth::login(User::firstOrCreate($data));
+    //     Auth::login(User::firstOrCreate($data));
 
-        //after login redirecting to home page
-        return redirect($this->redirectPath());
-    }
+    //     //after login redirecting to home page
+    //     return redirect($this->redirectPath());
+    // }
 }

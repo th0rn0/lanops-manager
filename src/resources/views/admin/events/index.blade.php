@@ -128,24 +128,6 @@
 								{{ Form::checkbox('allow_spec','Y',true) }} Allow Spectators
 							</label>
 						</div>
-						@if ($eventTags)
-							<div class="form-group">
-								<label>Eventula Tags</label>
-								<p><small>These are used and edited on the Eventula Hub site</small></p>
-								<div class="row">
-								 	@foreach ($eventTags as $eventTag)
-								 		<div class="col-xs-12 col-sm-6">
-			                                <div class="form-check form-check-inline">
-			                                    <input class="form-check-input" type="checkbox" value="{{ $eventTag->id }}" name="event_tags[{{ $eventTag->id }}]" id="event_tags[{{ $eventTag->id }}]">
-			                                    <label class="form-check-label" for="event_tags[{{ $eventTag->id }}]">
-			                                        {{ $eventTag->name }}
-			                                    </label>
-			                                </div>
-			                            </div>
-		                            @endforeach
-		                        </div>
-							</div>
-						@endif
 						<button type="submit" class="btn btn-success btn-block">Submit</button>
 					{{ Form::close() }}
 				</div>

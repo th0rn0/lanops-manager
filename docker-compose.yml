@@ -10,6 +10,7 @@ services:
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - internal
+      
   php:
     build:
       context: .
@@ -20,6 +21,7 @@ services:
     env_file: $PWD/src/.env
     networks:
       - internal
+
   db:
     image: mysql:5.6
     volumes:
@@ -48,6 +50,20 @@ services:
     #   dockerfile: docker/npm/Dockerfile
     #   target: npm-base
     entrypoint: [ "npm" ]
+    working_dir: /app
+    command: [ "-v" ]
+    # user: "1000"
+    volumes:
+      - ./src:/app
+
+  gulp:
+    image: node:8
+    # build:
+    #   context: .
+    #   dockerfile: docker/npm/Dockerfile
+    #   target: npm-base
+    entrypoint: [ "node_modules/.bin/gulp" ]
+    working_dir: /app
     command: [ "-v" ]
     # user: "1000"
     volumes:

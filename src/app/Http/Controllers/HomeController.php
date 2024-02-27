@@ -77,10 +77,10 @@ class HomeController extends Controller
         // Setup Slider Images
         $sliderImages = array(
             array(
-                "path" => "/storage/images/main/slider/frontpage/1.jpg"
+                "path" => "/images/frontpage/slider/1.jpg"
             ),
             array (
-                "path" => "/storage/images/main/slider/frontpage/2.jpg"
+                "path" => "/images/frontpage/slider/2.jpg"
             )
         );
 

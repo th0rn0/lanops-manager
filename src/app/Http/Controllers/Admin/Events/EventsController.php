@@ -29,8 +29,7 @@ class EventsController extends Controller
     {
         return view('admin.events.index')
             ->withUser(Auth::user())
-            ->withEvents(Event::withoutGlobalScopes()->paginate(10))
-            ->withEventTags(Helpers::getEventulaEventTags());
+            ->withEvents(Event::withoutGlobalScopes()->paginate(10));
     }
 
     /**
