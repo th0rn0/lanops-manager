@@ -22,3 +22,4 @@ Born from the ashes of Eventula comes the next iteration of the Lan Management P
 - - Maybe move them into storage?
 - - Maybe move away from gulp?
 - Re-evaluate what is needed from NPM
+- Storage permissions need sorting
