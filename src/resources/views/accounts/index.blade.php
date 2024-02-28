@@ -23,7 +23,7 @@
 							<div class="row" style="display: flex; align-items: center;">
 								<div class="col-md-2 col-sm-12">
 									@if ($user->avatar != NULL)
-										<img src="{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-responsive img-thumbnail"/>
+										<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-responsive img-thumbnail"/>
 									@endif
 								</div> 
 								<div class="col-md-10 col-sm-12">
