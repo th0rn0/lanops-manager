@@ -109,9 +109,6 @@
 					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="pull-right">{{ $purchase->transaction_id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Timestamp: <span class="pull-right">{{ $purchase->created_at }}</span></strong></li>
 				</ul>
-				@if ($purchase->order)
-					<a href="/admin/orders/{{ $purchase->order->id }}"><button class="btn btn-block btn-success">View Order</button></a>
-				@endif
 				@if (count($purchase->participants) > 0)
 					@foreach ($purchase->participants as $participant)
 						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}"><button class="btn btn-block btn-success">View Participant - {{ $participant->user->username }}</button></a>

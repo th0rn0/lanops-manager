@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 
 use App\NewsArticle;
 use App\NewsComment;
 use App\NewsTag;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;

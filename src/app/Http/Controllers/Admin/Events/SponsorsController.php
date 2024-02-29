@@ -2,17 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use DB;
-
-use App\User;
 use App\Event;
-use App\EventTicket;
 use App\EventSponsor;
-use App\EventSeating;
-use App\EventParticipant;
-use App\EventParticipantType;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -29,7 +21,7 @@ class SponsorsController extends Controller
     public function store(Request $request, Event $event)
     {
         $sponsor            = new EventSponsor();
-        $sponsor->event_id  = $event_id;
+        $sponsor->event_id  = $event->id;
         $sponsor->name      = $request->sponsor_name;
 
         if ($request->file('sponsor_image') !== null) {

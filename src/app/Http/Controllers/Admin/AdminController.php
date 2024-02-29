@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Settings;
 use Helpers;
 use \Carbon\Carbon as Carbon;
 

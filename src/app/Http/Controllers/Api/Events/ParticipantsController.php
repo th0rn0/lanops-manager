@@ -2,18 +2,9 @@
 
 namespace App\Http\Controllers\Api\Events;
 
-use DB;
-use Auth;
-use Session;
-use App\User;
 use App\Event;
-use App\EventParticipant;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
 
 class ParticipantsController extends Controller
 {

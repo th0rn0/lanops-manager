@@ -6,19 +6,9 @@ use DB;
 use Auth;
 
 use App\Event;
-use App\User;
 use App\NewsArticle;
-use App\EventTimetable;
 use App\EventTimetableData;
 use App\EventParticipant;
-
-use App\Http\Requests;
-
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Redirect;
-
-use Facebook\Facebook;
 
 class HomeController extends Controller
 {

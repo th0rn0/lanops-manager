@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use QrCode;
-use Storage;
 use Settings;
 use Helpers;
 use Auth;
 
 use App\Purchase;
-use App\User;
 use App\Event;
 use App\EventTicket;
-use App\ShopItem;
-use App\ShopOrder;
-use App\ShopOrderItem;
 use App\EventParticipant;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;

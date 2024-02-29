@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
-use Settings;
-
-use App\Http\Requests;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;

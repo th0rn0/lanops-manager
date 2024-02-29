@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
 use Auth;
 use Session;
 
-use App\User;
 use App\Poll;
 use App\PollOption;
-use App\GalleryAlbum;
-use App\GalleryAlbumImage;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;

@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use DB;
 use Auth;
 use Session;
-use Helpers;
 
-use App\User;
 use App\Event;
 use App\EventParticipant;
-use App\EventTicket;
-use App\EventAnnouncement;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;

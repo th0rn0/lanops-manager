@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use DB;
-use Auth;
 use Session;
 use Storage;
 use Input;
 
-use App\Event;
 use App\EventVenue;
 use App\EventVenueImage;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;

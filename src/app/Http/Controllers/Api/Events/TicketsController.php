@@ -2,20 +2,9 @@
 
 namespace App\Http\Controllers\Api\Events;
 
-use DB;
-use Auth;
-use Session;
-use Settings;
-
-use App\User;
 use App\Event;
-use App\EventParticipant;
 use App\EventTicket;
 
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class TicketsController extends Controller
