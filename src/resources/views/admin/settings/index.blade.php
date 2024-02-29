@@ -140,7 +140,6 @@
 					<div class="row">
 						<div class="form-group col-xs-12">
 							{{ Form::label('seo_keywords', "SEO Keywords" ,array('id'=>'','class'=>'')) }}
-							{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting','class'=>'form-control')) }}
 							<small>Separate each keyword with a Comma.</small>
 						</div>
 						<div class="form-group col-xs-12 col-md-6">

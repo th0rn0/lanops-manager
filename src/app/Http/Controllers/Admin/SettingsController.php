@@ -40,7 +40,6 @@ class SettingsController extends Controller
         return view('admin.settings.index')
             ->withSettings(Setting::all())
             ->withFacebookCallback($facebookCallback)
-            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
         ;
     }
 
@@ -52,31 +51,6 @@ class SettingsController extends Controller
     {
         return view('admin.settings.org')
             ->withSettings(Setting::all())
-        ;
-    }
-
-    /**
-     * Show Settings Payment Page
-     * @return Redirect
-     */
-    public function showPayments()
-    {
-        
-        return view('admin.settings.payments')
-            ->withSupportedPaymentGateways(Settings::getSupportedPaymentGateways())
-            ->withActivePaymentGateways(Settings::getPaymentGateways())
-        ;
-    }
-
-    /**
-     * Show Settings Index Page
-     * @return Redirect
-     */
-    public function showAuth()
-    {
-        
-        return view('admin.settings.auth')
-            ->withSupportedLoginMethods(Settings::getSupportedLoginMethods())
         ;
     }
     
@@ -118,16 +92,6 @@ class SettingsController extends Controller
             'org_favicon'                       => 'Org Favicon must be a Image'
         ];
         $this->validate($request, $rules, $messages);
-
-        if (isset($request->about_who) && !Settings::setAboutWho($request->about_who)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
-        if (isset($request->seo_keywords) && !Settings::setSeoKeywords($request->seo_keywords)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
 
         if (isset($request->analytics_google_id) && !ApiKey::setGoogleAnalyticsId($request->analytics_google_id)) {
             Session::flash('alert-danger', 'Could not update!');
@@ -178,51 +142,6 @@ class SettingsController extends Controller
             }
         }
         Session::flash('alert-success', "Successfully Linked {$social}!");
-        return Redirect::back();
-    }
-
-    /**
-     * Enable Payment Gateway
-     * @param  String $gateway
-     * @return Redirect
-     */
-    public function enablePaymentGateway($gateway)
-    {
-        if (!Settings::enablePaymentGateway($gateway)) {
-            Session::flash('alert-danger', "Could not Enable {$gateway}!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Enabled {$gateway}!");
-        return Redirect::back();
-    }
-
-    /**
-     * Disable Payment Gateway
-     * @param  String $gateway
-     * @return Redirect
-     */
-    public function disablePaymentGateway($gateway)
-    {
-        if (!Settings::disablePaymentGateway($gateway)) {
-            Session::flash('alert-danger', "Could not Disable {$gateway}!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Disabled {$gateway}!");
-        return Redirect::back();
-    }
-    
-    /**
-     * Enable Login Method
-     * @param  String $gateway
-     * @return Redirect
-     */
-    public function enableLoginMethod($method)
-    {
-        if (!Settings::enableLoginMethod($method)) {
-            Session::flash('alert-danger', "Could not Enable {$method}!");
-            return Redirect::back();
-        }
-        Session::flash('alert-success', "Successfully Enabled {$method}!");
         return Redirect::back();
     }
 

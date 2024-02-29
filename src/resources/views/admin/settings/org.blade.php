@@ -79,7 +79,6 @@
 				{{ Form::open(array('url'=>'/admin/settings', 'onsubmit' => 'return ConfirmSubmit()')) }}
 					<div class="form-group">
 						{{ Form::label('about_who','Who' ,array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('about_who', Settings::getAboutWho() ,array('id'=>'','class'=>'form-control wysiwyg-editor')) }}
 					</div>
 					<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}

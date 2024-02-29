@@ -326,17 +326,6 @@ Route::group([], function () {
         /**
          * Settings
          */
-        Route::get('/admin/settings', 'Admin\SettingsController@index');
-        Route::post('/admin/settings', 'Admin\SettingsController@update');
-        Route::get('/admin/settings/org', 'Admin\SettingsController@showOrg');
-        Route::get('/admin/settings/payments', 'Admin\SettingsController@showPayments');
-        Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
-        Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
-        Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
-        Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
-        Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
-        Route::post('/admin/settings/login/{method}/disable', 'Admin\SettingsController@disableLoginMethod');
-        Route::post('/admin/settings/login/{method}/enable', 'Admin\SettingsController@enableLoginMethod');
         Route::post('/admin/settings/generate/qr', 'Admin\SettingsController@regenerateQRCodes');
 
         /**

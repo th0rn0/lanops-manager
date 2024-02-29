@@ -20,8 +20,7 @@
 	<div class="page-header">
 		<h3>The Who's Who</h3> 
 	</div>
-	{!! Settings::getAboutWho() !!}
-
+	@include ('layouts._partials._about.who')
 </div>
 
 @endsection
