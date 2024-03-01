@@ -3,8 +3,8 @@
 return [
 
     // The default gateway to use
-    'default' => 'paypal',
-
+    'default' => 'stripe',
+    'available_payment_gateways' => '',
     // Add in each gateway here
     'gateways' => [
         'paypal_express' => [
@@ -17,9 +17,9 @@ return [
                 'note'              => 'You will be redirected offsite for this payment.',
             ],
             'credentials' => [
-                'username' => '',
-                'password' => '',
-                'signature' => ''
+                'username' => env('PAYPAL_USERNAME'),
+                'password' => env('PAYPAL_PASSWORD'),
+                'signature' => env('PAYPAL_SIGNATURE')
             ]
         ],
         'stripe' => [

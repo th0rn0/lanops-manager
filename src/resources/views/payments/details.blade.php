@@ -40,7 +40,7 @@
 					<h3 class="panel-title">Order Details</h3>
 				</div>
 				<div class="panel-body">
-					@include ('layouts._partials._shop.basket-preview')
+					@include ('layouts._partials._checkout.basket')
 				</div>
 			</div>
 			@if ($delivery && $deliveryDetails)

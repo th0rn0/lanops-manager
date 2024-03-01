@@ -34,7 +34,7 @@ class PaymentsController extends Controller
         }
         return view('payments.checkout')
             ->withBasket(Helpers::formatBasket(Session::get(config('app.basket_name'))))
-            ->withActivePaymentGateways(Settings::getPaymentGateways())
+            ->withActivePaymentGateways(config('laravel-omnipay.gateways.available_payment_gateways'))
         ;
     }
 
@@ -481,7 +481,7 @@ class PaymentsController extends Controller
                 }
             }
         } elseif(array_key_exists('shop', $basket)) {
-            # TODO: REMOVE THIS
+            // TODO: REMOVE THIS
             $status = 'EVENT';
             $deliverToEvent = true;
             if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
@@ -518,8 +518,12 @@ class PaymentsController extends Controller
      */
     private function checkParams($paymentGateway, $basket)
     {
-        $acceptedPaymentGateways = Settings::getPaymentGateways();
-        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
+        $acceptedPaymentGateways = [];
+        foreach(config('laravel-omnipay.gateways') as $key => $acceptedPaymentGateway) {
+            array_push($acceptedPaymentGateways, $key);
+            echo $key;
+        }
+        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways)) {
             $paymentGateway = strtolower($paymentGateway);
         } else {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
