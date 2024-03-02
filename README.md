@@ -23,3 +23,4 @@ Born from the ashes of Eventula comes the next iteration of the Lan Management P
 - - Maybe move away from gulp?
 - Re-evaluate what is needed from NPM
 - Remove event_tag table?
+- Storage permissions need sorting

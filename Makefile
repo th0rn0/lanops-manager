@@ -1,3 +1,5 @@
+build: composer-install npm-install npm-gulp 
+
 build-init: docker-build docker-pull docker-build-init-up composer-install npm-install npm-gulp artisan-key-generate artisan-db-migrate artisan-storage-link docker-build-init-down
 
 docker-pull:
