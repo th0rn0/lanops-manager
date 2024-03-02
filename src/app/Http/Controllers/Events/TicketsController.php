@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Events;
 use Auth;
 use Session;
 
-use App\User;
-use App\EventParticipant;
-use App\EventTicket;
+use App\Models\User;
+use App\Models\EventParticipant;
+use App\Models\EventTicket;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;

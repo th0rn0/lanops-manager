@@ -1,9 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Auth;
-use App\NewsCommentReport;
+use App\Models\NewsCommentReport;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -49,15 +49,15 @@ class NewsComment extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
     public function newsArticle()
     {
-        return $this->belongsTo('App\NewsArticle', 'news_feed_id');
+        return $this->belongsTo('App\Models\NewsArticle', 'news_feed_id');
     }
     public function reports()
     {
-        return $this->hasMany('App\NewsCommentReport', 'news_feed_comment_id');
+        return $this->hasMany('App\Models\NewsCommentReport', 'news_feed_comment_id');
     }
 
 

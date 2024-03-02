@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\Events;
 
 use Session;
 
-use App\Event;
-use App\EventAnnouncement;
+use App\Models\Event;
+use App\Models\EventAnnouncement;
 
 use App\Http\Controllers\Controller;
 

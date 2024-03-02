@@ -1,18 +1,29 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventTicket extends Model
+class EventTag extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'event_tickets';
+    protected $table = 'event_tags';
     
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'event_id',
+        'tag_id',
+    ];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -28,10 +39,6 @@ class EventTicket extends Model
      */
     public function event()
     {
-        return $this->belongsTo('App\Event');
-    }
-    public function participants()
-    {
-        return $this->hasMany('App\EventParticipant', 'ticket_id');
+        return $this->belongsTo('App\Models\Event');
     }
 }

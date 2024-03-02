@@ -1,8 +1,6 @@
 <?php
 
-namespace App;
-
-use DB;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,6 +36,6 @@ class EventInformation extends Model
      */
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Models\Event');
     }
 }

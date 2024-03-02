@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Events;
 
 use Session;
 
-use App\Event;
-use App\EventSeating;
-use App\EventSeatingPlan;
+use App\Models\Event;
+use App\Models\EventSeating;
+use App\Models\EventSeatingPlan;
 
 use App\Http\Controllers\Controller;
 

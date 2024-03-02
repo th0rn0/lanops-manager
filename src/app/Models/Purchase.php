@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -37,11 +37,11 @@ class Purchase extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
     public function participants()
     {
-        return $this->hasMany('App\EventParticipant', 'purchase_id');
+        return $this->hasMany('App\Models\EventParticipant', 'purchase_id');
     }
 
     /**

@@ -25,7 +25,7 @@ class Helpers
      */
     public static function getVenues($obj = false)
     {
-        $venues = \App\EventVenue::all();
+        $venues = \App\Models\EventVenue::all();
         $return = array();
         foreach ($venues as $venue) {
                 $return[$venue->id] = $venue->display_name;
@@ -50,9 +50,9 @@ class Helpers
     {
         $return = array();
         if ($limit != 0) {
-            $events = \App\Event::orderBy('start', $order)->paginate($limit);
+            $events = \App\Models\Event::orderBy('start', $order)->paginate($limit);
         } else {
-            $events = \App\Event::orderBy('start', 'DESC')->get();
+            $events = \App\Models\Event::orderBy('start', 'DESC')->get();
         }
         $return = array();
         foreach ($events as $event) {
@@ -77,15 +77,15 @@ class Helpers
         $return = array();
         if ($limit != 0) {
             if ($future) {
-                $events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', $order)->paginate($limit);
+                $events = \App\Models\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', $order)->paginate($limit);
             } else {
-                $events = \App\Event::orderBy('start', $order)->paginate($limit);
+                $events = \App\Models\Event::orderBy('start', $order)->paginate($limit);
             }
         } else {
             if ($future) {
-                $events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', 'DESC')->get();
+                $events = \App\Models\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', 'DESC')->get();
             } else {
-                $events = \App\Event::orderBy('start', 'DESC')->get();
+                $events = \App\Models\Event::orderBy('start', 'DESC')->get();
             }
         }
         if (!$obj) {
@@ -106,7 +106,7 @@ class Helpers
      */
     public static function getEventTotal()
     {
-        $events = \App\Event::count();
+        $events = \App\Models\Event::count();
         // Historical before this site
         return 23 + $events;
     }
@@ -118,7 +118,7 @@ class Helpers
      */
     public static function getNextEventName()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -138,7 +138,7 @@ class Helpers
      */
     public static function getNextEventSlug()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -156,7 +156,7 @@ class Helpers
      */
     public static function getNextEventDesc()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -173,7 +173,7 @@ class Helpers
      */
     public static function getNextEventStartDate()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -190,7 +190,7 @@ class Helpers
      */
     public static function getNextEventEndDate()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -207,7 +207,7 @@ class Helpers
      */
     public static function getEventParticipantTotal()
     {
-        $participants = \App\EventParticipant::count();
+        $participants = \App\Models\EventParticipant::count();
         // Historical before this site
         return 686 + $participants;
     }
@@ -221,7 +221,7 @@ class Helpers
     {
         $return = 0;
         foreach ($basket as $ticket_id => $quantity) {
-            $ticket = \App\EventTicket::where('id', $ticket_id)->first();
+            $ticket = \App\Models\EventTicket::where('id', $ticket_id)->first();
             $return += ($ticket->price * $quantity);
         }
         return $return;
@@ -242,16 +242,12 @@ class Helpers
     /**
      * Format Shopping Basket into Readable format
      * @param $itemId
-     * @return Boolean
+     * @return boolean
      */
     public static function formatBasket($basket)
     {
-        // TODO - REMOVE ME
-        if (array_key_exists('shop', $basket)) {
-            $formattedBasket = \App\ShopItem::whereIn('id', array_keys($basket['shop']))->get();
-        }
         if (array_key_exists('tickets', $basket)) {
-            $formattedBasket = \App\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
+            $formattedBasket = \App\Models\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
         }
         if (!$formattedBasket) {
             return false;

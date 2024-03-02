@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\Events;
 
-use App\Event;
-use App\EventTimetable;
+use App\Models\Event;
+use App\Models\EventTimetable;
 
 use App\Http\Controllers\Controller;
 

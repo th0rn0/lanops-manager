@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin\Events;
 use Session;
 use Storage;
 
-use App\Event;
-use App\EventSeating;
-use App\EventSeatingPlan;
-use App\EventParticipant;
+use App\Models\Event;
+use App\Models\EventSeating;
+use App\Models\EventSeatingPlan;
+use App\Models\EventParticipant;
 
 use App\Http\Controllers\Controller;
 

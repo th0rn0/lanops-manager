@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Events;
 
 use Auth;
 use Session;
-use App\EventParticipant;
+use App\Models\EventParticipant;
 
 use App\Http\Controllers\Controller;
 

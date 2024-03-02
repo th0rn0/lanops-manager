@@ -1,12 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DB;
 use Auth;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class PollOptionVote extends Model
 {
@@ -33,12 +31,12 @@ class PollOptionVote extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function pollOption()
     {
-        return $this->belongsTo('App\PollOption', 'poll_option_id');
+        return $this->belongsTo('App\Models\PollOption', 'poll_option_id');
     }
 
     /**

@@ -1,18 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventSponsor extends Model
+class EventSeating extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'event_sponsors';
-
+    protected $table = 'event_seating';
+    
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -22,12 +22,16 @@ class EventSponsor extends Model
         'created_at',
         'updated_at'
     );
-    
+
     /*
      * Relationships
      */
-    public function event()
+    public function seatingPlan()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Models\EventSeatingPlan', 'event_seating_plan_id');
+    }
+    public function eventParticipant()
+    {
+        return $this->belongsTo('App\Models\EventParticipant');
     }
 }

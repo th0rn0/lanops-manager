@@ -1,10 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Auth;
 use QrCode;
-use Settings;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -50,23 +49,23 @@ class EventParticipant extends Model
      */
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Models\Event');
     }
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
     public function ticket()
     {
-        return $this->belongsTo('App\EventTicket', 'ticket_id');
+        return $this->belongsTo('App\Models\EventTicket', 'ticket_id');
     }
     public function purchase()
     {
-        return $this->belongsTo('App\Purchase', 'purchase_id');
+        return $this->belongsTo('App\Models\Purchase', 'purchase_id');
     }
     public function seat()
     {
-        return $this->hasOne('App\EventSeating');
+        return $this->hasOne('App\Models\EventSeating');
     }
 
     /**

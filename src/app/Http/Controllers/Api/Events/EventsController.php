@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Events;
 
 
-use App\Event;
+use App\Models\Event;
 
 use App\Http\Controllers\Controller;
 

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\Events;
 
 use Session;
 
-use App\Event;
-use App\EventParticipant;
+use App\Models\Event;
+use App\Models\EventParticipant;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

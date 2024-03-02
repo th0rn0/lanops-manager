@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DB;
 use Auth;
 
 use Illuminate\Database\Eloquent\Model;
@@ -54,11 +53,11 @@ class EventSeatingPlan extends Model
      */
     public function event()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Models\Event');
     }
     public function seats()
     {
-        return $this->hasMany('App\EventSeating');
+        return $this->hasMany('App\Models\EventSeating');
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\Events;
 
-use App\Event;
-use App\EventTicket;
+use App\Models\Event;
+use App\Models\EventTicket;
 
 use App\Http\Controllers\Controller;
 

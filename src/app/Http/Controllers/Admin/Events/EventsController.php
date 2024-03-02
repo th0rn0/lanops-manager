@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Events;
 use Auth;
 use Session;
 
-use App\Event;
-use App\EventParticipant;
+use App\Models\Event;
+use App\Models\EventParticipant;
 
 use App\Http\Controllers\Controller;
 

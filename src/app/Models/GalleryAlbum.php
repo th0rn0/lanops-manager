@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DateTime;
 use Auth;
 
 use Illuminate\Database\Eloquent\Model;
@@ -10,12 +9,23 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class EventTimetable extends Model
+class GalleryAlbum extends Model
 {
     use Sluggable;
 
-    protected $table = 'event_timetables';
+    /**
+     * The name of the table.
+     *
+     * @var string
+     */
+    protected $table = 'gallery_albums';
 
+
+    /**
+    * The attributes excluded from the model's JSON form.
+    *
+    * @var array
+    */
     protected $hidden = array(
         'created_at',
         'updated_at'
@@ -38,19 +48,24 @@ class EventTimetable extends Model
             });
         }
     }
-    
     /*
-     * Relationships
-     */
-    public function event()
+    * Relationships
+    */
+    public function images()
     {
-        return $this->belongsTo('App\Event');
-    }
-    public function data()
-    {
-        return $this->hasMany('App\EventTimetableData');
+        return $this->hasMany('App\Models\GalleryAlbumImage');
     }
 
+    public function event()
+    {
+        return $this->belongsTo('App\Models\Event', 'event_id');
+    }
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
     public function sluggable(): array
     {
         return [
@@ -71,25 +86,21 @@ class EventTimetable extends Model
     }
 
     /**
-     * Get Available Time slots for timetable
-     * @param  boolean $obj
-     * @return Array
+     * Set Album Cover
+     * @param $imageId
      */
-    public function getAvailableTimes($obj = false)
+    public function setAlbumCover($imageId)
     {
-        $return = array();
-        $endDate = new \DateTime($this->event->end);
-        $startDate = new \DateTime($this->event->start);
-        while ($startDate <= $endDate) {
-            $return[$startDate->format('Y-m-d H:i:s')] = date(
-                "D",
-                strtotime($startDate->format('Y-m-d H:i:s'))
-            ) . ' - ' .  date("H:i", strtotime($startDate->format('Y-m-d H:i:s')));
-            $startDate->modify('+30 minutes');
-        }
-        if ($obj) {
-            return json_decode(json_encode($return), false);
-        }
-        return $return;
+        $this->album_cover_id = $imageId;
+        $this->save();
+    }
+
+    /**
+     * Get Album Cover Path
+     * @return String
+     */
+    public function getAlbumCoverPath()
+    {
+        return $this->images()->where('id', $this->album_cover_id)->first()->path;
     }
 }

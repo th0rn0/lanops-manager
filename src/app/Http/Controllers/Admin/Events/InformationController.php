@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin\Events;
 use Session;
 use Storage;
 
-use App\Event;
-use App\EventInformation;
+use App\Models\Event;
+use App\Models\EventInformation;
 
 use App\Http\Controllers\Controller;
 

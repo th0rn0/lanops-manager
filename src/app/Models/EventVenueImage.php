@@ -1,28 +1,28 @@
 <?php
 
-namespace App;
-
-use DB;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventAnnouncement extends Model
+class EventVenueImage extends Model
 {
+
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'event_announcements';
-    
+    protected $table = 'event_venue_images';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'message',
-        'event_id',
+        'path',
+        'description',
+        'venue_id',
     ];
 
     /**
@@ -30,16 +30,15 @@ class EventAnnouncement extends Model
      *
      * @var array
      */
-    protected $hidden = array(
-        'created_at',
-        'updated_at'
-    );
+    protected $hidden = [
 
+    ];
+    
     /*
      * Relationships
      */
-    public function event()
+    public function venue()
     {
-        return $this->belongsTo('App\Event');
+        return $this->belongsTo('App\Models\EventVenue');
     }
 }

@@ -6,13 +6,13 @@ use Auth;
 use Helpers;
 use \Carbon\Carbon as Carbon;
 
-use App\User;
-use App\Event;
-use App\Poll;
-use App\PollOptionVote;
-use App\EventParticipant;
-use App\NewsComment;
-use App\EventTicket;
+use App\Models\User;
+use App\Models\Event;
+use App\Models\Poll;
+use App\Models\PollOptionVote;
+use App\Models\EventParticipant;
+use App\Models\NewsComment;
+use App\Models\EventTicket;
 
 use App\Http\Controllers\Controller;
 

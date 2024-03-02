@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin\Events;
 
 use Session;
 
-use App\Event;
-use App\EventTimetable;
-use App\EventTimetableData;
+use App\Models\Event;
+use App\Models\EventTimetable;
+use App\Models\EventTimetableData;
 
 use App\Http\Controllers\Controller;
 

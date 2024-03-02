@@ -1,19 +1,17 @@
 <?php
 
-namespace App;
-
-use DB;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventSeating extends Model
+class EventTicket extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'event_seating';
+    protected $table = 'event_tickets';
     
     /**
      * The attributes excluded from the model's JSON form.
@@ -28,12 +26,12 @@ class EventSeating extends Model
     /*
      * Relationships
      */
-    public function seatingPlan()
+    public function event()
     {
-        return $this->belongsTo('App\EventSeatingPlan', 'event_seating_plan_id');
+        return $this->belongsTo('App\Models\Event');
     }
-    public function eventParticipant()
+    public function participants()
     {
-        return $this->belongsTo('App\EventParticipant');
+        return $this->hasMany('App\Models\EventParticipant', 'ticket_id');
     }
 }

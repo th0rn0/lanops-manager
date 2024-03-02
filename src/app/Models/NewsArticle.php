@@ -1,9 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\NewsComment;
-use App\NewsTag;
+use App\Models\NewsTag;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -33,17 +32,17 @@ class NewsArticle extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function comments()
     {
-        return $this->hasMany('App\NewsComment', 'news_feed_id');
+        return $this->hasMany('App\Models\NewsComment', 'news_feed_id');
     }
 
     public function tags()
     {
-        return $this->hasMany('App\NewsTag', 'news_feed_id');
+        return $this->hasMany('App\Models\NewsTag', 'news_feed_id');
     }
 
 

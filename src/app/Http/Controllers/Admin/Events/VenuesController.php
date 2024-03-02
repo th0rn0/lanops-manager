@@ -6,8 +6,8 @@ use Session;
 use Storage;
 use Input;
 
-use App\EventVenue;
-use App\EventVenueImage;
+use App\Models\EventVenue;
+use App\Models\EventVenueImage;
 
 use App\Http\Controllers\Controller;
 

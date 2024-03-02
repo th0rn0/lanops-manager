@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DB;
 use Auth;
 
 use Illuminate\Database\Eloquent\Model;
@@ -73,47 +72,47 @@ class Event extends Model
      */
     public function eventParticipants()
     {
-        return $this->hasMany('App\EventParticipant');
+        return $this->hasMany('App\Models\EventParticipant');
     }
     public function timetables()
     {
-        return $this->hasMany('App\EventTimetable');
+        return $this->hasMany('App\Models\EventTimetable');
     }
     public function tickets()
     {
-        return $this->hasMany('App\EventTicket');
+        return $this->hasMany('App\Models\EventTicket');
     }
     public function seatingPlans()
     {
-        return $this->hasMany('App\EventSeatingPlan');
+        return $this->hasMany('App\Models\EventSeatingPlan');
     }
     public function sponsors()
     {
-        return $this->hasMany('App\EventSponsor');
+        return $this->hasMany('App\Models\EventSponsor');
     }
     public function information()
     {
-        return $this->hasMany('App\EventInformation');
+        return $this->hasMany('App\Models\EventInformation');
     }
     public function announcements()
     {
-        return $this->hasMany('App\EventAnnouncement');
+        return $this->hasMany('App\Models\EventAnnouncement');
     }
     public function venue()
     {
-        return $this->belongsTo('App\EventVenue', 'event_venue_id');
+        return $this->belongsTo('App\Models\EventVenue', 'event_venue_id');
     }
     public function galleries()
     {
-        return $this->hasMany('App\GalleryAlbum');
+        return $this->hasMany('App\Models\GalleryAlbum');
     }
     public function polls()
     {
-        return $this->hasMany('App\Poll', 'event_id');
+        return $this->hasMany('App\Models\Poll', 'event_id');
     }
     public function tags()
     {
-        return $this->hasMany('App\EventTag', 'event_id');
+        return $this->hasMany('App\Models\EventTag', 'event_id');
     }
 
     /**

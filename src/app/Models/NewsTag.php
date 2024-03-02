@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -56,6 +56,6 @@ class NewsTag extends Model
      */
     public function newsArticle()
     {
-        return $this->belongsTo('App\NewsArticle', 'news_feed_id');
+        return $this->belongsTo('App\Models\NewsArticle', 'news_feed_id');
     }
 }

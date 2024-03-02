@@ -1,12 +1,6 @@
 <?php
 
-namespace App;
-
-use DB;
-use Auth;
-use Settings;
-
-use App\CreditLog;
+namespace App\Models;
 
 use \Carbon\Carbon as Carbon;
 
@@ -57,11 +51,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function eventParticipants()
     {
-        return $this->hasMany('App\EventParticipant');
+        return $this->hasMany('App\Models\EventParticipant');
     }
     public function purchases()
     {
-        return $this->hasMany('App\Purchase');
+        return $this->hasMany('App\Models\Purchase');
     }
 
     /**

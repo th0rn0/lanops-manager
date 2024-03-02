@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DB;
 use Auth;
 
 use App\PollOptionVote as Vote;
@@ -35,17 +34,17 @@ class PollOption extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function poll()
     {
-        return $this->belongsTo('App\Poll', 'poll_id');
+        return $this->belongsTo('App\Models\Poll', 'poll_id');
     }
 
     public function votes()
     {
-        return $this->hasMany('App\PollOptionVote', 'poll_option_id');
+        return $this->hasMany('App\Models\PollOptionVote', 'poll_option_id');
     }
 
     public function getTotalVotes()

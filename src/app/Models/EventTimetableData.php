@@ -1,9 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\EventTimetable;
-use App\Http\Requests;
 use Illuminate\Database\Eloquent\Model;
 
 class EventTimetableData extends Model
@@ -20,6 +18,6 @@ class EventTimetableData extends Model
      */
     public function timetable()
     {
-        return $this->belongsTo('App\EventTimetable');
+        return $this->belongsTo('App\Models\EventTimetable');
     }
 }

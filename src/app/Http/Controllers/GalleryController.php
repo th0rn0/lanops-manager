@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Event;
-use App\GalleryAlbum;
+use App\Models\Event;
+use App\Models\GalleryAlbum;
 
 use App\Http\Controllers\Controller;
 

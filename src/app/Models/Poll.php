@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use DB;
 use Auth;
 use App\PollOption;
 
@@ -56,17 +55,17 @@ class Poll extends Model
      */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 
     public function options()
     {
-        return $this->hasMany('App\PollOption', 'poll_id');
+        return $this->hasMany('App\Models\PollOption', 'poll_id');
     }
 
     public function event()
     {
-        return $this->belongsTo('App\Event', 'event_id');
+        return $this->belongsTo('App\Models\Event', 'event_id');
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use App\Event;
-use App\EventSponsor;
+use App\Models\Event;
+use App\Models\EventSponsor;
 
 use App\Http\Controllers\Controller;
 

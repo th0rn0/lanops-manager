@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 
-use App\Event;
-use App\NewsArticle;
-use App\EventTimetableData;
-use App\EventParticipant;
+use App\Models\Event;
+use App\Models\NewsArticle;
+use App\Models\EventTimetableData;
+use App\Models\EventParticipant;
 
 class HomeController extends Controller
 {

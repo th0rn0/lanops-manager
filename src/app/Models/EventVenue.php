@@ -1,8 +1,6 @@
 <?php
 
-namespace App;
-
-use DB;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,11 +46,11 @@ class EventVenue extends Model
      */
     public function events()
     {
-        return $this->hasMany('App\Event');
+        return $this->hasMany('App\Models\Event');
     }
     public function images()
     {
-        return $this->hasMany('App\EventVenueImage');
+        return $this->hasMany('App\Models\EventVenueImage');
     }
 
     /**

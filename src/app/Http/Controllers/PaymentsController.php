@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Settings;
 use Helpers;
 use Auth;
 
-use App\Purchase;
-use App\Event;
-use App\EventTicket;
-use App\EventParticipant;
+use App\Models\Purchase;
+use App\Models\Event;
+use App\Models\EventTicket;
+use App\Models\EventParticipant;
 
 use App\Http\Controllers\Controller;
 
