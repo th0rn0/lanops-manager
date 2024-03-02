@@ -105,7 +105,7 @@ class EventParticipant extends Model
 
     /**
      * Regenerate QR Codes
-     * @return Boolean
+     * @return boolean
      */
     public function generateQRCode()
     {
@@ -128,7 +128,7 @@ class EventParticipant extends Model
     /**
      * Transfer Participant to another Event
      * @param $type
-     * @return Orders
+     * @return boolean
      */
     public function transfer($eventId)
     {
