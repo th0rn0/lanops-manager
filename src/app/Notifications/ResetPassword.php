@@ -2,8 +2,6 @@
 
 namespace App\Notifications;
 
-use Settings;
-
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;

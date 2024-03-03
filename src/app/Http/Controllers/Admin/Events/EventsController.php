@@ -91,9 +91,6 @@ class EventsController extends Controller
             Session::flash('alert-danger', 'Cannot Save Event!');
             return Redirect::to('admin/events/' . $event->slug);
         }
-        if ($request->has('event_tags')) {
-            $event->addTagsById($request->event_tags);
-        }
         Session::flash('alert-success', 'Successfully saved Event!');
         return Redirect::to('admin/events/' . $event->slug);
     }

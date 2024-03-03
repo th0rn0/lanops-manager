@@ -65,9 +65,6 @@
 			<li>
 				<a href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>
-			<li>
-				<a href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
-			</li>
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->

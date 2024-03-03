@@ -6,7 +6,7 @@ use Auth;
 
 use Session;
 
-use App\User;
+use App\Models\User;
 
 use App\Http\Controllers\Controller;
 

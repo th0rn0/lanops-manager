@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('credit_total');
+        Schema::table('event_tags', function (Blueprint $table) {
+            $table->dropForeign('event_tags_event_id_foreign');
+            $table->dropColumn('event_id');
         });
+        Schema::drop('event_tags');   
     }
 
     /**
@@ -25,7 +27,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('event_tags', function (Blueprint $table) {
             //
         });
     }

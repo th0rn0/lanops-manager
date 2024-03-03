@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Purchase;
+use App\Models\Purchase;
 
 use App\Http\Controllers\Controller;
 

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Auth;
 
-use App\NewsArticle;
-use App\NewsComment;
-use App\NewsTag;
+use App\Models\NewsArticle;
+use App\Models\NewsComment;
+use App\Models\NewsTag;
 
 use App\Http\Controllers\Controller;
 

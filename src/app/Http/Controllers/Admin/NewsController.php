@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Auth;
 use Session;
 
-use App\NewsArticle;
-use App\NewsComment;
-use App\NewsCommentReport;
+use App\Models\NewsArticle;
+use App\Models\NewsComment;
+use App\Models\NewsCommentReport;
 
 use App\Http\Controllers\Controller;
 

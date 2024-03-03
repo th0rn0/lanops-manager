@@ -26,25 +26,25 @@ class EventsSeeder extends Seeder
         \DB::table('event_information')->delete();
 
         ## Venue
-        $venue = factory(App\Models\EventVenue::class)->create();
+        $venue = factory(\App\Models\EventVenue::class)->create();
 
         ## Events
-        factory(App\Models\Event::class)->create([
+        factory(\App\Models\Event::class)->create([
             'event_venue_id'    => $venue->id,
             'status'            => 'PUBLISHED',
             'capacity'          => 30,
         ])->each(
             function ($event) {
-                factory(App\Models\EventTicket::class)->create([
+                factory(\App\Models\EventTicket::class)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(App\Models\EventTimetable::class)->create([
+                factory(\App\Models\EventTimetable::class)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(App\Models\EventInformation::class, 5)->create([
+                factory(\App\Models\EventInformation::class, 5)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(App\Models\EventSeatingPlan::class)->create([
+                factory(\App\Models\EventSeatingPlan::class)->create([
                     'event_id' => $event->id,
                 ]);
             }

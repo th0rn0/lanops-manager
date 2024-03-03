@@ -7,8 +7,8 @@ use Image;
 use Session;
 use File;
 
-use App\GalleryAlbum;
-use App\GalleryAlbumImage;
+use App\Models\GalleryAlbum;
+use App\Models\GalleryAlbumImage;
 
 use App\Http\Controllers\Controller;
 

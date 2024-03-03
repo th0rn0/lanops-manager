@@ -7,14 +7,14 @@ services:
       - '8080:80'
     volumes:
       - ./src:/var/www/html
-      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./resources/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - internal
       
   php:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: resources/docker/php/Dockerfile
       target: php-base
     volumes:
       - ./src:/var/www/html
@@ -35,7 +35,7 @@ services:
   composer:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: resources/docker/php/Dockerfile
       target: php-composer
     entrypoint: [ "composer" ]
     command: [ "--version" ]
@@ -47,7 +47,7 @@ services:
     image: node:8
     # build:
     #   context: .
-    #   dockerfile: docker/npm/Dockerfile
+    #   dockerfile: resources/docker/npm/Dockerfile
     #   target: npm-base
     entrypoint: [ "npm" ]
     working_dir: /app
@@ -60,7 +60,7 @@ services:
     image: node:8
     # build:
     #   context: .
-    #   dockerfile: docker/npm/Dockerfile
+    #   dockerfile: resources/docker/npm/Dockerfile
     #   target: npm-base
     entrypoint: [ "node_modules/.bin/gulp" ]
     working_dir: /app
@@ -72,7 +72,7 @@ services:
   artisan:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: resources/docker/php/Dockerfile
       target: php-base
     entrypoint: [ "php", "artisan" ]
     command: [ "--version" ]
