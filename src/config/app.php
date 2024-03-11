@@ -27,6 +27,8 @@ return [
     'currency'          => env('APP_CURRENCY','GBP'),
     'currency_symbol'   => env('APP_CURRENCY','£'),
 
+    'discord_bot_url'   => env('DISCORD_BOT_URL', ''),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

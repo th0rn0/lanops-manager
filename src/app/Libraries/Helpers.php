@@ -242,7 +242,7 @@ class Helpers
     /**
      * Format Shopping Basket into Readable format
      * @param $itemId
-     * @return boolean
+     * @return Boolean
      */
     public static function formatBasket($basket)
     {

@@ -39,6 +39,7 @@ class ParticipantsController extends Controller
             $return[] = [
                 'username' => $participant->user->steamname,
                 'seat' => $seat,
+                'id' => $participant->id
             ];
             // $x['user']['steamname'] = $participant->user->steamname;
             // $x['user']['username'] = $participant->user->username;

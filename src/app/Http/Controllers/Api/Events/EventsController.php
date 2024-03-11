@@ -49,7 +49,6 @@ class EventsController extends Controller
                     'timetables' => '#timetables',
                     'tournaments' => '#tournaments',
                 ],
-                'eventula_tags' => $event->tags()->pluck('tag_id'),
             ];
         }
         return $return;
@@ -62,7 +61,7 @@ class EventsController extends Controller
     public function showUpcoming()
     {
         foreach (Event::where('start', '>', \Carbon\Carbon::today())->get() as $event) {
-            $return[] = [
+            $return = [
                 'name' => $event->display_name,
                 'capacity' => $event->capacity,
                 'start' => $event->start,

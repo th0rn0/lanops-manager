@@ -23,6 +23,14 @@ class EventSeating extends Model
         'updated_at'
     );
 
+    public static function boot()
+    {
+        parent::boot();
+        self::updated(function ($model) {
+            dd($model->getChanges());
+        });
+    }
+
     /*
      * Relationships
      */

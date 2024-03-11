@@ -27,7 +27,8 @@
         "laravel/ui": "^3",
         "php-http/guzzle7-adapter": "^1.0",
         "laravel/legacy-factories": "^1.4",
-        "laravel/helpers": "^1.7"
+        "laravel/helpers": "^1.7",
+        "spatie/laravel-webhook-server": "^3.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

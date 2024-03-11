@@ -21,6 +21,8 @@ services:
     env_file: $PWD/src/.env
     networks:
       - internal
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
 
   db:
     image: mysql:5.6

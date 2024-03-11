@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Auth;
 use QrCode;
+use Spatie\WebhookServer\WebhookCall;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +16,7 @@ class EventParticipant extends Model
      * @var string
      */
     protected $table = 'event_participants';
-    
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -40,9 +41,42 @@ class EventParticipant extends Model
             if (!$model->generateQRCode()) {
                 return false;
             }
+            // Send Webhook to Discord Bot
+            if (config('app.discord_bot_url') != '') {
+                WebhookCall::create()
+                    ->url(config('app.discord_bot_url') . '/webhooks/participant')
+                    ->payload(['username' => $model->user->steamname])
+                    // ->useSecret('sign-using-this-secret')
+                    ->doNotSign()
+                    ->dispatch();
+            };
+            return true;
+        });
+        self::updated(function ($model) {
+            if (
+                config('app.discord_bot_url') != '' &&
+                array_key_exists('user_id', $model->getDirty()) &&
+                array_key_exists('gift_accepted', $model->getDirty()) &&
+                $model->getDirty()['gift_accepted']
+            ) {
+                $newUser = User::find($model->getOriginal('user_id'));
+                WebhookCall::create()
+                    ->url(config('app.discord_bot_url') . '/webhooks/participant')
+                    ->payload([
+                        'gifted_by' => $newUser->steamname,
+                        'username' => $model->user->steamname,
+                    ])
+                    // ->useSecret('sign-using-this-secret')
+                    ->doNotSign()
+                    ->dispatch();
+            };
             return true;
         });
     }
+
+
+
+
 
     /*
      * Relationships
@@ -110,7 +144,7 @@ class EventParticipant extends Model
     {
         $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
         $qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
-        $qrCodeFileName =  $this->event->slug . '-' . str_random(32) . '.png';
+        $qrCodeFileName = $this->event->slug . '-' . str_random(32) . '.png';
         if (!file_exists($qrCodePath)) {
             mkdir($qrCodePath, 0775, true);
         }
