@@ -217,6 +217,18 @@
 	</div>
 	<div class="col-lg-4">
 
+		@if (config('app.discord_bot_url') != '')
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-bullhorn fa-fw"></i> Discord Status
+					<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#linkDiscordModal">Add Announcement</a>
+				</div>
+				<div class="panel-body">
+					
+				</div>
+			</div>
+		@endif
+
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-bullhorn fa-fw"></i> Announcements
@@ -403,6 +415,39 @@
 		</div>
 	</div>
 </div>
+
+@if (config('app.discord_bot_url') != '')
+	<div class="modal fade" id="linkDiscordModal" tabindex="-1" role="dialog" aria-labelledby="linkDiscordModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="linkDiscordModalLabel">Link Discord</h4>
+				</div>
+				<div class="modal-body">
+					@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/discord/link', 'files' => 'true')) }}
+						Are you Sure you want to Link this Event to Discord? It will do the following:
+						<ul>
+							<li>Create New Scheduled Event</li>
+							<li>Create New Event Channels</li>
+							<li>Maybe more? Contact Th0rn0</li>
+						</ul>
+						<button type="submit" class="btn btn-default btn-block">Submit</button>
+					{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	</div>
+@endif
 
 <div class="modal fade" id="addAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

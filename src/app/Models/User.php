@@ -222,4 +222,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $nextEvent;
     }
 
+    public function getFormattedDiscordAvatar()
+    {
+        if (substr($this->discord_avatar, 0, 2) == "a_") {
+            return $this->discord_avatar.".gif";
+        }
+        return $this->discord_avatar.".png";
+    }
+
 }

@@ -44,8 +44,11 @@ class EventParticipant extends Model
             // Send Webhook to Discord Bot
             if (config('app.discord_bot_url') != '') {
                 WebhookCall::create()
-                    ->url(config('app.discord_bot_url') . '/webhooks/participant')
-                    ->payload(['username' => $model->user->steamname])
+                    ->url(config('app.discord_bot_url') . '/webhooks/participants')
+                    ->payload([
+                        'username' => $model->user->steamname,
+                        'discord_id' => $model->user->discord_id
+                    ])
                     // ->useSecret('sign-using-this-secret')
                     ->doNotSign()
                     ->dispatch();
@@ -61,10 +64,11 @@ class EventParticipant extends Model
             ) {
                 $newUser = User::find($model->getOriginal('user_id'));
                 WebhookCall::create()
-                    ->url(config('app.discord_bot_url') . '/webhooks/participant')
+                    ->url(config('app.discord_bot_url') . '/webhooks/participants')
                     ->payload([
                         'gifted_by' => $newUser->steamname,
                         'username' => $model->user->steamname,
+                        'discord_id' => $model->user->discord_id
                     ])
                     // ->useSecret('sign-using-this-secret')
                     ->doNotSign()
@@ -73,10 +77,6 @@ class EventParticipant extends Model
             return true;
         });
     }
-
-
-
-
 
     /*
      * Relationships

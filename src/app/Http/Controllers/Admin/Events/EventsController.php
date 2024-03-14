@@ -13,6 +13,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+use Spatie\WebhookServer\WebhookCall;
+
 class EventsController extends Controller
 {
     /**
@@ -253,5 +255,32 @@ class EventsController extends Controller
 
         Session::flash('alert-success', 'Successfully added Admin!');
         return Redirect::to('admin/events/' . $event->slug . '/tickets');
+    }
+
+    public function linkDiscord(Request $request, Event $event)
+    {
+        WebhookCall::create()
+            ->url(config('app.discord_bot_url') . '/webhooks/events/create')
+            ->payload([
+                'name' => $event->display_name,
+                'slug' => $event->slug,
+                'url' => config('app.url') . '/events/' . $event->slug,
+                'start' => $event->start,
+                'end' => $event->end,
+                'address' => "someplace"
+            ])
+            // ->useSecret('sign-using-this-secret')
+            ->doNotSign()
+            ->dispatch();
+
+        $event->discord_link_enabled = true;
+        if (!$event->save()) {
+            Session::flash('alert-danger', 'Cannot Link Event!');
+            return Redirect::to('admin/events/' . $event->slug);
+        }
+
+        Session::flash('alert-success', 'Successfully Linked Event!');
+        return Redirect::to('admin/events/' . $event->slug);
+
     }
 }

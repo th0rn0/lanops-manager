@@ -90,6 +90,44 @@
 				</div>
 			</div>
 
+			<!-- DISCORD --> 
+			<div class="col-xs-12 col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Socials</h3>
+					</div>
+					<div class="panel-body">
+						<div class="panel panel-success">
+							<div class="panel-heading">
+								<strong>Discord</strong>
+							</div>
+							<div class="panel-body">
+								<div class="row" style="display: flex; align-items: center;">
+									@if (is_null($user->discord_id))
+										<a class="btn btn-lg btn-discord btn-block" href="{{ $discordLinkUrl }}">
+											<button class="btn btn-success btn-block"> 
+												Link Account
+											</button>
+										</a>
+									@else
+										<div class="col-xs-12 col-md-2">
+											<img alt="{{ $user->username }}'s Discord Avatar" class="img-responsive img-thumbnail" src="https://cdn.discordapp.com/avatars/{{ $user->discord_id }}/{{ $user->getFormattedDiscordAvatar() }}" />
+										</div>
+										<div class="col-xs-12 col-md-10">
+											{{ Form::open(array('url'=>'/account/discord/unlink')) }}
+												<button  type="submit"  class="btn btn-danger btn-block"> 
+													Unlink Account <strong>{{ $user->discord_username }}</strong>
+												</button>
+											{{ Form::close() }}
+										</div>
+									@endif
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<!-- TICKETS -->
 			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-7">
 				<div class="panel panel-default">

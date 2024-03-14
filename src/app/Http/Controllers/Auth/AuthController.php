@@ -163,6 +163,7 @@ class AuthController extends Controller
         $user->username         = $request->username;
         $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
 
+        // Fix to make first user admin
         if (User::count() == 0) {
             $user->admin = true;
         }

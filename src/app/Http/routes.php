@@ -40,9 +40,12 @@ Route::group(['middleware' => ['web']], function () {
     // Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
-        Route::get('/account', 'AccountController@index');
+        Route::get('/account', 'AccountController@index')->name('accounts');
         Route::post('/account', 'AccountController@update');
+        // DEBUG - should this go to the AccountController?
         Route::post('/account/delete', 'Auth\SteamController@destroy');
+        Route::get('/account/discord/callback', 'AccountController@linkDiscord');
+        Route::post('/account/discord/unlink', 'AccountController@unlinkDiscord');
     });
 
     Route::group(['middleware' => ['auth']], function () {
@@ -162,6 +165,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/events/{event}/information', 'Admin\Events\InformationController@store');
     Route::post('/admin/information/{information}', 'Admin\Events\InformationController@update');
     Route::delete('/admin/information/{information}', 'Admin\Events\InformationController@destroy');
+    Route::post('/admin/events/{event}/discord/link', 'Admin\Events\EventsController@linkDiscord');
     
     /**
      * Seating
