@@ -60,7 +60,7 @@ class EventsController extends Controller
      * Show Next Event
      * @return View
      */
-    public function showNextEvent()
+    public function showNext()
     {
         $event = Event::where('start', '>', \Carbon\Carbon::today())->first();
         

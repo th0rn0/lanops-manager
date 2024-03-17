@@ -6,7 +6,7 @@
 Route::group(['middleware' => ['api']], function () {
     Route::get('/api/events/', 'Api\Events\EventsController@index');
     Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
-    Route::get('/api/events/next', 'Api\Events\EventsController@showNextEvent');
+    Route::get('/api/events/next', 'Api\Events\EventsController@showNext');
     Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
 });
 
