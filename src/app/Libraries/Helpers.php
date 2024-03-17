@@ -3,7 +3,6 @@
 namespace App\Libraries;
 
 use DB;
-use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 
 class Helpers

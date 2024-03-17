@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Redirect;
 
 use Spatie\WebhookServer\WebhookCall;
 
+use Illuminate\Support\Facades\Http;
+
 class EventsController extends Controller
 {
     /**
@@ -259,21 +261,36 @@ class EventsController extends Controller
 
     public function linkDiscord(Request $request, Event $event)
     {
-        WebhookCall::create()
-            ->url(config('app.discord_bot_url') . '/webhooks/events/create')
-            ->payload([
-                'name' => $event->display_name,
-                'slug' => $event->slug,
-                'url' => config('app.url') . '/events/' . $event->slug,
-                'start' => $event->start,
-                'end' => $event->end,
-                'address' => "someplace"
-            ])
-            // ->useSecret('sign-using-this-secret')
-            ->doNotSign()
-            ->dispatch();
+        $response = Http::post(config('app.discord_bot_url') . '/webhooks/events/create', [
+            'name' => $event->display_name,
+            'slug' => $event->slug,
+            'url' => config('app.url') . '/events/' . $event->slug,
+            'start' => $event->start,
+            'end' => $event->end,
+            'address' => "someplace"
+        ]);
+
+        
+        // WebhookCall::create()
+        //     ->url(config('app.discord_bot_url') . '/webhooks/events/create')
+        //     ->payload([
+        //         'name' => $event->display_name,
+        //         'slug' => $event->slug,
+        //         'url' => config('app.url') . '/events/' . $event->slug,
+        //         'start' => $event->start,
+        //         'end' => $event->end,
+        //         'address' => "someplace"
+        //     ])
+        //     // ->useSecret('sign-using-this-secret')
+        //     ->doNotSign()
+        //     ->dispatch();
+
+        $response->throwUnlessStatus(200);
 
         $event->discord_link_enabled = true;
+        $event->discord_role_id = $response['role_id'];
+        $event->discord_channel_id = $response['channel_id'];
+        $event->discord_event_id = $response['event_id'];
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Link Event!');
             return Redirect::to('admin/events/' . $event->slug);

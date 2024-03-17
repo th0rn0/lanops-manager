@@ -42,12 +42,14 @@ class EventParticipant extends Model
                 return false;
             }
             // Send Webhook to Discord Bot
-            if (config('app.discord_bot_url') != '') {
+            if (config('app.discord_bot_url') != '' && $model->event->discord_link_enabled) {
                 WebhookCall::create()
                     ->url(config('app.discord_bot_url') . '/webhooks/participants')
                     ->payload([
                         'username' => $model->user->steamname,
-                        'discord_id' => $model->user->discord_id
+                        'discord_id' => $model->user->discord_id,
+                        'channel_id' => $model->event->discord_channel_id,
+                        'role_id' => $model->event->discord_role_id
                     ])
                     // ->useSecret('sign-using-this-secret')
                     ->doNotSign()
