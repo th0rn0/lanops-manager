@@ -29,16 +29,13 @@ jobs:
         name: Create Dummy .env
         run: touch src/.env
       -
-        name: Build Images
-        run: make build
-      -
         name: Build App Dependencies
         run: make build && make artisan-storage-link
       -
         name: Push - NGINX
         uses: docker/build-push-action@v5
         with:
-          context: resources/docker/nginx/
+          context: .
           file: resources/docker/nginx/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
@@ -46,7 +43,7 @@ jobs:
         name: Push - APP
         uses: docker/build-push-action@v5
         with:
-          context: resources/docker/php/
+          context: .
           file: resources/docker/php/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest
