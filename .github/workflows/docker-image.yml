@@ -26,6 +26,9 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       -
+        name: Create Dummy .env
+        run: touch src/.env
+      -
         name: Build App Dependencies
         run: make build
       -
