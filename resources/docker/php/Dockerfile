@@ -15,6 +15,12 @@ WORKDIR /var/www/html
 
 COPY src/ /var/www/html
 
+COPY resources/docker/php/entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 FROM php-base as php-composer
 
 RUN apt install -y git curl wget
