@@ -26,7 +26,53 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       -
-        name: Build and push
+        name: Build App Dependencies
+        run: make build-init
+      -
+        name: Build - nginx
+        uses: docker/build-push-action@v5
+        with:
+          context: resources/docker/php/
+          file: Dockerfile
+          load: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
+      # -
+      #   name: Build - nginx
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile
+      #     load: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
+      # -
+      #   name: Build - nginx
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     file: ./Dockerfile
+      #     load: true
+      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
+
+
+
+      -
+        name: Build and push - nginx
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
+      -
+        name: Build and push - php
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
+      -
+        name: Build and push - nginx
         uses: docker/build-push-action@v5
         with:
           context: .
