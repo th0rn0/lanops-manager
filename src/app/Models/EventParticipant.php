@@ -44,16 +44,16 @@ class EventParticipant extends Model
             // Send Webhook to Discord Bot
             if (config('app.discord_bot_url') != '' && $model->event->discord_link_enabled) {
                 WebhookCall::create()
-                    ->url(config('app.discord_bot_url') . '/webhooks/participants')
+                    ->url(config('app.discord_bot_url') . '/participants/new')
                     ->payload([
                         'username' => $model->user->steamname,
                         'discord_id' => $model->user->discord_id,
                         'channel_id' => $model->event->discord_channel_id,
                         'role_id' => $model->event->discord_role_id
                     ])
-                    // ->useSecret('sign-using-this-secret')
-                    ->doNotSign()
+                    ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
+
             };
             return true;
         });
@@ -66,15 +66,33 @@ class EventParticipant extends Model
             ) {
                 $newUser = User::find($model->getOriginal('user_id'));
                 WebhookCall::create()
-                    ->url(config('app.discord_bot_url') . '/webhooks/participants')
+                    ->url(config('app.discord_bot_url') . '/participants/gifted')
                     ->payload([
                         'gifted_by' => $newUser->steamname,
                         'username' => $model->user->steamname,
-                        'discord_id' => $model->user->discord_id
+                        'discord_id' => $model->user->discord_id,
+                        'channel_id' => $model->event->discord_channel_id,
+                        'role_id' => $model->event->discord_role_id
                     ])
-                    // ->useSecret('sign-using-this-secret')
-                    ->doNotSign()
+                    ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
+            };
+            if (
+                config('app.discord_bot_url') != '' &&
+                array_key_exists('user_id', $model->getDirty()) &&
+                array_key_exists('transferred', $model->getDirty()) &&
+                $model->getDirty()['transferred']
+            ) {
+                WebhookCall::create()
+                ->url(config('app.discord_bot_url') . '/participants/gifted')
+                ->payload([
+                    'username' => $model->user->steamname,
+                    'discord_id' => $model->user->discord_id,
+                    'channel_id' => $model->event->discord_channel_id,
+                    'role_id' => $model->event->discord_role_id
+                ])
+                ->useSecret(config('app.discord_bot_secret'))
+                ->dispatch();
             };
             return true;
         });

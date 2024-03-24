@@ -28,6 +28,9 @@ return [
     'currency_symbol'   => env('APP_CURRENCY','£'),
 
     'discord_bot_url'   => env('DISCORD_BOT_URL', ''),
+    'discord_bot_user' => env('DISCORD_BOT_USER', ''),
+    'discord_bot_pass' => env('DISCORD_BOT_PASS', ''),
+    'discord_bot_secret' => env('DISCORD_BOT_SECRET'),
     'discord_auth_url' => env('DISCORD_AUTH_URL', ''),
     'discord_reditect_url' => env('DISCORD_REDIRECT_URL', ''),
     'discord_client_id' => env('DISCORD_CLIENT_ID', ''),

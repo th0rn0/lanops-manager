@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Http;
 
 class AccountController extends Controller
 {
@@ -51,44 +52,36 @@ class AccountController extends Controller
 
     public function linkDiscord(Request $request) 
     {
-        // DEBUG - WE HAVE A TOKEN - GO GRAB THE USER DETAILS AND SAVE THEM
-        $code = $request->input('code');
-        $state = $request->input('state');
-        // DEBUG
-        # Check if $state == $_SESSION['state'] to verify if the login is legit | CHECK THE FUNCTION get_state($state) FOR MORE INFORMATION.
-        $url = "https://discord.com/api/oauth2/token";
-        $data = array(
-            "client_id" => config('app.discord_client_id'),
-            "client_secret" => config('app.discord_client_secret'),
-            "grant_type" => "authorization_code",
-            "code" => $code,
-            "redirect_uri" => config('app.discord_redirect_url')
-        );
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $results = json_decode($response, true);
+        $response = Http::asform()->withHeaders([
+                'Content-Type' => 'application/json',
+            ])->post("https://discord.com/api/oauth2/token", [
+                "client_id" => config('app.discord_client_id'),
+                "client_secret" => config('app.discord_client_secret'),
+                "grant_type" => "authorization_code",
+                "code" => $request->input('code'),
+                "redirect_uri" => config('app.discord_redirect_url')
+            ]);
 
-        $accessToken = $results['access_token'];
+        if ($response->status() != 200) {
+            Session::flash('alert-danger', 'Somewent went wrong!');
+            return Redirect::to('account');
+        }
 
-        $url = "https://discord.com/api/users/@me";
-        $headers = array('Content-Type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $accessToken);
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        $results = json_decode($response, true);
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => ' Bearer ' . $response['access_token']
+        ])->get("https://discord.com/api/users/@me");
+
+        
+        if ($response->status() != 200) {
+            Session::flash('alert-danger', 'Somewent went wrong!');
+            return Redirect::to('account');
+        }
 
         $user = Auth::user();
-        $user->discord_id = $results['id'];
-        $user->discord_username = $results['global_name'];
-        $user->discord_avatar = $results['avatar'];
+        $user->discord_id = $response['id'];
+        $user->discord_username = $response['global_name'];
+        $user->discord_avatar = $response['avatar'];
 
         if (!$user->save()) {
             Session::flash('alert-danger', 'Something went wrong, please try again!');
@@ -139,5 +132,20 @@ class AccountController extends Controller
             return Redirect::back()->withFail("Oops, Something went Wrong.");
         }
         return Redirect::back()->withSuccess('Account successfully updated!');
+    }
+
+    /**
+     * Delete Account
+     * @return Redirect
+     */
+    public function destroy()
+    {
+        $user = Auth::user();
+        if ($user && $user->delete()) {
+            Session::flash('alert-success', 'Account Deleted!');
+            return Redirect::to('/');
+        }
+        Session::flash('alert-danger', 'Could not delete Account!');
+        return Redirect::to('/account');
     }
 }

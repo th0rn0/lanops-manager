@@ -9,10 +9,10 @@
 				</div>
 				<div class="col-xs-10">
 					<a href="https://www.facebook.com/sharer/sharer.php?u={{ url('/news') }}/{{ $newsArticle->slug }}&t={{ $newsArticle->title }}" target="_blank">
-						<img alt="Facebook Share" class="img img-responsive img-rounded news-post-share-button" src="/storage/images/main/social/facebook.png">
+						<img alt="Facebook Share" class="img img-responsive img-rounded news-post-share-button" src="/images/social/facebook.png">
 					</a>
 					<a href="http://twitter.com/share?text={{ $newsArticle->title }}&url=http://{{ url('/news') }}/{{ $newsArticle->slug }}&hashtags={{ $newsArticle->getTags(',') }}" target="_blank">
-						<img alt="Twitter Share" class="img img-responsive img-rounded news-post-share-button" src="/storage/images/main/social/twitter.png">
+						<img alt="Twitter Share" class="img img-responsive img-rounded news-post-share-button" src="/images/social/twitter.png">
 					</a>
 				</div>
 				<div class="col-xs-2">

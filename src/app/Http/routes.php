@@ -38,8 +38,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/account', 'AccountController@index')->name('accounts');
         Route::post('/account', 'AccountController@update');
-        // DEBUG - should this go to the AccountController?
-        Route::post('/account/delete', 'Auth\SteamController@destroy');
+        Route::post('/account/delete', 'AccountController@destroy');
         Route::get('/account/discord/callback', 'AccountController@linkDiscord');
         Route::post('/account/discord/unlink', 'AccountController@unlinkDiscord');
     });

@@ -41,6 +41,7 @@ return [
      */
     'headers' => [
         'Content-Type' => 'application/json',
+        'Authorization' => 'Basic ' . base64_encode(config('app.discord_bot_user') . ':' . config('app.discord_bot_pass'))
     ],
 
     /*

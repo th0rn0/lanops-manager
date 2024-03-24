@@ -23,9 +23,6 @@ class NewsController extends Controller
     {
         $seoKeywords = explode(',',config('settings.seo_keywords'));
         $seoKeywords[] = "News";
-        // TODO - REPLACE ME
-        // SEOMeta::addKeyword($seoKeywords);
-        // OpenGraph::addProperty('type', 'article');
         return view('news.index')
             ->withNewsArticles(NewsArticle::paginate(20));
     }
@@ -42,11 +39,6 @@ class NewsController extends Controller
         foreach ($newsArticle->tags as $tag) {
             $seoKeywords[] = $tag->tag;
         }
-        // TODO - REPLACE ME
-        // SEOMeta::setDescription($newsArticle->title);
-        // SEOMeta::addKeyword($seoKeywords);
-        // OpenGraph::setDescription($newsArticle->title);
-        // OpenGraph::addProperty('type', 'article');
         return view('news.show')
             ->withNewsArticle($newsArticle);
     }
@@ -60,11 +52,6 @@ class NewsController extends Controller
     {
         $seoKeywords = explode(',',config('settings.seo_keywords'));
         $seoKeywords[] = $newsTag->tag;
-        // TODO - REPLACE ME
-        // SEOMeta::setDescription($newsTag->tag);
-        // SEOMeta::addKeyword($seoKeywords);
-        // OpenGraph::setDescription($newsTag->tag);
-        // OpenGraph::addProperty('type', 'article');
         foreach (NewsTag::where('tag', $newsTag->tag)->get()->reverse() as $newsTag) {
             $newsArticles[] = $newsTag->newsArticle;
         }

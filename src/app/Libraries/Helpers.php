@@ -110,7 +110,6 @@ class Helpers
         return 23 + $events;
     }
 
-    // TODO - move to model
     /**
      * Get Next Event Name
      * @return String

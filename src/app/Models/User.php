@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use Spatie\WebhookServer\WebhookCall;
+
 // TODO - REMOVE MUST VERIFY EMAIL
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -44,6 +46,48 @@ class User extends Authenticatable implements MustVerifyEmail
     public static function boot()
     {
         parent::boot();
+        self::updated(function ($model) {
+            if (
+                config('app.discord_bot_url') != '' &&
+                array_key_exists('discord_id', $model->getDirty())
+            ) {
+                if ($model->discord_id != null && $model->getUpcomingEvents()) {
+                    foreach($model->getUpcomingEvents() as $event) {
+                        if ($event->discord_link_enabled) {
+                            WebhookCall::create()
+                            ->url(config('app.discord_bot_url') . '/participants/new')
+                            ->payload([
+                                'username' => $model->steamname,
+                                'discord_id' => $model->discord_id,
+                                'channel_id' => $event->discord_channel_id,
+                                'role_id' => $event->discord_role_id,
+                                'no_message' => true
+                            ])
+                            ->useSecret(config('app.discord_bot_secret'))
+                            ->dispatch();
+                        }
+                    }
+                }
+
+                if ($model->discord_id == null && $model->getUpcomingEvents()) {
+                    foreach($model->getUpcomingEvents() as $event) {
+                        if ($event->discord_link_enabled) {
+                            WebhookCall::create()
+                            ->url(config('app.discord_bot_url') . '/participants/remove')
+                            ->payload([
+                                'username' => $model->steamname,
+                                'discord_id' => $model->getOriginal('discord_id'),
+                                'channel_id' => $event->discord_channel_id,
+                                'role_id' => $event->discord_role_id,
+                            ])
+                            ->useSecret(config('app.discord_bot_secret'))
+                            ->dispatch();
+                        }
+                    }
+                }
+            };
+        });
+
     }
     
     /*
@@ -220,6 +264,20 @@ class User extends Authenticatable implements MustVerifyEmail
             } 
         }
         return $nextEvent;
+    }
+
+    public function getUpcomingEvents()
+    {
+        $nextEvents = false;
+        foreach ($this->eventParticipants as $eventParticipant) {
+            if ($eventParticipant->event->end >=  Carbon::now()) {
+                $nextEvents[] = $eventParticipant->event;
+            } 
+        }
+        if ($nextEvents) {
+            $nextEvents = array_unique($nextEvents);
+        }
+        return $nextEvents;
     }
 
     public function getFormattedDiscordAvatar()

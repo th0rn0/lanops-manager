@@ -99,19 +99,4 @@ class SteamController extends Controller
         Session::flash('alert-danger', 'Something went wrong. Please Try again later!');
         return Redirect('/');
     }
-
-    /**
-     * Delete Account
-     * @return Redirect
-     */
-    public function destroy()
-    {
-        $user = Auth::user();
-        if ($user && $user->delete()) {
-            Session::flash('alert-success', 'Account Deleted!');
-            return Redirect::to('/');
-        }
-        Session::flash('alert-danger', 'Could not delete Account!');
-        return Redirect::to('/account');
-    }
 }
