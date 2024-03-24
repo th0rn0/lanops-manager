@@ -39,7 +39,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: resources/docker/nginx/
-          file: Dockerfile
+          file: resources/docker/nginx/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
       -
@@ -47,6 +47,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: resources/docker/php/
-          file: Dockerfile
+          file: resources/docker/php/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest
