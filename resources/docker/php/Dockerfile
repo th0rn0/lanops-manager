@@ -11,9 +11,11 @@ RUN apt-get update && apt-get install -y \
         libonig-dev \
     && docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring
 
-WORKDIR /var/www/html
-
 COPY src/ /var/www/html
+
+RUN chown -R www-data:www-data /var/www
+
+WORKDIR /var/www/html
 
 COPY resources/docker/php/entrypoint.sh /entrypoint.sh
 
