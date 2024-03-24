@@ -30,7 +30,7 @@ jobs:
         run: touch src/.env
       -
         name: Build Images
-        run: make build --no-cache
+        run: make build
       -
         name: Build App Dependencies
         run: make build && make artisan-storage-link
