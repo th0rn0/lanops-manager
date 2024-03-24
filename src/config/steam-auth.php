@@ -13,6 +13,6 @@ return [
     /*
      * Is using https?
      */
-    'https' => env('ENABLE_HTTPS')
+    'https' => env('STEAM_ENABLE_HTTPS', true)
 
 ];

@@ -17,11 +17,11 @@ RUN chown -R www-data:www-data /var/www
 
 WORKDIR /var/www/html
 
-COPY resources/docker/php/entrypoint.sh /entrypoint.sh
+COPY resources/docker/php/entrypoint.sh /custom-entrypoint.sh
 
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /custom-entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/custom-entrypoint.sh"]
 
 FROM php-base as php-composer
 
