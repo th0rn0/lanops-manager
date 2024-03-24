@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www/html
 
+COPY src/ /var/www/html
+
 FROM php-base as php-composer
 
 RUN apt install -y git curl wget

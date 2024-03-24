@@ -3,8 +3,8 @@ version: '3.9'
 services:
   nginx:
     build:
-      context: resources/docker/nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: resources/docker/nginx/Dockerfile
     ports:
       - '8080:80'
     volumes:
@@ -15,8 +15,8 @@ services:
       
   php:
     build:
-      context: resources/docker/php/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
       target: php-base
     volumes:
       - ./src:/var/www/html
@@ -38,8 +38,8 @@ services:
 
   composer:
     build:
-      context: resources/docker/php/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
       target: php-composer
     entrypoint: [ "composer" ]
     command: [ "--version" ]
@@ -75,8 +75,8 @@ services:
 
   artisan:
     build:
-      context: resources/docker/php/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
       target: php-base
     entrypoint: [ "php", "artisan" ]
     command: [ "--version" ]
