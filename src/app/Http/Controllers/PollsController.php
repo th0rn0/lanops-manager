@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 use Session;
 
-use App\Poll;
-use App\PollOption;
+use App\Models\Poll;
+use App\Models\PollOption;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;

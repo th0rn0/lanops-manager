@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\Admin\Events;
 
-use DB;
 use Auth;
 use Session;
-use Helpers;
 
-use App\User;
-use App\Event;
-use App\EventParticipant;
-use App\EventTicket;
-use App\EventAnnouncement;
+use App\Models\Event;
+use App\Models\EventParticipant;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Http;
+
+use Spatie\WebhookServer\WebhookCall;
 
 class EventsController extends Controller
 {
@@ -29,8 +26,7 @@ class EventsController extends Controller
     {
         return view('admin.events.index')
             ->withUser(Auth::user())
-            ->withEvents(Event::withoutGlobalScopes()->paginate(10))
-            ->withEventTags(Helpers::getEventulaEventTags());
+            ->withEvents(Event::withoutGlobalScopes()->paginate(10));
     }
 
     /**
@@ -97,9 +93,6 @@ class EventsController extends Controller
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
             return Redirect::to('admin/events/' . $event->slug);
-        }
-        if ($request->has('event_tags')) {
-            $event->addTagsById($request->event_tags);
         }
         Session::flash('alert-success', 'Successfully saved Event!');
         return Redirect::to('admin/events/' . $event->slug);
@@ -263,5 +256,60 @@ class EventsController extends Controller
 
         Session::flash('alert-success', 'Successfully added Admin!');
         return Redirect::to('admin/events/' . $event->slug . '/tickets');
+    }
+
+    public function linkDiscord(Request $request, Event $event)
+    {
+        $address = [
+            $event->venue->address_1,
+            $event->venue->address_2,
+            $event->venue->address_street,
+            $event->venue->address_city,
+            $event->venue->address_postcode,
+            $event->venue->address_country,
+        ];
+        $response = Http::withBasicAuth(
+            config('app.discord_bot_user'),
+            config('app.discord_bot_pass'))
+        ->post(config('app.discord_bot_url') . '/events/create', [
+            'name' => $event->display_name,
+            'slug' => $event->slug,
+            'url' => config('app.url') . '/events/' . $event->slug,
+            'start' => $event->start,
+            'end' => $event->end,
+            'address' => implode(", ", $address)
+        ]);
+
+        if ($response->status() != 200) {
+            Session::flash('alert-danger', 'Cannot Link Event! ' . $response);
+            return Redirect::to('admin/events/' . $event->slug);
+        }
+
+        $event->discord_link_enabled = true;
+        $event->discord_role_id = $response['role_id'];
+        $event->discord_channel_id = $response['channel_id'];
+        $event->discord_event_id = $response['event_id'];
+        if (!$event->save()) {
+            Session::flash('alert-danger', 'Cannot Link Event!');
+            return Redirect::to('admin/events/' . $event->slug);
+        }
+
+        foreach($event->eventParticipants as $participant) {
+                WebhookCall::create()
+                ->url(config('app.discord_bot_url') . '/participants/new')
+                ->payload([
+                    'username' => $participant->user->steamname,
+                    'discord_id' => $participant->user->discord_id,
+                    'channel_id' => $event->discord_channel_id,
+                    'role_id' => $event->discord_role_id,
+                    'no_message' => true
+                ])
+                ->useSecret(config('app.discord_bot_secret'))
+                ->dispatch();
+        }
+
+        Session::flash('alert-success', 'Successfully Linked Event!');
+        return Redirect::to('admin/events/' . $event->slug);
+
     }
 }

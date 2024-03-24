@@ -2,18 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Auth;
-use Session;
+use App\Models\Purchase;
 
-use App\User;
-use App\Purchase;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
 
 class PurchasesController extends Controller
 {
@@ -25,26 +16,6 @@ class PurchasesController extends Controller
     {
         return view('admin.purchases.index')
             ->withPurchases(Purchase::paginate(20));
-    }
-
-    /**
-     * Show Shop Purchases Index Page
-     * @return View
-     */
-    public function showShop()
-    {
-        return view('admin.purchases.index')
-            ->withPurchases(Purchase::has('order')->paginate(20));
-    }
-
-    /**
-     * Show Event Purchases Index Page
-     * @return View
-     */
-    public function showEvent()
-    {
-        return view('admin.purchases.index')
-            ->withPurchases(Purchase::has('participants')->paginate(20));
     }
 
   	/**

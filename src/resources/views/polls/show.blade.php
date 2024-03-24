@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' ' . $poll->name)
+@section ('page_title', config('app.name') . ' ' . $poll->name)
 
 @section ('content')
 			

@@ -7,7 +7,7 @@
 	<div class="carousel-inner" role="listbox">
 		@foreach ($sliderImages as $image)
 			<div class="item @if ($loop->first) active @endif">
-				<img class="hero-image" alt="{{ Settings::getOrgName() }} Banner" src="{{ $image->path }}">
+				<img class="hero-image" alt="{{ config('app.name') }} Banner" src="{{ $image->path }}">
 			</div>
 		@endforeach
 	</div>
@@ -34,9 +34,9 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
 			<div class="page-header">
-				<h3>About {{ Settings::getOrgName() }}</h3>
+				<h3>About {{ config('app.name') }}</h3>
 			</div>
-			<p>{!! Settings::getAboutShort() !!}</p>
+			@include ('layouts._partials._about.short')
 		</div>
 		<div class="hidden-xs hidden-sm hidden-md col-lg-4">
 			<div class="page-header">
@@ -94,7 +94,7 @@
 				<h5>{{ $nextEvent->venue->display_name }}</h5>
 				@if ($nextEvent->tickets)
 					<h4>Price:</h4>
-					<h5>Tickets Start From {{ Settings::getCurrencySymbol() }}{{ $nextEvent->getCheapestTicket() }}</h5>
+					<h5>Tickets Start From {{ config('app.currency_symbol') }}{{ $nextEvent->getCheapestTicket() }}</h5>
 				@endif
 			</div>
 		@endif
@@ -129,10 +129,10 @@
 		</div>
 		<div class="col-xs-12 col-sm-3">
 			<div class="page-header">
-				<h3>The {{ Settings::getOrgName() }} Fam</h3>
+				<h3>The {{ config('app.name') }} Fam</h3>
 			</div>
-			@if (Settings::getDiscordId())			
-				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ Settings::getDiscordId() }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
+			@if (config('app.dicord_id'))			
+				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ config('app.dicord_id') }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
 			@endif
 			@if (count($topAttendees) > 0)
 				<div class="page-header">
@@ -179,9 +179,9 @@
 		<div class="row">
 			<div class="col-md-8  col-md-offset-2 text-center">
 				<div class="text-center">
-					<h2 class="section-heading  text-center">All About {{ Settings::getOrgName() }}</h2>
+					<h2 class="section-heading  text-center">All About {{ config('app.name') }}</h2>
 				</div>
-				{!! Settings::getAboutShort() !!}
+				@include ('layouts._partials._about.short')
 			</div>
 		</div>
 	</div>

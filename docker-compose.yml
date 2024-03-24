@@ -1,33 +1,93 @@
-version: "3.4"
+version: '3.9'
+
 services:
-  eventula_manager_app:
+  nginx:
+    image: nginx:latest
+    ports:
+      - '8080:80'
+    volumes:
+      - ./src:/var/www/html
+      - ./resources/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - internal
+      
+  php:
     build:
       context: .
-    working_dir: /web/html/
+      dockerfile: resources/docker/php/Dockerfile
+      target: php-base
     volumes:
-      - $PWD/src/:/web/html/
-      - $PWD/resources/certs:/etc/nginx/certs
-      - $PWD/resources/secrets:/run/secrets
+      - ./src:/var/www/html
     env_file: $PWD/src/.env
-    container_name: eventula_manager_app
     networks:
-      - lan
-    ports:
-      - 80:80
-      - 443:443
-  eventula_manager_database:
+      - internal
+    extra_hosts:
+        - "host.docker.internal:host-gateway"
+
+  db:
     image: mysql:5.6
     volumes:
-      - eventula_manager_database:/var/lib/mysql
+      - db:/var/lib/mysql
     env_file: $PWD/src/.env
     ports:
       - 3306:3306
-    container_name: eventula_manager_database
     networks:
-      - lan
+      - internal
+
+  composer:
+    build:
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
+      target: php-composer
+    entrypoint: [ "composer" ]
+    command: [ "--version" ]
+    # user: "1000"
+    volumes:
+      - ./src:/var/www/html
+
+  npm:
+    image: node:8
+    # build:
+    #   context: .
+    #   dockerfile: resources/docker/npm/Dockerfile
+    #   target: npm-base
+    entrypoint: [ "npm" ]
+    working_dir: /app
+    command: [ "-v" ]
+    # user: "1000"
+    volumes:
+      - ./src:/app
+
+  gulp:
+    image: node:8
+    # build:
+    #   context: .
+    #   dockerfile: resources/docker/npm/Dockerfile
+    #   target: npm-base
+    entrypoint: [ "node_modules/.bin/gulp" ]
+    working_dir: /app
+    command: [ "-v" ]
+    # user: "1000"
+    volumes:
+      - ./src:/app
+
+  artisan:
+    build:
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
+      target: php-base
+    entrypoint: [ "php", "artisan" ]
+    command: [ "--version" ]
+    # user: "1000"
+    volumes:
+      - ./src:/var/www/html
+    env_file: $PWD/src/.env
+    networks:
+      - internal
+    
 volumes:
-  eventula_manager_database:
-    name: eventula_manager_database
+  db:
+
 networks:
-  lan:
-    external: true
+  internal:
+    driver: bridge

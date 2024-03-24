@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - Terms & Conditions')
+@section ('page_title', config('app.name') . ' - Terms & Conditions')
 
 @section ('content')
 			
@@ -12,12 +12,11 @@
 	<div class="page-header">
 		<h3>Registration Terms & Conditions</h3> 
 	</div>
-	{!! Settings::getRegistrationTermsAndConditions() !!}
+	@include ('layouts._partials._terms.registration')
 	<div class="page-header">
 		<h3>Purchase Terms & Conditions</h3> 
 	</div>
-	{!! Settings::getPurchaseTermsAndConditions() !!}
-	
+	@include ('layouts._partials._terms.purchase')
 </div>
 
 @endsection

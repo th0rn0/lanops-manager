@@ -8,20 +8,15 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/"><img class="img-responsive" style="width:200px; height: auto; margin-top:-46px;" src="{{ Settings::getOrgLogo() }}"/></a>
+			<a class="navbar-brand" href="/"><img class="img-responsive" style="width:200px; height: auto; margin-top:-46px;" src="{{ config('app.logo') }}"/></a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="topbar-navigation">
 			<ul class="nav navbar-nav navbar-right">
-				@include ('layouts._partials._tournaments.navigation')
-
 				@include ('layouts._partials.events-navigation')
 
 				<li><a href="/gallery">Gallery</a></li>
-				@if (Settings::isShopEnabled())
-					<li><a href="/shop">Shop</a></li>
-				@endif
 				@if (Auth::check())
 					@include ('layouts._partials.user-navigation')
 				@else

@@ -100,13 +100,7 @@
 												 - x {{ $item->quantity }}
 												 <br>
 											 	@if ($item->price != null)
-													{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-													@if ($item->price_credit != null && Settings::isCreditEnabled())
-														/
-													@endif
-												@endif
-												@if ($item->price_credit != null && Settings::isCreditEnabled())
-													{{ $item->price_credit * $item->quantity }} Credits
+													{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
 												@endif
 												@if (!$loop->last)
 													<hr>
@@ -189,86 +183,6 @@
 				</div>
 			</div>
 		</div>			
-		@if ($creditLogs)
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<i class="fa fa-users fa-fw"></i> Add Credit
-				</div>
-				<div class="panel-body">
-					{{ Form::open(array('url'=>'/admin/credit/edit')) }}
-						<div class="form-group">
-							{{ Form::hidden('user_id', $userShow->id) }}
-							{{ Form::label('amount','Amount',array('id'=>'','class'=>'')) }}
-							{{ Form::number('amount', '',array('id'=>'amount','class'=>'form-control')) }}
-						</div>
-						<button type="submit" class="btn btn-block btn-success">Submit</button>
-					{{ Form::close() }}
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Credit - {{ $userShow->credit_total }}</h3>
-				</div>
-				<div class="panel-body">
-					<table width="100%" class="table table-striped table-hover" id="dataTables-example">
-						<thead>
-							<tr>
-								<th>Action</th>
-								<th>Amount</th>
-								<th>Item</th>
-								<th>Reason</th>
-								<th>Timestamp</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($userShow->creditLogs->reverse() as $creditLog)
-							<tr class="table-row" class="odd gradeX">
-								<td>{{ $creditLog->action }}</td>
-								<td>{{ $creditLog->amount }}</td>
-								<td>
-									@if (strtolower($creditLog->action) == 'buy')
-										@if (!$creditLog->purchase->participants->isEmpty())
-											@foreach ($creditLog->purchase->participants as $participant)
-												{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
-												@if (!$loop->last)
-													<hr>
-												@endif
-											@endforeach
-										@elseif ($creditLog->purchase->order != null)
-											@foreach ($creditLog->purchase->order->items as $item)
-												@if ($item->item)
-													{{ $item->item->name }}
-												@endif 
-												 - x {{ $item->quantity }}
-												 <br>
-											 	@if ($item->price != null)
-													{{ Settings::getCurrencySymbol() }}{{ $item->price * $item->quantity }}
-													@if ($item->price_credit != null && Settings::isCreditEnabled())
-														/
-													@endif
-												@endif
-												@if ($item->price_credit != null && Settings::isCreditEnabled())
-													{{ $item->price_credit * $item->quantity }} Credits
-												@endif
-												@if (!$loop->last)
-													<hr>
-												@endif
-											@endforeach
-										@endif
-									@endif
-								</td>
-								<td>{{ $creditLog->reason }}</td>
-								<td>
-									{{ $creditLog->updated_at }}
-								</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
-					{{ $creditLogs->links() }}
-				</div>
-			</div>
-		@endif
 	</div>
 </div>
  

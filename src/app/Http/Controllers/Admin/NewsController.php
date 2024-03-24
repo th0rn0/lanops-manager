@@ -2,26 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
 use Auth;
 use Session;
-use Settings;
 
-use App\User;
-use App\Event;
-use App\NewsArticle;
-use App\NewsComment;
-use App\NewsCommentReport;
-use App\GalleryAlbum;
-use App\GalleryAlbumImage;
+use App\Models\NewsArticle;
+use App\Models\NewsComment;
+use App\Models\NewsCommentReport;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
-use FacebookPageWrapper as Facebook;
 
 class NewsController extends Controller
 {
@@ -33,7 +24,6 @@ class NewsController extends Controller
     {
         return view('admin.news.index')
             ->withNewsArticles(NewsArticle::paginate(10))
-            ->withFacebookLinked(Facebook::isLinked())
             ->withCommentsToApprove(
                 NewsComment::where([['approved', '=', false], ['reviewed', '=', false]])
                     ->get()
@@ -89,21 +79,6 @@ class NewsController extends Controller
             $newsArticle->delete();
             Session::flash('alert-danger', 'Cannot Save News Article!');
             return Redirect::to('/admin/events/');
-        }
-
-        if ((
-                isset($request->post_to_facebook) &&
-                $request->post_to_facebook
-            ) &&
-            (
-                Facebook::isEnabled() &&
-                Facebook::isLinked()
-            )
-        ) {
-            if (!Facebook::postNewsArticleToPage($newsArticle->title, $newsArticle->article, $newsArticle->slug)) {
-                Session::flash('alert-danger', 'Facebook SDK returned an error');
-                return Redirect::back();
-            }
         }
 
         Session::flash('alert-success', 'Successfully Saved News Article!');

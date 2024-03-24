@@ -2,22 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use QrCode;
-use Storage;
-use Settings;
 use Helpers;
 use Auth;
 
-use App\Purchase;
-use App\User;
-use App\Event;
-use App\EventTicket;
-use App\ShopItem;
-use App\ShopOrder;
-use App\ShopOrderItem;
-use App\EventParticipant;
+use App\Models\Purchase;
+use App\Models\Event;
+use App\Models\EventTicket;
+use App\Models\EventParticipant;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -30,19 +22,18 @@ class PaymentsController extends Controller
 {
     protected $sandbox = false;
 
-
     /**
      * Checkout Page
      * @return View
      */
     public function showCheckout()
     {
-        if (!Session::has(Settings::getOrgName() . '-basket')) {
+        if (!Session::has(config('app.basket_name'))) {
             return Redirect::to('/');
         }
         return view('payments.checkout')
-            ->withBasket(Helpers::formatBasket(Session::get(Settings::getOrgName() . '-basket')))
-            ->withActivePaymentGateways(Settings::getPaymentGateways())
+            ->withBasket(Helpers::formatBasket(Session::get(config('app.basket_name'))))
+            ->withActivePaymentGateways(config('laravel-omnipay.gateways.available_payment_gateways'))
         ;
     }
 
@@ -52,7 +43,7 @@ class PaymentsController extends Controller
      */
     public function showReview($paymentGateway)
     {
-        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
         }
         $nextEventFlag = true;
@@ -86,7 +77,7 @@ class PaymentsController extends Controller
      */
     public function showDetails($paymentGateway)
     {
-        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
         }
         $delivery = false;
@@ -106,29 +97,13 @@ class PaymentsController extends Controller
     }
 
     /**
-     * Delivery Details Page
-     * @param  $paymentGateway
-     * @return View
-     */
-    public function showDelivery($paymentGateway)
-    {
-        if (!$paymentGateway = $this->checkParams($paymentGateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
-            return Redirect::back();
-        }
-        return view('payments.delivery')
-            ->withPaymentGateway($paymentGateway)
-            ->withBasket(Helpers::formatBasket($basket, true))
-        ;
-    }
-
-    /**
      * Post Payment to Gateway
      * @param  Request $request
      * @return Redirect
      */
     public function post(Request $request)
     {
-        if (!$paymentGateway = $this->checkParams($request->gateway, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+        if (!$paymentGateway = $this->checkParams($request->gateway, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
         }
         if (array_key_exists('tickets', $basket)) {
@@ -198,7 +173,7 @@ class PaymentsController extends Controller
                 } else {
                     $basket['delivery'] = ['type' => 'event'];
                 }
-                Session::put(Settings::getOrgName() . '-basket', $basket);
+                Session::put(config('app.basket_name'), $basket);
                 Session::save();
             }
         }
@@ -241,8 +216,8 @@ class PaymentsController extends Controller
                     'cancelUrl'     => $this->getCallbackCancelUrl($paymentGateway),
                     'returnUrl'     => $this->getCallbackReturnUrl($paymentGateway),
                     'amount'        => (float)Helpers::formatBasket($basket)->total,
-                    'description'   => 'Purchase for ' . Settings::getOrgName(),
-                    'currency'      => Settings::getCurrency(),
+                    'description'   => 'Purchase for ' . config('app.name'),
+                    'currency'      => config('app.currency'),
                     'paymentMethod' => $request->stripe_token,
                     'confirm'       => true,
                 );
@@ -254,11 +229,11 @@ class PaymentsController extends Controller
                 $params = array(
                     'cancelUrl'     => $this->getCallbackCancelUrl($paymentGateway),
                     'returnUrl'     => $this->getCallbackReturnUrl($paymentGateway),
-                    'name'          => Settings::getOrgName() . ' - Tickets Purchase',
-                    'description'   => 'Purchase for ' . Settings::getOrgName(),
+                    'name'          => config('app.name') . ' - Tickets Purchase',
+                    'description'   => 'Purchase for ' . config('app.name'),
                     'amount'        => (float)Helpers::formatBasket($basket)->total,
                     'quantity'      => (string)count($basket),
-                    'currency'      => Settings::getCurrency(),
+                    'currency'      => config('app.currency'),
                 );
                 $gateway = Omnipay::create('PayPal_Express');
                 $gateway->setUsername(config('laravel-omnipay.gateways.paypal_express.credentials.username'));
@@ -290,23 +265,23 @@ class PaymentsController extends Controller
 
         // Process Response
         // Credit
-        if ($processPaymentSkip && $paymentGateway == 'credit') {
-            if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
-                Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
-                return Redirect::to('/payment/failed');
-            }
-            $purchaseParams = [
-                'user_id'           => Auth::id(),
-                'type'              => 'Credit',
-                'transaction_id'    => '',
-                'token'             => '',
-                'status'            => 'Success'
-            ];
-            $purchase = Purchase::create($purchaseParams);
-            $this->processBasket($basket, $purchase->id);
-            Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
-            return Redirect::to('/payment/successful/' . $purchase->id);
-        }
+        // if ($processPaymentSkip && $paymentGateway == 'credit') {
+        //     if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
+        //         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
+        //         return Redirect::to('/payment/failed');
+        //     }
+        //     $purchaseParams = [
+        //         'user_id'           => Auth::id(),
+        //         'type'              => 'Credit',
+        //         'transaction_id'    => '',
+        //         'token'             => '',
+        //         'status'            => 'Success'
+        //     ];
+        //     $purchase = Purchase::create($purchaseParams);
+        //     $this->processBasket($basket, $purchase->id);
+        //     Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
+        //     return Redirect::to('/payment/successful/' . $purchase->id);
+        // }
 
 
         if ($response->isSuccessful()) {
@@ -358,7 +333,7 @@ class PaymentsController extends Controller
      */
     public function process(Request $request)
     {
-        if (!$paymentGateway = $this->checkParams($request->gate, $basket = Session::get(Settings::getOrgName() . '-basket'))) {
+        if (!$paymentGateway = $this->checkParams($request->gate, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
         }
         if ($request->input('type') == 'cancel') {
@@ -444,14 +419,14 @@ class PaymentsController extends Controller
         if (!Session::has('params')) {
             return Redirect::to('/');
         }
-        $basket = Session::get(Settings::getOrgName() . '-basket');
+        $basket = Session::get(config('app.basket_name'));
         $type = 'tickets';
         if (array_key_exists('shop', $basket)) {
             $type = 'shop';
         }
         $basket = Helpers::formatBasket($basket);
         Session::forget('params');
-        Session::forget(Settings::getOrgName() . '-basket');
+        Session::forget(config('app.basket_name'));
         return view('payments.successful')
             ->withType($type)
             ->withBasket($basket)
@@ -467,7 +442,7 @@ class PaymentsController extends Controller
     public function showFailed()
     {
         Session::forget('params');
-        Session::forget(Settings::getOrgName() . '-basket');
+        Session::forget(config('app.basket_name'));
         return view('payments.failed');
     }
 
@@ -479,7 +454,7 @@ class PaymentsController extends Controller
     public function showCancelled()
     {
         Session::forget('params');
-        Session::forget(Settings::getOrgName() . '-basket');
+        Session::forget(config('app.basket_name'));
         return view('payments.cancelled');
     }
 
@@ -505,6 +480,7 @@ class PaymentsController extends Controller
                 }
             }
         } elseif(array_key_exists('shop', $basket)) {
+            // TODO: REMOVE THIS
             $status = 'EVENT';
             $deliverToEvent = true;
             if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
@@ -541,31 +517,23 @@ class PaymentsController extends Controller
      */
     private function checkParams($paymentGateway, $basket)
     {
-        $acceptedPaymentGateways = Settings::getPaymentGateways();
-        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways) || $paymentGateway == 'credit') {
+        $acceptedPaymentGateways = [];
+        foreach(config('laravel-omnipay.gateways') as $key => $acceptedPaymentGateway) {
+            array_push($acceptedPaymentGateways, $key);
+            echo $key;
+        }
+        if (in_array(strtolower($paymentGateway), $acceptedPaymentGateways)) {
             $paymentGateway = strtolower($paymentGateway);
         } else {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
             return false;
         }
-        if (!$basket = Session::get(Settings::getOrgName() . '-basket')) {
+        if (!$basket = Session::get(config('app.basket_name'))) {
             Session::flash('alert-danger', 'No Basket was found. Please try again');
             return false;
         }
         if (!isset($paymentGateway)) {
             Session::flash('alert-danger', 'A Payment Gateway is required: ' . implode(" ", $acceptedPaymentGateways));
-            return false;
-        }
-        if ($paymentGateway == 'credit' && !Settings::isCreditEnabled()) {
-            Session::flash('alert-danger', 'Credit is not enabled.');
-            return false;
-        }
-        if ($paymentGateway == 'credit' && !Helpers::formatBasket($basket)->allow_credit) {
-            Session::flash('alert-danger', 'You cannot use credit to purchase this Basket!');
-            return false;
-        }
-        if ($paymentGateway != 'credit' && !Helpers::formatBasket($basket)->allow_payment) {
-            Session::flash('alert-danger', 'You cannot use that method to purchase this Basket!');
             return false;
         }
 

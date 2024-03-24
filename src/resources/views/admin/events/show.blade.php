@@ -217,6 +217,28 @@
 	</div>
 	<div class="col-lg-4">
 
+		@if (config('app.discord_bot_url') != '')
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-bullhorn fa-fw"></i> Discord Status
+					@if (!$event->discord_link_enabled)
+						<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#linkDiscordModal">Link Bot</a>
+					@else
+						<a href="#" class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#unlinkDiscordModal">Unlink Bot</a>
+					@endif
+				</div>
+				<div class="panel-body">
+					@if ($event->discord_link_enabled)
+						<p>Channel ID: {{ $event->discord_channel_id }}</p>
+						<p>Role ID: {{ $event->discord_role_id }}</p>
+						<p>Event ID: {{ $event->discord_event_id }}</p>
+					@else
+						<h4>Please link the bot</h4>
+					@endif
+				</div>
+			</div>
+		@endif
+
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-bullhorn fa-fw"></i> Announcements
@@ -249,7 +271,7 @@
 					<div class="list-group">
 						@foreach ($event->tickets as $ticket)
 							<a href="/admin/events/{{ $event->slug }}/tickets/{{ $ticket->id }}" class="list-group-item">
-								<i class="fa fa-pencil fa-fw"></i> {{ $ticket->name }} - {{ Settings::getCurrencySymbol() }}{{ $ticket->price }}
+								<i class="fa fa-pencil fa-fw"></i> {{ $ticket->name }} - {{ config('app.currency_symbol') }}{{ $ticket->price }}
 								<span class="pull-right text-muted small">
 									@if($ticket->quantity != 0)
 										<em>{{ $ticket->participants()->count() }} / {{ $ticket->quantity }}</em>
@@ -403,6 +425,71 @@
 		</div>
 	</div>
 </div>
+
+@if (config('app.discord_bot_url') != '')
+	<div class="modal fade" id="linkDiscordModal" tabindex="-1" role="dialog" aria-labelledby="linkDiscordModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="linkDiscordModalLabel">Link Discord</h4>
+				</div>
+				<div class="modal-body">
+					@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/discord/link', 'files' => 'true')) }}
+						Are you Sure you want to Link this Event to Discord? It will do the following:
+						<ul>
+							<li>Create New Scheduled Event</li>
+							<li>Create New Event Channel</li>
+							<li>Create New Event Role</li>
+							<li>Announce New Attendees</li>
+						</ul>
+						<button type="submit" class="btn btn-default btn-block">Submit</button>
+					{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="unlinkDiscordModal" tabindex="-1" role="dialog" aria-labelledby="unlinkDiscordModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="unlinkDiscordModalLabel">Unlink Discord</h4>
+				</div>
+				<div class="modal-body">
+					@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/discord/unlink', 'files' => 'true')) }}
+						Are you Sure you want to Unlink this Event from Discord? It will do the following (this is done Automatically after each event):
+						<ul>
+							<li>Stop the Bot Watching this Event</li>
+							<li>Remove the Event Role</li>
+						</ul>
+						<button type="submit" class="btn btn-default btn-block">Submit</button>
+					{{ Form::close() }}
+				</div>
+			</div>
+		</div>
+	</div>
+
+@endif
 
 <div class="modal fade" id="addAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="addAnnouncementModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

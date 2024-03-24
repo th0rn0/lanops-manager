@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' News Tag: ' . $tag)
+@section ('page_title', config('app.name') . ' News Tag: ' . $tag)
 
 @section ('content')
 			

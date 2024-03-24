@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - ' . $event->display_name)
+@section ('page_title', config('app.name') . ' - ' . $event->display_name)
 
 @section ('content')
 			
@@ -178,47 +178,6 @@
 										</dd>
 									</dl>
 								@endif
-								<!-- // TODO - refactor-->
-								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
-									@php
-										if ($tournament->team_size != '1v1') {
-											$tournamentParticipants = $tournament->tournamentTeams;
-										}
-										if ($tournament->team_size == '1v1') {
-											$tournamentParticipants = $tournament->tournamentParticipants;
-										}
-										$tournamentParticipants = $tournamentParticipants->sortBy('final_rank');
-									@endphp
-									@foreach ($tournamentParticipants as $tournamentParticipant)
-										@if ($tournamentParticipant->final_rank == 1)
-											@if ($tournament->team_size == '1v1')
-												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
-											@else
-												<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
-											@endif
-										@endif
-										@if ($tournamentParticipant->final_rank == 2)
-											@if ($tournament->team_size == '1v1')
-												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
-											@else
-												<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
-											@endif
-										@endif
-										@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
-											@if ($tournament->team_size == '1v1')
-												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
-											@else
-												<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
-											@endif
-										@endif
-									@endforeach
-									<h4>Signups Closed</h4>
-								@endif
-								<strong>
-									{{ $tournament->tournamentParticipants->count() }} Signups
-								</strong>
-								<hr>
-								<p><a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="btn btn-primary btn-block" role="button">View</a></p>
 							</div>
 						</div>
 					</div>

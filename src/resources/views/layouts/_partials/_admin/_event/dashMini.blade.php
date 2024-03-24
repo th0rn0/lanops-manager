@@ -82,28 +82,6 @@
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-xs-3">
-						<i class="fa fa-list-ol fa-5x"></i>
-					</div>
-					<div class="col-xs-9 text-right">
-						<div class="huge">{{ $event->tournaments->count() }}</div>
-						<div>Tournaments</div>
-					</div>
-				</div>
-			</div>
-			<a href="/admin/events/{{ $event->slug }}/tournaments">
-				<div class="panel-footer">
-					<span class="pull-left">View Tournaments</span>
-					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-					<div class="clearfix"></div>
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-lg-2 col-md-6 col-xs-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<div class="row">
-					<div class="col-xs-3">
 						<i class="fa fa-user fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
@@ -129,7 +107,7 @@
 						<i class="fa fa-ticket fa-5x"></i>
 					</div>
 					<div class="col-xs-9 text-right">
-						<div class="huge">{{ Settings::getCurrencySymbol() }}{{ $event->getTicketSalesCount() }}</div>
+						<div class="huge">{{ config('app.currency_symbol') }}{{ $event->getTicketSalesCount() }}</div>
 						<div>Ticket Sales</div>
 					</div>
 				</div>

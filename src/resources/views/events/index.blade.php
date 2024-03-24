@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - Events')
+@section ('page_title', config('app.name') . ' - Events')
 
 @section ('content')
 			

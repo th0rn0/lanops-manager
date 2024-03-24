@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title',  Settings::getOrgName() . ' - ' . $event->display_name)
+@section ('page_title',  config('app.name') . ' - ' . $event->display_name)
 
 @section ('content')
 			
@@ -36,9 +36,6 @@
 							<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
 						@endif
 						<li style="font-size:15px; font-weight:bold;"><a href="#attendees">Attendees</a></li>
-						@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
-							<li style="font-size:15px; font-weight:bold;"><a href="#tournaments">Tournaments</a></li>
-						@endif
 						@if (!$event->timetables->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#timetable">Timetable</a></li>
 						@endif
@@ -113,7 +110,7 @@
 								@endif
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-sm-12 col-xs-12">
-										<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
+										<h3>{{ config('app.currency_symbol') }}{{$ticket->price}}
 											@if ($ticket->quantity != 0)
 												<small>
 													{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available
@@ -486,108 +483,6 @@
 		<div class="alert alert-info">Please Log in to Purchase a ticket</div>
 	@endif
 	
-	<!-- TOURNAMENTS -->
-	@if (!$event->tournaments->isEmpty() && config('challonge.api_key') != null)
-		<div class="page-header">
-			<a name="tournaments"></a>
-			<h3>Tournaments</h3>
-		</div>
-		<div class="row">
-			@foreach ($event->tournaments as $tournament)
-				@if ($tournament->status != 'DRAFT')
-					<div class="col-xs-12 col-sm-6 col-md-3">
-						<div class="thumbnail">
-							@if ($tournament->game && $tournament->game->image_thumbnail_path)
-								<img class="img img-responsive img-rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
-							@endif
-							<div class="caption">
-								<h3>{{ $tournament->name }}</h3>
-								<hr>
-								@if ($tournament->status != 'COMPLETE')
-									<dl>
-										<dt>
-											Team Sizes:
-										</dt>
-										<dd>
-											{{ $tournament->team_size }}
-										</dd>
-										@if ($tournament->game)
-											 <dt>
-												Game:
-											</dt>
-											<dd>
-												{{ $tournament->game->name }}
-											</dd>
-										@endif
-										<dt>
-											Format:
-										</dt>
-										<dd>
-											{{ $tournament->format }}
-										</dd>
-									</dl>
-								@endif
-								<!-- // TODO - refactor & add order on rank-->
-								@if ($tournament->status == 'COMPLETE' && $tournament->format != 'list')
-									@if ($tournament->team_size != '1v1')
-										@foreach ($tournament->tournamentTeams->sortBy('final_rank') as $tournamentParticipant)
-											@if ($tournamentParticipant->final_rank == 1)
-												@if ($tournament->team_size == '1v1')
-													<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
-												@else
-													<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
-												@endif
-											@endif
-											@if ($tournamentParticipant->final_rank == 2)
-												@if ($tournament->team_size == '1v1')
-													<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
-												@else
-													<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
-												@endif
-											@endif
-											@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
-												@if ($tournament->team_size == '1v1')
-													<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
-												@else
-													<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
-												@endif
-											@endif
-										@endforeach
-									@endif
-									@if ($tournament->team_size == '1v1')
-										@foreach ($tournament->tournamentParticipants->sortBy('final_rank') as $tournamentParticipant)
-											@if ($tournamentParticipant->final_rank == 1)
-												@if ($tournament->team_size == '1v1')
-													<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h2>
-												@else
-													<h2>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h2>
-												@endif
-											@endif
-											@if ($tournamentParticipant->final_rank == 2)
-												@if ($tournament->team_size == '1v1')
-													<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h3>
-												@else
-													<h3>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h3>
-												@endif
-											@endif
-											@if ($tournamentParticipant->final_rank != 2 && $tournamentParticipant->final_rank != 1)
-												@if ($tournament->team_size == '1v1')
-													<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->eventParticipant->user->username }}</h4>
-												@else
-													<h4>{{ Helpers::getChallongeRankFormat($tournamentParticipant->final_rank) }} - {{ $tournamentParticipant->name }}</h4>
-												@endif
-											@endif
-										@endforeach
-									@endif
-								@endif
-							</div>
-						</div>
-					</div>
-				@endif
-			@endforeach
-		</div>
-	@endif
-
 	<!-- ATTENDEES -->
 	<div class="page-header">
 		<a name="attendees"></a>

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
-use Settings;
-
-use App\Http\Requests;
+use Session;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Http;
 
 class AccountController extends Controller
 {
@@ -22,19 +20,73 @@ class AccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $creditLogs = false;
-        if (Settings::isCreditEnabled()) {
-            $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'cl');
-        }
         $purchases = $user->purchases()->paginate(5, ['*'], 'pu');
         $tickets = $user->eventParticipants()->paginate(5, ['*'], 'ti');
+
+        $state = bin2hex(openssl_random_pseudo_bytes(12));
+        Session::put('discordoauth', $state);
+        $discordLinkUrl = 'https://discordapp.com/oauth2/authorize?response_type=code&client_id=' . config('app.discord_client_id') . '&redirect_uri=' . config('app.discord_redirect_url') . '&scope=' . config('app.discord_scope') . "&state=" . $state;
+
         return view("accounts.index")
             ->withUser($user)
-            ->withCreditLogs($creditLogs)
             ->withPurchases($purchases)
             ->withEventParticipants($tickets)
+            ->withDiscordLinkUrl($discordLinkUrl)
         ;
 
+    }
+
+    public function unlinkDiscord(Request $request) 
+    {
+        $user = Auth::user();
+        $user->discord_id = null;
+        $user->discord_avatar = null;
+        $user->discord_username = null;
+
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Something went wrong, please try again!');
+        }
+
+        return Redirect::to('account');
+    }
+
+    public function linkDiscord(Request $request) 
+    {
+        $response = Http::asform()->withHeaders([
+                'Content-Type' => 'application/json',
+            ])->post("https://discord.com/api/oauth2/token", [
+                "client_id" => config('app.discord_client_id'),
+                "client_secret" => config('app.discord_client_secret'),
+                "grant_type" => "authorization_code",
+                "code" => $request->input('code'),
+                "redirect_uri" => config('app.discord_redirect_url')
+            ]);
+
+        if ($response->status() != 200) {
+            Session::flash('alert-danger', 'Somewent went wrong!');
+            return Redirect::to('account');
+        }
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Authorization' => ' Bearer ' . $response['access_token']
+        ])->get("https://discord.com/api/users/@me");
+
+        
+        if ($response->status() != 200) {
+            Session::flash('alert-danger', 'Somewent went wrong!');
+            return Redirect::to('account');
+        }
+
+        $user = Auth::user();
+        $user->discord_id = $response['id'];
+        $user->discord_username = $response['global_name'];
+        $user->discord_avatar = $response['avatar'];
+
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Something went wrong, please try again!');
+        }
+        return Redirect::to('account');
     }
 
     public function update(Request $request)
@@ -80,5 +132,20 @@ class AccountController extends Controller
             return Redirect::back()->withFail("Oops, Something went Wrong.");
         }
         return Redirect::back()->withSuccess('Account successfully updated!');
+    }
+
+    /**
+     * Delete Account
+     * @return Redirect
+     */
+    public function destroy()
+    {
+        $user = Auth::user();
+        if ($user && $user->delete()) {
+            Session::flash('alert-success', 'Account Deleted!');
+            return Redirect::to('/');
+        }
+        Session::flash('alert-danger', 'Could not delete Account!');
+        return Redirect::to('/account');
     }
 }

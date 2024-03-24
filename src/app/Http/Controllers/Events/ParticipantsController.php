@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Events;
 
-use DB;
 use Auth;
 use Session;
-use App\User;
-use App\Event;
-use App\EventParticipant;
+use App\Models\EventParticipant;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;

@@ -2,24 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Auth;
 
-use App\NewsArticle;
-use App\NewsComment;
-use App\NewsTag;
+use App\Models\NewsArticle;
+use App\Models\NewsComment;
+use App\Models\NewsTag;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-
-use Artesaos\SEOTools\Facades\SEOTools;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\OpenGraph;
-use Artesaos\SEOTools\Facades\TwitterCard;
-use Artesaos\SEOTools\Facades\JsonLd;
 
 class NewsController extends Controller
 {
@@ -31,8 +23,6 @@ class NewsController extends Controller
     {
         $seoKeywords = explode(',',config('settings.seo_keywords'));
         $seoKeywords[] = "News";
-        SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::addProperty('type', 'article');
         return view('news.index')
             ->withNewsArticles(NewsArticle::paginate(20));
     }
@@ -49,10 +39,6 @@ class NewsController extends Controller
         foreach ($newsArticle->tags as $tag) {
             $seoKeywords[] = $tag->tag;
         }
-        SEOMeta::setDescription($newsArticle->title);
-        SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::setDescription($newsArticle->title);
-        OpenGraph::addProperty('type', 'article');
         return view('news.show')
             ->withNewsArticle($newsArticle);
     }
@@ -66,10 +52,6 @@ class NewsController extends Controller
     {
         $seoKeywords = explode(',',config('settings.seo_keywords'));
         $seoKeywords[] = $newsTag->tag;
-        SEOMeta::setDescription($newsTag->tag);
-        SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::setDescription($newsTag->tag);
-        OpenGraph::addProperty('type', 'article');
         foreach (NewsTag::where('tag', $newsTag->tag)->get()->reverse() as $newsTag) {
             $newsArticles[] = $newsTag->newsArticle;
         }

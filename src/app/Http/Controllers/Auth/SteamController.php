@@ -6,7 +6,7 @@ use Auth;
 
 use Session;
 
-use App\User;
+use App\Models\User;
 
 use App\Http\Controllers\Controller;
 
@@ -98,20 +98,5 @@ class SteamController extends Controller
         Auth::logout();
         Session::flash('alert-danger', 'Something went wrong. Please Try again later!');
         return Redirect('/');
-    }
-
-    /**
-     * Delete Account
-     * @return Redirect
-     */
-    public function destroy()
-    {
-        $user = Auth::user();
-        if ($user && $user->delete()) {
-            Session::flash('alert-success', 'Account Deleted!');
-            return Redirect::to('/');
-        }
-        Session::flash('alert-danger', 'Could not delete Account!');
-        return Redirect::to('/account');
     }
 }

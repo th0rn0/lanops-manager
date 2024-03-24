@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' Gallery')
+@section ('page_title', config('app.name') . ' Gallery')
 
 @section ('content')
 

@@ -30,9 +30,6 @@
 								<th>Avatar</th>
 								<th>User</th>
 								<th>Name</th>
-								@if (Settings::isCreditEnabled())
-									<th>Credit</th>
-								@endif
 								<th>Admin</th>
 								<th>Edit</th>
 							</tr>
@@ -50,11 +47,6 @@
 										@endif
 									</td>
 									<td>{{ $user->firstname }} {{ $user->surname }}</td>
-									@if (Settings::isCreditEnabled())
-										<td>
-											{{ $user->credit_total }}
-										</td>
-									@endif
 									<td>
 										@if ($user->admin)
 											Yes

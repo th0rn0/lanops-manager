@@ -1,6 +1,6 @@
 @extends ('layouts.admin-default')
 
-@section ('page_title', 'Participants - ' . $event->display_name . ' | ' . Settings::getOrgName() . ' Admin')
+@section ('page_title', 'Participants - ' . $event->display_name . ' | ' . config('app.name') . ' Admin')
 
 @section ('content')
 

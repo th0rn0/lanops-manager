@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - About Us')
+@section ('page_title', config('app.name') . ' - About Us')
 
 @section ('content')
 			
@@ -12,16 +12,15 @@
 	<div class="page-header">
 		<h3>Who We Are</h3> 
 	</div>
-	{!! Settings::getAboutMain() !!}
+	@include ('layouts._partials._about.long')
 	<div class="page-header">
 		<h3>Our Aim</h3> 
 	</div>
-	{!! Settings::getAboutOurAim() !!}
+	@include ('layouts._partials._about.aim')
 	<div class="page-header">
 		<h3>The Who's Who</h3> 
 	</div>
-	{!! Settings::getAboutWho() !!}
-
+	@include ('layouts._partials._about.who')
 </div>
 
 @endsection

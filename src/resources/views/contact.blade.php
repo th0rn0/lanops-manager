@@ -1,6 +1,6 @@
 @extends ('layouts.default')
 
-@section ('page_title', Settings::getOrgName() . ' - Contact Us')
+@section ('page_title', config('app.name') . ' - Contact Us')
 
 @section ('content')
       

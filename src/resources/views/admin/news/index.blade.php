@@ -34,11 +34,6 @@
 						{{ Form::label('tags','Tags',array('id'=>'','class'=>'')) }}<small> - Separate with a comma</small>
 						{{ Form::text('tags', '', array('id'=>'', 'class'=>'form-control')) }}
 					</div>
-					@if ($facebookLinked)
-						<div class="form-group">
-							{{ Form::checkbox('post_to_facebook', true, array('id'=>'post_to_facebook','class'=>'form-control')) }} Post to facebook?
-						</div>
-					@endif
 					<button type="submit" class="btn btn-success btn-block">Submit</button> 
 				{{ Form::close() }}
 			</div>

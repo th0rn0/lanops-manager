@@ -3,12 +3,20 @@
 namespace App\Libraries;
 
 use DB;
-use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 
 class Helpers
 {
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
+
+    // public static function getGameSelectArray($publicOnly = true)
+    // {
+    //     $return[0] = 'None';
+    //     foreach (Game::where('public', $publicOnly)->orderBy('name', 'ASC')->get() as $game) {
+    //         $return[$game->id] = $game->name;
+    //     }
+    //     return $return;
+    // }
     /**
      * Get Venues
      * @param  boolean $obj Return as Object
@@ -16,7 +24,7 @@ class Helpers
      */
     public static function getVenues($obj = false)
     {
-        $venues = \App\EventVenue::all();
+        $venues = \App\Models\EventVenue::all();
         $return = array();
         foreach ($venues as $venue) {
                 $return[$venue->id] = $venue->display_name;
@@ -41,9 +49,9 @@ class Helpers
     {
         $return = array();
         if ($limit != 0) {
-            $events = \App\Event::orderBy('start', $order)->paginate($limit);
+            $events = \App\Models\Event::orderBy('start', $order)->paginate($limit);
         } else {
-            $events = \App\Event::orderBy('start', 'DESC')->get();
+            $events = \App\Models\Event::orderBy('start', 'DESC')->get();
         }
         $return = array();
         foreach ($events as $event) {
@@ -68,15 +76,15 @@ class Helpers
         $return = array();
         if ($limit != 0) {
             if ($future) {
-                $events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', $order)->paginate($limit);
+                $events = \App\Models\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', $order)->paginate($limit);
             } else {
-                $events = \App\Event::orderBy('start', $order)->paginate($limit);
+                $events = \App\Models\Event::orderBy('start', $order)->paginate($limit);
             }
         } else {
             if ($future) {
-                $events = \App\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', 'DESC')->get();
+                $events = \App\Models\Event::where('end', '>=', date('Y-m-d'))->orderBy('start', 'DESC')->get();
             } else {
-                $events = \App\Event::orderBy('start', 'DESC')->get();
+                $events = \App\Models\Event::orderBy('start', 'DESC')->get();
             }
         }
         if (!$obj) {
@@ -97,18 +105,18 @@ class Helpers
      */
     public static function getEventTotal()
     {
-        $events = \App\Event::count();
-        return Settings::getEventCountOffset() + $events;
+        $events = \App\Models\Event::count();
+        // Historical before this site
+        return 23 + $events;
     }
 
-    // TODO - move to model
     /**
      * Get Next Event Name
      * @return String
      */
     public static function getNextEventName()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -128,7 +136,7 @@ class Helpers
      */
     public static function getNextEventSlug()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -146,7 +154,7 @@ class Helpers
      */
     public static function getNextEventDesc()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -163,7 +171,7 @@ class Helpers
      */
     public static function getNextEventStartDate()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -180,7 +188,7 @@ class Helpers
      */
     public static function getNextEventEndDate()
     {
-        if ($event = \App\Event::where(
+        if ($event = \App\Models\Event::where(
             'end',
             '>=',
             Carbon::now()
@@ -197,57 +205,9 @@ class Helpers
      */
     public static function getEventParticipantTotal()
     {
-        $participants = \App\EventParticipant::count();
-        return Settings::getParticipantCountOffset() + $participants;
-    }
-
-    /**
-     * Get Active Tournaments count for User
-     * @param  $event_id
-     * @return Integer
-     */
-    public static function getUserActiveTournaments($event_id)
-    {
-        $user = \Auth::user();
-        $active_tournament_counter = 0;
-        foreach ($user->eventParticipants as $event_participant) {
-            foreach ($event_participant->tournamentParticipants as $tournament_participant) {
-                if ($tournament_participant->eventTournament->event_id == $event_id &&
-                    $tournament_participant->eventTournament->status != 'COMPLETE'
-                ) {
-                    $active_tournament_counter++;
-                }
-            }
-        }
-        return $active_tournament_counter;
-    }
-
-    /**
-     * Format Challonge Rankings
-     * @param  $final_rank
-     * @return String
-     */
-    public static function getChallongeRankFormat($final_rank)
-    {
-        if ($final_rank == '1') {
-            return '1st';
-        }
-        if ($final_rank == '2') {
-            return '2nd';
-        }
-        if ($final_rank == '3') {
-            return '3rd';
-        }
-        if (substr($final_rank, -1) == '1') {
-            return $final_rank . 'st';
-        }
-        if (substr($final_rank, -1) == '2') {
-            return $final_rank . 'nd';
-        }
-        if (substr($final_rank, -1) == '3') {
-            return $final_rank . 'rd';
-        }
-        return $final_rank . 'th';
+        $participants = \App\Models\EventParticipant::count();
+        // Historical before this site
+        return 686 + $participants;
     }
 
     /**
@@ -259,7 +219,7 @@ class Helpers
     {
         $return = 0;
         foreach ($basket as $ticket_id => $quantity) {
-            $ticket = \App\EventTicket::where('id', $ticket_id)->first();
+            $ticket = \App\Models\EventTicket::where('id', $ticket_id)->first();
             $return += ($ticket->price * $quantity);
         }
         return $return;
@@ -278,37 +238,14 @@ class Helpers
     }
 
     /**
-     * Get Games Select Array
-     * @param  $publicOnly
-     * @return Array
-     */
-    public static function getGameSelectArray($publicOnly = true)
-    {
-        return \App\Game::getGameSelectArray($publicOnly);
-    }
-
-    /**
-     * Get Shop Categories Select Array
-     * @param  $publicOnly
-     * @return Array
-     */
-    public static function getShopCategoriesSelectArray($publicOnly = true)
-    {
-        return \App\ShopItemCategory::getShopCategoriesSelectArray($publicOnly);
-    }
-
-    /**
      * Format Shopping Basket into Readable format
      * @param $itemId
      * @return Boolean
      */
     public static function formatBasket($basket)
     {
-        if (array_key_exists('shop', $basket)) {
-            $formattedBasket = \App\ShopItem::whereIn('id', array_keys($basket['shop']))->get();
-        }
         if (array_key_exists('tickets', $basket)) {
-            $formattedBasket = \App\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
+            $formattedBasket = \App\Models\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
         }
         if (!$formattedBasket) {
             return false;
@@ -318,6 +255,7 @@ class Helpers
         $formattedBasket->allow_payment = true;
         $formattedBasket->allow_credit = true;
         foreach ($formattedBasket as $item) {
+            // TODO - REMOVE ME
             if (array_key_exists('shop', $basket)) {
                 $item->quantity = $basket['shop'][$item->id];
                 if ($item->price != null && $item->price != 0) {
@@ -342,15 +280,6 @@ class Helpers
 
     }
 
-    /**
-     * Get CSS Version Number for Cache Busting
-     * @return integer
-     */
-    public static function getCssVersion()
-    {
-        return \App\Appearance::getCssVersion();
-    }
-    
     /**
      * Get Card Expiry Month Dates
      * @return array
@@ -383,21 +312,6 @@ class Helpers
             $return[$date] = $date;
         }
         return $return;
-    }
-
-    /**
-     * Get Supported Event Tags from Eventula
-     * @return array
-     */
-    public static function getEventulaEventTags()
-    {
-        $client = new Client();
-        try {
-            $response = $client->get(config('eventula.url') . '/api/tags/events');
-        } catch (\Exception $e) {
-            return false;
-        }
-        return json_decode($response->getBody());
     }
 
     /**

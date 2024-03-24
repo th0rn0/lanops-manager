@@ -21,41 +21,6 @@
 				<i class="fa fa-credit-card fa-fw"></i> Purchases
 			</div>
 			<div class="panel-body">
-				<div class="row">
-					<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
-							<a href="/admin/purchases">
-								<div class="panel-footer">
-									<span class="pull-left">All Purchases</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-									<div class="clearfix"></div>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
-							<a href="/admin/purchases/shop">
-								<div class="panel-footer">
-									<span class="pull-left">Shop Purchases</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-									<div class="clearfix"></div>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
-							<a href="/admin/purchases/event">
-								<div class="panel-footer">
-									<span class="pull-left">Event Purchases</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-									<div class="clearfix"></div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
 				<table width="100%" class="table table-striped table-hover">
 					<thead>
 						<tr>

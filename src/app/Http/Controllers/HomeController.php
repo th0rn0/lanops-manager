@@ -5,28 +5,10 @@ namespace App\Http\Controllers;
 use DB;
 use Auth;
 
-use App\Event;
-use App\User;
-use App\SliderImage;
-use App\NewsArticle;
-use App\EventTimetable;
-use App\EventTimetableData;
-use App\EventParticipant;
-use App\EventTournamentTeam;
-use App\EventTournamentParticipant;
-
-use App\Http\Requests;
-
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Redirect;
-use Artesaos\SEOTools\Facades\SEOTools;
-use Artesaos\SEOTools\Facades\SEOMeta;
-use Artesaos\SEOTools\Facades\OpenGraph;
-use Artesaos\SEOTools\Facades\TwitterCard;
-use Artesaos\SEOTools\Facades\JsonLd;
-
-use Facebook\Facebook;
+use App\Models\Event;
+use App\Models\NewsArticle;
+use App\Models\EventTimetableData;
+use App\Models\EventParticipant;
 
 class HomeController extends Controller
 {
@@ -76,33 +58,22 @@ class HomeController extends Controller
         });
 
         $topWinners = array();
-        foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
-            $recent = false;
-            foreach ($winner_team->tournamentParticipants as $winner) {
-                if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
-                    $topWinners[$winner->eventParticipant->user->id]->win_count++;
-                    $recent = true;
-                }
-                if (!$recent) {
-                    $winner->eventParticipant->user->win_count = 1;
-                    $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
-                }
-            }
-        }
-        foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
-            $recent = false;
-            if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
-                $topWinners[$winner->eventParticipant->user->id]->win_count++;
-                $recent = true;
-            }
-            if (!$recent) {
-                $winner->eventParticipant->user->win_count = 1;
-                $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
-            }
-        }
+
         usort($topWinners, function ($a, $b) {
             return $b['win_count'] <=> $a['win_count'];
         });
+
+        // TODO - TEMP FIX
+        // Setup Slider Images
+        $sliderImages = array(
+            array(
+                "path" => "/images/frontpage/slider/1.jpg"
+            ),
+            array (
+                "path" => "/images/frontpage/slider/2.jpg"
+            )
+        );
+
         return view("home")
             ->withNextEvent(
                 Event::where('end', '>=', \Carbon\Carbon::now())
@@ -112,7 +83,7 @@ class HomeController extends Controller
             ->withTopWinners(array_slice($topWinners, 0, 5))
             ->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
             ->withEvents(Event::all())
-            ->withSliderImages(SliderImage::getImages('frontpage'))
+            ->withSliderImages(json_decode(json_encode($sliderImages), FALSE))
         ;
     }
     

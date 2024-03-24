@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Auth;
-use Storage;
 use Input;
 use Image;
-use Validator;
 use Session;
 use File;
 
-use App\User;
-use App\Event;
-use App\GalleryAlbum;
-use App\GalleryAlbumImage;
+use App\Models\GalleryAlbum;
+use App\Models\GalleryAlbumImage;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;

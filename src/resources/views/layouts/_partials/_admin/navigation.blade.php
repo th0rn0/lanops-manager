@@ -7,7 +7,7 @@
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="/">{{ Settings::getOrgName() }} Admin</a>
+		<a class="navbar-brand" href="/">{{ config('app.name') }} Admin</a>
 	</div>
 	<!-- Top Menu Items -->
 	<ul class="nav navbar-right top-nav">
@@ -63,25 +63,8 @@
 				<a href="/admin/gallery"><i class="fa fa-camera fa-fw"></i> Gallery</a>
 			</li>
 			<li>
-				<a href="/admin/games"><i class="fa fa-gamepad fa-fw"></i> Games</a>
-			</li>
-			<li>
 				<a href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>
-			<li>
-				<a href="/admin/settings"><i class="fa fa-book fa-fw"></i> Settings</a>
-			</li>
-			<li>
-				<a href="/admin/credit"><i class="fa fa-refresh fa-fw" aria-hidden="true"></i> Credit System (Beta)</a> 
-			</li>
-			<li>
-				<a href="/admin/shop"><i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i> Shop (Beta)</a> 
-			</li>
-			@if (Settings::isShopEnabled())
-				<li>
-					<a href="/admin/orders"><i class="fa fa-reorder fa-fw" aria-hidden="true"></i> Orders (Beta)</a> 
-				</li>
-			@endif
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->
