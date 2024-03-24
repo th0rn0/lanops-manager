@@ -29,56 +29,24 @@ jobs:
         name: Create Dummy .env
         run: touch src/.env
       -
-        name: Build App Dependencies
-        run: make build
+        name: Build Images
+        run: make build --no-cache
       -
-        name: Build - nginx
+        name: Build App Dependencies
+        run: make build && make artisan-storage-link
+      -
+        name: Push - NGINX
+        uses: docker/build-push-action@v5
+        with:
+          context: resources/docker/nginx/
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
+      -
+        name: Push - APP
         uses: docker/build-push-action@v5
         with:
           context: resources/docker/php/
           file: Dockerfile
-          load: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
-      # -
-      #   name: Build - nginx
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     load: true
-      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
-      # -
-      #   name: Build - nginx
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     load: true
-      #     tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
-
-
-
-      -
-        name: Build and push - nginx
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
-      -
-        name: Build and push - php
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
-      -
-        name: Build and push - nginx
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest
