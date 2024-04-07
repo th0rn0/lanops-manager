@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Auth;
 
-use App\PollOptionVote as Vote;
+use App\Models\PollOptionVote as Vote;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;

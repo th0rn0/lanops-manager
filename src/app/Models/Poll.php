@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Auth;
-use App\PollOption;
+use App\Models\PollOption;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+use Spatie\WebhookServer\WebhookCall;
 use Cviebrock\EloquentSluggable\Sluggable;
 
 class Poll extends Model
@@ -32,6 +33,19 @@ class Poll extends Model
     protected static function boot()
     {
         parent::boot();
+
+        self::updated(function ($model) {
+            if (config('app.discord_bot_url') != '' && !is_null($model->event_id) && $model->statusPublished) {
+                WebhookCall::create()
+                    ->url(config('app.discord_bot_url') . '/message/channel')
+                    ->payload([
+                        'channel_id' => $model->event->discord_channel_id,
+                        'message' => "We have a new poll for " . $model->event->display_name . " - go vote now - " . config('app.url') . $model->slug
+                    ])
+                    ->useSecret(config('app.discord_bot_secret'))
+                    ->dispatch();
+            }
+        });
 
         $admin = false;
         if (Auth::user() && Auth::user()->getAdmin()) {

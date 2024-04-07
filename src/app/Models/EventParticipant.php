@@ -53,7 +53,6 @@ class EventParticipant extends Model
                     ])
                     ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
-
             };
             return true;
         });
