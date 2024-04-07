@@ -35,7 +35,7 @@ class Poll extends Model
         parent::boot();
 
         self::updated(function ($model) {
-            if (config('app.discord_bot_url') != '' && !is_null($model->event_id) && $model->status == "PUBLISHED") {
+            if (config('app.discord_bot_url') != '' && !is_null($model->event_id) && $model->status == "published" && $model->event->discord_link_enabled) {
                 WebhookCall::create()
                     ->url(config('app.discord_bot_url') . '/message/channel')
                     ->payload([
@@ -45,6 +45,7 @@ class Poll extends Model
                     ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
             }
+            return true;
         });
 
         $admin = false;
