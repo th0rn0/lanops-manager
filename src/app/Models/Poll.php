@@ -35,12 +35,12 @@ class Poll extends Model
         parent::boot();
 
         self::updated(function ($model) {
-            if (config('app.discord_bot_url') != '' && !is_null($model->event_id) && $model->statusPublished) {
+            if (config('app.discord_bot_url') != '' && !is_null($model->event_id) && $model->status == "PUBLISHED") {
                 WebhookCall::create()
                     ->url(config('app.discord_bot_url') . '/message/channel')
                     ->payload([
                         'channel_id' => $model->event->discord_channel_id,
-                        'message' => "We have a new poll for " . $model->event->display_name . " - go vote now - " . config('app.url') . $model->slug
+                        'message' => "We have a new poll for " . $model->event->display_name . " - go vote now - " . config('app.url') . "/polls/" . $model->slug
                     ])
                     ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
