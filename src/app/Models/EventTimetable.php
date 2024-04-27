@@ -5,6 +5,8 @@ namespace App\Models;
 use DateTime;
 use Auth;
 
+use Spatie\WebhookServer\WebhookCall;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -37,6 +39,20 @@ class EventTimetable extends Model
                 $builder->where('status', 'PUBLISHED');
             });
         }
+
+        self::updated(function ($model) {
+            if (config('app.discord_bot_url') != '' && strtolower($model->status) == "published" && $model->event->discord_link_enabled) {
+                WebhookCall::create()
+                    ->url(config('app.discord_bot_url') . '/message/channel')
+                    ->payload([
+                        'channel_id' => $model->event->discord_channel_id,
+                        'message' => "The timetable for " . $model->event->display_name . " is now live! " . config('app.url') . "/events/" . $model->event->slug
+                    ])
+                    ->useSecret(config('app.discord_bot_secret'))
+                    ->dispatch();
+            }
+            return true;
+        });
     }
     
     /*
