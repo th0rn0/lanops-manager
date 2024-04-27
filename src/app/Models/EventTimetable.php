@@ -46,7 +46,7 @@ class EventTimetable extends Model
                     ->url(config('app.discord_bot_url') . '/message/channel')
                     ->payload([
                         'channel_id' => $model->event->discord_channel_id,
-                        'message' => "The timetable for " . $model->event->display_name . " is now live! " . config('app.url') . "/events/" . $model->event->slug
+                        'message' => "The timetable for " . $model->event->display_name . " is now live! " . config('app.url') . "/events/" . $model->event->slug . "#timetable"
                     ])
                     ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
