@@ -241,27 +241,6 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-bullhorn fa-fw"></i> Announcements
-				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addAnnouncementModal">Add Announcement</a>
-			</div>
-			<div class="panel-body">
-				@if ($announcements->count() != 0)
-					<div class="list-group">
-						@foreach ($announcements as $announcement)
-							<a href="#" class="list-group-item" data-toggle="modal" onclick="editAnnouncement('{{$announcement->id}}', '{{$announcement->message}}')" data-target="#editAnnouncementModal">
-								<i class="fa fa-comment fa-fw"></i> {{ $announcement->message }}
-							</a>
-						@endforeach
-						{{ $announcements->links() }}
-					</div>
-				@else
-					<h4>None</h4>
-				@endif
-			</div>
-		</div>
-
-		<div class="panel panel-default">
-			<div class="panel-heading">
 				<i class="fa fa-ticket fa-fw"></i> Tickets
 				<a href="/admin/events/{{ $event->slug }}/tickets" style="margin-left:3px;" class="btn btn-info btn-xs pull-right">All Tickets</a>
 				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addTicketModal">Add Ticket</a>
@@ -328,27 +307,6 @@
 							</a>
 						@endforeach
 						{{ $participants->links() }}
-					</div>
-				@else
-					<h4>None</h4>
-				@endif
-			</div>
-		</div>
-
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<i class="fa fa-suitcase fa-fw"></i> Sponsors
-				<a href="#" class="btn btn-info btn-xs pull-right" data-toggle="modal" data-target="#addSponsorModal">Add Sponsor</a>
-			</div>
-			<div class="panel-body">
-				@if (!$event->sponsors->isEmpty())
-					<div class="list-group">
-						@foreach ($event->sponsors as $sponsor)
-							<a href="/admin/tickets/{{ $ticket->id }}" class="list-group-item">
-								<i class="fa fa-pencil fa-fw"></i> {{ $sponsor->name }} - {{ ucwords($sponsor->website) }}
-								<img class="img-responsive img-thumbnail" src="{{ $sponsor->image_path }}" />
-							</a>
-						@endforeach
 					</div>
 				@else
 					<h4>None</h4>

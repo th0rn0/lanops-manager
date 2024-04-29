@@ -68,7 +68,6 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/events', 'Events\EventsController@index');
     Route::get('/events/{event}', 'Events\EventsController@show');
-    Route::get('/events/{event}/big', 'HomeController@bigScreen');
 
     /**
      * Misc Pages
@@ -203,19 +202,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     );
 
     /**
-     * Announcements
-     */
-    Route::post('/admin/events/{event}/announcements', 'Admin\Events\AnnouncementsController@store');
-    Route::post(
-        '/admin/events/{event}/announcements/{announcement}',
-        'Admin\Events\AnnouncementsController@update'
-    );
-    Route::delete(
-        '/admin/events/{event}/announcements/{announcement}',
-        'Admin\Events\AnnouncementsController@destroy'
-    );
-
-    /**
      * Tickets
      */
     Route::get('/admin/events/{event}/tickets', 'Admin\Events\TicketsController@index');
@@ -229,11 +215,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      */
     Route::post('/admin/events/{event}/freebies/admin', 'Admin\Events\EventsController@freeStaff');
     Route::post('/admin/events/{event}/freebies/gift', 'Admin\Events\EventsController@freeGift');
-
-    /**
-     * Sponsors
-     */
-    Route::post('/admin/events/{event}/sponsors', 'Admin\Events\SponsorsController@store');
 
     /**
      * Venues

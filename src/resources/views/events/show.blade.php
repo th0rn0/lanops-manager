@@ -29,9 +29,6 @@
 				<div id="navbar" class="navbar-collapse collapse" style="text-align:center;">
 					<ul class="nav navbar-nav" style="display: inline-block; float: none;">
 						<li style="font-size:15px; font-weight:bold;"><a href="#event">Event Information</a></li>
-						@if (!$event->sponsors->isEmpty())
-							<li style="font-size:15px; font-weight:bold;"><a href="#sponsors">Sponsors</a></li>
-						@endif
 						@if (!$event->seatingPlans->isEmpty())
 							<li style="font-size:15px; font-weight:bold;"><a href="#seating">Seating</a></li>
 						@endif
@@ -327,19 +324,6 @@
 			@endforeach
 		</div>
 	</div>
-	
-	<!-- EVENT SPONSORS -->
-	@if (!$event->sponsors->isEmpty())
-		<div class="page-header">
-			<a name="sponsors"></a>
-			<h3>{{$event->display_name}} is sponsored by</h3>
-		</div>
-		@foreach ($event->sponsors as $sponsor)
-			<a href="{{ $sponsor->website }}">
-				<img class="img-responsive img-rounded" src="{{ $sponsor->image_path }}" alt="{{ $sponsor->website}}" />
-			</a>
-		@endforeach
-	@endif
 	
 	<!-- EVENT INFORMATION SECTIONS -->
 	@if (!empty($event->information))
