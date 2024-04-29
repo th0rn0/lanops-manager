@@ -14,30 +14,9 @@ class HomeController extends Controller
 {
     /**
      * Show Index Page
-     * @return Function
-     */
-    public function index()
-    {
-        // Check for Event
-        $user = Auth::user();
-        if ($user && !empty($user->eventParticipants)) {
-            foreach ($user->eventParticipants as $participant) {
-                if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
-                    (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                    $participant->signed_in
-                ) {
-                    return $this->event();
-                }
-            }
-        }
-        return $this->net();
-    }
-
-    /**
-     * Show New Page
      * @return View
      */
-    public function net()
+    public function index()
     {
         $topAttendees = array();
         foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
@@ -111,56 +90,5 @@ class HomeController extends Controller
     public function contact()
     {
         return view("contact");
-    }
-    
-    /**
-     * Show Event Page
-     * @return View
-     */
-    public function event()
-    {
-        $signedIn = true;
-        $event = Event::where('start', '<', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
-        $event->load('eventParticipants.user');
-        $event->load('timetables');
-        foreach ($event->timetables as $timetable) {
-            $timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)
-                ->orderBy('start_time', 'asc')
-                ->get();
-        }
-
-        // TODO - Refactor
-        $user = Auth::user();
-        if ($user) {
-            $clauses = ['user_id' => $user->id, 'event_id' => $event->id];
-            $user->event_participation = EventParticipant::where($clauses)->get();
-        }
-
-        $ticketFlag = false;
-        if ($user) {
-            $user->setActiveEventParticipant($event->id);
-            if ($user->eventParticipation != null || isset($user->eventParticipation)) {
-                foreach ($user->eventParticipation as $participant) {
-                    if ($participant->event_id == $event->id) {
-                        $ticketFlag = true;
-                    }
-                }
-            }
-        }
-        return view("events.home")
-            ->withEvent($event)
-            ->withTicketFlag($ticketFlag)
-            ->withSignedIn($signedIn)
-            ->withUser($user);
-    }
-
-    /**
-     * Show Big Screen Page
-     * @param  Event  $event
-     * @return View
-     */
-    public function bigScreen(Event $event)
-    {
-        return view("events.big")->withEvent($event);
     }
 }
