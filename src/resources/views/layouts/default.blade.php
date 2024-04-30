@@ -132,12 +132,9 @@
 							<p class=""><a target="_blank" href="{{ config('app.steam_link') }}">Steam</a></p>
 						@endif
 					</div>
-					<div class="col-lg-12">
-						<p class="">© {{ config('app.name') }} {{ date("Y") }}. All rights reserved.</p>
-					</div>
 				</div>
 				<div class="col-lg-12 text-center">
-					<p class="">Th0rn0 - Created with Vodka & Hatred</p>
+					<p class="">© {{ config('app.name') }} {{ date("Y") }}. All rights reserved.</p>
 				</div>
 			</div>
 		</footer>
