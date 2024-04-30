@@ -60,7 +60,7 @@ class HomeController extends Controller
             )
             ->withTopAttendees(array_slice($topAttendees, 0, 5))
             ->withTopWinners(array_slice($topWinners, 0, 5))
-            ->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
+            ->withNewsArticles(NewsArticle::limit(4)->orderBy('created_at', 'desc')->get())
             ->withEvents(Event::all())
             ->withSliderImages(json_decode(json_encode($sliderImages), FALSE))
         ;
