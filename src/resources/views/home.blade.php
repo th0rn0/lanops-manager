@@ -131,8 +131,8 @@
 			<div class="page-header">
 				<h3>The {{ config('app.name') }} Fam</h3>
 			</div>
-			@if (config('app.dicord_id'))			
-				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ config('app.dicord_id') }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
+			@if (config('app.discord_id'))			
+				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ config('app.discord_id') }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
 			@endif
 			@if (count($topAttendees) > 0)
 				<div class="page-header">
