@@ -21,8 +21,6 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
-        $seoKeywords[] = "News";
         return view('news.index')
             ->withNewsArticles(NewsArticle::paginate(20));
     }
@@ -34,11 +32,6 @@ class NewsController extends Controller
      */
     public function show(NewsArticle $newsArticle)
     {
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
-        $seoKeywords[] = $newsArticle->title;
-        foreach ($newsArticle->tags as $tag) {
-            $seoKeywords[] = $tag->tag;
-        }
         return view('news.show')
             ->withNewsArticle($newsArticle);
     }
@@ -50,8 +43,6 @@ class NewsController extends Controller
      */
     public function showTag(NewsTag $newsTag)
     {
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
-        $seoKeywords[] = $newsTag->tag;
         foreach (NewsTag::where('tag', $newsTag->tag)->get()->reverse() as $newsTag) {
             $newsArticles[] = $newsTag->newsArticle;
         }

@@ -565,3 +565,5 @@
 </script>
 
 @endsection
+
+@seo(['description' => $event->desc_short])

@@ -41,6 +41,12 @@ class AppServiceProvider extends ServiceProvider
                 )
             );
         }
+
+        seo()
+            ->site(config('app.name'))
+            ->description(default:  config('app.tagline'))
+            ->image(default: fn () => config('app.url') . config('app.logo'))
+            ->twitterSite('@LanOps');
     }
 
     /**

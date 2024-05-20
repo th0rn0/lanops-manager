@@ -4,8 +4,66 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b3689ad7f22e42513d044f6e79bfc47",
+    "content-hash": "19493d3b1d11f45ec3f8813cb29b7443",
     "packages": [
+        {
+            "name": "archtechx/laravel-seo",
+            "version": "v0.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/archtechx/laravel-seo.git",
+                "reference": "6d6903ad6254f854387de6c42f811f4d51561f23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/archtechx/laravel-seo/zipball/6d6903ad6254f854387de6c42f811f4d51561f23",
+                "reference": "6d6903ad6254f854387de6c42f811f4d51561f23",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.24|^9.0|^10.0",
+                "illuminate/view": "^8.24|^9.0|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "intervention/image": "^2.7",
+                "nunomaduro/larastan": "^1.0|^2.4",
+                "orchestra/testbench": "^6.23|^7.0|^8.0",
+                "pestphp/pest": "^1.2|^2.0",
+                "pestphp/pest-plugin-laravel": "^1.0|^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ArchTech\\SEO\\SEOServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "ArchTech\\SEO\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samuel Štancl",
+                    "email": "samuel@archte.ch"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/archtechx/laravel-seo/issues",
+                "source": "https://github.com/archtechx/laravel-seo/tree/v0.9.0"
+            },
+            "time": "2023-05-31T17:02:49+00:00"
+        },
         {
             "name": "bacon/bacon-qr-code",
             "version": "1.0.2",

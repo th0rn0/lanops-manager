@@ -48,9 +48,6 @@ class EventsController extends Controller
                 $poll->sortOptions();
             }
         }
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
-        $seoKeywords[] = $event->display_name;
-        $seoKeywords[] = "Start Date: " . $event->start;
         return view('events.show')->withEvent($event);
     }
 }
