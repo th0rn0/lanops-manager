@@ -2,9 +2,11 @@
 
 From the original Eventula Management Platform comes the next iteration of the Lan Management Platform. Built For LanOps. 
 
-I originally built the eventula manager as a fully whitelabelled solution. The original build had a central hub to deploy these fully bespoke and white labelled Event Management Solutions as well as a searchable google map. Unfornately through time I've not been able to keep up with its maintainence. However some wonderful people have decided to fork it and have a go at her themselves! 
+I originally built the eventula manager as a fully whitelabelled solution. The original build had a central hub to deploy these fully bespoke and white labelled Event Management Solutions as well as a searchable google map. Unfortunately through time I've not been able to keep up with its maintainence. However some wonderful people have decided to fork it and have a go at her themselves! 
 
 ### If you are wanting a fully white labelled event management system go look at the [Lan2Play Fork](https://github.com/Lan2Play/eventula-manager)
+
+This code base has been specifically updated for LanOps. It can still be used for other events but would require you're own fork of the repo.
 
 Built with Vodka and Hatred ontop of Laravel. Full Docker stack included.
 
