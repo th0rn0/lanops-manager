@@ -66,7 +66,7 @@ jobs:
       - 
         name: Discord Webhook Action - Build Failure
         if: failure()
-        uses: tsickert/discord-webhook@6.0.0
+        uses: tsickert/discord-webhook@v6.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           embed-title: ${{ github.repository }} - Build Failure!
