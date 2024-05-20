@@ -2,7 +2,9 @@
 
 From the original Eventula Management Platform comes the next iteration of the Lan Management Platform. Built For LanOps. 
 
-I originally built the eventula manager as a fully whitelabelled solution. The original build had a central hub to deploy these fully bespoke and white labelled Event Management Solutions as well as a searchable google map. Unfornately through time I've not been able to keep up with its maintainence. However some wonderful people have decided to fork it and have a go at her themselves! If you are wanting a fully white labelled event management system
+I originally built the eventula manager as a fully whitelabelled solution. The original build had a central hub to deploy these fully bespoke and white labelled Event Management Solutions as well as a searchable google map. Unfornately through time I've not been able to keep up with its maintainence. However some wonderful people have decided to fork it and have a go at her themselves! 
+
+### If you are wanting a fully white labelled event management system go look at the [Lan2Play Fork](https://github.com/Lan2Play/eventula-manager)
 
 Built with Vodka and Hatred ontop of Laravel. Full Docker stack included.
 
@@ -22,20 +24,7 @@ Built with Vodka and Hatred ontop of Laravel. Full Docker stack included.
 - ```docker compose up -d```
 
 
-### TODO
-
-- upgrade NPM - using node8!!!
-- re do frontend
-- move images into app/resources and have gulp pull them in
-- move all assets in public into app/resources and have gulp sort them
-    - Maybe move them into storage?
-    - Maybe move away from gulp?
-- Re-evaluate what is needed from NPM
-- Storage permissions need sorting
-- This fucking README.md
-
-
-##### Features
+## Features
 
 - Event Management
   - Signup/Info Pages
@@ -62,7 +51,6 @@ Built with Vodka and Hatred ontop of Laravel. Full Docker stack included.
 - Voting and Poll Management
 - News Management
 
-
 ## ENV
 
 ### Variables
@@ -88,3 +76,14 @@ Built with Vodka and Hatred ontop of Laravel. Full Docker stack included.
 | STRIPE_PUBLIC_KEY            | False    |                  |                                                                                     |
 | STEAM_API_KEY                | False    |                  | Used for Steam Login                                                                |
 | LOG_FILES                    | False    | False            | If set to true, the App and Nginx will log to file                                  |
+
+## TODO
+
+- upgrade NPM - using node8
+- re do frontend
+- move images into app/resources and have gulp pull them in
+- move all assets in public into app/resources and have gulp sort them
+    - Maybe move them into storage?
+    - Maybe move away from gulp?
+- Re-evaluate what is needed from NPM
+- Storage permissions need sorting
