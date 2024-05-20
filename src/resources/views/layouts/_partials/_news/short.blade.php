@@ -26,7 +26,6 @@
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-6">
-			<!-- // TODO - add user account public pages -->
 			<p class="news-post-meta pull-right">{{ date('F d, Y', strtotime($newsArticle->created_at)) }} by <a href="#">{{ $newsArticle->user->username }}</a><span class="hidden-xs"> | Comments: {{ $newsArticle->comments->count() }}</span></p>
 		</div>
 	</div>
