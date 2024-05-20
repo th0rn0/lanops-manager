@@ -29,7 +29,8 @@
         "laravel/legacy-factories": "^1.4",
         "laravel/helpers": "^1.7",
         "spatie/laravel-webhook-server": "^3.8",
-        "archtechx/laravel-seo": "^0.9.0"
+        "archtechx/laravel-seo": "^0.9.0",
+        "verschuur/laravel-robotstxt": "^5.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
