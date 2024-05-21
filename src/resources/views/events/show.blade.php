@@ -566,4 +566,4 @@
 
 @endsection
 
-@seo(['description' => $event->desc_short])
+@seo(['description' => strip_tags(substr($event->desc_long, 0, 1000))])

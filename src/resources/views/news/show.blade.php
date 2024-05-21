@@ -56,4 +56,4 @@
 
 @endsection
 
-@seo(['description' => strip_tags(substr($newsArticle->article, strpos($newsArticle->article, "<p"), strpos($newsArticle->article, "</p>")+4))])
+@seo(['description' => strip_tags(substr($newsArticle->article, 0, 1000))])

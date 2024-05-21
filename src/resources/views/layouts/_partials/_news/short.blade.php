@@ -1,7 +1,7 @@
 <div class="news-post">
 	<h2 class="news-post-title"><a href="/news/{{ $newsArticle->slug }}">{{ $newsArticle->title }}</a></h2>
 	<br>
-	{!! strip_tags(substr($newsArticle->article, strpos($newsArticle->article, "<p"), strpos($newsArticle->article, "</p>")+4)) !!}
+	{{ substr($newsArticle->article, 0, 2000) }}...
 	<br><br>
 	<p><a href="/news/{{ $newsArticle->slug }}">Read More...</a></p>
 	<hr>
