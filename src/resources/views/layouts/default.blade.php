@@ -15,7 +15,7 @@
 				{{ config('app.tagline') }} | {{ config('app.name') }}
 			@endif
 		</title>
-		<meta name="keywords" content="UK Lan, LAN, LAN Party, South Yorkshire, Gaming, lanops, UK, community"/>
+		<meta name="keywords" content="{{ config('app.seo_keywords') }}"/>
 		<x-seo::meta />
 	</head>
 	<body class="full-height">

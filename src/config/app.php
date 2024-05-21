@@ -36,6 +36,9 @@ return [
     'discord_client_id' => env('DISCORD_CLIENT_ID', ''),
     'discord_client_secret' => env('DISCORD_CLIENT_SECRET', ''),
     'discord_scope' => env('DISCORD_SCOPE', 'identify'),
+
+    'seo_description' => env('SEO_DESCRIPTION', ''),
+    'seo_keywords' => env('SEO_KEYWORDS', 'UK Lan, LAN, LAN Party, South Yorkshire, Gaming, lanops, UK, community'),
     
 
     /*
