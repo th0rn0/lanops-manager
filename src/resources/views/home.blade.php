@@ -132,43 +132,7 @@
 				<h3>The {{ config('app.name') }} Fam</h3>
 			</div>
 			@if (config('app.discord_id'))			
-				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ config('app.discord_id') }}&theme=light" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
-			@endif
-			@if (count($topAttendees) > 0)
-				<div class="page-header">
-					<h5>Top 5 Attendees</h5>
-				</div>
-				@foreach ($topAttendees as $attendee)
-					<div class="row">
-						<div class="col-xs-12 col-sm-3">
-							<img class="img-rounded img-responsive" alt="{{ $attendee->username }}'s Avatar" src="{{ $attendee->avatar }}">
-						</div>
-						<div class="col-xs-12 col-sm-9">
-							<p>
-								{{ $attendee->username }}<br>
-								<small> {{ $attendee->event_count }} Events Attended</small>
-							</p>
-						</div>
-					</div>
-				@endforeach
-			@endif
-			@if (count($topWinners) > 0)
-				<div class="page-header">
-					<h5>Top 5 Winners</h5>
-				</div>
-				@foreach ($topWinners as $winner)
-					<div class="row">
-						<div class="col-xs-12 col-sm-3">
-							<img class="img-rounded img-responsive" alt="{{ $winner->username }}'s Avatar" src="{{ $winner->avatar }}">
-						</div>
-						<div class="col-xs-12 col-sm-9">
-							<p>
-								{{ $winner->username }}<br>
-								<small> {{ $winner->win_count }} Wins</small>
-							</p>
-						</div>
-					</div>
-				@endforeach
+				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ config('app.discord_id') }}&theme=light" width="100%" height="1000" allowtransparency="true" frameborder="0"></iframe>
 			@endif
 		</div>
 	</div>
