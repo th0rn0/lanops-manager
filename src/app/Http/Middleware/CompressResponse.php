@@ -16,6 +16,9 @@ class CompressResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        $response = $next($request);          
+        // $response->header('Content-Encoding', 'deflate'); // You can also use 'deflate' or 'br' (Brotli) as alternatives         
+        // $response->header('Vary', 'Accept-Encoding');          
+        return $response;     
     }
 }

@@ -15,6 +15,7 @@
 				{{ config('app.tagline') }} | {{ config('app.name') }}
 			@endif
 		</title>
+		<meta name="keywords" content="UK Lan, LAN, LAN Party, South Yorkshire, Gaming, lanops, UK, community"/>
 		<x-seo::meta />
 	</head>
 	<body class="full-height">
@@ -89,7 +90,7 @@
 					<br><br>
 				</div>
 				<div class="col-lg-4 hidden-md hidden-sm hidden-xs">
-					<img class="img-responsive" src="{{ config('app.logo') }}">
+					<img class="img-responsive" src="{{ config('app.logo') }}" alt="{{ config('app.name') }} logo footer">
 				</div>
 				<div class="col-lg-8 col-sm-12 col-md-12 text-center">
 					<div class="col-lg-6 col-md-6">
