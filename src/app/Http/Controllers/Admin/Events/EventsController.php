@@ -169,11 +169,6 @@ class EventsController extends Controller
             $event->status          = $request->status;
         }
 
-        if (isset($request->essential_info)) {
-            $event->essential_info  = $request->essential_info;
-        }
-
-        
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
         }

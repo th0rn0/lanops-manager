@@ -26,8 +26,18 @@ services:
     extra_hosts:
         - "host.docker.internal:host-gateway"
 
+  # db:
+  #   image: mysql:5.6
+  #   volumes:
+  #     - db:/var/lib/mysql
+  #   env_file: $PWD/src/.env
+  #   ports:
+  #     - 3306:3306
+  #   networks:
+  #     - internal
+
   db:
-    image: mysql:5.7
+    image: mariadb:10.11
     volumes:
       - db:/var/lib/mysql
     env_file: $PWD/src/.env
