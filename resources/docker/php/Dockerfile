@@ -1,8 +1,6 @@
 FROM php:8-fpm as php-base
 LABEL maintainer="Thornton Phillis (dev@th0rn0.co.uk)"
 
-ENV UPLOAD_LIMIT=128M
-
 RUN apt-get update && apt-get install -y \
 		libfreetype-dev \
 		libjpeg62-turbo-dev \
