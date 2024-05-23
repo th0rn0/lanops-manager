@@ -19,6 +19,9 @@ WORKDIR /var/www/html
 
 COPY resources/docker/php/entrypoint.sh /custom-entrypoint.sh
 
+COPY resources/docker/php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
+
 RUN chmod +x /custom-entrypoint.sh
 
 ENTRYPOINT ["/custom-entrypoint.sh"]
