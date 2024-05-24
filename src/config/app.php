@@ -40,7 +40,7 @@ return [
     'seo_description' => env('SEO_DESCRIPTION', ''),
     'seo_keywords' => env('SEO_KEYWORDS', 'UK Lan, LAN, LAN Party, South Yorkshire, Gaming, lanops, UK, community'),
     
-
+    'google_tag_id' => env('GOOGLE_TAG_ID', null),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
