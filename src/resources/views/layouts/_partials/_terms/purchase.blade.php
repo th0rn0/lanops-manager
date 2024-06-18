@@ -12,7 +12,7 @@
         You agree that LanOps and its staff cannot be held responsible for any claims, liabilities, actions, loss or damage to property or persons apart from any claims caused by the negligence of LanOps and its staff.
     </p>
     <p>
-        If you are under 16 years of age you will need to ensure that we have a signed and dated <a href="http://web.archive.org/web/20110912122255/http://www.lanops.co.uk/page11.html">Parental Consent Form</a>. <strong>If this is your first time attending a LanOps LAN Party and you don't bring it with you or it isn't signed by your Parent/Guardian you will NOT be allowed to attend the LAN.</strong>
+        <strong>If you are under 16 years of age you will need to ensure that we have a signed and dated <a href="https://docs.google.com/document/d/1H2Z3hU1hGmJLT8G0dCNalaLQFMl4Xpt3LA_GCVBBsT4">Parental Consent Form</a>. If this is your first time attending a LanOps LAN Party and you don't bring it with you or it isn't signed by your Parent/Guardian you will NOT be allowed to attend the LAN.</strong>
     </p>
     <p>
         LanOps staff members reserve the right to ask a person to leave the event if their behavior is found to be disruptive. Disruptive behavior is considered but not limited to the following:
