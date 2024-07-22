@@ -155,7 +155,7 @@ class GalleryController extends Controller
         $uploadcount = 0;
         $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
         if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
-            File::makeDirectory(public_path() . $destinationPath, 0777, true);
+            File::makeDirectory(public_path() . $destinationPath, 0755, true);
         }
         foreach ($files as $file) {
             $imageName  = $file->getClientOriginalName();
