@@ -31,8 +31,6 @@
 						<thead>
 							<tr>
 								<th>Image</th>
-								<th>Name</th>
-								<th>Description</th>
 								<th>Album Cover</th>
 								<th>Added</th>
 								<th></th>
@@ -44,17 +42,7 @@
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class=" col-xs-3">
-											<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
-										</td>
-										<td>
-											<div class="form-group">
-												{{ Form::text('name', $image->nice_name,array('id'=>'name','class'=>'form-control')) }}
-											</div>
-										</td>
-										<td>
-											<div class="form-group">
-												{{ Form::textarea('desc', $image->desc,array('id'=>'desc','class'=>'form-control', 'rows'=>'2')) }}
-											</div>
+											<img class="img-responsive img-thumbnail" src="{{ $image->getFullUrl() }}">
 										</td>
 										<td>
 											<div class="form-group checkbox">
@@ -84,7 +72,6 @@
 							@endforeach
 						</tbody>
 					</table>
-					{{ $images->links() }}
 				</div>
 				<!-- /.table-responsive -->
 			</div>

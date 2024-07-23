@@ -9,9 +9,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class GalleryAlbum extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+class GalleryAlbum extends Model implements HasMedia
 {
     use Sluggable;
+    use InteractsWithMedia;
 
     /**
      * The name of the table.
@@ -48,13 +54,14 @@ class GalleryAlbum extends Model
             });
         }
     }
+
     /*
     * Relationships
     */
-    public function images()
-    {
-        return $this->hasMany('App\Models\GalleryAlbumImage');
-    }
+    // public function images()
+    // {
+    //     return $this->hasMany('App\Models\GalleryAlbumImage');
+    // }
 
     public function event()
     {
@@ -101,6 +108,15 @@ class GalleryAlbum extends Model
      */
     public function getAlbumCoverPath()
     {
+        dd('fixme');
         return $this->images()->where('id', $this->album_cover_id)->first()->path;
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
     }
 }

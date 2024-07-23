@@ -20,6 +20,7 @@ services:
       target: php-base
     volumes:
       - ./src:/var/www/html
+      - ./uploadDump:/tmp/gallery
     env_file: $PWD/src/.env
     networks:
       - internal

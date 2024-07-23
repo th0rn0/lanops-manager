@@ -17,8 +17,8 @@
 		@endif
 	</div>
 	<div class="center-align fotorama" data-nav="thumbs" data-allowfullscreen="full">
-		@foreach ($album->images as $image)
-			<img src="{{ $image->path }}">
+		@foreach ($album->getMedia('images') as $image)
+			<img src="{{ $image->getFullUrl() }}">
 		@endforeach
 	</div>
 </div>

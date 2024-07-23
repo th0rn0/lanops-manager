@@ -6,6 +6,7 @@ use Input;
 use Image;
 use Session;
 use File;
+use Storage;
 
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
@@ -36,7 +37,8 @@ class GalleryController extends Controller
     {
         return view('admin.gallery.show')
             ->withAlbum($album)
-            ->withImages($album->images()->paginate(10))
+            // ->withImages($album->images()->paginate(10))
+            ->withImages($album->getMedia('images'))
         ;
     }
     
@@ -123,13 +125,14 @@ class GalleryController extends Controller
      */
     public function destroy(GalleryAlbum $album)
     {
+
         if (!$album->delete()) {
             Session::flash('alert-danger', 'Cannot delete Gallery!');
             return Redirect::back();
         }
 
         Session::flash('alert-success', 'Successfully deleted Gallery!');
-        return Redirect::back();
+        return Redirect::to('admin/gallery');
     }
 
     /**
@@ -148,38 +151,15 @@ class GalleryController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        $files = Input::file('images');
-        //Keep a count of uploaded files
-        $fileCount = count($files);
-        //Counter for uploaded files
-        $uploadcount = 0;
-        $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
-        if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
-            File::makeDirectory(public_path() . $destinationPath, 0755, true);
-        }
-        foreach ($files as $file) {
-            $imageName  = $file->getClientOriginalName();
+        // $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
+        // if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
+        //     File::makeDirectory(public_path() . $destinationPath, 0755, true);
+        // }
 
-            $image                          = new GalleryAlbumImage();
-            $image->display_name            = $imageName;
-            $image->nice_name               = $image->url = strtolower(str_replace(' ', '-', $imageName));
-            $image->gallery_album_id        = $album->id;
-            Image::make($file)
-                ->resize(null, 1080, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })
-                ->save(public_path() . $destinationPath . $imageName)
-            ;
-            $image->path = $destinationPath . $imageName;
-            $image->save();
-            
-            $uploadcount++;
-        }
-        if ($uploadcount != $fileCount) {
-            Session::flash('alert-danger', 'Upload unsuccessful!');
-            return Redirect::to('admin/gallery/' . $album->slug);
-        }
+        $fileAdders = $album->addMultipleMediaFromRequest(['images'])
+            ->each(function ($fileAdder) {
+                $fileAdder->withResponsiveImages()->toMediaCollection('images');
+            });
 
         Session::flash('alert-success', 'Upload successful!');
         return Redirect::to('admin/gallery/' . $album->slug);
@@ -227,5 +207,13 @@ class GalleryController extends Controller
 
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
+    }
+
+    public function ingestImages(GalleryAlbum $album) {
+        $files = Storage::allFiles('/tmp/gallery');
+        foreach($files as $file) {
+            // $album->addMediaFromDisk($file, 'gallery_uploads')->withResponsiveImages()->toMediaCollection('images');
+            $album->addMedia($file)->withResponsiveImages()->toMediaCollection('images');
+        }
     }
 }
