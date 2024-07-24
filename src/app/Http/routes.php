@@ -230,7 +230,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     /**
      * Galleries
      */
-
     Route::get('/admin/gallery', 'Admin\GalleryController@index');
     Route::post('/admin/gallery', 'Admin\GalleryController@store');
     Route::get('/admin/gallery/{album}', 'Admin\GalleryController@show');
@@ -239,8 +238,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/gallery/{album}/ingest', 'Admin\GalleryController@ingestImages');
     Route::post('/admin/gallery/{album}/upload', 'Admin\GalleryController@uploadImage');
     Route::delete('/admin/gallery/{album}/{image}', 'Admin\GalleryController@destroyImage');
-
-
 
     /**
      * Users
