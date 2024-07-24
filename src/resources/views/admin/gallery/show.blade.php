@@ -33,27 +33,17 @@
 								<th>Image</th>
 								<th>Added</th>
 								<th></th>
-								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($images as $image)
 								<tr>
-									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
-										<td class=" col-xs-3">
-											<img class="img-responsive img-thumbnail" src="{{ $image->getUrl('optimized') }}">
-										</td>
-										<td>
-											{{ $image->created_at }}
-										</td>
-										<td width="15%">
-											@if ($album->album_cover_id == $image->id)
-												<button disabled type="submit" class="btn btn-primary btn-sm btn-block">Set Album Cover</button>
-											@else
-												<button type="submit" class="btn btn-primary btn-sm btn-block">Set Album Cover</button>
-											@endif
-										</td>
-									{{ Form::close() }}
+									<td class=" col-xs-3">
+										<img class="img-responsive img-thumbnail" src="{{ $image->getUrl('optimized') }}">
+									</td>
+									<td>
+										{{ $image->created_at }}
+									</td>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										<td width="15%">

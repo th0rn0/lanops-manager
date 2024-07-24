@@ -181,21 +181,6 @@ class GalleryController extends Controller
     }
 
     /**
-     * Update Image from Gallery
-     * @param  GalleryAlbum      $album
-     * @param  GalleryAlbumImage $image
-     * @param  Request           $request
-     * @return Redirect
-     */
-    public function updateImage(GalleryAlbum $album, Media $image, Request $request)
-    {
-        $album->setAlbumCover($image->id);
-
-        Session::flash('alert-success', 'Successfully updated!');
-        return Redirect::back();
-    }
-
-    /**
      * Ingest images from upload dir
      * @param  GalleryAlbum      $album
      * @return Redirect

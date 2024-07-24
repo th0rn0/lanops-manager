@@ -91,7 +91,7 @@ services:
   queue-worker:
     deploy:
       mode: replicated
-      replicas: 10
+      replicas: 5
     restart: always
     build:
       context: .
