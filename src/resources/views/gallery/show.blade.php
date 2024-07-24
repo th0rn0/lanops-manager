@@ -4,10 +4,7 @@
 
 @section ('content')
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
+<script src="https://rawcdn.githack.com/nextapps-de/spotlight/0.7.8/dist/spotlight.bundle.js"></script>
 
 <div class="container">
 	<div class="page-header">
@@ -16,10 +13,16 @@
 			<h4>From {{ $album->event->display_name }}</h4>
 		@endif
 	</div>
-	<div class="center-align fotorama" data-nav="thumbs" data-allowfullscreen="full">
-		@foreach ($album->getMedia('images') as $image)
-			<img src="{{ $image->getFullUrl() }}">
-		@endforeach
+	<div class="center-align">
+		<div class="row">
+			@foreach ($album->getMedia('images') as $image)
+				<div class="col-xs-6 col-md-3">
+					<a class="spotlight thumbnail" href="{{ $image->getUrl('optimized') }}">
+						<img src="{{ $image->getUrl('thumb') }}">
+					</a>
+				</div>
+			@endforeach
+		</div>
 	</div>
 </div>
 

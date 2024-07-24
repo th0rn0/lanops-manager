@@ -43,7 +43,7 @@
 									<td>{{ $album->description }}</td>
 									<td>{{ $album->slug }}</td>
 									<td>{{ $album->status }}</td>
-									<td>{{ $album->images()->count() }}</td>
+									<td>{{ $album->getMedia('images')->count() }}</td>
 									<td width="15%">
 										<a href="/admin/gallery/{{ $album->slug }}">
 											<button type="button" class="btn btn-primary btn-sm btn-block">Edit</button>

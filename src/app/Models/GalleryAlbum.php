@@ -40,7 +40,6 @@ class GalleryAlbum extends Model implements HasMedia
     protected static function boot()
     {
         parent::boot();
-
         $admin = false;
         if (Auth::user() && Auth::user()->getAdmin()) {
             $admin = true;
@@ -58,11 +57,6 @@ class GalleryAlbum extends Model implements HasMedia
     /*
     * Relationships
     */
-    // public function images()
-    // {
-    //     return $this->hasMany('App\Models\GalleryAlbumImage');
-    // }
-
     public function event()
     {
         return $this->belongsTo('App\Models\Event', 'event_id');
@@ -104,19 +98,23 @@ class GalleryAlbum extends Model implements HasMedia
 
     /**
      * Get Album Cover Path
-     * @return String
+     * @return Media
      */
-    public function getAlbumCoverPath()
+    public function getAlbumCoverImageUrl()
     {
-        dd('fixme');
-        return $this->images()->where('id', $this->album_cover_id)->first()->path;
+        return $this->getFirstMedia('images')->getUrl('thumb');
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
         $this
-            ->addMediaConversion('preview')
+            ->addMediaConversion('thumb')
             ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
+            ->queued();
+        $this
+            ->addMediaConversion('optimized')
+            ->fit(Manipulations::FIT_MAX, 2000, 2000)
+            ->optimize()
+            ->queued();
     }
 }

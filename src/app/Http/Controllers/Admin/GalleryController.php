@@ -6,6 +6,7 @@ use Input;
 use Image;
 use Session;
 use File;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Storage;
 
 use App\Models\GalleryAlbum;
@@ -15,6 +16,10 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+
+use Spatie\Image\Manipulations;
+
+use App\Jobs\ProcessUploadedImages;
 
 class GalleryController extends Controller
 {
@@ -37,7 +42,6 @@ class GalleryController extends Controller
     {
         return view('admin.gallery.show')
             ->withAlbum($album)
-            // ->withImages($album->images()->paginate(10))
             ->withImages($album->getMedia('images'))
         ;
     }
@@ -125,7 +129,6 @@ class GalleryController extends Controller
      */
     public function destroy(GalleryAlbum $album)
     {
-
         if (!$album->delete()) {
             Session::flash('alert-danger', 'Cannot delete Gallery!');
             return Redirect::back();
@@ -151,17 +154,12 @@ class GalleryController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        // $destinationPath = '/storage/images/gallery/' . $album->slug . '/';
-        // if (Input::file('images') && !File::exists(public_path() . $destinationPath)) {
-        //     File::makeDirectory(public_path() . $destinationPath, 0755, true);
-        // }
-
         $fileAdders = $album->addMultipleMediaFromRequest(['images'])
             ->each(function ($fileAdder) {
-                $fileAdder->withResponsiveImages()->toMediaCollection('images');
+                $fileAdder->toMediaCollection('images');
             });
 
-        Session::flash('alert-success', 'Upload successful!');
+        Session::flash('alert-success', 'Upload successful! Processing images please wait!');
         return Redirect::to('admin/gallery/' . $album->slug);
     }
 
@@ -171,7 +169,7 @@ class GalleryController extends Controller
      * @param  GalleryAlbumImage $image
      * @return Redirect
      */
-    public function destroyImage(GalleryAlbum $album, GalleryAlbumImage $image)
+    public function destroyImage(GalleryAlbum $album, Media $image)
     {
         if (!$image->delete()) {
             Session::flash('alert-danger', 'Cannot delete Image!');
@@ -189,31 +187,22 @@ class GalleryController extends Controller
      * @param  Request           $request
      * @return Redirect
      */
-    public function updateImage(GalleryAlbum $album, GalleryAlbumImage $image, Request $request)
+    public function updateImage(GalleryAlbum $album, Media $image, Request $request)
     {
-        //DEBUG - Refactor - replace iamge name as well!
-        $image->display_name  = $request->name;
-        $image->nice_name     = strtolower(str_replace(' ', '-', $request->name));
-        $image->desc          = $request->desc;
-
-        if (isset($request->album_cover) && $request->album_cover) {
-            $album->setAlbumCover($image->id);
-        }
-
-        if (!$image->save()) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
+        $album->setAlbumCover($image->id);
 
         Session::flash('alert-success', 'Successfully updated!');
         return Redirect::back();
     }
 
+    /**
+     * Ingest images from upload dir
+     * @param  GalleryAlbum      $album
+     * @return Redirect
+     */
     public function ingestImages(GalleryAlbum $album) {
-        $files = Storage::allFiles('/tmp/gallery');
-        foreach($files as $file) {
-            // $album->addMediaFromDisk($file, 'gallery_uploads')->withResponsiveImages()->toMediaCollection('images');
-            $album->addMedia($file)->withResponsiveImages()->toMediaCollection('images');
-        }
+        ProcessUploadedImages::dispatch($album);
+        Session::flash('alert-info', 'Upload Started! Please check back in a while...');
+        return Redirect::to('admin/gallery/' . $album->slug);
     }
 }

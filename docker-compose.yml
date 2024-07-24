@@ -22,6 +22,7 @@ services:
       - ./src:/var/www/html
       - ./uploadDump:/tmp/gallery
     env_file: $PWD/src/.env
+    user: "1000"
     networks:
       - internal
     extra_hosts:
@@ -81,7 +82,22 @@ services:
       target: php-base
     entrypoint: [ "php", "artisan" ]
     command: [ "--version" ]
-    # user: "1000"
+    user: "1000"
+    volumes:
+      - ./src:/var/www/html
+    env_file: $PWD/src/.env
+    networks:
+      - internal
+
+  queue-worker:
+    restart: always
+    build:
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
+      target: php-base
+    entrypoint: [ "php", "artisan" ]
+    command: [ "queue:work" ]
+    user: "1000"
     volumes:
       - ./src:/var/www/html
     env_file: $PWD/src/.env

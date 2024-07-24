@@ -28,7 +28,7 @@ class GalleryPathGenerator implements PathGenerator
      */
     public function getPathForResponsiveImages(Media $media): string
     {
-        return $this->getBasePath($media).'/responsive-images/';
+        return $this->getBasePath($media).'/responsive/';
     }
 
     /*

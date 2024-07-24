@@ -31,7 +31,6 @@
 						<thead>
 							<tr>
 								<th>Image</th>
-								<th>Album Cover</th>
 								<th>Added</th>
 								<th></th>
 								<th></th>
@@ -42,24 +41,17 @@
 								<tr>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
 										<td class=" col-xs-3">
-											<img class="img-responsive img-thumbnail" src="{{ $image->getFullUrl() }}">
+											<img class="img-responsive img-thumbnail" src="{{ $image->getUrl('optimized') }}">
 										</td>
-										<td>
-											<div class="form-group checkbox">
-												<label>
-													@if ($album->album_cover_id == $image->id)
-														{{ Form::checkbox('album_cover', 1, true) }}
-													@else
-														{{ Form::checkbox('album_cover', 1) }}
-													@endif
-												</label>
-											</div>
-										</td> 
 										<td>
 											{{ $image->created_at }}
 										</td>
 										<td width="15%">
-											<button type="submit" class="btn btn-primary btn-sm btn-block">Update</button>
+											@if ($album->album_cover_id == $image->id)
+												<button disabled type="submit" class="btn btn-primary btn-sm btn-block">Set Album Cover</button>
+											@else
+												<button type="submit" class="btn btn-primary btn-sm btn-block">Set Album Cover</button>
+											@endif
 										</td>
 									{{ Form::close() }}
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
