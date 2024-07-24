@@ -20,7 +20,6 @@ services:
       target: php-base
     volumes:
       - ./src:/var/www/html
-      - ./uploadDump:/tmp/gallery
     env_file: $PWD/src/.env
     user: "1000"
     networks:
@@ -90,6 +89,9 @@ services:
       - internal
 
   queue-worker:
+    deploy:
+      mode: replicated
+      replicas: 10
     restart: always
     build:
       context: .
