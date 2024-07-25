@@ -21,7 +21,7 @@ services:
     volumes:
       - ./src:/var/www/html
     env_file: $PWD/src/.env
-    user: "1000"
+    # user: "1000"
     networks:
       - internal
     extra_hosts:
@@ -44,7 +44,7 @@ services:
       target: php-composer
     entrypoint: [ "composer" ]
     command: [ "--version" ]
-    user: "1000"
+    # user: "1000"
     volumes:
       - ./src:/var/www/html
 
@@ -57,7 +57,7 @@ services:
     entrypoint: [ "npm" ]
     working_dir: /app
     command: [ "-v" ]
-    user: "1000"
+    # user: "1000"
     volumes:
       - ./src:/app
 
@@ -81,7 +81,7 @@ services:
       target: php-base
     entrypoint: [ "php", "artisan" ]
     command: [ "--version" ]
-    user: "1000"
+    # user: "1000"
     volumes:
       - ./src:/var/www/html
     env_file: $PWD/src/.env
@@ -99,7 +99,7 @@ services:
       target: php-base
     entrypoint: [ "php", "artisan" ]
     command: [ "queue:work" ]
-    user: "1000"
+    # user: "1000"
     volumes:
       - ./src:/var/www/html
     env_file: $PWD/src/.env
