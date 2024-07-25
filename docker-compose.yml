@@ -97,7 +97,7 @@ services:
       context: .
       dockerfile: resources/docker/php/Dockerfile
       target: php-base
-    entrypoint: [ "php", "artisan" ]
+    entrypoint: [ "/entrypoint-queue.sh" ]
     command: [ "queue:work" ]
     # user: "1000"
     volumes:

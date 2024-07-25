@@ -20,13 +20,15 @@ RUN chown -R www-data:www-data /var/www
 
 WORKDIR /var/www/html
 
-COPY resources/docker/php/entrypoint.sh /custom-entrypoint.sh
+COPY resources/docker/php/entrypoint-php.sh /entrypoint-php.sh
+COPY resources/docker/php/entrypoint-queue.sh /entrypoint-queue.sh
 
 COPY resources/docker/php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
-RUN chmod +x /custom-entrypoint.sh
+RUN chmod +x /entrypoint-php.sh
+RUN chmod +x /entrypoint-queue.sh
 
-ENTRYPOINT ["/custom-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint-php.sh"]
 
 FROM php-base as php-composer
 
