@@ -72,6 +72,11 @@ return [
             'root' => base_path('public/css'),
         ],
 
+        'gallery-ingest' => [
+            'driver' => 'local',
+            'root' => storage_path('media-library/upload'),  
+        ]
+
     ],
 
 ];

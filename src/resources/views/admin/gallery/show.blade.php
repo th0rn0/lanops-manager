@@ -31,49 +31,19 @@
 						<thead>
 							<tr>
 								<th>Image</th>
-								<th>Name</th>
-								<th>Description</th>
-								<th>Album Cover</th>
 								<th>Added</th>
-								<th></th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($images as $image)
 								<tr>
-									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true )) }}
-										<td class=" col-xs-3">
-											<img class="img-responsive img-thumbnail" src="{{ $image->path }}">
-										</td>
-										<td>
-											<div class="form-group">
-												{{ Form::text('name', $image->nice_name,array('id'=>'name','class'=>'form-control')) }}
-											</div>
-										</td>
-										<td>
-											<div class="form-group">
-												{{ Form::textarea('desc', $image->desc,array('id'=>'desc','class'=>'form-control', 'rows'=>'2')) }}
-											</div>
-										</td>
-										<td>
-											<div class="form-group checkbox">
-												<label>
-													@if ($album->album_cover_id == $image->id)
-														{{ Form::checkbox('album_cover', 1, true) }}
-													@else
-														{{ Form::checkbox('album_cover', 1) }}
-													@endif
-												</label>
-											</div>
-										</td> 
-										<td>
-											{{ $image->created_at }}
-										</td>
-										<td width="15%">
-											<button type="submit" class="btn btn-primary btn-sm btn-block">Update</button>
-										</td>
-									{{ Form::close() }}
+									<td class=" col-xs-3">
+										<img class="img-responsive img-thumbnail" src="{{ $image->getUrl('optimized') }}">
+									</td>
+									<td>
+										{{ $image->created_at }}
+									</td>
 									{{ Form::open(array('url'=>'/admin/gallery/' . $album->slug . '/' . $image->id, 'files' => true, 'onsubmit' => 'return ConfirmDelete()')) }}
 										{{ Form::hidden('_method', 'DELETE') }}
 										<td width="15%">
@@ -84,7 +54,6 @@
 							@endforeach
 						</tbody>
 					</table>
-					{{ $images->links() }}
 				</div>
 				<!-- /.table-responsive -->
 			</div>

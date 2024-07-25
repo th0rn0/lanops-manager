@@ -8,8 +8,11 @@ RUN apt-get update && apt-get install -y \
         libicu-dev \
         libzip-dev \
         libxml2-dev \
-        libonig-dev \
-    && docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring
+        libonig-dev
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
+
+RUN docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring exif
 
 COPY src/ /var/www/html
 

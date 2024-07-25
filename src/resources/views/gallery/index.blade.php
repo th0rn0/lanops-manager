@@ -18,11 +18,7 @@
 				@endif
 				<p>{{ $album->description }}</p>
 				<a href="/gallery/{{ $album->slug }}">
-					@if (isset($album->album_cover_id) && trim($album->album_cover_id) != '')
-						<img src="{{ $album->getAlbumCoverPath() }}" class="img img-responsive img-thumbnail"/>
-					@else
-						<img src="http://placehold.it/600x300" class="img img-responsive img-thumbnail"/>
-					@endif
+					<img src="{{ $album->getAlbumCoverImageUrl() }}" class="img img-responsive img-thumbnail"/>
 				</a>
 			</div>
 		@endforeach

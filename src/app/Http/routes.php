@@ -235,8 +235,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/gallery/{album}', 'Admin\GalleryController@show');
     Route::post('/admin/gallery/{album}', 'Admin\GalleryController@update');
     Route::delete('/admin/gallery/{album}', 'Admin\GalleryController@destroy');
+    Route::get('/admin/gallery/{album}/ingest', 'Admin\GalleryController@ingestImages');
     Route::post('/admin/gallery/{album}/upload', 'Admin\GalleryController@uploadImage');
-    Route::post('/admin/gallery/{album}/{image}', 'Admin\GalleryController@updateImage');
     Route::delete('/admin/gallery/{album}/{image}', 'Admin\GalleryController@destroyImage');
 
     /**
