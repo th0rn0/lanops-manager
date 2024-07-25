@@ -44,7 +44,7 @@ services:
       target: php-composer
     entrypoint: [ "composer" ]
     command: [ "--version" ]
-    # user: "1000"
+    user: "1000"
     volumes:
       - ./src:/var/www/html
 
@@ -57,7 +57,7 @@ services:
     entrypoint: [ "npm" ]
     working_dir: /app
     command: [ "-v" ]
-    # user: "1000"
+    user: "1000"
     volumes:
       - ./src:/app
 
