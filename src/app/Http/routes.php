@@ -136,6 +136,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
         Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
     });
+
+    /**
+     * Big Screen
+     */
+    Route::get('/bigscreen/timetable', 'BigScreenController@timetable');
+    Route::get('/bigscreen/seating', 'BigScreenController@seating');
 });
 
 /**
