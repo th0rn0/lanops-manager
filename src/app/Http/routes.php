@@ -104,6 +104,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::get('/payment/checkout', 'PaymentsController@showCheckout');
+        Route::post('/payment/checkout/code', 'PaymentsController@applyDiscountCode');
         Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
         Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
         Route::get('/payment/callback', 'PaymentsController@process');

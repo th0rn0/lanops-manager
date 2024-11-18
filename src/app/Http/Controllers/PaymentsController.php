@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Helpers;
 use Auth;
 
+use App\Models\User;
 use App\Models\Purchase;
 use App\Models\Event;
 use App\Models\EventTicket;
@@ -115,68 +116,68 @@ class PaymentsController extends Controller
                 }
             }
         }
-        if (array_key_exists('shop', $basket)) {
-            foreach ($basket['shop'] as $itemId => $quantity) {
-                if (!ShopItem::hasStockByItemId($itemId)) {
-                    $itemName = ShopItem::where('id', $itemId)->first()->name;
-                    Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
-                    return Redirect::to('/payment/checkout');
-                }
-            }
-        }
+        // if (array_key_exists('shop', $basket)) {
+        //     foreach ($basket['shop'] as $itemId => $quantity) {
+        //         if (!ShopItem::hasStockByItemId($itemId)) {
+        //             $itemName = ShopItem::where('id', $itemId)->first()->name;
+        //             Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
+        //             return Redirect::to('/payment/checkout');
+        //         }
+        //     }
+        // }
         // If Order accepts delivery and no delivery details have been submitted redirect to delivery page
-        if (array_key_exists('shop', $basket)) {
-            if (
-                !isset($request->shipping_first_name) &&
-                !isset($request->shipping_last_name) &&
-                !isset($request->shipping_address_1) &&
-                !isset($request->shipping_postcode) &&
-                !array_key_exists('delivery', $basket)
-            ) {
-                return Redirect::to('/payment/delivery/' . $paymentGateway);
-            }
-            if (!array_key_exists('delivery', $basket)) {
-                 $rules = [
-                    'delivery_type'   => 'required|in:event,shipping'
-                ];
-                $messages = [
-                    'delivery_type.required' => 'A Delivery type is Required',
-                    'delivery_type.in' => 'Delivery type must be event or shipping'
-                ];
-                $this->validate($request, $rules, $messages);
-                // Check if the order is delivery to event or person
-                if ($request->delivery_type == 'shipping') {
-                    // Shipping Details
-                    $rules = [
-                        'shipping_first_name'   => 'required',
-                        'shipping_last_name'    => 'required',
-                        'shipping_address_1'    => 'required',
-                        'shipping_postcode'     => 'required',
-                    ];
-                    $messages = [
-                        'shipping_first_name.required'      => 'First Name is Required',
-                        'shipping_last_name.required'       => 'Last Name is Required',
-                        'shipping_address_1.required'       => 'Shipping Address Required',
-                        'shipping_postcode.required'        => 'Shipping Postcode Required',
-                    ];
-                    $this->validate($request, $rules, $messages);
-                    $basket['delivery'] = [
-                        'type'                  => 'shipping',
-                        'shipping_first_name'   => $request->shipping_first_name,
-                        'shipping_last_name'    => $request->shipping_last_name,
-                        'shipping_address_1'    => $request->shipping_address_1,
-                        'shipping_address_2'    => @$request->shipping_address_2,
-                        'shipping_country'      => @$request->shipping_country,
-                        'shipping_postcode'     => $request->shipping_postcode,
-                        'shipping_state'        => @$request->shipping_state,
-                    ];
-                } else {
-                    $basket['delivery'] = ['type' => 'event'];
-                }
-                Session::put(config('app.basket_name'), $basket);
-                Session::save();
-            }
-        }
+        // if (array_key_exists('shop', $basket)) {
+        //     if (
+        //         !isset($request->shipping_first_name) &&
+        //         !isset($request->shipping_last_name) &&
+        //         !isset($request->shipping_address_1) &&
+        //         !isset($request->shipping_postcode) &&
+        //         !array_key_exists('delivery', $basket)
+        //     ) {
+        //         return Redirect::to('/payment/delivery/' . $paymentGateway);
+        //     }
+        //     if (!array_key_exists('delivery', $basket)) {
+        //          $rules = [
+        //             'delivery_type'   => 'required|in:event,shipping'
+        //         ];
+        //         $messages = [
+        //             'delivery_type.required' => 'A Delivery type is Required',
+        //             'delivery_type.in' => 'Delivery type must be event or shipping'
+        //         ];
+        //         $this->validate($request, $rules, $messages);
+        //         // Check if the order is delivery to event or person
+        //         if ($request->delivery_type == 'shipping') {
+        //             // Shipping Details
+        //             $rules = [
+        //                 'shipping_first_name'   => 'required',
+        //                 'shipping_last_name'    => 'required',
+        //                 'shipping_address_1'    => 'required',
+        //                 'shipping_postcode'     => 'required',
+        //             ];
+        //             $messages = [
+        //                 'shipping_first_name.required'      => 'First Name is Required',
+        //                 'shipping_last_name.required'       => 'Last Name is Required',
+        //                 'shipping_address_1.required'       => 'Shipping Address Required',
+        //                 'shipping_postcode.required'        => 'Shipping Postcode Required',
+        //             ];
+        //             $this->validate($request, $rules, $messages);
+        //             $basket['delivery'] = [
+        //                 'type'                  => 'shipping',
+        //                 'shipping_first_name'   => $request->shipping_first_name,
+        //                 'shipping_last_name'    => $request->shipping_last_name,
+        //                 'shipping_address_1'    => $request->shipping_address_1,
+        //                 'shipping_address_2'    => @$request->shipping_address_2,
+        //                 'shipping_country'      => @$request->shipping_country,
+        //                 'shipping_postcode'     => $request->shipping_postcode,
+        //                 'shipping_state'        => @$request->shipping_state,
+        //             ];
+        //         } else {
+        //             $basket['delivery'] = ['type' => 'event'];
+        //         }
+        //         Session::put(config('app.basket_name'), $basket);
+        //         Session::save();
+        //     }
+        // }
         // If Credit Redirect Straight to details page
         if ($paymentGateway == 'credit' && !isset($request->confirm)) {
             return Redirect::to('/payment/details/' . $paymentGateway);
@@ -575,5 +576,28 @@ class PaymentsController extends Controller
             $requestScheme = 'https';
         }
         return $requestScheme;
+    }
+
+    public function applyDiscountCode(Request $request)
+    {
+        $rules = [
+            'referral_code'     => 'filled',
+        ];
+        $messages = [
+            'referral_code.filled'      => 'Referral Code Cannot be blank.',
+        ];
+        $this->validate($request, $rules, $messages);
+
+        if(!User::isValidReferralCode($request->referral_code, Auth::user())) {
+            Session::flash('alert-danger', 'Referral Code does not exist');
+            return Redirect::back();
+        }
+
+        $basket = Session::get(config('app.basket_name'));
+        $basket['codes']['referral'] = $request->referral_code;
+        Session::put(config('app.basket_name'), $basket);
+
+        Session::flash('alert-success', 'Referral Code applied');
+        return Redirect::back();
     }
 }

@@ -91,7 +91,7 @@
 			</div>
 
 			<!-- DISCORD --> 
-			<div class="col-xs-12 col-lg-12">
+			<div class="col-xs-12 col-lg-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Socials</h3>
@@ -124,6 +124,22 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Refer a Friend -->
+			<div class="col-xs-12 col-lg-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Refer a Friend</h3>
+					</div>
+					<div class="panel-body">
+						@if ($user->hasReferrals())
+							<p>You have referrals to use on your next purchase!</p>
+						@endif
+						<p>Give your friends this referral code and get {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} per referral! Discounts on your next purchase!</p>
+						<p>{{ $user->account_referral_code }}</p>
 					</div>
 				</div>
 			</div>

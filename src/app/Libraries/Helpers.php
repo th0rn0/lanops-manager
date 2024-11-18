@@ -254,6 +254,7 @@ class Helpers
         $formattedBasket->total_credit = 0;
         $formattedBasket->allow_payment = true;
         $formattedBasket->allow_credit = true;
+        $formattedBasket->referral_code = null;
         foreach ($formattedBasket as $item) {
             // TODO - REMOVE ME
             if (array_key_exists('shop', $basket)) {
@@ -274,6 +275,11 @@ class Helpers
             }
             if ($item->price == null || $item->price == 0) {
                 $formattedBasket->allow_payment = false;
+            }
+        }
+        if (array_key_exists('codes', $basket)) {
+            if (array_key_exists('referral', $basket['codes'])) {
+                $formattedBasket->referral_code = $basket['codes']['referral'];
             }
         }
         return $formattedBasket;

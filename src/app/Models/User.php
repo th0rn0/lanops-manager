@@ -288,4 +288,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->discord_avatar.".png";
     }
 
+    public function hasReferrals()
+    {
+        return $this->account_referral_count > 0;
+    }
+
+    public static function generateReferralCode()
+    {
+        return bin2hex(random_bytes(10));
+    }
+
+    public static function isValidReferralCode($referralCode, User $user = null)
+    {
+        if ($user) {
+            return User::where('account_referral_code', $referralCode)->where('id', $user->id)->first();
+        }
+        return User::where('account_referral_code', $referralCode)->first();
+    }
+
+    public static function getUserByReferralCode($referralCode)
+    {
+        return User::where('account_referral_code', $referralCode)->first();
+    }
 }

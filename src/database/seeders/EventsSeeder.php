@@ -21,7 +21,6 @@ class EventsSeeder extends Seeder
         \DB::table('events')->delete();
         \DB::table('event_tickets')->delete();
         \DB::table('event_timetables')->delete();
-        \DB::table('event_tournaments')->delete();
         \DB::table('event_venues')->delete();
         \DB::table('event_information')->delete();
 
