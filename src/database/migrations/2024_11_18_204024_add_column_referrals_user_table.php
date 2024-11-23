@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('account_referred')->after('discord_avatar')->default(false);
-            $table->integer('account_referral_count')->after('account_referred')->default(0);
+            // $table->boolean('account_referral_activated')->after('discord_avatar')->default(false);
+            $table->integer('account_referral_count')->after('discord_avatar')->default(0);
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('account_referred');
+            // $table->dropColumn('account_referral_activated');
             $table->dropColumn('account_referral_count');
         });
     }

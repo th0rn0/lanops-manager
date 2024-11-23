@@ -46,6 +46,10 @@
 									<td></td>
 									<td></td>
 									<td class="text-right">
+										@if ($basket->discounts > 0)
+											<strong>Discounts:</strong>
+											-{{ config('app.currency_symbol') }}{{ number_format($basket->discounts, 2) }}<br>
+										@endif
 										<strong>Total:</strong>
 										@if ($basket->total != null)
 											{{ config('app.currency_symbol') }}{{ number_format($basket->total, 2) }}
@@ -57,7 +61,7 @@
 					</div>
 				</div>
 			</div>
-			@if (count($user->eventParticipants) == 0)
+			@if ($user->isReferrable())
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">This looks like it will be your first event!</h3>
@@ -65,7 +69,7 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-xs-12 col-md-6">
-								Use a friends Code to gift them {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} of their next ticket!
+								Use a friends Code to gift them {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} off their next ticket!
 							</div>
 							<div class="col-xs-12 col-md-6">
 								@if ($basket->referral_code)

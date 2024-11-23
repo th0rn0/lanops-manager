@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', callback: function (Blueprint $table) {
-            $table->string('account_referral_code')->after('account_referral_count')->unique()->default(User::generateReferralCode());
+            $table->string('account_referral_code')->after('account_referral_count')->unique();
         });
     }
 

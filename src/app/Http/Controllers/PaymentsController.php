@@ -466,13 +466,26 @@ class PaymentsController extends Controller
      */
     private function processBasket($basket, $purchaseId)
     {
+        $user = Auth::user();
+        if (
+            array_key_exists('codes', $basket) && 
+            array_key_exists('referral', $basket['codes']) && 
+            User::isValidReferralCode($basket['codes']['referral']) && 
+            $user->isReferrable()
+        ) {
+            $referredUser = User::getUserByReferralCode($basket['codes']['referral']);
+            $referredUser->incrementReferralCounter();
+        }
+        if ($user->hasReferrals()) {
+            $user->decrementReferralCounter();
+        }
         if (array_key_exists('tickets', $basket)) {
             foreach ($basket['tickets'] as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();
                 for ($i = 1; $i <= $quantity; $i++) {
                     //Add Participant to database
                     $participant = [
-                        'user_id'       => Auth::id(),
+                        'user_id'       => $user->id,
                         'event_id'      => $ticket->event->id,
                         'ticket_id'     => $ticket->id,
                         'purchase_id'   => $purchaseId,
@@ -480,35 +493,7 @@ class PaymentsController extends Controller
                     EventParticipant::create($participant);
                 }
             }
-        } elseif(array_key_exists('shop', $basket)) {
-            // TODO: REMOVE THIS
-            $status = 'EVENT';
-            $deliverToEvent = true;
-            if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
-                $deliverToEvent = false;
-                $status = 'PENDING';
-            }
-            $formattedBasket = Helpers::formatBasket($basket);
-            $orderParams = [
-                'total'                 => (float)$formattedBasket->total,
-                'total_credit'          => $formattedBasket->total_credit,
-                'purchase_id'           => $purchaseId,
-                'status'                => $status,
-                'shipping_first_name'   => @$basket['delivery']['shipping_first_name'],
-                'shipping_last_name'    => @$basket['delivery']['shipping_last_name'],
-                'shipping_address_1'    => @$basket['delivery']['shipping_address_1'],
-                'shipping_address_2'    => @$basket['delivery']['shipping_address_2'],
-                'shipping_country'      => @$basket['delivery']['shipping_country'],
-                'shipping_postcode'     => @$basket['delivery']['shipping_postcode'],
-                'shipping_state'        => @$basket['delivery']['shipping_state'],
-                'deliver_to_event'      => $deliverToEvent,
-            ];
-            $order = ShopOrder::create($orderParams);
-            foreach ($formattedBasket as $item) {
-                $item->updateStock($item->quantity);
-                $order->updateOrder($item);
-            }
-        }
+        } 
     }
 
     /**
@@ -587,7 +572,6 @@ class PaymentsController extends Controller
             'referral_code.filled'      => 'Referral Code Cannot be blank.',
         ];
         $this->validate($request, $rules, $messages);
-
         if(!User::isValidReferralCode($request->referral_code, Auth::user())) {
             Session::flash('alert-danger', 'Referral Code does not exist');
             return Redirect::back();

@@ -293,21 +293,45 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->account_referral_count > 0;
     }
 
+    public function isReferrable()
+    {
+        return count($this->eventParticipants) == 0;
+    }
+
     public static function generateReferralCode()
     {
         return bin2hex(random_bytes(10));
     }
 
-    public static function isValidReferralCode($referralCode, User $user = null)
+    public static function isValidReferralCode($referralCode, User $excludeUser = null)
     {
-        if ($user) {
-            return User::where('account_referral_code', $referralCode)->where('id', $user->id)->first();
+        if ($excludeUser) {
+            return User::where('account_referral_code', $referralCode)
+                ->where('id', '!=', $excludeUser->id)
+                ->withCount('eventParticipants')
+                ->having('event_participants_count', '>', 0)
+                ->first();
         }
-        return User::where('account_referral_code', $referralCode)->first();
+        return User::where('account_referral_code', $referralCode)
+            ->withCount('eventParticipants')
+            ->having('event_participants_count', '>', 0)
+            ->first();
     }
 
     public static function getUserByReferralCode($referralCode)
     {
         return User::where('account_referral_code', $referralCode)->first();
+    }
+
+    public function incrementReferralCounter()
+    {
+        $this->account_referral_count++;
+        $this->save();
+    }
+
+    public function decrementReferralCounter()
+    {
+        $this->account_referral_count--;
+        $this->save();
     }
 }

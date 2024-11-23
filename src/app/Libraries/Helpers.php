@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use DB;
+use Auth;
 use \Carbon\Carbon as Carbon;
 
 class Helpers
@@ -252,9 +253,11 @@ class Helpers
         }
         $formattedBasket->total = 0;
         $formattedBasket->total_credit = 0;
+        $formattedBasket->discounts = 0;
         $formattedBasket->allow_payment = true;
         $formattedBasket->allow_credit = true;
         $formattedBasket->referral_code = null;
+        $formattedBasket->referral_used = false;
         foreach ($formattedBasket as $item) {
             // TODO - REMOVE ME
             if (array_key_exists('shop', $basket)) {
@@ -277,8 +280,13 @@ class Helpers
                 $formattedBasket->allow_payment = false;
             }
         }
+        if (Auth::user()->hasReferrals()) {
+            $formattedBasket->total -= config('app.refer_a_friend_discount');
+            $formattedBasket->discounts += config('app.refer_a_friend_discount');
+            $formattedBasket->referral_used = true;
+        }
         if (array_key_exists('codes', $basket)) {
-            if (array_key_exists('referral', $basket['codes'])) {
+            if (array_key_exists('referral', $basket['codes']) && Auth::isValidReferralCode($basket['codes']['referral'], Auth::user())) {
                 $formattedBasket->referral_code = $basket['codes']['referral'];
             }
         }
