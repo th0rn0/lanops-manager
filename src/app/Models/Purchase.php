@@ -19,7 +19,14 @@ class Purchase extends Model
         'transaction_id',
         'token',
         'status',
-        'paypal_email'
+        'paypal_email',
+        'basket',
+        'referral_discount_total',
+        'referral_code',
+    ];
+
+    protected $casts = [
+        'basket' => 'array'
     ];
 
     /**

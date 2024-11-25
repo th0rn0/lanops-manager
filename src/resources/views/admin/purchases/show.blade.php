@@ -24,55 +24,38 @@
 				<i class="fa fa-credit-card fa-fw"></i> Items
 			</div>
 			<div class="panel-body">
-				<table width="100%" class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>Item</th>
-							<th>Quantity</th>
-							<th>Price Paid</th>
-						</tr>
-					</thead>
-					<tbody>
-						@if ($purchase->order != null)
-							@foreach ($purchase->order->items as $item)
-								<tr>
-									<td>
-										{{ $item->item->name }}
-									</td>
-									<td>
-										{{ $item->quantity }}
-									</td>
-									<td>
-										@if ($item->price != null)
-											{{ config('app.currency_symbol') }}{{ $item->price }}
-										@endif
-										Each | 
-										@if ($item->price != null)
-											{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
-										@endif
-										Total
-									</td>
-								</tr>
-							@endforeach
-						@elseif (!$purchase->participants->isEmpty())
-							@foreach ($purchase->participants as $participant)
-								<tr>
-									<td>
-										{{ $participant->ticket->name }} for {{ $participant->event->display_name }}
-									</td>
-									<td>
-										1
-									</td>
-									<td>
-										@if ($participant->ticket->price != null)
-											{{ config('app.currency_symbol') }}{{ $participant->ticket->price }}
-										@endif
-									</td>
-								</tr>
-							@endforeach
-						@endif
-					</tbody>
-				</table>
+				@if ($purchase->basket)
+					@include ('layouts._partials._checkout.basket', ['basket' => Helpers::formatBasket($purchase->basket, $purchase->user, $purchase->referral_discount_total, true)])
+				@else
+					<table width="100%" class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Quantity</th>
+								<th>Price Paid</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (!$purchase->participants->isEmpty())
+								@foreach ($purchase->participants as $participant)
+									<tr>
+										<td>
+											{{ $participant->ticket->name }} for {{ $participant->event->display_name }}
+										</td>
+										<td>
+											1
+										</td>
+										<td>
+											@if ($participant->ticket->price != null)
+												{{ config('app.currency_symbol') }}{{ $participant->ticket->price }}
+											@endif
+										</td>
+									</tr>
+								@endforeach
+							@endif
+						</tbody>
+					</table>
+				@endif
 			</div>  
 		</div>
 	</div>

@@ -57,7 +57,11 @@ class TicketsController extends Controller
             'tickets' => [
                 $ticket->id => $request->quantity,
             ],
+            'referral_discount' => false
         ];
+        if ($user->hasReferrals()) {
+            $params['referral_discount'] = true;
+        }
         Session::put(config('app.basket_name'), $params);
         Session::save();
         return Redirect::to('/payment/checkout');

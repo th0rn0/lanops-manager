@@ -91,7 +91,7 @@ class PaymentsController extends Controller
         }
         return view('payments.details')
             ->withPaymentGateway($paymentGateway)
-            ->withBasket(Helpers::formatBasket($basket, true))
+            ->withBasket(Helpers::formatBasket($basket))
             ->withDelivery($delivery)
             ->withDeliveryDetails($deliveryDetails)
         ;
@@ -102,7 +102,7 @@ class PaymentsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function post(Request $request)
+    public function postPayment(Request $request)
     {
         if (!$paymentGateway = $this->checkParams($request->gateway, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
@@ -264,27 +264,6 @@ class PaymentsController extends Controller
             }
         }
 
-        // Process Response
-        // Credit
-        // if ($processPaymentSkip && $paymentGateway == 'credit') {
-        //     if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
-        //         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
-        //         return Redirect::to('/payment/failed');
-        //     }
-        //     $purchaseParams = [
-        //         'user_id'           => Auth::id(),
-        //         'type'              => 'Credit',
-        //         'transaction_id'    => '',
-        //         'token'             => '',
-        //         'status'            => 'Success'
-        //     ];
-        //     $purchase = Purchase::create($purchaseParams);
-        //     $this->processBasket($basket, $purchase->id);
-        //     Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
-        //     return Redirect::to('/payment/successful/' . $purchase->id);
-        // }
-
-
         if ($response->isSuccessful()) {
             // Payment was successful: update database
             try {
@@ -297,13 +276,15 @@ class PaymentsController extends Controller
                 return Redirect::back();
             }
             $responseStripe = $response->getData();
-          
             $purchaseParams = [
-                'user_id'           => Auth::id(),
-                'type'              => 'Stripe',
-                'transaction_id'    => $response->getTransactionReference(),
-                'token'             => $response->getPaymentIntentReference(),
-                'status'            => 'Success'
+                'user_id'                   => Auth::id(),
+                'type'                      => 'Stripe',
+                'transaction_id'            => $response->getTransactionReference(),
+                'token'                     => $response->getPaymentIntentReference(),
+                'status'                    => 'Success',
+                'basket'                    => $basket,
+                'referral_discount_total'   => Helpers::formatBasket($basket)->referral_discount_total,
+                'referral_code'             => array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral']) ? $basket['codes']['referral'] : null,
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
@@ -332,7 +313,7 @@ class PaymentsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function process(Request $request)
+    public function processCallback(Request $request)
     {
         if (!$paymentGateway = $this->checkParams($request->gate, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
@@ -364,11 +345,14 @@ class PaymentsController extends Controller
                 if ($response->isSuccessful()) {
                     //Add Purchase to database
                     $purchaseParams = [
-                        'user_id'           => Auth::id(),
-                        'type'              => 'Stripe',
-                        'transaction_id'    => $response->getTransactionReference(),
-                        'token'             => $response->getPaymentIntentReference(),
-                        'status'            => 'Success'
+                        'user_id'                   => Auth::id(),
+                        'type'                      => 'Stripe',
+                        'transaction_id'            => $response->getTransactionReference(),
+                        'token'                     => $response->getPaymentIntentReference(),
+                        'status'                    => 'Success',
+                        'basket'                    => $basket,
+                        'referral_discount_total'   => Helpers::formatBasket($basket)->referral_discount_total,
+                        'referral_code'             => array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral']) ? $basket['codes']['referral'] : null,
                     ];
                     $successful = true;
                 }
@@ -389,12 +373,15 @@ class PaymentsController extends Controller
                 ) {
                     //Add Purchase to database
                     $purchaseParams = [
-                        'user_id'           => Auth::id(),
-                        'type'              => 'PayPal Express',
-                        'transaction_id'    => $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'],
-                        'token'             => $paypalResponse['TOKEN'],
-                        'status'            => $paypalResponse['ACK'],
-                        'paypal_email'      => $paypalResponse['EMAIL'],
+                        'user_id'                   => Auth::id(),
+                        'type'                      => 'PayPal Express',
+                        'transaction_id'            => $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'],
+                        'token'                     => $paypalResponse['TOKEN'],
+                        'status'                    => $paypalResponse['ACK'],
+                        'paypal_email'              => $paypalResponse['EMAIL'],
+                        'basket'                    => $basket,
+                        'referral_discount_total'   => Helpers::formatBasket($basket)->referral_discount_total,
+                        'referral_code'             => array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral']) ? $basket['codes']['referral'] : null,
                     ];
                     $successful = true;
                 }
@@ -573,7 +560,7 @@ class PaymentsController extends Controller
         ];
         $this->validate($request, $rules, $messages);
         if(!User::isValidReferralCode($request->referral_code, Auth::user())) {
-            Session::flash('alert-danger', 'Referral Code does not exist');
+            Session::flash('alert-danger', 'Referral Code is not valid');
             return Redirect::back();
         }
 

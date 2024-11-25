@@ -138,8 +138,12 @@
 						@if ($user->hasReferrals())
 							<p>You have referrals to use on your next purchase!</p>
 						@endif
-						<p>Give your friends this referral code and get {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} per referral! Discounts on your next purchase!</p>
-						<p>{{ $user->account_referral_code }}</p>
+						@if (App\Models\User::isValidReferralCode($user->account_referral_code))
+							<p>Give your friends this referral code and get {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} per referral! Discounts on your next purchase!</p>
+							<p>{{ $user->account_referral_code }}</p>
+						@else
+							<p>Your Referral Code will unlock when you have purchased a ticket!</p>
+						@endif
 					</div>
 				</div>
 			</div>

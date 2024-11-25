@@ -46,9 +46,9 @@
 									<td></td>
 									<td></td>
 									<td class="text-right">
-										@if ($basket->discounts > 0)
-											<strong>Discounts:</strong>
-											-{{ config('app.currency_symbol') }}{{ number_format($basket->discounts, 2) }}<br>
+										@if ($basket->referral_discount_total > 0)
+											<strong>Referral Discounts:</strong>
+											-{{ config('app.currency_symbol') }}{{ number_format($basket->referral_discount_total, 2) }}<br>
 										@endif
 										<strong>Total:</strong>
 										@if ($basket->total != null)

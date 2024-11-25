@@ -107,8 +107,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/payment/checkout/code', 'PaymentsController@applyDiscountCode');
         Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
         Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
-        Route::get('/payment/callback', 'PaymentsController@process');
-        Route::post('/payment/post', 'PaymentsController@post');
+        Route::get('/payment/callback', 'PaymentsController@processCallback');
+        Route::post('/payment/post', 'PaymentsController@postPayment');
         Route::get('/payment/failed', 'PaymentsController@showFailed');
         Route::get('/payment/cancelled', 'PaymentsController@showCancelled');
         Route::get('/payment/successful/{purchase}', 'PaymentsController@showSuccessful');
