@@ -31,6 +31,8 @@
 							<th>Type</th>
 							<th>Paypal Email</th>
 							<th>Transaction ID</th>
+							<th>Referral Code Used</th>
+							<th>Referral Redeemed</th>
 							<th>Created At</th>
 							<th></th>
 						</tr>
@@ -58,6 +60,20 @@
 								<td>{{ $purchase->type }}</td>
 								<td>{{ $purchase->paypal_email }}</td>
 								<td>{{ $purchase->transaction_id }}</td>
+								<td>									
+									@if ($purchase->referral_code_user_id )
+										Yes
+									@else
+										No
+									@endif
+								</td>
+								<td>
+									@if ($purchase->referral_discount_total > 0)
+										Yes
+									@else
+										No
+									@endif
+								</td>
 								<td>{{ $purchase->created_at }}</td>
 								<td>
 									<a href="/admin/purchases/{{ $purchase->id }}">

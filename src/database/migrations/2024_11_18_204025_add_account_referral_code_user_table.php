@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', callback: function (Blueprint $table) {
-            $table->string('account_referral_code')->after('account_referral_count')->unique();
+            $table->string('referral_code')->after('referral_code_count')->unique();
         });
     }
 
@@ -28,7 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('account_referral_code');
+            $table->dropColumn('referral_code');
         });
     }
 };

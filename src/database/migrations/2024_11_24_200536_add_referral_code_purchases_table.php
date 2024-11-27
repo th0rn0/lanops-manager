@@ -14,7 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('purchases', function (Blueprint $table) {
-            $table->string('referral_code')->after('referral_discount_total')->nullable();
+            $table->integer('referral_code_user_id')->after('referral_discount_total')->unsigned()->index()->nullable();
+            
+            $table->foreign('referral_code_user_id')->references('id')->on('users');
         });
     }
 
@@ -26,7 +28,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('purchases', function (Blueprint $table) {
-            $table->dropColumn('referral_code');
+            $table->dropForeign('purchases_referral_code_user_id_foreign');
+            $table->dropColumn('referral_code_user_id');
         });
     }
 };

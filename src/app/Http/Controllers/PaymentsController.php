@@ -283,8 +283,6 @@ class PaymentsController extends Controller
                 'token'                     => $response->getPaymentIntentReference(),
                 'status'                    => 'Success',
                 'basket'                    => $basket,
-                'referral_discount_total'   => Helpers::formatBasket($basket)->referral_discount_total,
-                'referral_code'             => array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral']) ? $basket['codes']['referral'] : null,
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
@@ -351,8 +349,6 @@ class PaymentsController extends Controller
                         'token'                     => $response->getPaymentIntentReference(),
                         'status'                    => 'Success',
                         'basket'                    => $basket,
-                        'referral_discount_total'   => Helpers::formatBasket($basket)->referral_discount_total,
-                        'referral_code'             => array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral']) ? $basket['codes']['referral'] : null,
                     ];
                     $successful = true;
                 }
@@ -380,8 +376,6 @@ class PaymentsController extends Controller
                         'status'                    => $paypalResponse['ACK'],
                         'paypal_email'              => $paypalResponse['EMAIL'],
                         'basket'                    => $basket,
-                        'referral_discount_total'   => Helpers::formatBasket($basket)->referral_discount_total,
-                        'referral_code'             => array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral']) ? $basket['codes']['referral'] : null,
                     ];
                     $successful = true;
                 }
@@ -412,7 +406,7 @@ class PaymentsController extends Controller
         if (array_key_exists('shop', $basket)) {
             $type = 'shop';
         }
-        $basket = Helpers::formatBasket($basket);
+        $basket = Helpers::formatBasket($basket, null, $purchase->referral_discount_total, true);
         Session::forget('params');
         Session::forget(config('app.basket_name'));
         return view('payments.successful')
@@ -454,18 +448,6 @@ class PaymentsController extends Controller
     private function processBasket($basket, $purchaseId)
     {
         $user = Auth::user();
-        if (
-            array_key_exists('codes', $basket) && 
-            array_key_exists('referral', $basket['codes']) && 
-            User::isValidReferralCode($basket['codes']['referral']) && 
-            $user->isReferrable()
-        ) {
-            $referredUser = User::getUserByReferralCode($basket['codes']['referral']);
-            $referredUser->incrementReferralCounter();
-        }
-        if ($user->hasReferrals()) {
-            $user->decrementReferralCounter();
-        }
         if (array_key_exists('tickets', $basket)) {
             foreach ($basket['tickets'] as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();

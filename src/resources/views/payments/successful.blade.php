@@ -38,33 +38,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="table-responsive">
-						<table class="table table-striped">
-							<tbody>
-								@php ($total = 0)
-								@foreach ($basket as $item)
-									<tr>
-										<td>
-											<strong>{{ $item->name }}</strong>
-										</td>
-										<td>
-											x {{ $item->quantity }}
-										</td>
-										<td>
-											{{ config('app.currency_symbol') }}{{ $item->price }}
-										</td>
-									</tr>
-								@endforeach
-								<tr>
-									<td></td>
-									<td>
-										<strong>Total:</strong>
-									</td>
-									<td>
-										{{ config('app.currency_symbol') }}{{ $basket->total }}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						@include ('layouts._partials._checkout.basket')
 					</div>
 				</div>
 			</div>

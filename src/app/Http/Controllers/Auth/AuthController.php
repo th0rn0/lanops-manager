@@ -162,7 +162,7 @@ class AuthController extends Controller
         $user->surname          = $request->surname;
         $user->username         = $request->username;
         $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
-        $user->account_referral_code = User::generateReferralCode();
+        $user->referral_code = User::generateReferralCode();
 
         // Fix to make first user admin
         if (User::count() == 0) {

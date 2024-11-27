@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // $table->boolean('account_referral_activated')->after('discord_avatar')->default(false);
-            $table->integer('account_referral_count')->after('discord_avatar')->default(0);
+            $table->integer('referral_code_count')->after('discord_avatar')->default(0);
         });
     }
 
@@ -28,7 +28,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // $table->dropColumn('account_referral_activated');
-            $table->dropColumn('account_referral_count');
+            $table->dropColumn('referral_code_count');
         });
     }
 };

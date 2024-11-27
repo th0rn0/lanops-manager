@@ -244,13 +244,13 @@ class Helpers
      * @param $itemId
      * @return Boolean
      */
-    public static function formatBasket($basket, User $user = null, $referralDiscountAmount = null, $skipReferralCountCheck = false)
+    public static function formatBasket($basket, User $user = null, $referralDiscountAmountOverride = null, $skipReferralCountCheck = false)
     {
         if(!$user) {
             $user = Auth::user();
         }
-        if (!$referralDiscountAmount) {
-            $referralDiscountAmount = config('app.refer_a_friend_discount');
+        if (!$referralDiscountAmountOverride) {
+            $referralDiscountAmountOverride = config('app.refer_a_friend_discount');
         }
         if (array_key_exists('tickets', $basket)) {
             $formattedBasket = \App\Models\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
@@ -259,6 +259,7 @@ class Helpers
             return false;
         }
         $formattedBasket->total = 0;
+        $formattedBasket->total_before_discounts = 0;
         $formattedBasket->referral_discount_total = 0;
         $formattedBasket->allow_payment = true;
         $formattedBasket->referral_code = null;
@@ -267,14 +268,15 @@ class Helpers
             if (array_key_exists('tickets', $basket)) {
                 $item->quantity = $basket['tickets'][$item->id];
                 $formattedBasket->total += $item->price * $item->quantity;
+                $formattedBasket->total_before_discounts += $item->price * $item->quantity;
             }
             if ($item->price == null || $item->price < 0) {
                 $formattedBasket->allow_payment = false;
             }
         }
         if (array_key_exists('referral_discount', $basket) && $basket['referral_discount'] && ($user->hasReferrals() || $skipReferralCountCheck)) {
-            $formattedBasket->total -= $referralDiscountAmount;
-            $formattedBasket->referral_discount_total += $referralDiscountAmount;
+            $formattedBasket->total -= $referralDiscountAmountOverride;
+            $formattedBasket->referral_discount_total += $referralDiscountAmountOverride;
             $formattedBasket->referral_used = true;
         }
         if (array_key_exists('codes', $basket)) {

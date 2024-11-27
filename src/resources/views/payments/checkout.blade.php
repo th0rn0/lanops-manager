@@ -18,46 +18,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="table-responsive">
-						<table class="table table-striped">
-							<tbody>
-								@foreach ($basket as $item)
-									<tr>
-										<td>
-											<strong>{{ $item->name }}</strong>
-										</td>
-										<td class="text-right">
-											x {{ $item->quantity }}
-										</td>
-										<td class="text-right">
-											@if ($item->price != null && $item->price != 0)
-												{{ config('app.currency_symbol') }}{{ number_format($item->price, 2) }}
-											@endif
-											Each
-										</td>
-										<td class="text-right">
-											@if ($item->price != null && $item->price != 0)
-												{{ config('app.currency_symbol') }}{{ number_format($item->price * $item->quantity, 2) }}
-											@endif
-										</td>
-									</tr>
-								@endforeach
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td class="text-right">
-										@if ($basket->referral_discount_total > 0)
-											<strong>Referral Discounts:</strong>
-											-{{ config('app.currency_symbol') }}{{ number_format($basket->referral_discount_total, 2) }}<br>
-										@endif
-										<strong>Total:</strong>
-										@if ($basket->total != null)
-											{{ config('app.currency_symbol') }}{{ number_format($basket->total, 2) }}
-										@endif
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						@include ('layouts._partials._checkout.basket')
 					</div>
 				</div>
 			</div>

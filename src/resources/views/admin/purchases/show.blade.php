@@ -72,6 +72,30 @@
 					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="pull-right">{{ $purchase->id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info">
 						<strong>
+							Referral Code Used: 
+							<span class="pull-right">
+								@if ($purchase->referral_code_user_id )
+									Yes
+								@else
+									No
+								@endif
+							</span>
+						</strong>
+					</li>
+					<li class="list-group-item list-group-item-info">
+						<strong>
+							Referral Redeemed: 
+							<span class="pull-right">
+								@if ($purchase->referral_discount_total > 0)
+									Yes
+								@else
+									No
+								@endif
+							</span>
+						</strong>
+					</li>
+					<li class="list-group-item list-group-item-info">
+						<strong>
 							User: 
 							<span class="pull-right">
 								{{ $purchase->user->username }}
@@ -91,6 +115,16 @@
 					@endif
 					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="pull-right">{{ $purchase->transaction_id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Timestamp: <span class="pull-right">{{ $purchase->created_at }}</span></strong></li>
+					<li class="list-group-item list-group-item-info">
+						<strong>
+							Total at Gateway: 
+							<span class="pull-right">
+								Total: {{ $purchase->total }} </br>
+								Total Discount: {{ $purchase->total_discount }} </br>
+								Referral Discount: {{ $purchase->referral_discount_total }}
+							</span>
+						</strong>
+					</li>
 				</ul>
 				@if (count($purchase->participants) > 0)
 					@foreach ($purchase->participants as $participant)
@@ -99,7 +133,29 @@
 				@endif
 			</div>  
 		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-credit-card fa-fw"></i> Total at Gateway
+			</div>
+			<div class="panel-body">
+				<strong>
+					Total: 
+					<span class="pull-right">
+						{{ config('app.currency_symbol') }}{{ $purchase->total }} </br>
+					</span></br>
+					Total Before Discount:
+					<span class="pull-right">
+						{{ config('app.currency_symbol') }}{{ $purchase->total_before_discount }} </br>
+					</span></br>
+					Referral Discount: 
+					<span class="pull-right">
+						{{ config('app.currency_symbol') }}{{ $purchase->referral_discount_total }}
+					</span>
+				</strong>
+			</div>
+		</div>
 	</div>
+
 </div>
 
 @endsection
