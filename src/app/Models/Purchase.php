@@ -4,11 +4,6 @@ namespace App\Models;
 
 use Helpers;
 
-use App\Models\ReferralCodeAudit;
-
-use App\Models\ReferralCode;
-
-
 use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
@@ -30,8 +25,8 @@ class Purchase extends Model
         'basket',
         'referral_discount_total',
         'referral_code_user_id',
-        'total',
-        'referral_discount_total',
+        'referral_code_discount_redeemed_purchase_id',
+        'total'
     ];
 
     protected $casts = [
@@ -61,35 +56,16 @@ class Purchase extends Model
             }
         });
         self::created(function ($model) {
+            $formattedBasket = Helpers::formatBasket($model->basket);
+            if ($model->referral_discount_total > 0 && $formattedBasket->referral_used && $referredPurchase = $model->user->getAvailableReferralPurchase()) {
+                $referredPurchase->referral_code_discount_redeemed_purchase_id = $model->id;
+                $referredPurchase->save();
+            }
             if ($model->referral_discount_total > 0) {
                 $model->user->decrementReferralCounter();
             } elseif ($model->referral_code_user_id) {
                 $model->referralUser->incrementReferralCounter();
             }
-            // if ($model->referral_code && $userReferral = User::getuserByReferralCode($model->referral_code)) {
-            //     $userReferral->incrementReferralCounter();
-            //     $referralCodeAuditParams = [
-            //         'referral_code' => $model->referral_code,
-            //         'event_description' => ReferralCodeAudit::$applied,
-            //         'purchase_id' => $model->id,
-            //     ];
-            //     ReferralCodeAudit::create($referralCodeAuditParams);
-
-            //     $referralCodeParams = [
-            //         'referral_purchase_id' => $model->id,
-            //     ];
-
-            //     ReferralCode::create($referralCodeParams);
-            // }
-            // if (Helpers::formatBasket($model->basket,$model->user, null, true)->referral_used && $userReferred = User::where('id', $model->user_id)->first()) {
-            //     $userReferred->decrementReferralCounter();
-            //     $referralCodeAuditParams = [
-            //         'referral_code' => $userReferred->referral_code,
-            //         'event_description' => ReferralCodeAudit::$redeemed,
-            //         'purchase_id' => $model->id,
-            //     ];
-            //     ReferralCodeAudit::create($referralCodeAuditParams);
-            // }
         });
     }
     /*
@@ -108,6 +84,16 @@ class Purchase extends Model
     public function referralUser()
     {
         return $this->belongsTo('App\Models\User', 'referral_code_user_id');
+    }
+
+    public function referralDiscountUsedPurchase()
+    {
+        return $this->belongsTo('App\Models\Purchase', 'referral_code_discount_redeemed_purchase_id');
+    }
+
+    public function referralCodeUsedPurchase()
+    {
+        return $this->hasOne('App\Models\Purchase', 'referral_code_discount_redeemed_purchase_id');
     }
 
     /**

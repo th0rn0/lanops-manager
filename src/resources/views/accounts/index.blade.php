@@ -90,16 +90,13 @@
 				</div>
 			</div>
 
-			<!-- DISCORD --> 
-			<div class="col-xs-12 col-lg-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Socials</h3>
-					</div>
-					<div class="panel-body">
-						<div class="panel panel-success">
+			<div class="col-xs-12">
+				<div class="row">
+					<!-- DISCORD --> 
+					<div class="col-xs-12 col-md-6">
+						<div class="panel panel-default">
 							<div class="panel-heading">
-								<strong>Discord</strong>
+								<h3 class="panel-title">Discord Link</h3>
 							</div>
 							<div class="panel-body">
 								<div class="row" style="display: flex; align-items: center;">
@@ -125,31 +122,36 @@
 							</div>
 						</div>
 					</div>
+
+					<!-- REFER A FRIEND -->
+					<div class="col-xs-12 col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">Refer a Friend</h3>
+							</div>
+							<div class="panel-body">
+								@if ($user->hasReferrals())
+									<p>You have referrals to use on your next purchase!</p>
+								@endif
+								@if ($user->referralsRedeemed()) 
+									<p>You have used <strong>{{ $user->referralsRedeemed() }}</strong> Referrals</p>
+								@endif
+								@if (App\Models\User::isValidReferralCode($user->referral_code))
+									<p>Give your friends this referral code and get {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} off your next purchase!</p>
+									<div class="alert alert-info">
+										<p>{{ $user->referral_code }}</p>
+									</div>
+								@else
+									<p>Your Referral Code will unlock when you have purchased a ticket!</p>
+								@endif
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<!-- Refer a Friend -->
-			<div class="col-xs-12 col-lg-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Refer a Friend</h3>
-					</div>
-					<div class="panel-body">
-						@if ($user->hasReferrals())
-							<p>You have referrals to use on your next purchase!</p>
-						@endif
-						@if (App\Models\User::isValidReferralCode($user->referral_code))
-							<p>Give your friends this referral code and get {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} per referral! Discounts on your next purchase!</p>
-							<p>{{ $user->referral_code }}</p>
-						@else
-							<p>Your Referral Code will unlock when you have purchased a ticket!</p>
-						@endif
-					</div>
-				</div>
-			</div>
-
+			
 			<!-- TICKETS -->
-			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-7">
+			<div class="col-xs-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Tickets</h3>
@@ -167,7 +169,7 @@
 			</div>
 
 			<!-- PURCHASES -->
-			<div class="col-sm-12 col-xs-12 col-md-6 col-lg-5">
+			<div class="col-xs-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="panel-title">Purchases</h3>
@@ -204,28 +206,20 @@
 												{{  date('d-m-y H:i', strtotime($purchase->created_at)) }}
 											</td>
 											<td>
-												@if (!$purchase->participants->isEmpty())
-													@foreach ($purchase->participants as $participant)
-														{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
-														@if (!$loop->last)
-															<hr>
+												<div class="panel panel-default">
+													<div class="panel-body">
+														@if ($purchase->basket)
+															@include ('layouts._partials._checkout.basket', ['basket' => Helpers::formatBasket($purchase->basket, $purchase->user, $purchase->referral_discount_total, true)])
+														@elseif (!$purchase->participants->isEmpty())
+															@foreach ($purchase->participants as $participant)
+																{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
+																@if (!$loop->last)
+																	<hr>
+																@endif
+															@endforeach
 														@endif
-													@endforeach
-												@elseif ($purchase->order != null)
-													@foreach ($purchase->order->items as $item)
-														@if ($item->item)
-															{{ $item->item->name }}
-														@endif 
-														 - x {{ $item->quantity }}
-														 <br>
-													 	@if ($item->price != null)
-															{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
-														@endif
-														@if (!$loop->last)
-															<hr>
-														@endif
-													@endforeach
-												@endif
+													</div>
+												</div>
 											</td>
 										</tr>
 									@endforeach

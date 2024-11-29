@@ -66,9 +66,6 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-group">
-
-
-
 					<li class="list-group-item list-group-item-info"><strong>Purchase ID: <span class="pull-right">{{ $purchase->id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info">
 						<strong>
@@ -82,18 +79,26 @@
 							</span>
 						</strong>
 					</li>
-					<li class="list-group-item list-group-item-info">
-						<strong>
-							Referral Redeemed: 
-							<span class="pull-right">
-								@if ($purchase->referral_discount_total > 0)
-									Yes
-								@else
-									No
-								@endif
-							</span>
-						</strong>
-					</li>
+					@if ($purchase->referralCodeUsedPurchase)
+						<li class="list-group-item list-group-item-info">
+							<strong>
+								Referral Redeemed: 
+								<span class="pull-right">
+										Yes
+								</span>
+							</strong>
+						</li>
+						<li class="list-group-item list-group-item-info">
+							<strong>
+								Referral User: 
+								<span class="pull-right">
+									<a href="/admin/users/{{ $purchase->referralCodeUsedPurchase->user->id }}">
+										{{ $purchase->referralCodeUsedPurchase->user->username }}
+									</a>
+								</span>
+							</strong>
+						</li>
+					@endif
 					<li class="list-group-item list-group-item-info">
 						<strong>
 							User: 
@@ -115,16 +120,6 @@
 					@endif
 					<li class="list-group-item list-group-item-info"><strong>Transaction ID: <span class="pull-right">{{ $purchase->transaction_id }}</span></strong></li>
 					<li class="list-group-item list-group-item-info"><strong>Timestamp: <span class="pull-right">{{ $purchase->created_at }}</span></strong></li>
-					<li class="list-group-item list-group-item-info">
-						<strong>
-							Total at Gateway: 
-							<span class="pull-right">
-								Total: {{ $purchase->total }} </br>
-								Total Discount: {{ $purchase->total_discount }} </br>
-								Referral Discount: {{ $purchase->referral_discount_total }}
-							</span>
-						</strong>
-					</li>
 				</ul>
 				@if (count($purchase->participants) > 0)
 					@foreach ($purchase->participants as $participant)

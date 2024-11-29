@@ -27,6 +27,17 @@
 					</td>
 				</tr>
 			@endif
+			@if ($basket->referral_code) 
+			<tr>
+				<td></td>
+				<td class="text-right">
+					<strong>Referral Code:</strong>
+				</td>
+				<td>
+					{{ $basket->referral_code }}
+				</td>
+			</tr>
+			@endif
 			<tr>
 				<td></td>
 				<td class="text-right">

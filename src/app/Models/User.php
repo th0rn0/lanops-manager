@@ -101,6 +101,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Purchase');
     }
 
+    public function referralPurchases()
+    {
+        return $this->hasMany('App\Models\Purchase', 'referral_code_user_id');
+    }
+
     /**
      * Check if Admin
      * @return Boolean
@@ -278,5 +283,16 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->referral_code_count--;
         $this->save();
+    }
+
+    public function referralsRedeemed()
+    {
+        return count($this->purchases()->where('referral_discount_total', '>', 0)->get());
+    }
+
+    public function getAvailableReferralPurchase()
+    {
+        // return $this->referralPurchases()->whereNotIn('id', $this->purchases()->pluck('referral_code_purchase_id'))->first();
+        return $this->referralPurchases->where('referral_code_discount_redeemed_purchase_id', null)->first();
     }
 }

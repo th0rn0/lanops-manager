@@ -116,78 +116,19 @@ class PaymentsController extends Controller
                 }
             }
         }
-        // if (array_key_exists('shop', $basket)) {
-        //     foreach ($basket['shop'] as $itemId => $quantity) {
-        //         if (!ShopItem::hasStockByItemId($itemId)) {
-        //             $itemName = ShopItem::where('id', $itemId)->first()->name;
-        //             Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
-        //             return Redirect::to('/payment/checkout');
-        //         }
-        //     }
-        // }
-        // If Order accepts delivery and no delivery details have been submitted redirect to delivery page
-        // if (array_key_exists('shop', $basket)) {
-        //     if (
-        //         !isset($request->shipping_first_name) &&
-        //         !isset($request->shipping_last_name) &&
-        //         !isset($request->shipping_address_1) &&
-        //         !isset($request->shipping_postcode) &&
-        //         !array_key_exists('delivery', $basket)
-        //     ) {
-        //         return Redirect::to('/payment/delivery/' . $paymentGateway);
-        //     }
-        //     if (!array_key_exists('delivery', $basket)) {
-        //          $rules = [
-        //             'delivery_type'   => 'required|in:event,shipping'
-        //         ];
-        //         $messages = [
-        //             'delivery_type.required' => 'A Delivery type is Required',
-        //             'delivery_type.in' => 'Delivery type must be event or shipping'
-        //         ];
-        //         $this->validate($request, $rules, $messages);
-        //         // Check if the order is delivery to event or person
-        //         if ($request->delivery_type == 'shipping') {
-        //             // Shipping Details
-        //             $rules = [
-        //                 'shipping_first_name'   => 'required',
-        //                 'shipping_last_name'    => 'required',
-        //                 'shipping_address_1'    => 'required',
-        //                 'shipping_postcode'     => 'required',
-        //             ];
-        //             $messages = [
-        //                 'shipping_first_name.required'      => 'First Name is Required',
-        //                 'shipping_last_name.required'       => 'Last Name is Required',
-        //                 'shipping_address_1.required'       => 'Shipping Address Required',
-        //                 'shipping_postcode.required'        => 'Shipping Postcode Required',
-        //             ];
-        //             $this->validate($request, $rules, $messages);
-        //             $basket['delivery'] = [
-        //                 'type'                  => 'shipping',
-        //                 'shipping_first_name'   => $request->shipping_first_name,
-        //                 'shipping_last_name'    => $request->shipping_last_name,
-        //                 'shipping_address_1'    => $request->shipping_address_1,
-        //                 'shipping_address_2'    => @$request->shipping_address_2,
-        //                 'shipping_country'      => @$request->shipping_country,
-        //                 'shipping_postcode'     => $request->shipping_postcode,
-        //                 'shipping_state'        => @$request->shipping_state,
-        //             ];
-        //         } else {
-        //             $basket['delivery'] = ['type' => 'event'];
-        //         }
-        //         Session::put(config('app.basket_name'), $basket);
-        //         Session::save();
-        //     }
-        // }
-        // If Credit Redirect Straight to details page
-        if ($paymentGateway == 'credit' && !isset($request->confirm)) {
-            return Redirect::to('/payment/details/' . $paymentGateway);
+        if (
+            (array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && !Auth::user()->isReferrable()) || 
+            $basket['referral_discount'] && !Auth::user()->hasReferrals()
+            ) {
+            Session::flash('alert-danger', 'Basket has changed');
+            return Redirect::to('/payment/checkout');
         }
+        
         $offSitePaymentGateways = [
             'paypal_express',
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
         if (
-            $paymentGateway != 'credit' &&
             !in_array($paymentGateway, $offSitePaymentGateways) &&
             !isset($request->card_first_name) &&
             !isset($request->card_last_name) &&
@@ -241,15 +182,10 @@ class PaymentsController extends Controller
                 $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
                 $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
                 break;
-            case 'credit':
-                $processPaymentSkip = true;
-                $params = array();
-                break;
         }
         Session::put('params', $params);
         Session::save();
         if (!$processPaymentSkip) {
-
             if (config('app.debug')) {
                 $this->sandbox = true;
             }

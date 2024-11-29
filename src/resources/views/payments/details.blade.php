@@ -97,10 +97,11 @@
 		const clientSecret = cardButton.dataset.secret;
 		const form = document.getElementById('payment-form');
 		cardButton.addEventListener('click', async (e) => {
+			cardButton.disabled = true;
+			cardButton.textContent = 'Processing Please Wait...';
 		    stripe.createPaymentMethod('card', cardElement, {
                 billing_details: {name: cardHolderName.value }
             }).then(function(result) {
-
                 if (result.error) {
                     cardButton.disabled = false;
                     alert(result.error.message);
@@ -116,6 +117,7 @@
             });
 		});
 	</script>
+
 @endif
 
 @endsection
