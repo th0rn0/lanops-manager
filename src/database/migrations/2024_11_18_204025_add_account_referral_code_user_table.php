@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', callback: function (Blueprint $table) {
-            $table->string('referral_code')->after('referral_code_count')->unique();
+            $table->string('referral_code')->after('discord_avatar')->unique();
         });
     }
 

@@ -59,7 +59,7 @@ class TicketsController extends Controller
             ],
             'referral_discount' => false
         ];
-        if ($user->hasReferrals()) {
+        if ($user->getAvailableReferralPurchase()) {
             $params['referral_discount'] = true;
         }
         Session::put(config('app.basket_name'), $params);

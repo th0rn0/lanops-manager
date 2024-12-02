@@ -42,8 +42,8 @@
 							@if ($userShow->email != null)
 								<li class="list-group-item">Email: {{ $userShow->email }}</li>
 							@endif
-							<li class="list-group-item">Referral Discounts Unclaimed: {{ $userShow->referral_code_count }}</li>
-							<li class="list-group-item">Referral Discounts Used: {{ $userShow->referralsRedeemed() }}</li>
+							<li class="list-group-item">Referral Discounts Unclaimed: {{ $userShow->getReferralsUnclaimedCount() }}</li>
+							<li class="list-group-item">Referral Discounts Used: {{ $userShow->getReferralsRedeemedCount() }}</li>
 						</ul>
   					</div>
   				</div>

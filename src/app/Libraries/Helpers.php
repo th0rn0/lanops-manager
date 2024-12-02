@@ -244,7 +244,7 @@ class Helpers
      * @param $itemId
      * @return Boolean
      */
-    public static function formatBasket($basket, User $user = null, $referralDiscountAmountOverride = null, $skipReferralCountCheck = false)
+    public static function formatBasket($basket, User $user = null, $referralDiscountAmountOverride = null, $skipAvailableReferralsCheck = false)
     {
         if(!$user) {
             $user = Auth::user();
@@ -274,7 +274,7 @@ class Helpers
                 $formattedBasket->allow_payment = false;
             }
         }
-        if (array_key_exists('referral_discount', $basket) && $basket['referral_discount'] && ($user->hasReferrals() || $skipReferralCountCheck)) {
+        if (array_key_exists('referral_discount', $basket) && $basket['referral_discount'] && ($user->getAvailableReferralPurchase() || $skipAvailableReferralsCheck)) {
             $formattedBasket->total -= $referralDiscountAmountOverride;
             $formattedBasket->referral_discount_total += $referralDiscountAmountOverride;
             $formattedBasket->referral_used = true;

@@ -12,6 +12,11 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
+			@if ($user->getReferralsUnclaimedCount())
+				<div class="alert alert-info">
+					A referral discount has been applied to the basket!
+				</div>
+			@endif
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Order Details</h3>
@@ -38,7 +43,7 @@
 								@else
 									{{ Form::open(array('url'=>'/payment/checkout/code' )) }}
 										<div class="form-group">
-											{{ Form::text('referral_code', '' ,array('id'=>'referral_code','class'=>'form-control')) }}
+											{{ Form::text('referral_code', '', array('id'=>'referral_code','class'=>'form-control')) }}
 										</div>
 										<button type="submit" class="btn btn-primary btn-block">Submit</button>
 									{{ Form::close() }}

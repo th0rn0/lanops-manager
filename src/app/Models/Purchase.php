@@ -61,11 +61,6 @@ class Purchase extends Model
                 $referredPurchase->referral_code_discount_redeemed_purchase_id = $model->id;
                 $referredPurchase->save();
             }
-            if ($model->referral_discount_total > 0) {
-                $model->user->decrementReferralCounter();
-            } elseif ($model->referral_code_user_id) {
-                $model->referralUser->incrementReferralCounter();
-            }
         });
     }
     /*

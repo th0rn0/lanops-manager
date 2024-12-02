@@ -118,7 +118,7 @@ class PaymentsController extends Controller
         }
         if (
             (array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && !Auth::user()->isReferrable()) || 
-            $basket['referral_discount'] && !Auth::user()->hasReferrals()
+            $basket['referral_discount'] && !Auth::user()->getAvailableReferralPurchase()
             ) {
             Session::flash('alert-danger', 'Basket has changed');
             return Redirect::to('/payment/checkout');

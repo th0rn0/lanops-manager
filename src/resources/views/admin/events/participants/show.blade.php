@@ -106,11 +106,10 @@
 					<p>{{ $participant->purchase->referralUser->username }}'s Referral Code Used</p>
 				@endif
 				@if ($participant->purchase)
-					{{ Form::label('','Purchase Info',array('id'=>'','class'=>'')) }}
-					<p><a href="/admin/purchases/{{ $participant->purchase->id }}">{{ $participant->purchase->type }}</a></p>
-					@if ($participant->purchase->paypal_email)
-						<p>{{ $participant->purchase->paypal_email }}</p>
-					@endif
+					<hr>
+					<div class="form-group">
+						<a href="/admin/purchases/{{ $participant->purchase->id }}"><button class="btn btn-block btn-success">Purchase Info</button></a>
+					</div>
 				@endif
 				@if (!$participant->signed_in)
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/transfer')) }}

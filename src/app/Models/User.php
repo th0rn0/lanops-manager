@@ -238,11 +238,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->discord_avatar.".png";
     }
 
-    public function hasReferrals()
-    {
-        return $this->referral_code_count > 0;
-    }
-
     public function isReferrable()
     {
         return count($this->eventParticipants) == 0;
@@ -273,26 +268,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return User::where('referral_code', $referralCode)->first();
     }
 
-    public function incrementReferralCounter()
+    public function getReferralsRedeemedCount()
     {
-        $this->referral_code_count++;
-        $this->save();
+        return count($this->referralPurchases()->whereNot('referral_code_discount_redeemed_purchase_id', null)->get());
     }
 
-    public function decrementReferralCounter()
+    public function getReferralsUnclaimedCount()
     {
-        $this->referral_code_count--;
-        $this->save();
-    }
-
-    public function referralsRedeemed()
-    {
-        return count($this->purchases()->where('referral_discount_total', '>', 0)->get());
+        return count($this->referralPurchases()->where('referral_code_discount_redeemed_purchase_id', null)->get());
     }
 
     public function getAvailableReferralPurchase()
     {
-        // return $this->referralPurchases()->whereNotIn('id', $this->purchases()->pluck('referral_code_purchase_id'))->first();
         return $this->referralPurchases->where('referral_code_discount_redeemed_purchase_id', null)->first();
     }
 }

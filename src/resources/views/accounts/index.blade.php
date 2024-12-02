@@ -130,19 +130,17 @@
 								<h3 class="panel-title">Refer a Friend</h3>
 							</div>
 							<div class="panel-body">
-								@if ($user->hasReferrals())
-									<p>You have referrals to use on your next purchase!</p>
-								@endif
-								@if ($user->referralsRedeemed()) 
-									<p>You have used <strong>{{ $user->referralsRedeemed() }}</strong> Referrals</p>
-								@endif
+									<p>You have <strong>{{ $user->getReferralsUnclaimedCount() }}</strong> Referrals.@if ( $user->getReferralsUnclaimedCount() ) A discount will be applied to your purchase!@endif</p>
+									<p>You have used <strong>{{ $user->getReferralsRedeemedCount() }}</strong> Referrals</p>
 								@if (App\Models\User::isValidReferralCode($user->referral_code))
 									<p>Give your friends this referral code and get {{ config('app.currency_symbol') }}{{ config('app.refer_a_friend_discount') }} off your next purchase!</p>
 									<div class="alert alert-info">
 										<p>{{ $user->referral_code }}</p>
 									</div>
 								@else
-									<p>Your Referral Code will unlock when you have purchased a ticket!</p>
+									<div class="alert alert-info">
+										Your Referral Code will unlock when you have purchased a ticket!
+									</div>
 								@endif
 							</div>
 						</div>
