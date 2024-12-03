@@ -102,6 +102,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Purchase');
     }
 
+    public function gameListParticipants()
+    {
+        return $this->hasMany('App\Models\GameSignupListParticipant');
+    }
+
     /**
      * Check if Admin
      * @return Boolean
