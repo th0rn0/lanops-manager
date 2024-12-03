@@ -169,7 +169,7 @@ class Event extends Model
         $total = 0;
         foreach ($this->eventParticipants as $participant) {
             if ($participant->purchase && $participant->ticket) {
-                $total = $total + $participant->ticket->price;
+                $total = ($total + $participant->ticket->price) - $participant->purchase->referral_discount_total;
             }
         }
         return $total;

@@ -3,6 +3,8 @@
 namespace App\Libraries;
 
 use DB;
+use Auth;
+use App\Models\User;
 use \Carbon\Carbon as Carbon;
 
 class Helpers
@@ -242,8 +244,14 @@ class Helpers
      * @param $itemId
      * @return Boolean
      */
-    public static function formatBasket($basket)
+    public static function formatBasket($basket, User $user = null, $referralDiscountAmountOverride = null, $skipAvailableReferralsCheck = false)
     {
+        if(!$user) {
+            $user = Auth::user();
+        }
+        if (!$referralDiscountAmountOverride) {
+            $referralDiscountAmountOverride = config('app.refer_a_friend_discount');
+        }
         if (array_key_exists('tickets', $basket)) {
             $formattedBasket = \App\Models\EventTicket::whereIn('id', array_keys($basket['tickets']))->get();
         }
@@ -251,29 +259,29 @@ class Helpers
             return false;
         }
         $formattedBasket->total = 0;
-        $formattedBasket->total_credit = 0;
+        $formattedBasket->total_before_discounts = 0;
+        $formattedBasket->referral_discount_total = 0;
         $formattedBasket->allow_payment = true;
-        $formattedBasket->allow_credit = true;
+        $formattedBasket->referral_code = null;
+        $formattedBasket->referral_used = false;
         foreach ($formattedBasket as $item) {
-            // TODO - REMOVE ME
-            if (array_key_exists('shop', $basket)) {
-                $item->quantity = $basket['shop'][$item->id];
-                if ($item->price != null && $item->price != 0) {
-                    $formattedBasket->total += $item->price * $item->quantity;
-                }
-                if ($item->price_credit != null && $item->price_credit != 0) {
-                    $formattedBasket->total_credit += $item->price_credit * $item->quantity;
-                }
-            } else {
+            if (array_key_exists('tickets', $basket)) {
                 $item->quantity = $basket['tickets'][$item->id];
                 $formattedBasket->total += $item->price * $item->quantity;
-                $formattedBasket->total_credit += $item->price_credit * $item->quantity;
+                $formattedBasket->total_before_discounts += $item->price * $item->quantity;
             }
-            if ($item->price_credit == null || $item->price_credit == 0) {
-                $formattedBasket->allow_credit = false;
-            }
-            if ($item->price == null || $item->price == 0) {
+            if ($item->price == null || $item->price < 0) {
                 $formattedBasket->allow_payment = false;
+            }
+        }
+        if (array_key_exists('referral_discount', $basket) && $basket['referral_discount'] && ($user->getAvailableReferralPurchase() || $skipAvailableReferralsCheck)) {
+            $formattedBasket->total -= $referralDiscountAmountOverride;
+            $formattedBasket->referral_discount_total += $referralDiscountAmountOverride;
+            $formattedBasket->referral_used = true;
+        }
+        if (array_key_exists('codes', $basket)) {
+            if (array_key_exists('referral', $basket['codes']) && User::isValidReferralCode($basket['codes']['referral'], Auth::user())) {
+                $formattedBasket->referral_code = $basket['codes']['referral'];
             }
         }
         return $formattedBasket;
