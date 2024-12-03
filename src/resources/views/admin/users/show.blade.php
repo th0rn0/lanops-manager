@@ -18,7 +18,7 @@
 </div>
 
 <div class="row">
-	<div class="col-sm-12 col-lg-6">
+	<div class="col-sm-12 col-lg-10">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-users fa-fw"></i> User
@@ -42,6 +42,8 @@
 							@if ($userShow->email != null)
 								<li class="list-group-item">Email: {{ $userShow->email }}</li>
 							@endif
+							<li class="list-group-item">Referral Discounts Unclaimed: {{ $userShow->getReferralsUnclaimedCount() }}</li>
+							<li class="list-group-item">Referral Discounts Used: {{ $userShow->getReferralsRedeemedCount() }}</li>
 						</ul>
   					</div>
   				</div>
@@ -69,6 +71,9 @@
 									Basket
 								</th>
 								<th>
+									Referral Code
+								</th>
+								<th>
 								</th>
 							</tr>
 						</thead>
@@ -85,27 +90,20 @@
 										{{  date('d-m-y H:i', strtotime($purchase->created_at)) }}
 									</td>
 									<td>
-										@if (!$purchase->participants->isEmpty())
+										@if ($purchase->basket)
+											@include ('layouts._partials._checkout.basket', ['basket' => Helpers::formatBasket($purchase->basket, $purchase->user, $purchase->referral_discount_total, true)])
+										@elseif (!$purchase->participants->isEmpty())
 											@foreach ($purchase->participants as $participant)
 												{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
 												@if (!$loop->last)
 													<hr>
 												@endif
 											@endforeach
-										@elseif ($purchase->order != null)
-											@foreach ($purchase->order->items as $item)
-												@if ($item->item)
-													{{ $item->item->name }}
-												@endif 
-												 - x {{ $item->quantity }}
-												 <br>
-											 	@if ($item->price != null)
-													{{ config('app.currency_symbol') }}{{ $item->price * $item->quantity }}
-												@endif
-												@if (!$loop->last)
-													<hr>
-												@endif
-											@endforeach
+										@endif
+									</td>
+									<td>
+										@if ($purchase->referralUser )
+											<a href="/admin/users/{{ $purchase->referralUser->id }}">{{ $purchase->referralUser->referral_code }} - {{ $purchase->referralUser->username }}</a>
 										@endif
 									</td>
 									<td>
@@ -124,14 +122,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-12 col-lg-6">
+	<div class="col-sm-12 col-lg-2">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-users fa-fw"></i> Options
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-xs-12 col-sm-12">
 						@if ($userShow->admin)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/admin')) }}
 								{{ Form::hidden('_method', 'DELETE') }}
@@ -145,7 +143,7 @@
 						<small>This will add or remove access to this admin panel. This means they can access everything! BE CAREFUL!</small>
 					</div>
 					@if ($userShow->email != null && $userShow->password != null)
-						<div class="col-xs-12 col-sm-6">
+						<div class="col-xs-12 col-sm-12">
 							{{ Form::open(array('url'=>'/login/forgot')) }}
 	                            @csrf
 								<input type="hidden" name="email" value="{{ $userShow->email }}">
@@ -159,7 +157,7 @@
 				<h4>Danger Zone</h4>
 				<hr>
 				<div class="row">
-					<div class="col-xs-12 col-sm-6">
+					<div class="col-xs-12 col-sm-12">
 						@if (!$userShow->banned)
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/ban')) }}
 								<button type="submit" class="btn btn-block btn-danger">Ban</button>
@@ -168,16 +166,6 @@
 							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id . '/unban')) }}
 								<button type="submit" class="btn btn-block btn-success">Un-Ban</button>
 							{{ Form::close() }}
-						@endif
-					</div>
-					<div class="col-xs-12 col-sm-6">
-						@if ($userShow->banned)
-							{{ Form::open(array('url'=>'/admin/users/' . $userShow->id, 'onsubmit' => 'return ConfirmDelete()')) }}
-								{{ Form::hidden('_method', 'DELETE') }}
-								<button type="submit" class="btn btn-block btn-danger">Delete</button>
-							{{ Form::close() }}
-						@else
-							<button type="submit" class="btn btn-block btn-danger" disabled="true">Delete</button>
 						@endif
 					</div>
 				</div>

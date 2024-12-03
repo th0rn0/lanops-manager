@@ -38,7 +38,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/account', 'AccountController@index')->name('accounts');
         Route::post('/account', 'AccountController@update');
-        Route::post('/account/delete', 'AccountController@destroy');
+        // Route::post('/account/delete', 'AccountController@destroy');
         Route::get('/account/discord/callback', 'AccountController@linkDiscord');
         Route::post('/account/discord/unlink', 'AccountController@unlinkDiscord');
     });
@@ -104,10 +104,11 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::get('/payment/checkout', 'PaymentsController@showCheckout');
+        Route::post('/payment/checkout/code', 'PaymentsController@applyDiscountCode');
         Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
         Route::get('/payment/details/{paymentGateway}', 'PaymentsController@showDetails');
-        Route::get('/payment/callback', 'PaymentsController@process');
-        Route::post('/payment/post', 'PaymentsController@post');
+        Route::get('/payment/callback', 'PaymentsController@processCallback');
+        Route::post('/payment/post', 'PaymentsController@postPayment');
         Route::get('/payment/failed', 'PaymentsController@showFailed');
         Route::get('/payment/cancelled', 'PaymentsController@showCancelled');
         Route::get('/payment/successful/{purchase}', 'PaymentsController@showSuccessful');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Helpers;
 use Auth;
 
+use App\Models\User;
 use App\Models\Purchase;
 use App\Models\Event;
 use App\Models\EventTicket;
@@ -90,7 +91,7 @@ class PaymentsController extends Controller
         }
         return view('payments.details')
             ->withPaymentGateway($paymentGateway)
-            ->withBasket(Helpers::formatBasket($basket, true))
+            ->withBasket(Helpers::formatBasket($basket))
             ->withDelivery($delivery)
             ->withDeliveryDetails($deliveryDetails)
         ;
@@ -101,7 +102,7 @@ class PaymentsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function post(Request $request)
+    public function postPayment(Request $request)
     {
         if (!$paymentGateway = $this->checkParams($request->gateway, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
@@ -115,78 +116,19 @@ class PaymentsController extends Controller
                 }
             }
         }
-        if (array_key_exists('shop', $basket)) {
-            foreach ($basket['shop'] as $itemId => $quantity) {
-                if (!ShopItem::hasStockByItemId($itemId)) {
-                    $itemName = ShopItem::where('id', $itemId)->first()->name;
-                    Session::flash('alert-danger', $itemName . ' basket has Sold Out!');
-                    return Redirect::to('/payment/checkout');
-                }
-            }
-        }
-        // If Order accepts delivery and no delivery details have been submitted redirect to delivery page
-        if (array_key_exists('shop', $basket)) {
-            if (
-                !isset($request->shipping_first_name) &&
-                !isset($request->shipping_last_name) &&
-                !isset($request->shipping_address_1) &&
-                !isset($request->shipping_postcode) &&
-                !array_key_exists('delivery', $basket)
+        if (
+            (array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && !Auth::user()->isReferrable()) || 
+            $basket['referral_discount'] && !Auth::user()->getAvailableReferralPurchase()
             ) {
-                return Redirect::to('/payment/delivery/' . $paymentGateway);
-            }
-            if (!array_key_exists('delivery', $basket)) {
-                 $rules = [
-                    'delivery_type'   => 'required|in:event,shipping'
-                ];
-                $messages = [
-                    'delivery_type.required' => 'A Delivery type is Required',
-                    'delivery_type.in' => 'Delivery type must be event or shipping'
-                ];
-                $this->validate($request, $rules, $messages);
-                // Check if the order is delivery to event or person
-                if ($request->delivery_type == 'shipping') {
-                    // Shipping Details
-                    $rules = [
-                        'shipping_first_name'   => 'required',
-                        'shipping_last_name'    => 'required',
-                        'shipping_address_1'    => 'required',
-                        'shipping_postcode'     => 'required',
-                    ];
-                    $messages = [
-                        'shipping_first_name.required'      => 'First Name is Required',
-                        'shipping_last_name.required'       => 'Last Name is Required',
-                        'shipping_address_1.required'       => 'Shipping Address Required',
-                        'shipping_postcode.required'        => 'Shipping Postcode Required',
-                    ];
-                    $this->validate($request, $rules, $messages);
-                    $basket['delivery'] = [
-                        'type'                  => 'shipping',
-                        'shipping_first_name'   => $request->shipping_first_name,
-                        'shipping_last_name'    => $request->shipping_last_name,
-                        'shipping_address_1'    => $request->shipping_address_1,
-                        'shipping_address_2'    => @$request->shipping_address_2,
-                        'shipping_country'      => @$request->shipping_country,
-                        'shipping_postcode'     => $request->shipping_postcode,
-                        'shipping_state'        => @$request->shipping_state,
-                    ];
-                } else {
-                    $basket['delivery'] = ['type' => 'event'];
-                }
-                Session::put(config('app.basket_name'), $basket);
-                Session::save();
-            }
+            Session::flash('alert-danger', 'Basket has changed');
+            return Redirect::to('/payment/checkout');
         }
-        // If Credit Redirect Straight to details page
-        if ($paymentGateway == 'credit' && !isset($request->confirm)) {
-            return Redirect::to('/payment/details/' . $paymentGateway);
-        }
+        
         $offSitePaymentGateways = [
             'paypal_express',
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
         if (
-            $paymentGateway != 'credit' &&
             !in_array($paymentGateway, $offSitePaymentGateways) &&
             !isset($request->card_first_name) &&
             !isset($request->card_last_name) &&
@@ -240,15 +182,10 @@ class PaymentsController extends Controller
                 $gateway->setPassword(config('laravel-omnipay.gateways.paypal_express.credentials.password'));
                 $gateway->setSignature(config('laravel-omnipay.gateways.paypal_express.credentials.signature'));
                 break;
-            case 'credit':
-                $processPaymentSkip = true;
-                $params = array();
-                break;
         }
         Session::put('params', $params);
         Session::save();
         if (!$processPaymentSkip) {
-
             if (config('app.debug')) {
                 $this->sandbox = true;
             }
@@ -263,27 +200,6 @@ class PaymentsController extends Controller
             }
         }
 
-        // Process Response
-        // Credit
-        // if ($processPaymentSkip && $paymentGateway == 'credit') {
-        //     if (!Auth::user()->checkCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit))) {
-        //         Session::flash('alert-danger', 'Payment was UNSUCCESSFUL! - Not enough credit!');
-        //         return Redirect::to('/payment/failed');
-        //     }
-        //     $purchaseParams = [
-        //         'user_id'           => Auth::id(),
-        //         'type'              => 'Credit',
-        //         'transaction_id'    => '',
-        //         'token'             => '',
-        //         'status'            => 'Success'
-        //     ];
-        //     $purchase = Purchase::create($purchaseParams);
-        //     $this->processBasket($basket, $purchase->id);
-        //     Auth::user()->editCredit(-1 * abs((float)Helpers::formatBasket($basket)->total_credit), false, 'Purchase', true, $purchase->id);
-        //     return Redirect::to('/payment/successful/' . $purchase->id);
-        // }
-
-
         if ($response->isSuccessful()) {
             // Payment was successful: update database
             try {
@@ -296,13 +212,13 @@ class PaymentsController extends Controller
                 return Redirect::back();
             }
             $responseStripe = $response->getData();
-          
             $purchaseParams = [
-                'user_id'           => Auth::id(),
-                'type'              => 'Stripe',
-                'transaction_id'    => $response->getTransactionReference(),
-                'token'             => $response->getPaymentIntentReference(),
-                'status'            => 'Success'
+                'user_id'                   => Auth::id(),
+                'type'                      => 'Stripe',
+                'transaction_id'            => $response->getTransactionReference(),
+                'token'                     => $response->getPaymentIntentReference(),
+                'status'                    => 'Success',
+                'basket'                    => $basket,
             ];
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
@@ -331,7 +247,7 @@ class PaymentsController extends Controller
      * @param  Request $request
      * @return Redirect
      */
-    public function process(Request $request)
+    public function processCallback(Request $request)
     {
         if (!$paymentGateway = $this->checkParams($request->gate, $basket = Session::get(config('app.basket_name')))) {
             return Redirect::back();
@@ -363,11 +279,12 @@ class PaymentsController extends Controller
                 if ($response->isSuccessful()) {
                     //Add Purchase to database
                     $purchaseParams = [
-                        'user_id'           => Auth::id(),
-                        'type'              => 'Stripe',
-                        'transaction_id'    => $response->getTransactionReference(),
-                        'token'             => $response->getPaymentIntentReference(),
-                        'status'            => 'Success'
+                        'user_id'                   => Auth::id(),
+                        'type'                      => 'Stripe',
+                        'transaction_id'            => $response->getTransactionReference(),
+                        'token'                     => $response->getPaymentIntentReference(),
+                        'status'                    => 'Success',
+                        'basket'                    => $basket,
                     ];
                     $successful = true;
                 }
@@ -388,12 +305,13 @@ class PaymentsController extends Controller
                 ) {
                     //Add Purchase to database
                     $purchaseParams = [
-                        'user_id'           => Auth::id(),
-                        'type'              => 'PayPal Express',
-                        'transaction_id'    => $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'],
-                        'token'             => $paypalResponse['TOKEN'],
-                        'status'            => $paypalResponse['ACK'],
-                        'paypal_email'      => $paypalResponse['EMAIL'],
+                        'user_id'                   => Auth::id(),
+                        'type'                      => 'PayPal Express',
+                        'transaction_id'            => $paypalResponse['PAYMENTREQUEST_0_TRANSACTIONID'],
+                        'token'                     => $paypalResponse['TOKEN'],
+                        'status'                    => $paypalResponse['ACK'],
+                        'paypal_email'              => $paypalResponse['EMAIL'],
+                        'basket'                    => $basket,
                     ];
                     $successful = true;
                 }
@@ -424,7 +342,7 @@ class PaymentsController extends Controller
         if (array_key_exists('shop', $basket)) {
             $type = 'shop';
         }
-        $basket = Helpers::formatBasket($basket);
+        $basket = Helpers::formatBasket($basket, null, $purchase->referral_discount_total, true);
         Session::forget('params');
         Session::forget(config('app.basket_name'));
         return view('payments.successful')
@@ -465,13 +383,14 @@ class PaymentsController extends Controller
      */
     private function processBasket($basket, $purchaseId)
     {
+        $user = Auth::user();
         if (array_key_exists('tickets', $basket)) {
             foreach ($basket['tickets'] as $ticketId => $quantity) {
                 $ticket = EventTicket::where('id', $ticketId)->first();
                 for ($i = 1; $i <= $quantity; $i++) {
                     //Add Participant to database
                     $participant = [
-                        'user_id'       => Auth::id(),
+                        'user_id'       => $user->id,
                         'event_id'      => $ticket->event->id,
                         'ticket_id'     => $ticket->id,
                         'purchase_id'   => $purchaseId,
@@ -479,35 +398,7 @@ class PaymentsController extends Controller
                     EventParticipant::create($participant);
                 }
             }
-        } elseif(array_key_exists('shop', $basket)) {
-            // TODO: REMOVE THIS
-            $status = 'EVENT';
-            $deliverToEvent = true;
-            if (array_key_exists('delivery', $basket) && $basket['delivery']['type'] == 'shipping') {
-                $deliverToEvent = false;
-                $status = 'PENDING';
-            }
-            $formattedBasket = Helpers::formatBasket($basket);
-            $orderParams = [
-                'total'                 => (float)$formattedBasket->total,
-                'total_credit'          => $formattedBasket->total_credit,
-                'purchase_id'           => $purchaseId,
-                'status'                => $status,
-                'shipping_first_name'   => @$basket['delivery']['shipping_first_name'],
-                'shipping_last_name'    => @$basket['delivery']['shipping_last_name'],
-                'shipping_address_1'    => @$basket['delivery']['shipping_address_1'],
-                'shipping_address_2'    => @$basket['delivery']['shipping_address_2'],
-                'shipping_country'      => @$basket['delivery']['shipping_country'],
-                'shipping_postcode'     => @$basket['delivery']['shipping_postcode'],
-                'shipping_state'        => @$basket['delivery']['shipping_state'],
-                'deliver_to_event'      => $deliverToEvent,
-            ];
-            $order = ShopOrder::create($orderParams);
-            foreach ($formattedBasket as $item) {
-                $item->updateStock($item->quantity);
-                $order->updateOrder($item);
-            }
-        }
+        } 
     }
 
     /**
@@ -575,5 +466,27 @@ class PaymentsController extends Controller
             $requestScheme = 'https';
         }
         return $requestScheme;
+    }
+
+    public function applyDiscountCode(Request $request)
+    {
+        $rules = [
+            'referral_code'     => 'filled',
+        ];
+        $messages = [
+            'referral_code.filled'      => 'Referral Code Cannot be blank.',
+        ];
+        $this->validate($request, $rules, $messages);
+        if(!User::isValidReferralCode($request->referral_code, Auth::user())) {
+            Session::flash('alert-danger', 'Referral Code is not valid');
+            return Redirect::back();
+        }
+
+        $basket = Session::get(config('app.basket_name'));
+        $basket['codes']['referral'] = $request->referral_code;
+        Session::put(config('app.basket_name'), $basket);
+
+        Session::flash('alert-success', 'Referral Code applied');
+        return Redirect::back();
     }
 }

@@ -17,16 +17,22 @@
 			<p><strong>Purchase ID:</strong> {{ $purchase->id }}</p>
 			<p><strong>Payment Method:</strong> {{ $purchase->getPurchaseType() }}</p>
 			@if (is_null(Auth::user()->discord_id))
-				<h4>You havent linked your discord account! <a href="/account">Click here to link it!</a></h4> 
+				<div class="alert alert-info">
+					You havent linked your discord account! <a href="/account">Click here to link it!</a>
+				</div>
 			@endif
 			<h3>Tickets</h3>
 			<hr>
 			<div class="row">
 				@foreach ($purchase->participants as $participant)
 					<div class="col-lg-4 col-sm-6 col-xs-12 text-center">
-						<h5>{{ $participant->event->display_name }}</h5>
-						<h5>{{ $participant->ticket->name }}</h5>
-						<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<h5>{{ $participant->event->display_name }}</h5>
+								<h5>{{ $participant->ticket->name }}</h5>
+								<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
+							</div>
+						</div>
 					</div>
 				@endforeach
 			</div>
@@ -38,33 +44,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="table-responsive">
-						<table class="table table-striped">
-							<tbody>
-								@php ($total = 0)
-								@foreach ($basket as $item)
-									<tr>
-										<td>
-											<strong>{{ $item->name }}</strong>
-										</td>
-										<td>
-											x {{ $item->quantity }}
-										</td>
-										<td>
-											{{ config('app.currency_symbol') }}{{ $item->price }}
-										</td>
-									</tr>
-								@endforeach
-								<tr>
-									<td></td>
-									<td>
-										<strong>Total:</strong>
-									</td>
-									<td>
-										{{ config('app.currency_symbol') }}{{ $basket->total }}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						@include ('layouts._partials._checkout.basket')
 					</div>
 				</div>
 			</div>
