@@ -143,6 +143,16 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/bigscreen/timetable', 'BigScreenController@timetable');
     Route::get('/bigscreen/seating', 'BigScreenController@seating');
+
+    /**
+     * Tournaments
+     */
+    Route::get('/tournaments', 'TournamentsController@index');
+    Route::get('/tournaments/{tournament}', 'TournamentsController@show');
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+        Route::post('/tournaments/{tournament}/register', 'TournamentsController@register');
+        Route::post('/tournaments/{tournament}/unregister', 'TournamentsController@unregister');
+    });
 });
 
 /**
@@ -289,4 +299,13 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      */
     Route::get('/admin/purchases', 'Admin\PurchasesController@index');
     Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
+
+    /**
+     * Tournaments
+     */
+    Route::get('/admin/tournaments', 'Admin\TournamentsController@index');
+    Route::post('/admin/tournaments', 'Admin\TournamentsController@store');
+    Route::get('/admin/tournaments/{tournament}', 'Admin\TournamentsController@show');
+    Route::post('/admin/tournaments/{tournament}', 'Admin\TournamentsController@update');
+    Route::delete('/admin/tournaments/{tournament}', 'Admin\TournamentsController@destroy');
 });

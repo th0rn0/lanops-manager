@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GameSignupListParticipant extends Model
+class TournamentParticipant extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'game_signup_list_participant';
+    protected $table = 'tournament_participants';
 
     protected $fillable = [
         'user_id',
-        'game_signup_list_id',
-        'game_signup_list_team_id'
+        'tournament_id',
+        'tournament_team_id'
     ];
 
     /**
@@ -38,11 +38,11 @@ class GameSignupListParticipant extends Model
 
     public function signupList()
     {
-        return $this->belongsTo('App\Models\GameSignupList', 'game_signup_list_id');
+        return $this->belongsTo('App\Models\Tournament', 'tournament_id');
     }
 
     public function team()
     {
-        return $this->belongsTo('App\Models\GameSignupListTeam', 'game_signup_list_team_id');
+        return $this->belongsTo('App\Models\TournamentTeam', 'tournament_team_id');
     }
 }

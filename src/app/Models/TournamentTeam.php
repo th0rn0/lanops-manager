@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GameSignupListTeam extends Model
+class TournamentTeam extends Model
 {
     /**
      * The name of the table.
      *
      * @var string
      */
-    protected $table = 'game_signup_list_participant';
+    protected $table = 'tournament_teams';
 
     protected $fillable = [
         'name',
-        'game_signup_list_id',
+        'tournament_id',
     ];
 
     /**
@@ -30,13 +30,13 @@ class GameSignupListTeam extends Model
     /*
      * Relationships
      */
-    public function signupList()
+    public function tournament()
     {
-        return $this->belongsTo('App\Models\GameSignupList', 'game_signup_list_id');
+        return $this->belongsTo('App\Models\Tournament', 'tournament_id');
     }
 
     public function participants()
     {
-        return $this->hasMany('App\Models\GameSignupListParticipant', 'game_signup_list_team_id');
+        return $this->hasMany('App\Models\TournamentParticipant');
     }
 }

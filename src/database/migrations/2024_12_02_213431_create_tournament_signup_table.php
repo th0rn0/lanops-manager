@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('game_signup_lists', function (Blueprint $table) {
+        Schema::create('tournaments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
 			$table->integer('event_id')->unsigned()->index()->nullable();
@@ -33,9 +33,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('game_signup_lists', function (Blueprint $table) {
-			$table->dropForeign('game_signup_lists_event_id_foreign');
+        Schema::table('tournaments', function (Blueprint $table) {
+			$table->dropForeign('tournaments_event_id_foreign');
         });
-        Schema::dropIfExists('game_signup_lists');
+        Schema::dropIfExists('tournaments');
     }
 };

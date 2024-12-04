@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('game_signup_list_teams', function (Blueprint $table) {
+        Schema::create('tournament_teams', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('game_signup_list_id')->unsigned()->index();
+			$table->integer('tournament_id')->unsigned()->index();
 			$table->string('name');
 			$table->timestamps();
+            $table->string('password')->nullable();
 
 			## Foreign Key
-			$table->foreign('game_signup_list_id')->references('id')->on('game_signup_lists')->onDelete('cascade');
+			$table->foreign('tournament_id')->references('id')->on('tournaments')->onDelete('cascade');
         });
     }
 
@@ -31,9 +32,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('game_signup_list_teams', function (Blueprint $table) {
-			$table->dropForeign('game_signup_list_teams_game_signup_list_id_foreign');
+        Schema::table('tournament_teams', function (Blueprint $table) {
+			$table->dropForeign('tournament_teams_tournament_id_foreign');
         });
-        Schema::dropIfExists('game_signup_list_teams');
+        Schema::dropIfExists('tournament_teams');
     }
 };

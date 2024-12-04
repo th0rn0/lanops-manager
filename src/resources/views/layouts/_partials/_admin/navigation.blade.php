@@ -65,6 +65,9 @@
 			<li>
 				<a href="/admin/purchases"><i class="fa fa-credit-card fa-fw"></i> Purchases</a>
 			</li>
+			<li>
+				<a href="/admin/tournaments"><i class="fa fa-credit-card fa-fw"></i> Tournaments</a>
+			</li>
 		</ul>
 	</div>
 	<!-- /.navbar-collapse -->

@@ -18,7 +18,7 @@ class PurchasesController extends Controller
             ->withPurchases(Purchase::paginate(20));
     }
 
-  	/**
+    /**
      * Show Purchase Page
      * @param Purchase $purchase
      * @return View

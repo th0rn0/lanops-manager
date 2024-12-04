@@ -41,7 +41,7 @@
 								<th>Seat</th>
 								<th>Ticket</th>
 								<th>Paypal Email</th>
-								<th>Referralsadsa Code Used</th>
+								<th>Referral Code Used</th>
 								<th>Referral Discount Redeemed</th>
 								<th>Free/Staff/Gift</th>
 								<th>Signed in</th>
