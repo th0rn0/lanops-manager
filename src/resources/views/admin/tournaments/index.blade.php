@@ -27,6 +27,7 @@
 							<th>Name</th>
 							<th>Event</th>
 							<th>Teams Size</th>
+							<th>Participants</th>
 							<th>Status</th>
 						</tr>
 					</thead>
@@ -48,6 +49,7 @@
 										None
 									@endif
 								</td>
+								<td>{{ $tournament->participants()->count() }}</td>
 								<td>{{ $tournament->status }}</td>
 								<td width="15%">
 									<a href="/admin/tournaments/{{ $tournament->slug }}">

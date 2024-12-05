@@ -152,6 +152,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
         Route::post('/tournaments/{tournament}/register', 'TournamentsController@register');
         Route::post('/tournaments/{tournament}/unregister', 'TournamentsController@unregister');
+        Route::post('/tournaments/{tournament}/registerTeam', 'TournamentsController@registerTeam');
     });
 });
 

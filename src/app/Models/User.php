@@ -106,9 +106,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\Purchase', 'referral_code_user_id');
     }
 
-    public function gameListParticipants()
+    public function tournamentParticipants()
     {
-        return $this->hasMany('App\Models\GameSignupListParticipant');
+        return $this->hasMany('App\Models\TournamentParticipant');
     }
 
     /**

@@ -57,31 +57,36 @@ class TournamentsController extends Controller
      */
     public function register(Tournament $tournament, Request $request)
     {
+        $rules = [];
+        $messages = [];
+        if (isset($request->event_id) && $request->event_id != 0) {
+            $rules['tournament_team_id'] = 'exists:tournament_teams,id';
+            $messages['tournament_team_id'] = 'Tournament Team does not exist';
+        }
+        $this->validate($request, $rules, $messages);
+
         if ($tournament->status != 'OPEN') {
             Session::flash('alert-danger', 'Signups not permitted at this time.');
             return Redirect::back();
         }
 
-        if ($tournament->event_id && !$tournament->event->eventParticipants()->where('id', $request->user_id)->get() > 0) {
+        if ($tournament->event_id && !$tournament->event->getEventParticipant()) {
             Session::flash('alert-danger', 'You are not signed in to this event.');
             return Redirect::back();
         }
+
         if ($tournament->isUserSignedUp(Auth::user())) {
             Session::flash('alert-danger', 'You are already signed up to this tournament.');
             return Redirect::back();
         }
-        // if (isset($request->event_tournament_team_id) &&
-        //     $tournamentTeam = $tournament->tournamentTeams()->where('id', $request->event_tournament_team_id)->first()
-        // ) {
-        //     if ($tournamentTeam->tournamentParticipants->count() == substr($tournament->team_size, 0, 1)) {
-        //         Session::flash('alert-danger', 'This team is full.');
-        //         return Redirect::back();
-        //     }
-        // }
+
         $tournamentParticipant                  = new TournamentParticipant();
         $tournamentParticipant->user_id         = Auth::id();
         $tournamentParticipant->tournament_id   = $tournament->id;
-        // $tournamentParticipant->event_tournament_team_id    = @$request->event_tournament_team_id;
+        $tournamentParticipant->tournament_team_id = null;
+        if ($tournament->hasTeams() && isset($request->tournament_team_id) && $request->tournament_team_id != null) {
+            $tournamentParticipant->tournament_team_id = $request->tournament_team_id;
+        }
         if (!$tournamentParticipant->save()) {
             Session::flash('alert-danger', 'Cannot add participant. Please try again.');
             return Redirect::back();
@@ -89,47 +94,67 @@ class TournamentsController extends Controller
         Session::flash('alert-success', 'Successfully Registered!');
         return Redirect::back();
     }
-    // /**
-    //  * Register Team to Tournament
-    //  * @param  Event           $event
-    //  * @param  EventTournament $tournament
-    //  * @param  Request         $request
-    //  * @return Redirect
-    //  */
-    // public function registerTeam(Event $event, EventTournament $tournament, Request $request)
-    // {
-    //     if ($tournament->status != 'OPEN') {
-    //         Session::flash('alert-danger', 'Signups not permitted at this time.');
-    //         return Redirect::back();
-    //     }
-     
-    //     if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
-    //         Session::flash('alert-danger', 'You are not signed in to this event.');
-    //         return Redirect::back();
-    //     }
-    //     if ($tournament->getParticipant($request->event_participant_id)) {
-    //         Session::flash('alert-danger', 'You are already signed up to this tournament.');
-    //         return Redirect::back();
-    //     }
-    //     $tournamentTeam                         = new EventTournamentTeam();
-    //     $tournamentTeam->event_tournament_id    = $tournament->id;
-    //     $tournamentTeam->name                   = $request->team_name;
-    //     if (!$tournamentTeam->save()) {
-    //         Session::flash('alert-danger', 'Cannot add Team. Please try again.');
-    //         return Redirect::back();
-    //     }
-    //     // TODO - Refactor
-    //     $tournamentParticipant                              = new EventTournamentParticipant();
-    //     $tournamentParticipant->event_participant_id        = $request->event_participant_id;
-    //     $tournamentParticipant->event_tournament_id         = $tournament->id;
-    //     $tournamentParticipant->event_tournament_team_id    = $tournamentTeam->id;
-    //     if (!$tournamentParticipant->save()) {
-    //         Session::flash('alert-danger', 'Cannot add participant. Please try again.');
-    //         return Redirect::back();
-    //     }
-    //     Session::flash('alert-success', 'Team Successfully Created!');
-    //     return Redirect::back();
-    // }
+
+    /**
+     * Register Team to Tournament
+     * @param  Tournament $tournament
+     * @param  Request         $request
+     * @return Redirect
+     */
+    public function registerTeam(Tournament $tournament, Request $request)
+    {
+        $rules = [
+            'team_name'          => 'required',
+        ];
+        $messages = [
+            'team_name.required'         => 'Team Name is required',
+        ];
+        $this->validate($request, $rules, $messages);
+        if (!$tournament->signupsOpen()) {
+            Session::flash('alert-danger', 'Signups not permitted at this time.');
+            return Redirect::back();
+        }
+
+        if ($tournament->event_id && !$tournament->event->getEventParticipant()) {
+            Session::flash('alert-danger', 'You are not signed in to this event.');
+            return Redirect::back();
+        }
+
+        if ($tournament->hasEvent() && !$tournament->event->getEventParticipant()) {
+            Session::flash('alert-danger', 'You are not signed in to this event.');
+            return Redirect::back();
+        }
+
+        if ($tournament->isUserSignedUp(Auth::user())) {
+            Session::flash('alert-danger', 'You are already signed up to this tournament.');
+            return Redirect::back();
+        }
+
+        $tournamentTeam                 = new TournamentTeam();
+        $tournamentTeam->tournament_id  = $tournament->id;
+        $tournamentTeam->name           = $request->team_name;
+        $tournamentTeam->password       = null;
+        if ($request->team_password != "") {
+            $tournamentTeam->password = $request->team_password;
+        }
+        if (!$tournamentTeam->save()) {
+            Session::flash('alert-danger', 'Cannot add Team. Please try again.');
+            return Redirect::back();
+        }
+
+        $tournamentParticipant                      = new TournamentParticipant();
+        $tournamentParticipant->user_id             = Auth::id();
+        $tournamentParticipant->tournament_id       = $tournament->id;
+        $tournamentParticipant->tournament_team_id  = $tournamentTeam->id;
+        if (!$tournamentParticipant->save()) {
+            Session::flash('alert-danger', 'Cannot add participant. Please try again.');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Team Successfully Created!');
+        return Redirect::back();
+    }
+
     // /**
     //  * Register Pug to Tournament
     //  * @param  Event           $event
@@ -181,6 +206,7 @@ class TournamentsController extends Controller
             Session::flash('alert-danger', 'Cannot remove. Please try again.');
             return Redirect::back();
         }
+
         Session::flash('alert-success', 'You have been successfully removed from the Tournament.');
         return Redirect::back();
     }

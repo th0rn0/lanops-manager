@@ -63,9 +63,6 @@ class Tournament extends Model
             static::addGlobalScope('statusDraft', function (Builder $builder) {
                 $builder->where('status', '!=', Tournament::$statusDraft);
             });
-            // static::addGlobalScope('statusPublished', function (Builder $builder) {
-            //     $builder->where('status', 'PUBLISHED');
-            // });
         }
     }
 
@@ -125,11 +122,6 @@ class Tournament extends Model
             Tournament::$statusLive     => Tournament::$statusLive,
             Tournament::$statusComplete => Tournament::$statusComplete,
         ];
-    }
-
-    public function isTeamBased()
-    {
-        return $this->team_size > 0;
     }
 
     public function getParticipantByUser(User $user)

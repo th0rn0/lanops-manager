@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\TournamentTeam;
+
 use Illuminate\Database\Eloquent\Model;
 
 class TournamentParticipant extends Model
@@ -28,6 +30,17 @@ class TournamentParticipant extends Model
         'created_at',
     );
 
+    public static function boot()
+    {
+        parent::boot();
+        self::deleted(function ($model) {
+            if ($model->getOriginal('tournament_team_id') != null && $team = TournamentTeam::where('id', $model->getOriginal('tournament_team_id'))->first()) {
+                if ($team->participants()->count() == 0) {
+                    $team->delete();
+                }
+            }
+        });
+    }
     /*
      * Relationships
      */
@@ -36,7 +49,7 @@ class TournamentParticipant extends Model
         return $this->belongsTo('App\Models\User', foreignKey: 'user_id');
     }
 
-    public function signupList()
+    public function tournament()
     {
         return $this->belongsTo('App\Models\Tournament', 'tournament_id');
     }
@@ -44,5 +57,13 @@ class TournamentParticipant extends Model
     public function team()
     {
         return $this->belongsTo('App\Models\TournamentTeam', 'tournament_team_id');
+    }
+
+    public function getSeat()
+    {
+        if (!$this->tournament->hasEvent()) {
+            return null;
+        }
+        return $this->tournament->event->eventParticipants()->where('user_id', $this->user_id)->first()->seat;
     }
 }

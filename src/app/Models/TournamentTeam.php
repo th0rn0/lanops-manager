@@ -39,4 +39,9 @@ class TournamentTeam extends Model
     {
         return $this->hasMany('App\Models\TournamentParticipant');
     }
+
+    public function getParticipantCount()
+    {
+        return $this->participants()->count();
+    }
 }
