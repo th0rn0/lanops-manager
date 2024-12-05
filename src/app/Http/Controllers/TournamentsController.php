@@ -26,30 +26,6 @@ class TournamentsController extends Controller
     }
     
     /**
-     * Show Tournaments Page
-     * @param  Event            $event
-     * @param  EventTournament  $tournament
-     * @param  Request          $request
-     * @return View
-     */
-    // public function show(Event $event, EventTournament $tournament, Request $request)
-    // {
-    //     if (!$user = Auth::user()) {
-    //         Redirect::to('/');
-    //     }
-    //     $user->setActiveEventParticipant($event->id);
-    //     if (!isset($user->active_event_participant)) {
-    //         Session::flash('alert-danger', 'Please sign in with one of our Admins.');
-    //         return Redirect::to('/')->withErrors('Please sign in with one of our Admins.');
-    //     }
-    //     return view('events.tournaments.show')
-    //         ->withTournament($tournament)
-    //         ->withEvent($event)
-    //         ->withUser($user)
-    //     ;
-    // }
-    
-    /**
      * Register to Tournament
      * @param  Tournament       $tournament
      * @param  Request          $request
@@ -154,40 +130,6 @@ class TournamentsController extends Controller
         Session::flash('alert-success', 'Team Successfully Created!');
         return Redirect::back();
     }
-
-    // /**
-    //  * Register Pug to Tournament
-    //  * @param  Event           $event
-    //  * @param  EventTournament $tournament
-    //  * @param  Request         $request
-    //  * @return Redirect
-    //  */
-    // public function registerPug(Event $event, EventTournament $tournament, Request $request)
-    // {
-    //     if ($tournament->status != 'OPEN') {
-    //         Session::flash('alert-danger', 'Signups not permitted at this time.');
-    //         return Redirect::back();
-    //     }
-     
-    //     if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
-    //         Session::flash('alert-danger', 'You are not signed in to this event.');
-    //         return Redirect::back();
-    //     }
-    //     if ($tournament->getParticipant($request->event_participant_id)) {
-    //         Session::flash('alert-danger', 'You are already signed up to this tournament.');
-    //         return Redirect::back();
-    //     }
-    //     $tournamentParticipant                          = new EventTournamentParticipant();
-    //     $tournamentParticipant->event_participant_id    = $request->event_participant_id;
-    //     $tournamentParticipant->event_tournament_id     = $tournament->id;
-    //     $tournamentParticipant->pug                     = true;
-    //     if (!$tournamentParticipant->save()) {
-    //         Session::flash('alert-danger', 'Cannot add PUG. Please try again.');
-    //         return Redirect::back();
-    //     }
-    //     Session::flash('alert-success', 'Successfully Registered!');
-    //     return Redirect::back();
-    // }
 
     /**
      * Unregister from Tournament
