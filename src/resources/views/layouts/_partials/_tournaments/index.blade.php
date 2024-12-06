@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <strong><a href="/tournaments/{{ $tournament->slug }}">{{ $tournament->name }}</a></strong>
+        <strong>{{ $tournament->name }}</strong>
         @if ($tournament->hasEvent())
             <strong> - {{ $tournament->event->display_name }}</strong>
         @endif
