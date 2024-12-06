@@ -120,7 +120,7 @@ class Event extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => 'nice_name'
             ]
         ];
     }
