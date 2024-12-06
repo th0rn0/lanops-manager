@@ -111,6 +111,11 @@ class Event extends Model
         return $this->hasMany('App\Models\Poll', 'event_id');
     }
 
+    public function tournaments()
+    {
+        return $this->hasMany('App\Models\Tournament');
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *
