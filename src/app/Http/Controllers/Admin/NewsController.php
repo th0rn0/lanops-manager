@@ -23,7 +23,7 @@ class NewsController extends Controller
     public function index()
     {
         return view('admin.news.index')
-            ->withNewsArticles(NewsArticle::paginate(10))
+            ->withNewsArticles(NewsArticle::orderBy('created_at', 'DESC')->paginate(10))
             ->withCommentsToApprove(
                 NewsComment::where([['approved', '=', false], ['reviewed', '=', false]])
                     ->get()

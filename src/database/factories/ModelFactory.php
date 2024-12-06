@@ -32,8 +32,8 @@ $factory->define(App\Models\Event::class, function (Faker\Generator $faker) {
         'slug'              => strtolower(str_replace(' ', '-', $event_name)),
         'start'             => $start_date . ' 16:00:00',
         'end'               => $end_date . ' 18:00:00',
-        'desc_long'         => $faker->sentences($nb = 5, $asText = true),
-        'desc_short'        => $faker->sentences($nb = 1, $asText = true),
+        'desc_long'         => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
+        'desc_short'        => "Some Awesome Event",
         'status'            => 'published',
     ];
 });
@@ -93,7 +93,7 @@ $factory->define(App\Models\EventVenue::class, function (Faker\Generator $faker)
 $factory->define(App\Models\EventInformation::class, function (Faker\Generator $faker) {
     return [
         'title' => $faker->words($nb = 3, $asText = true),
-        'text'  => $faker->paragraphs($nb = 3, $asText = true),
+        'text'  => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
     ];
 });
 
@@ -101,6 +101,7 @@ $factory->define(App\Models\EventInformation::class, function (Faker\Generator $
 $factory->define(App\Models\NewsArticle::class, function (Faker\Generator $faker) {
     return [
         'title'     => $faker->words($nb = 3, $asText = true),
-        'text'      => $faker->paragraphs($nb = 3, $asText = true),
+        'text'      => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
+        // 'text'      => $faker->paragraphs([$nb = 3, $asText = true]),
     ];
 });

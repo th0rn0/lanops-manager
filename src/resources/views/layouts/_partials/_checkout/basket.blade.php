@@ -4,7 +4,7 @@
 			@foreach ($basket as $item)
 				<tr>
 					<td>
-						<strong>{{ $item->name }}</strong>
+						<strong>{{ $item->event->display_name }}: {{ $item->name }}</strong>
 					</td>
 					<td class="text-right">
 						x {{ $item->quantity }}
@@ -16,6 +16,28 @@
 					</td>
 				</tr>
 			@endforeach
+			@if ($basket->referral_discount_total > 0)
+				<tr>
+					<td></td>
+					<td class="text-right">
+						<strong>Referral Discounts:</strong>
+					</td>
+					<td>
+						-{{ config('app.currency_symbol') }}{{ number_format($basket->referral_discount_total, 2) }}
+					</td>
+				</tr>
+			@endif
+			@if ($basket->referral_code) 
+			<tr>
+				<td></td>
+				<td class="text-right">
+					<strong>Referral Code:</strong>
+				</td>
+				<td>
+					{{ $basket->referral_code }}
+				</td>
+			</tr>
+			@endif
 			<tr>
 				<td></td>
 				<td class="text-right">
@@ -26,6 +48,7 @@
 						{{ config('app.currency_symbol') }}{{ number_format($basket->total, 2) }}
 					@endif
 				</td>
+			</tr>
 		</tbody>
 	</table>
 </div>

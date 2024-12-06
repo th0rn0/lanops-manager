@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts._partials.events-navigation', function ($view) {
-            $view->with('events', Event::orderBy('display_name', 'desc')->get());
+            $view->with('events', Event::orderBy('created_at', 'desc')->whereNot('status', 'DRAFT')->get());
         });
         view()->composer('*', function ($view) {
             $view->with('user', Auth::user());

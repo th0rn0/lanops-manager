@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Spatie\WebhookServer\WebhookCall;
 
-// TODO - REMOVE MUST VERIFY EMAIL
 class User extends Authenticatable implements MustVerifyEmail
 {
 
@@ -86,6 +85,10 @@ class User extends Authenticatable implements MustVerifyEmail
                     }
                 }
             };
+            if (!$model->referral_code) {
+                $model->referral_code = User::generateReferralCode();
+                $model->save();
+            }
         });
 
     }
@@ -100,6 +103,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function purchases()
     {
         return $this->hasMany('App\Models\Purchase');
+    }
+
+    public function referralPurchases()
+    {
+        return $this->hasMany('App\Models\Purchase', 'referral_code_user_id');
+    }
+
+    public function tournamentParticipants()
+    {
+        return $this->hasMany('App\Models\TournamentParticipant');
     }
 
     /**
@@ -181,60 +194,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $return;
     }
 
-    // To Re introduce with new credit sytem
-    // /**
-    //  * Check Credit amount for current user
-    //  * @param  $amount
-    //  * @return Boolean
-    //  */
-    // public function checkCredit($amount)
-    // {
-    //     if (($this->credit_total + $amount) < 0) {
-    //         return false;
-    //     }
-    //     return true;
-    // }
-
-    // /**
-    //  * Edit Credit for current User
-    //  * @param  $amount
-    //  * @param  Boolean $manual
-    //  * @param  $reason
-    //  * @param  Boolean $buy
-    //  * @param  $purchaseId
-    //  * @return Boolean
-    //  */
-    // public function editCredit($amount, $manual = false, $reason = 'System Automated', $buy = false, $purchaseId = null)
-    // {
-    //     $this->credit_total += $amount;
-    //     $admin_id = null;
-    //     if ($manual) {
-    //         $admin_id = Auth::id();
-    //         $reason = 'Manual Edit';
-    //     }
-    //     $action = 'ADD';
-    //     if ($amount < 0) {
-    //         $action = 'SUB';
-    //     }
-    //     if ($buy) {
-    //         $action = 'BUY';
-    //     }
-    //     if ($amount != 0) {
-    //         CreditLog::create([
-    //             'user_id'       => $this->id,
-    //             'action'        => $action,
-    //             'amount'        => $amount,
-    //             'reason'        => $reason,
-    //             'purchase_id'   => $purchaseId,
-    //             'admin_id'      => $admin_id
-    //         ]);
-    //     }
-    //     if (!$this->save()) {
-    //         return false;
-    //     }
-    //     return true;
-    // }
-
     /**
      * Send the password reset notification.
      *
@@ -288,4 +247,48 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->discord_avatar.".png";
     }
 
+    public function isReferrable()
+    {
+        return count($this->eventParticipants) == 0;
+    }
+
+    public static function generateReferralCode()
+    {
+        return bin2hex(random_bytes(10));
+    }
+
+    public static function isValidReferralCode($referralCode, User $excludeUser = null)
+    {
+        if ($excludeUser) {
+            return User::where('referral_code', $referralCode)
+                ->where('id', '!=', $excludeUser->id)
+                ->withCount('eventParticipants')
+                ->having('event_participants_count', '>', 0)
+                ->first();
+        }
+        return User::where('referral_code', $referralCode)
+            ->withCount('eventParticipants')
+            ->having('event_participants_count', '>', 0)
+            ->first();
+    }
+
+    public static function getUserByReferralCode($referralCode)
+    {
+        return User::where('referral_code', $referralCode)->first();
+    }
+
+    public function getReferralsRedeemedCount()
+    {
+        return count($this->referralPurchases()->whereNot('referral_code_discount_redeemed_purchase_id', null)->get());
+    }
+
+    public function getReferralsUnclaimedCount()
+    {
+        return count($this->referralPurchases()->where('referral_code_discount_redeemed_purchase_id', null)->get());
+    }
+
+    public function getAvailableReferralPurchase()
+    {
+        return $this->referralPurchases->where('referral_code_discount_redeemed_purchase_id', null)->first();
+    }
 }

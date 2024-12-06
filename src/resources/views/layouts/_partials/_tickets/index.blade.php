@@ -1,7 +1,7 @@
 <div class="panel panel-success">
 	<div class="panel-heading">
 		@if ($participant->ticket)
-			<strong>{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - Seat: @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else Not Seated @endif @endif</strong>
+			<strong>{{ $participant->ticket->name }}</strong>
 		@else
 			@if ($participant->staff)
 				<strong>Staff Ticket @if ($participant->seat) - Seat: {{$participant->seat->seat}} @endif</strong>
@@ -19,6 +19,11 @@
 	<div class="panel-body">
 		<div class="row" style="display: flex; align-items: center;">
 			<div class="col-md-8 col-sm-8 col-xs-12">
+				<div class="alert alert-success">
+					<strong>
+						{{ $participant->event->display_name }} @if ($participant->ticket && $participant->ticket->seatable) - Seat: @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else Not Seated @endif @endif
+					</strong>
+				</div>
 				@if ($participant->gift != 1 && $participant->gift_accepted != 1)
 					<button class="btn btn-md btn-success btn-block" onclick="giftTicket('{{ $participant->id }}')" data-toggle="modal" data-target="#giftTicketModal">
 						Gift Ticket
@@ -28,7 +33,7 @@
 					<label>Gift URL:</label>
 					<p>
 						<strong>
-							http://{{ config('app.url') }}/gift/accept/?url={{ $participant->gift_accepted_url }}
+							{{ config('app.url') }}/gift/accept/?url={{ $participant->gift_accepted_url }}
 						</strong>
 					</p>
 					{{ Form::open(array('url'=>'/gift/' . $participant->id . '/revoke', 'id'=>'revokeGiftTicketForm')) }}

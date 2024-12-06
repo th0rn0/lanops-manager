@@ -37,6 +37,8 @@ return [
     'discord_client_secret' => env('DISCORD_CLIENT_SECRET', ''),
     'discord_scope' => env('DISCORD_SCOPE', 'identify'),
 
+    'refer_a_friend_discount' => env('REFER_A_FRIEND_DISCOUNT', 10),
+
     'seo_description' => env('SEO_DESCRIPTION', ''),
     'seo_keywords' => env('SEO_KEYWORDS', 'UK Lan, LAN, LAN Party, South Yorkshire, Gaming, lanops, UK, community'),
     

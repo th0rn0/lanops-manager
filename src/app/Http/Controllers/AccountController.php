@@ -20,7 +20,7 @@ class AccountController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $purchases = $user->purchases()->paginate(5, ['*'], 'pu');
+        $purchases = $user->purchases()->latest()->paginate(5, ['*'], 'pu');
         $tickets = $user->eventParticipants()->paginate(5, ['*'], 'ti');
 
         $state = bin2hex(openssl_random_pseudo_bytes(12));

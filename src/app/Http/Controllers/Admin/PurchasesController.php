@@ -15,10 +15,10 @@ class PurchasesController extends Controller
     public function index()
     {
         return view('admin.purchases.index')
-            ->withPurchases(Purchase::paginate(20));
+            ->withPurchases(Purchase::orderBy('id', 'DESC')->paginate(20));
     }
 
-  	/**
+    /**
      * Show Purchase Page
      * @param Purchase $purchase
      * @return View

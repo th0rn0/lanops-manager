@@ -41,6 +41,8 @@
 								<th>Seat</th>
 								<th>Ticket</th>
 								<th>Paypal Email</th>
+								<th>Referral Code Used</th>
+								<th>Referral Discount Redeemed</th>
 								<th>Free/Staff/Gift</th>
 								<th>Signed in</th>
 								<th></th>
@@ -65,6 +67,20 @@
 									</td>
 									<td>
 										@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif
+									</td>
+									<td>
+										@if ($participant->purchase && $participant->purchase->referralUser)
+											Yes
+										@else
+											No
+										@endif
+									</td>
+									<td>
+										@if ($participant->purchase && $participant->purchase->referral_discount_total > 0)
+											Yes
+										@else
+											No
+										@endif
 									</td>
 									<td>
 										@if ($participant->free)

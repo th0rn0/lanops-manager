@@ -99,7 +99,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($newsArticles->reverse() as $newsArticle)
+							@foreach ($newsArticles as $newsArticle)
 								<tr>
 									<td>
 										{{ $newsArticle->title }}
