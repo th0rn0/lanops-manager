@@ -22,7 +22,7 @@ class NewsController extends Controller
     public function index()
     {
         return view('news.index')
-            ->withNewsArticles(NewsArticle::paginate(20));
+            ->withNewsArticles(NewsArticle::orderBy('created_at', 'DESC')->paginate(20));
     }
 
     /**

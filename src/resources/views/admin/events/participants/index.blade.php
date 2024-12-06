@@ -69,14 +69,14 @@
 										@if ($participant->purchase) {{ $participant->purchase->paypal_email }} @endif
 									</td>
 									<td>
-										@if ($participant->purchase->referral_code_user_id)
+										@if ($participant->purchase && $participant->purchase->referralUser)
 											Yes
 										@else
 											No
 										@endif
 									</td>
 									<td>
-										@if ($participant->purchase->referral_discount_total > 0)
+										@if ($participant->purchase && $participant->purchase->referral_discount_total > 0)
 											Yes
 										@else
 											No

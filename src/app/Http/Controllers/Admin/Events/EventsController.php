@@ -26,7 +26,7 @@ class EventsController extends Controller
     {
         return view('admin.events.index')
             ->withUser(Auth::user())
-            ->withEvents(Event::withoutGlobalScopes()->paginate(10));
+            ->withEvents(Event::withoutGlobalScopes()->orderBy('created_at', 'DESC')->paginate(10));
     }
 
     /**

@@ -85,6 +85,10 @@ class User extends Authenticatable implements MustVerifyEmail
                     }
                 }
             };
+            if (!$model->referral_code) {
+                $model->referral_code = User::generateReferralCode();
+                $model->save();
+            }
         });
 
     }

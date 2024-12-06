@@ -114,4 +114,13 @@ class UsersController extends Controller
         Session::flash('alert-success', 'Successfully unbanned user!');
         return Redirect::back();
     }
+
+    public function generalReferralCodes()
+    {
+        $users = User::all();
+        foreach ($users as $user) {
+            $user->referral_code = User::generateReferralCode();
+            $user->save();
+        }
+    }
 }

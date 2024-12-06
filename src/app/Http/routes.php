@@ -261,6 +261,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
      * Users
      */
     Route::get('/admin/users', 'Admin\UsersController@index');
+    Route::get('/admin/users/referralcodes', 'Admin\UsersController@generalReferralCodes');
     Route::get('/admin/users/{user}', 'Admin\UsersController@show');
     Route::post('/admin/users/{user}/admin', 'Admin\UsersController@grantAdmin');
     Route::delete('/admin/users/{user}/admin', 'Admin\UsersController@removeAdmin');

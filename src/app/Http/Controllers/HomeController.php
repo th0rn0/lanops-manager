@@ -32,7 +32,7 @@ class HomeController extends Controller
                     ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
             )
             ->withNewsArticles(NewsArticle::limit(4)->orderBy('created_at', 'desc')->get())
-            ->withEvents(Event::all())
+            ->withEvents(Event::orderBy('created_at', 'DESC')->get())
             ->withSliderImages(json_decode(json_encode($sliderImages), FALSE))
         ;
     }
