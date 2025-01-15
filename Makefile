@@ -33,5 +33,8 @@ artisan-db-migrate:
 artisan-storage-link:
 	docker compose run --rm artisan storage:link
 
-# artisan-db-seed:
-# 	docker compose run --rm artisan db:seed
+artisan-db-fresh:
+	docker compose run --rm artisan migrate:fresh
+
+artisan-db-seed:
+	docker compose run --rm artisan db:seed

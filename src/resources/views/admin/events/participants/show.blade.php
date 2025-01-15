@@ -97,11 +97,11 @@
 				@else
 					<p>No Ticket Bought / Free</p>
 				@endif
-				@if ($participant->purchase->referral_discount_total > 0)
+				@if ($participant->purchase && $participant->purchase->referral_discount_total > 0)
 					{{ Form::label('','Referral Code Discount Applied!',array('id'=>'','class'=>'')) }}
 					<p>{{ config('app.currency_symbol') }}{{ $participant->purchase->referral_discount_total }}</p>
 				@endif
-				@if ($participant->purchase->referral_code_user_id)
+				@if ($participant->purchase && $participant->purchase->referral_code_user_id)
 					{{ Form::label('','Referral Code Used!',array('id'=>'','class'=>'')) }}
 					<p>{{ $participant->purchase->referralUser->username }}'s Referral Code Used</p>
 				@endif
