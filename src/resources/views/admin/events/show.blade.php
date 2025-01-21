@@ -62,24 +62,44 @@
 									</div>
 								</div>
 								<div class="col-md-6 col-xs-12">
-									<div class="form-group">
-										{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
-										{{ 
-											Form::select(
-												'status',
-												array(
-													'draft'=>'Draft',
-													'preview'=>'Preview',
-													'published'=>'Published',
-													'private' => 'Private'
-												),
-												strtolower($event->status),
-												array(
-													'id'=>'status',
-													'class'=>'form-control'
-												)
-											)
-										}}
+									<div class="row">
+										<div class="col-md-6 col-xs-12">
+											<div class="form-group">
+												{{ Form::label('event_status','Status',array('id'=>'','class'=>'')) }}
+												{{ 
+													Form::select(
+														'status',
+														array(
+															'draft'=>'Draft',
+															'preview'=>'Preview',
+															'published'=>'Published',
+															'private' => 'Private'
+														),
+														strtolower($event->status),
+														array(
+															'id'=>'status',
+															'class'=>'form-control'
+														)
+													)
+												}}
+											</div>
+										</div>
+										<div class="col-md-6 col-xs-12">
+											<div class="form-group">
+												{{ Form::label('event_type','Type',array('id'=>'','class'=>'')) }}
+												{{ 
+													Form::select(
+														'type',
+														App\Models\Event::getTypeArray(),
+														$event->type,
+														array(
+															'id'=>'type',
+															'class'=>'form-control'
+														)
+													)
+												}}
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

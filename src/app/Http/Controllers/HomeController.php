@@ -31,6 +31,16 @@ class HomeController extends Controller
                 Event::where('end', '>=', \Carbon\Carbon::now())
                     ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
             )
+            ->withNextEventLan(
+                Event::where('end', '>=', \Carbon\Carbon::now())
+                    ->where('type', Event::$typeLan)
+                    ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
+            )
+            ->withNextEventTabletop(
+                Event::where('end', '>=', \Carbon\Carbon::now())
+                    ->where('type', Event::$typeTabletop)
+                    ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
+            )
             ->withNewsArticles(NewsArticle::limit(4)->orderBy('created_at', 'desc')->get())
             ->withEvents(Event::orderBy('created_at', 'DESC')->get())
             ->withSliderImages(json_decode(json_encode($sliderImages), FALSE))
