@@ -7,7 +7,7 @@
 	<div class="carousel-inner" role="listbox">
 		@foreach ($sliderImages as $image)
 			<div class="item @if ($loop->first) active @endif">
-				<img class="hero-image" alt="{{ config('app.name') }} Banner" src="{{ $image->path }}">
+				<img class="hero-image" alt="{{ config('app.name') }} Banner" src="{{ $image }}">
 			</div>
 		@endforeach
 	</div>
@@ -32,9 +32,7 @@
 				<h1>Gaming Events in Yorkshire</h1>
 				<h3>Have fun & Be Awesome!</h3>
 			</div> --}}
-		</div>
 	</div>
-	
 </div>
 
 <div class="container">
