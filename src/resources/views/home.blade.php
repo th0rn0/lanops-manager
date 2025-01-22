@@ -12,26 +12,22 @@
 		@endforeach
 	</div>
 	<div class="hero-overlay hidden-sm">
-			@if ($nextEventLan)
-				<h3>Next LAN Event</h3>
-				<h1>{{ $nextEventLan->display_name }}</h1>
-				<h5>{{ date('dS', strtotime($nextEventLan->start)) }} - {{ date('dS', strtotime($nextEventLan->end)) }} {{ date('F', strtotime($nextEventLan->end)) }} {{ date('Y', strtotime($nextEventLan->end)) }}</h5>
-				<a href="/events/{{ $nextEventLan->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
-			@elseif ($nextEventTabletop)
+		@if ($nextEventLan)
+			<h3>Next LAN Event</h3>
+			<h1>{{ $nextEventLan->display_name }}</h1>
+			<h5>{{ date('dS', strtotime($nextEventLan->start)) }} - {{ date('dS', strtotime($nextEventLan->end)) }} {{ date('F', strtotime($nextEventLan->end)) }} {{ date('Y', strtotime($nextEventLan->end)) }}</h5>
+			<a href="/events/{{ $nextEventLan->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
+		@elseif ($nextEventTabletop)
+			<h3>Next Event</h3>
+			<h1>{{ $nextEvent->display_name }}</h1>
+			<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
+			<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
+		@else
+			<div>
 				<h3>Next Event</h3>
-				<h1>{{ $nextEvent->display_name }}</h1>
-				<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
-				<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
-			@else
-				<div>
-					<h3>Next Event</h3>
-					<h1>Coming soon</h1>
-				</div>
-			@endif
-			{{-- <div>
-				<h1>Gaming Events in Yorkshire</h1>
-				<h3>Have fun & Be Awesome!</h3>
-			</div> --}}
+				<h1>Coming soon</h1>
+			</div>
+		@endif
 	</div>
 </div>
 
@@ -169,14 +165,6 @@
 				<p>Nothing to see here...</p>
 			@endif
 		</div>
-		{{-- <div class="col-xs-12 col-sm-3">
-			<div class="page-header">
-				<h3>Discord</h3>
-			</div>
-			@if (config('app.discord_id'))			
-				<iframe class="hidden-md" src="https://discordapp.com/widget?id={{ config('app.discord_id') }}&theme=light" width="100%" height="1000" allowtransparency="true" frameborder="0"></iframe>
-			@endif
-		</div> --}}
 	</div>
 </div>
 
