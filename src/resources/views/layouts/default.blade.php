@@ -122,6 +122,9 @@
 						@if (config('app.steam_link') != "")
 							<p class=""><a target="_blank" href="{{ config('app.steam_link') }}">Steam</a></p>
 						@endif
+						@if (config('app.youtube_link') != "")
+							<p class=""><a target="_blank" href="{{ config('app.youtube_link') }}">Youtube</a></p>
+						@endif
 					</div>
 				</div>
 				<div class="col-lg-12 text-center">

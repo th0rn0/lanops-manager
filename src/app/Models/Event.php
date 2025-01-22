@@ -32,11 +32,7 @@ class Event extends Model
         'status',
         'start',
         'end',
-        'description',
-        'seating_cap',
-        'spectator_cap',
-        'ticket_spectator',
-        'ticket_weekend'
+        'type'
     ];
 
     /**
@@ -48,6 +44,10 @@ class Event extends Model
         'created_at',
         'updated_at'
     );
+
+    public static $typeLan = 'LAN';
+
+    public static $typeTabletop = 'TABLETOP';
 
     protected static function boot()
     {
@@ -256,5 +256,13 @@ class Event extends Model
     public function getCheapestTicket()
     {
         return $this->tickets->where('price', '!==', null)->min('price');
+    }
+
+    public static function getTypeArray()
+    {
+        return [
+            Event::$typeLan         => Event::$typeLan,
+            Event::$typeTabletop    => Event::$typeTabletop,
+        ];
     }
 }
