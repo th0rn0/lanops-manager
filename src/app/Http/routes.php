@@ -24,10 +24,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/login/steam', 'Auth\SteamController@login');
 
     // LEGACY AUTH ROUTES
-    // Route::post('/login/standard', 'Auth\LoginController@login');
-    // Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-    // Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
-    // Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+    Route::post('/login/standard', 'Auth\LoginController@login');
+    Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
+    Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
     // Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     // Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
