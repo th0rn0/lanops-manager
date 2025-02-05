@@ -26,14 +26,14 @@ Route::group(['middleware' => ['web']], function () {
     // LEGACY AUTH ROUTES
     Route::post('/login/standard', 'Auth\LoginController@login');
     Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
-    Route::get('/register/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+    Route::get('/register/email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
     Route::get('/register/email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
-    // Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    // Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    Route::get('/login/forgot', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('/login/forgot', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 
-    // Route::post('/login/reset/password', 'Auth\ResetPasswordController@reset')->name('password.update');
-    // Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    Route::post('/login/reset/password', 'Auth\ResetPasswordController@reset')->name('password.update');
+    Route::get('/login/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/account', 'AccountController@index')->name('accounts');
