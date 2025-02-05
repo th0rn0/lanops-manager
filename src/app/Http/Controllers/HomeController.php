@@ -54,6 +54,7 @@ class HomeController extends Controller
     {
         return view("terms");
     }
+
     /**
      * Show Contact Page
      * @return View
@@ -61,5 +62,14 @@ class HomeController extends Controller
     public function contact()
     {
         return view("contact");
+    }
+
+    /**
+     * Show Information Page
+     * @return View
+     */
+    public function info()
+    {
+        return view("info");
     }
 }

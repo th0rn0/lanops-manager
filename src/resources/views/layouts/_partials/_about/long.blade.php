@@ -1,10 +1,5 @@
 <div>
-    <p>
-        LanOps, or LAN Operations, was a small LAN party started by Th0rn0, way back in 2003. Breaking from traditional LAN systems, such as massive tournaments, cash prizes and "uber-pr0" clans everywhere, LanOps set out with one goal:
-    </p>
-    <p>
-        Have Fun & Be awesome.
-    </p>
+    @include ('layouts._partials._about.short')
     <p>
         Fast forward to 2008. LanOps holds a LAN at the Sheffield Hallam Arena which proves to be the peak of the initial incarnation and the LanOps went on it’s first Hiatus Reforming in 2010 with a new line up and a new venue, Dronfield Civic Hall eventually moving into Sheffield city centre until the venue we were at shut down, and now in 2016, after more than two dozen LANS, we are better than ever, currently based in North Wingfield just outside of Chesterfield less than 10 minutes from the M1, we are based in a modern venue, faster internet, and great help from our LAN friends, UKVR who do VR experiences and racing rigs and LanCafe who do affordable quality breakfasts and snacks and drinks throughout the event.
     </p>
