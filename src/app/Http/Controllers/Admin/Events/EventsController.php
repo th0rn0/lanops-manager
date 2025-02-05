@@ -114,6 +114,7 @@ class EventsController extends Controller
             'status'            => 'in:draft,preview,published,private',
             'capacity'          => 'filled|integer',
             'venue'             => 'exists:event_venues,id',
+            'type'              => 'in:LAN,TABLETOP',
         ];
         $messages = [
             'event_name.filled'         => 'Event Name cannot be empty',
@@ -128,7 +129,9 @@ class EventsController extends Controller
             'status.in'                 => 'Status must be draft, preview, published or private',
             'capacity.filled'           => 'Capacity is required',
             'capacity.integer'          => 'Capacity must be a integer',
-            'venue.exists'              => 'A venue is required'
+            'venue.exists'              => 'A venue is required',
+            'type.in'                   => 'Type must be LAN or TABLETOP',
+
         ];
         $this->validate($request, $rules, $messages);
 
@@ -171,6 +174,11 @@ class EventsController extends Controller
 
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
+        }
+
+        
+        if (isset($request->type)) {
+            $event->type            = $request->type;
         }
 
         if (!$event->save()) {
