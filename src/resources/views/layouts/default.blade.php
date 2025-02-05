@@ -106,6 +106,7 @@
 						<h2 class="">Links</h2>
 						<p class=" hidden"><a href="/contact">Contact Us</a></p>
 						<p class=""><a href="/news">News</a></p>
+						<p class=""><a href="/info">Frequently Asked Questions</a></p>
 						<p class=""><a href="/terms">Terms & Conditions</a></p>
 						<p class=""><a href="/about">About Us</a></p>
 						<p class=""><a href="/polls">Polls</a></p>
@@ -121,6 +122,9 @@
 						@endif
 						@if (config('app.steam_link') != "")
 							<p class=""><a target="_blank" href="{{ config('app.steam_link') }}">Steam</a></p>
+						@endif
+						@if (config('app.youtube_link') != "")
+							<p class=""><a target="_blank" href="{{ config('app.youtube_link') }}">Youtube</a></p>
 						@endif
 					</div>
 				</div>

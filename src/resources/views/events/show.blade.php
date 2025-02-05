@@ -450,6 +450,17 @@
 		@endforeach
 	@endif
 
+	<!-- TOURNAMENTS-->
+	@if (!$event->tournaments->isEmpty())
+		<div class="page-header">
+			<a name="tournaments"></a>
+			<h3>Tournaments</h3>
+		</div>
+		@foreach ($event->tournaments as $tournament)
+			@include('layouts._partials._tournaments.index')
+		@endforeach
+	@endif
+
 	<!-- MY TICKETS -->
 	<div class="page-header">
 		<a name="yourTickets"></a>

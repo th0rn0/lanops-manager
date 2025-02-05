@@ -24,6 +24,8 @@ return [
 
     'steam_link'        => env('STEAM_LINK',''),
 
+    'youtube_link'        => env('YOUTUBE_LINK',''),
+
     'currency'          => env('APP_CURRENCY','GBP'),
     'currency_symbol'   => env('APP_CURRENCY','£'),
 
