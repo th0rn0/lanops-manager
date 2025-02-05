@@ -1,8 +1,8 @@
 <div>
     <p>
-        LanOps, or LAN Operations, was a small LAN party started by Th0rn0, way back in 2003. Breaking from traditional LAN systems, such as massive tournaments, cash prizes and "uber-pr0" clans everywhere, LanOps set out with one goal:
+        LanOps is a non-profit community run by volunteers. We have been hosting Gaming Events for over 20 years. Breaking from traditional LAN systems, such as massive tournaments, cash prizes and "uber-pr0" clans everywhere, LanOps set out with one goal:
     </p>
     <p>
-        Have Fun & Be awesome.
+        Have Fun & Be Awesome.
     </p>
 </div>

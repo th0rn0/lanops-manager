@@ -75,6 +75,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/about', 'HomeController@about');
     Route::get('/contact', 'HomeController@contact');
     Route::get('/terms', 'HomeController@terms');
+    Route::get('/info', 'HomeController@info');
 
     /**
      * Tickets
