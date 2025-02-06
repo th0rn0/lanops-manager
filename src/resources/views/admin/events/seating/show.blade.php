@@ -41,9 +41,14 @@
 								<td>
 									<h4><strong>ROW {{ $header }}</strong></h4> 
 								</td>
-								@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
-									{{ dd($seat)}}
-								@endforeach
+								<td style="padding-top:14px;">
+									@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
+										{{-- {{ dd($seat)}} --}}
+										<button class="btn @if ($seat->disabled) btn-danger @else btn-primary @endif btn-sm"  onclick="editSeating('{{ $seat->seat }}')" data-toggle="modal" data-target="#editSeatingModal">
+											{{ $seat->seat }} - @if ($seat->participant) {{ $seat->participant->user->username }} @else Empty @endif
+										</button>
+									@endforeach
+								</td>
 							</tr>
 						@endforeach
 						{{-- @for ($column = 1; $column <= $seatingPlan->columns; $column++)
@@ -266,7 +271,7 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat/disable', 'id'=>'disable_seat_form')) }}
 					<hr>
 					{{ Form::hidden('seat_number_disable', null, array('id'=>'seat_number_disable')) }}
-					<button type="submit" class="btn btn-danger btn-block">Disable Seat</button>
+					<button type="submit" class="btn btn-danger btn-block">Enable/Disable Seat</button>
 				{{ Form::close() }}
 
 			</div>

@@ -286,13 +286,19 @@ class SeatingController extends Controller
             'seat_number_disable.filled' => 'You must enter a seat number',
         ];
         $this->validate($request, $rules, $messages);
-        if (in_array($request->seat_number_disable, $seatingPlan->disabled_seats)) {
-            $seatingPlan->disabled_seats = array_values(array_diff($seatingPlan->disabled_seats, [$request->seat_number_disable]));
-        } else {
-            $seatingPlan->disabled_seats = array_merge($seatingPlan->disabled_seats, [$request->seat_number_disable]);
+
+        if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number_disable)->first()) {
+            Session::flash('alert-danger', 'Could not disable/enable seat!');
+            return Redirect::back();
         }
 
-        if (!$seatingPlan->save()) {
+        if ($seat->disabled) {
+            $seat->disabled = false;
+        } else {
+            $seat->disabled = true;
+        }
+
+        if (!$seat->save()) {
             Session::flash('alert-danger', 'Could not disable/enable seat!');
             return Redirect::back();
         }

@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('event_seating_plans', function (Blueprint $table) {
-            $table->json('disabled_seats')->after('status')->default('[]');
-            
+        Schema::table('event_seating', function (Blueprint $table) {
+            $table->boolean('disabled')->default(false);
         });
     }
 
@@ -27,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('event_seating_plans', function (Blueprint $table) {
-            $table->dropColumn('disabled_seats');
+            $table->dropColumn('disabled');
         });
     }
 };

@@ -55,29 +55,17 @@ class EventSeatingPlan extends Model
         }
         self::creating(function ($model) {
             $headers = [];
-            for ($r = 1; $r < $model->rows; $r++) {
-                // $column = '';
-                // while ($num > 0) {
-                //     $num--; // Adjust for 0-based index
-                //     $column = chr($num % 26 + 65) . $column;
-                //     $num = floor($num / 26);
-                // }
-                $headers[] = $model->numberToExcelColumn($r);
+            for ($r = 0; $r < $model->rows; $r++) {
+                $headers[] = $model->numberToExcelColumn($r + 1);
             }
             $model->headers = $headers;
         });
         self::created(function ($model) {
-            // $alphabet = range('A', 'Z');
-            // for ($i = 0; $i < $request->columns; $i++) {
-            //     $seatingHeaders[] = $alphabet[$i];
-            // }
-            // $seatingPlan->headers  = implode(',', $seatingHeaders);
-
-            for ($r = 1; $r < $model->rows; $r++) {
-                for ($c = 1; $c < $model->columns; $c++) {
+            for ($r = 0; $r < $model->rows; $r++) {
+                for ($c = 0; $c < $model->columns; $c++) {
                     $seat = new EventSeating();
                     $seat->event_seating_plan_id = $model->id;
-                    $seat->seat = $model->numberToExcelColumn($r) . $c;
+                    $seat->seat = $model->numberToExcelColumn($r + 1) . $c + 1;
                     $seat->save();
                 }
             }
@@ -158,6 +146,6 @@ class EventSeatingPlan extends Model
      * @return string
      */
     public function getSeatsForRow($row) {
-        return $this->seats()->where('seat', 'LIKE', $row)->get();
+        return $this->seats()->where('seat', 'LIKE', "%{$row}%")->get();
     }
 }
