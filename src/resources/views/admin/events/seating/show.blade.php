@@ -36,7 +36,17 @@
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table class="table">
-						@for ($column = 1; $column <= $seatingPlan->columns; $column++)
+						@foreach ($seatingPlan->headers as $header)
+							<tr>
+								<td>
+									<h4><strong>ROW {{ $header }}</strong></h4> 
+								</td>
+								@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
+									{{ dd($seat)}}
+								@endforeach
+							</tr>
+						@endforeach
+						{{-- @for ($column = 1; $column <= $seatingPlan->columns; $column++)
 							<?php
 								$headers = explode(',', $seatingPlan->headers);
 								$headers = array_combine(range(1, count($headers)), $headers);
@@ -59,6 +69,10 @@
 											<button class="btn btn-success btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', '{{ $username }}', '{{ $participant_id }}')" data-toggle="modal" data-target="#editSeatingModal">
 												{{ ucwords($headers[$column]) . $row }} - {{ $username }}
 											</button>
+										@elseif (in_array(ucwords($headers[$column]) . $row, $seatingPlan->disabled_seats))
+											<button class="btn btn-disabled btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}')" data-toggle="modal" data-target="#editSeatingModal">
+												{{ ucwords($headers[$column]) . $row }} - Disabled
+											</button>
 										@else
 											<button class="btn btn-primary btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}')" data-toggle="modal" data-target="#editSeatingModal">
 												{{ ucwords($headers[$column]) . $row }} - Empty
@@ -67,17 +81,17 @@
 									</td>
 								@endfor
 							</tr>
-						@endfor
+						@endfor --}}
 					</table>
 				</div>
 			</div>
 		</div>
-		<div class="panel panel-default">
+		{{-- <div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-th fa-fw"></i> Seating Plan
 			</div>
 			<div class="panel-body">
-			 <div class="dataTable_wrapper">
+			 	<div class="dataTable_wrapper">
 					<table width="100%" class="table table-striped table-hover" id="seating_table">
 						<thead>
 							<tr>
@@ -126,7 +140,7 @@
 					{{ $seats->links() }}
 				</div>
 			</div>
-		</div>
+		</div> --}}
 	
 	</div>
 	<div class="col-lg-4">
@@ -236,7 +250,7 @@
 					</div> 
 					{{ Form::hidden('participant_id_modal', null, array('id'=>'participant_id_modal','class'=>'form-control')) }}
 					{{ Form::hidden('event_id_modal', null, array('id'=>'event_id_modal','class'=>'form-control')) }}
-
+					
 					<a href="" id="participant_link">
 						<button type="button" class="btn btn-default btn-block">Go to Participant</button>
 					</a>
@@ -246,9 +260,15 @@
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat', 'id'=>'clear_seat_form')) }}
 					<hr>
 					{{ Form::hidden('_method', 'DELETE') }}
-					{{ Form::hidden('seat_number', null, array('id'=>'seat_number')) }}
+					{{ Form::hidden('seat_number_clear', null, array('id'=>'seat_number_clear')) }}
 					<button type="submit" class="btn btn-danger btn-block">Clear Seat</button>
 				{{ Form::close() }}
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug . '/seat/disable', 'id'=>'disable_seat_form')) }}
+					<hr>
+					{{ Form::hidden('seat_number_disable', null, array('id'=>'seat_number_disable')) }}
+					<button type="submit" class="btn btn-danger btn-block">Disable Seat</button>
+				{{ Form::close() }}
+
 			</div>
 		</div>
 	</div>
@@ -260,7 +280,8 @@
 	{
 		seat = seat.trim();
 		$("#seat_number_modal").val(seat);
-		$("#seat_number").val(seat);
+		$("#seat_number_clear").val(seat);
+		$("#seat_number_disable").val(seat);
 		var orginal_participant_id = $("#participant_id_modal").val();
 		//Reset all inputs
 		$("#seat_number_modal").prop('readonly', '');

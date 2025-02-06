@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\EventSeating;
+
 use Auth;
 
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +32,11 @@ class EventSeatingPlan extends Model
         'updated_at'
     );
 
+    protected $casts = [
+        'disabled_seats' => 'array',
+        'headers' => 'array'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -46,6 +53,53 @@ class EventSeatingPlan extends Model
                 $builder->where('status', 'PUBLISHED');
             });
         }
+        self::creating(function ($model) {
+            $headers = [];
+            for ($r = 1; $r < $model->rows; $r++) {
+                // $column = '';
+                // while ($num > 0) {
+                //     $num--; // Adjust for 0-based index
+                //     $column = chr($num % 26 + 65) . $column;
+                //     $num = floor($num / 26);
+                // }
+                $headers[] = $model->numberToExcelColumn($r);
+            }
+            $model->headers = $headers;
+        });
+        self::created(function ($model) {
+            // $alphabet = range('A', 'Z');
+            // for ($i = 0; $i < $request->columns; $i++) {
+            //     $seatingHeaders[] = $alphabet[$i];
+            // }
+            // $seatingPlan->headers  = implode(',', $seatingHeaders);
+
+            for ($r = 1; $r < $model->rows; $r++) {
+                for ($c = 1; $c < $model->columns; $c++) {
+                    $seat = new EventSeating();
+                    $seat->event_seating_plan_id = $model->id;
+                    $seat->seat = $model->numberToExcelColumn($r) . $c;
+                    $seat->save();
+                }
+            }
+        });
+        self::updating(function ($model) {
+            // if (array_key_exists('rows', $model->getDirty()) || 
+            //     array_key_exists('columns', $model->getDirty())) {
+            //         dd('asdasd');
+            // }
+
+
+        });
+    }
+
+    public function numberToExcelColumn($num) {
+        $column = '';
+        while ($num > 0) {
+            $num--; // Adjust for 0-based index
+            $column = chr($num % 26 + 65) . $column;
+            $num = floor($num / 26);
+        }
+        return $column;
     }
 
     /*
@@ -96,5 +150,14 @@ class EventSeatingPlan extends Model
             $name = $this->name_short;
         }
         return $name;
+    }
+
+    /**
+     * Get Seats for specific row.
+     *
+     * @return string
+     */
+    public function getSeatsForRow($row) {
+        return $this->seats()->where('seat', 'LIKE', $row)->get();
     }
 }

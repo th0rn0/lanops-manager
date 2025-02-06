@@ -190,6 +190,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::delete('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@destroy');
     Route::post('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@storeSeat');
     Route::delete('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@destroySeat');
+    Route::post('/admin/events/{event}/seating/{seatingPlan}/seat/disable', 'Admin\Events\SeatingController@disableSeat');
 
     /**
      * Timetables

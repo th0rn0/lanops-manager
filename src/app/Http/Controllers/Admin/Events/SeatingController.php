@@ -72,11 +72,6 @@ class SeatingController extends Controller
         $seatingPlan->name          = $request->name;
         $seatingPlan->name_short    = @$request->name_short;
 
-        $alphabet = range('A', 'Z');
-        for ($i = 0; $i < $request->columns; $i++) {
-            $seatingHeaders[] = $alphabet[$i];
-        }
-        $seatingPlan->headers  = implode(',', $seatingHeaders);
         $seatingPlan->columns  = $request->columns;
         $seatingPlan->rows     = $request->rows;
 
@@ -261,7 +256,7 @@ class SeatingController extends Controller
      */
     public function destroySeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
-        if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number)->first()) {
+        if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number_clear)->first()) {
             Session::flash('alert-danger', 'Could not find seat!');
             return Redirect::back();
         }
@@ -271,6 +266,36 @@ class SeatingController extends Controller
             return Redirect::back();
         }
 
+        Session::flash('alert-success', 'Seat Updated!');
+        return Redirect::back();
+    }
+
+    /**
+     * Disable/Enable Participant Seating
+     * @param  Event            $event
+     * @param  EventSeatingPlan $seatingPlan
+     * @param  Request          $request
+     * @return Redirect
+     */
+    public function disableSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
+    {
+        $rules = [
+            "seat_number_disable" => "filled",
+        ];
+        $messages = [
+            'seat_number_disable.filled' => 'You must enter a seat number',
+        ];
+        $this->validate($request, $rules, $messages);
+        if (in_array($request->seat_number_disable, $seatingPlan->disabled_seats)) {
+            $seatingPlan->disabled_seats = array_values(array_diff($seatingPlan->disabled_seats, [$request->seat_number_disable]));
+        } else {
+            $seatingPlan->disabled_seats = array_merge($seatingPlan->disabled_seats, [$request->seat_number_disable]);
+        }
+
+        if (!$seatingPlan->save()) {
+            Session::flash('alert-danger', 'Could not disable/enable seat!');
+            return Redirect::back();
+        }
         Session::flash('alert-success', 'Seat Updated!');
         return Redirect::back();
     }
