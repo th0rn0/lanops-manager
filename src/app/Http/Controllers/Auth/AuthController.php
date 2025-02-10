@@ -75,7 +75,8 @@ class AuthController extends Controller
      */
     public function prompt()
     {
-        return view('auth.login');
+        return view('auth.login')
+            ->withActiveLoginMethods(['standard', 'steam']);
     }
 
     /**
