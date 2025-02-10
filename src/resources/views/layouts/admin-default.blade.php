@@ -18,7 +18,7 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="{{ config('app.favicon') }}">
 		
 		<!-- Admin CSS -->
-		<link href="/css/admin.css" rel="stylesheet">
+		@vite(['resources/assets/sass/admin.scss'])
 
 		<!-- Custom Fonts -->
 		<link href="/fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css">
