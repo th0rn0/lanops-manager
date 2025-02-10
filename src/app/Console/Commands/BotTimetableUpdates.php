@@ -42,33 +42,32 @@ class BotTimetableUpdates extends Command
             if ($nextEvent && strtolower($nextEvent->status) == "published" && $nextEvent->discord_link_enabled && (Carbon::parse($nextEvent->end)->isFuture() && Carbon::parse($nextEvent->start)->subMinutes(60)->isPast())) {
                 foreach ($nextEvent->timetables as $timetable) {
                     if (strtolower($timetable->status) == "published") {
-                        $nextTimetableItems = $timetable->data()->where('start_time', '>=', Carbon::now())
-                        ->get();
+                        $nextTimetableItems = $timetable->data()->where('start_time', '>=', Carbon::now())->get();
 
                         foreach ($nextTimetableItems as $nextTimetableItem) {
                             // 60 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 59, 60)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, "TIMETABLE: 1 HOUR WARNING: " . $nextTimetableItem->name);
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE: % - Due to start in 1 hour!", $nextTimetableItem->name));
                             }
 
                             // 30 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 29, 30)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, "TIMETABLE: 30 Minute WARNING: " . $nextTimetableItem->name);
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE: % - Due to start in 30 minutes!", $nextTimetableItem->name));
                             }
 
                             // 15 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 14, 15)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, "TIMETABLE: 15 Minute WARNING: " . $nextTimetableItem->name);
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE: % - Due to start in 15 minutes!", $nextTimetableItem->name));
                             }
 
                             // 5 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 4, 5)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, "TIMETABLE: 5 Minute WARNING: " . $nextTimetableItem->name);
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE: % - Due to start in 5 minutes!", $nextTimetableItem->name));
                             }
 
                             // Starting Now
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, -1, 0)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, "TIMETABLE: STARTING SOON: " . $nextTimetableItem->name);
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE: % - STARTING SOON!", $nextTimetableItem->name));
                             }
                         }
                     }
