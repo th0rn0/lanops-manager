@@ -10,8 +10,6 @@ src/public/storage
 src/public/downloads/qr/tickets/*
 src/Homestead.yaml
 src/Homestead.json
-src/public/css/admin\.css
-src/public/css/app\.css
-src/public/css/admin\.css\.map
-src/public/css/app\.css\.map
 src/public/uploads/gallery/*
+src/public/hot
+src/public/build

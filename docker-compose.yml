@@ -47,25 +47,12 @@ services:
       - ./src:/var/www/html
 
   npm:
-    image: node:9
+    image: node:23
     # build:
     #   context: .
     #   dockerfile: resources/docker/npm/Dockerfile
     #   target: npm-base
     entrypoint: [ "npm" ]
-    working_dir: /app
-    command: [ "-v" ]
-    # user: "1000"
-    volumes:
-      - ./src:/app
-
-  gulp:
-    image: node:8
-    # build:
-    #   context: .
-    #   dockerfile: resources/docker/npm/Dockerfile
-    #   target: npm-base
-    entrypoint: [ "node_modules/.bin/gulp" ]
     working_dir: /app
     command: [ "-v" ]
     # user: "1000"
