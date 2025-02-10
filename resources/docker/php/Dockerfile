@@ -1,4 +1,4 @@
-FROM php:8.3-fpm as php-base
+FROM php:8.3-fpm AS php-base
 LABEL maintainer="Thornton Phillis (dev@th0rn0.co.uk)"
 
 RUN apt-get update && apt-get install -y \
@@ -37,7 +37,7 @@ RUN chmod +x /entrypoint-cron.sh
 
 ENTRYPOINT ["/entrypoint-php.sh"]
 
-FROM php-base as php-composer
+FROM php-base AS php-composer
 
 RUN apt install -y git curl wget
 

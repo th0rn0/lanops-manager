@@ -3,4 +3,4 @@
 php artisan optimize
 php artisan config:cache
 
-cron -f
+cron "$@"

@@ -51,10 +51,6 @@ services:
 
   npm:
     image: node:23
-    # build:
-    #   context: .
-    #   dockerfile: resources/docker/npm/Dockerfile
-    #   target: npm-base
     entrypoint: [ "npm" ]
     working_dir: /app
     command: [ "-v" ]
@@ -104,6 +100,7 @@ services:
       dockerfile: resources/docker/php/Dockerfile
       target: php-base
     entrypoint: [ "/entrypoint-cron.sh" ]
+    command: ['-f']
     volumes_from:
       - php
     env_file: $PWD/src/.env
