@@ -15,11 +15,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          # list of Docker images to use as base name for tags
           images: |
             th0rn0/lanops-manager
-          # generate Docker tags based on the following events/attributes
           tags: |
+            type=raw,value={{date 'YYYYMMDD'}}
             type=ref,event=branch
             type=sha
       -
@@ -56,8 +55,8 @@ jobs:
           file: resources/docker/nginx/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-develop-latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-develop-${{ steps.vars.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ steps.meta.outputs.tag }}
       -
         name: Push - APP
         uses: docker/build-push-action@v5
@@ -66,8 +65,8 @@ jobs:
           file: resources/docker/php/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-develop-latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-develop-${{ steps.vars.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ steps.meta.outputs.tag }}
       - 
         name: Discord Webhook Action - Build Success
         uses: tsickert/discord-webhook@v6.0.0

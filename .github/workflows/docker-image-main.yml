@@ -13,6 +13,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - 
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            th0rn0/lanops-manager
+          tags: |
+            type=raw,value={{date 'YYYYMMDD'}}
+            type=ref,event=branch
+            type=sha
       -
         name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +57,9 @@ jobs:
           context: .
           file: resources/docker/nginx/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ steps.meta.outputs.tags }}
       -
         name: Push - APP
         uses: docker/build-push-action@v5
@@ -54,7 +67,10 @@ jobs:
           context: .
           file: resources/docker/php/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ steps.meta.outputs.tags }}
+
       - 
         name: Discord Webhook Action - Build Success
         uses: tsickert/discord-webhook@v6.0.0
