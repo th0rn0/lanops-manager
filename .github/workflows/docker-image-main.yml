@@ -58,8 +58,8 @@ jobs:
           file: resources/docker/nginx/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest-${{ steps.meta.outputs.tags }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-main
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-main-${{ steps.meta.outputs.tags }}
       -
         name: Push - APP
         uses: docker/build-push-action@v5
@@ -68,8 +68,8 @@ jobs:
           file: resources/docker/php/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest-${{ steps.meta.outputs.tags }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-main
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-main-${{ steps.meta.outputs.tags }}
 
       - 
         name: Discord Webhook Action - Build Success
