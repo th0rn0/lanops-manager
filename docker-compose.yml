@@ -50,16 +50,12 @@ services:
       - php
 
   npm:
-    image: node:8
+    image: node:23
+    # build:
+    #   context: .
+    #   dockerfile: resources/docker/npm/Dockerfile
+    #   target: npm-base
     entrypoint: [ "npm" ]
-    working_dir: /app
-    command: [ "-v" ]
-    volumes:
-      - ./src:/app
-
-  gulp:
-    image: node:8
-    entrypoint: [ "node_modules/.bin/gulp" ]
     working_dir: /app
     command: [ "-v" ]
     volumes:
