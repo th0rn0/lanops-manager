@@ -108,4 +108,9 @@ class EventTimetable extends Model
         }
         return $return;
     }
+
+    public function getNext()
+    {
+        
+    }
 }

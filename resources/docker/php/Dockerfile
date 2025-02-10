@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
         libicu-dev \
         libzip-dev \
         libxml2-dev \
-        libonig-dev
+        libonig-dev \
+        cron
 
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
 
@@ -21,12 +22,18 @@ RUN chown -R www-data:www-data /var/www
 WORKDIR /var/www/html
 
 COPY resources/docker/php/entrypoint-php.sh /entrypoint-php.sh
-COPY resources/docker/php/entrypoint-queue.sh /entrypoint-queue.sh
+COPY resources/docker/php/entrypoint-artisan.sh /entrypoint-artisan.sh
+COPY resources/docker/php/entrypoint-cron.sh /entrypoint-cron.sh
+
 
 COPY resources/docker/php/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
+COPY resources/docker/php/crontab /etc/cron.d/laravel-cron
+RUN chmod 0644 /etc/cron.d/laravel-cron && crontab /etc/cron.d/laravel-cron
+
 RUN chmod +x /entrypoint-php.sh
-RUN chmod +x /entrypoint-queue.sh
+RUN chmod +x /entrypoint-artisan.sh
+RUN chmod +x /entrypoint-cron.sh
 
 ENTRYPOINT ["/entrypoint-php.sh"]
 

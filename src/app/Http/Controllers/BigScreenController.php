@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use DB;
 
 use App\Models\Event;
-use App\Models\NewsArticle;
 
 class BigScreenController extends Controller
 {

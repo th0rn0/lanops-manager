@@ -1,16 +1,4 @@
 services:
-  nginx:
-    build:
-      context: .
-      dockerfile: resources/docker/nginx/Dockerfile
-    ports:
-      - '8080:80'
-    volumes:
-      - ./src:/var/www/html
-      - ./resources/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - internal
-      
   php:
     build:
       context: .
@@ -19,12 +7,26 @@ services:
     volumes:
       - ./src:/var/www/html
     env_file: $PWD/src/.env
-    # user: "1000"
     networks:
       - internal
     extra_hosts:
         - "host.docker.internal:host-gateway"
 
+  nginx:
+    build:
+      context: .
+      dockerfile: resources/docker/nginx/Dockerfile
+    ports:
+      - '8080:80'
+    volumes:
+      - ./resources/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    volumes_from:
+      - php
+    depends_on:
+      - php
+    networks:
+      - internal
+  
   db:
     image: mariadb:10.11
     volumes:
@@ -42,33 +44,24 @@ services:
       target: php-composer
     entrypoint: [ "composer" ]
     command: [ "--version" ]
-    # user: "1000"
-    volumes:
-      - ./src:/var/www/html
+    volumes_from:
+      - php
+    depends_on:
+      - php
 
   npm:
     image: node:8
-    # build:
-    #   context: .
-    #   dockerfile: resources/docker/npm/Dockerfile
-    #   target: npm-base
     entrypoint: [ "npm" ]
     working_dir: /app
     command: [ "-v" ]
-    # user: "1000"
     volumes:
       - ./src:/app
 
   gulp:
     image: node:8
-    # build:
-    #   context: .
-    #   dockerfile: resources/docker/npm/Dockerfile
-    #   target: npm-base
     entrypoint: [ "node_modules/.bin/gulp" ]
     working_dir: /app
     command: [ "-v" ]
-    # user: "1000"
     volumes:
       - ./src:/app
 
@@ -79,12 +72,13 @@ services:
       target: php-base
     entrypoint: [ "php", "artisan" ]
     command: [ "--version" ]
-    # user: "1000"
-    volumes:
-      - ./src:/var/www/html
+    volumes_from:
+      - php
     env_file: $PWD/src/.env
     networks:
       - internal
+    depends_on:
+      - php
 
   queue-worker:
     deploy:
@@ -95,14 +89,34 @@ services:
       context: .
       dockerfile: resources/docker/php/Dockerfile
       target: php-base
-    entrypoint: [ "/entrypoint-queue.sh" ]
+    entrypoint: [ "/entrypoint-artisan.sh" ]
     command: [ "queue:work" ]
-    # user: "1000"
-    volumes:
-      - ./src:/var/www/html
+    volumes_from:
+      - php
     env_file: $PWD/src/.env
     networks:
       - internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - php
+
+  cron:
+    restart: always
+    build:
+      context: .
+      dockerfile: resources/docker/php/Dockerfile
+      target: php-base
+    entrypoint: [ "/entrypoint-cron.sh" ]
+    volumes_from:
+      - php
+    env_file: $PWD/src/.env
+    networks:
+      - internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - php
     
 volumes:
   db:

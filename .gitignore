@@ -15,3 +15,5 @@ src/public/css/app\.css
 src/public/css/admin\.css\.map
 src/public/css/app\.css\.map
 src/public/uploads/gallery/*
+
+sitemap.xml
