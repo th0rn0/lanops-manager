@@ -7,7 +7,6 @@
     "devDependencies": {
         "bootstrap-sass": "^3.4.3",
         "cross-env": "^7.0.3",
-        "laravel-mix": "^4.0.7",
         "laravel-vite-plugin": "^1.2.0",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.84.0",
