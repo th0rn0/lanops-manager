@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class GenerateSitemap extends Command
+class SitemapGenerate extends Command
 {
     /**
      * The name and signature of the console command.
@@ -18,7 +18,7 @@ class GenerateSitemap extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Generate Sitemap';
 
     /**
      * Execute the console command.
@@ -37,6 +37,7 @@ class GenerateSitemap extends Command
         $sitemap->add(url('events'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
         $sitemap->add(url('news'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
         $sitemap->add(url('gallery'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
+        $sitemap->add(url('info'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
 
     
         $events = \DB::table('events')->orderBy('start')->get();

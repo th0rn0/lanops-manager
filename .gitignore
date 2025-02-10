@@ -13,3 +13,4 @@ src/Homestead.json
 src/public/uploads/gallery/*
 src/public/hot
 src/public/build
+src/public/sitemap.xml
