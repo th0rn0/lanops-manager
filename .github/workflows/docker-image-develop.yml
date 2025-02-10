@@ -1,10 +1,8 @@
-name: Build Docker Image
+name: Build Docker Image - Develop Branch
 
 on:
   push:
-    branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
+    branches: [ "develop" ]
 
 jobs:
 
@@ -46,7 +44,7 @@ jobs:
           context: .
           file: resources/docker/nginx/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-develop
       -
         name: Push - APP
         uses: docker/build-push-action@v5
@@ -54,7 +52,7 @@ jobs:
           context: .
           file: resources/docker/php/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-develop
       - 
         name: Discord Webhook Action - Build Success
         uses: tsickert/discord-webhook@v6.0.0
