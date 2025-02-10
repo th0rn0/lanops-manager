@@ -1,6 +1,6 @@
-build: composer-install npm-install npm-gulp 
+build: composer-install npm-install npm-run-production 
 
-build-init: docker-build docker-pull docker-build-init-up composer-install npm-install npm-gulp artisan-key-generate artisan-db-migrate artisan-storage-link docker-build-init-down
+build-init: docker-build docker-pull docker-build-init-up composer-install npm-install npm-run-development artisan-key-generate artisan-db-migrate artisan-storage-link docker-build-init-down
 
 docker-pull:
 	docker compose pull
@@ -21,8 +21,11 @@ composer-install:
 npm-install:
 	docker compose run --rm npm install
 
-npm-gulp:
-	docker compose run --rm gulp --production
+npm-run-development:
+	docker compose run --rm npm run development
+
+npm-run-production:
+	docker compose run --rm npm run production
 
 artisan-key-generate:
 	docker compose run --rm artisan key:generate
