@@ -72,9 +72,7 @@ class BotTimetableUpdates extends Command
                         }
                     }
                 }
-
             }
-
         }
 
         return Command::SUCCESS;
