@@ -26,8 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('sitemap:generate')
-            // ->hourly()
-            ->everyMinute()
+            ->hourly()
             ->onOneServer()
             ->runInBackground();
         $schedule->command('bot:timetable-updates')
