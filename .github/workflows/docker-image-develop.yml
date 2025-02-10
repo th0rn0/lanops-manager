@@ -56,7 +56,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ steps.meta.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ date 'YYYYMMDD' }}
       -
         name: Push - APP
         uses: docker/build-push-action@v5
@@ -66,7 +66,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ steps.meta.outputs.tag }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ date 'YYYYMMDD' }}
       - 
         name: Discord Webhook Action - Build Success
         uses: tsickert/discord-webhook@v6.0.0
