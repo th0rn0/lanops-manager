@@ -43,55 +43,18 @@
 								</td>
 								<td style="padding-top:14px;">
 									@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
-										{{-- {{ dd($seat)}} --}}
-										<button class="btn @if ($seat->disabled) btn-danger @else btn-primary @endif btn-sm"  onclick="editSeating('{{ $seat->seat }}')" data-toggle="modal" data-target="#editSeatingModal">
-											{{ $seat->seat }} - @if ($seat->participant) {{ $seat->participant->user->username }} @else Empty @endif
+										<button class="btn @if ($seat->disabled) btn-danger @elseif ($seat->eventParticipant) btn-success @else btn-primary @endif btn-sm"  onclick="editSeating('{{ $seat->seat }}', '{{ $seat->event_participant_id }}')" data-toggle="modal" data-target="#editSeatingModal">
+											{{ $seat->seat }} - @if ($seat->eventParticipant) {{ $seat->eventParticipant->user->username }} @elseif ($seat->disabled) Disabled @else Empty @endif
 										</button>
 									@endforeach
 								</td>
 							</tr>
 						@endforeach
-						{{-- @for ($column = 1; $column <= $seatingPlan->columns; $column++)
-							<?php
-								$headers = explode(',', $seatingPlan->headers);
-								$headers = array_combine(range(1, count($headers)), $headers);
-							?>
-							<tr>
-								<td>
-									<h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4>
-								</td>
-								@for ($row = 1; $row <= $seatingPlan->rows; $row++)
-									<td style="padding-top:14px;">
-										@if($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
-											@foreach($seatingPlan->seats as $seat)
-												<?php
-													if($seat->seat == (ucwords($headers[$column]) . $row)){
-														$username = $seat->eventParticipant->user->username;
-														$participant_id = $seat->eventParticipant->id;
-													}
-												?>
-											@endforeach
-											<button class="btn btn-success btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}', '{{ $username }}', '{{ $participant_id }}')" data-toggle="modal" data-target="#editSeatingModal">
-												{{ ucwords($headers[$column]) . $row }} - {{ $username }}
-											</button>
-										@elseif (in_array(ucwords($headers[$column]) . $row, $seatingPlan->disabled_seats))
-											<button class="btn btn-disabled btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}')" data-toggle="modal" data-target="#editSeatingModal">
-												{{ ucwords($headers[$column]) . $row }} - Disabled
-											</button>
-										@else
-											<button class="btn btn-primary btn-sm"  onclick="editSeating('{{ ucwords($headers[$column]) . $row }}')" data-toggle="modal" data-target="#editSeatingModal">
-												{{ ucwords($headers[$column]) . $row }} - Empty
-											</button>
-										@endif
-									</td>
-								@endfor
-							</tr>
-						@endfor --}}
 					</table>
 				</div>
 			</div>
 		</div>
-		{{-- <div class="panel panel-default">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="fa fa-th fa-fw"></i> Seating Plan
 			</div>
@@ -136,7 +99,7 @@
 										@endif
 									</td>
 									<td width="10%">
-										<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->user->username }}', '{{ $seat->eventParticipant->id }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
+										<button type="button" class="btn btn-primary btn-sm btn-block" onclick="editSeating('{{ ucwords($seat->seat) }}', '{{ $seat->eventParticipant->id }}')" data-toggle="modal" data-target="#editSeatingModal">Edit</button>
 									</td>
 								</tr>
 							@endforeach
@@ -145,7 +108,7 @@
 					{{ $seats->links() }}
 				</div>
 			</div>
-		</div> --}}
+		</div>
 	
 	</div>
 	<div class="col-lg-4">
@@ -281,7 +244,7 @@
 
 <!-- JavaScript-->
 <script>
-	function editSeating(seat, username = null, participant_id = null)
+	function editSeating(seat, participant_id = null)
 	{
 		seat = seat.trim();
 		$("#seat_number_modal").val(seat);
@@ -296,7 +259,7 @@
 		$("#participant_select_modal").val('');
 		$("#participant_id_modal").val('');
 		$('#participant_select_modal option[value="' + orginal_participant_id + '"]').attr("selected",false);
-		if(username != null){
+		if(participant_id != null){
 			//we have a user - Fill in extra
 			$("#seat_number_modal").prop('readonly', 'readonly');
 			$("#participant_link").prop('href', '/admin/events/{{ $event->slug }}/participants/' + participant_id);

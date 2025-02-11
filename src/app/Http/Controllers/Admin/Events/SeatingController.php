@@ -40,7 +40,7 @@ class SeatingController extends Controller
         return view('admin.events.seating.show')
             ->withEvent($event)
             ->withSeatingPlan($seatingPlan)
-            ->withSeats($seatingPlan->seats()->paginate(15, ['*'], 'se'));
+            ->withSeats($seatingPlan->seats()->where('event_participant_id', '!=', null)->paginate(15, ['*'], 'se'));
     }
 
     /**
@@ -193,22 +193,14 @@ class SeatingController extends Controller
      * @param  Request          $request
      * @return Redirect
      */
-    public function storeSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
+    public function updateSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
-        if (!in_array(substr($request->seat_number_modal, 0, 1), explode(',', $seatingPlan->headers)) ||
+        if (!in_array(substr($request->seat_number_modal, 0, 1), $seatingPlan->headers) ||
             substr($request->seat_number_modal, 1, 1) <= 0 ||
             substr($request->seat_number_modal, 1, 1) > $seatingPlan->rows
         ) {
             Session::flash('alert-danger', 'Invalid seat selection!');
             return Redirect::back();
-        }
-
-        if (isset($request->participant_id_modal) && trim($request->participant_id_modal) != '') {
-            $clauses = ['event_participant_id' => $request->participant_id_modal];
-            $previousSeat = EventSeating::where($clauses)->first();
-            if ($previousSeat != null) {
-                $previousSeat->delete();
-            }
         }
 
         if (isset($request->participant_select_modal) && trim($request->participant_select_modal) != '') {
@@ -220,25 +212,29 @@ class SeatingController extends Controller
             }
         }
 
-        $clauses = ['event_participant_id' => $request->participant_select_modal];
-        $previousSeat = EventSeating::where($clauses)->first();
-        if ($previousSeat != null) {
-            $previousSeat->delete();
-        }
-
-        $clauses = ['seat' => $request->seat_number_modal, 'event_seating_plan_id' => $seatingPlan->id];
-        $seat = EventSeating::where($clauses)->first();
-        if ($seat != null) {
-            Session::flash('alert-danger', 'Seat is still occupied. Please try again!');
+        if (!$seat = EventSeating::where([
+            'seat' => $request->seat_number_modal,
+            'event_seating_plan_id' => $seatingPlan->id
+        ])->first()) {
+            Session::flash('alert-danger', 'Invalid seat selection!');
             return Redirect::back();
         }
 
-        $newSeat                         = new EventSeating();
-        $newSeat->seat                   = $request->seat_number_modal;
-        $newSeat->event_participant_id   = $request->participant_select_modal;
-        $newSeat->event_seating_plan_id  = $seatingPlan->id;
+        if ($previousSeat = EventSeating::where([
+            'event_seating_plan_id' => $seatingPlan->id,
+            'event_participant_id' => $request->participant_select_modal
+        ])->first()) {
+            $previousSeat->event_participant_id = null;
+            if (!$previousSeat->save()) {
+                Session::flash('alert-danger', 'Could not update Seat!');
+                return Redirect::back();
+            }
+        }
 
-        if (!$newSeat->save()) {
+        $seat->event_participant_id = $request->participant_select_modal;
+        $seat->disabled             = false;
+
+        if (!$seat->save()) {
             Session::flash('alert-danger', 'Could not update Seat!');
             return Redirect::back();
         }
@@ -248,20 +244,22 @@ class SeatingController extends Controller
     }
 
     /**
-     * Remove Participant Seating
+     * Clear Participant Seating
      * @param  Event            $event
      * @param  EventSeatingPlan $seatingPlan
      * @param  Request          $request
      * @return Redirect
      */
-    public function destroySeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
+    public function clearSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
         if (!$seat = $seatingPlan->seats()->where('seat', $request->seat_number_clear)->first()) {
             Session::flash('alert-danger', 'Could not find seat!');
             return Redirect::back();
         }
 
-        if (!$seat->delete()) {
+        $seat->event_participant_id = null;
+
+        if (!$seat->save()) {
             Session::flash('alert-danger', 'Could not clear seat!');
             return Redirect::back();
         }
@@ -297,6 +295,8 @@ class SeatingController extends Controller
         } else {
             $seat->disabled = true;
         }
+
+        $seat->event_participant_id = null;
 
         if (!$seat->save()) {
             Session::flash('alert-danger', 'Could not disable/enable seat!');

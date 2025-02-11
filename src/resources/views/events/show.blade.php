@@ -200,59 +200,36 @@
 									<table class="table">
 										<thead>
 											<tr>
-											<?php
-												$headers = explode(',', $seatingPlan->headers);
-												$headers = array_combine(range(1, count($headers)), $headers);
-											?>
-											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-												<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
-											@endfor
+												@foreach ($seatingPlan->headers as $header)
+													<th class="text-center"><h4><strong>ROW {{ucwords($header)}}</strong></h4></th>
+												@endforeach
 											</tr>
 										 </thead>
 										<tbody>
-											@for ($row = $seatingPlan->rows; $row > 0; $row--)
+											@foreach ($seatingPlan->headers as $header)
 												<tr>
-													@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-														<td style="padding-top:14px;">
-															@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
-																@if ($seatingPlan->locked)
-																	<button class="btn btn-success btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																	</button>
-																@else
-																	<button class="btn btn-success btn-sm">
-																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																	</button>
+													@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
+														<td>
+														
+															<button 
+																class="btn @if ($seat->disabled) btn-danger @elseif ($seat->eventParticipant) btn-success @else btn-primary @endif btn-sm" 
+																@if ($seat->disabled) disabled @endif
+																@if (!$seat->eventParticipant)
+																	onclick="pickSeat(
+																		'{{ $seatingPlan->slug }}',
+																		'{{ $seat->seat }}'
+																	)"
+																	data-toggle="modal"
+																	data-target="#pickSeatModal"
 																@endif
-															@else
-																@if ($seatingPlan->locked)
-																	<button class="btn btn-primary btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - Empty
-																	</button>
-																@else
-																	@if (Auth::user() && $event->getEventParticipant())
-																		<button 
-																			class="btn btn-primary btn-sm"
-																			onclick="pickSeat(
-																				'{{ $seatingPlan->slug }}',
-																				'{{ ucwords($headers[$column]) . $row }}'
-																			)"
-																			data-toggle="modal"
-																			data-target="#pickSeatModal"
-																		>
-																			{{ ucwords($headers[$column]) . $row }} - Empty
-																		</button>
-																	@else
-																		<button class="btn btn-primary btn-sm">
-																			{{ ucwords($headers[$column]) . $row }} - Empty
-																		</button>
-																	@endif
-																@endif
-															@endif
+																>
+																{{ $seat->seat }} - @if ($seat->eventParticipant) {{ $seat->eventParticipant->user->username }} @elseif ($seat->disabled) Disabled @else Empty @endif
+															</button>
+
 														</td>
-													@endfor
+													@endforeach
 												</tr>
-											@endfor
+											@endforeach
 										</tbody>
 									</table>
 									@if ($seatingPlan->locked)

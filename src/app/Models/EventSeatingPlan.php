@@ -71,12 +71,30 @@ class EventSeatingPlan extends Model
             }
         });
         self::updating(function ($model) {
-            // if (array_key_exists('rows', $model->getDirty()) || 
-            //     array_key_exists('columns', $model->getDirty())) {
-            //         dd('asdasd');
-            // }
+            if (
+                array_key_exists('rows', $model->getDirty()) || 
+                array_key_exists('columns', $model->getDirty())
+            ) {
+                $occupiedSeats = $model->seats()->where('event_participant_id', '!=', null)->get();
+                $model->seats()->delete();
+                for ($r = 0; $r < $model->rows; $r++) {
+                    for ($c = 0; $c < $model->columns; $c++) {
+                        $seat = new EventSeating();
+                        $seat->event_seating_plan_id = $model->id;
+                        $seat->seat = $model->numberToExcelColumn($r + 1) . $c + 1;
+                        if ($thisSeat = $occupiedSeats->where('seat', $seat->seat)->first()) {
+                            $seat->event_participant_id = $thisSeat->event_participant_id;
+                        }
+                        $seat->save();
+                    }
+                }
 
-
+                $headers = [];
+                for ($r = 0; $r < $model->rows; $r++) {
+                    $headers[] = $model->numberToExcelColumn($r + 1);
+                }
+                $model->headers = $headers;
+            }
         });
     }
 
