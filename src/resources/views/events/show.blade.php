@@ -198,16 +198,19 @@
 							<div class="panel-body">
 								<div class="table-responsive text-center">
 									<table class="table">
-										<thead>
+										{{-- <thead>
 											<tr>
 												@foreach ($seatingPlan->headers as $header)
 													<th class="text-center"><h4><strong>ROW {{ucwords($header)}}</strong></h4></th>
 												@endforeach
 											</tr>
-										 </thead>
+										 </thead> --}}
 										<tbody>
 											@foreach ($seatingPlan->headers as $header)
 												<tr>
+													<td>
+														<th class="text-center"><h4><strong>ROW {{ucwords($header)}}</strong></h4></th>
+													</td>
 													@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
 														<td>
 														
