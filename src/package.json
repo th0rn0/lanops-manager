@@ -1,10 +1,15 @@
 {
- "private": true,
- "devDependencies": {
-  "gulp": "^4.0.2"
- },
- "dependencies": {
-  "bootstrap-sass": "^3.4.1",
-  "laravel-elixir": "^6.0.0-18"
- }
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "bootstrap-sass": "^3.4.3",
+        "cross-env": "^7.0.3",
+        "laravel-vite-plugin": "^1.2.0",
+        "sass": "^1.84.0",
+        "vite": "^6.0.11"
+    },
+    "type": "module"
 }

@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // Commands\Inspire::class,
-        Commands\GenerateSitemap::class,
+        Commands\SitemapGenerate::class,
+        Commands\BotTimetableUpdates::class,
     ];
 
     /**
@@ -25,7 +25,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('sitemap:generate')
-        //          ->hourly();
+        $schedule->command('sitemap:generate')
+            ->hourly()
+            ->onOneServer()
+            ->runInBackground();
+        $schedule->command('bot:timetable-updates')
+            ->everyMinute()
+            ->onOneServer()
+            ->runInBackground();
     }
 }
