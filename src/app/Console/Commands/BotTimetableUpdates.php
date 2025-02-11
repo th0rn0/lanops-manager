@@ -66,7 +66,7 @@ class BotTimetableUpdates extends Command
                             }
 
                             // Starting Now
-                            if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, -1, 0)) {
+                            if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 0, 1)) {
                                 $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - STARTING SOON!", $nextTimetableItem->name));
                             }
                         }
