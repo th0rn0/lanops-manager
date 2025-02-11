@@ -11,16 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            th0rn0/lanops-manager
-          tags: |
-            type=raw,value={{date 'YYYYMMDD'}}
-            type=ref,event=branch
-            type=sha
+      - 
+        name: Get Build Date/Time
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
       -
         name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +23,7 @@ jobs:
         uses: tsickert/discord-webhook@v6.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-title: ${{ github.repository }} - Build Started!
+          embed-title: ${{ github.repository }} - ${{ github.head_ref || github.ref_name }} - Build Started!
           embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-description: ${{ github.event.head_commit.message }}
       -
@@ -56,7 +50,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ github.event.repository.updated_at}}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ steps.date.outputs.date }}
       -
         name: Push - APP
         uses: docker/build-push-action@v5
@@ -66,13 +60,13 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ github.event.repository.updated_at}}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ steps.date.outputs.date }}
       - 
         name: Discord Webhook Action - Build Success
         uses: tsickert/discord-webhook@v6.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-title: ${{ github.repository }} - Build Success!
+          embed-title: ${{ github.repository }} - ${{ github.head_ref || github.ref_name }} - Build Success!
           embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-description: ${{ github.event.head_commit.message }}
       - 
@@ -81,6 +75,6 @@ jobs:
         uses: tsickert/discord-webhook@v6.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-title: ${{ github.repository }} - Build Failure!
+          embed-title: ${{ github.repository }} - ${{ github.head_ref || github.ref_name }} - Build Failure!
           embed-url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           embed-description: ${{ github.event.head_commit.message }}
