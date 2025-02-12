@@ -15,10 +15,15 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('event_seating', function (Blueprint $table) {
+            $table->boolean('disabled')->default(false);
+        });
+
+        // Migration scheme to new Event Seating Data Schema
         foreach (EventSeatingPlan::all() as $seatingPlan) {
             $seatingPlan->column += 1;
             $seatingPlan->save();
-            $seatingPlan->column += 1;
+            $seatingPlan->column -= 1;
             $seatingPlan->save();
         }
     }
@@ -30,6 +35,11 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('event_seating_plans', function (Blueprint $table) {
+            $table->dropColumn('disabled');
+        });
+
+        // Migration scheme to old Event Seating Data Schema
         foreach (EventSeating::where('event_participant_id', null)->get() as $seat) {
             $seat->delete();
         }

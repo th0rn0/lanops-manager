@@ -34,22 +34,29 @@
 				<i class="fa fa-desktop fa-fw"></i> Seating Plan Preview
 			</div>
 			<div class="panel-body">
-				<div class="table-responsive">
+				<div class="table-responsive text-center">
 					<table class="table">
-						@foreach ($seatingPlan->headers as $header)
+						<thead>
 							<tr>
-								<td>
-									<h4><strong>ROW {{ $header }}</strong></h4> 
-								</td>
-								<td style="padding-top:14px;">
-									@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
-										<button class="btn @if ($seat->disabled) btn-danger @elseif ($seat->eventParticipant) btn-success @else btn-primary @endif btn-sm"  onclick="editSeating('{{ $seat->seat }}', '{{ $seat->event_participant_id }}')" data-toggle="modal" data-target="#editSeatingModal">
-											{{ $seat->seat }} - @if ($seat->eventParticipant) {{ $seat->eventParticipant->user->username }} @elseif ($seat->disabled) Disabled @else Empty @endif
-										</button>
-									@endforeach
-								</td>
+								@foreach ($seatingPlan->headers as $header)
+									<th class="text-center"><h4><strong>ROW {{ucwords($header)}}</strong></h4></th>
+								@endforeach
 							</tr>
-						@endforeach
+						 </thead>
+						<tbody>
+							@for ($c = 1; $c <= $seatingPlan->columns; $c++)
+								<tr>
+									@foreach ($seatingPlan->getSeatsForColumn($c)->sortBy('seat') as $seat)
+										<td>
+											<button class="btn @if ($seat->disabled) btn-danger @elseif ($seat->eventParticipant) btn-success @else btn-primary @endif btn-sm"  onclick="editSeating('{{ $seat->seat }}', '{{ $seat->event_participant_id }}')" data-toggle="modal" data-target="#editSeatingModal">
+												{{ $seat->seat }} - @if ($seat->eventParticipant) {{ $seat->eventParticipant->user->username }} @elseif ($seat->disabled) Disabled @else Empty @endif
+											</button>
+										</td>
+									@endforeach
+								</tr>
+							@endfor
+						</tbody>
+
 					</table>
 				</div>
 			</div>
@@ -120,13 +127,13 @@
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/seating/' . $seatingPlan->slug, 'files' => 'true')) }}
 					@if ($errors->any())
-					  	<div class="alert alert-danger">
-					        <ul>
-					          	@foreach ($errors->all() as $error)
-					            	<li>{{ $error }}</li>
-					          	@endforeach
-					        </ul>
-					  	</div>
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
 					@endif
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 form-group">

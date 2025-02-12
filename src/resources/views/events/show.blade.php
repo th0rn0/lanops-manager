@@ -463,56 +463,6 @@
 	</table>
 </div>
 
-<!-- Seat Modal -->
-<div class="modal fade" id="pickSeatModal" tabindex="-1" role="dialog" aria-labelledby="editSeatingModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="pickSeatModalLabel"></h4>
-			</div>
-			@if (Auth::user())
-				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
-					<div class="modal-body">
-						<div class="form-group">
-							<h4>Which ticket would you like to seat?</h4>
-							{{
-								Form::select(
-									'participant_id',
-									$user->getTickets($event->id),             
-									null, 
-									array(
-										'id'    => 'format',
-										'class' => 'form-control'
-									)
-								)
-							}}
-							<p>Are you sure you want this seat?</p>
-							<p>You can remove it at anytime.</p>
-						</div>
-					</div>
-					{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-					{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">Yes</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-					</div>
-				{{ Form::close() }}
-			@endif
-		</div>
-	</div>
-</div>
-
-<script>
-	function pickSeat(seating_plan_slug, seat)
-	{
-		$("#seat_number_modal").val(seat);
-		$("#seat_modal").val(seat);
-		$("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
-		$("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
-	}
-</script>
+@seo(['description' => strip_tags(substr($event->desc_long, 0, 1000))])
 
 @endsection
-
-@seo(['description' => strip_tags(substr($event->desc_long, 0, 1000))])
