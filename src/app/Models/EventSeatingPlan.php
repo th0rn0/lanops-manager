@@ -84,6 +84,11 @@ class EventSeatingPlan extends Model
         return $this->hasMany('App\Models\EventSeating');
     }
 
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
     public function sluggable(): array
     {
         return [
@@ -93,11 +98,21 @@ class EventSeatingPlan extends Model
         ];
     }
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
     }
 
+    /**
+     * Get the Short Name for Lists.
+     *
+     * @return string
+     */
     public function getShortName()
     {
         $name = $this->name;
@@ -107,10 +122,20 @@ class EventSeatingPlan extends Model
         return $name;
     }
 
+    /**
+     * Get Seats for specific row.
+     *
+     * @return string
+     */
     public function getSeatsForRow($row) {
         return $this->seats()->where('seat', 'REGEXP', "^[{$row}]\d+$")->get();
     }
 
+    /**
+     * Get Seats for specific column.
+     *
+     * @return App\Models\Seat
+     */
     public function getSeatsForColumn($column) {
         return $this->seats()->where('seat', 'REGEXP', "^[A-Za-z]{1,9}{$column}$")->get();
     }
