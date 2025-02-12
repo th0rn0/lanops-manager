@@ -119,8 +119,7 @@ Route::group(['middleware' => ['web']], function () {
      * Seating
      */
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
-        Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@store');
-        Route::delete('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@destroy');
+        Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@update');
     });
 
     /**
@@ -188,8 +187,9 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@show');
     Route::post('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@update');
     Route::delete('/admin/events/{event}/seating/{seatingPlan}', 'Admin\Events\SeatingController@destroy');
-    Route::post('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@storeSeat');
-    Route::delete('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@destroySeat');
+    Route::post('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@updateSeat');
+    Route::delete('/admin/events/{event}/seating/{seatingPlan}/seat', 'Admin\Events\SeatingController@clearSeat');
+    Route::post('/admin/events/{event}/seating/{seatingPlan}/seat/disable', 'Admin\Events\SeatingController@disableSeat');
 
     /**
      * Timetables

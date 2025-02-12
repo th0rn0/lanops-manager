@@ -27,7 +27,7 @@ class EventSeating extends Model
     {
         parent::boot();
         self::updated(function ($model) {
-            // dd($model->getChanges());
+
         });
     }
 

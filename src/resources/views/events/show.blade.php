@@ -178,7 +178,7 @@
 	)
 		<div class="page-header">
 			<a name="seating"></a>
-			<h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
+			<h3>Seating Plans <small>- {{ $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
 		</div>
 		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 			@foreach ($event->seatingPlans as $seatingPlan)
@@ -187,7 +187,7 @@
 						<div class="panel-heading" role="tab" id="headingOne">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-									{{ $seatingPlan->name }} <small>- {{ ($seatingPlan->columns * $seatingPlan->rows) - $seatingPlan->seats->count() }} / {{ $seatingPlan->columns * $seatingPlan->rows }} Available</small>
+									{{ $seatingPlan->name }} <small>- {{ $seatingPlan->getSeatedCount() }} / {{ $seatingPlan->getCapacity() }} Seats Remaining</small>
 									@if ($seatingPlan->status != 'PUBLISHED')
 										<small> - {{ $seatingPlan->status }}</small>
 									@endif
@@ -196,69 +196,7 @@
 						</div>
 						<div id="collapse_{{ $seatingPlan->slug }}" class="panel-collapse collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
 							<div class="panel-body">
-								<div class="table-responsive text-center">
-									<table class="table">
-										<thead>
-											<tr>
-											<?php
-												$headers = explode(',', $seatingPlan->headers);
-												$headers = array_combine(range(1, count($headers)), $headers);
-											?>
-											@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-												<th class="text-center"><h4><strong>ROW {{ucwords($headers[$column])}}</strong></h4></th>
-											@endfor
-											</tr>
-										 </thead>
-										<tbody>
-											@for ($row = $seatingPlan->rows; $row > 0; $row--)
-												<tr>
-													@for ($column = 1; $column <= $seatingPlan->columns; $column++)
-														<td style="padding-top:14px;">
-															@if ($event->getSeat($seatingPlan->id, ucwords($headers[$column]) . $row))
-																@if ($seatingPlan->locked)
-																	<button class="btn btn-success btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																	</button>
-																@else
-																	<button class="btn btn-success btn-sm">
-																		{{ ucwords($headers[$column]) . $row }} - {{ $event->getSeat($seatingPlan->id, ucwords($headers[$column] . $row))->eventParticipant->user->username }}
-																	</button>
-																@endif
-															@else
-																@if ($seatingPlan->locked)
-																	<button class="btn btn-primary btn-sm" disabled>
-																		{{ ucwords($headers[$column]) . $row }} - Empty
-																	</button>
-																@else
-																	@if (Auth::user() && $event->getEventParticipant())
-																		<button 
-																			class="btn btn-primary btn-sm"
-																			onclick="pickSeat(
-																				'{{ $seatingPlan->slug }}',
-																				'{{ ucwords($headers[$column]) . $row }}'
-																			)"
-																			data-toggle="modal"
-																			data-target="#pickSeatModal"
-																		>
-																			{{ ucwords($headers[$column]) . $row }} - Empty
-																		</button>
-																	@else
-																		<button class="btn btn-primary btn-sm">
-																			{{ ucwords($headers[$column]) . $row }} - Empty
-																		</button>
-																	@endif
-																@endif
-															@endif
-														</td>
-													@endfor
-												</tr>
-											@endfor
-										</tbody>
-									</table>
-									@if ($seatingPlan->locked)
-										<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
-									@endif
-								</div>
+								@include ('layouts._partials._seating.plan', ['horizontal' => false])
 								<hr>
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-xs-12 col-md-8">
@@ -525,56 +463,6 @@
 	</table>
 </div>
 
-<!-- Seat Modal -->
-<div class="modal fade" id="pickSeatModal" tabindex="-1" role="dialog" aria-labelledby="editSeatingModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="pickSeatModalLabel"></h4>
-			</div>
-			@if (Auth::user())
-				{{ Form::open(array('url'=>'/events/' . $event->slug . '/seating/', 'id'=>'pickSeatFormModal')) }}
-					<div class="modal-body">
-						<div class="form-group">
-							<h4>Which ticket would you like to seat?</h4>
-							{{
-								Form::select(
-									'participant_id',
-									$user->getTickets($event->id),             
-									null, 
-									array(
-										'id'    => 'format',
-										'class' => 'form-control'
-									)
-								)
-							}}
-							<p>Are you sure you want this seat?</p>
-							<p>You can remove it at anytime.</p>
-						</div>
-					</div>
-					{{ Form::hidden('user_id', $user->id, array('id'=>'user_id','class'=>'form-control')) }}
-					{{ Form::hidden('seat', NULL, array('id'=>'seat_modal','class'=>'form-control')) }}
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-success">Yes</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-					</div>
-				{{ Form::close() }}
-			@endif
-		</div>
-	</div>
-</div>
-
-<script>
-	function pickSeat(seating_plan_slug, seat)
-	{
-		$("#seat_number_modal").val(seat);
-		$("#seat_modal").val(seat);
-		$("#pickSeatModalLabel").html('Do you what to choose seat ' + seat);
-		$("#pickSeatFormModal").prop('action', '/events/{{ $event->slug }}/seating/' + seating_plan_slug);
-	}
-</script>
+@seo(['description' => strip_tags(substr($event->desc_long, 0, 1000))])
 
 @endsection
-
-@seo(['description' => strip_tags(substr($event->desc_long, 0, 1000))])

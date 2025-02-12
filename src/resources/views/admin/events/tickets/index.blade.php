@@ -200,7 +200,7 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-plus fa-fw"></i> Add Tickets
+				<i class="fa fa-plus fa-fw"></i> Add Ticket
 			</div>
 			<div class="panel-body">
 				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/tickets')) }}
