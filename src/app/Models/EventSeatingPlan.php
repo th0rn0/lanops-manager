@@ -172,4 +172,12 @@ class EventSeatingPlan extends Model
         return $column;
     }
 
+    public function getCapacity() {
+        return $this->seats()->where('disabled', false)->get()->count();
+    }
+
+    public function getSeatedCount() {
+        return $this->seats()->where('disabled', false)->where('event_participant_id', '!=', null)->get()->count();
+    }
+
 }
