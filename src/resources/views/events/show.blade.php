@@ -196,49 +196,7 @@
 						</div>
 						<div id="collapse_{{ $seatingPlan->slug }}" class="panel-collapse collapse @if ($loop->first) in @endif" role="tabpanel" aria-labelledby="collaspe_{{ $seatingPlan->slug }}">
 							<div class="panel-body">
-								<div class="table-responsive text-center">
-									<table class="table">
-										{{-- <thead>
-											<tr>
-												@foreach ($seatingPlan->headers as $header)
-													<th class="text-center"><h4><strong>ROW {{ucwords($header)}}</strong></h4></th>
-												@endforeach
-											</tr>
-										 </thead> --}}
-										<tbody>
-											@foreach ($seatingPlan->headers as $header)
-												<tr>
-													<td>
-														<th class="text-center"><h4><strong>ROW {{ucwords($header)}}</strong></h4></th>
-													</td>
-													@foreach ($seatingPlan->getSeatsForRow($header) as $seat)
-														<td>
-														
-															<button 
-																class="btn @if ($seat->disabled) btn-danger @elseif ($seat->eventParticipant) btn-success @else btn-primary @endif btn-sm" 
-																@if ($seat->disabled) disabled @endif
-																@if (!$seat->eventParticipant)
-																	onclick="pickSeat(
-																		'{{ $seatingPlan->slug }}',
-																		'{{ $seat->seat }}'
-																	)"
-																	data-toggle="modal"
-																	data-target="#pickSeatModal"
-																@endif
-																>
-																{{ $seat->seat }} - @if ($seat->eventParticipant) {{ $seat->eventParticipant->user->username }} @elseif ($seat->disabled) Disabled @else Empty @endif
-															</button>
-
-														</td>
-													@endforeach
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-									@if ($seatingPlan->locked)
-										<p class="text-center"><strong>NOTE: Seating Plan is currently locked!</strong></p>
-									@endif
-								</div>
+								@include ('layouts._partials._seating.plan', ['horizontal' => false])
 								<hr>
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-xs-12 col-md-8">

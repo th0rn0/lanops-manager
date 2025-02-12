@@ -201,7 +201,7 @@ class Event extends Model
     {
         $total = 0;
         foreach ($this->seatingPlans as $seatingPlan) {
-            $total += $seatingPlan->seats()->count();
+            $total += $seatingPlan->seats()->where('disabled', false)->count();
         }
         return $total;
     }

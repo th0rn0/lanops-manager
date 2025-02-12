@@ -164,6 +164,16 @@ class EventSeatingPlan extends Model
      * @return string
      */
     public function getSeatsForRow($row) {
-        return $this->seats()->where('seat', 'LIKE', "%{$row}%")->get();
+        return $this->seats()->where('seat', 'REGEXP', "^[{$row}]\d+$")->get();
     }
+
+    /**
+     * Get Seats for specific column.
+     *
+     * @return string
+     */
+    public function getSeatsForColumn($column) {
+        return $this->seats()->where('seat', 'REGEXP', "^[A-Za-z]{1,9}{$column}$")->get();
+    }
+    
 }
