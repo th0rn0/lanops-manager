@@ -14,7 +14,7 @@
 	)
 		<div class="page-header">
 			<a name="seating"></a>
-			<h3>Seating Plans <small>- {{ $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
+			<h3>Seating Plans <small>- {{ $event->getSeatingCapacity() - $event->getSeatedCount() }} / {{ $event->getSeatingCapacity() }} Seats Remaining</small></h3>
 		</div>
 		<div class="panel-group">
 			@foreach ($event->seatingPlans as $seatingPlan)
@@ -23,7 +23,7 @@
 						<div class="panel-heading" role="tab" id="headingOne">
 							<h4 class="panel-title">
 								<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ $seatingPlan->slug }}" aria-expanded="true" aria-controls="collapse_{{ $seatingPlan->slug }}">
-									{{ $seatingPlan->name }} <small>- {{ $seatingPlan->getSeatedCount() }} / {{ $seatingPlan->getCapacity() }} Seats Remaining</small>
+									{{ $seatingPlan->name }} <small>- {{ $seatingPlan->getCapacity() - $seatingPlan->getSeatedCount() }} / {{ $seatingPlan->getCapacity() }} Seats Remaining</small>
 									@if ($seatingPlan->status != 'PUBLISHED')
 										<small> - {{ $seatingPlan->status }}</small>
 									@endif

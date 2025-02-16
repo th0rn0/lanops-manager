@@ -73,6 +73,11 @@ class SeatingController extends Controller
             return Redirect::back();
         }
 
+        if ($seat->disabled) {
+            Session::flash('alert-danger', 'Seat is disabled!');
+            return Redirect::back();
+        }
+
         if ($seat->event_participant_id != null) {
             Session::flash('alert-danger', 'That seat is already taken!');
             return Redirect::back();

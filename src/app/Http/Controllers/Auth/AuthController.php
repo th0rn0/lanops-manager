@@ -176,6 +176,9 @@ class AuthController extends Controller
         }
         Session::forget('user');
         Auth::login($user, true);
+        if ($method == 'standard') {
+            $user->sendEmailVerificationNotification();
+        }
         return Redirect('/account');
       
     }
