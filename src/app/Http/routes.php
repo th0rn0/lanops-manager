@@ -13,7 +13,7 @@ Route::group(['middleware' => ['api']], function () {
 /**
  * Front End
  */
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web']], function () {    
     /**
      * Login & Register
      */
@@ -23,7 +23,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/login', 'Auth\AuthController@prompt');
     Route::get('/login/steam', 'Auth\SteamController@login');
 
-    // LEGACY AUTH ROUTES
     Route::post('/login/standard', 'Auth\LoginController@login');
     Route::get('/register/email/verify', 'Auth\VerificationController@show')->name('verification.notice');
     Route::get('/register/email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
@@ -38,7 +37,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/account', 'AccountController@index')->name('accounts');
         Route::post('/account', 'AccountController@update');
-        // Route::post('/account/delete', 'AccountController@destroy');
         Route::get('/account/discord/callback', 'AccountController@linkDiscord');
         Route::post('/account/discord/unlink', 'AccountController@unlinkDiscord');
     });
@@ -76,6 +74,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/contact', 'HomeController@contact');
     Route::get('/terms', 'HomeController@terms');
     Route::get('/info', 'HomeController@info');
+    Route::get('/sitemap', 'SitemapController@renderSitemap');
 
     /**
      * Tickets
