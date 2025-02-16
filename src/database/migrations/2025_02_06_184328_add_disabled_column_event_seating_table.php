@@ -21,9 +21,10 @@ return new class extends Migration
 
         // Migration scheme to new Event Seating Data Schema
         foreach (EventSeatingPlan::all() as $seatingPlan) {
-            $seatingPlan->column += 1;
-            $seatingPlan->save();
-            $seatingPlan->column -= 1;
+            $columns = $seatingPlan->columns;
+            $rows = $seatingPlan->rows;
+            $seatingPlan->columns = $rows;
+            $seatingPlan->rows = $columns;
             $seatingPlan->save();
         }
     }

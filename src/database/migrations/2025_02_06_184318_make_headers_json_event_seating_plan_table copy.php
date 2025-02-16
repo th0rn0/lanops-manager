@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('event_seating_plans', function (Blueprint $table) {
-            $table->json('headers')->change();
+            // $table->json('headers')->change();
         });
     }
 

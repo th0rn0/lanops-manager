@@ -11,7 +11,7 @@
          </thead>
         <tbody>
             @if (!$horizontal)
-                @for ($c = 1; $c <= $seatingPlan->columns; $c++)
+                @for ($c = $seatingPlan->columns; $c >= 1; $c--)
                     <tr>
                         @foreach ($seatingPlan->getSeatsForColumn($c)->sortBy('seat') as $seat)
                             <td>
