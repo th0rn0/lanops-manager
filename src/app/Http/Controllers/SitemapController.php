@@ -1,36 +1,19 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Http\Controllers;
 
-use Illuminate\Console\Command;
+use Illuminate\Http\Request;
+use App\Models\User;
 
-class SitemapGenerate extends Command
+class SitemapController extends Controller
 {
     /**
-     * The name and signature of the console command.
+     * Generate Sitemap
      *
-     * @var string
+     * @return \Illuminate\Http\Response
      */
-    protected $signature = 'sitemap:generate';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Generate Sitemap';
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function renderSitemap()
     {
-                // modify this to your own needs
-        // SitemapGenerator::create(config('app.url'))
-        //     ->writeToFile(public_path('sitemap.xml'));
-
         $sitemap = resolve("sitemap");
 
         $sitemap->add(url('/'), '2012-08-25T20:10:00+02:00', '1.0', 'daily');
@@ -39,10 +22,9 @@ class SitemapGenerate extends Command
         $sitemap->add(url('gallery'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
         $sitemap->add(url('info'), '2012-08-26T12:30:00+02:00', '0.9', 'monthly');
 
-    
         $events = \DB::table('events')->orderBy('start')->get();
 
-        $sitemap->setCache('laravel.sitemap', 60);
+        $sitemap->setCache('laravel.sitemap', 30);
     
         foreach ($events as $event) {
             $sitemap->add(url('/') . '/' . $event->slug, $event->updated_at, '1.0', 'daily');
@@ -54,8 +36,6 @@ class SitemapGenerate extends Command
             $sitemap->add(url('/') . '/' . $newsPost->slug, $newsPost->updated_at, '1.0', 'daily');
         }
     
-        $sitemap->store('xml', 'sitemap');
-        
-        return Command::SUCCESS;
+        return $sitemap->render('xml');
     }
 }

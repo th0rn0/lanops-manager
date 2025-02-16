@@ -14,6 +14,9 @@ Route::group(['middleware' => ['api']], function () {
  * Front End
  */
 Route::group(['middleware' => ['web']], function () {
+
+    Route::get('sitemap', 'SitemapController@renderSitemap');
+    
     /**
      * Login & Register
      */
