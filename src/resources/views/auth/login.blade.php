@@ -10,14 +10,6 @@
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <p>Use one of the login methods below to continue or <a href="/register/standard">register</a></p>
-                @if (in_array('steam', $activeLoginMethods))
-                    <a href="/login/steam">
-                        <img class="img img-responsive" src="https://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_01.png">
-                    </a>
-                @endif
-            </div>
-            <div class="col-sm-12 col-md-6">
                 @if (in_array('standard', $activeLoginMethods))
                     <form method="POST" action="/login/standard" class="form-horizontal">
                         @csrf
@@ -47,14 +39,29 @@
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <a class="btn btn-link" href="/login/forgot">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
                     </form>
+                    <div class="row">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <a href="/register/standard">
+                                <button class="btn btn-lg btn-primary btn-block">Register</button>
+                            </a>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <a class="btn btn-link" href="/login/forgot">
+                                Forgot Your Password?
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <p>Use one of the login methods below to continue or <a href="/register/standard">register</a></p>
+                @if (in_array('steam', $activeLoginMethods))
+                    <a href="/login/steam">
+                        <div class="">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"><img class="img img-responsive img-rounded login-icon-button" src="/images/login/steam.png"/>Steam</button>
+                        </div>
+                    </a>
                 @endif
             </div>
         </div>
