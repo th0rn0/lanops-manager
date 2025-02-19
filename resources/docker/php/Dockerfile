@@ -9,11 +9,12 @@ RUN apt-get update && apt-get install -y \
         libzip-dev \
         libxml2-dev \
         libonig-dev \
+        libmagickwand-dev \
         cron
 
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
 
-RUN docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring exif
+RUN docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring exif 
 
 COPY src/ /var/www/html
 

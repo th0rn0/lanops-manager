@@ -50,7 +50,6 @@
                         <input id="password2" type="password" class="form-control" name="password2" required autocomplete="new-password">
                     </div>
                     <input id="url" type="hidden" class="form-control" name="url">
-
                 @endif
                 @if ($loginMethod == "steam")
                     <div class="form-group">
@@ -62,6 +61,16 @@
             <div class="col-xs-12 col-md-6">
                 @include ('layouts._partials._terms.registration')
                 <h5>By Clicking on Confirm you are agreeing to the Terms and Conditions as set by {!! config('app.name') !!}</h5>
+                <div class="form-group">
+                    <center>
+                        <img class="img img-responsive mb-2" src="{{ captcha_src('default'); }}" alt="captcha">
+                    </center>
+                </div>
+                <div class="margin-top-2"></div>
+                <div class="form-group @error('captcha') has-error @enderror">
+                    <input type="text" name="captcha" class="form-control @error('captcha') is-invalid @enderror" placeholder="Please Insert Captcha">
+                </div>
+                 
                 <button type="submit" class="btn btn-block btn-primary">Register</button>
             </div>
         {{ Form::close() }}

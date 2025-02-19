@@ -86,6 +86,7 @@ return [
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -146,6 +147,7 @@ return [
         'QrCode'                => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Helpers'               => App\Libraries\Helpers::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
+        'Captcha'               => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];
