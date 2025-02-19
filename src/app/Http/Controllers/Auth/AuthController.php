@@ -141,6 +141,7 @@ class AuthController extends Controller
                     'username'      => 'required|unique:users,username',
                     'firstname'     => 'required|string',
                     'surname'       => 'required|string',
+                    'captcha'       => 'required|captcha',
                 ];
                 $messages = [
                     'username.unique'       => 'Username must be unique',
@@ -152,6 +153,7 @@ class AuthController extends Controller
                     'password1.same'        => 'Passwords must be the same.',
                     'password1.required'    => 'Password is required.',
                     'password1.min'         => 'Password must be atleast 8 characters long.',
+                    'captcha'               => 'Captcha is incorrect.',
                 ];
                 $this->validate($request, $rules, $messages);
                 $user->email          = $request->email;
