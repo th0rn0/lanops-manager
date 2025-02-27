@@ -11,7 +11,7 @@
 			</div>
 		@endforeach
 	</div>
-	<div class="hero-overlay hidden-sm">
+	<div class="hero-overlay hidden-sm hidden-xs">
 		@if ($nextEventLan)
 			<h3>Next LAN Event</h3>
 			<h1>{{ $nextEventLan->display_name }}</h1>
