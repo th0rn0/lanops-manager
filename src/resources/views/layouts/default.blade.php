@@ -118,6 +118,9 @@
 						@if (config('app.facebook_link') != "")
 							<p class=""><a target="_blank" href="{{ config('app.facebook_link') }}">Facebook</a></p>
 						@endif
+						@if (config('app.bsky_link') != "")
+							<p class=""><a target="_blank" href="{{ config('app.bsky_link') }}">BSKY</a></p>
+						@endif
 						@if (config('app.discord_link') != "")
 							<p class=""><a target="_blank" href="{{ config('app.discord_link') }}">Discord</a></p>
 						@endif
