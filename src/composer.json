@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.3",
         "laravel/framework": "^9.0",
         "laravelcollective/html": "^6.0",
         "invisnik/laravel-steam-auth": "^4.4",
