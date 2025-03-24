@@ -27,13 +27,13 @@ class SitemapController extends Controller
         $sitemap->setCache('laravel.sitemap', 30);
     
         foreach ($events as $event) {
-            $sitemap->add(url('/') . '/' . $event->slug, $event->updated_at, '1.0', 'daily');
+            $sitemap->add(url('/') . '/events/' . $event->slug, $event->updated_at, '1.0', 'daily');
         }
 
         $newsPosts = \DB::table('news_feed')->orderBy('updated_at')->get();
     
         foreach ($newsPosts as $newsPost) {
-            $sitemap->add(url('/') . '/' . $newsPost->slug, $newsPost->updated_at, '1.0', 'daily');
+            $sitemap->add(url('/') . '/news/' . $newsPost->slug, $newsPost->updated_at, '1.0', 'daily');
         }
     
         return $sitemap->render('xml');
