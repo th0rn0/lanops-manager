@@ -195,14 +195,6 @@ class SeatingController extends Controller
      */
     public function updateSeat(Event $event, EventSeatingPlan $seatingPlan, Request $request)
     {
-        if (!in_array(substr($request->seat_number_modal, 0, 1), $seatingPlan->headers) ||
-            substr($request->seat_number_modal, 1, 1) <= 0 ||
-            substr($request->seat_number_modal, 1, 1) > $seatingPlan->rows
-        ) {
-            Session::flash('alert-danger', 'Invalid seat selection!');
-            return Redirect::back();
-        }
-
         if (isset($request->participant_select_modal) && trim($request->participant_select_modal) != '') {
             $clauses = ['id' => $request->participant_select_modal];
             $participant = EventParticipant::where($clauses)->first();
