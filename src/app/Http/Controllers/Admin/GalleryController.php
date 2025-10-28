@@ -171,6 +171,7 @@ class GalleryController extends Controller
      */
     public function destroyImage(GalleryAlbum $album, Media $image)
     {
+        $image->clearMediaCollection();
         if (!$image->delete()) {
             Session::flash('alert-danger', 'Cannot delete Image!');
             return Redirect::back();

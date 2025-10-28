@@ -208,12 +208,12 @@
 											{{ Form::label('text','Text',array('id'=>'','class'=>'')) }}
 											{{ Form::textarea('text', $section->text,array('id'=>'text','class'=>'form-control wysiwyg-editor', 'rows' => '4')) }}
 										</div>
-										@if(isset($section->image_path))
+										@if($section->hasMedia())
 											<div class="row">
 												<div class="form-group col-lg-6">
 													{{ Form::label('preview','Image Preview',array('id'=>'','class'=>'')) }}
 													<center>
-														<img class="img-responsive img-thumbnail" src="{{ $section->image_path }}" />
+														<img class="img-responsive img-thumbnail" src="{{ $section->getFirstMediaUrl() }}" />
 													</center>
 												</div>  
 											</div>
@@ -342,6 +342,18 @@
 			</div>
 		</div>
 
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<i class="fa fa-wrench fa-fw"></i> Duplicate Event TEST
+			</div>
+			<div class="panel-body">
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/duplicate')) }}
+					{{ Form::hidden('_method', 'POST') }}
+					<button type="submit" class="btn btn-danger btn-block">Duplicate</button>
+				{{ Form::close() }}
+			</div>
+		</div>
+
 	</div>
 </div>
 
@@ -359,43 +371,6 @@
 					@include('layouts._partials._admin._event._tickets.form', ['empty' => true])
 				{{ Form::close() }}
 			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="addSponsorModal" tabindex="-1" role="dialog" aria-labelledby="addSponsorModalModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="addSponsorModalLabel">Add Sponsor</h4>
-			</div>
-			{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/sponsors', 'files' => 'true')) }}
-				<div class="modal-body">
-					@if ($errors->any())
-					  	<div class="alert alert-danger">
-					        <ul>
-					          	@foreach ($errors->all() as $error)
-					            	<li>{{ $error }}</li>
-					          	@endforeach
-					        </ul>
-					  	</div>
-					@endif
-					<div class="form-group">
-						{{ Form::label('sponsor_name','Sponsor Name',array('id'=>'','class'=>'')) }}
-						{{ Form::text('sponsor_name',NULL,array('id'=>'sponsor_name','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('sponsor_website','Sponsor Website',array('id'=>'','class'=>'')) }}
-						{{ Form::text('sponsor_website',NULL,array('id'=>'sponsor_website','class'=>'form-control')) }}
-					</div>
-					<div class="form-group">
-						{{ Form::label('sponsor_image','Sponsor Image',array('id'=>'','class'=>'')) }}
-						{{ Form::file('sponsor_image',array('id'=>'sponsor_image','class'=>'form-control')) }}
-					</div>
-					<button type="submit" name="action" value="add_sponsor" class="btn btn-default">Submit</button>
-				</div>
-			{{ Form::close() }}
 		</div>
 	</div>
 </div>

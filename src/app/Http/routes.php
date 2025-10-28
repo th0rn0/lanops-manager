@@ -177,6 +177,8 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::post('/admin/information/{information}', 'Admin\Events\InformationController@update');
     Route::delete('/admin/information/{information}', 'Admin\Events\InformationController@destroy');
     Route::post('/admin/events/{event}/discord/link', 'Admin\Events\EventsController@linkDiscord');
+    Route::post('/admin/events/{event}/duplicate', 'Admin\Events\EventsController@duplicate');
+
     
     /**
      * Seating

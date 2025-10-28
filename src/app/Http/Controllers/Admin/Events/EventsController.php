@@ -6,7 +6,12 @@ use Auth;
 use Session;
 
 use App\Models\Event;
+use App\Models\EventTimetable;
 use App\Models\EventParticipant;
+use App\Models\EventTimetableData;
+use App\Models\EventTicket;
+use App\Models\EventSeatingPlan;
+use App\Models\EventInformation;
 
 use App\Http\Controllers\Controller;
 
@@ -262,6 +267,7 @@ class EventsController extends Controller
 
     public function linkDiscord(Request $request, Event $event)
     {
+        // TODO - put this into the model
         $address = [
             $event->venue->address_1,
             $event->venue->address_2,
@@ -313,5 +319,100 @@ class EventsController extends Controller
         Session::flash('alert-success', 'Successfully Linked Event!');
         return Redirect::to('admin/events/' . $event->slug);
 
+    }
+
+    public function duplicate(Request $request, Event $event)
+    {
+        // TODO - Put this into the model
+        $duplicatedEvent = new Event();
+        $duplicatedEvent->display_name        = $event->display_name . " Copy";
+        $duplicatedEvent->nice_name           = strtolower(str_replace(' ', '-', $event->display_name . " Copy"));
+        $duplicatedEvent->start               = $event->start;
+        $duplicatedEvent->end                 = $event->end;
+        $duplicatedEvent->desc_long           = $event->desc_long;
+        $duplicatedEvent->desc_short          = $event->desc_short;
+        $duplicatedEvent->event_venue_id      = @$event->event_venue_id;
+        $duplicatedEvent->capacity            = $event->capacity;
+
+        if (!$duplicatedEvent->save()) {
+            Session::flash('alert-danger', 'Cannot save Event!');
+            return Redirect::back();
+        }
+
+        foreach ($event->timetables as $timetable) {
+            $duplicatedTimetable              = new EventTimetable();
+            $duplicatedTimetable->name        = $timetable->name;
+            $duplicatedTimetable->event_id    = $duplicatedEvent->id;
+
+            if (!$duplicatedTimetable->save()) {
+                Session::flash('alert-danger', 'Cannot save Timetable!');
+                return Redirect::back();
+            }
+
+            foreach ($timetable->data as $data) {
+                $duplicatedEventTimetableData                       = new EventTimetableData();
+                $duplicatedEventTimetableData->event_timetable_id   = $duplicatedTimetable->id;
+                $duplicatedEventTimetableData->start_time           = $data->start_time;
+                $duplicatedEventTimetableData->name                 = $data->name;
+                $duplicatedEventTimetableData->desc                 = $data->desc;
+
+                if (!$duplicatedEventTimetableData->save()) {
+                    Session::flash('alert-danger', 'Cannot save Timetable Data!');
+                    return Redirect::back();
+                }
+            }
+        }
+
+        foreach ($event->tickets as $ticket) {
+            $duplicatedTicket             = new EventTicket();
+            $duplicatedTicket->event_id   = $duplicatedEvent->id;
+            $duplicatedTicket->name       = $ticket->name;
+            $duplicatedTicket->type       = $ticket->type;
+            $duplicatedTicket->price      = $ticket->price;
+            $duplicatedTicket->seatable   = $ticket->seatable;
+            $duplicatedTicket->sale_start = $ticket->sale_start;
+            $duplicatedTicket->sale_end   = $ticket->sale_end;
+            $duplicatedTicket->quantity   = $ticket->quantity;
+    
+            if (!$duplicatedTicket->save()) {
+                Session::flash('alert-danger', 'Cannot save Ticket');
+                Redirect::back();
+            }
+        }
+
+        foreach ($event->seatingPlans as $seatingPlan) {
+            $duplicatedSeatingPlan              = new EventSeatingPlan();
+            $duplicatedSeatingPlan->event_id    = $duplicatedEvent->id;
+            $duplicatedSeatingPlan->name        = $seatingPlan->name;
+            $duplicatedSeatingPlan->name_short  = $seatingPlan->name_short;
+            $duplicatedSeatingPlan->columns     = $seatingPlan->columns;
+            $duplicatedSeatingPlan->rows        = $seatingPlan->rows;
+
+            if (!$duplicatedSeatingPlan->save()) {
+                Session::flash('alert-danger', 'Cannot save Seating Plan');
+                Redirect::back();
+            }
+        }
+
+        foreach ($event->information as $information) {
+            $duplicatedInformation               = new EventInformation();
+            $duplicatedInformation->event_id     = $duplicatedEvent->id;
+            $duplicatedInformation->title        = $information->title;
+            $duplicatedInformation->text         = $information->text;
+            $duplicatedInformation->image_path   = $information->image_path;
+            $duplicatedInformation->order        = $information->order;
+
+            if (!$duplicatedInformation->save()) {
+                Session::flash('alert-danger', 'Cannot save Information');
+                Redirect::back();
+            }
+
+            if ($information->hasMedia()) {
+                $information->getMedia()->first()->copy($duplicatedInformation);
+            }
+        }
+
+        Session::flash('alert-success', 'Successfully Duplicated Event!');
+        return Redirect::to('admin/events/' . $duplicatedEvent->slug);
     }
 }

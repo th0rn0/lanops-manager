@@ -187,7 +187,7 @@ class EventParticipant extends Model
         $this->transferred = true;
         $this->transferred_event_id = $this->event_id;
         $this->event_id = $eventId;
-        if (!$this->save()) {
+        if (!$this->save() && !$this->seat()->delete()) {
             return false;
         }
         return true;
