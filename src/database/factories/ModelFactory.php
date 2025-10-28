@@ -105,6 +105,5 @@ $factory->define(App\Models\NewsArticle::class, function (Faker\Generator $faker
     return [
         'title'     => $faker->words($nb = 3, $asText = true),
         'text'      => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
-        // 'text'      => $faker->paragraphs([$nb = 3, $asText = true]),
     ];
 });

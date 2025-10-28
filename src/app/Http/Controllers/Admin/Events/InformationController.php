@@ -40,19 +40,13 @@ class InformationController extends Controller
         $information->text      = $request->text;
         $information->event_id  = $event->id;
 
-        if ($request->file('image') !== null) {
-            $information->image_path = str_replace(
-                'public/',
-                '/storage/',
-                Storage::put(
-                    'public/images/events/' . $event->slug . '/info',
-                    $request->file('image')
-                )
-            );
-        }
-        
         if (!$information->save()) {
             Session::flash('alert-danger', 'Cannot save Event Information!');
+            return Redirect::back();
+        }
+
+        if ($request->file('image') !== null && !$information->addMediaFromRequest('image')->toMediaCollection()) {
+            Session::flash('alert-danger', 'Cannot save Event Information Image!');
             return Redirect::back();
         }
 
@@ -94,21 +88,19 @@ class InformationController extends Controller
             $information->order = $request->order;
         }
         
-        if ($request->file('image') !== null) {
-            Storage::delete($information->image_path);
-            $information->image_path    = str_replace(
-                'public/',
-                '/storage/',
-                Storage::put(
-                    'public/images/events/' . $information->event->slug . '/info',
-                    $request->file('image')
-                )
-            );
-        }
-
         if (!$information->save()) {
             Session::flash('alert-danger', 'Cannot update Event Information!');
             return Redirect::back();
+        }
+
+        if ($request->file('image') !== null) {
+            if ($information->hasMedia()) {
+                $information->clearMediaCollection();
+            }
+            if (!$information->addMediaFromRequest('image')->toMediaCollection()) {
+                Session::flash('alert-danger', 'Cannot save Event Information Image!');
+                return Redirect::back();
+            }
         }
 
         Session::flash('alert-success', 'Successfully updated Event Information!');
@@ -122,6 +114,8 @@ class InformationController extends Controller
      */
     public function destroy(EventInformation $information)
     {
+        $information->clearMediaCollection();
+
         if (!$information->delete()) {
             Session::flash('alert-danger', 'Cannot delete Event Information!');
             return Redirect::back();
