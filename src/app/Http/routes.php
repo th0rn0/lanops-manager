@@ -244,7 +244,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/venues/{venue}', 'Admin\Events\VenuesController@show');
     Route::post('/admin/venues/{venue}', 'Admin\Events\VenuesController@update');
     Route::delete('/admin/venues/{venue}', 'Admin\Events\VenuesController@destroy');
-    Route::post('/admin/venues/{venue}/{image}', 'Admin\Events\VenuesController@updateImage');
     Route::delete('/admin/venues/{venue}/{image}', 'Admin\Events\VenuesController@destroyImage');
     
     /**

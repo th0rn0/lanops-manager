@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin\Events;
 
 use Session;
-use Storage;
 use Input;
 
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 use App\Models\EventVenue;
-use App\Models\EventVenueImage;
 
 use App\Http\Controllers\Controller;
 
@@ -100,23 +100,13 @@ class VenuesController extends Controller
         $venue->address_postcode    = $request->address_postcode;
         $venue->address_country     = $request->address_country;
 
-        if (Input::file('images')) {
-            foreach (Input::file('images') as $image) {
-                $venue->images()->create([
-                    'path' => str_replace(
-                        'public/',
-                        '/storage/',
-                        Storage::put(
-                            'public/images/venues/' . $venue->slug,
-                            $image
-                        )
-                    ),
-                ]);
-            }
-        }
-
         if (!$venue->save()) {
             Session::flash('alert-danger', 'Cannot save Venue!');
+            return Redirect::back();
+        }
+
+        if (Input::file('images') !== null && !$venue->addMediaFromRequest('images')->toMediaCollection()) {
+            Session::flash('alert-danger', 'Cannot save Venue Image!');
             return Redirect::back();
         }
 
@@ -200,20 +190,13 @@ class VenuesController extends Controller
 
         }
 
-        if (Input::file('images')) {
-            foreach (Input::file('images') as $image) {
-                $venue->images()->create([
-                    'path' => str_replace(
-                        'public/',
-                        '/storage/',
-                        Storage::put('public/images/venues/' . $venue->slug, $image)
-                    ),
-                ]);
-            }
-        }
-
         if (!$venue->save()) {
             Session::flash('alert-danger', 'Cannot update Venue!');
+            return Redirect::back();
+        }
+        
+        if (Input::file('images') !== null && !$venue->addMediaFromRequest('images')->toMediaCollection()) {
+            Session::flash('alert-danger', 'Cannot save Venue Image!');
             return Redirect::back();
         }
 
@@ -243,34 +226,12 @@ class VenuesController extends Controller
     }
 
     /**
-     * Update Venue Image
-     * @param  EventVenue      $venue
-     * @param  EventVenueImage $image
-     * @param  Request         $request
-     * @return Redirect
-     */
-    public function updateImage(EventVenue $venue, EventVenueImage $image, Request $request)
-    {
-        if (isset($request->description)) {
-            $image->description = $request->description;
-        }
-
-        if (!$image->save()) {
-            Session::flash('alert-danger', 'Could update Image!');
-            return Redirect::back();
-        }
-
-        Session::flash('alert-success', 'Successfully updated Image!');
-        return Redirect::back();
-    }
-
-    /**
      * Delete Image Venue
      * @param  EventVenue      $venue
-     * @param  EventVenueImage $image
+     * @param  Media $image
      * @return Redirect
      */
-    public function destroyImage(EventVenue $venue, EventVenueImage $image)
+    public function destroyImage(EventVenue $venue, Media $image)
     {
         if (!$image->delete()) {
             Session::flash('alert-danger', 'Cannot delete Image!');

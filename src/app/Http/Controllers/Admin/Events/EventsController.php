@@ -229,8 +229,7 @@ class EventsController extends Controller
         $participant->event_id                  = $event->id;
         $participant->free                      = 1;
         $participant->staff_free_assigned_by    = Auth::id();
-        $participant->generateQRCode();
-
+        
         if (!$participant->save()) {
             Session::flash('alert-danger', 'Could not add Gift!');
             return Redirect::to('admin/events/' . $event->slug . '/tickets');
@@ -254,8 +253,7 @@ class EventsController extends Controller
         $participant->event_id               = $event->id;
         $participant->staff                  = 1;
         $participant->staff_free_assigned_by = Auth::id();
-        $participant->generateQRCode();
-     
+
         if (!$participant->save()) {
             Session::flash('alert-danger', 'Could not add Admin!');
             return Redirect::to('admin/events/' . $event->slug . '/tickets');
@@ -337,30 +335,6 @@ class EventsController extends Controller
         if (!$duplicatedEvent->save()) {
             Session::flash('alert-danger', 'Cannot save Event!');
             return Redirect::back();
-        }
-
-        foreach ($event->timetables as $timetable) {
-            $duplicatedTimetable              = new EventTimetable();
-            $duplicatedTimetable->name        = $timetable->name;
-            $duplicatedTimetable->event_id    = $duplicatedEvent->id;
-
-            if (!$duplicatedTimetable->save()) {
-                Session::flash('alert-danger', 'Cannot save Timetable!');
-                return Redirect::back();
-            }
-
-            foreach ($timetable->data as $data) {
-                $duplicatedEventTimetableData                       = new EventTimetableData();
-                $duplicatedEventTimetableData->event_timetable_id   = $duplicatedTimetable->id;
-                $duplicatedEventTimetableData->start_time           = $data->start_time;
-                $duplicatedEventTimetableData->name                 = $data->name;
-                $duplicatedEventTimetableData->desc                 = $data->desc;
-
-                if (!$duplicatedEventTimetableData->save()) {
-                    Session::flash('alert-danger', 'Cannot save Timetable Data!');
-                    return Redirect::back();
-                }
-            }
         }
 
         foreach ($event->tickets as $ticket) {

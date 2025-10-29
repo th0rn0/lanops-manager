@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Events;
 
 use Session;
-use Storage;
 
 use App\Models\Event;
 use App\Models\EventInformation;

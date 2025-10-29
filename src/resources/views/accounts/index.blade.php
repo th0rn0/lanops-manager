@@ -159,6 +159,7 @@
 							@foreach ($eventParticipants as $participant)
 								@include ('layouts._partials._tickets.index')
 							@endforeach
+							{{ $eventParticipants->links() }}
 						@else
 							You currently have no tickets.
 						@endif

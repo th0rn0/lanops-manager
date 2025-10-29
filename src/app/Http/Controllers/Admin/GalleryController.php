@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Input;
 use Image;
 use Session;
-use File;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Storage;
 
 use App\Models\GalleryAlbum;
 use App\Models\GalleryAlbumImage;
@@ -79,11 +77,10 @@ class GalleryController extends Controller
     /**
      * Update Gallery
      * @param  GalleryAlbum           $album
-     * @param  GalleryAlbumImage|null $image
      * @param  Request                $request
      * @return Redirect
      */
-    public function update(GalleryAlbum $album, GalleryAlbumImage $image = null, Request $request)
+    public function update(GalleryAlbum $album, Request $request)
     {
         $rules = [
             'name'          => 'filled',
@@ -165,8 +162,8 @@ class GalleryController extends Controller
 
     /**
      * Delete Image from Gallery
-     * @param  GalleryAlbum      $album
-     * @param  GalleryAlbumImage $image
+     * @param  GalleryAlbum     $album
+     * @param  Media            $image
      * @return Redirect
      */
     public function destroyImage(GalleryAlbum $album, Media $image)

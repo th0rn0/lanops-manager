@@ -21,7 +21,7 @@ class AccountController extends Controller
     {
         $user = Auth::user();
         $purchases = $user->purchases()->latest()->paginate(5, ['*'], 'pu');
-        $tickets = $user->eventParticipants()->paginate(5, ['*'], 'ti');
+        $tickets = $user->eventParticipants()->latest()->paginate(5, ['*'], 'ti');
 
         $state = bin2hex(openssl_random_pseudo_bytes(12));
         Session::put('discordoauth', $state);

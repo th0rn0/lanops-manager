@@ -4,11 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class EventVenue extends Model
+class EventVenue extends Model implements HasMedia
 {
     use Sluggable;
+    use InteractsWithMedia;
 
     /**
      * The name of the table.
@@ -47,10 +53,6 @@ class EventVenue extends Model
     public function events()
     {
         return $this->hasMany('App\Models\Event');
-    }
-    public function images()
-    {
-        return $this->hasMany('App\Models\EventVenueImage');
     }
 
     /**
