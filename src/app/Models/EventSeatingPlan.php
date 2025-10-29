@@ -9,11 +9,17 @@ use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class EventSeatingPlan extends Model
+class EventSeatingPlan extends Model implements HasMedia
 {
     use Sluggable;
+    use InteractsWithMedia;
 
     /**
      * The name of the table.

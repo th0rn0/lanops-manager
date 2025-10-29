@@ -4,12 +4,19 @@ namespace App\Models;
 
 use Auth;
 use QrCode;
+
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Manipulations;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\WebhookServer\WebhookCall;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EventParticipant extends Model
+class EventParticipant extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     /**
      * The name of the table.
      *
@@ -156,22 +163,19 @@ class EventParticipant extends Model
     }
 
     /**
-     * Regenerate QR Codes
+     * Generate QR Code
      * @return boolean
      */
     public function generateQRCode()
     {
         $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
-        $qrCodePath = 'storage/images/events/' . $this->event->slug . '/qr/';
-        $qrCodeFileName = $this->event->slug . '-' . str_random(32) . '.png';
-        if (!file_exists($qrCodePath)) {
-            mkdir($qrCodePath, 0775, true);
-        }
         QrCode::format('png');
         QrCode::size(300);
-        QrCode::generate($ticketUrl, $qrCodePath . $qrCodeFileName);
-        $this->qrcode = $qrCodePath . $qrCodeFileName;
-        if (!$this->save()) {
+        $qr = QrCode::generate($ticketUrl);
+        if ($this->hasMedia()) {
+            $this->clearMediaCollection();
+        }
+        if (!$this->addMediaFromString($qr)->usingFileName('qr.png')->toMediaCollection('qr')) {
             return false;
         }
         return true;

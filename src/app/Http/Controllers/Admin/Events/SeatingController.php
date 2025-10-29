@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Events;
 
 use Session;
-use Storage;
 
 use App\Models\Event;
 use App\Models\EventSeating;
@@ -75,19 +74,13 @@ class SeatingController extends Controller
         $seatingPlan->columns  = $request->columns;
         $seatingPlan->rows     = $request->rows;
 
-        if ($request->file('image') !== null) {
-            $seatingPlan->image_path = str_replace(
-                'public/',
-                '/storage/',
-                Storage::put(
-                    'public/images/events/' . $event->slug . '/seating/' . $seatingPlan->slug,
-                    $request->file('image')
-                )
-            );
-        }
-
         if (!$seatingPlan->save()) {
             Session::flash('alert-danger', 'Could not save Seating Plan!');
+            return Redirect::back();
+        }
+
+        if ($request->file('image') !== null && !$seatingPlan->addMediaFromRequest('image')->toMediaCollection()) {
+            Session::flash('alert-danger', 'Cannot save Venue Image!');
             return Redirect::back();
         }
 
@@ -148,21 +141,19 @@ class SeatingController extends Controller
             }
         }
 
-        if ($request->file('image') !== null) {
-            Storage::delete($seatingPlan->image_path);
-            $seatingPlan->image_path = str_replace(
-                'public/',
-                '/storage/',
-                Storage::put(
-                    'public/images/events/' . $event->slug . '/seating/' . $seatingPlan->slug,
-                    $request->file('image')
-                )
-            );
-        }
-
         if (!$seatingPlan->save()) {
             Session::flash('alert-danger', 'Could not update Seating Plan!');
             return Redirect::back();
+        }
+
+        if ($request->file('image') !== null) {
+            if ($seatingPlan->hasMedia()) {
+                $seatingPlan->clearMediaCollection();
+            }
+            if (!$seatingPlan->addMediaFromRequest('image')->toMediaCollection()) {
+                Session::flash('alert-danger', 'Cannot save Seating Plan Image!');
+                return Redirect::back();
+            }
         }
 
         Session::flash('alert-success', 'Successfully updated Seating Plan!');

@@ -200,7 +200,9 @@
 								<hr>
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-xs-12 col-md-8">
-										<img class="img-responsive" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->image_path}}"/>
+										@if ($seatingPlan->hasMedia())
+											<img class="img-responsive" alt="{{ $seatingPlan->name }}" src="{{$seatingPlan->getFirstMediaUrl()}}"/>
+										@endif
 									</div>
 									<div class="col-xs-12 col-md-4">
 										<h5>Your Seats</h5>
@@ -257,8 +259,8 @@
 			</address>
 		</div>
 		<div class="col-lg-5">
-			@foreach ($event->venue->images as $image)
-				<img class="img-responsive img-rounded" alt="{{ $event->venue->display_name }}" src="{{$image->path}}"/>
+			@foreach ($event->venue->getMedia() as $image)
+				<img class="img-responsive img-rounded" alt="{{ $event->venue->display_name }}" src="{{$image->getUrl()}}"/>
 			@endforeach
 		</div>
 	</div>
@@ -272,11 +274,11 @@
 		@foreach ($event->information as $section)
 			<div class="row">
 				@if ($x % 2 == 0)
-					@if (isset($section->image_path))
+					@if ($section->hasMedia())
 						<div class="col-sm-4 visible-xs">
 							<h4>{{$section->title}}</h4>
 							<center>
-								<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+								<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->getFirstMediaUrl() }}" />
 							</center>
 						</div>
 						<div class="col-sm-8">
@@ -284,11 +286,9 @@
 							<p>{!! $section->text !!}</p>
 						</div>
 						<div class="col-sm-4 hidden-xs">
-							@if (isset($section->image_path))
 								<center>
-									<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+									<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->getFirstMediaUrl() }}" />
 								</center>
-							@endif
 						</div>
 					@else
 						<div class="col-sm-12">
@@ -297,11 +297,11 @@
 						</div>
 					@endif
 				@else
-					@if (isset($section->image_path))
+					@if ($section->hasMedia())
 						<div class="col-sm-4">
 							<h4 class="visible-xs">{{$section->title}}</h4>
 							<center>
-								<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->image_path }}" />
+								<img class="img-responsive img-rounded" alt="{{ $section->title }}" src="{{ $section->getFirstMediaUrl() }}" />
 							</center>
 						</div>
 						<div class="col-sm-8">

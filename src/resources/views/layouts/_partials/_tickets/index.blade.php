@@ -56,7 +56,7 @@
 				@endif
 			</div>
 			<div class="col-md-offset-2 col-md-2 col-sm-offset-2 col-sm-4 col-xs-12">
-				<img class="img img-responsive" src="/{{ $participant->qrcode }}"/>
+				<img class="img img-responsive" src="{{ $participant->getFirstMediaUrl('qr') }}"/>
 			</div>
 		</div>
 	</div>
