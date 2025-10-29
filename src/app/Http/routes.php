@@ -178,7 +178,6 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::delete('/admin/information/{information}', 'Admin\Events\InformationController@destroy');
     Route::post('/admin/events/{event}/discord/link', 'Admin\Events\EventsController@linkDiscord');
     Route::post('/admin/events/{event}/duplicate', 'Admin\Events\EventsController@duplicate');
-
     
     /**
      * Seating
@@ -264,6 +263,7 @@ Route::group(['middleware' => ['web', 'admin']], function () {
     Route::get('/admin/users', 'Admin\UsersController@index');
     Route::get('/admin/users/referralcodes', 'Admin\UsersController@generalReferralCodes');
     Route::get('/admin/users/{user}', 'Admin\UsersController@show');
+    Route::post('/admin/users/{user}', 'Admin\UsersController@update');
     Route::post('/admin/users/{user}/admin', 'Admin\UsersController@grantAdmin');
     Route::delete('/admin/users/{user}/admin', 'Admin\UsersController@removeAdmin');
     Route::post('/admin/users/{user}/ban', 'Admin\UsersController@ban');

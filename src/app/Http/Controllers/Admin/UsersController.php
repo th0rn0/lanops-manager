@@ -9,6 +9,7 @@ use App\Models\User;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class UsersController extends Controller
@@ -33,6 +34,31 @@ class UsersController extends Controller
         return view('admin.users.show')
             ->withUserShow($user)
             ->withPurchases($user->purchases()->paginate(10, ['*'], 'pu'));
+    }
+
+    /**
+     * Update User
+     * @param  User  $user
+     * @return View
+     */
+    public function update(User $user, Request $request)
+    {
+        $rules = [
+            'username'      => 'required|unique:users,username',
+        ];
+        $messages = [
+            'username.unique'       => 'Username must be unique',
+            'username.required'     => 'Username is required',
+        ];
+
+        $user->username = $request->username;
+        $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Cannot update user!');
+            return Redirect::back();
+        }
+        Session::flash('alert-success', 'Successfully updated user!');
+        return Redirect::back();
     }
 
     /**
