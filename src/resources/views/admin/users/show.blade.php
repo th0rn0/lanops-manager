@@ -154,6 +154,15 @@
 					@endif
 				</div>
 				<br>
+				<h4>Change Username</h4>
+				<hr>
+				{{ Form::open(array('url'=>'/admin/users/' . $userShow->id )) }}
+					<div class="form-group">
+						{{ Form::text('username', '',array('id'=>'username','class'=>'form-control')) }}
+					</div>
+					<button type="submit" class="btn btn-success btn-block">Submit</button>
+				{{ Form::close() }}
+				<br>
 				<h4>Danger Zone</h4>
 				<hr>
 				<div class="row">
