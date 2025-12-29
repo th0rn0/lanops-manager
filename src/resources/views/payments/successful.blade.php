@@ -30,7 +30,7 @@
 							<div class="panel-body">
 								<h5>{{ $participant->event->display_name }}</h5>
 								<h5>{{ $participant->ticket->name }}</h5>
-								<img class="img img-responsive" src="/{{ $participant->getFirstMediaUrl('qr') }}"/>
+								<p>QR Codes Generating</p>
 							</div>
 						</div>
 					</div>

@@ -322,9 +322,10 @@ class EventsController extends Controller
     public function duplicate(Request $request, Event $event)
     {
         // TODO - Put this into the model
+        $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
         $duplicatedEvent = new Event();
-        $duplicatedEvent->display_name        = $event->display_name . " Copy";
-        $duplicatedEvent->nice_name           = strtolower(str_replace(' ', '-', $event->display_name . " Copy"));
+        $duplicatedEvent->display_name        = $event->display_name . " Copy ". $randomNameSuffix;
+        $duplicatedEvent->nice_name           = strtolower(str_replace(' ', '-', $event->display_name . " Copy " . $randomNameSuffix));
         $duplicatedEvent->start               = $event->start;
         $duplicatedEvent->end                 = $event->end;
         $duplicatedEvent->desc_long           = $event->desc_long;
@@ -373,7 +374,6 @@ class EventsController extends Controller
             $duplicatedInformation->event_id     = $duplicatedEvent->id;
             $duplicatedInformation->title        = $information->title;
             $duplicatedInformation->text         = $information->text;
-            $duplicatedInformation->image_path   = $information->image_path;
             $duplicatedInformation->order        = $information->order;
 
             if (!$duplicatedInformation->save()) {

@@ -82,7 +82,11 @@ return [
      * Here you can specify which path generator should be used for the given class.
      */
     'custom_path_generators' => [
-        App\Models\GalleryAlbum::class => App\Libraries\PathGenerators\GalleryPathGenerator::class
+        App\Models\GalleryAlbum::class => App\Libraries\PathGenerators\GalleryPathGenerator::class,
+        App\Models\EventInformation::class => App\Libraries\PathGenerators\EventInformationPathGenerator::class,
+        App\Models\EventVenue::class => App\Libraries\PathGenerators\EventVenuePathGenerator::class,
+        App\Models\EventParticipant::class => App\Libraries\PathGenerators\EventParticipantPathGenerator::class,
+
         // Model::class => PathGenerator::class
         // or
         // 'model_morph_alias' => PathGenerator::class
@@ -258,5 +262,5 @@ return [
      * You can specify a prefix for that is used for storing all media.
      * If you set this to `/my-subdir`, all your media will be stored in a `/my-subdir` directory.
      */
-    'prefix' => env('MEDIA_PREFIX', ''),
+    'prefix' => env('MEDIA_PREFIX', 'images/'),
 ];

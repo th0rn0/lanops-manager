@@ -98,8 +98,17 @@ class EventParticipant extends Model implements HasMedia
                     'role_id' => $model->event->discord_role_id
                 ])
                 ->useSecret(config('app.discord_bot_secret'))
-                ->dispatch();
+                ->
+                dispatch();
             };
+            if (
+                array_key_exists('event_id', $model->getDirty()) &&
+                $model->seat
+            ) {
+
+                $model->seat->event_participant_id = null;
+                $model->seat->save();
+            }
             return true;
         });
     }
@@ -191,7 +200,7 @@ class EventParticipant extends Model implements HasMedia
         $this->transferred = true;
         $this->transferred_event_id = $this->event_id;
         $this->event_id = $eventId;
-        if (!$this->save() && !$this->seat()->delete()) {
+        if (!$this->save()) {
             return false;
         }
         return true;
