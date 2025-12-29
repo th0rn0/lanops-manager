@@ -184,7 +184,8 @@ class EventParticipant extends Model implements HasMedia
         if ($this->hasMedia()) {
             $this->clearMediaCollection();
         }
-        if (!$this->addMediaFromString($qr)->usingFileName('qr.png')->toMediaCollection('qr')) {
+        $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
+        if (!$this->addMediaFromString($qr)->usingFileName($randomNameSuffix . 'qr.png')->toMediaCollection('qr')) {
             return false;
         }
         return true;

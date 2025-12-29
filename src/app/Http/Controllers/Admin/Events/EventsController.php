@@ -265,7 +265,6 @@ class EventsController extends Controller
 
     public function linkDiscord(Request $request, Event $event)
     {
-        // TODO - put this into the model
         $address = [
             $event->venue->address_1,
             $event->venue->address_2,
@@ -321,7 +320,6 @@ class EventsController extends Controller
 
     public function duplicate(Request $request, Event $event)
     {
-        // TODO - Put this into the model
         $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
         $duplicatedEvent = new Event();
         $duplicatedEvent->display_name        = $event->display_name . " Copy ". $randomNameSuffix;
