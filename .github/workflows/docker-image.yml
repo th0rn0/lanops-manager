@@ -2,7 +2,7 @@ name: Build Docker Image - Main Branch
 
 on:
   push:
-    branches: [ "main", "develop" ]
+    branches: [ "main" ]
 
 jobs:
   build:

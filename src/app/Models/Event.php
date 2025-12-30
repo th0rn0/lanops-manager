@@ -121,7 +121,8 @@ class Event extends Model
     {
         return [
             'slug' => [
-                'source' => 'nice_name'
+                'source' => 'nice_name',
+                'onUpdate' => true
             ]
         ];
     }
