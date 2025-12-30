@@ -3,6 +3,7 @@ name: Build Docker Image - Main Branch
 on:
   push:
     branches: [ "main" ]
+    tags: [ "*" ]
 
 jobs:
   build:
@@ -11,6 +12,20 @@ jobs:
       - name: Get Build Date/Time
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+
+      - name: Determine Docker Tag(s)
+        id: dockertags
+        shell: bash
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            # Tag push: use the tag name only
+            echo "suffix=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+            echo "extra_suffix=" >> "$GITHUB_OUTPUT"
+          else
+            # main branch push: use main and main-<datetime>
+            echo "suffix=main" >> "$GITHUB_OUTPUT"
+            echo "extra_suffix=main-${{ steps.date.outputs.date }}" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,8 +60,8 @@ jobs:
           file: resources/docker/nginx/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ github.head_ref || github.ref_name }}-${{ steps.date.outputs.date }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:nginx-${{ steps.dockertags.outputs.suffix }}
+            ${{ steps.dockertags.outputs.extra_suffix && format('{0}/lanops-manager:nginx-{1}', secrets.DOCKERHUB_USERNAME, steps.dockertags.outputs.extra_suffix) || '' }}
 
       - name: Push - APP
         uses: docker/build-push-action@v5
@@ -55,8 +70,8 @@ jobs:
           file: resources/docker/php/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ github.head_ref || github.ref_name }}-${{ steps.date.outputs.date }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/lanops-manager:app-${{ steps.dockertags.outputs.suffix }}
+            ${{ steps.dockertags.outputs.extra_suffix && format('{0}/lanops-manager:app-{1}', secrets.DOCKERHUB_USERNAME, steps.dockertags.outputs.extra_suffix) || '' }}
 
       - name: Discord Webhook Action - Build Success
         uses: tsickert/discord-webhook@v6.0.0
