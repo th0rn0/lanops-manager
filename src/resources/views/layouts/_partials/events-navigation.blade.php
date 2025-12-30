@@ -12,28 +12,7 @@
 	</ul>
 </li>
 <li class="dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Future Events <span class="caret"></span></a>
-	<ul class="dropdown-menu">
-		@if ( count($events) > 0 )
-			@foreach ( $events->reverse() as $event )
-				@if ($event->start > \Carbon\Carbon::today() )
-					<li>
-						<a href="/events/{{ $event->slug }}">
-							{{ $event->display_name }}
-							@if ($event->status != 'PUBLISHED')
-								- {{ $event->status }}
-							@endif
-						</a>
-					</li>
-				@endif
-			@endforeach
-		@else
-			<li><a href="#">No Future events</a></li>
-		@endif
-	</ul>
-</li>
-<li class="dropdown">
-	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">All Events <span class="caret"></span></a>
+	<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Upcoming Events <span class="caret"></span></a>
 	<ul class="dropdown-menu">
 		@if ( count($events) > 0 )
 			@foreach ( $events as $event )
@@ -47,7 +26,8 @@
 				</li>
 			@endforeach
 		@else
-			<li><a href="#">No events</a></li>
+			<li><a href="#">No Future events</a></li>
 		@endif
 	</ul>
 </li>
+<li><a href="/events">All Events</a></li>
