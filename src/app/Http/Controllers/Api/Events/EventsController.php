@@ -118,7 +118,7 @@ class EventsController extends Controller
                 'country' => $event->venue->address_country,
             ],
             'url' => [
-                'base' => 'http://' . $_SERVER['HTTP_HOST'] . '/events/' . $event->slug,
+                'base' => config('app.url') . '/events/' . $event->slug,
                 'tickets' => '#tickets',
                 'participants' => '#participants',
                 'timetables' => '#timetables',
