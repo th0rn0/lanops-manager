@@ -47,27 +47,27 @@ class BotTimetableUpdates extends Command
                         foreach ($nextTimetableItems as $nextTimetableItem) {
                             // 60 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 59, 60)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 1 hour!", $nextTimetableItem->name));
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 1 hour! - @%s", $nextTimetableItem->name, $nextEvent->discord_role_id));
                             }
 
                             // 30 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 29, 30)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 30 minutes!", $nextTimetableItem->name));
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 30 minutes! - @%s", $nextTimetableItem->name, $nextEvent->discord_role_id));
                             }
 
                             // 15 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 14, 15)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 15 minutes!", $nextTimetableItem->name));
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 15 minutes! - @%s", $nextTimetableItem->name, $nextEvent->discord_role_id));
                             }
 
                             // 5 Minutes
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 4, 5)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 5 minutes!", $nextTimetableItem->name));
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - Due to start in 5 minutes! - @%s", $nextTimetableItem->name, $nextEvent->discord_role_id));
                             }
 
                             // Starting Now
                             if ($this->isWithinThresholdToSendMessage($nextTimetableItem->start_time, 0, 1)) {
-                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - STARTING SOON!", $nextTimetableItem->name));
+                                $this->sendMessageToBot($nextEvent->discord_channel_id, sprintf("TIMETABLE ANNOUNCEMENT: %s - STARTING SOON! - @%s", $nextTimetableItem->name, $nextEvent->discord_role_id));
                             }
                         }
                     }
