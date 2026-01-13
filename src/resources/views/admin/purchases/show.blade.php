@@ -47,7 +47,7 @@
 										</td>
 										<td>
 											@if ($participant->ticket->price != null)
-												{{ config('app.currency_symbol') }}{{ $participant->ticket->price }}
+												{{ config('app.currency_symbol') }}{{ number_format((float)$participant->ticket->price, 2, '.', '') }}
 											@endif
 										</td>
 									</tr>

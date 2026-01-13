@@ -107,7 +107,8 @@
 								@endif
 								<div class="row" style="display: flex; align-items: center;">
 									<div class="col-sm-12 col-xs-12">
-										<h3>{{ config('app.currency_symbol') }}{{$ticket->price}}
+										<h3>
+											{{ config('app.currency_symbol') }}{{number_format((float)$ticket->price, 2, '.', '')}}
 											@if ($ticket->quantity != 0)
 												<small>
 													{{ $ticket->quantity - $ticket->participants()->count() }}/{{ $ticket->quantity }} Available
