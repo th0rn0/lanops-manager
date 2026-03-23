@@ -96,6 +96,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
     ],
 
     /*
@@ -150,6 +151,7 @@ return [
         'Helpers'               => App\Libraries\Helpers::class,
         'Image'                 => Intervention\Image\Facades\Image::class,
         'Captcha'               => Mews\Captcha\Facades\Captcha::class,
+        'Sentry'                => Sentry\Laravel\Facade::class,
     ],
 
 ];

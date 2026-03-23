@@ -90,10 +90,6 @@ class Event extends Model
     {
         return $this->hasMany('App\Models\EventInformation');
     }
-    public function announcements()
-    {
-        return $this->hasMany('App\Models\EventAnnouncement');
-    }
     public function venue()
     {
         return $this->belongsTo('App\Models\EventVenue', 'event_venue_id');

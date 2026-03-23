@@ -33,7 +33,8 @@
         "verschuur/laravel-robotstxt": "^5.0",
         "ultrono/laravel-sitemap": "^9.4",
         "spatie/laravel-medialibrary": "^10.15",
-        "mews/captcha": "^3.3"
+        "mews/captcha": "^3.3",
+        "sentry/sentry-laravel": "^4.23"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

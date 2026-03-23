@@ -457,51 +457,11 @@
 				        </ul>
 				  	</div>
 				@endif
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true')) }}
-					<div class="form-group">
-						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('message', NULL,array('id'=>'message','class'=>'form-control', 'rows' => '2')) }}
-					</div>
-					<button type="submit" class="btn btn-default btn-block">Submit</button>
-				{{ Form::close() }}
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="modal fade" id="editAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="editAnnouncementModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="editAnnouncementModalLabel">Edit Announcement</h4>
-			</div>
-			<div class="modal-body">
-				@if ($errors->any())
-				  	<div class="alert alert-danger">
-				        <ul>
-				          	@foreach ($errors->all() as $error)
-				            	<li>{{ $error }}</li>
-				          	@endforeach
-				        </ul>
-				  	</div>
-				@endif
-				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/announcements', 'files' => 'true', 'id' => 'editAnnouncementForm')) }}
-					<div class="form-group">
-						{{ Form::label('message','Message',array('id'=>'','class'=>'')) }}
-						{{ Form::textarea('message', NULL,array('id'=>'edit_announcement','class'=>'form-control', 'rows' => '2')) }}
-					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-default btn-block">Submit</button>
-					</div>
-				{{ Form::close() }}
-				{{ Form::open(array('method'  => 'delete', 'url'=>'/admin/events/' . $event->slug . '/announcements', 'id'=>'deleteAnnouncementForm', 'files' => 'true')) }}
-					<button type="submit" class="btn btn-danger btn-block">Delete</button>
-				{{ Form::close() }}
-			</div>
-		</div>
-	</div>
-</div>
 <script>
 	function editAnnouncement(announcement_id, message)
 	{

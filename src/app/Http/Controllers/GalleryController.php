@@ -7,6 +7,9 @@ use App\Models\GalleryAlbum;
 
 use App\Http\Controllers\Controller;
 
+use Illuminate\Validation\ValidationException;
+
+
 class GalleryController extends Controller
 {
     /**
@@ -15,6 +18,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
+        return throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
+
         $event = Event::where('start', '>=', date("Y-m-d 00:00:00"))->first();
         $albums = GalleryAlbum::all();
         return view('gallery.index')
