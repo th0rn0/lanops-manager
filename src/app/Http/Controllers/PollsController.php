@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Auth;
 use Session;
 
+use DB;
+
 use App\Models\Poll;
 use App\Models\PollOption;
 
@@ -21,10 +23,10 @@ class PollsController extends Controller
      */
     public function index()
     {
-        $activePolls = Poll::where('end', '==', null)
-            ->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")]);
+        $activePolls = Poll::where('end', null)->get();
         $endedPolls = Poll::where('end', '!=', null)
             ->orWhereBetween('end', ['0000-00-00 00:00:00', date("Y-m-d H:i:s")])
+            ->orderBy(DB::raw('ABS(DATEDIFF(polls.end, NOW()))'))
             ->paginate(10, ['*'], 'page');
         return view("polls.index")
             ->withActivePolls($activePolls)
