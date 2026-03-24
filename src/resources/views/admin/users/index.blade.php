@@ -42,9 +42,6 @@
 									</td>
 									<td>
 										{{ $user->username }}
-										@if ($user->steamid)
-											- <span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
-										@endif
 									</td>
 									<td>{{ $user->firstname }} {{ $user->surname }}</td>
 									<td>

@@ -93,10 +93,7 @@ class AuthController extends Controller
 
                 $user = Session::get('user');
                 
-                if (is_null($user['steamid']) ||
-                    is_null($user['avatar']) ||
-                    is_null($user['steamname'])
-                ) {
+                if (is_null($user['steamid'])) {
                     return redirect('/'); // redirect to site
                 }
                 return view('auth.register', $user)->withLoginMethod('steam');
@@ -125,12 +122,10 @@ class AuthController extends Controller
                     'surname'   => 'required|string',
                     'steamid'   => 'required|string',
                     'avatar'    => 'required|string',
-                    'steamname' => 'required|string',
                     'username'  => 'required|unique:users,username',
                 ]);
                 $user->avatar               = $request->avatar;
                 $user->steamid              = $request->steamid;
-                $user->steamname            = $request->steamname;
                 // No email Verification needed - just add the email_verified_at
                 $user->email_verified_at    = new \DateTime('NOW');
                 break;

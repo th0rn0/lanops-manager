@@ -315,7 +315,7 @@
 							<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id }}" class="list-group-item">
 								<i class="fa fa-comment fa-fw"></i> {{ $participant->user->username }}
 								@if ($participant->user->steamid)
-									- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+									SOME STEAM SHIT
 								@endif
 								<span class="pull-right text-muted small">
 									<em>{{ date('d-m-y H:i', strtotime($participant->created_at)) }}</em>

@@ -445,7 +445,7 @@
 				<td style="vertical-align: middle;">
 					{{ $participant->user->username }}
 					@if ($participant->user->steamid)
-						- <span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+						SOME STEAM SHIT
 					@endif
 				</td>
 				<td style="vertical-align: middle;">
