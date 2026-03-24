@@ -48,10 +48,6 @@ class SteamController extends Controller
                     Auth::login($user, true);
                     //Check if the user has changed their steam details
                     $steam_changes = false;
-                    if ($info->personaname != $user->steamname) {
-                        $user->steamname = $info->personaname;
-                        $steam_changes = true;
-                    }
                     if ($info->avatarfull != $user->avatar) {
                         $user->avatar = $info->avatarfull;
                         $steam_changes = true;
@@ -61,7 +57,6 @@ class SteamController extends Controller
                     return redirect('/'); // redirect to site
                 } else {
                     $user = [
-                            'steamname'     => $info->personaname,
                             'avatar'        => $info->avatarfull,
                             'steamid'       => $info->steamID64,
                     ];

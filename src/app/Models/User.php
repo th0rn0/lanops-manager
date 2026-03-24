@@ -24,7 +24,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'firstname',
         'surname',
         'username_nice',
-        'steamname',
         'username',
         'avatar',
         'steamid',
@@ -56,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
                             WebhookCall::create()
                             ->url(config('app.discord_bot_url') . '/participants/new')
                             ->payload([
-                                'username' => $model->steamname,
+                                'username' => $model->username,
                                 'discord_id' => $model->discord_id,
                                 'channel_id' => $event->discord_channel_id,
                                 'role_id' => $event->discord_role_id,
@@ -74,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
                             WebhookCall::create()
                             ->url(config('app.discord_bot_url') . '/participants/remove')
                             ->payload([
-                                'username' => $model->steamname,
+                                'username' => $model->username,
                                 'discord_id' => $model->getOriginal('discord_id'),
                                 'channel_id' => $event->discord_channel_id,
                                 'role_id' => $event->discord_role_id,

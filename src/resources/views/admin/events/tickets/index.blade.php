@@ -166,7 +166,7 @@
 								<td>
 									{{ $user->username }}
 									@if ($user->steamid)
-										<br><span class="text-muted"><small>Steam: {{ $user->steamname }}</small></span>
+										SOME STEAM SHIT
 									@endif
 								</td>
 								<td>

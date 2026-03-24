@@ -303,7 +303,7 @@ class EventsController extends Controller
                 WebhookCall::create()
                 ->url(config('app.discord_bot_url') . '/participants/new')
                 ->payload([
-                    'username' => $participant->user->steamname,
+                    'username' => $participant->user->username,
                     'discord_id' => $participant->user->discord_id,
                     'channel_id' => $event->discord_channel_id,
                     'role_id' => $event->discord_role_id,

@@ -52,7 +52,7 @@
 								<td>
 									{{ $participant->user->username }}
 									@if ($participant->user->steamid)
-										<br><span class="text-muted"><small>Steam: {{ $participant->user->steamname }}</small></span>
+										SOME STEAM SHIT
 									@endif
 								</td>
 								<td>{{ $participant->user->firstname }} {{ $participant->user->surname }}</td>

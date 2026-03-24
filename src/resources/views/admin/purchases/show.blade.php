@@ -105,7 +105,7 @@
 							<span class="pull-right">
 								{{ $purchase->user->username }}
 								@if ($purchase->user->steamid)
-									- <span class="text-muted"><small>Steam: {{ $purchase->user->steamname }}</small></span>
+									SOME STEAM SHIT
 								@endif
 							</span>
 						</strong>

@@ -15,7 +15,6 @@
             @if ($loginMethod == "steam")
                 {{ Form::hidden('avatar', $avatar, array('id'=>'avatar','class'=>'form-control')) }}
                 {{ Form::hidden('steamid', $steamid, array('id'=>'steamid','class'=>'form-control')) }}
-                {{ Form::hidden('steamname', $steamname, array('id'=>'steamname','class'=>'form-control')) }}
             @endif
             <div class="col-xs-12 col-md-6">
                 <div class="row">
@@ -52,10 +51,8 @@
                     <input id="url" type="hidden" class="form-control" name="url">
                 @endif
                 @if ($loginMethod == "steam")
-                    <div class="form-group">
-                        {{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
-                        {{ Form::text('steamname', $steamname, array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
-                    </div>
+                    SOME STEAM SHIT
+                    LOGIN ACCOUNT USED FROM STEAM
                 @endif
             </div>
             <div class="col-xs-12 col-md-6">

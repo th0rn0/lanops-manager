@@ -53,7 +53,7 @@ class EventParticipant extends Model implements HasMedia
                 WebhookCall::create()
                     ->url(config('app.discord_bot_url') . '/participants/new')
                     ->payload([
-                        'username' => ($model->user->steamname != null ? $model->user->steamname : $model->user->username),
+                        'username' => ($model->user->username),
                         'discord_id' => $model->user->discord_id,
                         'channel_id' => $model->event->discord_channel_id,
                         'role_id' => $model->event->discord_role_id
@@ -74,8 +74,8 @@ class EventParticipant extends Model implements HasMedia
                 WebhookCall::create()
                     ->url(config('app.discord_bot_url') . '/participants/gifted')
                     ->payload([
-                        'gifted_by' => ($newUser->steamname != null ? $newUser->steamname : $newUser->username),
-                        'username' => ($model->user->steamname != null ? $model->user->steamname : $model->user->username),
+                        'gifted_by' => ($newUser->username),
+                        'username' => ($model->user->username),
                         'discord_id' => $model->user->discord_id,
                         'channel_id' => $model->event->discord_channel_id,
                         'role_id' => $model->event->discord_role_id
@@ -92,7 +92,7 @@ class EventParticipant extends Model implements HasMedia
                 WebhookCall::create()
                 ->url(config('app.discord_bot_url') . '/participants/gifted')
                 ->payload([
-                    'username' => ($model->user->steamname != null ? $model->user->steamname : $model->user->username),
+                    'username' => ($model->user->username),
                     'discord_id' => $model->user->discord_id,
                     'channel_id' => $model->event->discord_channel_id,
                     'role_id' => $model->event->discord_role_id

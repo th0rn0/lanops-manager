@@ -80,7 +80,7 @@ class EventsController extends Controller
                 $seat = $participant->seat->seat;
             }
             $participants[] = [
-                'username' => $participant->user->steamname,
+                'username' => $participant->user->username,
                 'seat' => $seat,
                 'id' => $participant->id
             ];

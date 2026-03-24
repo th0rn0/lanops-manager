@@ -45,10 +45,9 @@
 										{{ Form::label('Username','User Name',array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
 									</div> 
-									@if ($user->steamid && $user->steamname)
+									@if ($user->steamid)
 										<div class="form-group">
-											{{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
-											{{ Form::text('steamname', $user->steamname ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+											SOME STEAM SHIT
 										</div>
 									@endif
 									@if ($user->email)
