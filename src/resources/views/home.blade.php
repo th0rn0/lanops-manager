@@ -17,7 +17,11 @@
                             {{ date('jS', strtotime($nextEventLan->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventLan->end)) }}
                         </p>
                         @if ($nextEventLan->venue)
-                            <p class="hero-event-venue">{{ $nextEventLan->venue->display_name }}</p>
+                            @php
+                                $v = $nextEventLan->venue;
+                                $addr = implode(', ', array_filter([$v->address_1, $v->address_2, $v->address_street, $v->address_city, $v->address_postcode]));
+                            @endphp
+                            <p class="hero-event-venue">{{ $v->display_name }}@if($addr)<br><span class="hero-event-address">{{ $addr }}</span>@endif</p>
                         @endif
                         <a href="/events/{{ $nextEventLan->slug }}#tickets" class="btn btn-orange btn-lg hero-cta">Get Your Ticket</a>
                     </div>
@@ -35,7 +39,11 @@
                             {{ date('jS', strtotime($nextEventTabletop->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventTabletop->end)) }}
                         </p>
                         @if ($nextEventTabletop->venue)
-                            <p class="hero-event-venue">{{ $nextEventTabletop->venue->display_name }}</p>
+                            @php
+                                $v = $nextEventTabletop->venue;
+                                $addr = implode(', ', array_filter([$v->address_1, $v->address_2, $v->address_street, $v->address_city, $v->address_postcode]));
+                            @endphp
+                            <p class="hero-event-venue">{{ $v->display_name }}@if($addr)<br><span class="hero-event-address">{{ $addr }}</span>@endif</p>
                         @endif
                         <a href="/events/{{ $nextEventTabletop->slug }}#tickets" class="btn btn-orange btn-lg hero-cta">Get Your Ticket</a>
                     </div>
@@ -89,8 +97,12 @@
                             <dt>When</dt>
                             <dd>{{ date('jS', strtotime($nextEventLan->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventLan->end)) }}</dd>
                             @if ($nextEventLan->venue)
+                                @php
+                                    $v = $nextEventLan->venue;
+                                    $addr = implode(', ', array_filter([$v->address_1, $v->address_2, $v->address_street, $v->address_city, $v->address_postcode]));
+                                @endphp
                                 <dt>Where</dt>
-                                <dd>{{ $nextEventLan->venue->display_name }}</dd>
+                                <dd>{{ $v->display_name }}@if($addr)<br>{{ $addr }}@endif</dd>
                             @endif
                             @if ($nextEventLan->tickets && $nextEventLan->tickets->count())
                                 <dt>From</dt>
@@ -135,8 +147,12 @@
                             <dt>When</dt>
                             <dd>{{ date('jS', strtotime($nextEventTabletop->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventTabletop->end)) }}</dd>
                             @if ($nextEventTabletop->venue)
+                                @php
+                                    $v = $nextEventTabletop->venue;
+                                    $addr = implode(', ', array_filter([$v->address_1, $v->address_2, $v->address_street, $v->address_city, $v->address_postcode]));
+                                @endphp
                                 <dt>Where</dt>
-                                <dd>{{ $nextEventTabletop->venue->display_name }}</dd>
+                                <dd>{{ $v->display_name }}@if($addr)<br>{{ $addr }}@endif</dd>
                             @endif
                             @if ($nextEventTabletop->tickets && $nextEventTabletop->tickets->count())
                                 <dt>From</dt>
