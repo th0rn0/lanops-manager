@@ -34,6 +34,7 @@
   					<div class="media-body">
 						<ul class="list-group">
 							<li class="list-group-item">Username: {{ $userShow->username }}</li>
+							@if ($steamProfile = Helpers::getSteamProfile($userShow->steamid)) <li class="list-group-item">Steam: {{ $steamProfile["name"] }}</li> @endif
 							<li class="list-group-item">Name: {{ $userShow->firstname }} {{ $userShow->surname }}</li>
 							<li class="list-group-item">
 								Admin: @if ($userShow->admin) Yes @else No @endif
