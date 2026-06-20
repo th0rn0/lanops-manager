@@ -53,8 +53,8 @@
 								<tr class="odd gradeX">
 									<td>
 										{{ $participant->user->username }}
-										@if ($participant->user->steamid)
-											SOME STEAM SHIT
+										@if ($steamProfile = Helpers::getSteamProfile($participant->user->steamid))
+											<br><span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
 										@endif
 									</td>
 									<td>{{ $participant->user->firstname }} {{ $participant->user->surname }}</td>

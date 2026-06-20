@@ -47,7 +47,8 @@
 									</div> 
 									@if ($user->steamid)
 										<div class="form-group">
-											SOME STEAM SHIT
+											{{ Form::label('steamname','Linked Steam Account',array('id'=>'','class'=>'')) }}
+											{{ Form::text('steamname', Helpers::getSteamProfile($user->steamid)["name"] ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
 										</div>
 									@endif
 									@if ($user->email)
