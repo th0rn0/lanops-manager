@@ -16,6 +16,12 @@
                         <p class="hero-event-date">
                             {{ date('jS', strtotime($nextEventLan->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventLan->end)) }}
                         </p>
+                        <div class="hero-countdown" data-countdown="{{ \Carbon\Carbon::parse($nextEventLan->start)->toIso8601String() }}">
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="d">--</span><span class="hero-countdown-label">days</span></div>
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="h">--</span><span class="hero-countdown-label">hrs</span></div>
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="m">--</span><span class="hero-countdown-label">mins</span></div>
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="s">--</span><span class="hero-countdown-label">secs</span></div>
+                        </div>
                         @if ($nextEventLan->venue)
                             <p class="hero-event-venue">{{ $nextEventLan->venue->display_name }}</p>
                         @endif
@@ -34,6 +40,12 @@
                         <p class="hero-event-date">
                             {{ date('jS', strtotime($nextEventTabletop->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventTabletop->end)) }}
                         </p>
+                        <div class="hero-countdown" data-countdown="{{ \Carbon\Carbon::parse($nextEventTabletop->start)->toIso8601String() }}">
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="d">--</span><span class="hero-countdown-label">days</span></div>
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="h">--</span><span class="hero-countdown-label">hrs</span></div>
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="m">--</span><span class="hero-countdown-label">mins</span></div>
+                            <div class="hero-countdown-unit"><span class="hero-countdown-value" data-unit="s">--</span><span class="hero-countdown-label">secs</span></div>
+                        </div>
                         @if ($nextEventTabletop->venue)
                             <p class="hero-event-venue">{{ $nextEventTabletop->venue->display_name }}</p>
                         @endif
@@ -335,6 +347,35 @@
     vidA.play().catch(function(){});
     activate(vidA);
     preloadNext();
+}());
+</script>
+<script>
+(function () {
+    var countdowns = document.querySelectorAll('.hero-countdown[data-countdown]');
+    if (!countdowns.length) return;
+
+    function tick() {
+        var now = Date.now();
+        countdowns.forEach(function (el) {
+            var target = new Date(el.getAttribute('data-countdown')).getTime();
+            var diff = target - now;
+            if (diff <= 0) {
+                el.querySelectorAll('.hero-countdown-value').forEach(function (v) { v.textContent = '0'; });
+                return;
+            }
+            var d = Math.floor(diff / 86400000);
+            var h = Math.floor((diff % 86400000) / 3600000);
+            var m = Math.floor((diff % 3600000) / 60000);
+            var s = Math.floor((diff % 60000) / 1000);
+            el.querySelector('[data-unit="d"]').textContent = d;
+            el.querySelector('[data-unit="h"]').textContent = String(h).padStart(2, '0');
+            el.querySelector('[data-unit="m"]').textContent = String(m).padStart(2, '0');
+            el.querySelector('[data-unit="s"]').textContent = String(s).padStart(2, '0');
+        });
+    }
+
+    tick();
+    setInterval(tick, 1000);
 }());
 </script>
 @endpush
