@@ -1,0 +1,76 @@
+/**
+ * Discord CTA
+ */
+
+.discord-cta {
+    background: #5865F2;
+    padding: 48px 24px;
+}
+
+.discord-cta-inner {
+    max-width: 1170px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.discord-cta-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+}
+
+.discord-logo {
+    width: 56px;
+    height: auto;
+    flex-shrink: 0;
+    opacity: 0.95;
+}
+
+.discord-cta-text {
+    h2 {
+        color: #fff;
+        font-size: 28px;
+        font-weight: $font-bold;
+        margin: 0 0 8px;
+    }
+
+    p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 15px;
+        margin: 0;
+    }
+}
+
+.discord-cta-btn {
+    background: #fff;
+    color: #5865F2;
+    font-size: 15px;
+    font-weight: $font-bold;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover,
+    &:focus {
+        background: rgba(255, 255, 255, 0.88);
+        color: #4752c4;
+        text-decoration: none;
+    }
+}

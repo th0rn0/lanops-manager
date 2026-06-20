@@ -15,3 +15,4 @@ src/public/hot
 src/public/build
 src/public/sitemap.xml
 .gstack/
+.claude/
