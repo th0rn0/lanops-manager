@@ -14,3 +14,6 @@ src/public/uploads/gallery/*
 src/public/hot
 src/public/build
 src/public/sitemap.xml
+src/public/videos/
+src/public/images/frontpage/slider/
+.gstack/

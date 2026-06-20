@@ -5,39 +5,130 @@
 .hero-section {
     position: relative;
     overflow: hidden;
+    height: 100vh;
+    background: #000;
 }
 
-.hero-slide {
-    min-height: 70vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
+@keyframes hero-kenburns {
+    from { transform: scale(1.0); }
+    to   { transform: scale(1.08); }
+}
 
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 70%;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
-        pointer-events: none;
+.hero-slide-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease;
+
+    &--active {
+        opacity: 1;
     }
 
-    @media (max-width: 767px) {
-        min-height: 50vh;
+    &--zoom {
+        animation: hero-kenburns 14s linear forwards;
     }
+}
+
+// Gradient overlay sits above videos, below content
+.hero-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.05) 45%,
+        rgba(0, 0, 0, 0.75) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
 }
 
 .hero-content {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 48px 24px 40px;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 40px 40px;
     text-align: center;
-    z-index: 10;
+    z-index: 2;
+
+    @media (max-width: 767px) {
+        padding: 32px 20px 24px;
+    }
+}
+
+.hero-event-block {
+    width: 100%;
+    text-align: center;
+}
+
+.hero-events-grid {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+}
+
+.hero-event-item {
+    flex: 1;
+    max-width: 520px;
+    padding: 0 32px;
+
+    @media (max-width: 767px) {
+        padding: 0;
+    }
+}
+
+.hero-event-col-divider {
+    width: 1px;
+    background: rgba(255, 255, 255, 0.25);
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+.hero-divider {
+    width: 100%;
+    max-width: 600px;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    margin: 28px 0;
+}
+
+.hero-bio {
+    max-width: 680px;
+
+    div { margin: 0; }
+
+    p {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 17px;
+        line-height: 1.7;
+        margin: 0;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+
+        & + p {
+            margin-top: 6px;
+            font-size: 20px;
+            font-weight: $font-bold;
+            color: $color_primary;
+            text-shadow: none;
+        }
+    }
+
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
 
 .hero-event-type {
@@ -87,27 +178,3 @@
     margin-top: 12px;
 }
 
-// Carousel fade mechanics
-.carousel.fade {
-    opacity: 1;
-}
-
-.carousel.fade .item {
-    transition: opacity ease-out 1s;
-    left: 0;
-    opacity: 0;
-    top: 0;
-    position: absolute;
-    width: 100%;
-    display: block;
-}
-
-.carousel.fade .item:first-child {
-    top: auto;
-    opacity: 1;
-    position: relative;
-}
-
-.carousel.fade .item.active {
-    opacity: 1;
-}
