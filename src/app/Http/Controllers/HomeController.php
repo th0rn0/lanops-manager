@@ -15,16 +15,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // TODO - TEMP FIX
-        // Setup Slider Images
-        $sliderImages = array(
-            "/images/frontpage/slider/1.jpg",
-            "/images/frontpage/slider/3.jpg",
-            "/images/frontpage/slider/2.jpg",
-            "/images/frontpage/slider/4.jpg",
-            "/images/frontpage/slider/5.jpg"
+        $sliderDir = public_path('videos/slider/');
+        $sliderFiles = glob($sliderDir . '*.{mp4,webm}', GLOB_BRACE) ?: [];
+        $sliderVideos = array_map(
+            fn($f) => '/videos/slider/' . basename($f),
+            $sliderFiles
         );
-        shuffle($sliderImages);
         return view("home")
             ->withNextEvent(
                 Event::where('end', '>=', \Carbon\Carbon::now())
@@ -42,7 +38,7 @@ class HomeController extends Controller
             )
             ->withNewsArticles(NewsArticle::limit(4)->orderBy('created_at', 'desc')->get())
             ->withEvents(Event::orderBy('created_at', 'DESC')->get())
-            ->withSliderImages($sliderImages)
+            ->withSliderVideos($sliderVideos)
         ;
     }
     
