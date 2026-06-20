@@ -53,7 +53,7 @@
                 @if ($loginMethod == "steam")
                     <div class="form-group">
                         {{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
-                        {{ Form::text('steamname', $steamname, array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+                        {{ Form::text('steamname', Helpers::getSteamProfile($steamid)['name'], array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
                     </div>
                 @endif
             </div>
