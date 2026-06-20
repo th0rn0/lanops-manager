@@ -21,6 +21,29 @@ class HomeController extends Controller
             fn($f) => '/videos/slider/' . basename($f),
             $sliderFiles
         );
+
+        $nextLan = Event::where('end', '>=', \Carbon\Carbon::now())
+            ->where('type', Event::$typeLan)
+            ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))
+            ->first();
+
+        $seoTitle       = config('app.tagline');
+        $seoDescription = config('app.seo_description');
+
+        if ($nextLan) {
+            $eventDate      = date('jS F Y', strtotime($nextLan->start));
+            $seoTitle       = 'Next LAN: ' . $nextLan->display_name . ' — ' . $eventDate;
+            $seoDescription = 'Join us for ' . $nextLan->display_name . ' on ' . $eventDate
+                . ($nextLan->venue ? ' at ' . $nextLan->venue->display_name : '')
+                . '. ' . config('app.seo_description');
+        }
+
+        seo()
+            ->title($seoTitle)
+            ->description($seoDescription)
+            ->url(config('app.url') . '/')
+            ->image(config('app.url') . '/images/og-image.jpg');
+
         return view("home")
             ->withNextEvent(
                 Event::where('end', '>=', \Carbon\Carbon::now())
