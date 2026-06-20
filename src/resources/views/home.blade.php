@@ -2,183 +2,222 @@
 
 @section ('content')
 
-<div id="hero-carousel" class="carousel fade" data-ride="carousel" data-interval="8000">
-	<!-- Wrapper for slides -->
-	<div class="carousel-inner" role="listbox">
-		@foreach ($sliderImages as $image)
-			<div class="item @if ($loop->first) active @endif">
-				<img class="hero-image" alt="{{ config('app.name') }} Banner" src="{{ $image }}">
-			</div>
-		@endforeach
-	</div>
-	<div class="hero-overlay hidden-sm hidden-xs">
-		@if ($nextEventLan)
-			<h3>Next LAN Event</h3>
-			<h1>{{ $nextEventLan->display_name }}</h1>
-			<h5>{{ date('dS', strtotime($nextEventLan->start)) }} - {{ date('dS', strtotime($nextEventLan->end)) }} {{ date('F', strtotime($nextEventLan->end)) }} {{ date('Y', strtotime($nextEventLan->end)) }}</h5>
-			<a href="/events/{{ $nextEventLan->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
-		@elseif ($nextEventTabletop)
-			<h3>Next Event</h3>
-			<h1>{{ $nextEvent->display_name }}</h1>
-			<h5>{{ date('dS', strtotime($nextEvent->start)) }} - {{ date('dS', strtotime($nextEvent->end)) }} {{ date('F', strtotime($nextEvent->end)) }} {{ date('Y', strtotime($nextEvent->end)) }}</h5>
-			<a href="/events/{{ $nextEvent->slug }}#tickets"><button class="btn btn-orange btn-lg">Book Now</button></a>
-		@else
-			<div>
-				<h3>Next Event</h3>
-				<h1>Coming soon</h1>
-			</div>
-		@endif
-	</div>
+{{-- Hero --}}
+<div id="hero-carousel" class="carousel fade hero-section" data-ride="carousel" data-interval="8000">
+    <div class="carousel-inner" role="listbox">
+        @foreach ($sliderImages as $image)
+            <div class="item @if ($loop->first) active @endif">
+                <div class="hero-slide" style="background-image: url('{{ $image }}')"></div>
+            </div>
+        @endforeach
+    </div>
+    <div class="hero-content">
+        @if ($nextEventLan)
+            <span class="hero-event-type">Next LAN Event</span>
+            <h1 class="hero-event-name">{{ $nextEventLan->display_name }}</h1>
+            <p class="hero-event-date">
+                {{ date('jS', strtotime($nextEventLan->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventLan->end)) }}
+            </p>
+            @if ($nextEventLan->venue)
+                <p class="hero-event-venue">{{ $nextEventLan->venue->display_name }}</p>
+            @endif
+            <a href="/events/{{ $nextEventLan->slug }}#tickets" class="btn btn-orange btn-lg hero-cta">Get Your Ticket</a>
+        @elseif ($nextEvent)
+            <span class="hero-event-type">Next Event</span>
+            <h1 class="hero-event-name">{{ $nextEvent->display_name }}</h1>
+            <p class="hero-event-date">
+                {{ date('jS', strtotime($nextEvent->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEvent->end)) }}
+            </p>
+            <a href="/events/{{ $nextEvent->slug }}#tickets" class="btn btn-orange btn-lg hero-cta">Get Your Ticket</a>
+        @else
+            <span class="hero-event-type">Gaming Events</span>
+            <h1 class="hero-event-name">Coming Soon</h1>
+            <p class="hero-event-date">Stay tuned for our next event announcement</p>
+            <a href="/news" class="btn btn-orange btn-lg hero-cta">Read the News</a>
+        @endif
+    </div>
 </div>
 
-<div class="container">
-	<div class="row">
+{{-- Upcoming Events --}}
+@if ($nextEventLan || $nextEventTabletop)
+<div class="featured-events section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="section-heading">Upcoming Events</h2>
+            </div>
+        </div>
+        <div class="row">
 
-		@if ($nextEventLan)
-			<div class="col-xs-12">
-				<div class="page-header">
-					<h3>
-						{{ $nextEventLan->display_name }}
-						@if (count($nextEventLan->seatingPlans) > 0)
-							<small>{{ max($nextEventLan->getSeatingCapacity() - $nextEventLan->eventParticipants->count(), 0) }} / {{ $nextEventLan->getSeatingCapacity() }} Seats Remaining</small>
-						@else 
-							<small>{{ max($nextEventLan->capacity - $nextEventLan->eventParticipants->count(), 0) }} / {{ $nextEventLan->capacity }} Tickets Remaining</small>
-						@endif
-					</h3>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-9">
-				<h4>{!! $nextEventLan->desc_short !!}</h4>
-				<p>{!! $nextEventLan->desc_long !!}</p>
-			</div>
-			<div class="col-xs-12 col-sm-3">
-				<h4>When:</h4>
-				<h5>{{ date('dS', strtotime($nextEventLan->start)) }} - {{ date('dS', strtotime($nextEventLan->end)) }} {{ date('F', strtotime($nextEventLan->end)) }} {{ date('Y', strtotime($nextEventLan->end)) }}</h5>
-				<h4>Where:</h4>
-				<h5>{{ $nextEventLan->venue->display_name }}</h5>
-				@if ($nextEventLan->tickets)
-					<h4>Price:</h4>
-					<h5>Tickets Start From {{ config('app.currency_symbol') }}{{ $nextEventLan->getCheapestTicket() }}</h5>
-				@endif
-			</div>
-		@endif
+            @if ($nextEventLan)
+            @php
+                $lanCapacity = count($nextEventLan->seatingPlans) > 0
+                    ? $nextEventLan->getSeatingCapacity()
+                    : $nextEventLan->capacity;
+                $lanFilled   = $nextEventLan->eventParticipants->count();
+                $lanRemaining = max($lanCapacity - $lanFilled, 0);
+                $lanPct      = $lanCapacity > 0 ? round(($lanFilled / $lanCapacity) * 100) : 0;
+            @endphp
+            <div class="col-xs-12 {{ $nextEventTabletop ? 'col-md-6' : '' }}">
+                <div class="event-card">
+                    <div class="event-card-header">
+                        <span class="event-card-badge">LAN</span>
+                        <h3 class="event-card-title">{{ $nextEventLan->display_name }}</h3>
+                    </div>
+                    <div class="event-card-body">
+                        <dl class="event-card-meta">
+                            <dt>When</dt>
+                            <dd>{{ date('jS', strtotime($nextEventLan->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventLan->end)) }}</dd>
+                            @if ($nextEventLan->venue)
+                                <dt>Where</dt>
+                                <dd>{{ $nextEventLan->venue->display_name }}</dd>
+                            @endif
+                            @if ($nextEventLan->tickets && $nextEventLan->tickets->count())
+                                <dt>From</dt>
+                                <dd>{{ config('app.currency_symbol') }}{{ $nextEventLan->getCheapestTicket() }}</dd>
+                            @endif
+                        </dl>
+                        @if ($nextEventLan->desc_short)
+                            <div class="event-card-desc">{!! $nextEventLan->desc_short !!}</div>
+                        @endif
+                        <div class="capacity-wrap">
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" style="width: {{ $lanPct }}%"></div>
+                            </div>
+                            <span class="capacity-text">{{ $lanRemaining }} of {{ $lanCapacity }} tickets remaining</span>
+                        </div>
+                    </div>
+                    <div class="event-card-footer">
+                        <a href="/events/{{ $nextEventLan->slug }}" class="btn btn-default btn-sm">Details</a>
+                        <a href="/events/{{ $nextEventLan->slug }}#tickets" class="btn btn-orange btn-sm">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            @endif
 
-		@if ($nextEventTabletop)
-			@if ($nextEventLan)
-		</hr>
-			@endif
-			<div class="col-xs-12">
-				<div class="page-header">
-					<h3>
-						{{ $nextEventTabletop->display_name }}
-						@if (count($nextEventTabletop->seatingPlans) > 0)
-							<small>{{ max($nextEventTabletop->getSeatingCapacity() - $nextEventTabletop->eventParticipants->count(), 0) }} / {{ $nextEventTabletop->getSeatingCapacity() }} Seats Remaining</small>
-						@else 
-							<small>{{ max($nextEventTabletop->capacity - $nextEventTabletop->eventParticipants->count(), 0) }} / {{ $nextEventTabletop->capacity }} Tickets Remaining</small>
-						@endif
-					</h3>
-				</div>
-			</div>
-			<div class="col-xs-12 col-sm-9">
-				<h4>{!! $nextEventTabletop->desc_short !!}</h4>
-				<p>{!! $nextEventTabletop->desc_long !!}</p>
-			</div>
-			<div class="col-xs-12 col-sm-3">
-				<h4>When:</h4>
-				<h5>{{ date('dS', strtotime($nextEventTabletop->start)) }} - {{ date('dS', strtotime($nextEventTabletop->end)) }} {{ date('F', strtotime($nextEventTabletop->end)) }} {{ date('Y', strtotime($nextEventTabletop->end)) }}</h5>
-				<h4>Where:</h4>
-				<h5>{{ $nextEventTabletop->venue->display_name }}</h5>
-				@if ($nextEventTabletop->tickets)
-					<h4>Price:</h4>
-					<h5>Tickets Start From {{ config('app.currency_symbol') }}{{ $nextEventTabletop->getCheapestTicket() }}</h5>
-				@endif
-			</div>
-		@endif
+            @if ($nextEventTabletop)
+            @php
+                $ttCapacity  = count($nextEventTabletop->seatingPlans) > 0
+                    ? $nextEventTabletop->getSeatingCapacity()
+                    : $nextEventTabletop->capacity;
+                $ttFilled    = $nextEventTabletop->eventParticipants->count();
+                $ttRemaining = max($ttCapacity - $ttFilled, 0);
+                $ttPct       = $ttCapacity > 0 ? round(($ttFilled / $ttCapacity) * 100) : 0;
+            @endphp
+            <div class="col-xs-12 {{ $nextEventLan ? 'col-md-6' : '' }}">
+                <div class="event-card">
+                    <div class="event-card-header">
+                        <span class="event-card-badge event-card-badge--alt">TABLETOP</span>
+                        <h3 class="event-card-title">{{ $nextEventTabletop->display_name }}</h3>
+                    </div>
+                    <div class="event-card-body">
+                        <dl class="event-card-meta">
+                            <dt>When</dt>
+                            <dd>{{ date('jS', strtotime($nextEventTabletop->start)) }} &ndash; {{ date('jS F Y', strtotime($nextEventTabletop->end)) }}</dd>
+                            @if ($nextEventTabletop->venue)
+                                <dt>Where</dt>
+                                <dd>{{ $nextEventTabletop->venue->display_name }}</dd>
+                            @endif
+                            @if ($nextEventTabletop->tickets && $nextEventTabletop->tickets->count())
+                                <dt>From</dt>
+                                <dd>{{ config('app.currency_symbol') }}{{ $nextEventTabletop->getCheapestTicket() }}</dd>
+                            @endif
+                        </dl>
+                        @if ($nextEventTabletop->desc_short)
+                            <div class="event-card-desc">{!! $nextEventTabletop->desc_short !!}</div>
+                        @endif
+                        <div class="capacity-wrap">
+                            <div class="capacity-bar">
+                                <div class="capacity-fill" style="width: {{ $ttPct }}%"></div>
+                            </div>
+                            <span class="capacity-text">{{ $ttRemaining }} of {{ $ttCapacity }} tickets remaining</span>
+                        </div>
+                    </div>
+                    <div class="event-card-footer">
+                        <a href="/events/{{ $nextEventTabletop->slug }}" class="btn btn-default btn-sm">Details</a>
+                        <a href="/events/{{ $nextEventTabletop->slug }}#tickets" class="btn btn-orange btn-sm">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            @endif
 
-	</div>
+        </div>
+    </div>
 </div>
-<div class="book-now  text-center hidden-xs">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12">
-				@if ($nextEvent)
-					<h3>Want to get in on the action <a href="/events/{{ $nextEvent->slug }}" class="text-info">Book Now</a></h3>
-				@else
-					<h3>Events Coming soon!</h3>
-				@endif
-			</div>
-		</div>
-	</div>
-</div>
-<div class="container">
-	<div class="row">
+@endif
 
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
-			<div class="page-header">
-				<h3>About {{ config('app.name') }}</h3>
-			</div>
-			@include ('layouts._partials._about.short')
-		</div>
-		<div class="hidden-xs hidden-sm hidden-md col-lg-4">
-			<div class="page-header">
-				<h3>Event Calendar</h3>
-			</div>
-			@if ( count($events) > 0 )
-				<table class="table table-borderless">
-					<tbody>
-						@foreach ( $events as $event )
-							@if ($event->start > \Carbon\Carbon::today() )
-								<tr>
-									<td>
-										<a href="/events/{{ $event->slug }}">
-											{{ $event->display_name }}
-											@if ($event->status != 'PUBLISHED')
-												- {{ $event->status }}
-											@endif
-										</a>
-									</td>
-									<td>
-										<span class="pull-right">
-											{{ date('dS', strtotime($event->start)) }} - {{ date('dS', strtotime($event->end)) }} {{ date('F', strtotime($event->end)) }} {{ date('Y', strtotime($event->end)) }}
-										</span>
-									</td>
-								</tr>
-							@endif
-						@endforeach
-					</tbody>
-				</table>
-			@else
-				<div>Coming soon...</div>
-			@endif
-		</div>
-
-
-		<div class="col-xs-12 col-sm-12">
-			<div class="page-header">
-				<h3>Latest News</h3>
-			</div>
-			@if (!$newsArticles->isEmpty())
-				@foreach ($newsArticles as $newsArticle)
-					@include ('layouts._partials._news.short')
-				@endforeach
-			@else
-				<p>Nothing to see here...</p>
-			@endif
-		</div>
-	</div>
+{{-- About + Event Calendar --}}
+<div class="about-calendar-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-7">
+                <h2 class="section-heading">About {{ config('app.name') }}</h2>
+                @include ('layouts._partials._about.short')
+                <a href="/about" class="btn btn-default" style="margin-top:10px;">Learn More</a>
+            </div>
+            <div class="col-xs-12 col-md-5">
+                <h2 class="section-heading" style="margin-top:30px;">Event Calendar</h2>
+                @php $futureEvents = $events->filter(fn($e) => $e->start > \Carbon\Carbon::today()); @endphp
+                @if ($futureEvents->count() > 0)
+                    <ul class="cal-list">
+                        @foreach ($futureEvents as $calEvent)
+                            <li class="cal-item">
+                                <a href="/events/{{ $calEvent->slug }}" class="cal-name">
+                                    {{ $calEvent->display_name }}
+                                    @if ($calEvent->status !== 'PUBLISHED')
+                                        <span class="label label-default" style="font-size:10px;">{{ $calEvent->status }}</span>
+                                    @endif
+                                </a>
+                                <span class="cal-date">
+                                    {{ date('jS', strtotime($calEvent->start)) }} &ndash; {{ date('jS F Y', strtotime($calEvent->end)) }}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-muted">No upcoming events — check back soon.</p>
+                @endif
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="about  section-padding  section-margin hidden">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-8  col-md-offset-2 text-center">
-				<div class="text-center">
-					<h2 class="section-heading  text-center">All About {{ config('app.name') }}</h2>
-				</div>
-				@include ('layouts._partials._about.short')
-			</div>
-		</div>
-	</div>
+{{-- Latest News --}}
+<div class="news-grid-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="section-heading">Latest News</h2>
+            </div>
+        </div>
+        @if (!$newsArticles->isEmpty())
+            <div class="row">
+                @foreach ($newsArticles as $newsArticle)
+                    <div class="col-xs-12 col-sm-6 col-lg-3">
+                        <div class="news-card">
+                            <div class="news-card-body">
+                                <h4 class="news-card-title">
+                                    <a href="/news/{{ $newsArticle->slug }}">{{ $newsArticle->title }}</a>
+                                </h4>
+                                <p class="news-card-excerpt">{{ substr(strip_tags($newsArticle->article), 0, 160) }}...</p>
+                            </div>
+                            <div class="news-card-foot">
+                                <span class="news-card-date">{{ date('M j, Y', strtotime($newsArticle->created_at)) }}</span>
+                                <a href="/news/{{ $newsArticle->slug }}" class="news-card-more">Read more &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center" style="margin-top:20px;">
+                    <a href="/news" class="btn btn-default">All News</a>
+                </div>
+            </div>
+        @else
+            <p class="text-muted">Nothing here yet...</p>
+        @endif
+    </div>
 </div>
 
 @endsection
