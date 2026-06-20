@@ -13,3 +13,4 @@ public/css/app\.css
 public/css/admin\.css\.map
 public/css/app\.css\.map
 public/uploads/gallery/
+.phpunit.result.cache
