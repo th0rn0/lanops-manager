@@ -16,6 +16,8 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="{{ config('app.favicon') }}">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css' />
 
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *;**script-src 'self' http://onlineerp.solution.quebec 'unsafe-inline' 'unsafe-eval';** "> -->
+
 		@vite(['resources/assets/sass/app.scss'])
     	
 		<title>

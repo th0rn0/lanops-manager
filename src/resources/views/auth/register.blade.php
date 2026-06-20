@@ -51,8 +51,10 @@
                     <input id="url" type="hidden" class="form-control" name="url">
                 @endif
                 @if ($loginMethod == "steam")
-                    SOME STEAM SHIT
-                    LOGIN ACCOUNT USED FROM STEAM
+                    <div class="form-group">
+                        {{ Form::label('steamname','Steam Name',array('id'=>'','class'=>'')) }}
+                        {{ Form::text('steamname', $steamname, array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+                    </div>
                 @endif
             </div>
             <div class="col-xs-12 col-md-6">

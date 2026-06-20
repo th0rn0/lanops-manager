@@ -86,8 +86,8 @@
 									<td>{{ ucwords($seat->seat) }}</td>
 									<td>
 										{{ $seat->eventParticipant->user->username }}
-										@if ($seat->eventParticipant->user->steamid)
-											SOME STEAM SHIT
+										@if ($steamProfile = Helpers::getSteamProfile($seat->eventParticipant->user->steamid))
+											<br><span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
 										@endif
 									</td>
 									<td>{{ $seat->eventParticipant->user->firstname }} {{ $seat->eventParticipant->user->surname }}</td>

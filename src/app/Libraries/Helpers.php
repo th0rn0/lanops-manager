@@ -7,6 +7,9 @@ use Auth;
 use App\Models\User;
 use \Carbon\Carbon as Carbon;
 
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+
 class Helpers
 {
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
@@ -326,5 +329,43 @@ class Helpers
             "United Kingdom",
         ];
         return $countriesArray;
+    }
+
+    public static function getSteamProfile(?string $steamId): ?array
+    {
+        if (! $steamId || ! preg_match('/^\d{17}$/', $steamId)) {
+            return null;
+        }
+
+        return Cache::remember(
+            "steam_profile_{$steamId}",
+            now()->addDays(1),
+            function () use ($steamId) {
+                $response = Http::timeout(10)->get(
+                    'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/',
+                    [
+                        'key' => config('steam-auth.api_key'),
+                        'steamids' => $steamId,
+                    ]
+                );
+
+                if (! $response->successful()) {
+                    return null;
+                }
+
+                $player = $response->json('response.players.0');
+
+                if (! $player) {
+                    return null;
+                }
+
+                return [
+                    'steam_id' => $player['steamid'] ?? null,
+                    'name' => $player['personaname'] ?? null,
+                    'avatar' => $player['avatarfull'] ?? ($player['avatarmedium'] ?? $player['avatar'] ?? null),
+                    'profile_url' => $player['profileurl'] ?? null,
+                ];
+            }
+        );
     }
 }

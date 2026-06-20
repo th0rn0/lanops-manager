@@ -104,8 +104,8 @@
 							User: 
 							<span class="pull-right">
 								{{ $purchase->user->username }}
-								@if ($purchase->user->steamid)
-									SOME STEAM SHIT
+								@if ($steamProfile = Helpers::getSteamProfile($purchase->user->steamid))
+									<br><span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
 								@endif
 							</span>
 						</strong>

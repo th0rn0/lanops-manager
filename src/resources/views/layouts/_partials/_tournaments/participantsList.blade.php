@@ -18,8 +18,8 @@
                     <td width="10%"><img class="img-responsive img-rounded" src="{{ $participant->user->avatar }}"/></td>
                     <td>
                         {{ $participant->user->username }}
-                        @if ($participant->user->steamid)
-                            SOME STEAM SHIT
+                        @if ($steamProfile = Helpers::getSteamProfile($participant->user->steamid))
+                            <br><span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
                         @endif
                     </td>
                     @if ($tournament->hasEvent())

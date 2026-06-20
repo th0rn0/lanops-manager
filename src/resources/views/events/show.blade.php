@@ -444,8 +444,8 @@
 				</td>
 				<td style="vertical-align: middle;">
 					{{ $participant->user->username }}
-					@if ($participant->user->steamid)
-						SOME STEAM SHIT
+					@if ($steamProfile = Helpers::getSteamProfile($participant->user->steamid))
+						- <span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
 					@endif
 				</td>
 				<td style="vertical-align: middle;">
