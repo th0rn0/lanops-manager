@@ -35,20 +35,20 @@
 
 .news-grid-section {
     background: #f5f5f5;
+    padding-bottom: 32px;
 }
 
 .news-card {
     background: #fff;
     border: 1px solid #e2e2e2;
-    border-top: 3px solid transparent;
+    border-top: 4px solid $color_primary;
     margin-bottom: 24px;
     display: flex;
     flex-direction: column;
     height: calc(100% - 24px);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: box-shadow 0.2s ease;
 
     &:hover {
-        border-top-color: $color_primary;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     }
 }
