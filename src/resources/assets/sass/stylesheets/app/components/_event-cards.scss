@@ -1,0 +1,171 @@
+/**
+ * Event Cards
+ */
+
+.featured-events {
+    background: #f5f5f5;
+}
+
+.event-card {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-top: 4px solid $color_primary;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 24px);
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.event-card-header {
+    padding: 20px 24px 12px;
+}
+
+.event-card-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: $font-bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: $color_primary;
+    color: $color_primary_text;
+    padding: 2px 10px;
+    margin-bottom: 10px;
+}
+
+.event-card-badge--alt {
+    background: $color_secondary;
+    color: $color_secondary_text;
+}
+
+.event-card-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: $font-bold;
+    color: $color_body_text;
+    line-height: 1.2;
+}
+
+.event-card-body {
+    padding: 4px 24px 16px;
+    flex: 1;
+}
+
+.event-card-meta {
+    margin: 0 0 14px;
+
+    dt {
+        float: left;
+        clear: left;
+        width: 52px;
+        font-size: 11px;
+        font-weight: $font-bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #999;
+        line-height: 1.8;
+    }
+
+    dd {
+        margin-left: 60px;
+        font-size: 14px;
+        color: $color_body_text;
+        line-height: 1.8;
+    }
+}
+
+.event-card-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 14px;
+}
+
+.capacity-wrap {
+    margin-top: auto;
+}
+
+.capacity-bar {
+    height: 4px;
+    background: #e8e8e8;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.capacity-fill {
+    height: 100%;
+    background: $color_primary;
+    border-radius: 2px;
+}
+
+.capacity-text {
+    font-size: 12px;
+    color: #999;
+}
+
+.event-card-footer {
+    padding: 14px 24px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/**
+ * About + Calendar Section
+ */
+
+.about-calendar-section {
+    background: #fff;
+
+    @media (min-width: 992px) {
+        .col-md-5 {
+            padding-left: 40px;
+        }
+    }
+}
+
+.cal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cal-item {
+    padding: 11px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.cal-name {
+    font-size: 14px;
+    font-weight: $font-bold;
+    color: $color_body_text;
+    flex: 1;
+
+    &:hover {
+        color: $color_primary;
+        text-decoration: none;
+    }
+}
+
+.cal-date {
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
