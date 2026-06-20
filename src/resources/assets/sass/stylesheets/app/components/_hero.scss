@@ -180,6 +180,17 @@
     letter-spacing: 1px;
 }
 
+.hero-venue-link {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        text-decoration: underline;
+    }
+}
+
 .hero-cta {
     margin-top: 12px;
 }
