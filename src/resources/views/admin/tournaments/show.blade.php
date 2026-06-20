@@ -109,9 +109,9 @@
 									<td width="30%"><img class="img-responsive img-rounded" src="{{ $participant->user->avatar }}"/></td>
 									<td>
 										{{ $participant->user->username }}
-										@if ($participant->user->steamid)
-											SOME STEAM SHIT
-										@endif
+										@if ($steamProfile = Helpers::getSteamProfile($participant->user->steamid))
+                            				<br><span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
+                        				@endif
 									</td>
 									<td>
 

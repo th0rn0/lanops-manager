@@ -45,10 +45,10 @@
 										{{ Form::label('Username','User Name',array('id'=>'','class'=>'')) }}
 										{{ Form::text('name', $user->username ,array('id'=>'name','class'=>'form-control', 'disabled' => 'disabled')) }}
 									</div> 
-									@if ($user->steamid)
+									@if ($steamProfile = Helpers::getSteamProfile($user->steamid))
 										<div class="form-group">
 											{{ Form::label('steamname','Linked Steam Account',array('id'=>'','class'=>'')) }}
-											{{ Form::text('steamname', Helpers::getSteamProfile($user->steamid)["name"] ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
+											{{ Form::text('steamname', $steamProfile["name"] ,array('id'=>'steamname','class'=>'form-control', 'disabled'=>'true')) }}
 										</div>
 									@endif
 									@if ($user->email)

@@ -42,6 +42,9 @@
 									</td>
 									<td>
 										{{ $user->username }}
+										@if ($steamProfile = Helpers::getSteamProfile($user->steamid))
+										 	<span class="text-muted"><small>Steam: {{ $steamProfile["name"] }}</small></span>
+                        				@endif
 									</td>
 									<td>{{ $user->firstname }} {{ $user->surname }}</td>
 									<td>
