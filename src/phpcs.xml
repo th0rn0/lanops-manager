@@ -19,6 +19,11 @@
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
 
+    <!-- PHPUnit test methods use snake_case by convention -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
     <!-- Show progression -->
     <arg value="p"/>
 </ruleset>
