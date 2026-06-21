@@ -10,18 +10,28 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * Override RefreshDatabase's migrate call to bypass PendingCommand.
+     * Override the RefreshDatabase migration step to bypass PendingCommand.
      *
-     * The default implementation calls $this->artisan('migrate') which wraps
-     * the command in PendingCommand. PendingCommand creates a strict Mockery
-     * partial mock of OutputStyle; if migrate calls confirm() for any reason
-     * (e.g. "SQLite database does not exist, create it?"), Mockery throws
-     * BadMethodCallException which PendingCommand does not catch, killing the
-     * test. Using Kernel::call() directly skips PendingCommand entirely.
+     * RefreshDatabase::refreshDatabase() calls $this->artisan('migrate') (or
+     * migrate:fresh) which wraps the command in PendingCommand. PendingCommand
+     * creates a strict Mockery partial mock of OutputStyle; if the migrate
+     * command calls confirm() for any reason Mockery throws BadMethodCallException
+     * that PendingCommand does not catch, killing every test in CI.
+     *
+     * We force SQLite in-memory config at runtime so this works even when a
+     * config cache or stale env vars point at MySQL. Then we run migrate
+     * directly via the Kernel (no PendingCommand), and wrap in a transaction
+     * for per-test isolation.
      */
-    protected function refreshInMemoryDatabase()
+    public function refreshDatabase()
     {
+        $this->app['config']->set('database.default', 'sqlite');
+        $this->app['config']->set('database.connections.sqlite.database', ':memory:');
+
+        $this->beforeRefreshingDatabase();
         $this->app[Kernel::class]->call('migrate');
         $this->app[Kernel::class]->setArtisan(null);
+        $this->beginDatabaseTransaction();
+        $this->afterRefreshingDatabase();
     }
 }
