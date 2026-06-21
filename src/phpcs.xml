@@ -19,6 +19,11 @@
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
 
+    <!-- Line length is not enforced in this legacy codebase -->
+    <rule ref="Generic.Files.LineLength">
+        <severity>0</severity>
+    </rule>
+
     <!-- PHPUnit test methods use snake_case by convention -->
     <rule ref="PSR1.Methods.CamelCapsMethodName">
         <exclude-pattern>*/tests/*</exclude-pattern>
