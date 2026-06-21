@@ -25,7 +25,9 @@ steps:
   - name: lint
     image: php:8.3-cli
     commands:
-      - apt-get update -q && apt-get install -yq git unzip
+      - apt-get update -q && apt-get install -yq git unzip libfreetype-dev libjpeg62-turbo-dev libpng-dev
+      - docker-php-ext-configure gd --with-freetype --with-jpeg
+      - docker-php-ext-install bcmath exif gd
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - cd /drone/src/src && composer install --no-interaction --prefer-dist --no-progress
       - vendor/bin/phpcs
@@ -71,6 +73,9 @@ steps:
   - name: test
     image: php:8.3-cli
     commands:
+      - apt-get update -q && apt-get install -yq libfreetype-dev libjpeg62-turbo-dev libpng-dev
+      - docker-php-ext-configure gd --with-freetype --with-jpeg
+      - docker-php-ext-install bcmath exif gd
       - cd /drone/src/src
       - cp .env.example .env
       - php artisan key:generate
