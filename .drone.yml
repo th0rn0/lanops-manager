@@ -1,0 +1,205 @@
+kind: pipeline
+type: docker
+name: ci
+
+trigger:
+  event:
+    - push
+    - pull_request
+    - tag
+
+steps:
+
+# ── Lint ──────────────────────────────────────────────────────────────────────
+
+  - name: discord-lint-start
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Lint Started!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+
+  - name: lint
+    image: php:8.3-cli
+    commands:
+      - apt-get update -q && apt-get install -yq git unzip
+      - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+      - cd /drone/src/src && composer install --no-interaction --prefer-dist --no-progress
+      - vendor/bin/phpcs
+
+  - name: discord-lint-success
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Lint Success!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      status:
+        - success
+
+  - name: discord-lint-failure
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Lint Failure!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      status:
+        - failure
+
+# ── Tests ─────────────────────────────────────────────────────────────────────
+
+  - name: discord-test-start
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Test Started!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+
+  - name: test
+    image: php:8.3-cli
+    commands:
+      - cd /drone/src/src
+      - cp .env.example .env
+      - php artisan key:generate
+      - php artisan test
+
+  - name: discord-test-success
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Test Success!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      status:
+        - success
+
+  - name: discord-test-failure
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Test Failure!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      status:
+        - failure
+
+# ── Docker Build ──────────────────────────────────────────────────────────────
+# Dry-run on all branches except main. Push on main push and tags.
+
+  - name: discord-build-start
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Build Started!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      branch:
+        - main
+      event:
+        - push
+        - tag
+
+  - name: build
+    image: plugins/docker
+    settings:
+      repo: th0rn0/lanops-manager
+      dockerfile: resources/docker/php/Dockerfile
+      dry_run: true
+    when:
+      event:
+        - push
+        - pull_request
+      branch:
+        exclude:
+          - main
+
+  - name: build-push
+    image: plugins/docker
+    settings:
+      repo: th0rn0/lanops-manager
+      dockerfile: resources/docker/php/Dockerfile
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_token
+      tags:
+        - latest
+    when:
+      branch:
+        - main
+      event:
+        - push
+
+  - name: build-push-release
+    image: plugins/docker
+    settings:
+      repo: th0rn0/lanops-manager
+      dockerfile: resources/docker/php/Dockerfile
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_token
+      tags:
+        - latest
+        - ${DRONE_TAG}
+    when:
+      event:
+        - tag
+
+  - name: discord-build-success
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Build Success!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      branch:
+        - main
+      event:
+        - push
+        - tag
+      status:
+        - success
+
+  - name: discord-build-failure
+    image: curlimages/curl:8.7.1
+    failure: ignore
+    environment:
+      DISCORD_WEBHOOK_URL:
+        from_secret: discord_webhook_url
+    commands:
+      - |
+        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Build Failure!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
+    when:
+      branch:
+        - main
+      event:
+        - push
+        - tag
+      status:
+        - failure
