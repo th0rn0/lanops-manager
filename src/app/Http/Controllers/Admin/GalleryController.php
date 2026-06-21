@@ -183,7 +183,8 @@ class GalleryController extends Controller
      * @param  GalleryAlbum      $album
      * @return Redirect
      */
-    public function ingestImages(GalleryAlbum $album) {
+    public function ingestImages(GalleryAlbum $album)
+    {
         ProcessUploadedImages::dispatch($album);
         Session::flash('alert-info', 'Upload Started! Please check back in a while...');
         return Redirect::to('admin/gallery/' . $album->slug);

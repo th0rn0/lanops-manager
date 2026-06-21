@@ -31,5 +31,4 @@ class BigScreenController extends Controller
             )
         ;
     }
-
 }

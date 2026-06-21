@@ -249,7 +249,7 @@ class Helpers
      */
     public static function formatBasket($basket, User $user = null, $referralDiscountAmountOverride = null, $skipAvailableReferralsCheck = false)
     {
-        if(!$user) {
+        if (!$user) {
             $user = Auth::user();
         }
         if (!$referralDiscountAmountOverride) {
@@ -288,7 +288,6 @@ class Helpers
             }
         }
         return $formattedBasket;
-
     }
 
     /**

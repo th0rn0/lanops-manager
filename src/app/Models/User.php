@@ -45,12 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         parent::boot();
         self::updated(function ($model) {
-            if (
-                config('app.discord_bot_url') != '' &&
+            if (config('app.discord_bot_url') != '' &&
                 array_key_exists('discord_id', $model->getDirty())
             ) {
                 if ($model->discord_id != null && $model->getUpcomingEvents()) {
-                    foreach($model->getUpcomingEvents() as $event) {
+                    foreach ($model->getUpcomingEvents() as $event) {
                         if ($event->discord_link_enabled) {
                             WebhookCall::create()
                             ->url(config('app.discord_bot_url') . '/participants/new')
@@ -68,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 }
 
                 if ($model->discord_id == null && $model->getUpcomingEvents()) {
-                    foreach($model->getUpcomingEvents() as $event) {
+                    foreach ($model->getUpcomingEvents() as $event) {
                         if ($event->discord_link_enabled) {
                             WebhookCall::create()
                             ->url(config('app.discord_bot_url') . '/participants/remove')
@@ -89,7 +88,6 @@ class User extends Authenticatable implements MustVerifyEmail
                 $model->save();
             }
         });
-
     }
     
     /*
@@ -219,7 +217,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 if ($nextEvent->end >= $eventParticipant->event->end) {
                     $nextEvent = $eventParticipant->event;
                 }
-            } 
+            }
         }
         return $nextEvent;
     }
@@ -230,7 +228,7 @@ class User extends Authenticatable implements MustVerifyEmail
         foreach ($this->eventParticipants as $eventParticipant) {
             if ($eventParticipant->event->end >=  Carbon::now()) {
                 $nextEvents[] = $eventParticipant->event;
-            } 
+            }
         }
         if ($nextEvents) {
             $nextEvents = array_unique($nextEvents);

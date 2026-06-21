@@ -275,7 +275,8 @@ class EventsController extends Controller
         ];
         $response = Http::withBasicAuth(
             config('app.discord_bot_user'),
-            config('app.discord_bot_pass'))
+            config('app.discord_bot_pass')
+        )
         ->post(config('app.discord_bot_url') . '/events/create', [
             'name' => $event->display_name,
             'slug' => $event->slug,
@@ -299,7 +300,7 @@ class EventsController extends Controller
             return Redirect::to('admin/events/' . $event->slug);
         }
 
-        foreach($event->eventParticipants as $participant) {
+        foreach ($event->eventParticipants as $participant) {
                 WebhookCall::create()
                 ->url(config('app.discord_bot_url') . '/participants/new')
                 ->payload([
@@ -315,12 +316,11 @@ class EventsController extends Controller
 
         Session::flash('alert-success', 'Successfully Linked Event!');
         return Redirect::to('admin/events/' . $event->slug);
-
     }
 
     public function duplicate(Request $request, Event $event)
     {
-        $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
+        $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)))), 1, 5);
         $duplicatedEvent = new Event();
         $duplicatedEvent->display_name        = $event->display_name . " Copy ". $randomNameSuffix;
         $duplicatedEvent->nice_name           = strtolower(str_replace(' ', '-', $event->display_name . " Copy " . $randomNameSuffix));

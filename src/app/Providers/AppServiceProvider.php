@@ -32,11 +32,11 @@ class AppServiceProvider extends ServiceProvider
         
         if (env('PAYPAL_USERNAME') != '' && env('PAYPAL_PASSWORD') != '' && env('PAYPAL_SIGNATURE') != '') {
             @\Config::set(
-                'laravel-omnipay.gateways.available_payment_gateways', 
+                'laravel-omnipay.gateways.available_payment_gateways',
                 array_merge(
                     config(
                         'laravel-omnipay.gateways.available_payment_gateways'
-                    ), 
+                    ),
                     ['paypal_express']
                 )
             );

@@ -74,7 +74,7 @@ return [
 
         'gallery-ingest' => [
             'driver' => 'local',
-            'root' => storage_path('media-library/upload'),  
+            'root' => storage_path('media-library/upload'),
         ]
 
     ],

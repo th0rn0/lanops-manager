@@ -2,7 +2,7 @@
 return [
 
     'name'              => env('APP_NAME', 'LanOps'),
-    'tagline'           => env('APP_TAGLINE','Lans in South Yorkshire!'),
+    'tagline'           => env('APP_TAGLINE', 'Lans in South Yorkshire!'),
     'env'               => env('APP_ENV', 'production'),
     'debug'             => env('APP_DEBUG', false),
     'url'               => env('APP_URL', 'localhost'),
@@ -20,16 +20,16 @@ return [
     'discord_link'      => env('DISCORD_LINK', ""),
     'discord_id'        => env('DISCORD_ID', ""),
 
-    'facebook_link'     => env('FACEBOOK_LINK',''),
+    'facebook_link'     => env('FACEBOOK_LINK', ''),
 
-    'steam_link'        => env('STEAM_LINK',''),
+    'steam_link'        => env('STEAM_LINK', ''),
 
-    'youtube_link'       => env('YOUTUBE_LINK',''),
+    'youtube_link'       => env('YOUTUBE_LINK', ''),
 
     'bsky_link'         => env('BSKY_LINK'),
 
-    'currency'          => env('APP_CURRENCY','GBP'),
-    'currency_symbol'   => env('APP_CURRENCY','£'),
+    'currency'          => env('APP_CURRENCY', 'GBP'),
+    'currency_symbol'   => env('APP_CURRENCY', '£'),
 
     'discord_bot_url'   => env('DISCORD_BOT_URL', ''),
     'discord_bot_user' => env('DISCORD_BOT_USER', ''),

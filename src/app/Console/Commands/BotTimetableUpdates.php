@@ -34,8 +34,7 @@ class BotTimetableUpdates extends Command
      */
     public function handle()
     {
-        if (config('app.discord_bot_url') != '' ) {
-
+        if (config('app.discord_bot_url') != '') {
             $nextEvent = Event::where('end', '>=', \Carbon\Carbon::now())
                 ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first();
 
@@ -78,7 +77,8 @@ class BotTimetableUpdates extends Command
         return Command::SUCCESS;
     }
     
-    private function sendMessageToBot($channelID, $message) {
+    private function sendMessageToBot($channelID, $message)
+    {
         WebhookCall::create()
         ->url(config('app.discord_bot_url') . '/message/channel')
         ->payload([
@@ -90,7 +90,8 @@ class BotTimetableUpdates extends Command
         ->dispatch();
     }
 
-    private function isWithinThresholdToSendMessage($time, $min, $max) {
+    private function isWithinThresholdToSendMessage($time, $min, $max)
+    {
         $minThreshold = Carbon::now()->addMinutes($min);
         $maxThreshold = Carbon::now()->addMinutes($max);
         return Carbon::parse($time)->between($minThreshold, $maxThreshold);
