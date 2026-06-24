@@ -8,6 +8,9 @@ Route::group(['middleware' => ['api']], function () {
     Route::get('/api/events/upcoming', 'Api\Events\EventsController@showUpcoming');
     Route::get('/api/events/next', 'Api\Events\EventsController@showNext');
     Route::get('/api/events/{event}', 'Api\Events\EventsController@show');
+    Route::get('/api/events/{event}/timetables', 'Api\Events\TimetablesController@index');
+    Route::get('/api/events/{event}/timetables/default', 'Api\Events\TimetablesController@showPrimary');
+    Route::get('/api/events/{event}/timetables/{timetable}', 'Api\Events\TimetablesController@show');
 });
 
 /**

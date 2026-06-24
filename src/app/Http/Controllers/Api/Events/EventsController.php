@@ -93,9 +93,15 @@ class EventsController extends Controller
             ];
         }
 
-        // $timetables = array();
-        // foreach ($event->timetables as $timetable) {
-        // }
+        $timetables = array();
+        foreach ($event->timetables as $timetable) {
+            $timetables[] = [
+                'name' => $timetable->name,
+                'slug' => $timetable->slug,
+                'default' => (bool) $timetable->primary,
+                'url' => config('app.url') . '/api/events/' . $event->slug . '/timetables/' . $timetable->slug,
+            ];
+        }
 
         $formattedResponse = [
             'name' => $event->display_name,
@@ -119,11 +125,11 @@ class EventsController extends Controller
                 'base' => config('app.url') . '/events/' . $event->slug,
                 'tickets' => '#tickets',
                 'participants' => '#participants',
-                'timetables' => '#timetables',
+                'timetables' => config('app.url') . '/api/events/' . $event->slug . '/timetables',
             ],
             'participants' => $participants,
             'tickets' => $tickets,
-            // 'timetables' => $event->timetables
+            'timetables' => $timetables,
         ];
 
         return $formattedResponse;
