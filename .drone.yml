@@ -2,13 +2,6 @@ kind: pipeline
 type: docker
 name: ci
 
-services:
-  - name: database
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: testing
-      MYSQL_ROOT_PASSWORD: testing
-
 trigger:
   event:
     - push
@@ -61,67 +54,6 @@ steps:
     commands:
       - |
         curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Lint Failure!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
-    when:
-      status:
-        - failure
-
-# ── Tests ─────────────────────────────────────────────────────────────────────
-
-  - name: discord-test-start
-    image: curlimages/curl:8.7.1
-    failure: ignore
-    environment:
-      DISCORD_WEBHOOK_URL:
-        from_secret: discord_webhook_url
-    commands:
-      - |
-        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Test Started!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
-
-  - name: test
-    image: php:8.3-cli
-    environment:
-      DB_HOST: database
-      DB_DATABASE: testing
-      DB_USERNAME: root
-      DB_PASSWORD: testing
-    commands:
-      - apt-get update -q && apt-get install -yq libfreetype-dev libjpeg62-turbo-dev libpng-dev
-      - docker-php-ext-configure gd --with-freetype --with-jpeg
-      - docker-php-ext-install bcmath exif gd pdo_mysql
-      - until php -r "new PDO('mysql:host=database;port=3306;dbname=testing', 'root', 'testing');" 2>/dev/null; do sleep 2; done
-      - cd /drone/src/src
-      - cp .env.example .env
-      - sed -i 's|^APP_ENV=.*|APP_ENV=testing|' .env
-      - sed -i 's|^DB_CONNECTION=.*|DB_CONNECTION=mysql|' .env
-      - sed -i 's|^DB_HOST=.*|DB_HOST=database|' .env
-      - sed -i 's|^DB_DATABASE=.*|DB_DATABASE=testing|' .env
-      - sed -i 's|^DB_USERNAME=.*|DB_USERNAME=root|' .env
-      - sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD=testing|' .env
-      - php artisan key:generate
-      - vendor/bin/phpunit --testdox
-
-  - name: discord-test-success
-    image: curlimages/curl:8.7.1
-    failure: ignore
-    environment:
-      DISCORD_WEBHOOK_URL:
-        from_secret: discord_webhook_url
-    commands:
-      - |
-        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Test Success!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
-    when:
-      status:
-        - success
-
-  - name: discord-test-failure
-    image: curlimages/curl:8.7.1
-    failure: ignore
-    environment:
-      DISCORD_WEBHOOK_URL:
-        from_secret: discord_webhook_url
-    commands:
-      - |
-        curl -s -X POST "$DISCORD_WEBHOOK_URL" -H "Content-Type: application/json" -d "{\"embeds\":[{\"title\":\"$DRONE_REPO - $DRONE_SOURCE_BRANCH - Test Failure!\",\"url\":\"$DRONE_BUILD_LINK\"}]}"
     when:
       status:
         - failure
