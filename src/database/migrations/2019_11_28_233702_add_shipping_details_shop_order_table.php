@@ -32,13 +32,10 @@ class AddShippingDetailsShopOrderTable extends Migration
     public function down()
     {
         Schema::table('shop_orders', function (Blueprint $table) {
-            $table->dropColumn('shipping_first_name');
-            $table->dropColumn('shipping_last_name');
-            $table->dropColumn('shipping_address_1');
-            $table->dropColumn('shipping_address_2');
-            $table->dropColumn('shipping_country');
-            $table->dropColumn('shipping_postcode');
-            $table->dropColumn('shipping_state');
+            $table->dropColumn([
+                'shipping_first_name', 'shipping_last_name', 'shipping_address_1',
+                'shipping_address_2', 'shipping_country', 'shipping_postcode', 'shipping_state',
+            ]);
         });
     }
 }

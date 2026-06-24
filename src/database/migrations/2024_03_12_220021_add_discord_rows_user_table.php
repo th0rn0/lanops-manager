@@ -28,9 +28,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('discord_id');
-            $table->dropColumn('discord_username');
-            $table->dropColumn('discord_avatar');
+            $table->dropColumn(['discord_id', 'discord_username', 'discord_avatar']);
         });
     }
 };

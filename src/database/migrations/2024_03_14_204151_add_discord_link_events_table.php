@@ -29,10 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('discord_link_enabled');
-            $table->dropColumn('discord_role_id');
-            $table->dropColumn('discord_channel_id');
-            $table->dropColumn('discord_event_id');
+            $table->dropColumn(['discord_link_enabled', 'discord_role_id', 'discord_channel_id', 'discord_event_id']);
         });
     }
 };

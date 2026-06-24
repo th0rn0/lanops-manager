@@ -14,28 +14,15 @@ class RemoveInformationSectionsEventTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('venue_name');
-            $table->dropColumn('venue_address');
-            $table->dropColumn('venue_image');
-            $table->dropColumn('section_1_title');
-            $table->dropColumn('section_1_text');
-            $table->dropColumn('section_1_image');
-            $table->dropColumn('section_2_title');
-            $table->dropColumn('section_2_text');
-            $table->dropColumn('section_2_image');
-            $table->dropColumn('section_3_title');
-            $table->dropColumn('section_3_text');
-            $table->dropColumn('section_3_image');
-            $table->dropColumn('section_4_title');
-            $table->dropColumn('section_4_text');
-            $table->dropColumn('section_4_image');
-            $table->dropColumn('section_5_title');
-            $table->dropColumn('section_5_text');
-            $table->dropColumn('section_5_image');
-            $table->dropColumn('section_6_title');
-            $table->dropColumn('section_6_text');
-            $table->dropColumn('section_6_image');
-
+            $table->dropColumn([
+                'venue_name', 'venue_address', 'venue_image',
+                'section_1_title', 'section_1_text', 'section_1_image',
+                'section_2_title', 'section_2_text', 'section_2_image',
+                'section_3_title', 'section_3_text', 'section_3_image',
+                'section_4_title', 'section_4_text', 'section_4_image',
+                'section_5_title', 'section_5_text', 'section_5_image',
+                'section_6_title', 'section_6_text', 'section_6_image',
+            ]);
         });
     }
 

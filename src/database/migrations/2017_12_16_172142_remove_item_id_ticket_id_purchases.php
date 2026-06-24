@@ -16,8 +16,7 @@ class RemoveItemIdTicketIdPurchases extends Migration
         Schema::table('purchases', function (Blueprint $table) {
             $table->dropForeign('purchases_ticket_id_foreign');
             $table->dropForeign('purchases_user_id_foreign');
-            $table->dropColumn('item_id');
-            $table->dropColumn('ticket_id');
+            $table->dropColumn(['item_id', 'ticket_id']);
         });
     }
 

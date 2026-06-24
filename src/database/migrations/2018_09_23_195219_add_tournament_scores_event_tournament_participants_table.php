@@ -29,10 +29,7 @@ class AddTournamentScoresEventTournamentParticipantsTable extends Migration
     public function down()
     {
         Schema::table('event_tournament_participants', function (Blueprint $table) {
-            $table->dropColumn('final_rank');
-            $table->dropColumn('final_history');
-            $table->dropColumn('final_ratio');
-            $table->dropColumn('final_score');
+            $table->dropColumn(['final_rank', 'final_history', 'final_ratio', 'final_score']);
         });
     }
 }

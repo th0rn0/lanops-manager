@@ -28,9 +28,7 @@ class AddAdminFreeEventParticipants extends Migration
     public function down()
     {
         Schema::table('event_participants', function (Blueprint $table) {
-            $table->dropColumn('staff');
-            $table->dropColumn('free');
-            $table->dropColumn('staff_free_assigned_by');
+            $table->dropColumn(['staff', 'free', 'staff_free_assigned_by']);
         });
     }
 }

@@ -27,8 +27,7 @@ class AddShippingTrackingNoteShopOrdersTable extends Migration
     public function down()
     {
         Schema::table('shop_orders', function (Blueprint $table) {
-            $table->dropColumn('shipping_tracking');
-            $table->dropColumn('shipping_note');
+            $table->dropColumn(['shipping_tracking', 'shipping_note']);
         });
     }
 }
