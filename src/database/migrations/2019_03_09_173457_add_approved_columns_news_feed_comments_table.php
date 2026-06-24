@@ -27,8 +27,7 @@ class AddApprovedColumnsNewsFeedCommentsTable extends Migration
     public function down()
     {
         Schema::table('news_feed_comments', function (Blueprint $table) {
-            $table->dropColumn('reviewed');
-            $table->dropColumn('approved');
+            $table->dropColumn(['reviewed', 'approved']);
         });
     }
 }

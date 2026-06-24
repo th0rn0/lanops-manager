@@ -116,8 +116,7 @@ class PaymentsController extends Controller
                 }
             }
         }
-        if (
-            (array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && !Auth::user()->isReferrable()) || 
+        if ((array_key_exists('codes', $basket) && array_key_exists('referral', $basket['codes']) && !Auth::user()->isReferrable()) ||
             $basket['referral_discount'] && !Auth::user()->getAvailableReferralPurchase()
             ) {
             Session::flash('alert-danger', 'Basket has changed');
@@ -128,8 +127,7 @@ class PaymentsController extends Controller
             'paypal_express',
         ];
         // Check if the card details have been submitted but allow off site payment gateways to continue
-        if (
-            !in_array($paymentGateway, $offSitePaymentGateways) &&
+        if (!in_array($paymentGateway, $offSitePaymentGateways) &&
             !isset($request->card_first_name) &&
             !isset($request->card_last_name) &&
             !isset($request->stripe_token)
@@ -223,7 +221,7 @@ class PaymentsController extends Controller
             $purchase = Purchase::create($purchaseParams);
             $this->processBasket($basket, $purchase->id);
             return Redirect::to('/payment/successful/' . $purchase->id);
-        } else if($response->isRedirect()) {
+        } elseif ($response->isRedirect()) {
             // Payment Requires redirect
             try {
                 $response->redirect();
@@ -398,7 +396,7 @@ class PaymentsController extends Controller
                     EventParticipant::create($participant);
                 }
             }
-        } 
+        }
     }
 
     /**
@@ -409,7 +407,7 @@ class PaymentsController extends Controller
     private function checkParams($paymentGateway, $basket)
     {
         $acceptedPaymentGateways = [];
-        foreach(config('laravel-omnipay.gateways') as $key => $acceptedPaymentGateway) {
+        foreach (config('laravel-omnipay.gateways') as $key => $acceptedPaymentGateway) {
             array_push($acceptedPaymentGateways, $key);
             echo $key;
         }
@@ -477,7 +475,7 @@ class PaymentsController extends Controller
             'referral_code.filled'      => 'Referral Code Cannot be blank.',
         ];
         $this->validate($request, $rules, $messages);
-        if(!User::isValidReferralCode($request->referral_code, Auth::user())) {
+        if (!User::isValidReferralCode($request->referral_code, Auth::user())) {
             Session::flash('alert-danger', 'Referral Code is not valid');
             return Redirect::back();
         }

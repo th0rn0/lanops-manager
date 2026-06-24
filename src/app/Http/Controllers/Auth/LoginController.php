@@ -35,7 +35,8 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
-    public function authenticated(Request $request, $user) {
+    public function authenticated(Request $request, $user)
+    {
         $user->last_login = Carbon::now()->toDateTimeString();
         $user->save();
     }

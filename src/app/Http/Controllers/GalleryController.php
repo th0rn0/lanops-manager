@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Validation\ValidationException;
 
-
 class GalleryController extends Controller
 {
     /**

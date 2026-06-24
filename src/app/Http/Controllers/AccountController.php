@@ -33,10 +33,9 @@ class AccountController extends Controller
             ->withEventParticipants($tickets)
             ->withDiscordLinkUrl($discordLinkUrl)
         ;
-
     }
 
-    public function unlinkDiscord(Request $request) 
+    public function unlinkDiscord(Request $request)
     {
         $user = Auth::user();
         $user->discord_id = null;
@@ -50,7 +49,7 @@ class AccountController extends Controller
         return Redirect::to('account');
     }
 
-    public function linkDiscord(Request $request) 
+    public function linkDiscord(Request $request)
     {
         $response = Http::asform()->withHeaders([
                 'Content-Type' => 'application/json',

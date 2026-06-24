@@ -13,7 +13,7 @@ Route::group(['middleware' => ['api']], function () {
 /**
  * Front End
  */
-Route::group(['middleware' => ['web']], function () {    
+Route::group(['middleware' => ['web']], function () {
     /**
      * Login & Register
      */
@@ -102,7 +102,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Payments
      */
-    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::get('/payment/checkout', 'PaymentsController@showCheckout');
         Route::post('/payment/checkout/code', 'PaymentsController@applyDiscountCode');
         Route::get('/payment/review/{paymentGateway}', 'PaymentsController@showReview');
@@ -117,7 +117,7 @@ Route::group(['middleware' => ['web']], function () {
     /**
      * Seating
      */
-    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::post('/events/{event}/seating/{seatingPlan}', 'Events\SeatingController@update');
     });
 
@@ -131,7 +131,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/polls', 'PollsController@index');
     Route::get('/polls/{poll}', 'PollsController@show');
-    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::post('/polls/{poll}/options', 'PollsController@storeOption');
         Route::get('/polls/{poll}/options/{option}/vote', 'PollsController@vote');
         Route::get('/polls/{poll}/options/{option}/abstain', 'PollsController@abstain');
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['web']], function () {
      */
     Route::get('/tournaments', 'TournamentsController@index');
     Route::get('/tournaments/{tournament}', 'TournamentsController@show');
-    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {    
+    Route::group(['middleware' => ['auth', 'banned', 'verified']], function () {
         Route::post('/tournaments/{tournament}/register', 'TournamentsController@register');
         Route::post('/tournaments/{tournament}/unregister', 'TournamentsController@unregister');
         Route::post('/tournaments/{tournament}/registerTeam', 'TournamentsController@registerTeam');

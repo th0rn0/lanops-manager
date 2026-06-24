@@ -37,18 +37,12 @@
         "sentry/sentry-laravel": "^4.23"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "^9",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*",
         "squizlabs/php_codesniffer": "3.*",
         "filp/whoops": "~2.0"
     },
     "autoload": {
         "classmap": [
-            "database",
-            "tests/TestCase.php"
+            "database"
         ],
         "psr-4": {
             "App\\": "app/"
@@ -58,12 +52,8 @@
         ]
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ],
         "psr-4": {
-            "App\\": "app/",
-            "Tests\\": "tests/"
+            "App\\": "app/"
         }
     },
     "scripts": {

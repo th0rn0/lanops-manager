@@ -66,8 +66,7 @@ class EventSeatingPlan extends Model implements HasMedia
             $model->createSeats();
         });
         self::updating(function ($model) {
-            if (
-                array_key_exists('rows', $model->getDirty()) || 
+            if (array_key_exists('rows', $model->getDirty()) ||
                 array_key_exists('columns', $model->getDirty())
             ) {
                 $occupiedSeats = $model->seats()->where('event_participant_id', '!=', null)->get();
@@ -133,7 +132,8 @@ class EventSeatingPlan extends Model implements HasMedia
      *
      * @return string
      */
-    public function getSeatsForRow($row) {
+    public function getSeatsForRow($row)
+    {
         return $this->seats()->where('seat', 'REGEXP', "^[{$row}]\d+$")->get();
     }
 
@@ -142,11 +142,13 @@ class EventSeatingPlan extends Model implements HasMedia
      *
      * @return App\Models\Seat
      */
-    public function getSeatsForColumn($column) {
+    public function getSeatsForColumn($column)
+    {
         return $this->seats()->where('seat', 'REGEXP', "^[A-Za-z]{1,9}{$column}$")->get();
     }
     
-    public function createSeats($occupiedSeats = null) {
+    public function createSeats($occupiedSeats = null)
+    {
         for ($r = 0; $r < $this->rows; $r++) {
             for ($c = 0; $c < $this->columns; $c++) {
                 $seat = new EventSeating();
@@ -160,7 +162,8 @@ class EventSeatingPlan extends Model implements HasMedia
         }
     }
 
-    public function formatRowHeaders() {
+    public function formatRowHeaders()
+    {
         $headers = [];
         for ($r = 0; $r < $this->rows; $r++) {
             $headers[] = $this->formatRowHeaderByNumber($r + 1);
@@ -168,7 +171,8 @@ class EventSeatingPlan extends Model implements HasMedia
         return $headers;
     }
 
-    public function formatRowHeaderByNumber($num) {
+    public function formatRowHeaderByNumber($num)
+    {
         $column = '';
         while ($num > 0) {
             $num--; // Adjust for 0-based index
@@ -178,12 +182,13 @@ class EventSeatingPlan extends Model implements HasMedia
         return $column;
     }
 
-    public function getCapacity() {
+    public function getCapacity()
+    {
         return $this->seats()->where('disabled', false)->get()->count();
     }
 
-    public function getSeatedCount() {
+    public function getSeatedCount()
+    {
         return $this->seats()->where('disabled', false)->where('event_participant_id', '!=', null)->get()->count();
     }
-
 }

@@ -36,7 +36,7 @@ class ProcessUploadedImages implements ShouldQueue
     public function handle()
     {
         $files = Storage::disk('gallery-ingest')->allFiles();
-        foreach($files as $file) {
+        foreach ($files as $file) {
             if (in_array(Storage::disk('gallery-ingest')->mimeType($file), ['image/jpeg','image/png'])) {
                 ProcessUploadedImage::dispatch($this->album, $file);
             }

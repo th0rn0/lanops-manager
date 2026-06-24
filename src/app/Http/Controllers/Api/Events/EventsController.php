@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api\Events;
 
-
 use App\Models\Event;
 
 use App\Http\Controllers\Controller;
-
 
 class EventsController extends Controller
 {
@@ -130,7 +128,4 @@ class EventsController extends Controller
 
         return $formattedResponse;
     }
-
 }
-
-

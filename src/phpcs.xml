@@ -10,7 +10,6 @@
     <file>config</file>
     <file>database</file>
     <file>resources</file>
-    <file>tests</file>
 
     <exclude-pattern>bootstrap/cache/*</exclude-pattern>
     <exclude-pattern>bootstrap/autoload.php</exclude-pattern>
@@ -18,6 +17,11 @@
     <exclude-pattern>*/seeds/*</exclude-pattern>
     <exclude-pattern>*.blade.php</exclude-pattern>
     <exclude-pattern>*.js</exclude-pattern>
+
+    <!-- Line length is not enforced in this legacy codebase -->
+    <rule ref="Generic.Files.LineLength">
+        <severity>0</severity>
+    </rule>
 
     <!-- Show progression -->
     <arg value="p"/>

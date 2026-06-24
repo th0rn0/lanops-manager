@@ -1,22 +1,15 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
-|
-*/
+use Illuminate\Support\Str;
 
 $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'name'              => $faker->name,
-        'email'             => $faker->email,
-        'password'          => bcrypt(str_random(10)),
-        'remember_token'    => str_random(10),
+        'firstname'      => $faker->firstName,
+        'surname'        => $faker->lastName,
+        'username'       => $faker->unique()->userName,
+        'email'          => $faker->unique()->safeEmail,
+        'password'       => bcrypt(Str::random(10)),
+        'remember_token' => Str::random(10),
     ];
 });
 
@@ -29,17 +22,15 @@ $factory->define(App\Models\Event::class, function (Faker\Generator $faker) {
     return [
         'display_name'      => $event_name,
         'nice_name'         => strtolower(str_replace(' ', '-', $event_name)),
-        'slug'              => strtolower(str_replace(' ', '-', $event_name)),
+        'slug'              => strtolower(str_replace(' ', '-', $event_name)) . '-' . Str::random(4),
         'start'             => $start_date . ' 16:00:00',
         'end'               => $end_date . ' 18:00:00',
-        'desc_long'         => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
+        'desc_long'         => $faker->paragraph(5),
         'desc_short'        => "Some Awesome LAN Event",
-        'status'            => 'published',
-        'type'              => 'LAN'
+        'status'            => 'PUBLISHED',
+        'type'              => 'LAN',
     ];
 });
-
-
 
 ## Event Tickets
 
@@ -58,18 +49,16 @@ $factory->define(App\Models\EventTicket::class, function (Faker\Generator $faker
 
 $factory->define(App\Models\EventTimetable::class, function (Faker\Generator $faker) {
     return [
-        'name'  => $faker->words($nb = 3, $asText = true),
-        'status'        => 'published',
+        'name'      => $faker->words(3, true),
+        'status'    => 'published',
     ];
 });
-
-## Event Timetable Data
 
 ## Event Seating
 
 $factory->define(App\Models\EventSeatingPlan::class, function (Faker\Generator $faker) {
     return [
-        'name'      => $faker->words($nb = 3, $asText = true),
+        'name'      => $faker->words(3, true),
         'columns'   => 8,
         'rows'      => 6,
         'headers'   => 'A,B,C,D,E,F,G,H',
@@ -83,27 +72,32 @@ $factory->define(App\Models\EventVenue::class, function (Faker\Generator $faker)
     $venue_name = 'VenueNameHere ' . $faker->randomDigitNotNull;
     return [
         'display_name'      => $venue_name,
-        'slug'              => strtolower(str_replace(' ', '-', $venue_name)),
-        'address_1'         => $faker->secondaryAddress(),
-        'address_street'    => $faker->streetName(),
-        'address_city'      => $faker->city(),
-        'address_postcode'  => $faker->postcode(),
-        'address_country'   => $faker->country(),
+        'slug'              => strtolower(str_replace(' ', '-', $venue_name)) . '-' . Str::random(4),
+        'address_1'         => $faker->secondaryAddress,
+        'address_street'    => $faker->streetName,
+        'address_city'      => $faker->city,
+        'address_postcode'  => $faker->postcode,
+        'address_country'   => $faker->country,
     ];
 });
 
 ## Event Information
+
 $factory->define(App\Models\EventInformation::class, function (Faker\Generator $faker) {
     return [
-        'title' => $faker->words($nb = 3, $asText = true),
-        'text'  => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
+        'title' => $faker->words(3, true),
+        'text'  => $faker->paragraph(5),
     ];
 });
 
 ## News Article
+
 $factory->define(App\Models\NewsArticle::class, function (Faker\Generator $faker) {
     return [
-        'title'     => $faker->words($nb = 3, $asText = true),
-        'text'      => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam aliquam lorem sit amet luctus consequat. Curabitur egestas ante ac dui molestie dignissim. Praesent at hendrerit ligula. Aenean auctor luctus augue in iaculis. Morbi tellus nibh, mollis in quam at, varius vehicula nisi. Praesent nulla diam, consequat et molestie eget, mattis ac diam. Vivamus nisi metus, rutrum non sem semper, varius blandit sapien. Duis cursus risus vitae lectus sollicitudin aliquet. Sed quis fringilla leo, et egestas arcu. Cras non diam quis lacus fermentum auctor. Cras ut ante id nibh volutpat laoreet. Proin volutpat tellus laoreet euismod vulputate.",
+        'title'     => $faker->words(3, true),
+        'article'   => $faker->paragraph(5),
+        'user_id'   => function () {
+            return factory(App\Models\User::class)->create()->id;
+        },
     ];
 });

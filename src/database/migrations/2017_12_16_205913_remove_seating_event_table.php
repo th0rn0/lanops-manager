@@ -14,11 +14,7 @@ class RemoveSeatingEventTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('seating_columns');
-            $table->dropColumn('seating_rows');
-            $table->dropColumn('seating_headers');
-            $table->dropColumn('seating_image');
-            $table->dropColumn('seating_locked');
+            $table->dropColumn(['seating_columns', 'seating_rows', 'seating_headers', 'seating_image', 'seating_locked']);
         });
     }
 

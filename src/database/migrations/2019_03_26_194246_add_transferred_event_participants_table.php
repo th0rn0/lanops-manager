@@ -27,8 +27,7 @@ class AddTransferredEventParticipantsTable extends Migration
     public function down()
     {
         Schema::table('event_participants', function (Blueprint $table) {
-            $table->dropColumn('transferred');
-            $table->dropColumn('transferred_event_id');
+            $table->dropColumn(['transferred', 'transferred_event_id']);
         });
     }
 }

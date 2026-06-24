@@ -187,7 +187,6 @@ class VenuesController extends Controller
             }
             $venue->address_postcode    = $request->address_postcode;
             $venue->address_country     = $request->address_country;
-
         }
 
         if (!$venue->save()) {

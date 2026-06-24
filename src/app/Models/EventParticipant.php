@@ -64,8 +64,7 @@ class EventParticipant extends Model implements HasMedia
             return true;
         });
         self::updated(function ($model) {
-            if (
-                config('app.discord_bot_url') != '' &&
+            if (config('app.discord_bot_url') != '' &&
                 array_key_exists('user_id', $model->getDirty()) &&
                 array_key_exists('gift_accepted', $model->getDirty()) &&
                 $model->getDirty()['gift_accepted']
@@ -83,8 +82,7 @@ class EventParticipant extends Model implements HasMedia
                     ->useSecret(config('app.discord_bot_secret'))
                     ->dispatch();
             };
-            if (
-                config('app.discord_bot_url') != '' &&
+            if (config('app.discord_bot_url') != '' &&
                 array_key_exists('user_id', $model->getDirty()) &&
                 array_key_exists('transferred', $model->getDirty()) &&
                 $model->getDirty()['transferred']
@@ -101,11 +99,9 @@ class EventParticipant extends Model implements HasMedia
                 ->
                 dispatch();
             };
-            if (
-                array_key_exists('event_id', $model->getDirty()) &&
+            if (array_key_exists('event_id', $model->getDirty()) &&
                 $model->seat
             ) {
-
                 $model->seat->event_participant_id = null;
                 $model->seat->save();
             }
@@ -184,7 +180,7 @@ class EventParticipant extends Model implements HasMedia
         if ($this->hasMedia()) {
             $this->clearMediaCollection();
         }
-        $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)) )),1,5);
+        $randomNameSuffix = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(5/strlen($x)))), 1, 5);
         if (!$this->addMediaFromString($qr)->usingFileName($randomNameSuffix . 'qr.png')->toMediaCollection('qr')) {
             return false;
         }

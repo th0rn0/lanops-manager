@@ -39,7 +39,8 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/';
 
-    public function authenticated(Request $request, $user) {
+    public function authenticated(Request $request, $user)
+    {
         $user->last_login = Carbon::now()->toDateTimeString();
         $user->save();
     }
@@ -177,7 +178,6 @@ class AuthController extends Controller
             $user->sendEmailVerificationNotification();
         }
         return Redirect('/account');
-      
     }
 
     // public function redirectToProvider($provider)

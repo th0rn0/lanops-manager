@@ -27,8 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('purchases', function (Blueprint $table) {
-            $table->dropColumn('total');
-            $table->dropColumn('total_before_discount');
+            $table->dropColumn(['total', 'total_before_discount']);
         });
     }
 };

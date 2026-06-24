@@ -27,8 +27,7 @@ class AddStatusPrimaryEventTimetables extends Migration
     public function down()
     {
         Schema::table('event_timetables', function (Blueprint $table) {
-            $table->dropColumn('status');
-            $table->dropColumn('primary');
+            $table->dropColumn(['status', 'primary']);
         });
     }
 }
