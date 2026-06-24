@@ -77,7 +77,21 @@ steps:
         - push
         - tag
 
-  - name: build
+  - name: build-nginx
+    image: plugins/docker
+    settings:
+      repo: th0rn0/lanops-manager
+      dockerfile: resources/docker/nginx/Dockerfile
+      dry_run: true
+    when:
+      event:
+        - push
+        - pull_request
+      branch:
+        exclude:
+          - main
+
+  - name: build-app
     image: plugins/docker
     settings:
       repo: th0rn0/lanops-manager
@@ -91,24 +105,25 @@ steps:
         exclude:
           - main
 
-  - name: build-push
+  - name: build-push-nginx
     image: plugins/docker
     settings:
       repo: th0rn0/lanops-manager
-      dockerfile: resources/docker/php/Dockerfile
+      dockerfile: resources/docker/nginx/Dockerfile
       username:
         from_secret: dockerhub_username
       password:
         from_secret: dockerhub_token
       tags:
-        - latest
+        - nginx-main
+        - nginx-main-${DRONE_BUILD_NUMBER}
     when:
       branch:
         - main
       event:
         - push
 
-  - name: build-push-release
+  - name: build-push-app
     image: plugins/docker
     settings:
       repo: th0rn0/lanops-manager
@@ -118,8 +133,40 @@ steps:
       password:
         from_secret: dockerhub_token
       tags:
-        - latest
-        - ${DRONE_TAG}
+        - app-main
+        - app-main-${DRONE_BUILD_NUMBER}
+    when:
+      branch:
+        - main
+      event:
+        - push
+
+  - name: build-push-nginx-release
+    image: plugins/docker
+    settings:
+      repo: th0rn0/lanops-manager
+      dockerfile: resources/docker/nginx/Dockerfile
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_token
+      tags:
+        - nginx-${DRONE_TAG}
+    when:
+      event:
+        - tag
+
+  - name: build-push-app-release
+    image: plugins/docker
+    settings:
+      repo: th0rn0/lanops-manager
+      dockerfile: resources/docker/php/Dockerfile
+      username:
+        from_secret: dockerhub_username
+      password:
+        from_secret: dockerhub_token
+      tags:
+        - app-${DRONE_TAG}
     when:
       event:
         - tag
