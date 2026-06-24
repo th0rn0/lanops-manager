@@ -88,7 +88,7 @@ steps:
       - apt-get update -q && apt-get install -yq libfreetype-dev libjpeg62-turbo-dev libpng-dev default-mysql-client
       - docker-php-ext-configure gd --with-freetype --with-jpeg
       - docker-php-ext-install bcmath exif gd pdo_mysql
-      - until mysqladmin ping -h database -u root -ptesting --silent; do sleep 1; done
+      - until mysqladmin ping -h database -u root -ptesting --silent --connect-timeout=3 2>/dev/null; do sleep 2; done
       - cd /drone/src/src
       - cp .env.example .env
       - sed -i 's|^APP_ENV=.*|APP_ENV=testing|' .env
