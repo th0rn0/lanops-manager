@@ -2,6 +2,13 @@ kind: pipeline
 type: docker
 name: ci
 
+services:
+  - name: database
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: testing
+      MYSQL_ROOT_PASSWORD: testing
+
 trigger:
   event:
     - push
@@ -72,15 +79,24 @@ steps:
 
   - name: test
     image: php:8.3-cli
+    environment:
+      DB_HOST: database
+      DB_DATABASE: testing
+      DB_USERNAME: root
+      DB_PASSWORD: testing
     commands:
-      - apt-get update -q && apt-get install -yq libfreetype-dev libjpeg62-turbo-dev libpng-dev
+      - apt-get update -q && apt-get install -yq libfreetype-dev libjpeg62-turbo-dev libpng-dev default-mysql-client
       - docker-php-ext-configure gd --with-freetype --with-jpeg
-      - docker-php-ext-install bcmath exif gd
+      - docker-php-ext-install bcmath exif gd pdo_mysql
+      - until mysqladmin ping -h database -u root -ptesting --silent; do sleep 1; done
       - cd /drone/src/src
       - cp .env.example .env
       - sed -i 's|^APP_ENV=.*|APP_ENV=testing|' .env
-      - sed -i 's|^DB_CONNECTION=.*|DB_CONNECTION=sqlite|' .env
-      - sed -i 's|^DB_DATABASE=.*|DB_DATABASE=:memory:|' .env
+      - sed -i 's|^DB_CONNECTION=.*|DB_CONNECTION=mysql|' .env
+      - sed -i 's|^DB_HOST=.*|DB_HOST=database|' .env
+      - sed -i 's|^DB_DATABASE=.*|DB_DATABASE=testing|' .env
+      - sed -i 's|^DB_USERNAME=.*|DB_USERNAME=root|' .env
+      - sed -i 's|^DB_PASSWORD=.*|DB_PASSWORD=testing|' .env
       - php artisan key:generate
       - vendor/bin/phpunit --testdox
 
