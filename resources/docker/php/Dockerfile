@@ -1,3 +1,13 @@
+FROM node:20-alpine AS node-builder
+
+WORKDIR /app
+
+COPY src/package.json src/package-lock.json ./
+RUN npm ci
+
+COPY src/ ./
+RUN npm run build
+
 FROM php:8.3-fpm AS php-base
 LABEL maintainer="Thornton Phillis (dev@th0rn0.co.uk)"
 
@@ -14,9 +24,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg
 
-RUN docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring exif 
+RUN docker-php-ext-install mysqli pdo_mysql gd bcmath intl zip xml mbstring exif
 
 COPY src/ /var/www/html
+COPY --from=node-builder /app/public/build /var/www/html/public/build
 
 RUN chown -R www-data:www-data /var/www
 
