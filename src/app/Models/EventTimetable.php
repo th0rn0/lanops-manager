@@ -64,7 +64,7 @@ class EventTimetable extends Model
     }
     public function data()
     {
-        return $this->hasMany('App\Models\EventTimetableData');
+        return $this->hasMany('App\Models\EventTimetableData')->orderBy('start_time');
     }
 
     public function sluggable(): array
