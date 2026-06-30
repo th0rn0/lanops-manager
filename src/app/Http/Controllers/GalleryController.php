@@ -48,7 +48,8 @@ class GalleryController extends Controller
 
         try {
             seo()->image($album->getFirstMedia('images')->getUrl('optimized'));
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         return view('gallery.show')
             ->withAlbum($album);
