@@ -140,5 +140,3 @@ function editComment(comment, comment_id) {
 @endpush
 
 @endsection
-
-@seo(['description' => strip_tags(substr($newsArticle->article, 0, 1000))])

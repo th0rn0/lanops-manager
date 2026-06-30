@@ -21,6 +21,11 @@ class NewsController extends Controller
      */
     public function index()
     {
+        seo()
+            ->title('News')
+            ->description('Read the latest news and updates from ' . config('app.name') . '.')
+            ->url(url('/news'));
+
         return view('news.index')
             ->withNewsArticles(NewsArticle::orderBy('created_at', 'DESC')->paginate(20));
     }
@@ -32,6 +37,11 @@ class NewsController extends Controller
      */
     public function show(NewsArticle $newsArticle)
     {
+        seo()
+            ->title($newsArticle->title)
+            ->description(substr(strip_tags($newsArticle->article), 0, 160))
+            ->url(url('/news/' . $newsArticle->slug));
+
         return view('news.show')
             ->withNewsArticle($newsArticle);
     }
@@ -43,6 +53,11 @@ class NewsController extends Controller
      */
     public function showTag(NewsTag $newsTag)
     {
+        seo()
+            ->title('News tagged: ' . $newsTag->tag)
+            ->description('Browse ' . config('app.name') . ' news articles tagged with "' . $newsTag->tag . '".')
+            ->url(url('/news/tags/' . $newsTag->slug));
+
         foreach (NewsTag::where('tag', $newsTag->tag)->get()->reverse() as $newsTag) {
             $newsArticles[] = $newsTag->newsArticle;
         }

@@ -17,6 +17,11 @@ class EventsController extends Controller
      */
     public function index()
     {
+        seo()
+            ->title('Events')
+            ->description('Browse all gaming events hosted by ' . config('app.name') . '. Book your ticket online.')
+            ->url(url('/events'));
+
         return view('events.index')->withEvents(Event::orderByDesc('start')->get());
     }
     
