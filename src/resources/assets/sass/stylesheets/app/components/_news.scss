@@ -30,6 +30,226 @@
 }
 
 /**
+ * Tag pill — used on cards and article pages
+ */
+
+.news-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: $font-bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: $color_secondary;
+    color: $color_secondary_text;
+    padding: 2px 8px;
+    margin-right: 4px;
+    margin-top: 4px;
+    text-decoration: none;
+
+    &:hover {
+        background: $color_primary;
+        color: $color_primary_text;
+        text-decoration: none;
+    }
+}
+
+.news-card-tags {
+    margin-top: 10px;
+}
+
+/**
+ * News — article header banner
+ */
+
+.news-article-header {
+    background: $color_secondary;
+    padding: 40px 0 32px;
+
+    .news-article-back {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: $font-bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: $color_primary;
+        margin-bottom: 16px;
+        text-decoration: none;
+
+        &:hover {
+            color: lighten(orange, 15%);
+            text-decoration: none;
+        }
+    }
+}
+
+.news-article-title {
+    color: #fff;
+    font-size: 32px;
+    font-weight: $font-bold;
+    line-height: 1.2;
+    margin: 0 0 16px;
+
+    @media (min-width: 768px) {
+        font-size: 40px;
+    }
+}
+
+.news-article-meta {
+    font-size: 13px;
+    color: #aaa;
+
+    .news-article-meta-sep {
+        margin: 0 8px;
+        color: #666;
+    }
+
+    .news-tag {
+        vertical-align: middle;
+    }
+}
+
+/**
+ * News — article body section
+ */
+
+.news-article-section {
+    background: #fff;
+}
+
+.news-article-body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: $color_body_text;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        margin: 16px 0;
+    }
+
+    h2, h3, h4 {
+        margin-top: 32px;
+        margin-bottom: 12px;
+        font-weight: $font-bold;
+    }
+
+    blockquote {
+        border-left: 4px solid $color_primary;
+        padding-left: 16px;
+        color: #666;
+        font-style: italic;
+    }
+}
+
+.news-article-share {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+    margin-top: 32px;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.news-article-share-label {
+    font-size: 12px;
+    font-weight: $font-bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+}
+
+/**
+ * News — comments
+ */
+
+.news-comment {
+    display: flex;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.news-comment-avatar {
+    flex-shrink: 0;
+    width: 52px;
+    text-align: center;
+
+    img {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+}
+
+.news-comment-author {
+    font-size: 11px;
+    color: #999;
+    margin: 4px 0 0;
+    text-align: center;
+}
+
+.news-comment-body {
+    flex: 1;
+}
+
+.news-comment-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: $color_body_text;
+    margin: 0 0 8px;
+}
+
+.news-comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.news-comment-date {
+    font-size: 11px;
+    color: #aaa;
+}
+
+.news-comment-action {
+    font-size: 11px;
+    color: $color_primary;
+    text-decoration: none;
+
+    &:hover {
+        color: darken(orange, 10%);
+        text-decoration: underline;
+    }
+
+    &--danger {
+        color: #c0392b;
+
+        &:hover {
+            color: darken(#c0392b, 10%);
+        }
+    }
+}
+
+.news-comment-reported {
+    font-size: 11px;
+    color: #c0392b;
+}
+
+.news-comment-form {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.news-comment-form-title {
+    font-size: 16px;
+    font-weight: $font-bold;
+    margin: 0 0 20px;
+}
+
+/**
  * News — home page card grid
  */
 
