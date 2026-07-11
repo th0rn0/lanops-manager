@@ -20,7 +20,8 @@ class EventsController extends Controller
         seo()
             ->title('Events')
             ->description('Browse all gaming events hosted by ' . config('app.name') . '. Book your ticket online.')
-            ->url(url('/events'));
+            ->url(url('/events'))
+            ->image(config('app.url') . '/images/events-og-image.jpg');
 
         return view('events.index')->withEvents(Event::orderByDesc('start')->get());
     }
@@ -32,13 +33,16 @@ class EventsController extends Controller
      */
     public function show(Event $event)
     {
+        $eventDates = date('jS F Y', strtotime($event->start)) . ' - ' . date('jS F Y', strtotime($event->end));
+        $seoDescription = $eventDates
+            . ($event->venue ? ' at ' . $event->venue->display_name : '')
+            . '. ' . strip_tags(substr($event->desc_long, 0, 120));
+
         seo()
             ->title($event->display_name)
-            ->description(strip_tags(substr($event->desc_long, 0, 160)))
-            ->url(url('/events/' . $event->slug));
-        if ($event->venue && $event->venue->getFirstMediaUrl()) {
-            seo()->image($event->venue->getFirstMediaUrl());
-        }
+            ->description($seoDescription)
+            ->url(url('/events/' . $event->slug))
+            ->image(config('app.url') . '/images/events-og-image.jpg');
 
         $user = Auth::user();
         if ($user) {
