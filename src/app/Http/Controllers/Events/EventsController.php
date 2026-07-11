@@ -32,6 +32,14 @@ class EventsController extends Controller
      */
     public function show(Event $event)
     {
+        seo()
+            ->title($event->display_name)
+            ->description(strip_tags(substr($event->desc_long, 0, 160)))
+            ->url(url('/events/' . $event->slug));
+        if ($event->venue && $event->venue->getFirstMediaUrl()) {
+            seo()->image($event->venue->getFirstMediaUrl());
+        }
+
         $user = Auth::user();
         if ($user) {
             $clauses = ['user_id' => $user->id, 'event_id' => $event->id];
