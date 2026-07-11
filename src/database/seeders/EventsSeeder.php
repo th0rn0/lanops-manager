@@ -26,6 +26,9 @@ class EventsSeeder extends Seeder
 
         ## Venue
         $venue = factory(\App\Models\EventVenue::class)->create();
+        foreach (['venue-1.jpg', 'venue-2.jpg', 'venue-3.jpg'] as $image) {
+            $venue->addMedia(__DIR__ . '/images/' . $image)->preservingOriginal()->toMediaCollection();
+        }
 
         ## Events
         factory(\App\Models\Event::class)->create([
@@ -45,12 +48,19 @@ class EventsSeeder extends Seeder
                 factory(\App\Models\EventTimetable::class)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(\App\Models\EventInformation::class, 5)->create([
+                $information = factory(\App\Models\EventInformation::class, 5)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(\App\Models\EventSeatingPlan::class)->create([
+                $infoImages = ['info-a.jpg', 'info-b.jpg', 'info-c.jpg'];
+                foreach ($information as $index => $section) {
+                    if (isset($infoImages[$index])) {
+                        $section->addMedia(__DIR__ . '/images/' . $infoImages[$index])->preservingOriginal()->toMediaCollection();
+                    }
+                }
+                $seatingPlan = factory(\App\Models\EventSeatingPlan::class)->create([
                     'event_id' => $event->id,
                 ]);
+                $seatingPlan->addMedia(__DIR__ . '/images/seating-plan.jpg')->preservingOriginal()->toMediaCollection();
             }
         );
 
@@ -71,12 +81,19 @@ class EventsSeeder extends Seeder
                 factory(\App\Models\EventTimetable::class)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(\App\Models\EventInformation::class, 5)->create([
+                $information = factory(\App\Models\EventInformation::class, 5)->create([
                     'event_id' => $event->id,
                 ]);
-                factory(\App\Models\EventSeatingPlan::class)->create([
+                $infoImages = ['info-a.jpg', 'info-b.jpg', 'info-c.jpg'];
+                foreach ($information as $index => $section) {
+                    if (isset($infoImages[$index])) {
+                        $section->addMedia(__DIR__ . '/images/' . $infoImages[$index])->preservingOriginal()->toMediaCollection();
+                    }
+                }
+                $seatingPlan = factory(\App\Models\EventSeatingPlan::class)->create([
                     'event_id' => $event->id,
                 ]);
+                $seatingPlan->addMedia(__DIR__ . '/images/seating-plan.jpg')->preservingOriginal()->toMediaCollection();
             }
         );
     }

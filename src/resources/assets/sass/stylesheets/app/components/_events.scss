@@ -15,7 +15,7 @@
 
 	z-index: 1 !important;
 	background-color: $color_body_background !important;
-	.navbar-collapse 
+	.navbar-collapse
 	{
 		padding-left: 0;
 		padding-right: 0;
@@ -25,4 +25,373 @@
 		padding-left: 0;
 		padding-right: 0;
 	}
+}
+
+/**
+ * Event show / detail page
+ */
+
+.event-detail-header {
+    background: $color_secondary;
+    padding: 40px 0 28px;
+}
+
+.event-detail-back {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: $font-bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $color_primary;
+    margin-bottom: 16px;
+    text-decoration: none;
+
+    &:hover {
+        color: lighten(orange, 15%);
+        text-decoration: none;
+    }
+}
+
+.event-detail-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: $font-bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: $color_primary;
+    color: $color_primary_text;
+    padding: 2px 10px;
+    margin-bottom: 14px;
+}
+
+.event-detail-badge--alt {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+}
+
+.event-detail-title {
+    color: #fff;
+    font-size: 32px;
+    font-weight: $font-bold;
+    line-height: 1.2;
+    margin: 0 0 12px;
+
+    @media (min-width: 768px) {
+        font-size: 40px;
+    }
+}
+
+.event-detail-status {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: $font-bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 2px 10px;
+    margin-left: 10px;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+.event-detail-summary {
+    color: #ccc;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 0 16px;
+}
+
+.event-detail-meta {
+    font-size: 13px;
+    color: #aaa;
+
+    .event-detail-meta-sep {
+        margin: 0 8px;
+        color: #666;
+    }
+}
+
+.event-detail-capacity {
+    margin-top: 22px;
+    max-width: 320px;
+}
+
+.event-detail-capacity-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.event-detail-capacity-fill {
+    height: 100%;
+    background: $color_primary;
+    border-radius: 3px;
+}
+
+.event-detail-capacity-text {
+    font-size: 12px;
+    color: #ccc;
+
+    strong {
+        color: #fff;
+    }
+}
+
+.event-detail-nav-wrap {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.event-detail-section {
+    background: $color_body_background;
+}
+
+.event-detail-block {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid #f0f0f0;
+
+    &:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+}
+
+.event-detail-subheading {
+    font-size: 16px;
+    font-weight: $font-bold;
+    color: $color_body_text;
+    margin: 0 0 14px;
+
+    .event-detail-draft {
+        vertical-align: middle;
+    }
+}
+
+.event-detail-draft {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: $font-bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: #c0392b;
+    color: #fff;
+    padding: 2px 8px;
+    margin-left: 8px;
+}
+
+.event-detail-prose {
+    font-size: 15px;
+    line-height: 1.8;
+    color: $color_body_text;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        margin: 16px 0;
+        border-radius: 4px;
+    }
+}
+
+.event-info-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.event-detail-meta-list {
+    margin: 0 0 20px;
+    padding: 20px 24px;
+    background: #f9f9f9;
+    border-left: 4px solid $color_primary;
+
+    dt {
+        font-size: 11px;
+        font-weight: $font-bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #999;
+        margin-top: 14px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    dd {
+        font-size: 15px;
+        color: $color_body_text;
+        margin: 2px 0 0;
+    }
+}
+
+/**
+ * Event show — ticket cards
+ */
+
+.ticket-card {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-top: 4px solid $color_primary;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    height: calc(100% - 24px);
+}
+
+.ticket-card-title {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: $font-bold;
+    color: $color_body_text;
+}
+
+.ticket-card-soldout {
+    color: #c0392b;
+    font-weight: $font-bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-left: 6px;
+}
+
+.ticket-card-limited {
+    display: block;
+    font-size: 12px;
+    color: #999;
+}
+
+.ticket-card-price {
+    font-size: 22px;
+    font-weight: $font-bold;
+    color: $color_body_text;
+    margin: 14px 0;
+}
+
+.ticket-card-avail {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+    margin-left: 6px;
+}
+
+/**
+ * Event show — seating accordion
+ */
+
+.event-seating {
+    .panel {
+        border: none;
+        border-top: 4px solid $color_primary;
+        border-radius: 0;
+        box-shadow: none;
+        margin-bottom: 16px;
+    }
+
+    .panel-heading {
+        background: $color_secondary;
+        border-radius: 0;
+        padding: 14px 20px;
+
+        a {
+            color: #fff;
+            text-decoration: none;
+
+            small {
+                color: #ccc;
+            }
+
+            &:hover {
+                color: $color_primary;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .panel-body {
+        padding: 24px;
+    }
+}
+
+/**
+ * Event show — venue
+ */
+
+.event-detail-address {
+    font-size: 15px;
+    line-height: 1.8;
+    font-style: normal;
+    color: $color_body_text;
+
+    strong {
+        font-size: 17px;
+    }
+}
+
+.event-venue-photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.event-venue-photo {
+    width: calc(50% - 4px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 4px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/**
+ * Event show — tables (timetable, attendees)
+ */
+
+.event-detail-table {
+    margin-bottom: 32px;
+
+    > thead > tr > th {
+        background: $color_secondary;
+        color: #fff;
+        font-weight: $font-bold;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        border: none;
+        padding: 12px 16px;
+    }
+
+    > tbody > tr:nth-child(odd) {
+        background: #f9f9f9;
+    }
+
+    > tbody > tr:hover {
+        background: #fdf3e6;
+    }
+
+    > tbody > td,
+    > tbody > tr > td {
+        padding: 12px 16px;
+        vertical-align: middle;
+        border-top: 1px solid #f0f0f0;
+    }
+}
+
+/**
+ * Event show — panel lists (tournaments, my tickets)
+ */
+
+.event-detail-panels {
+    .panel {
+        border-radius: 0;
+        box-shadow: none;
+        margin-bottom: 16px;
+    }
 }
